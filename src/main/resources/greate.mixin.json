@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "electrolyte.greate.mixin",
+  "minVersion": "0.8",
+  "compatabilityLevel": "JAVA_16",
+  "mixins": [
+    "MixinKineticBlockEntity",
+    "MixinKineticNetwork"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "refmap": "greate.mixin-refmap.json"
+}

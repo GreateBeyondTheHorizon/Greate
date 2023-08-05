@@ -32,19 +32,6 @@ public class PoweredAndesiteShaft extends PoweredShaftBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
-        if(pPlayer.isShiftKeyDown() || !pPlayer.mayBuild()) {
-            return InteractionResult.PASS;
-        }
-        ItemStack heldItem = pPlayer.getItemInHand(pHand);
-        IPlacementHelper helper = PlacementHelpers.get(AndesiteShaft.placementHelperId);
-        if(helper.matchesItem(heldItem)) {
-            return helper.getOffset(pPlayer, pLevel, pState, pPos, pHit).placeInWorld(pLevel, (BlockItem) heldItem.getItem(), pPlayer, pHand, pHit);
-        }
-        return InteractionResult.PASS;
-    }
-
-    @Override
     public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
         if(!stillValid(pState, pLevel, pPos)) {
             pLevel.setBlock(pPos, ModBlocks.ANDESITE_SHAFT.getDefaultState()

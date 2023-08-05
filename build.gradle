@@ -3,7 +3,7 @@ plugins {
     id 'maven-publish'
     id 'net.minecraftforge.gradle' version '5.1.+'
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
-    //id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
+    id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
 }
 
 version = '1.0'
@@ -17,7 +17,7 @@ println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty '
 minecraft {
     mappings channel: 'parchment', version: "${parchment_version}-${minecraft_version}"
 
-    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg') // Currently, this location cannot be changed from the default.
+    //accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
         client {
@@ -41,6 +41,8 @@ minecraft {
             property "mixin.env.remapRefMap", 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
+            arg "-mixin.config=greate.mixin.json"
+
             mods {
                 greate {
                     source sourceSets.main
@@ -59,6 +61,8 @@ minecraft {
 
             property "mixin.env.remapRefMap", 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+
+            arg "-mixin.config=greate.mixin.json"
 
             mods {
                 greate {
@@ -93,6 +97,11 @@ minecraft {
 
             property 'forge.logging.console.level', 'debug'
 
+            property "mixin.env.remapRefMap", 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+
+            arg "-mixin.config=greate.mixin.json"
+
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
             args '--mod', 'greate', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
 
@@ -118,6 +127,8 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
     implementation fg.deobf("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
     implementation fg.deobf("com.jozufozu.flywheel:flywheel-forge-${minecraft_version}:${flywheel_version}")
     implementation fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
@@ -128,6 +139,10 @@ dependencies {
 
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${minecraft_version}-${curios_version}:api")
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${minecraft_version}-${curios_version}")
+}
+
+mixin {
+    add sourceSets.main, "greate.mixin-refmap.json"
 }
 
 // Example for how to get properties into the manifest for reading at runtime.

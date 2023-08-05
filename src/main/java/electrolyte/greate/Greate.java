@@ -2,6 +2,8 @@ package electrolyte.greate;
 
 import com.mojang.logging.LogUtils;
 import com.simibubi.create.foundation.data.CreateRegistrate;
+import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.foundation.utility.LangBuilder;
 import electrolyte.greate.registry.ModBlockEntityTypes;
 import electrolyte.greate.registry.ModBlocks;
 import net.minecraft.world.item.CreativeModeTab;
@@ -19,6 +21,7 @@ public class Greate {
     public static final String MOD_ID = "greate";
     public static final Logger LOGGER = LogUtils.getLogger();
     public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(Greate.MOD_ID);
+    public static final LangBuilder LANG = Lang.builder(Greate.MOD_ID);
 
     public Greate() {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();

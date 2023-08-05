@@ -1,0 +1,5 @@
+{
+  "greate.tooltip.overcapacity": "Overcapacity",
+  "greate.tooltip.overcapacity.description": "It appears that a shaft on this network is §fovercapacity.§7 Reduce the amount of su to an amount that shaft can support.",
+  "greate.tooltip.capacity": "Shaft Kinetic Capacity:"
+}

@@ -28,16 +28,6 @@ public class GirderEncasedAndesiteShaft extends GirderEncasedShaftBlock {
     }
 
     @Override
-    public Class<KineticBlockEntity> getBlockEntityClass() {
-        return super.getBlockEntityClass();
-    }
-
-    @Override
-    public BlockEntityType<? extends KineticBlockEntity> getBlockEntityType() {
-        return super.getBlockEntityType();
-    }
-
-    @Override
     public ItemRequirement getRequiredItems(BlockState state, BlockEntity be) {
         return ItemRequirement.of(ModBlocks.ANDESITE_SHAFT.getDefaultState(), be)
                 .union(ItemRequirement.of(AllBlocks.METAL_GIRDER.getDefaultState(), be));
