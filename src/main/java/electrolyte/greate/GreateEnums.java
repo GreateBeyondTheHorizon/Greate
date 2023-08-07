@@ -14,7 +14,7 @@ public class GreateEnums {
         LUDICRIOUS("LuS", getStressAtTier(7), ChatFormatting.LIGHT_PURPLE),
         ZPM("ZPMS", getStressAtTier(8), ChatFormatting.RED),
         ULTIMATE("US", getStressAtTier(9), ChatFormatting.DARK_AQUA),
-        ULTIMATE_HIGH("UHS", getStressAtTier(9), ChatFormatting.DARK_RED);
+        ULTIMATE_HIGH("UHS", getStressAtTier(10), ChatFormatting.DARK_RED);
 
         private final String name;
         private final int stress;
