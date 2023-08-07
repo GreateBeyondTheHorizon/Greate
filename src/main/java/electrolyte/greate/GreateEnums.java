@@ -5,14 +5,15 @@ import net.minecraft.ChatFormatting;
 public class GreateEnums {
 
     public enum TIER {
-        LOW("LS", getStressAtTier(1), ChatFormatting.GRAY),
-        MEDIUM("MS", getStressAtTier(2), ChatFormatting.AQUA),
-        HIGH("HS", getStressAtTier(3), ChatFormatting.GOLD),
-        EXTREME("ES", getStressAtTier(4), ChatFormatting.DARK_PURPLE),
-        INSANE("IS", getStressAtTier(5), ChatFormatting.DARK_BLUE),
-        LUDICRIOUS("LuS", getStressAtTier(6), ChatFormatting.LIGHT_PURPLE),
-        ZPM("ZPMS", getStressAtTier(7), ChatFormatting.RED),
-        ULTIMATE("US", getStressAtTier(8), ChatFormatting.DARK_AQUA),
+        ULTRA_LOW("ULS", getStressAtTier(1), ChatFormatting.DARK_GRAY),
+        LOW("LS", getStressAtTier(2), ChatFormatting.GRAY),
+        MEDIUM("MS", getStressAtTier(3), ChatFormatting.AQUA),
+        HIGH("HS", getStressAtTier(4), ChatFormatting.GOLD),
+        EXTREME("ES", getStressAtTier(5), ChatFormatting.DARK_PURPLE),
+        INSANE("IS", getStressAtTier(6), ChatFormatting.DARK_BLUE),
+        LUDICRIOUS("LuS", getStressAtTier(7), ChatFormatting.LIGHT_PURPLE),
+        ZPM("ZPMS", getStressAtTier(8), ChatFormatting.RED),
+        ULTIMATE("US", getStressAtTier(9), ChatFormatting.DARK_AQUA),
         ULTIMATE_HIGH("UHS", getStressAtTier(9), ChatFormatting.DARK_RED);
 
         private final String name;

@@ -8,6 +8,7 @@ public class GreateConfig {
 
     public static final ForgeConfigSpec SERVER_CONFIG;
 
+    public static ForgeConfigSpec.DoubleValue ULS_CAPACITY_MULTIPLIER;
     public static ForgeConfigSpec.DoubleValue LS_CAPACITY_MULTIPLIER;
     public static ForgeConfigSpec.DoubleValue MS_CAPACITY_MULTIPLIER;
     public static ForgeConfigSpec.DoubleValue HS_CAPACITY_MULTIPLIER;
@@ -21,6 +22,9 @@ public class GreateConfig {
     static {
         ForgeConfigSpec.Builder SERVER_BUILDER = new ForgeConfigSpec.Builder();
         SERVER_BUILDER.comment("Server Settings").push("server_settings");
+        ULS_CAPACITY_MULTIPLIER = SERVER_BUILDER
+                .comment("Stress capacity multiplier for ULS shafts and cogwheels.")
+                .defineInRange("uls_capacity_multiplier", 1, 1, Double.MAX_VALUE);
         LS_CAPACITY_MULTIPLIER = SERVER_BUILDER
                 .comment("Stress capacity multiplier for LS shafts and cogwheels.")
                 .defineInRange("ls_capacity_multiplier", 1, 1, Double.MAX_VALUE);
