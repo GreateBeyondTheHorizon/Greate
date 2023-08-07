@@ -5,7 +5,7 @@ import net.minecraft.ChatFormatting;
 public class GreateEnums {
 
     public enum TIER {
-
+        NONE("NONE", Double.MAX_VALUE, ChatFormatting.WHITE),
         ULTRA_LOW("ULS", GreateConfig.ULS_CAPACITY.get(), ChatFormatting.WHITE),
         LOW("LS", GreateConfig.LS_CAPACITY.get(), ChatFormatting.GRAY),
         MEDIUM("MS", GreateConfig.MS_CAPACITY.get(), ChatFormatting.AQUA),
