@@ -9,7 +9,7 @@ import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.item.TooltipHelper;
 import com.simibubi.create.foundation.utility.Lang;
 import electrolyte.greate.Greate;
-import electrolyte.greate.be.ITieredKineticBlockEntity;
+import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -25,6 +25,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.List;
 
@@ -36,37 +37,38 @@ public abstract class MixinKineticBlockEntity extends SmartBlockEntity implement
     @Shadow protected float capacity;
     @Shadow public abstract void onSpeedChanged(float previousSpeed);
     @Shadow protected KineticEffectHandler effects;
-    @Shadow public abstract boolean hasNetwork();
-    @Unique protected float greate_shaftMaxCapacity;
+    @Unique protected double greate_shaftMaxCapacity;
     @Unique protected boolean greate_OverCapacity;
-    @Unique protected float greate_networkMaxCapacity;
+    @Unique protected double greate_networkMaxCapacity;
 
     public MixinKineticBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
 
     @Override
-    public float getShaftMaxCapacity() {
+    public double getShaftMaxCapacity() {
         return Integer.MAX_VALUE;
     }
 
     @Inject(method = "write", at = @At("HEAD"), remap = false)
     private void greate_Write(CompoundTag compound, boolean clientPacket, CallbackInfo ci) {
-        compound.putFloat("MaxCapacity", getShaftMaxCapacity());
-        //if(hasNetwork()) {
-            CompoundTag networkTag = new CompoundTag();
-            networkTag.putFloat("MaxCapacity", greate_networkMaxCapacity);
-            compound.put("NetworkCapacity", networkTag);
-        //}
+        compound.putDouble("MaxCapacity", getShaftMaxCapacity());
+    }
+
+    @Inject(method = "write", at = @At(value = "INVOKE", target = "Lnet/minecraft/nbt/CompoundTag;putLong(Ljava/lang/String;J)V"), locals = LocalCapture.CAPTURE_FAILSOFT, remap = false)
+    private void greate_WriteNetwork(CompoundTag compound, boolean clientPacket, CallbackInfo ci, CompoundTag networkTag) {
+        networkTag.putDouble("MaxCapacity", greate_networkMaxCapacity);
     }
 
     @Inject(method = "read", at = @At(value = "INVOKE", target = "Lnet/minecraft/nbt/CompoundTag;getFloat(Ljava/lang/String;)F"), remap = false)
     private void greate_Read(CompoundTag tag, boolean clientPacket, CallbackInfo ci) {
         boolean overCapacityBefore = greate_OverCapacity;
-        greate_shaftMaxCapacity = tag.getFloat("MaxCapacity");
-        if (tag.contains("NetworkCapacity")) {
-            CompoundTag networkTag = tag.getCompound("NetworkCapacity");
-            greate_networkMaxCapacity = networkTag.getFloat("MaxCapacity");
+        greate_shaftMaxCapacity = tag.getDouble("MaxCapacity");
+
+        if(tag.contains("Network")) {
+            CompoundTag networkTag = tag.getCompound("Network");
+            capacity = networkTag.getFloat("Capacity");
+            greate_networkMaxCapacity = networkTag.getDouble("MaxCapacity");
             greate_OverCapacity = capacity > greate_networkMaxCapacity;
         }
 
@@ -76,6 +78,20 @@ public abstract class MixinKineticBlockEntity extends SmartBlockEntity implement
 
         if(clientPacket) {
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> InstancedRenderDispatcher.enqueueUpdate((KineticBlockEntity) (Object)this));
+        }
+    }
+
+    @Override
+    public void updateFromNetwork(float maxStress, float currentStress, int networkSize, double networkMaxCapacity) {
+        this.greate_networkMaxCapacity = networkMaxCapacity;
+        boolean overCapacity = capacity > networkMaxCapacity;
+        setChanged();
+
+        if(overCapacity != this.greate_OverCapacity) {
+            float prevSpeed = getSpeed();
+            this.greate_OverCapacity = overCapacity;
+            onSpeedChanged(prevSpeed);
+            sendData();
         }
     }
 
@@ -89,20 +105,6 @@ public abstract class MixinKineticBlockEntity extends SmartBlockEntity implement
     @Inject(method = "getSpeed", at = @At("HEAD"), remap = false, cancellable = true)
     private void greate_getSpeed(CallbackInfoReturnable<Float> cir) {
         if(greate_OverCapacity) cir.setReturnValue(0.0F);
-    }
-
-    @Override
-    public void updateFromNetwork(float maxStress, float currentStress, int networkSize, float networkMaxCapacity) {
-        this.greate_networkMaxCapacity = networkMaxCapacity;
-        boolean overCapacity = capacity > networkMaxCapacity;
-        setChanged();
-
-        if(overCapacity != this.greate_OverCapacity) {
-            float prevSpeed = getSpeed();
-            this.greate_OverCapacity = overCapacity;
-            onSpeedChanged(prevSpeed);
-            sendData();
-        }
     }
 
     @Inject(method = "addToTooltip", at = @At("RETURN"), cancellable = true, remap = false)

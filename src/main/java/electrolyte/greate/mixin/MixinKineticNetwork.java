@@ -2,7 +2,7 @@ package electrolyte.greate.mixin;
 
 import com.simibubi.create.content.kinetics.KineticNetwork;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
-import electrolyte.greate.be.ITieredKineticBlockEntity;
+import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -20,13 +20,18 @@ public abstract class MixinKineticNetwork {
     @Shadow private float currentCapacity;
     @Shadow private float currentStress;
     @Shadow public abstract int getSize();
-    @Unique private float greate_currentMaxCapacity;
-
+    @Shadow public abstract float calculateStress();
+    @Shadow public abstract float calculateCapacity();
+    @Unique private double greate_currentMaxCapacity;
 
     @Inject(method = "updateNetwork", at = @At(value = "HEAD"), remap = false)
     private void greate_updateNetwork(CallbackInfo ci) {
-        float newMaxCapacity = greate_calculateMaxCapacity();
-        if(greate_currentMaxCapacity != newMaxCapacity) {
+        float newStress = calculateStress();
+        float newMaxStress = calculateCapacity();
+        double newMaxCapacity = greate_calculateMaxCapacity();
+        if(currentStress != newStress || currentCapacity != newMaxStress || greate_currentMaxCapacity != newMaxCapacity) {
+            currentStress = newStress;
+            currentCapacity = newMaxStress;
             greate_currentMaxCapacity = newMaxCapacity;
             sync();
         }
@@ -41,7 +46,7 @@ public abstract class MixinKineticNetwork {
 
     @Unique
     private void greate_updateMaxCapacity() {
-        float newMaxCapacity = greate_calculateMaxCapacity();
+        double newMaxCapacity = greate_calculateMaxCapacity();
         if(greate_currentMaxCapacity != newMaxCapacity) {
             greate_currentMaxCapacity = newMaxCapacity;
             sync();
@@ -54,8 +59,8 @@ public abstract class MixinKineticNetwork {
     }
 
     @Unique
-    private float greate_calculateMaxCapacity() {
-        float presentMaxCapacity = Integer.MAX_VALUE;
+    private double greate_calculateMaxCapacity() {
+        double presentMaxCapacity = Integer.MAX_VALUE;
         for (KineticBlockEntity be : members.keySet()) {
             if (be instanceof ITieredKineticBlockEntity itkbe) {
                 if (presentMaxCapacity > itkbe.getShaftMaxCapacity()) {
