@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import electrolyte.greate.registry.ModBlockEntityTypes;
 import electrolyte.greate.registry.ModBlocks;
+import electrolyte.greate.registry.ModItems;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -29,6 +30,7 @@ public class Greate {
         REGISTRATE.registerEventListeners(eventBus);
         ModBlocks.register();
         ModBlockEntityTypes.register();
+        ModItems.register();
     }
 
     public static final CreativeModeTab GREATE_TAB = new CreativeModeTab("greate") {
