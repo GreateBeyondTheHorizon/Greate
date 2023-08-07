@@ -5,22 +5,23 @@ import net.minecraft.ChatFormatting;
 public class GreateEnums {
 
     public enum TIER {
-        ULTRA_LOW("ULS", getStressAtTier(1), ChatFormatting.DARK_GRAY),
-        LOW("LS", getStressAtTier(2), ChatFormatting.GRAY),
-        MEDIUM("MS", getStressAtTier(3), ChatFormatting.AQUA),
-        HIGH("HS", getStressAtTier(4), ChatFormatting.GOLD),
-        EXTREME("ES", getStressAtTier(5), ChatFormatting.DARK_PURPLE),
-        INSANE("IS", getStressAtTier(6), ChatFormatting.DARK_BLUE),
-        LUDICRIOUS("LuS", getStressAtTier(7), ChatFormatting.LIGHT_PURPLE),
-        ZPM("ZPMS", getStressAtTier(8), ChatFormatting.RED),
-        ULTIMATE("US", getStressAtTier(9), ChatFormatting.DARK_AQUA),
-        ULTIMATE_HIGH("UHS", getStressAtTier(10), ChatFormatting.DARK_RED);
+
+        ULTRA_LOW("ULS", GreateConfig.ULS_CAPACITY.get(), ChatFormatting.WHITE),
+        LOW("LS", GreateConfig.LS_CAPACITY.get(), ChatFormatting.GRAY),
+        MEDIUM("MS", GreateConfig.MS_CAPACITY.get(), ChatFormatting.AQUA),
+        HIGH("HS", GreateConfig.HS_CAPACITY.get(), ChatFormatting.GOLD),
+        EXTREME("ES", GreateConfig.ES_CAPACITY.get(), ChatFormatting.DARK_PURPLE),
+        INSANE("IS", GreateConfig.IS_CAPACITY.get(), ChatFormatting.DARK_BLUE),
+        LUDICRIOUS("LuS", GreateConfig.LUS_CAPACITY.get(), ChatFormatting.LIGHT_PURPLE),
+        ZPM("ZPMS", GreateConfig.ZPMS_CAPACITY.get(), ChatFormatting.RED),
+        ULTIMATE("US", GreateConfig.US_CAPACITY.get(), ChatFormatting.DARK_AQUA),
+        ULTIMATE_HIGH("UHS", GreateConfig.UHS_CAPACITY.get(), ChatFormatting.DARK_RED);
 
         private final String name;
-        private final int stress;
+        private final double stress;
         private final ChatFormatting tierColor;
 
-        TIER(String name, int stress, ChatFormatting tierColor) {
+        TIER(String name, double stress, ChatFormatting tierColor) {
             this.name = name;
             this.stress = stress;
             this.tierColor = tierColor;
@@ -30,16 +31,12 @@ public class GreateEnums {
             return name;
         }
 
-        public int getStress() {
+        public double getStress() {
             return stress;
         }
 
         public ChatFormatting getTierColor() {
             return tierColor;
-        }
-
-        private static int getStressAtTier(int tier) {
-            return (int) Math.pow(2, 2 * tier + 7);
         }
     }
 }
