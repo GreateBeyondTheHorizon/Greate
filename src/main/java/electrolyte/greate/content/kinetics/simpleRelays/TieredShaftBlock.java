@@ -31,7 +31,7 @@ import java.util.List;
 
 public class TieredShaftBlock extends ShaftBlock {
 
-    private TIER capacityTier;
+    private TIER tier;
 
     public TieredShaftBlock(Properties properties) {
         super(properties);
@@ -42,17 +42,17 @@ public class TieredShaftBlock extends ShaftBlock {
         return ModBlockEntityTypes.TIERED_SHAFT.get();
     }
 
-    public TIER getCapacityTier() {
-        return this.capacityTier;
+    public TIER getTier() {
+        return this.tier;
     }
 
-    public void setCapacityTier(TIER capacityTier) {
-        this.capacityTier = capacityTier;
+    public void setTier(TIER tier) {
+        this.tier = tier;
     }
 
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable BlockGetter pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
-        pTooltip.add(Component.translatable("greate.tooltip.shaft_capacity").append(Component.literal(String.valueOf(capacityTier.getStress())).withStyle(capacityTier.getTierColor())).append(" (").append(Component.literal(capacityTier.getName()).withStyle(capacityTier.getTierColor())).append(")").withStyle(ChatFormatting.DARK_GRAY));
+        pTooltip.add(Component.translatable("greate.tooltip.shaft_capacity").append(Component.literal(String.valueOf(tier.getStressCapacity())).withStyle(tier.getTierColor())).append(" (").append(Component.literal(tier.getName()).withStyle(tier.getTierColor())).append(")").withStyle(ChatFormatting.DARK_GRAY));
     }
 
     @Override
