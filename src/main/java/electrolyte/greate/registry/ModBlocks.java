@@ -19,6 +19,17 @@ public class ModBlocks {
         REGISTRATE.creativeModeTab(() -> Greate.GREATE_TAB);
     }
 
+    public static final BlockEntry<TieredShaftBlock> ANDESITE_SHAFT = REGISTRATE
+            .block("andesite_shaft", TieredShaftBlock::new)
+            .initialProperties(SharedProperties::stone)
+            .properties(p -> p.color(MaterialColor.METAL))
+            .transform(BlockStressDefaults.setNoImpact())
+            .transform(TagGen.pickaxeOnly())
+            .blockstate(BlockStateGen.axisBlockProvider(false))
+            .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+            .simpleItem()
+            .register();
+
     public static final BlockEntry<TieredShaftBlock> STEEL_SHAFT = REGISTRATE
             .block("steel_shaft", TieredShaftBlock::new)
             .initialProperties(SharedProperties::stone)

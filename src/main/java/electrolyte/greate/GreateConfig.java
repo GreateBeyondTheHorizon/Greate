@@ -8,46 +8,50 @@ public class GreateConfig {
 
     public static final ForgeConfigSpec SERVER_CONFIG;
 
-    public static ForgeConfigSpec.DoubleValue LC_MAX;
-    public static ForgeConfigSpec.DoubleValue MC_MAX;
-    public static ForgeConfigSpec.DoubleValue HC_MAX;
-    public static ForgeConfigSpec.DoubleValue EC_MAX;
-    public static ForgeConfigSpec.DoubleValue IC_MAX;
-    public static ForgeConfigSpec.DoubleValue LUC_MAX;
-    public static ForgeConfigSpec.DoubleValue ZPMC_MAX;
-    public static ForgeConfigSpec.DoubleValue UC_MAX;
-    public static ForgeConfigSpec.DoubleValue UHC_MAX;
+    public static ForgeConfigSpec.DoubleValue ULS_CAPACITY_MULTIPLIER;
+    public static ForgeConfigSpec.DoubleValue LS_CAPACITY_MULTIPLIER;
+    public static ForgeConfigSpec.DoubleValue MS_CAPACITY_MULTIPLIER;
+    public static ForgeConfigSpec.DoubleValue HS_CAPACITY_MULTIPLIER;
+    public static ForgeConfigSpec.DoubleValue ES_CAPACITY_MULTIPLIER;
+    public static ForgeConfigSpec.DoubleValue IS_CAPACITY_MULTIPLIER;
+    public static ForgeConfigSpec.DoubleValue LUS_CAPACITY_MULTIPLIER;
+    public static ForgeConfigSpec.DoubleValue ZPMS_CAPACITY_MULTIPLIER;
+    public static ForgeConfigSpec.DoubleValue US_CAPACITY_MULTIPLIER;
+    public static ForgeConfigSpec.DoubleValue UHS_CAPACITY_MULTIPLIER;
 
     static {
         ForgeConfigSpec.Builder SERVER_BUILDER = new ForgeConfigSpec.Builder();
         SERVER_BUILDER.comment("Server Settings").push("server_settings");
-        LC_MAX = SERVER_BUILDER
-                .comment("Maximum capacity for LC shafts.")
-                .defineInRange("lc_max", 32, 1, Double.MAX_VALUE);
-        MC_MAX = SERVER_BUILDER
-                .comment("Maximum capacity for MC shafts.")
-                .defineInRange("mc_max", 128, 1, Double.MAX_VALUE);
-        HC_MAX = SERVER_BUILDER
-                .comment("Maximum capacity for HC shafts.")
-                .defineInRange("hc_max", 512, 1, Double.MAX_VALUE);
-        EC_MAX = SERVER_BUILDER
-                .comment("Maximum capacity for EC shafts.")
-                .defineInRange("ec_max", 2048, 1, Double.MAX_VALUE);
-        IC_MAX = SERVER_BUILDER
-                .comment("Maximum capacity for IC shafts.")
-                .defineInRange("ic_max", 8192, 1, Double.MAX_VALUE);
-        LUC_MAX = SERVER_BUILDER
-                .comment("Maximum capacity for LUC shafts.")
-                .defineInRange("luc_max", 32768, 1, Double.MAX_VALUE);
-        ZPMC_MAX = SERVER_BUILDER
-                .comment("Maximum capacity for ZPMC shafts.")
-                .defineInRange("zpmc_max", 131072, 1, Double.MAX_VALUE);
-        UC_MAX = SERVER_BUILDER
-                .comment("Maximum capacity for UC shafts.")
-                .defineInRange("uc_max", 524288, 1, Double.MAX_VALUE);
-        UHC_MAX = SERVER_BUILDER
-                .comment("Maximum capacity for UHC shafts.")
-                .defineInRange("uhc_max", Double.MAX_VALUE, 1, Double.MAX_VALUE);
+        ULS_CAPACITY_MULTIPLIER = SERVER_BUILDER
+                .comment("Stress capacity multiplier for ULS shafts and cogwheels.")
+                .defineInRange("uls_capacity_multiplier", 1, 1, Double.MAX_VALUE);
+        LS_CAPACITY_MULTIPLIER = SERVER_BUILDER
+                .comment("Stress capacity multiplier for LS shafts and cogwheels.")
+                .defineInRange("ls_capacity_multiplier", 1, 1, Double.MAX_VALUE);
+        MS_CAPACITY_MULTIPLIER = SERVER_BUILDER
+                .comment("Stress capacity multiplier for MS shafts and cogwheels.")
+                .defineInRange("ms_capacity_multiplier", 1, 1, Double.MAX_VALUE);
+        HS_CAPACITY_MULTIPLIER = SERVER_BUILDER
+                .comment("Stress capacity multiplier for HS shafts and cogwheels.")
+                .defineInRange("hs_capacity_multiplier", 1, 1, Double.MAX_VALUE);
+        ES_CAPACITY_MULTIPLIER = SERVER_BUILDER
+                .comment("Stress capacity multiplier for ES shafts and cogwheels.")
+                .defineInRange("es_capacity_multiplier", 1, 1, Double.MAX_VALUE);
+        IS_CAPACITY_MULTIPLIER = SERVER_BUILDER
+                .comment("Stress capacity multiplier for IS shafts and cogwheels.")
+                .defineInRange("is_capacity_multiplier", 1, 1, Double.MAX_VALUE);
+        LUS_CAPACITY_MULTIPLIER = SERVER_BUILDER
+                .comment("Stress capacity multiplier for LUS shafts and cogwheels.")
+                .defineInRange("lus_capacity_multiplier", 1, 1, Double.MAX_VALUE);
+        ZPMS_CAPACITY_MULTIPLIER = SERVER_BUILDER
+                .comment("Stress capacity multiplier for ZPMS shafts and cogwheels.")
+                .defineInRange("zpms_capacity_multiplier", 1, 1, Double.MAX_VALUE);
+        US_CAPACITY_MULTIPLIER = SERVER_BUILDER
+                .comment("Stress capacity multiplier for US shafts and cogwheels.")
+                .defineInRange("us_capacity_multiplier", 1, 1, Double.MAX_VALUE);
+        UHS_CAPACITY_MULTIPLIER = SERVER_BUILDER
+                .comment("Stress capacity multiplier for UHS shafts and cogwheels.")
+                .defineInRange("uhs_capacity_multiplier", 1, 1, Double.MAX_VALUE);
         SERVER_BUILDER.pop();
 
         SERVER_CONFIG = SERVER_BUILDER.build();

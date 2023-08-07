@@ -7,7 +7,7 @@ import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
 import com.simibubi.create.content.kinetics.steamEngine.PoweredShaftBlock;
 import com.simibubi.create.foundation.placement.IPlacementHelper;
 import com.simibubi.create.foundation.placement.PlacementHelpers;
-import electrolyte.greate.GreateEnums.CAPACITY_TIER;
+import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.registry.ModBlockEntityTypes;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -31,7 +31,7 @@ import java.util.List;
 
 public class TieredShaftBlock extends ShaftBlock {
 
-    private CAPACITY_TIER capacityTier;
+    private TIER capacityTier;
 
     public TieredShaftBlock(Properties properties) {
         super(properties);
@@ -42,18 +42,17 @@ public class TieredShaftBlock extends ShaftBlock {
         return ModBlockEntityTypes.TIERED_SHAFT.get();
     }
 
-    public CAPACITY_TIER getCapacityTier() {
+    public TIER getCapacityTier() {
         return this.capacityTier;
     }
 
-    public void setCapacityTier(CAPACITY_TIER capacityTier) {
+    public void setCapacityTier(TIER capacityTier) {
         this.capacityTier = capacityTier;
     }
 
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable BlockGetter pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
-        pTooltip.set(0, Component.translatable(pTooltip.get(0).getString()).withStyle(capacityTier.getTierColor()));
-        pTooltip.add(Component.translatable("greate.tooltip.shaft_capacity").append(Component.literal(String.valueOf(capacityTier.getMaxCapacity())).withStyle(capacityTier.getTierColor())).append(" (").append(Component.literal(capacityTier.getName()).withStyle(capacityTier.getTierColor())).append(")").withStyle(ChatFormatting.DARK_GRAY));
+        pTooltip.add(Component.translatable("greate.tooltip.shaft_capacity").append(Component.literal(String.valueOf(capacityTier.getStress())).withStyle(capacityTier.getTierColor())).append(" (").append(Component.literal(capacityTier.getName()).withStyle(capacityTier.getTierColor())).append(")").withStyle(ChatFormatting.DARK_GRAY));
     }
 
     @Override

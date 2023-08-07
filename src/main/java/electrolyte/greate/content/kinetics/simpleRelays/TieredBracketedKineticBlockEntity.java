@@ -3,7 +3,7 @@ package electrolyte.greate.content.kinetics.simpleRelays;
 import com.simibubi.create.content.kinetics.simpleRelays.BracketedKineticBlockEntity;
 import com.simibubi.create.foundation.utility.Lang;
 import electrolyte.greate.Greate;
-import electrolyte.greate.GreateEnums.CAPACITY_TIER;
+import electrolyte.greate.GreateEnums.TIER;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -17,7 +17,7 @@ public class TieredBracketedKineticBlockEntity extends BracketedKineticBlockEnti
 
     private double networkMaxCapacity;
     private double networkCurrentCapacity;
-    private CAPACITY_TIER capacityTier;
+    private TIER capacityTier;
 
     public TieredBracketedKineticBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -26,7 +26,7 @@ public class TieredBracketedKineticBlockEntity extends BracketedKineticBlockEnti
 
     @Override
     public double getShaftMaxCapacity() {
-        return capacityTier.getMaxCapacity();
+        return capacityTier.getStress();
     }
 
     @Override
@@ -59,7 +59,7 @@ public class TieredBracketedKineticBlockEntity extends BracketedKineticBlockEnti
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         Lang.translate("gui.goggles.kinetic_stats").forGoggles(tooltip);
         Lang.builder(Greate.MOD_ID).translate("tooltip.capacity").style(ChatFormatting.GRAY).forGoggles(tooltip);
-        Lang.number(this.networkCurrentCapacity).style(ChatFormatting.AQUA).add(Lang.text("su")).space().add(Lang.text("/").space().add(Lang.number(capacityTier.getMaxCapacity())).add(Lang.text("su").space().add(Lang.text("at current shaft tier").style(ChatFormatting.DARK_GRAY)))).forGoggles(tooltip, 1);
+        Lang.number(this.networkCurrentCapacity).style(ChatFormatting.AQUA).add(Lang.text("su")).space().add(Lang.text("/").space().add(Lang.number(capacityTier.getStress())).add(Lang.text("su").space().add(Lang.text("at current shaft tier").style(ChatFormatting.DARK_GRAY)))).forGoggles(tooltip, 1);
         return true;
     }
 }

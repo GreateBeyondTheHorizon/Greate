@@ -10,14 +10,15 @@ public class GreateEventHandler {
 
     @SubscribeEvent
     public static void assignShaftTiers(AddReloadListenerEvent event) {
-        ModBlocks.STEEL_SHAFT.get().setCapacityTier(GreateEnums.CAPACITY_TIER.LOW);
-        ModBlocks.ALUMINIUM_SHAFT.get().setCapacityTier(GreateEnums.CAPACITY_TIER.MEDIUM);
-        ModBlocks.STAINLESS_STEEL_SHAFT.get().setCapacityTier(GreateEnums.CAPACITY_TIER.HIGH);
-        ModBlocks.TITANIUM_SHAFT.get().setCapacityTier(GreateEnums.CAPACITY_TIER.EXTREME);
-        ModBlocks.TUNGSTENSTEEL_SHAFT.get().setCapacityTier(GreateEnums.CAPACITY_TIER.INSANE);
-        ModBlocks.PALLADIUM_SHAFT.get().setCapacityTier(GreateEnums.CAPACITY_TIER.LUDICRIOUS);
-        ModBlocks.NAQUADAH_SHAFT.get().setCapacityTier(GreateEnums.CAPACITY_TIER.ZPM);
-        ModBlocks.DARMSTADTIUM_SHAFT.get().setCapacityTier(GreateEnums.CAPACITY_TIER.ULTIMATE);
-        ModBlocks.NEUTRONIUM_SHAFT.get().setCapacityTier(GreateEnums.CAPACITY_TIER.ULTIMATE_HIGH);
+        ModBlocks.ANDESITE_SHAFT.get().setCapacityTier(GreateEnums.TIER.ULTRA_LOW);
+        ModBlocks.STEEL_SHAFT.get().setCapacityTier(GreateEnums.TIER.LOW);
+        ModBlocks.ALUMINIUM_SHAFT.get().setCapacityTier(GreateEnums.TIER.MEDIUM);
+        ModBlocks.STAINLESS_STEEL_SHAFT.get().setCapacityTier(GreateEnums.TIER.HIGH);
+        ModBlocks.TITANIUM_SHAFT.get().setCapacityTier(GreateEnums.TIER.EXTREME);
+        ModBlocks.TUNGSTENSTEEL_SHAFT.get().setCapacityTier(GreateEnums.TIER.INSANE);
+        ModBlocks.PALLADIUM_SHAFT.get().setCapacityTier(GreateEnums.TIER.LUDICRIOUS);
+        ModBlocks.NAQUADAH_SHAFT.get().setCapacityTier(GreateEnums.TIER.ZPM);
+        ModBlocks.DARMSTADTIUM_SHAFT.get().setCapacityTier(GreateEnums.TIER.ULTIMATE);
+        ModBlocks.NEUTRONIUM_SHAFT.get().setCapacityTier(GreateEnums.TIER.ULTIMATE_HIGH);
     }
 }
