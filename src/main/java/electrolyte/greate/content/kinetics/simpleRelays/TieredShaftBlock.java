@@ -52,7 +52,6 @@ public class TieredShaftBlock extends ShaftBlock {
 
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable BlockGetter pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
-        pTooltip.set(0, Component.translatable(pTooltip.get(0).getString()).withStyle(capacityTier.getTierColor()));
         pTooltip.add(Component.translatable("greate.tooltip.shaft_capacity").append(Component.literal(String.valueOf(capacityTier.getStress())).withStyle(capacityTier.getTierColor())).append(" (").append(Component.literal(capacityTier.getName()).withStyle(capacityTier.getTierColor())).append(")").withStyle(ChatFormatting.DARK_GRAY));
     }
 
