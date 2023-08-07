@@ -122,23 +122,45 @@ repositories {
     maven { url = 'https://maven.blamejared.com/' }
     maven { url = 'https://modmaven.dev' }
     maven { url = 'https://maven.theillusivec4.top/'}
+    maven { url = uri('https://maven.pkg.github.com/GregTechCEu/GregTechLib-1.19')
+        credentials {
+            username = System.getenv("GITHUB_USERNAME")
+            password = System.getenv("GITHUB_TOKEN")
+        }
+    }
+    maven { url = 'https://maven.shedaniel.me/'}
+    maven { url = 'https://maven.architectury.dev/'
+        content {
+            includeGroup "dev.architectury"
+        }
+    }
+    maven { url = 'https://maven.saps.dev/minecraft'
+        content {
+            includeGroup 'dev.latvian.mods'
+        }
+    }
+    maven { url = 'https://jitpack.io'}
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    implementation 'com.github.LlamaLad7:MixinExtras:0.1.1'
+    annotationProcessor 'com.github.LlamaLad7:MixinExtras:0.1.1'
 
     implementation fg.deobf("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
     implementation fg.deobf("com.jozufozu.flywheel:flywheel-forge-${minecraft_version}:${flywheel_version}")
     implementation fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
 
-    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
-    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
-    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
-
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${minecraft_version}-${curios_version}:api")
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${minecraft_version}-${curios_version}")
+
+    implementation fg.deobf("dev.architectury:architectury-forge:${architectury_version}")
+    implementation fg.deobf("me.shedaniel.cloth:cloth-config-forge:${cloth_version}")
+    implementation fg.deobf("me.shedaniel:RoughlyEnoughItems-forge:${rei_version}")
+    implementation fg.deobf("dev.latvian.mods:rhino-forge:${rhino_version}")
+    implementation fg.deobf("dev.latvian.mods:kubejs-forge:${kubejs_version}")
+    implementation fg.deobf("com.gregtechceu.gregtechlib:gtlib-forge-${minecraft_version}:${gregtech_version}")
 }
 
 mixin {
