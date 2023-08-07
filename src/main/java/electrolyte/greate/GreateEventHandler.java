@@ -10,6 +10,7 @@ public class GreateEventHandler {
 
     @SubscribeEvent
     public static void assignShaftTiers(AddReloadListenerEvent event) {
+        ModBlocks.ANDESITE_SHAFT.get().setCapacityTier(GreateEnums.TIER.ULTRA_LOW);
         ModBlocks.STEEL_SHAFT.get().setCapacityTier(GreateEnums.TIER.LOW);
         ModBlocks.ALUMINIUM_SHAFT.get().setCapacityTier(GreateEnums.TIER.MEDIUM);
         ModBlocks.STAINLESS_STEEL_SHAFT.get().setCapacityTier(GreateEnums.TIER.HIGH);

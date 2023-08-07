@@ -12,7 +12,7 @@ public class ModBlockEntityTypes {
     public static final BlockEntityEntry<TieredBracketedKineticBlockEntity> TIERED_SHAFT = REGISTRATE
             .blockEntity("tiered_shaft", TieredBracketedKineticBlockEntity::new)
             .instance(() -> BracketedKineticBlockEntityInstance::new, false)
-            .validBlocks(ModBlocks.STEEL_SHAFT, ModBlocks.ALUMINIUM_SHAFT, ModBlocks.STAINLESS_STEEL_SHAFT,
+            .validBlocks(ModBlocks.ANDESITE_SHAFT, ModBlocks.STEEL_SHAFT, ModBlocks.ALUMINIUM_SHAFT, ModBlocks.STAINLESS_STEEL_SHAFT,
                     ModBlocks.TITANIUM_SHAFT, ModBlocks.TUNGSTENSTEEL_SHAFT, ModBlocks.PALLADIUM_SHAFT,
                     ModBlocks.NAQUADAH_SHAFT, ModBlocks.DARMSTADTIUM_SHAFT, ModBlocks.NEUTRONIUM_SHAFT)
             .renderer(() -> BracketedKineticBlockEntityRenderer::new)
