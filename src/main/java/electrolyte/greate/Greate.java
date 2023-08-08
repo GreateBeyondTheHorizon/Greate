@@ -22,7 +22,7 @@ public class Greate {
     public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(Greate.MOD_ID);
 
     public Greate() {
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, GreateConfig.SERVER_CONFIG);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, GreateConfig.COMMON_CONFIG);
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
         MinecraftForge.EVENT_BUS.register(this);
         REGISTRATE.registerEventListeners(eventBus);
