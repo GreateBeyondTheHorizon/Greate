@@ -17,7 +17,7 @@ println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty '
 minecraft {
     mappings channel: 'parchment', version: "${parchment_version}-${minecraft_version}"
 
-    //accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg') //needed since gt dependency does not include one
 
     runs {
         client {
@@ -118,18 +118,15 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
-    maven { url = 'https://maven.tterrag.com/' }
-    maven { url = 'https://maven.blamejared.com/' }
-    maven { url = 'https://modmaven.dev' }
-    maven { url = 'https://maven.theillusivec4.top/'}
-    maven { url = uri('https://maven.pkg.github.com/GregTechCEu/GregTechLib-1.19')
-        credentials {
-            def env = getenv()
-            username = env.find { it.key == "GITHUB_USERNAME" }.value
-            password = env.find { it.key == "GITHUB_TOKEN" }.value
+    maven { url = 'https://maven.tterrag.com/'
+        content {
+            includeGroup "com.simibubi.create"
+            includeGroup "com.jozufozu.flywheel"
+            includeGroup "com.tterrag.registrate"
         }
     }
-    maven { url = 'https://maven.shedaniel.me/'}
+    maven { url = 'https://maven.theillusivec4.top/'} //curios
+    maven { url = 'https://maven.shedaniel.me/'} // rei
     maven { url = 'https://maven.architectury.dev/'
         content {
             includeGroup "dev.architectury"
@@ -140,7 +137,12 @@ repositories {
             includeGroup 'dev.latvian.mods'
         }
     }
-    maven { url = 'https://jitpack.io'}
+    maven { url = 'https://cursemaven.com'
+        content {
+            includeGroup "curse.maven"
+        }
+    }
+    maven { url = 'https://jitpack.io' } //mixinextras
 }
 
 dependencies {
@@ -162,7 +164,9 @@ dependencies {
     implementation fg.deobf("me.shedaniel:RoughlyEnoughItems-plugin-compatibilities-forge:${rei_plugin_version}")
     implementation fg.deobf("dev.latvian.mods:rhino-forge:${rhino_version}")
     implementation fg.deobf("dev.latvian.mods:kubejs-forge:${kubejs_version}")
-    implementation fg.deobf("com.gregtechceu.gregtechlib:gtlib-forge-${minecraft_version}:${gregtech_version}")
+    implementation fg.deobf("curse.maven:ldlib-626676:4676440")
+    implementation fg.deobf("curse.maven:configuration-444699:4519560")
+    implementation fg.deobf("curse.maven:gregtechceu-modern-890405:4676496")
 }
 
 mixin {
@@ -205,23 +209,4 @@ publishing {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
-}
-
-// From gist: https://gist.github.com/silas/b2454f259ce600056d455e57351bdf68
-static LinkedHashMap<String, String> getenv(String path = ".env") {
-    def env = [:]
-
-    def file = new File(path)
-    if (file.exists()) {
-        file.eachLine { line ->
-            line = line.trim()
-            if (line != "" && !line.startsWith("#")) {
-                def pair = line.split("=", 2)
-                env[pair[0].trim()] = pair.length == 2 ? pair[1].trim() : ""
-            }
-            return line
-        }
-    }
-
-    return env as LinkedHashMap<String, String>
 }
