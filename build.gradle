@@ -225,5 +225,3 @@ static LinkedHashMap<String, String> getenv(String path = ".env") {
 
     return env as LinkedHashMap<String, String>
 }
-
-project.logger.lifecycle(getenv().find { it.key == "GITHUB_USERNAME" }.value)
