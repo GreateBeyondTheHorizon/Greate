@@ -1,6 +1,7 @@
 package electrolyte.greate;
 
-import electrolyte.greate.registry.ModBlocks;
+import electrolyte.greate.registry.Cogwheels;
+import electrolyte.greate.registry.Shafts;
 import electrolyte.greate.GreateEnums.TIER;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -11,36 +12,36 @@ public class GreateEventHandler {
 
     @SubscribeEvent
     public static void assignShaftTiers(AddReloadListenerEvent event) {
-        ModBlocks.ANDESITE_SHAFT.get().setTier(TIER.ULTRA_LOW);
-        ModBlocks.STEEL_SHAFT.get().setTier(TIER.LOW);
-        ModBlocks.ALUMINIUM_SHAFT.get().setTier(TIER.MEDIUM);
-        ModBlocks.STAINLESS_STEEL_SHAFT.get().setTier(TIER.HIGH);
-        ModBlocks.TITANIUM_SHAFT.get().setTier(TIER.EXTREME);
-        ModBlocks.TUNGSTENSTEEL_SHAFT.get().setTier(TIER.INSANE);
-        ModBlocks.PALLADIUM_SHAFT.get().setTier(TIER.LUDICRIOUS);
-        ModBlocks.NAQUADAH_SHAFT.get().setTier(TIER.ZPM);
-        ModBlocks.DARMSTADTIUM_SHAFT.get().setTier(TIER.ULTIMATE);
-        ModBlocks.NEUTRONIUM_SHAFT.get().setTier(TIER.ULTIMATE_HIGH);
+        Shafts.ANDESITE_SHAFT.get().setTier(TIER.ULTRA_LOW);
+        Shafts.STEEL_SHAFT.get().setTier(TIER.LOW);
+        Shafts.ALUMINIUM_SHAFT.get().setTier(TIER.MEDIUM);
+        Shafts.STAINLESS_STEEL_SHAFT.get().setTier(TIER.HIGH);
+        Shafts.TITANIUM_SHAFT.get().setTier(TIER.EXTREME);
+        Shafts.TUNGSTENSTEEL_SHAFT.get().setTier(TIER.INSANE);
+        Shafts.PALLADIUM_SHAFT.get().setTier(TIER.LUDICRIOUS);
+        Shafts.NAQUADAH_SHAFT.get().setTier(TIER.ZPM);
+        Shafts.DARMSTADTIUM_SHAFT.get().setTier(TIER.ULTIMATE);
+        Shafts.NEUTRONIUM_SHAFT.get().setTier(TIER.ULTIMATE_HIGH);
 
-        ModBlocks.ANDESITE_COGWHEEL.get().setTier(TIER.ULTRA_LOW);
-        ModBlocks.LARGE_ANDESITE_COGWHEEL.get().setTier(TIER.ULTRA_LOW);
-        ModBlocks.STEEL_COGWHEEL.get().setTier(TIER.LOW);
-        ModBlocks.LARGE_STEEL_COGWHEEL.get().setTier(TIER.LOW);
-        ModBlocks.ALUMINIUM_COGWHEEL.get().setTier(TIER.MEDIUM);
-        ModBlocks.LARGE_ALUMINIUM_COGWHEEL.get().setTier(TIER.MEDIUM);
-        ModBlocks.STAINLESS_STEEL_COGWHEEL.get().setTier(TIER.HIGH);
-        ModBlocks.LARGE_STAINLESS_STEEL_COGWHEEL.get().setTier(TIER.HIGH);
-        ModBlocks.TITANIUM_COGWHEEL.get().setTier(TIER.EXTREME);
-        ModBlocks.LARGE_TITANIUM_COGWHEEL.get().setTier(TIER.EXTREME);
-        ModBlocks.TUNGSTENSTEEL_COGWHEEL.get().setTier(TIER.INSANE);
-        ModBlocks.LARGE_TUNGSTENSTEEL_COGWHEEL.get().setTier(TIER.INSANE);
-        ModBlocks.PALLADIUM_COGWHEEL.get().setTier(TIER.LUDICRIOUS);
-        ModBlocks.LARGE_PALLADIUM_COGWHEEL.get().setTier(TIER.LUDICRIOUS);
-        ModBlocks.NAQUADAH_COGWHEEL.get().setTier(TIER.ZPM);
-        ModBlocks.LARGE_NAQUADAH_COGWHEEL.get().setTier(TIER.ZPM);
-        ModBlocks.DARMSTADTIUM_COGWHEEL.get().setTier(TIER.ULTIMATE);
-        ModBlocks.LARGE_DARMSTADTIUM_COGWHEEL.get().setTier(TIER.ULTIMATE);
-        ModBlocks.NEUTRONIUM_COGWHEEL.get().setTier(TIER.ULTIMATE_HIGH);
-        ModBlocks.LARGE_NEUTRONIUM_COGWHEEL.get().setTier(TIER.ULTIMATE_HIGH);
+        Cogwheels.ANDESITE_COGWHEEL.get().setTier(TIER.ULTRA_LOW);
+        Cogwheels.LARGE_ANDESITE_COGWHEEL.get().setTier(TIER.ULTRA_LOW);
+        Cogwheels.STEEL_COGWHEEL.get().setTier(TIER.LOW);
+        Cogwheels.LARGE_STEEL_COGWHEEL.get().setTier(TIER.LOW);
+        Cogwheels.ALUMINIUM_COGWHEEL.get().setTier(TIER.MEDIUM);
+        Cogwheels.LARGE_ALUMINIUM_COGWHEEL.get().setTier(TIER.MEDIUM);
+        Cogwheels.STAINLESS_STEEL_COGWHEEL.get().setTier(TIER.HIGH);
+        Cogwheels.LARGE_STAINLESS_STEEL_COGWHEEL.get().setTier(TIER.HIGH);
+        Cogwheels.TITANIUM_COGWHEEL.get().setTier(TIER.EXTREME);
+        Cogwheels.LARGE_TITANIUM_COGWHEEL.get().setTier(TIER.EXTREME);
+        Cogwheels.TUNGSTENSTEEL_COGWHEEL.get().setTier(TIER.INSANE);
+        Cogwheels.LARGE_TUNGSTENSTEEL_COGWHEEL.get().setTier(TIER.INSANE);
+        Cogwheels.PALLADIUM_COGWHEEL.get().setTier(TIER.LUDICRIOUS);
+        Cogwheels.LARGE_PALLADIUM_COGWHEEL.get().setTier(TIER.LUDICRIOUS);
+        Cogwheels.NAQUADAH_COGWHEEL.get().setTier(TIER.ZPM);
+        Cogwheels.LARGE_NAQUADAH_COGWHEEL.get().setTier(TIER.ZPM);
+        Cogwheels.DARMSTADTIUM_COGWHEEL.get().setTier(TIER.ULTIMATE);
+        Cogwheels.LARGE_DARMSTADTIUM_COGWHEEL.get().setTier(TIER.ULTIMATE);
+        Cogwheels.NEUTRONIUM_COGWHEEL.get().setTier(TIER.ULTIMATE_HIGH);
+        Cogwheels.LARGE_NEUTRONIUM_COGWHEEL.get().setTier(TIER.ULTIMATE_HIGH);
     }
 }

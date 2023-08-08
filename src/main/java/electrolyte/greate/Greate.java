@@ -2,10 +2,7 @@ package electrolyte.greate;
 
 import com.mojang.logging.LogUtils;
 import com.simibubi.create.foundation.data.CreateRegistrate;
-import electrolyte.greate.registry.ModBlockEntityTypes;
-import electrolyte.greate.registry.ModBlocks;
-import electrolyte.greate.registry.ModItems;
-import electrolyte.greate.registry.ModRecipeTypes;
+import electrolyte.greate.registry.*;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -29,10 +26,11 @@ public class Greate {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
         MinecraftForge.EVENT_BUS.register(this);
         REGISTRATE.registerEventListeners(eventBus);
-        ModBlocks.register();
+        Shafts.register();
+        Cogwheels.register();
         ModBlockEntityTypes.register();
         ModItems.register();
-        ModRecipeTypes.register(eventBus);
+        //ModRecipeTypes.register(eventBus);
     }
 
     public static final CreativeModeTab GREATE_TAB = new CreativeModeTab("greate") {
