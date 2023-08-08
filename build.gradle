@@ -124,8 +124,9 @@ repositories {
     maven { url = 'https://maven.theillusivec4.top/'}
     maven { url = uri('https://maven.pkg.github.com/GregTechCEu/GregTechLib-1.19')
         credentials {
-            username = System.getenv("GITHUB_USERNAME")
-            password = System.getenv("GITHUB_TOKEN")
+            def env = getenv()
+            username = env.find { it.key == "GITHUB_USERNAME" }.value
+            password = env.find { it.key == "GITHUB_TOKEN" }.value
         }
     }
     maven { url = 'https://maven.shedaniel.me/'}
@@ -205,3 +206,24 @@ publishing {
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
 }
+
+// From gist: https://gist.github.com/silas/b2454f259ce600056d455e57351bdf68
+static LinkedHashMap<String, String> getenv(String path = ".env") {
+    def env = [:]
+
+    def file = new File(path)
+    if (file.exists()) {
+        file.eachLine { line ->
+            line = line.trim()
+            if (line != "" && !line.startsWith("#")) {
+                def pair = line.split("=", 2)
+                env[pair[0].trim()] = pair.length == 2 ? pair[1].trim() : ""
+            }
+            return line
+        }
+    }
+
+    return env as LinkedHashMap<String, String>
+}
+
+project.logger.lifecycle(getenv().find { it.key == "GITHUB_USERNAME" }.value)
