@@ -5,7 +5,8 @@
   "compatabilityLevel": "JAVA_16",
   "mixins": [
     "MixinKineticBlockEntity",
-    "MixinKineticNetwork"
+    "MixinKineticNetwork",
+    "MixinBlockStressDefaults"
   ],
   "injectors": {
     "defaultRequire": 1
