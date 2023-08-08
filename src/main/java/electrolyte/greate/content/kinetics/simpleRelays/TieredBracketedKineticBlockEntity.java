@@ -21,7 +21,7 @@ public class TieredBracketedKineticBlockEntity extends BracketedKineticBlockEnti
 
     public TieredBracketedKineticBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
-        this.tier = ((TieredShaftBlock) state.getBlock()).getTier();
+        this.tier = ((ITieredBlock) state.getBlock()).getTier();
     }
 
     @Override

@@ -44,5 +44,13 @@ public class GreateEnums {
         public ChatFormatting getTierColor() {
             return tierColor;
         }
+
+        public static TIER deserialize(String name) {
+            for (TIER tier : values())
+                if (tier.name().equals(name))
+                    return tier;
+            Greate.LOGGER.warn("Tried to deserialize invalid recipe tier condition: \"" + name + "\"");
+            return NONE;
+        }
     }
 }

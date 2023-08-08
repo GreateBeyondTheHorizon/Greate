@@ -25,11 +25,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class TieredShaftBlock extends ShaftBlock {
+public class TieredShaftBlock extends ShaftBlock implements ITieredBlock {
 
     private TIER tier;
 
@@ -39,19 +38,22 @@ public class TieredShaftBlock extends ShaftBlock {
 
     @Override
     public BlockEntityType<? extends KineticBlockEntity> getBlockEntityType() {
-        return ModBlockEntityTypes.TIERED_SHAFT.get();
+        return ModBlockEntityTypes.TIERED_KINETIC.get();
     }
 
+    @Override
     public TIER getTier() {
         return this.tier;
     }
 
+    @Override
     public void setTier(TIER tier) {
         this.tier = tier;
     }
 
+
     @Override
-    public void appendHoverText(ItemStack pStack, @Nullable BlockGetter pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
+    public void appendHoverText(ItemStack pStack, BlockGetter pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
         pTooltip.add(Component.translatable("greate.tooltip.shaft_capacity").append(Component.literal(String.valueOf(tier.getStressCapacity())).withStyle(tier.getTierColor())).append(" (").append(Component.literal(tier.getName()).withStyle(tier.getTierColor())).append(")").withStyle(ChatFormatting.DARK_GRAY));
     }
 
