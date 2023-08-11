@@ -51,6 +51,13 @@ description="Create gregified"
     side="BOTH"
 
 [[dependencies.greate]]
+    modId="gtceu"
+    mandatory=true
+    versionRange="[1.0.10,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.greate]]
     modId="forge"
     mandatory=true
     versionRange="[43.2.3,)"
