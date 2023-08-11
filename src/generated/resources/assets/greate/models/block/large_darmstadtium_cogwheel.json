@@ -1,0 +1,9 @@
+{
+  "parent": "greate:block/base/large_cogwheel",
+  "textures": {
+    "0": "greate:block/darmstadtium/cogwheel_axis",
+    "3": "greate:block/darmstadtium/axis_top",
+    "4": "greate:block/darmstadtium/large_cogwheel",
+    "particle": "greate:block/darmstadtium/large_cogwheel"
+  }
+}

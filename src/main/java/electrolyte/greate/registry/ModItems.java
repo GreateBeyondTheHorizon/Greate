@@ -1,8 +1,6 @@
 package electrolyte.greate.registry;
 
-import com.tterrag.registrate.util.entry.ItemEntry;
 import electrolyte.greate.Greate;
-import net.minecraft.world.item.Item;
 
 import static electrolyte.greate.Greate.REGISTRATE;
 
@@ -11,6 +9,7 @@ public class ModItems {
     static {
         REGISTRATE.creativeModeTab(() -> Greate.GREATE_TAB);
     }
+/*
 
     public static final ItemEntry<Item> STEEL_ALLOY = REGISTRATE
             .item("steel_alloy", Item::new)
@@ -39,6 +38,7 @@ public class ModItems {
     public static final ItemEntry<Item> NEUTRONIUM_ALLOY = REGISTRATE
             .item("neutronium_alloy", Item::new)
             .register();
+*/
 
     public static void register() {}
 }

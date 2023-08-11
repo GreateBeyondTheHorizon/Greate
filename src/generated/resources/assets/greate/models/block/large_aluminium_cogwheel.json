@@ -1,0 +1,9 @@
+{
+  "parent": "greate:block/base/large_cogwheel",
+  "textures": {
+    "0": "greate:block/aluminium/cogwheel_axis",
+    "3": "greate:block/aluminium/axis_top",
+    "4": "greate:block/aluminium/large_cogwheel",
+    "particle": "greate:block/aluminium/large_cogwheel"
+  }
+}

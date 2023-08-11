@@ -11,6 +11,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 
@@ -25,7 +26,9 @@ public class Greate {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, GreateConfig.COMMON_CONFIG);
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
         MinecraftForge.EVENT_BUS.register(this);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
         REGISTRATE.registerEventListeners(eventBus);
+        GreateLang.register();
         Shafts.register();
         Cogwheels.register();
         ModBlockEntityTypes.register();
@@ -39,4 +42,8 @@ public class Greate {
             return new ItemStack(Items.GOLDEN_APPLE);
         }
     };
+
+    public void clientSetup(FMLClientSetupEvent event) {
+        GreatePartialModels.register();
+    }
 }

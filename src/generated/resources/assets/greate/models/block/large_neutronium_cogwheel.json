@@ -1,0 +1,9 @@
+{
+  "parent": "greate:block/base/large_cogwheel",
+  "textures": {
+    "0": "greate:block/neutronium/cogwheel_axis",
+    "3": "greate:block/neutronium/axis_top",
+    "4": "greate:block/neutronium/large_cogwheel",
+    "particle": "greate:block/neutronium/large_cogwheel"
+  }
+}

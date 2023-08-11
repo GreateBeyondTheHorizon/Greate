@@ -1,0 +1,8 @@
+{
+  "parent": "greate:block/base/shaft_half",
+  "textures": {
+    "0": "greate:block/andesite/axis",
+    "1": "greate:block/andesite/axis_top",
+    "particle": "greate:block/andesite/axis"
+  }
+}

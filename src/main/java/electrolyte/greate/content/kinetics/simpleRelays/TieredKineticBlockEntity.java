@@ -4,6 +4,7 @@ import com.simibubi.create.content.kinetics.simpleRelays.SimpleKineticBlockEntit
 import com.simibubi.create.foundation.utility.Lang;
 import electrolyte.greate.Greate;
 import electrolyte.greate.GreateEnums;
+import electrolyte.greate.content.kinetics.base.TieredKineticEffectHandler;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -18,10 +19,12 @@ public class TieredKineticBlockEntity extends SimpleKineticBlockEntity implement
     private double networkMaxCapacity;
     private double networkCurrentCapacity;
     private GreateEnums.TIER tier;
+    public TieredKineticEffectHandler effects;
 
     public TieredKineticBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
         super(typeIn, pos, state);
         this.tier = ((ITieredBlock) state.getBlock()).getTier();
+        effects = new TieredKineticEffectHandler(this);
     }
 
     @Override
@@ -49,17 +52,24 @@ public class TieredKineticBlockEntity extends SimpleKineticBlockEntity implement
     }
 
     @Override
+    public void tick() {
+        effects.tick();
+        super.tick();
+    }
+
+    @Override
     public void updateFromNetwork(float maxStress, float currentStress, int networkSize, double networkMaxCapacity) {
         super.updateFromNetwork(maxStress, currentStress, networkSize);
         this.networkMaxCapacity = networkMaxCapacity;
-        sendData();
+        //sendData();
     }
 
+    //todo check this updates when capacity = maxcapacity
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         Lang.translate("gui.goggles.kinetic_stats").forGoggles(tooltip);
         Lang.builder(Greate.MOD_ID).translate("tooltip.capacity").style(ChatFormatting.GRAY).forGoggles(tooltip);
-        Lang.number(this.networkCurrentCapacity).style(ChatFormatting.AQUA).add(Lang.text("su")).space().add(Lang.text("/").space().add(Lang.number(tier.getStressCapacity())).add(Lang.text("su").space().add(Lang.text("at current shaft tier").style(ChatFormatting.DARK_GRAY)))).forGoggles(tooltip, 1);
+        Lang.number(capacity).style(ChatFormatting.AQUA).add(Lang.text("su")).space().add(Lang.text("/").space().add(Lang.number(tier.getStressCapacity())).add(Lang.text("su").space().add(Lang.text("at current shaft tier").style(ChatFormatting.DARK_GRAY)))).forGoggles(tooltip, 1);
         return true;
     }
 }

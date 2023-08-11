@@ -1,0 +1,7 @@
+{
+  "parent": "greate:block/base/large_cogwheel_shaftless",
+  "textures": {
+    "4": "greate:block/tungstensteel/large_cogwheel",
+    "particle": "greate:block/tungstensteel/large_cogwheel"
+  }
+}
