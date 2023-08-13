@@ -31,9 +31,10 @@ public class Greate {
         GreateLang.register();
         Shafts.register();
         Cogwheels.register();
+        Millstones.register();
         ModBlockEntityTypes.register();
         ModItems.register();
-        //ModRecipeTypes.register(eventBus);
+        ModRecipeTypes.register(eventBus);
     }
 
     public static final CreativeModeTab GREATE_TAB = new CreativeModeTab("greate") {

@@ -125,8 +125,12 @@ repositories {
             includeGroup "com.tterrag.registrate"
         }
     }
+    maven { url = 'https://maven.blamejared.com'
+        content {
+            includeGroup "mezz.jei"
+        }
+    }
     maven { url = 'https://maven.theillusivec4.top/'} //curios
-    maven { url = 'https://maven.shedaniel.me/'} // rei
     maven { url = 'https://maven.architectury.dev/'
         content {
             includeGroup "dev.architectury"
@@ -158,15 +162,16 @@ dependencies {
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${minecraft_version}-${curios_version}:api")
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${minecraft_version}-${curios_version}")
 
+    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
+    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
+
     implementation fg.deobf("dev.architectury:architectury-forge:${architectury_version}")
-    implementation fg.deobf("me.shedaniel.cloth:cloth-config-forge:${cloth_version}")
-    implementation fg.deobf("me.shedaniel:RoughlyEnoughItems-forge:${rei_version}")
-    implementation fg.deobf("me.shedaniel:RoughlyEnoughItems-plugin-compatibilities-forge:${rei_plugin_version}")
     implementation fg.deobf("dev.latvian.mods:rhino-forge:${rhino_version}")
     implementation fg.deobf("dev.latvian.mods:kubejs-forge:${kubejs_version}")
     implementation fg.deobf("curse.maven:ldlib-626676:4676440")
     implementation fg.deobf("curse.maven:configuration-444699:4519560")
-    implementation fg.deobf("curse.maven:gregtechceu-modern-890405:4676496")
+    implementation fg.deobf("curse.maven:gregtechceu-modern-890405:4701156")
 }
 
 mixin {

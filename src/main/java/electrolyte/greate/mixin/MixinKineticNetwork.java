@@ -63,8 +63,8 @@ public abstract class MixinKineticNetwork {
         double presentMaxCapacity = Integer.MAX_VALUE;
         for (KineticBlockEntity be : members.keySet()) {
             if (be instanceof ITieredKineticBlockEntity itkbe) {
-                if (presentMaxCapacity > itkbe.getShaftMaxCapacity()) {
-                    presentMaxCapacity = itkbe.getShaftMaxCapacity();
+                if (presentMaxCapacity > itkbe.getMaxCapacity()) {
+                    presentMaxCapacity = itkbe.getMaxCapacity();
                 }
             }
         }

@@ -3,7 +3,7 @@ package electrolyte.greate.content.kinetics.simpleRelays;
 import com.simibubi.create.content.kinetics.simpleRelays.SimpleKineticBlockEntity;
 import com.simibubi.create.foundation.utility.Lang;
 import electrolyte.greate.Greate;
-import electrolyte.greate.GreateEnums;
+import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.content.kinetics.base.TieredKineticEffectHandler;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -17,8 +17,7 @@ import java.util.List;
 public class TieredKineticBlockEntity extends SimpleKineticBlockEntity implements ITieredKineticBlockEntity {
 
     private double networkMaxCapacity;
-    private double networkCurrentCapacity;
-    private GreateEnums.TIER tier;
+    private TIER tier;
     public TieredKineticEffectHandler effects;
 
     public TieredKineticBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
@@ -28,8 +27,12 @@ public class TieredKineticBlockEntity extends SimpleKineticBlockEntity implement
     }
 
     @Override
-    public double getShaftMaxCapacity() {
+    public double getMaxCapacity() {
         return tier.getStressCapacity();
+    }
+
+    public TIER getTier() {
+        return tier;
     }
 
     @Override
@@ -38,7 +41,6 @@ public class TieredKineticBlockEntity extends SimpleKineticBlockEntity implement
         if(compound.contains("Network")) {
             CompoundTag networkTag = compound.getCompound("Network");
             this.networkMaxCapacity = networkTag.getDouble("MaxCapacity");
-            this.networkCurrentCapacity = networkTag.getDouble("Capacity");
         }
     }
 
@@ -64,10 +66,14 @@ public class TieredKineticBlockEntity extends SimpleKineticBlockEntity implement
         //sendData();
     }
 
-    //todo check this updates when capacity = maxcapacity
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-        Lang.translate("gui.goggles.kinetic_stats").forGoggles(tooltip);
+        super.addToGoggleTooltip(tooltip, isPlayerSneaking);
+        if(!tooltip.isEmpty()) {
+            Lang.builder().space();
+        } else {
+            Lang.translate("gui.goggles.kinetic_stats").forGoggles(tooltip);
+        }
         Lang.builder(Greate.MOD_ID).translate("tooltip.capacity").style(ChatFormatting.GRAY).forGoggles(tooltip);
         Lang.number(capacity).style(ChatFormatting.AQUA).add(Lang.text("su")).space().add(Lang.text("/").space().add(Lang.number(tier.getStressCapacity())).add(Lang.text("su").space().add(Lang.text("at current shaft tier").style(ChatFormatting.DARK_GRAY)))).forGoggles(tooltip, 1);
         return true;
