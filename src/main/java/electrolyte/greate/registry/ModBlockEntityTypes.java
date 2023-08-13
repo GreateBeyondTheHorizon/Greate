@@ -1,9 +1,12 @@
 package electrolyte.greate.registry;
 
+import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.simibubi.create.content.kinetics.base.ShaftRenderer;
 import com.simibubi.create.content.kinetics.simpleRelays.encased.EncasedCogRenderer;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import electrolyte.greate.content.kinetics.base.TieredShaftInstance;
+import electrolyte.greate.content.kinetics.millstone.TieredMillstoneBlockEntity;
+import electrolyte.greate.content.kinetics.millstone.TieredMillstoneCogInstance;
 import electrolyte.greate.content.kinetics.simpleRelays.*;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedCogInstance;
 
@@ -57,7 +60,12 @@ public class ModBlockEntityTypes {
             .renderer(() -> EncasedCogRenderer::large)
             .register();
 
-
+    public static final BlockEntityEntry<TieredMillstoneBlockEntity> TIERED_MILLSTONE = REGISTRATE
+            .blockEntity("tiered_millstone", TieredMillstoneBlockEntity::new)
+            .instance(() -> TieredMillstoneCogInstance::new, false)
+            .validBlocks(Millstones.TEST_MILLSTONE)
+            .renderer(() -> KineticBlockEntityRenderer::new)
+            .register();
 
     public static void register() {}
 }

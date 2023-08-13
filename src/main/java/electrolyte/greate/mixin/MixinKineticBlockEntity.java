@@ -46,13 +46,13 @@ public abstract class MixinKineticBlockEntity extends SmartBlockEntity implement
     }
 
     @Override
-    public double getShaftMaxCapacity() {
+    public double getMaxCapacity() {
         return Integer.MAX_VALUE;
     }
 
     @Inject(method = "write", at = @At("HEAD"), remap = false)
     private void greate_Write(CompoundTag compound, boolean clientPacket, CallbackInfo ci) {
-        compound.putDouble("MaxCapacity", getShaftMaxCapacity());
+        compound.putDouble("MaxCapacity", getMaxCapacity());
     }
 
     @Inject(method = "write", at = @At(value = "INVOKE", target = "Lnet/minecraft/nbt/CompoundTag;putLong(Ljava/lang/String;J)V"), locals = LocalCapture.CAPTURE_FAILSOFT, remap = false)

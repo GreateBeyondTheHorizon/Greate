@@ -2,6 +2,7 @@ package electrolyte.greate;
 
 import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.registry.Cogwheels;
+import electrolyte.greate.registry.Millstones;
 import electrolyte.greate.registry.Shafts;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -94,5 +95,7 @@ public class GreateEventHandler {
         Cogwheels.ANDESITE_ENCASED_NEUTRONIUM_COGWHEEL.get().setTier(TIER.ULTIMATE_HIGH);
         Cogwheels.BRASS_ENCASED_NEUTRONIUM_COGWHEEL.get().setTier(TIER.ULTIMATE_HIGH);
         Cogwheels.LARGE_ANDESITE_ENCASED_NEUTRONIUM_COGWHEEL.get().setTier(TIER.ULTIMATE_HIGH);
+
+        Millstones.TEST_MILLSTONE.get().setTier(TIER.MEDIUM);
     }
 }

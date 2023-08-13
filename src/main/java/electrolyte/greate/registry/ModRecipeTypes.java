@@ -2,22 +2,13 @@ package electrolyte.greate.registry;
 
 import com.google.common.collect.ImmutableSet;
 import com.simibubi.create.Create;
-import com.simibubi.create.content.kinetics.crafter.MechanicalCraftingRecipe;
-import com.simibubi.create.content.kinetics.crusher.CrushingRecipe;
-import com.simibubi.create.content.kinetics.deployer.DeployerApplicationRecipe;
-import com.simibubi.create.content.kinetics.fan.HauntingRecipe;
-import com.simibubi.create.content.kinetics.fan.SplashingRecipe;
-import com.simibubi.create.content.kinetics.mixer.CompactingRecipe;
-import com.simibubi.create.content.kinetics.mixer.MixingRecipe;
-import com.simibubi.create.content.kinetics.press.PressingRecipe;
-import com.simibubi.create.content.kinetics.saw.CuttingRecipe;
-import com.simibubi.create.content.processing.basin.BasinRecipe;
-import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipeSerializer;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.RegisteredObjects;
 import electrolyte.greate.Greate;
 import electrolyte.greate.content.kinetics.millstone.TieredMillingRecipe;
+import electrolyte.greate.content.kinetics.simpleRelays.TieredKineticBlockEntity;
+import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeFactory;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeSerializer;
 import net.minecraft.core.Registry;
@@ -40,18 +31,7 @@ import java.util.function.Supplier;
 
 public enum ModRecipeTypes implements IRecipeTypeInfo {
 
-	//CRUSHING(CrushingRecipe::new),
-	//CUTTING(CuttingRecipe::new),
 	MILLING(TieredMillingRecipe::new);
-	//BASIN(BasinRecipe::new),
-	//MIXING(MixingRecipe::new),
-	//COMPACTING(CompactingRecipe::new),
-	//PRESSING(PressingRecipe::new),
-	//SPLASHING(SplashingRecipe::new),
-	//HAUNTING(HauntingRecipe::new),
-	//DEPLOYING(DeployerApplicationRecipe::new),
-	//MECHANICAL_CRAFTING(MechanicalCraftingRecipe.Serializer::new),
-	//SEQUENCED_ASSEMBLY(SequencedAssemblyRecipeSerializer::new);
 
 	private final ResourceLocation id;
 	private final RegistryObject<RecipeSerializer<?>> serializerObject;
@@ -107,9 +87,16 @@ public enum ModRecipeTypes implements IRecipeTypeInfo {
 		return (T) type.get();
 	}
 
-	public <C extends Container, T extends Recipe<C>> Optional<T> find(C inv, Level world) {
-		return world.getRecipeManager()
-			.getRecipeFor(getType(), inv, world);
+	public <C extends Container, T extends Recipe<C>> Optional<T> find(C inv, Level world, TieredKineticBlockEntity tkbe) {
+		Optional<T> recipe = world.getRecipeManager().getRecipeFor(getType(), inv, world);
+		if(recipe.isPresent()) {
+			if(recipe.get() instanceof TieredProcessingRecipe<?> tieredRecipe) {
+				if(tieredRecipe.getRecipeTier().compareTo(tkbe.getTier()) <= 0) {
+					return recipe;
+				}
+			}
+		}
+		return Optional.empty();
 	}
 
 	public static final Set<ResourceLocation> RECIPE_DENY_SET =
@@ -125,8 +112,8 @@ public enum ModRecipeTypes implements IRecipeTypeInfo {
 	}
 
 	private static class Registers {
-		private static final DeferredRegister<RecipeSerializer<?>> SERIALIZER_REGISTER = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Create.ID);
-		private static final DeferredRegister<RecipeType<?>> TYPE_REGISTER = DeferredRegister.create(Registry.RECIPE_TYPE_REGISTRY, Create.ID);
+		private static final DeferredRegister<RecipeSerializer<?>> SERIALIZER_REGISTER = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Greate.MOD_ID);
+		private static final DeferredRegister<RecipeType<?>> TYPE_REGISTER = DeferredRegister.create(Registry.RECIPE_TYPE_REGISTRY, Greate.MOD_ID);
 	}
 
 }
