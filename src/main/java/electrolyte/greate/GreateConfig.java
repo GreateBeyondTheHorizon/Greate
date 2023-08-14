@@ -1,59 +1,71 @@
 package electrolyte.greate;
 
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.common.Mod;
+import dev.toma.configuration.config.Config;
+import dev.toma.configuration.config.Configurable;
+import dev.toma.configuration.config.Configurable.Comment;
+import dev.toma.configuration.config.Configurable.Range;
+import dev.toma.configuration.config.Configurable.Synchronized;
 
-@Mod.EventBusSubscriber
+@Config(id = Greate.MOD_ID)
 public class GreateConfig {
 
-    public static final ForgeConfigSpec COMMON_CONFIG;
+    @Configurable
+    @Synchronized
+    @Range(min = 1)
+    @Comment("Maximum stress capacity for ULS tier machines")
+    public double ULS_CAPACITY = 8;
 
-    public static ForgeConfigSpec.DoubleValue ULS_CAPACITY;
-    public static ForgeConfigSpec.DoubleValue LS_CAPACITY;
-    public static ForgeConfigSpec.DoubleValue MS_CAPACITY;
-    public static ForgeConfigSpec.DoubleValue HS_CAPACITY;
-    public static ForgeConfigSpec.DoubleValue ES_CAPACITY;
-    public static ForgeConfigSpec.DoubleValue IS_CAPACITY;
-    public static ForgeConfigSpec.DoubleValue LUS_CAPACITY;
-    public static ForgeConfigSpec.DoubleValue ZPMS_CAPACITY;
-    public static ForgeConfigSpec.DoubleValue US_CAPACITY;
-    public static ForgeConfigSpec.DoubleValue UHS_CAPACITY;
+    @Configurable
+    @Synchronized
+    @Range(min = 1)
+    @Comment("Maximum stress capacity for LS tier machines")
+    public double LS_CAPACITY = 32;
 
-    static {
-        ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
-        COMMON_BUILDER.comment("COMMON Settings").push("COMMON_settings");
-        ULS_CAPACITY = COMMON_BUILDER
-                .comment("Stress capacity multiplier for ULS shafts and cogwheels.")
-                .defineInRange("uls_capacity", 8, 1, Double.MAX_VALUE);
-        LS_CAPACITY = COMMON_BUILDER
-                .comment("Stress capacity multiplier for LS shafts and cogwheels.")
-                .defineInRange("ls_capacity", 32, 1, Double.MAX_VALUE);
-        MS_CAPACITY = COMMON_BUILDER
-                .comment("Stress capacity multiplier for MS shafts and cogwheels.")
-                .defineInRange("ms_capacity", 128, 1, Double.MAX_VALUE);
-        HS_CAPACITY = COMMON_BUILDER
-                .comment("Stress capacity multiplier for HS shafts and cogwheels.")
-                .defineInRange("hs_capacity", 512, 1, Double.MAX_VALUE);
-        ES_CAPACITY = COMMON_BUILDER
-                .comment("Stress capacity multiplier for ES shafts and cogwheels.")
-                .defineInRange("es_capacity", 2048, 1, Double.MAX_VALUE);
-        IS_CAPACITY = COMMON_BUILDER
-                .comment("Stress capacity multiplier for IS shafts and cogwheels.")
-                .defineInRange("is_capacity", 8192, 1, Double.MAX_VALUE);
-        LUS_CAPACITY = COMMON_BUILDER
-                .comment("Stress capacity multiplier for LUS shafts and cogwheels.")
-                .defineInRange("lus_capacity", 32768, 1, Double.MAX_VALUE);
-        ZPMS_CAPACITY = COMMON_BUILDER
-                .comment("Stress capacity multiplier for ZPMS shafts and cogwheels.")
-                .defineInRange("zpms_capacity", 131072, 1, Double.MAX_VALUE);
-        US_CAPACITY = COMMON_BUILDER
-                .comment("Stress capacity multiplier for US shafts and cogwheels.")
-                .defineInRange("us_capacity", 524288, 1, Double.MAX_VALUE);
-        UHS_CAPACITY = COMMON_BUILDER
-                .comment("Stress capacity multiplier for UHS shafts and cogwheels.")
-                .defineInRange("uhs_capacity", 2097152, 1, Double.MAX_VALUE);
-        COMMON_BUILDER.pop();
+    @Configurable
+    @Synchronized
+    @Range(min = 1)
+    @Comment("Maximum stress capacity for MS tier machines")
+    public double MS_CAPACITY = 128;
 
-        COMMON_CONFIG = COMMON_BUILDER.build();
-    }
+    @Configurable
+    @Synchronized
+    @Range(min = 1)
+    @Comment("Maximum stress capacity for HS tier machines")
+    public double HS_CAPACITY = 512;
+
+    @Configurable
+    @Synchronized
+    @Range(min = 1)
+    @Comment("Maximum stress capacity for ES tier machines")
+    public double ES_CAPACITY = 2048;
+
+    @Configurable
+    @Synchronized
+    @Range(min = 1)
+    @Comment("Maximum stress capacity for IS tier machines")
+    public double IS_CAPACITY = 8192;
+
+    @Configurable
+    @Synchronized
+    @Range(min = 1)
+    @Comment("Maximum stress capacity for LuS tier machines")
+    public double LUS_CAPACITY = 32768;
+
+    @Configurable
+    @Synchronized
+    @Range(min = 1)
+    @Comment("Maximum stress capacity for ZPMS tier machines")
+    public double ZPMS_CAPACITY = 131072;
+
+    @Configurable
+    @Synchronized
+    @Range(min = 1)
+    @Comment("Maximum stress capacity for US tier machines")
+    public double US_CAPACITY = 524288;
+
+    @Configurable
+    @Synchronized
+    @Range(min = 1)
+    @Comment("Maximum stress capacity for UHS tier machines")
+    public double UHS_CAPACITY = 2097152;
 }

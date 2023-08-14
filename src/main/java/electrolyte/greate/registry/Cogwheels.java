@@ -12,6 +12,7 @@ import com.simibubi.create.foundation.data.TagGen;
 import com.simibubi.create.foundation.utility.Couple;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import electrolyte.greate.Greate;
+import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredCogwheelBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredCogwheelBlockItem;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedCogwheelBlock;
@@ -38,6 +39,7 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .blockstate(GreateBlockStateGen.tieredCogwheelProvider(false))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+            .onRegister(c -> c.setTier(TIER.ULTRA_LOW))
             .item(TieredCogwheelBlockItem::new).tab(() -> Greate.GREATE_TAB).build()
             .register();
 
@@ -50,6 +52,7 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .blockstate(GreateBlockStateGen.tieredCogwheelProvider(true))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+            .onRegister(c -> c.setTier(TIER.ULTRA_LOW))
             .item(TieredCogwheelBlockItem::new).build()
             .register();
 
@@ -60,6 +63,7 @@ public class Cogwheels {
             .transform(EncasingRegistry.addVariantTo(ANDESITE_COGWHEEL))
             .onRegister(CreateRegistrate.connectedTextures(() -> new EncasedCogCTBehaviour(AllSpriteShifts.ANDESITE_CASING,
                     Couple.create(AllSpriteShifts.ANDESITE_ENCASED_COGWHEEL_SIDE, AllSpriteShifts.ANDESITE_ENCASED_COGWHEEL_OTHERSIDE))))
+            .onRegister(c -> c.setTier(TIER.ULTRA_LOW))
             .transform(TagGen.axeOrPickaxe())
             .register();
 
@@ -69,6 +73,7 @@ public class Cogwheels {
             .transform(tieredEncasedLargeCogwheel(ANDESITE_COGWHEEL, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_ANDESITE_COGWHEEL))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.ULTRA_LOW))
             .register();
 
     public static final BlockEntry<TieredEncasedCogwheelBlock> BRASS_ENCASED_ANDESITE_COGWHEEL = REGISTRATE
@@ -79,6 +84,7 @@ public class Cogwheels {
             .onRegister(CreateRegistrate.connectedTextures(() -> new EncasedCogCTBehaviour(AllSpriteShifts.BRASS_CASING,
                     Couple.create(AllSpriteShifts.BRASS_ENCASED_COGWHEEL_SIDE, AllSpriteShifts.BRASS_ENCASED_COGWHEEL_OTHERSIDE))))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.ULTRA_LOW))
             .register();
 
     public static final BlockEntry<TieredEncasedCogwheelBlock> LARGE_BRASS_ENCASED_ANDESITE_COGWHEEL = REGISTRATE
@@ -87,6 +93,7 @@ public class Cogwheels {
             .transform(tieredEncasedLargeCogwheel(ANDESITE_COGWHEEL, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_ANDESITE_COGWHEEL))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.ULTRA_LOW))
             .register();
 
     public static final BlockEntry<TieredCogwheelBlock> STEEL_COGWHEEL = REGISTRATE
@@ -98,6 +105,7 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .blockstate(GreateBlockStateGen.tieredCogwheelProvider(false))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+            .onRegister(c -> c.setTier(TIER.LOW))
             .item(TieredCogwheelBlockItem::new).tab(() -> Greate.GREATE_TAB).build()
             .register();
 
@@ -110,6 +118,7 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .blockstate(GreateBlockStateGen.tieredCogwheelProvider(true))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+            .onRegister(c -> c.setTier(TIER.LOW))
             .item(TieredCogwheelBlockItem::new).build()
             .register();
 
@@ -120,6 +129,7 @@ public class Cogwheels {
             .transform(EncasingRegistry.addVariantTo(STEEL_COGWHEEL))
             .onRegister(CreateRegistrate.connectedTextures(() -> new EncasedCogCTBehaviour(AllSpriteShifts.ANDESITE_CASING,
                     Couple.create(AllSpriteShifts.ANDESITE_ENCASED_COGWHEEL_SIDE, AllSpriteShifts.ANDESITE_ENCASED_COGWHEEL_OTHERSIDE))))
+            .onRegister(c -> c.setTier(TIER.LOW))
             .transform(TagGen.axeOrPickaxe())
             .register();
 
@@ -129,6 +139,7 @@ public class Cogwheels {
             .transform(tieredEncasedLargeCogwheel(STEEL_COGWHEEL, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_STEEL_COGWHEEL))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.LOW))
             .register();
 
     public static final BlockEntry<TieredEncasedCogwheelBlock> BRASS_ENCASED_STEEL_COGWHEEL = REGISTRATE
@@ -138,6 +149,7 @@ public class Cogwheels {
             .transform(EncasingRegistry.addVariantTo(STEEL_COGWHEEL))
             .onRegister(CreateRegistrate.connectedTextures(() -> new EncasedCogCTBehaviour(AllSpriteShifts.BRASS_CASING,
                     Couple.create(AllSpriteShifts.BRASS_ENCASED_COGWHEEL_SIDE, AllSpriteShifts.BRASS_ENCASED_COGWHEEL_OTHERSIDE))))
+            .onRegister(c -> c.setTier(TIER.LOW))
             .transform(TagGen.axeOrPickaxe())
             .register();
 
@@ -147,6 +159,7 @@ public class Cogwheels {
             .transform(tieredEncasedLargeCogwheel(STEEL_COGWHEEL, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_STEEL_COGWHEEL))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.LOW))
             .register();
 
     public static final BlockEntry<TieredCogwheelBlock> ALUMINIUM_COGWHEEL = REGISTRATE
@@ -158,6 +171,7 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .blockstate(GreateBlockStateGen.tieredCogwheelProvider(false))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+            .onRegister(c -> c.setTier(TIER.MEDIUM))
             .item(TieredCogwheelBlockItem::new).tab(() -> Greate.GREATE_TAB).build()
             .register();
 
@@ -170,6 +184,7 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .blockstate(GreateBlockStateGen.tieredCogwheelProvider(true))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+            .onRegister(c -> c.setTier(TIER.MEDIUM))
             .item(TieredCogwheelBlockItem::new).build()
             .register();
 
@@ -180,6 +195,7 @@ public class Cogwheels {
             .transform(EncasingRegistry.addVariantTo(ALUMINIUM_COGWHEEL))
             .onRegister(CreateRegistrate.connectedTextures(() -> new EncasedCogCTBehaviour(AllSpriteShifts.ANDESITE_CASING,
                     Couple.create(AllSpriteShifts.ANDESITE_ENCASED_COGWHEEL_SIDE, AllSpriteShifts.ANDESITE_ENCASED_COGWHEEL_OTHERSIDE))))
+            .onRegister(c -> c.setTier(TIER.MEDIUM))
             .transform(TagGen.axeOrPickaxe())
             .register();
 
@@ -189,6 +205,7 @@ public class Cogwheels {
             .transform(tieredEncasedLargeCogwheel(ALUMINIUM_COGWHEEL, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_ALUMINIUM_COGWHEEL))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.MEDIUM))
             .register();
 
     public static final BlockEntry<TieredEncasedCogwheelBlock> BRASS_ENCASED_ALUMINIUM_COGWHEEL = REGISTRATE
@@ -198,6 +215,7 @@ public class Cogwheels {
             .transform(EncasingRegistry.addVariantTo(ALUMINIUM_COGWHEEL))
             .onRegister(CreateRegistrate.connectedTextures(() -> new EncasedCogCTBehaviour(AllSpriteShifts.BRASS_CASING,
                     Couple.create(AllSpriteShifts.BRASS_ENCASED_COGWHEEL_SIDE, AllSpriteShifts.BRASS_ENCASED_COGWHEEL_OTHERSIDE))))
+            .onRegister(c -> c.setTier(TIER.MEDIUM))
             .transform(TagGen.axeOrPickaxe())
             .register();
 
@@ -207,6 +225,7 @@ public class Cogwheels {
             .transform(tieredEncasedLargeCogwheel(ALUMINIUM_COGWHEEL, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_ALUMINIUM_COGWHEEL))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.MEDIUM))
             .register();
 
     public static final BlockEntry<TieredCogwheelBlock> STAINLESS_STEEL_COGWHEEL = REGISTRATE
@@ -218,6 +237,7 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .blockstate(GreateBlockStateGen.tieredCogwheelProvider(false))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+            .onRegister(c -> c.setTier(TIER.HIGH))
             .item(TieredCogwheelBlockItem::new).tab(() -> Greate.GREATE_TAB).build()
             .register();
 
@@ -230,6 +250,7 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .blockstate(GreateBlockStateGen.tieredCogwheelProvider(true))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+            .onRegister(c -> c.setTier(TIER.HIGH))
             .item(TieredCogwheelBlockItem::new).build()
             .register();
 
@@ -240,6 +261,7 @@ public class Cogwheels {
             .transform(EncasingRegistry.addVariantTo(STAINLESS_STEEL_COGWHEEL))
             .onRegister(CreateRegistrate.connectedTextures(() -> new EncasedCogCTBehaviour(AllSpriteShifts.ANDESITE_CASING,
                     Couple.create(AllSpriteShifts.ANDESITE_ENCASED_COGWHEEL_SIDE, AllSpriteShifts.ANDESITE_ENCASED_COGWHEEL_OTHERSIDE))))
+            .onRegister(c -> c.setTier(TIER.HIGH))
             .transform(TagGen.axeOrPickaxe())
             .register();
 
@@ -249,6 +271,7 @@ public class Cogwheels {
             .transform(tieredEncasedLargeCogwheel(STAINLESS_STEEL_COGWHEEL, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_STAINLESS_STEEL_COGWHEEL))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.HIGH))
             .register();
 
     public static final BlockEntry<TieredEncasedCogwheelBlock> BRASS_ENCASED_STAINLESS_STEEL_COGWHEEL = REGISTRATE
@@ -258,6 +281,7 @@ public class Cogwheels {
             .transform(EncasingRegistry.addVariantTo(STAINLESS_STEEL_COGWHEEL))
             .onRegister(CreateRegistrate.connectedTextures(() -> new EncasedCogCTBehaviour(AllSpriteShifts.BRASS_CASING,
                     Couple.create(AllSpriteShifts.BRASS_ENCASED_COGWHEEL_SIDE, AllSpriteShifts.BRASS_ENCASED_COGWHEEL_OTHERSIDE))))
+            .onRegister(c -> c.setTier(TIER.HIGH))
             .transform(TagGen.axeOrPickaxe())
             .register();
 
@@ -267,6 +291,7 @@ public class Cogwheels {
             .transform(tieredEncasedLargeCogwheel(STAINLESS_STEEL_COGWHEEL, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_STAINLESS_STEEL_COGWHEEL))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.HIGH))
             .register();
 
     public static final BlockEntry<TieredCogwheelBlock> TITANIUM_COGWHEEL = REGISTRATE
@@ -278,6 +303,7 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .blockstate(GreateBlockStateGen.tieredCogwheelProvider(false))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+            .onRegister(c -> c.setTier(TIER.EXTREME))
             .item(TieredCogwheelBlockItem::new).tab(() -> Greate.GREATE_TAB).build()
             .register();
 
@@ -290,6 +316,7 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .blockstate(GreateBlockStateGen.tieredCogwheelProvider(true))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+            .onRegister(c -> c.setTier(TIER.EXTREME))
             .item(TieredCogwheelBlockItem::new).build()
             .register();
 
@@ -300,6 +327,7 @@ public class Cogwheels {
             .transform(EncasingRegistry.addVariantTo(TITANIUM_COGWHEEL))
             .onRegister(CreateRegistrate.connectedTextures(() -> new EncasedCogCTBehaviour(AllSpriteShifts.ANDESITE_CASING,
                     Couple.create(AllSpriteShifts.ANDESITE_ENCASED_COGWHEEL_SIDE, AllSpriteShifts.ANDESITE_ENCASED_COGWHEEL_OTHERSIDE))))
+            .onRegister(c -> c.setTier(TIER.EXTREME))
             .transform(TagGen.axeOrPickaxe())
             .register();
 
@@ -309,6 +337,7 @@ public class Cogwheels {
             .transform(tieredEncasedLargeCogwheel(TITANIUM_COGWHEEL, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_TITANIUM_COGWHEEL))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.EXTREME))
             .register();
 
     public static final BlockEntry<TieredEncasedCogwheelBlock> BRASS_ENCASED_TITANIUM_COGWHEEL = REGISTRATE
@@ -318,6 +347,7 @@ public class Cogwheels {
             .transform(EncasingRegistry.addVariantTo(TITANIUM_COGWHEEL))
             .onRegister(CreateRegistrate.connectedTextures(() -> new EncasedCogCTBehaviour(AllSpriteShifts.BRASS_CASING,
                     Couple.create(AllSpriteShifts.BRASS_ENCASED_COGWHEEL_SIDE, AllSpriteShifts.BRASS_ENCASED_COGWHEEL_OTHERSIDE))))
+            .onRegister(c -> c.setTier(TIER.EXTREME))
             .transform(TagGen.axeOrPickaxe())
             .register();
 
@@ -327,6 +357,7 @@ public class Cogwheels {
             .transform(tieredEncasedLargeCogwheel(TITANIUM_COGWHEEL, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_TITANIUM_COGWHEEL))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.EXTREME))
             .register();
 
     public static final BlockEntry<TieredCogwheelBlock> TUNGSTENSTEEL_COGWHEEL = REGISTRATE
@@ -338,6 +369,7 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .blockstate(GreateBlockStateGen.tieredCogwheelProvider(false))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+            .onRegister(c -> c.setTier(TIER.INSANE))
             .item(TieredCogwheelBlockItem::new).tab(() -> Greate.GREATE_TAB).build()
             .register();
 
@@ -350,6 +382,7 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .blockstate(GreateBlockStateGen.tieredCogwheelProvider(true))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+            .onRegister(c -> c.setTier(TIER.INSANE))
             .item(TieredCogwheelBlockItem::new).build()
             .register();
 
@@ -360,6 +393,7 @@ public class Cogwheels {
             .transform(EncasingRegistry.addVariantTo(TUNGSTENSTEEL_COGWHEEL))
             .onRegister(CreateRegistrate.connectedTextures(() -> new EncasedCogCTBehaviour(AllSpriteShifts.ANDESITE_CASING,
                     Couple.create(AllSpriteShifts.ANDESITE_ENCASED_COGWHEEL_SIDE, AllSpriteShifts.ANDESITE_ENCASED_COGWHEEL_OTHERSIDE))))
+            .onRegister(c -> c.setTier(TIER.INSANE))
             .transform(TagGen.axeOrPickaxe())
             .register();
 
@@ -369,6 +403,7 @@ public class Cogwheels {
             .transform(tieredEncasedLargeCogwheel(TUNGSTENSTEEL_COGWHEEL, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_TUNGSTENSTEEL_COGWHEEL))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.INSANE))
             .register();
 
     public static final BlockEntry<TieredEncasedCogwheelBlock> BRASS_ENCASED_TUNGSTENSTEEL_COGWHEEL = REGISTRATE
@@ -378,6 +413,7 @@ public class Cogwheels {
             .transform(EncasingRegistry.addVariantTo(TUNGSTENSTEEL_COGWHEEL))
             .onRegister(CreateRegistrate.connectedTextures(() -> new EncasedCogCTBehaviour(AllSpriteShifts.BRASS_CASING,
                     Couple.create(AllSpriteShifts.BRASS_ENCASED_COGWHEEL_SIDE, AllSpriteShifts.BRASS_ENCASED_COGWHEEL_OTHERSIDE))))
+            .onRegister(c -> c.setTier(TIER.INSANE))
             .transform(TagGen.axeOrPickaxe())
             .register();
 
@@ -387,6 +423,7 @@ public class Cogwheels {
             .transform(tieredEncasedLargeCogwheel(TUNGSTENSTEEL_COGWHEEL, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_TUNGSTENSTEEL_COGWHEEL))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.INSANE))
             .register();
 
     public static final BlockEntry<TieredCogwheelBlock> PALLADIUM_COGWHEEL = REGISTRATE
@@ -398,6 +435,7 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .blockstate(GreateBlockStateGen.tieredCogwheelProvider(false))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+            .onRegister(c -> c.setTier(TIER.LUDICRIOUS))
             .item(TieredCogwheelBlockItem::new).tab(() -> Greate.GREATE_TAB).build()
             .register();
 
@@ -410,6 +448,7 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .blockstate(GreateBlockStateGen.tieredCogwheelProvider(true))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+            .onRegister(c -> c.setTier(TIER.LUDICRIOUS))
             .item(TieredCogwheelBlockItem::new).build()
             .register();
 
@@ -420,6 +459,7 @@ public class Cogwheels {
             .transform(EncasingRegistry.addVariantTo(PALLADIUM_COGWHEEL))
             .onRegister(CreateRegistrate.connectedTextures(() -> new EncasedCogCTBehaviour(AllSpriteShifts.ANDESITE_CASING,
                     Couple.create(AllSpriteShifts.ANDESITE_ENCASED_COGWHEEL_SIDE, AllSpriteShifts.ANDESITE_ENCASED_COGWHEEL_OTHERSIDE))))
+            .onRegister(c -> c.setTier(TIER.LUDICRIOUS))
             .transform(TagGen.axeOrPickaxe())
             .register();
 
@@ -429,6 +469,7 @@ public class Cogwheels {
             .transform(tieredEncasedLargeCogwheel(PALLADIUM_COGWHEEL, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_PALLADIUM_COGWHEEL))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.LUDICRIOUS))
             .register();
 
     public static final BlockEntry<TieredEncasedCogwheelBlock> BRASS_ENCASED_PALLADIUM_COGWHEEL = REGISTRATE
@@ -438,6 +479,7 @@ public class Cogwheels {
             .transform(EncasingRegistry.addVariantTo(PALLADIUM_COGWHEEL))
             .onRegister(CreateRegistrate.connectedTextures(() -> new EncasedCogCTBehaviour(AllSpriteShifts.BRASS_CASING,
                     Couple.create(AllSpriteShifts.BRASS_ENCASED_COGWHEEL_SIDE, AllSpriteShifts.BRASS_ENCASED_COGWHEEL_OTHERSIDE))))
+            .onRegister(c -> c.setTier(TIER.LUDICRIOUS))
             .transform(TagGen.axeOrPickaxe())
             .register();
 
@@ -447,6 +489,7 @@ public class Cogwheels {
             .transform(tieredEncasedLargeCogwheel(PALLADIUM_COGWHEEL, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_PALLADIUM_COGWHEEL))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.LUDICRIOUS))
             .register();
 
     public static final BlockEntry<TieredCogwheelBlock> NAQUADAH_COGWHEEL = REGISTRATE
@@ -458,6 +501,7 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .blockstate(GreateBlockStateGen.tieredCogwheelProvider(false))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+            .onRegister(c -> c.setTier(TIER.ZPM))
             .item(TieredCogwheelBlockItem::new).tab(() -> Greate.GREATE_TAB).build()
             .register();
 
@@ -470,6 +514,7 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .blockstate(GreateBlockStateGen.tieredCogwheelProvider(true))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+            .onRegister(c -> c.setTier(TIER.ZPM))
             .item(TieredCogwheelBlockItem::new).build()
             .register();
 
@@ -480,6 +525,7 @@ public class Cogwheels {
             .transform(EncasingRegistry.addVariantTo(NAQUADAH_COGWHEEL))
             .onRegister(CreateRegistrate.connectedTextures(() -> new EncasedCogCTBehaviour(AllSpriteShifts.ANDESITE_CASING,
                     Couple.create(AllSpriteShifts.ANDESITE_ENCASED_COGWHEEL_SIDE, AllSpriteShifts.ANDESITE_ENCASED_COGWHEEL_OTHERSIDE))))
+            .onRegister(c -> c.setTier(TIER.ZPM))
             .transform(TagGen.axeOrPickaxe())
             .register();
 
@@ -489,6 +535,7 @@ public class Cogwheels {
             .transform(tieredEncasedLargeCogwheel(NAQUADAH_COGWHEEL, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_NAQUADAH_COGWHEEL))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.ZPM))
             .register();
 
     public static final BlockEntry<TieredEncasedCogwheelBlock> BRASS_ENCASED_NAQUADAH_COGWHEEL = REGISTRATE
@@ -498,6 +545,7 @@ public class Cogwheels {
             .transform(EncasingRegistry.addVariantTo(NAQUADAH_COGWHEEL))
             .onRegister(CreateRegistrate.connectedTextures(() -> new EncasedCogCTBehaviour(AllSpriteShifts.BRASS_CASING,
                     Couple.create(AllSpriteShifts.BRASS_ENCASED_COGWHEEL_SIDE, AllSpriteShifts.BRASS_ENCASED_COGWHEEL_OTHERSIDE))))
+            .onRegister(c -> c.setTier(TIER.ZPM))
             .transform(TagGen.axeOrPickaxe())
             .register();
 
@@ -507,6 +555,7 @@ public class Cogwheels {
             .transform(tieredEncasedLargeCogwheel(NAQUADAH_COGWHEEL, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_NAQUADAH_COGWHEEL))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.ZPM))
             .register();
 
     public static final BlockEntry<TieredCogwheelBlock> DARMSTADTIUM_COGWHEEL = REGISTRATE
@@ -518,6 +567,7 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .blockstate(GreateBlockStateGen.tieredCogwheelProvider(false))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+            .onRegister(c -> c.setTier(TIER.ULTIMATE))
             .item(TieredCogwheelBlockItem::new).tab(() -> Greate.GREATE_TAB).build()
             .register();
 
@@ -530,6 +580,7 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .blockstate(GreateBlockStateGen.tieredCogwheelProvider(true))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+            .onRegister(c -> c.setTier(TIER.ULTIMATE))
             .item(TieredCogwheelBlockItem::new).build()
             .register();
 
@@ -540,6 +591,7 @@ public class Cogwheels {
             .transform(EncasingRegistry.addVariantTo(DARMSTADTIUM_COGWHEEL))
             .onRegister(CreateRegistrate.connectedTextures(() -> new EncasedCogCTBehaviour(AllSpriteShifts.ANDESITE_CASING,
                     Couple.create(AllSpriteShifts.ANDESITE_ENCASED_COGWHEEL_SIDE, AllSpriteShifts.ANDESITE_ENCASED_COGWHEEL_OTHERSIDE))))
+            .onRegister(c -> c.setTier(TIER.ULTIMATE))
             .transform(TagGen.axeOrPickaxe())
             .register();
 
@@ -549,6 +601,7 @@ public class Cogwheels {
             .transform(tieredEncasedLargeCogwheel(DARMSTADTIUM_COGWHEEL, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_DARMSTADTIUM_COGWHEEL))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.ULTIMATE))
             .register();
 
     public static final BlockEntry<TieredEncasedCogwheelBlock> BRASS_ENCASED_DARMSTADTIUM_COGWHEEL = REGISTRATE
@@ -558,6 +611,7 @@ public class Cogwheels {
             .transform(EncasingRegistry.addVariantTo(DARMSTADTIUM_COGWHEEL))
             .onRegister(CreateRegistrate.connectedTextures(() -> new EncasedCogCTBehaviour(AllSpriteShifts.BRASS_CASING,
                     Couple.create(AllSpriteShifts.BRASS_ENCASED_COGWHEEL_SIDE, AllSpriteShifts.BRASS_ENCASED_COGWHEEL_OTHERSIDE))))
+            .onRegister(c -> c.setTier(TIER.ULTIMATE))
             .transform(TagGen.axeOrPickaxe())
             .register();
 
@@ -567,6 +621,7 @@ public class Cogwheels {
             .transform(tieredEncasedLargeCogwheel(DARMSTADTIUM_COGWHEEL, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_DARMSTADTIUM_COGWHEEL))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.ULTIMATE))
             .register();
 
     public static final BlockEntry<TieredCogwheelBlock> NEUTRONIUM_COGWHEEL = REGISTRATE
@@ -578,6 +633,7 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .blockstate(GreateBlockStateGen.tieredCogwheelProvider(false))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+            .onRegister(c -> c.setTier(TIER.ULTIMATE_HIGH))
             .item(TieredCogwheelBlockItem::new).tab(() -> Greate.GREATE_TAB).build()
             .register();
 
@@ -590,6 +646,7 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .blockstate(GreateBlockStateGen.tieredCogwheelProvider(true))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+            .onRegister(c -> c.setTier(TIER.ULTIMATE_HIGH))
             .item(TieredCogwheelBlockItem::new).build()
             .register();
 
@@ -600,6 +657,7 @@ public class Cogwheels {
             .transform(EncasingRegistry.addVariantTo(NEUTRONIUM_COGWHEEL))
             .onRegister(CreateRegistrate.connectedTextures(() -> new EncasedCogCTBehaviour(AllSpriteShifts.ANDESITE_CASING,
                     Couple.create(AllSpriteShifts.ANDESITE_ENCASED_COGWHEEL_SIDE, AllSpriteShifts.ANDESITE_ENCASED_COGWHEEL_OTHERSIDE))))
+            .onRegister(c -> c.setTier(TIER.ULTIMATE_HIGH))
             .transform(TagGen.axeOrPickaxe())
             .register();
 
@@ -609,6 +667,7 @@ public class Cogwheels {
             .transform(tieredEncasedLargeCogwheel(NEUTRONIUM_COGWHEEL, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_NEUTRONIUM_COGWHEEL))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.ULTIMATE_HIGH))
             .register();
 
     public static final BlockEntry<TieredEncasedCogwheelBlock> BRASS_ENCASED_NEUTRONIUM_COGWHEEL = REGISTRATE
@@ -618,6 +677,7 @@ public class Cogwheels {
             .transform(EncasingRegistry.addVariantTo(NEUTRONIUM_COGWHEEL))
             .onRegister(CreateRegistrate.connectedTextures(() -> new EncasedCogCTBehaviour(AllSpriteShifts.BRASS_CASING,
                     Couple.create(AllSpriteShifts.BRASS_ENCASED_COGWHEEL_SIDE, AllSpriteShifts.BRASS_ENCASED_COGWHEEL_OTHERSIDE))))
+            .onRegister(c -> c.setTier(TIER.ULTIMATE_HIGH))
             .transform(TagGen.axeOrPickaxe())
             .register();
 
@@ -627,6 +687,7 @@ public class Cogwheels {
             .transform(tieredEncasedLargeCogwheel(NEUTRONIUM_COGWHEEL, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_NEUTRONIUM_COGWHEEL))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.ULTIMATE_HIGH))
             .register();
 
     public static void register() {}

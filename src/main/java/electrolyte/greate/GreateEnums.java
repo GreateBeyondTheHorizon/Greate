@@ -5,16 +5,16 @@ import net.minecraft.ChatFormatting;
 public class GreateEnums {
 
     public enum TIER implements Comparable<TIER> {
-        ULTRA_LOW("ULS",GreateConfig.ULS_CAPACITY.get(), ChatFormatting.WHITE),
-        LOW("LS", GreateConfig.LS_CAPACITY.get(), ChatFormatting.GRAY),
-        MEDIUM("MS",GreateConfig.MS_CAPACITY.get(), ChatFormatting.AQUA),
-        HIGH("HS", GreateConfig.HS_CAPACITY.get(), ChatFormatting.GOLD),
-        EXTREME("ES", GreateConfig.ES_CAPACITY.get(), ChatFormatting.DARK_PURPLE),
-        INSANE("IS", GreateConfig.IS_CAPACITY.get(), ChatFormatting.DARK_BLUE),
-        LUDICRIOUS("LuS", GreateConfig.LUS_CAPACITY.get(), ChatFormatting.LIGHT_PURPLE),
-        ZPM("ZPMS", GreateConfig.ZPMS_CAPACITY.get(), ChatFormatting.RED),
-        ULTIMATE("US", GreateConfig.US_CAPACITY.get(), ChatFormatting.DARK_AQUA),
-        ULTIMATE_HIGH("UHS", GreateConfig.UHS_CAPACITY.get(), ChatFormatting.DARK_RED),
+        ULTRA_LOW("ULS", Greate.CONFIG.ULS_CAPACITY, ChatFormatting.WHITE),
+        LOW("LS", Greate.CONFIG.LS_CAPACITY, ChatFormatting.GRAY),
+        MEDIUM("MS", Greate.CONFIG.MS_CAPACITY, ChatFormatting.AQUA),
+        HIGH("HS", Greate.CONFIG.HS_CAPACITY, ChatFormatting.GOLD),
+        EXTREME("ES", Greate.CONFIG.ES_CAPACITY, ChatFormatting.DARK_PURPLE),
+        INSANE("IS", Greate.CONFIG.IS_CAPACITY, ChatFormatting.DARK_BLUE),
+        LUDICRIOUS("LuS", Greate.CONFIG.LUS_CAPACITY, ChatFormatting.LIGHT_PURPLE),
+        ZPM("ZPMS", Greate.CONFIG.ZPMS_CAPACITY, ChatFormatting.RED),
+        ULTIMATE("US", Greate.CONFIG.US_CAPACITY, ChatFormatting.DARK_AQUA),
+        ULTIMATE_HIGH("UHS", Greate.CONFIG.UHS_CAPACITY, ChatFormatting.DARK_RED),
         NONE("NONE", Double.MAX_VALUE, ChatFormatting.WHITE);
 
         private final String name;

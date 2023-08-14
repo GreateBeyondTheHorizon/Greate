@@ -10,6 +10,7 @@ import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import electrolyte.greate.Greate;
+import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedShaftBlock;
 import electrolyte.greate.foundation.data.GreateBlockStateGen;
@@ -32,6 +33,7 @@ public class Shafts {
             .transform(TagGen.pickaxeOnly())
             .blockstate(GreateBlockStateGen.tieredShaftProvider())
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+            .onRegister(c -> c.setTier(TIER.ULTRA_LOW))
             .simpleItem()
             .item().tab(() -> Greate.GREATE_TAB).build()
             .register();
@@ -42,6 +44,7 @@ public class Shafts {
             .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(ANDESITE_SHAFT, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.ANDESITE_SHAFT))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.ULTRA_LOW))
             .register();
 
     public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_ANDESITE_SHAFT = REGISTRATE
@@ -50,6 +53,7 @@ public class Shafts {
             .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(ANDESITE_SHAFT, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.ANDESITE_SHAFT))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.ULTRA_LOW))
             .register();
 
     public static final BlockEntry<TieredShaftBlock> STEEL_SHAFT = REGISTRATE
@@ -60,6 +64,7 @@ public class Shafts {
             .transform(TagGen.pickaxeOnly())
             .blockstate(GreateBlockStateGen.tieredShaftProvider())
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+            .onRegister(c -> c.setTier(TIER.LOW))
             .simpleItem()
             .register();
 
@@ -69,6 +74,7 @@ public class Shafts {
             .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(STEEL_SHAFT, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.STEEL_SHAFT))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.LOW))
             .register();
 
     public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_STEEL_SHAFT = REGISTRATE
@@ -77,6 +83,7 @@ public class Shafts {
             .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(STEEL_SHAFT, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.STEEL_SHAFT))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.LOW))
             .register();
 
     public static final BlockEntry<TieredShaftBlock> ALUMINIUM_SHAFT = REGISTRATE
@@ -87,6 +94,7 @@ public class Shafts {
             .transform(TagGen.pickaxeOnly())
             .blockstate(GreateBlockStateGen.tieredShaftProvider())
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+            .onRegister(c -> c.setTier(TIER.MEDIUM))
             .simpleItem()
             .register();
 
@@ -96,6 +104,7 @@ public class Shafts {
             .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(ALUMINIUM_SHAFT, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.ALUMINIUM_SHAFT))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.MEDIUM))
             .register();
 
     public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_ALUMINIUM_SHAFT = REGISTRATE
@@ -104,6 +113,7 @@ public class Shafts {
             .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(ALUMINIUM_SHAFT, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.ALUMINIUM_SHAFT))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.MEDIUM))
             .register();
 
     public static final BlockEntry<TieredShaftBlock> STAINLESS_STEEL_SHAFT = REGISTRATE
@@ -114,6 +124,7 @@ public class Shafts {
             .transform(TagGen.pickaxeOnly())
             .blockstate(GreateBlockStateGen.tieredShaftProvider())
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+            .onRegister(c -> c.setTier(TIER.HIGH))
             .simpleItem()
             .register();
 
@@ -123,6 +134,7 @@ public class Shafts {
             .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(STAINLESS_STEEL_SHAFT, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.STAINLESS_STEEL_SHAFT))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.HIGH))
             .register();
 
     public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_STAINLESS_STEEL_SHAFT = REGISTRATE
@@ -131,6 +143,7 @@ public class Shafts {
             .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(STAINLESS_STEEL_SHAFT, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.STAINLESS_STEEL_SHAFT))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.HIGH))
             .register();
 
     public static final BlockEntry<TieredShaftBlock> TITANIUM_SHAFT = REGISTRATE
@@ -141,6 +154,7 @@ public class Shafts {
             .transform(TagGen.pickaxeOnly())
             .blockstate(GreateBlockStateGen.tieredShaftProvider())
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+            .onRegister(c -> c.setTier(TIER.EXTREME))
             .simpleItem()
             .register();
 
@@ -150,6 +164,7 @@ public class Shafts {
             .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(TITANIUM_SHAFT, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.TITANIUM_SHAFT))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.EXTREME))
             .register();
 
     public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_TITANIUM_SHAFT = REGISTRATE
@@ -158,6 +173,7 @@ public class Shafts {
             .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(TITANIUM_SHAFT, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.TITANIUM_SHAFT))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.EXTREME))
             .register();
 
     public static final BlockEntry<TieredShaftBlock> TUNGSTENSTEEL_SHAFT = REGISTRATE
@@ -168,6 +184,7 @@ public class Shafts {
             .transform(TagGen.pickaxeOnly())
             .blockstate(GreateBlockStateGen.tieredShaftProvider())
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+            .onRegister(c -> c.setTier(TIER.INSANE))
             .simpleItem()
             .register();
 
@@ -177,6 +194,7 @@ public class Shafts {
             .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(TUNGSTENSTEEL_SHAFT, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.TUNGSTENSTEEL_SHAFT))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.INSANE))
             .register();
 
     public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_TUNGSTENSTEEL_SHAFT = REGISTRATE
@@ -185,6 +203,7 @@ public class Shafts {
             .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(TUNGSTENSTEEL_SHAFT, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.TUNGSTENSTEEL_SHAFT))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.INSANE))
             .register();
 
     public static final BlockEntry<TieredShaftBlock> PALLADIUM_SHAFT = REGISTRATE
@@ -195,6 +214,7 @@ public class Shafts {
             .transform(TagGen.pickaxeOnly())
             .blockstate(GreateBlockStateGen.tieredShaftProvider())
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+            .onRegister(c -> c.setTier(TIER.LUDICRIOUS))
             .simpleItem()
             .register();
 
@@ -204,6 +224,7 @@ public class Shafts {
             .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(PALLADIUM_SHAFT, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.PALLADIUM_SHAFT))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.LUDICRIOUS))
             .register();
 
     public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_PALLADIUM_SHAFT = REGISTRATE
@@ -212,6 +233,7 @@ public class Shafts {
             .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(PALLADIUM_SHAFT, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.PALLADIUM_SHAFT))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.LUDICRIOUS))
             .register();
 
     public static final BlockEntry<TieredShaftBlock> NAQUADAH_SHAFT = REGISTRATE
@@ -222,6 +244,7 @@ public class Shafts {
             .transform(TagGen.pickaxeOnly())
             .blockstate(GreateBlockStateGen.tieredShaftProvider())
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+            .onRegister(c -> c.setTier(TIER.ZPM))
             .simpleItem()
             .register();
 
@@ -231,6 +254,7 @@ public class Shafts {
             .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(NAQUADAH_SHAFT, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.NAQUADAH_SHAFT))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.ZPM))
             .register();
 
     public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_NAQUADAH_SHAFT = REGISTRATE
@@ -239,6 +263,7 @@ public class Shafts {
             .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(NAQUADAH_SHAFT, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.NAQUADAH_SHAFT))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.ZPM))
             .register();
 
     public static final BlockEntry<TieredShaftBlock> DARMSTADTIUM_SHAFT = REGISTRATE
@@ -249,6 +274,7 @@ public class Shafts {
             .transform(TagGen.pickaxeOnly())
             .blockstate(GreateBlockStateGen.tieredShaftProvider())
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+            .onRegister(c -> c.setTier(TIER.ULTIMATE))
             .simpleItem()
             .register();
 
@@ -258,6 +284,7 @@ public class Shafts {
             .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(DARMSTADTIUM_SHAFT, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.DARMSTADTIUM_SHAFT))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.ULTIMATE))
             .register();
 
     public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_DARMSTADTIUM_SHAFT = REGISTRATE
@@ -266,6 +293,7 @@ public class Shafts {
             .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(DARMSTADTIUM_SHAFT, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.DARMSTADTIUM_SHAFT))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.ULTIMATE))
             .register();
 
     public static final BlockEntry<TieredShaftBlock> NEUTRONIUM_SHAFT = REGISTRATE
@@ -276,6 +304,7 @@ public class Shafts {
             .transform(TagGen.pickaxeOnly())
             .blockstate(GreateBlockStateGen.tieredShaftProvider())
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+            .onRegister(c -> c.setTier(TIER.ULTIMATE_HIGH))
             .simpleItem()
             .register();
 
@@ -285,6 +314,7 @@ public class Shafts {
             .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(NEUTRONIUM_SHAFT, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.NEUTRONIUM_SHAFT))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.ULTIMATE_HIGH))
             .register();
 
     public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_NEUTRONIUM_SHAFT = REGISTRATE
@@ -293,6 +323,7 @@ public class Shafts {
             .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(NEUTRONIUM_SHAFT, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.NEUTRONIUM_SHAFT))
             .transform(TagGen.axeOrPickaxe())
+            .onRegister(c -> c.setTier(TIER.ULTIMATE_HIGH))
             .register();
     public static void register() {}
 }
