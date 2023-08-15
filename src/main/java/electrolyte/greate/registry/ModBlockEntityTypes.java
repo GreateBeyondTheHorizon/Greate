@@ -4,8 +4,9 @@ import com.simibubi.create.content.kinetics.base.ShaftRenderer;
 import com.simibubi.create.content.kinetics.simpleRelays.encased.EncasedCogRenderer;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import electrolyte.greate.content.kinetics.base.TieredShaftInstance;
-import electrolyte.greate.content.kinetics.millstone.TieredMillstoneBlockEntity;
-import electrolyte.greate.content.kinetics.millstone.TieredMillstoneCogInstance;
+import electrolyte.greate.content.kinetics.gearbox.TieredGearboxBlockEntity;
+import electrolyte.greate.content.kinetics.gearbox.TieredGearboxInstance;
+import electrolyte.greate.content.kinetics.gearbox.TieredGearboxRenderer;
 import electrolyte.greate.content.kinetics.simpleRelays.*;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedCogInstance;
 
@@ -62,7 +63,16 @@ public class ModBlockEntityTypes {
             .renderer(() -> EncasedCogRenderer::large)
             .register();
 
-    public static final BlockEntityEntry<TieredMillstoneBlockEntity> TIERED_MILLSTONE = REGISTRATE
+    public static final BlockEntityEntry<TieredGearboxBlockEntity> TIERED_GEARBOX = REGISTRATE
+            .blockEntity("tiered_gearbox", TieredGearboxBlockEntity::new)
+            .instance(() -> TieredGearboxInstance::new, false)
+            .validBlocks(Gearboxes.ANDESITE_GEARBOX, Gearboxes.STEEL_GEARBOX, Gearboxes.ALUMINIUM_GEARBOX, Gearboxes.STAINLESS_STEEL_GEARBOX,
+                    Gearboxes.TITANIUM_GEARBOX, Gearboxes.TUNGSTENSTEEL_GEARBOX, Gearboxes.PALLADIUM_GEARBOX, Gearboxes.NAQUADAH_GEARBOX,
+                    Gearboxes.DARMSTADTIUM_GEARBOX, Gearboxes.NEUTRONIUM_GEARBOX)
+            .renderer(() -> TieredGearboxRenderer::new)
+            .register();
+
+    /*public static final BlockEntityEntry<TieredMillstoneBlockEntity> TIERED_MILLSTONE = REGISTRATE
             .blockEntity("tiered_millstone", TieredMillstoneBlockEntity::new)
             .instance(() -> TieredMillstoneCogInstance::new, false)
             .validBlocks(Millstones.TEST_MILLSTONE)

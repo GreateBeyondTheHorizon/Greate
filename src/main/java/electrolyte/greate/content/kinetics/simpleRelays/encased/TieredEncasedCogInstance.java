@@ -13,6 +13,7 @@ import com.simibubi.create.content.kinetics.base.flwdata.RotatingData;
 import com.simibubi.create.content.kinetics.simpleRelays.BracketedKineticBlockEntityRenderer;
 import com.simibubi.create.foundation.utility.Iterate;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredEncasedCogwheel;
+import electrolyte.greate.content.kinetics.simpleRelays.ITieredHalfShaft;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredKineticBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Block;
@@ -40,7 +41,7 @@ public class TieredEncasedCogInstance extends KineticBlockEntityInstance<TieredK
     public TieredEncasedCogInstance(MaterialManager materialManager, TieredKineticBlockEntity blockEntity, boolean large) {
         super(materialManager, blockEntity);
         this.large = large;
-        this.halfShaftModel = ((ITieredEncasedCogwheel) blockState.getBlock()).getHalfShaft();
+        this.halfShaftModel = ((ITieredHalfShaft) blockState.getBlock()).getHalfShaft();
         this.model = ((ITieredEncasedCogwheel) blockState.getBlock()).getCogwheelModel();
     }
 
