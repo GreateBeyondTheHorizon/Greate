@@ -9,6 +9,7 @@ import com.simibubi.create.content.schematics.requirement.ItemRequirement;
 import com.simibubi.create.foundation.block.IBE;
 import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
+import electrolyte.greate.content.kinetics.simpleRelays.ITieredShaftBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredKineticBlockEntity;
 import electrolyte.greate.registry.ModBlockEntityTypes;
 import net.minecraft.core.BlockPos;
@@ -30,7 +31,7 @@ import net.minecraft.world.phys.HitResult;
 
 import java.util.function.Supplier;
 
-public class TieredEncasedShaftBlock extends AbstractEncasedShaftBlock implements IBE<TieredKineticBlockEntity>, ISpecialBlockItemRequirement, EncasedBlock, ITieredBlock {
+public class TieredEncasedShaftBlock extends AbstractEncasedShaftBlock implements IBE<TieredKineticBlockEntity>, ISpecialBlockItemRequirement, EncasedBlock, ITieredBlock, ITieredShaftBlock {
 
     private final Supplier<Block> casing;
     private final Supplier<Block> shaft;
@@ -81,6 +82,7 @@ public class TieredEncasedShaftBlock extends AbstractEncasedShaftBlock implement
         return casing.get();
     }
 
+    @Override
     public Block getShaft() {
         return shaft.get();
     }

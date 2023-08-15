@@ -4,9 +4,10 @@
   "minVersion": "0.8",
   "compatabilityLevel": "JAVA_16",
   "mixins": [
+    "MixinBlockStressDefaults",
+    "MixinGirderBlock",
     "MixinKineticBlockEntity",
-    "MixinKineticNetwork",
-    "MixinBlockStressDefaults"
+    "MixinKineticNetwork"
   ],
   "injectors": {
     "defaultRequire": 1

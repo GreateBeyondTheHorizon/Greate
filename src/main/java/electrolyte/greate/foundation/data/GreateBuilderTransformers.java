@@ -57,13 +57,14 @@ public class GreateBuilderTransformers {
 
     private static <B extends TieredEncasedCogwheelBlock, P> BlockBuilder<B, P> tieredEncasedCogwheelBase(BlockBuilder<B, P> b,
         Supplier<CTSpriteShiftEntry> casingShift, Supplier<ItemLike> drop, boolean large) {
-        String cogwheelSize = large ? "encased_large_cogwheel" : "encased_cogwheel";
+        String cogwheelSize = large ? "encased_large_cogwheel/" : "encased_cogwheel/";
         return encasedBase(b, drop).addLayer(() -> RenderType::cutoutMipped)
                 .onRegister(CreateRegistrate.casingConnectivity((block, cc) -> cc.make(block, casingShift.get(),
                         (s, f) -> f.getAxis() == s.getValue(TieredEncasedCogwheelBlock.AXIS) && !s.getValue(f.getAxisDirection() == Direction.AxisDirection.POSITIVE ? TieredEncasedCogwheelBlock.TOP_SHAFT : TieredEncasedCogwheelBlock.BOTTOM_SHAFT))))
                 .blockstate((c, p) -> axisBlock(c, p, blockState -> {
-                    String suffix = (blockState.getValue(TieredEncasedCogwheelBlock.TOP_SHAFT) ? "_top" : "") +
-                            (blockState.getValue(TieredEncasedCogwheelBlock.BOTTOM_SHAFT) ? "_bottom" : "");
+                    String top = blockState.getValue(TieredEncasedCogwheelBlock.TOP_SHAFT) ? "top" : "";
+                    String bottom = blockState.getValue(TieredEncasedCogwheelBlock.BOTTOM_SHAFT) ? "bottom" : "";
+                    String suffix = (top.isEmpty() && bottom.isEmpty()) ? "cogwheel" : top.isEmpty() ? bottom : bottom.isEmpty() ? top : top + "_" + bottom;
                     String modelName = c.getName() + suffix;
                     String casingType = c.getName().contains("brass") ? "brass_" : "andesite_";
                     return p.models()
@@ -72,7 +73,7 @@ public class GreateBuilderTransformers {
                 .item()
                 .model((c, p) -> {
                     String casingType = c.getName().contains("brass") ? "brass_" : "andesite_";
-                    p.withExistingParent(c.getName(), p.modLoc("block/base/" + casingType + "encased_cogwheel_item"));
+                    p.withExistingParent(c.getName(), p.modLoc("block/base/" + casingType + "encased_cogwheel/item"));
                 })
                 .build();
     }

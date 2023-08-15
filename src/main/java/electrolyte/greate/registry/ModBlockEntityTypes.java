@@ -1,6 +1,5 @@
 package electrolyte.greate.registry;
 
-import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.simibubi.create.content.kinetics.base.ShaftRenderer;
 import com.simibubi.create.content.kinetics.simpleRelays.encased.EncasedCogRenderer;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
@@ -34,7 +33,10 @@ public class ModBlockEntityTypes {
                     Shafts.ANDESITE_ENCASED_ALUMINIUM_SHAFT, Shafts.BRASS_ENCASED_ALUMINIUM_SHAFT, Shafts.ANDESITE_ENCASED_STAINLESS_STEEL_SHAFT, Shafts.BRASS_ENCASED_STAINLESS_STEEL_SHAFT,
                     Shafts.ANDESITE_ENCASED_TITANIUM_SHAFT, Shafts.BRASS_ENCASED_TITANIUM_SHAFT, Shafts.ANDESITE_ENCASED_TUNGSTENSTEEL_SHAFT, Shafts.BRASS_ENCASED_TUNGSTENSTEEL_SHAFT,
                     Shafts.ANDESITE_ENCASED_PALLADIUM_SHAFT, Shafts.BRASS_ENCASED_PALLADIUM_SHAFT, Shafts.ANDESITE_ENCASED_NAQUADAH_SHAFT, Shafts.BRASS_ENCASED_NAQUADAH_SHAFT,
-                    Shafts.ANDESITE_ENCASED_DARMSTADTIUM_SHAFT, Shafts.BRASS_ENCASED_DARMSTADTIUM_SHAFT, Shafts.ANDESITE_ENCASED_NEUTRONIUM_SHAFT, Shafts.BRASS_ENCASED_NEUTRONIUM_SHAFT)
+                    Shafts.ANDESITE_ENCASED_DARMSTADTIUM_SHAFT, Shafts.BRASS_ENCASED_DARMSTADTIUM_SHAFT, Shafts.ANDESITE_ENCASED_NEUTRONIUM_SHAFT, Shafts.BRASS_ENCASED_NEUTRONIUM_SHAFT,
+                    Girders.ANDESITE_METAL_GIRDER_ENCASED_SHAFT, Girders.STEEL_METAL_GIRDER_ENCASED_SHAFT, Girders.ALUMINIUM_METAL_GIRDER_ENCASED_SHAFT, Girders.STAINLESS_STEEL_METAL_GIRDER_ENCASED_SHAFT,
+                    Girders.TITANIUM_METAL_GIRDER_ENCASED_SHAFT, Girders.TUNGSTENSTEEL_METAL_GIRDER_ENCASED_SHAFT, Girders.PALLADIUM_METAL_GIRDER_ENCASED_SHAFT, Girders.NAQUADAH_METAL_GIRDER_ENCASED_SHAFT,
+                    Girders.DARMSTADTIUM_METAL_GIRDER_ENCASED_SHAFT, Girders.NEUTRONIUM_METAL_GIRDER_ENCASED_SHAFT)
             .renderer(() -> ShaftRenderer::new)
             .register();
 

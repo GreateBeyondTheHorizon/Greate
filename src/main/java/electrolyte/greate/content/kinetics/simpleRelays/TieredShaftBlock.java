@@ -4,7 +4,6 @@ import com.google.common.base.Predicates;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.content.decoration.encasing.EncasableBlock;
-import com.simibubi.create.content.decoration.girder.GirderEncasedShaftBlock;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.simpleRelays.AbstractSimpleShaftBlock;
 import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
@@ -14,11 +13,11 @@ import com.simibubi.create.foundation.placement.PlacementHelpers;
 import com.simibubi.create.foundation.placement.PlacementOffset;
 import com.simibubi.create.foundation.placement.PoleHelper;
 import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.content.decoration.encasing.IGirderEncasableBlock;
 import electrolyte.greate.registry.ModBlockEntityTypes;
 import net.minecraft.ChatFormatting;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -39,7 +38,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class TieredShaftBlock extends AbstractSimpleShaftBlock implements EncasableBlock, ITieredBlock {
+public class TieredShaftBlock extends AbstractSimpleShaftBlock implements EncasableBlock, ITieredBlock, IGirderEncasableBlock {
 
     public static final int placementHelperId = PlacementHelpers.register(new PlacementHelper());
     private TIER tier;
@@ -101,21 +100,10 @@ public class TieredShaftBlock extends AbstractSimpleShaftBlock implements Encasa
             return InteractionResult.PASS;
 
         ItemStack heldItem = pPlayer.getItemInHand(pHand);
-        InteractionResult result = tryEncase(pState, pLevel, pPos, heldItem, pPlayer, pHand, pHit);
-        if (result.consumesAction())
-            return result;
-
-        if (AllBlocks.METAL_GIRDER.isIn(heldItem) && pState.getValue(AXIS) != Direction.Axis.Y) {
-            KineticBlockEntity.switchToBlockState(pLevel, pPos, AllBlocks.METAL_GIRDER_ENCASED_SHAFT.getDefaultState()
-                    .setValue(WATERLOGGED, pState.getValue(WATERLOGGED))
-                    .setValue(GirderEncasedShaftBlock.HORIZONTAL_AXIS, pState.getValue(AXIS) == Direction.Axis.Z ? Direction.Axis.Z : Direction.Axis.X));
-            if (!pLevel.isClientSide && !pPlayer.isCreative()) {
-                heldItem.shrink(1);
-                if (heldItem.isEmpty())
-                    pPlayer.setItemInHand(pHand, ItemStack.EMPTY);
-            }
-            return InteractionResult.SUCCESS;
-        }
+        InteractionResult resultEncase = tryEncase(pState, pLevel, pPos, heldItem, pPlayer, pHand, pHit);
+        InteractionResult resultGirderEncase = tryGirderEncase(pState, pLevel, pPos, heldItem, pPlayer, pHand, pHit);
+        if (resultEncase.consumesAction()) return resultEncase;
+        if (resultGirderEncase.consumesAction()) return resultGirderEncase;
 
         IPlacementHelper helper = PlacementHelpers.get(placementHelperId);
         if (helper.matchesItem(heldItem))

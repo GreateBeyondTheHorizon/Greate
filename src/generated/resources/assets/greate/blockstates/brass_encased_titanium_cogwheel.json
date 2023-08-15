@@ -1,54 +1,54 @@
 {
   "variants": {
     "axis=x,bottom_shaft=false,top_shaft=false": {
-      "model": "greate:block/brass_encased_titanium_cogwheel",
+      "model": "greate:block/brass_encased_titanium_cogwheelcogwheel",
       "x": 90,
       "y": 90
     },
     "axis=x,bottom_shaft=false,top_shaft=true": {
-      "model": "greate:block/brass_encased_titanium_cogwheel_top",
+      "model": "greate:block/brass_encased_titanium_cogwheeltop",
       "x": 90,
       "y": 90
     },
     "axis=x,bottom_shaft=true,top_shaft=false": {
-      "model": "greate:block/brass_encased_titanium_cogwheel_bottom",
+      "model": "greate:block/brass_encased_titanium_cogwheelbottom",
       "x": 90,
       "y": 90
     },
     "axis=x,bottom_shaft=true,top_shaft=true": {
-      "model": "greate:block/brass_encased_titanium_cogwheel_top_bottom",
+      "model": "greate:block/brass_encased_titanium_cogwheeltop_bottom",
       "x": 90,
       "y": 90
     },
     "axis=y,bottom_shaft=false,top_shaft=false": {
-      "model": "greate:block/brass_encased_titanium_cogwheel"
+      "model": "greate:block/brass_encased_titanium_cogwheelcogwheel"
     },
     "axis=y,bottom_shaft=false,top_shaft=true": {
-      "model": "greate:block/brass_encased_titanium_cogwheel_top"
+      "model": "greate:block/brass_encased_titanium_cogwheeltop"
     },
     "axis=y,bottom_shaft=true,top_shaft=false": {
-      "model": "greate:block/brass_encased_titanium_cogwheel_bottom"
+      "model": "greate:block/brass_encased_titanium_cogwheelbottom"
     },
     "axis=y,bottom_shaft=true,top_shaft=true": {
-      "model": "greate:block/brass_encased_titanium_cogwheel_top_bottom"
+      "model": "greate:block/brass_encased_titanium_cogwheeltop_bottom"
     },
     "axis=z,bottom_shaft=false,top_shaft=false": {
-      "model": "greate:block/brass_encased_titanium_cogwheel",
+      "model": "greate:block/brass_encased_titanium_cogwheelcogwheel",
       "x": 90,
       "y": 180
     },
     "axis=z,bottom_shaft=false,top_shaft=true": {
-      "model": "greate:block/brass_encased_titanium_cogwheel_top",
+      "model": "greate:block/brass_encased_titanium_cogwheeltop",
       "x": 90,
       "y": 180
     },
     "axis=z,bottom_shaft=true,top_shaft=false": {
-      "model": "greate:block/brass_encased_titanium_cogwheel_bottom",
+      "model": "greate:block/brass_encased_titanium_cogwheelbottom",
       "x": 90,
       "y": 180
     },
     "axis=z,bottom_shaft=true,top_shaft=true": {
-      "model": "greate:block/brass_encased_titanium_cogwheel_top_bottom",
+      "model": "greate:block/brass_encased_titanium_cogwheeltop_bottom",
       "x": 90,
       "y": 180
     }
