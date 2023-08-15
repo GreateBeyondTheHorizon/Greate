@@ -77,7 +77,7 @@ public class ModBlockEntityTypes {
             .instance(() -> TieredMillstoneCogInstance::new, false)
             .validBlocks(Millstones.TEST_MILLSTONE)
             .renderer(() -> KineticBlockEntityRenderer::new)
-            .register();
+            .register();*/
 
     public static void register() {}
 }
