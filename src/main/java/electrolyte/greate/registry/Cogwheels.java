@@ -40,7 +40,7 @@ public class Cogwheels {
             .blockstate(GreateBlockStateGen.tieredCogwheelProvider(false))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
             .onRegister(c -> c.setTier(TIER.ULTRA_LOW))
-            .item(TieredCogwheelBlockItem::new).tab(() -> Greate.GREATE_TAB).build()
+            .item(TieredCogwheelBlockItem::new).build()
             .register();
 
     public static final BlockEntry<TieredCogwheelBlock> LARGE_ANDESITE_COGWHEEL = REGISTRATE
@@ -106,7 +106,7 @@ public class Cogwheels {
             .blockstate(GreateBlockStateGen.tieredCogwheelProvider(false))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
             .onRegister(c -> c.setTier(TIER.LOW))
-            .item(TieredCogwheelBlockItem::new).tab(() -> Greate.GREATE_TAB).build()
+            .item(TieredCogwheelBlockItem::new).build()
             .register();
 
     public static final BlockEntry<TieredCogwheelBlock> LARGE_STEEL_COGWHEEL = REGISTRATE
@@ -172,7 +172,7 @@ public class Cogwheels {
             .blockstate(GreateBlockStateGen.tieredCogwheelProvider(false))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
             .onRegister(c -> c.setTier(TIER.MEDIUM))
-            .item(TieredCogwheelBlockItem::new).tab(() -> Greate.GREATE_TAB).build()
+            .item(TieredCogwheelBlockItem::new).build()
             .register();
 
     public static final BlockEntry<TieredCogwheelBlock> LARGE_ALUMINIUM_COGWHEEL = REGISTRATE
@@ -238,7 +238,7 @@ public class Cogwheels {
             .blockstate(GreateBlockStateGen.tieredCogwheelProvider(false))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
             .onRegister(c -> c.setTier(TIER.HIGH))
-            .item(TieredCogwheelBlockItem::new).tab(() -> Greate.GREATE_TAB).build()
+            .item(TieredCogwheelBlockItem::new).build()
             .register();
 
     public static final BlockEntry<TieredCogwheelBlock> LARGE_STAINLESS_STEEL_COGWHEEL = REGISTRATE
@@ -304,7 +304,7 @@ public class Cogwheels {
             .blockstate(GreateBlockStateGen.tieredCogwheelProvider(false))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
             .onRegister(c -> c.setTier(TIER.EXTREME))
-            .item(TieredCogwheelBlockItem::new).tab(() -> Greate.GREATE_TAB).build()
+            .item(TieredCogwheelBlockItem::new).build()
             .register();
 
     public static final BlockEntry<TieredCogwheelBlock> LARGE_TITANIUM_COGWHEEL = REGISTRATE
@@ -370,7 +370,7 @@ public class Cogwheels {
             .blockstate(GreateBlockStateGen.tieredCogwheelProvider(false))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
             .onRegister(c -> c.setTier(TIER.INSANE))
-            .item(TieredCogwheelBlockItem::new).tab(() -> Greate.GREATE_TAB).build()
+            .item(TieredCogwheelBlockItem::new).build()
             .register();
 
     public static final BlockEntry<TieredCogwheelBlock> LARGE_TUNGSTENSTEEL_COGWHEEL = REGISTRATE
@@ -436,7 +436,7 @@ public class Cogwheels {
             .blockstate(GreateBlockStateGen.tieredCogwheelProvider(false))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
             .onRegister(c -> c.setTier(TIER.LUDICRIOUS))
-            .item(TieredCogwheelBlockItem::new).tab(() -> Greate.GREATE_TAB).build()
+            .item(TieredCogwheelBlockItem::new).build()
             .register();
 
     public static final BlockEntry<TieredCogwheelBlock> LARGE_PALLADIUM_COGWHEEL = REGISTRATE
@@ -502,7 +502,7 @@ public class Cogwheels {
             .blockstate(GreateBlockStateGen.tieredCogwheelProvider(false))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
             .onRegister(c -> c.setTier(TIER.ZPM))
-            .item(TieredCogwheelBlockItem::new).tab(() -> Greate.GREATE_TAB).build()
+            .item(TieredCogwheelBlockItem::new).build()
             .register();
 
     public static final BlockEntry<TieredCogwheelBlock> LARGE_NAQUADAH_COGWHEEL = REGISTRATE
@@ -568,7 +568,7 @@ public class Cogwheels {
             .blockstate(GreateBlockStateGen.tieredCogwheelProvider(false))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
             .onRegister(c -> c.setTier(TIER.ULTIMATE))
-            .item(TieredCogwheelBlockItem::new).tab(() -> Greate.GREATE_TAB).build()
+            .item(TieredCogwheelBlockItem::new).build()
             .register();
 
     public static final BlockEntry<TieredCogwheelBlock> LARGE_DARMSTADTIUM_COGWHEEL = REGISTRATE
@@ -634,7 +634,7 @@ public class Cogwheels {
             .blockstate(GreateBlockStateGen.tieredCogwheelProvider(false))
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
             .onRegister(c -> c.setTier(TIER.ULTIMATE_HIGH))
-            .item(TieredCogwheelBlockItem::new).tab(() -> Greate.GREATE_TAB).build()
+            .item(TieredCogwheelBlockItem::new).build()
             .register();
 
     public static final BlockEntry<TieredCogwheelBlock> LARGE_NEUTRONIUM_COGWHEEL = REGISTRATE

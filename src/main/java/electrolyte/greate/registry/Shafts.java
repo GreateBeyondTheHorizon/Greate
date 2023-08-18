@@ -36,7 +36,7 @@ public class Shafts {
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
             .onRegister(c -> c.setTier(TIER.ULTRA_LOW))
             .simpleItem()
-            .item().tab(() -> Greate.GREATE_TAB).build()
+            .item().build()
             .register();
 
     public static final BlockEntry<TieredPoweredShaftBlock> POWERED_ANDESITE_SHAFT = REGISTRATE
