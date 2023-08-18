@@ -1,5 +1,6 @@
 package electrolyte.greate.content.decoration.encasing;
 
+import com.simibubi.create.AllBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.world.InteractionHand;
@@ -19,7 +20,7 @@ public interface IGirderEncasableBlock {
     default InteractionResult tryGirderEncase(BlockState state, Level level, BlockPos pos, ItemStack heldItem, Player player, InteractionHand hand, BlockHitResult hit) {
         List<Block> variant = GirderEncasingRegistry.get(state.getBlock());
         for(Block block : variant) {
-            if(block instanceof IGirderEncasedBlock girderEncasedBlock && state.getValue(BlockStateProperties.AXIS) != Axis.Y) {
+            if(block instanceof IGirderEncasedBlock girderEncasedBlock && heldItem.is(AllBlocks.METAL_GIRDER.get().asItem()) && state.getValue(BlockStateProperties.AXIS) != Axis.Y) {
                 if(level.isClientSide) return InteractionResult.SUCCESS;
                 girderEncasedBlock.handleEncasing(state, level, pos, heldItem, player, hand);
                 if (!player.isCreative()) {

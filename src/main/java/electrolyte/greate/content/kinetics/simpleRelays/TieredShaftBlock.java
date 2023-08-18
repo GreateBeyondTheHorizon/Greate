@@ -142,7 +142,6 @@ public class TieredShaftBlock extends AbstractSimpleShaftBlock implements Encasa
             return ((Predicate<BlockState>) this::checkBlock).or(this::checkBlockPowered);
         }
 
-        //todo: might be this?
         @Override
         public PlacementOffset getOffset(Player player, Level world, BlockState state, BlockPos pos, BlockHitResult ray) {
             PlacementOffset offset = super.getOffset(player, world, state, pos, ray);
