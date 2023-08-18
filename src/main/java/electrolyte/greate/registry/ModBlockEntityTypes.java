@@ -1,14 +1,17 @@
 package electrolyte.greate.registry;
 
+import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.simibubi.create.content.kinetics.base.ShaftRenderer;
 import com.simibubi.create.content.kinetics.simpleRelays.encased.EncasedCogRenderer;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import electrolyte.greate.content.kinetics.base.TieredShaftInstance;
+import electrolyte.greate.content.kinetics.base.TieredSingleRotatingInstance;
 import electrolyte.greate.content.kinetics.gearbox.TieredGearboxBlockEntity;
 import electrolyte.greate.content.kinetics.gearbox.TieredGearboxInstance;
 import electrolyte.greate.content.kinetics.gearbox.TieredGearboxRenderer;
 import electrolyte.greate.content.kinetics.simpleRelays.*;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedCogInstance;
+import electrolyte.greate.content.kinetics.steamEngine.TieredPoweredShaftBlockEntity;
 
 import static electrolyte.greate.Greate.REGISTRATE;
 
@@ -70,6 +73,15 @@ public class ModBlockEntityTypes {
                     Gearboxes.TITANIUM_GEARBOX, Gearboxes.TUNGSTENSTEEL_GEARBOX, Gearboxes.PALLADIUM_GEARBOX, Gearboxes.NAQUADAH_GEARBOX,
                     Gearboxes.DARMSTADTIUM_GEARBOX, Gearboxes.NEUTRONIUM_GEARBOX)
             .renderer(() -> TieredGearboxRenderer::new)
+            .register();
+
+    public static final BlockEntityEntry<TieredPoweredShaftBlockEntity> TIERED_POWERED_SHAFT = REGISTRATE
+            .blockEntity("tiered_powered_shaft", TieredPoweredShaftBlockEntity::new)
+            .instance(() -> TieredSingleRotatingInstance::new)
+            .validBlocks(Shafts.POWERED_ANDESITE_SHAFT, Shafts.POWERED_STEEL_SHAFT, Shafts.POWERED_ALUMINIUM_SHAFT, Shafts.POWERED_STAINLESS_STEEL_SHAFT,
+                    Shafts.POWERED_TITANIUM_SHAFT, Shafts.POWERED_TUNGSTENSTEEL_SHAFT, Shafts.POWERED_PALLADIUM_SHAFT, Shafts.POWERED_NAQUADAH_SHAFT,
+                    Shafts.POWERED_DARMSTADTIUM_SHAFT, Shafts.POWERED_NEUTRONIUM_SHAFT)
+            .renderer(() -> KineticBlockEntityRenderer::new)
             .register();
 
     /*public static final BlockEntityEntry<TieredMillstoneBlockEntity> TIERED_MILLSTONE = REGISTRATE

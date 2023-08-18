@@ -29,6 +29,21 @@ public class GreateBlockStateGen {
         }, BlockStateProperties.WATERLOGGED);
     }
 
+    public static <T extends Block> NonNullBiConsumer<DataGenContext<Block, T>, RegistrateBlockstateProvider> tieredPoweredShaftProvider() {
+        return (ctx, prov) -> prov.getVariantBuilder(ctx.getEntry()).forAllStatesExcept(state -> {
+            Axis axis = state.getValue(BlockStateProperties.AXIS);
+            return ConfiguredModel.builder()
+                    .modelFile(prov.models().withExistingParent(ctx.getName(), "greate:block/base/powered_shaft")
+                            .texture("particle", prov.modLoc("block/" + ctx.getName().substring(8, ctx.getName().length() - 6) + "/axis"))
+                            .texture("3", prov.modLoc("block/" + ctx.getName().substring(8, ctx.getName().length() - 6) + "/axis"))
+                            .texture("2", prov.modLoc("block/" + ctx.getName().substring(8, ctx.getName().length() - 6) + "/axis_top")))
+                    .uvLock(false)
+                    .rotationX(axis == Axis.Y ? 0 : 90)
+                    .rotationY(axis == Axis.X ? 90 : axis == Axis.Z ? 180 : 0)
+                    .build();
+        }, BlockStateProperties.WATERLOGGED);
+    }
+
     public static <T extends Block> NonNullBiConsumer<DataGenContext<Block, T>, RegistrateBlockstateProvider> tieredEncasedShaftProvider() {
         return (ctx, prov) -> prov.getVariantBuilder(ctx.getEntry()).forAllStatesExcept(state -> {
             Axis axis = state.getValue(BlockStateProperties.AXIS);

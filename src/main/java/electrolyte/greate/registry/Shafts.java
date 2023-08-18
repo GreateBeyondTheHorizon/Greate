@@ -13,6 +13,7 @@ import electrolyte.greate.Greate;
 import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedShaftBlock;
+import electrolyte.greate.content.kinetics.steamEngine.TieredPoweredShaftBlock;
 import electrolyte.greate.foundation.data.GreateBlockStateGen;
 import electrolyte.greate.foundation.data.GreateBuilderTransformers;
 import net.minecraft.world.level.material.MaterialColor;
@@ -36,6 +37,16 @@ public class Shafts {
             .onRegister(c -> c.setTier(TIER.ULTRA_LOW))
             .simpleItem()
             .item().tab(() -> Greate.GREATE_TAB).build()
+            .register();
+
+    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_ANDESITE_SHAFT = REGISTRATE
+            .block("powered_andesite_shaft", p -> new TieredPoweredShaftBlock(p, Shafts.ANDESITE_SHAFT::get))
+            .initialProperties(SharedProperties::stone)
+            .properties(p -> p.color(MaterialColor.METAL))
+            .transform(TagGen.pickaxeOnly())
+            .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
+            .loot((l, b) -> l.dropOther(b, ANDESITE_SHAFT.get()))
+            .onRegister(c -> c.setTier(TIER.ULTRA_LOW))
             .register();
 
     public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_ANDESITE_SHAFT = REGISTRATE
@@ -68,6 +79,16 @@ public class Shafts {
             .simpleItem()
             .register();
 
+    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_STEEL_SHAFT = REGISTRATE
+            .block("powered_steel_shaft", p -> new TieredPoweredShaftBlock(p, Shafts.STEEL_SHAFT::get))
+            .initialProperties(SharedProperties::stone)
+            .properties(p -> p.color(MaterialColor.METAL))
+            .transform(TagGen.pickaxeOnly())
+            .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
+            .loot((l, b) -> l.dropOther(b, STEEL_SHAFT.get()))
+            .onRegister(c -> c.setTier(TIER.LOW))
+            .register();
+
     public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_STEEL_SHAFT = REGISTRATE
             .block("andesite_encased_steel_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.ANDESITE_CASING::get, Shafts.STEEL_SHAFT::get))
             .properties(p -> p.color(MaterialColor.PODZOL))
@@ -96,6 +117,16 @@ public class Shafts {
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
             .onRegister(c -> c.setTier(TIER.MEDIUM))
             .simpleItem()
+            .register();
+
+    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_ALUMINIUM_SHAFT = REGISTRATE
+            .block("powered_aluminium_shaft", p -> new TieredPoweredShaftBlock(p, Shafts.ALUMINIUM_SHAFT::get))
+            .initialProperties(SharedProperties::stone)
+            .properties(p -> p.color(MaterialColor.METAL))
+            .transform(TagGen.pickaxeOnly())
+            .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
+            .loot((l, b) -> l.dropOther(b, ALUMINIUM_SHAFT.get()))
+            .onRegister(c -> c.setTier(TIER.MEDIUM))
             .register();
 
     public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_ALUMINIUM_SHAFT = REGISTRATE
@@ -128,6 +159,16 @@ public class Shafts {
             .simpleItem()
             .register();
 
+    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_STAINLESS_STEEL_SHAFT = REGISTRATE
+            .block("powered_stainless_steel_shaft", p -> new TieredPoweredShaftBlock(p, Shafts.STAINLESS_STEEL_SHAFT::get))
+            .initialProperties(SharedProperties::stone)
+            .properties(p -> p.color(MaterialColor.METAL))
+            .transform(TagGen.pickaxeOnly())
+            .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
+            .loot((l, b) -> l.dropOther(b, STAINLESS_STEEL_SHAFT.get()))
+            .onRegister(c -> c.setTier(TIER.HIGH))
+            .register();
+
     public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_STAINLESS_STEEL_SHAFT = REGISTRATE
             .block("andesite_encased_stainless_steel_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.ANDESITE_CASING::get, Shafts.STAINLESS_STEEL_SHAFT::get))
             .properties(p -> p.color(MaterialColor.PODZOL))
@@ -156,6 +197,16 @@ public class Shafts {
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
             .onRegister(c -> c.setTier(TIER.EXTREME))
             .simpleItem()
+            .register();
+
+    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_TITANIUM_SHAFT = REGISTRATE
+            .block("powered_titanium_shaft", p -> new TieredPoweredShaftBlock(p, Shafts.TITANIUM_SHAFT::get))
+            .initialProperties(SharedProperties::stone)
+            .properties(p -> p.color(MaterialColor.METAL))
+            .transform(TagGen.pickaxeOnly())
+            .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
+            .loot((l, b) -> l.dropOther(b, TITANIUM_SHAFT.get()))
+            .onRegister(c -> c.setTier(TIER.EXTREME))
             .register();
 
     public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_TITANIUM_SHAFT = REGISTRATE
@@ -188,6 +239,16 @@ public class Shafts {
             .simpleItem()
             .register();
 
+    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_TUNGSTENSTEEL_SHAFT = REGISTRATE
+            .block("powered_tungstensteel_shaft", p -> new TieredPoweredShaftBlock(p, Shafts.TUNGSTENSTEEL_SHAFT::get))
+            .initialProperties(SharedProperties::stone)
+            .properties(p -> p.color(MaterialColor.METAL))
+            .transform(TagGen.pickaxeOnly())
+            .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
+            .loot((l, b) -> l.dropOther(b, TUNGSTENSTEEL_SHAFT.get()))
+            .onRegister(c -> c.setTier(TIER.INSANE))
+            .register();
+
     public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_TUNGSTENSTEEL_SHAFT = REGISTRATE
             .block("andesite_encased_tungstensteel_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.ANDESITE_CASING::get, Shafts.TUNGSTENSTEEL_SHAFT::get))
             .properties(p -> p.color(MaterialColor.PODZOL))
@@ -216,6 +277,16 @@ public class Shafts {
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
             .onRegister(c -> c.setTier(TIER.LUDICRIOUS))
             .simpleItem()
+            .register();
+
+    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_PALLADIUM_SHAFT = REGISTRATE
+            .block("powered_palladium_shaft", p -> new TieredPoweredShaftBlock(p, Shafts.PALLADIUM_SHAFT::get))
+            .initialProperties(SharedProperties::stone)
+            .properties(p -> p.color(MaterialColor.METAL))
+            .transform(TagGen.pickaxeOnly())
+            .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
+            .loot((l, b) -> l.dropOther(b, PALLADIUM_SHAFT.get()))
+            .onRegister(c -> c.setTier(TIER.LUDICRIOUS))
             .register();
 
     public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_PALLADIUM_SHAFT = REGISTRATE
@@ -248,6 +319,16 @@ public class Shafts {
             .simpleItem()
             .register();
 
+    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_NAQUADAH_SHAFT = REGISTRATE
+            .block("powered_naquadah_shaft", p -> new TieredPoweredShaftBlock(p, Shafts.NAQUADAH_SHAFT::get))
+            .initialProperties(SharedProperties::stone)
+            .properties(p -> p.color(MaterialColor.METAL))
+            .transform(TagGen.pickaxeOnly())
+            .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
+            .loot((l, b) -> l.dropOther(b, NAQUADAH_SHAFT.get()))
+            .onRegister(c -> c.setTier(TIER.ZPM))
+            .register();
+
     public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_NAQUADAH_SHAFT = REGISTRATE
             .block("andesite_encased_naquadah_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.ANDESITE_CASING::get, Shafts.NAQUADAH_SHAFT::get))
             .properties(p -> p.color(MaterialColor.PODZOL))
@@ -278,6 +359,16 @@ public class Shafts {
             .simpleItem()
             .register();
 
+    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_DARMSTADTIUM_SHAFT = REGISTRATE
+            .block("powered_darmstadtium_shaft", p -> new TieredPoweredShaftBlock(p, Shafts.DARMSTADTIUM_SHAFT::get))
+            .initialProperties(SharedProperties::stone)
+            .properties(p -> p.color(MaterialColor.METAL))
+            .transform(TagGen.pickaxeOnly())
+            .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
+            .loot((l, b) -> l.dropOther(b, DARMSTADTIUM_SHAFT.get()))
+            .onRegister(c -> c.setTier(TIER.ULTIMATE))
+            .register();
+
     public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_DARMSTADTIUM_SHAFT = REGISTRATE
             .block("andesite_encased_darmstadtium_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.ANDESITE_CASING::get, Shafts.DARMSTADTIUM_SHAFT::get))
             .properties(p -> p.color(MaterialColor.PODZOL))
@@ -306,6 +397,16 @@ public class Shafts {
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
             .onRegister(c -> c.setTier(TIER.ULTIMATE_HIGH))
             .simpleItem()
+            .register();
+
+    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_NEUTRONIUM_SHAFT = REGISTRATE
+            .block("powered_neutronium_shaft", p -> new TieredPoweredShaftBlock(p, Shafts.NEUTRONIUM_SHAFT::get))
+            .initialProperties(SharedProperties::stone)
+            .properties(p -> p.color(MaterialColor.METAL))
+            .transform(TagGen.pickaxeOnly())
+            .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
+            .loot((l, b) -> l.dropOther(b, NEUTRONIUM_SHAFT.get()))
+            .onRegister(c -> c.setTier(TIER.ULTIMATE_HIGH))
             .register();
 
     public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_NEUTRONIUM_SHAFT = REGISTRATE

@@ -7,7 +7,9 @@
     "MixinBlockStressDefaults",
     "MixinGirderBlock",
     "MixinKineticBlockEntity",
-    "MixinKineticNetwork"
+    "MixinKineticNetwork",
+    "MixinSteamEngineBlock",
+    "MixinSteamEngineBlock$PlacementHelper"
   ],
   "injectors": {
     "defaultRequire": 1
