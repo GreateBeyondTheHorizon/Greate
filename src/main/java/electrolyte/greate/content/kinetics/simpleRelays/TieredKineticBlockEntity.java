@@ -63,7 +63,7 @@ public class TieredKineticBlockEntity extends SimpleKineticBlockEntity implement
     public void updateFromNetwork(float maxStress, float currentStress, int networkSize, double networkMaxCapacity) {
         super.updateFromNetwork(maxStress, currentStress, networkSize);
         this.networkMaxCapacity = networkMaxCapacity;
-        //sendData();
+        sendData();
     }
 
     @Override
