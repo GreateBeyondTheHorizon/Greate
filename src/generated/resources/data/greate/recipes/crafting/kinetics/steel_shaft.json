@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "A": {
+      "item": "greate:steel_alloy"
+    },
+    "S": {
+      "tag": "forge:tools/saws"
+    }
+  },
+  "pattern": [
+    "S ",
+    " A"
+  ],
+  "result": {
+    "count": 4,
+    "item": "greate:steel_shaft"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "F": {
+      "tag": "forge:tools/files"
+    },
+    "P": {
+      "tag": "forge:plates/stone"
+    },
+    "S": {
+      "item": "greate:steel_shaft"
+    }
+  },
+  "pattern": [
+    "SP",
+    "F "
+  ],
+  "result": {
+    "item": "greate:steel_cogwheel"
+  }
+}

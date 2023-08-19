@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "F": {
+      "tag": "forge:tools/files"
+    },
+    "P": {
+      "tag": "forge:plates/wood"
+    },
+    "S": {
+      "item": "greate:andesite_shaft"
+    }
+  },
+  "pattern": [
+    "SP",
+    "F "
+  ],
+  "result": {
+    "item": "greate:andesite_cogwheel"
+  }
+}

@@ -8,6 +8,7 @@
     "MixinGirderBlock",
     "MixinKineticBlockEntity",
     "MixinKineticNetwork",
+    "MixinRecipeManager",
     "MixinSteamEngineBlock",
     "MixinSteamEngineBlock$PlacementHelper"
   ],

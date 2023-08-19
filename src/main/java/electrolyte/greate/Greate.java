@@ -4,11 +4,13 @@ import com.mojang.logging.LogUtils;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import dev.toma.configuration.Configuration;
 import dev.toma.configuration.config.format.ConfigFormats;
+import electrolyte.greate.foundation.data.recipe.GreateStandardRecipeGen;
 import electrolyte.greate.registry.*;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -28,6 +30,7 @@ public class Greate {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
         MinecraftForge.EVENT_BUS.register(this);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::gatherData);
         REGISTRATE.registerEventListeners(eventBus);
         GreateLang.register();
         Cogwheels.register();
@@ -47,7 +50,13 @@ public class Greate {
         }
     };
 
-    public void clientSetup(FMLClientSetupEvent event) {
+    private void clientSetup(FMLClientSetupEvent event) {
         GreatePartialModels.register();
+    }
+
+    private void gatherData(GatherDataEvent event) {
+        if(event.includeServer()) {
+            event.getGenerator().addProvider(true, new GreateStandardRecipeGen(event.getGenerator()));
+        }
     }
 }

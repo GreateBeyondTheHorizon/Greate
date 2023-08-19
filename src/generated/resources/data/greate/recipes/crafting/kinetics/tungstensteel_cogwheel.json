@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "F": {
+      "tag": "forge:tools/files"
+    },
+    "P": {
+      "tag": "forge:plates/titanium"
+    },
+    "S": {
+      "item": "greate:tungstensteel_shaft"
+    }
+  },
+  "pattern": [
+    "SP",
+    "F "
+  ],
+  "result": {
+    "item": "greate:tungstensteel_cogwheel"
+  }
+}

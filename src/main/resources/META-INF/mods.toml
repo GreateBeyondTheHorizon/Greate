@@ -47,7 +47,7 @@ description="Create gregified"
     modId="create"
     mandatory=true
     versionRange="[0.5.1.c,)"
-    ordering="NONE"
+    ordering="AFTER"
     side="BOTH"
 
 [[dependencies.greate]]

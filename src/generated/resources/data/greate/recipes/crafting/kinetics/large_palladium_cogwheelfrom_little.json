@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "F": {
+      "tag": "forge:tools/files"
+    },
+    "P": {
+      "tag": "forge:plates/tungstensteel"
+    },
+    "S": {
+      "item": "greate:palladium_cogwheel"
+    }
+  },
+  "pattern": [
+    "SP",
+    "F "
+  ],
+  "result": {
+    "item": "greate:large_palladium_cogwheel"
+  }
+}
