@@ -123,6 +123,13 @@
   "greate.tooltip.capacity": "Kinetic Capacity: ",
   "greate.tooltip.overcapacity": "Overcapacity",
   "greate.tooltip.overcapacity.description": "It appears that a shaft on this network has reached §fovercapacity.§7 Reduce the amount of su to an amount that the shaft can support.",
+  "item.greate.aluminium_alloy": "Aluminium Alloy",
+  "item.greate.darmstadtium_alloy": "Darmstadtium Alloy",
+  "item.greate.naquadah_alloy": "Naquadah Alloy",
+  "item.greate.neutronium_alloy": "Neutronium Alloy",
+  "item.greate.palladium_alloy": "Palladium Alloy",
+  "item.greate.stainless_steel_alloy": "Stainless Steel Alloy",
+  "item.greate.steel_alloy": "Steel Alloy",
   "item.greate.tiered_aluminium_vertical_gearbox": "Aluminium Vertical Gearbox",
   "item.greate.tiered_andesite_vertical_gearbox": "Andesite Vertical Gearbox",
   "item.greate.tiered_darmstadtium_vertical_gearbox": "Darmstadtium Vertical Gearbox",
@@ -133,5 +140,7 @@
   "item.greate.tiered_steel_vertical_gearbox": "Steel Vertical Gearbox",
   "item.greate.tiered_titanium_vertical_gearbox": "Titanium Vertical Gearbox",
   "item.greate.tiered_tungstensteel_vertical_gearbox": "Tungstensteel Vertical Gearbox",
+  "item.greate.titanium_alloy": "Titanium Alloy",
+  "item.greate.tungstensteel_alloy": "Tungstensteel Alloy",
   "itemGroup.greate": "Greate"
 }

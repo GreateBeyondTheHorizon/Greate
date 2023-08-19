@@ -123,6 +123,13 @@
   "greate.tooltip.capacity": " :ʎʇıɔɐdɐƆ ɔıʇǝuıʞ",
   "greate.tooltip.overcapacity": "ʎʇıɔɐdɐɔɹǝʌO",
   "greate.tooltip.overcapacity.description": "˙ʇɹoddns uɐɔ ʇɟɐɥs ǝɥʇ ʇɐɥʇ ʇunoɯɐ uɐ oʇ ns ɟo ʇunoɯɐ ǝɥʇ ǝɔnpǝᴚ ㄥ§˙ʎʇıɔɐdɐɔɹǝʌoɟ§ pǝɥɔɐǝɹ sɐɥ ʞɹoʍʇǝu sıɥʇ uo ʇɟɐɥs ɐ ʇɐɥʇ sɹɐǝddɐ ʇI",
+  "item.greate.aluminium_alloy": "ʎoןןⱯ ɯnıuıɯnןⱯ",
+  "item.greate.darmstadtium_alloy": "ʎoןןⱯ ɯnıʇpɐʇsɯɹɐᗡ",
+  "item.greate.naquadah_alloy": "ʎoןןⱯ ɥɐpɐnbɐN",
+  "item.greate.neutronium_alloy": "ʎoןןⱯ ɯnıuoɹʇnǝN",
+  "item.greate.palladium_alloy": "ʎoןןⱯ ɯnıpɐןןɐԀ",
+  "item.greate.stainless_steel_alloy": "ʎoןןⱯ ןǝǝʇS ssǝןuıɐʇS",
+  "item.greate.steel_alloy": "ʎoןןⱯ ןǝǝʇS",
   "item.greate.tiered_aluminium_vertical_gearbox": "xoqɹɐǝ⅁ ןɐɔıʇɹǝΛ ɯnıuıɯnןⱯ",
   "item.greate.tiered_andesite_vertical_gearbox": "xoqɹɐǝ⅁ ןɐɔıʇɹǝΛ ǝʇısǝpuⱯ",
   "item.greate.tiered_darmstadtium_vertical_gearbox": "xoqɹɐǝ⅁ ןɐɔıʇɹǝΛ ɯnıʇpɐʇsɯɹɐᗡ",
@@ -133,5 +140,7 @@
   "item.greate.tiered_steel_vertical_gearbox": "xoqɹɐǝ⅁ ןɐɔıʇɹǝΛ ןǝǝʇS",
   "item.greate.tiered_titanium_vertical_gearbox": "xoqɹɐǝ⅁ ןɐɔıʇɹǝΛ ɯnıuɐʇı⟘",
   "item.greate.tiered_tungstensteel_vertical_gearbox": "xoqɹɐǝ⅁ ןɐɔıʇɹǝΛ ןǝǝʇsuǝʇsbun⟘",
+  "item.greate.titanium_alloy": "ʎoןןⱯ ɯnıuɐʇı⟘",
+  "item.greate.tungstensteel_alloy": "ʎoןןⱯ ןǝǝʇsuǝʇsbun⟘",
   "itemGroup.greate": "ǝʇɐǝɹ⅁"
 }
