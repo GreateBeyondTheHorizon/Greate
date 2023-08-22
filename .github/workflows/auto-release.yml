@@ -21,8 +21,9 @@ jobs:
       with:
           arguments: build
     - name: Upload Release
-      uses: AButler/upload-release-assets@v2.0
+      uses: softprops/actoin-gh-release@v1
       with:
-          files: 'build/libs/*.jar'
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          files: build/libs/*.jar
+          generate_release_notes: true
+          prerelease: true
        
