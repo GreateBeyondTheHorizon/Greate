@@ -25,7 +25,7 @@ public abstract class MixinSteamEngineBlock extends FaceAttachedHorizontalDirect
         super(pProperties);
     }
 
-    @Inject(method = "isShaftValid", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "isShaftValid", at = @At("HEAD"), remap = false, cancellable = true)
     private static void greate_isShaftValid(BlockState state, BlockState shaft, CallbackInfoReturnable<Boolean> cir) {
         if((shaft.getBlock() instanceof TieredShaftBlock || shaft.getBlock() instanceof TieredPoweredShaftBlock) &&
                 shaft.getValue(ShaftBlock.AXIS) != greate_getFacing(state).getAxis()) {

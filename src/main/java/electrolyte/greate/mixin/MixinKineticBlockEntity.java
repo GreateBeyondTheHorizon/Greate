@@ -25,7 +25,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.List;
 
@@ -37,6 +36,9 @@ public abstract class MixinKineticBlockEntity extends SmartBlockEntity implement
     @Shadow protected float capacity;
     @Shadow public abstract void onSpeedChanged(float previousSpeed);
     @Shadow protected KineticEffectHandler effects;
+
+    @Shadow public abstract boolean hasNetwork();
+
     @Unique protected double greate_shaftMaxCapacity;
     @Unique protected boolean greate_OverCapacity;
     @Unique protected double greate_networkMaxCapacity;
@@ -50,17 +52,17 @@ public abstract class MixinKineticBlockEntity extends SmartBlockEntity implement
         return Integer.MAX_VALUE;
     }
 
-    @Inject(method = "write", at = @At("HEAD"), remap = false)
+    @Inject(method = "write", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/blockEntity/SmartBlockEntity;write(Lnet/minecraft/nbt/CompoundTag;Z)V"), remap = false)
     private void greate_Write(CompoundTag compound, boolean clientPacket, CallbackInfo ci) {
         compound.putDouble("MaxCapacity", getMaxCapacity());
+        if(hasNetwork()) {
+            CompoundTag networkTag = compound.getCompound("Network");
+            networkTag.putDouble("MaxCapacity", greate_networkMaxCapacity);
+            compound.put("Network", networkTag);
+        }
     }
 
-    @Inject(method = "write", at = @At(value = "INVOKE", target = "Lnet/minecraft/nbt/CompoundTag;putLong(Ljava/lang/String;J)V"), locals = LocalCapture.CAPTURE_FAILSOFT, remap = false)
-    private void greate_WriteNetwork(CompoundTag compound, boolean clientPacket, CallbackInfo ci, CompoundTag networkTag) {
-        networkTag.putDouble("MaxCapacity", greate_networkMaxCapacity);
-    }
-
-    @Inject(method = "read", at = @At(value = "INVOKE", target = "Lnet/minecraft/nbt/CompoundTag;getFloat(Ljava/lang/String;)F"), remap = false)
+    @Inject(method = "read", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/kinetics/transmission/sequencer/SequencedGearshiftBlockEntity$SequenceContext;fromNBT(Lnet/minecraft/nbt/CompoundTag;)Lcom/simibubi/create/content/kinetics/transmission/sequencer/SequencedGearshiftBlockEntity$SequenceContext;"), remap = false)
     private void greate_Read(CompoundTag tag, boolean clientPacket, CallbackInfo ci) {
         boolean overCapacityBefore = greate_OverCapacity;
         greate_shaftMaxCapacity = tag.getDouble("MaxCapacity");

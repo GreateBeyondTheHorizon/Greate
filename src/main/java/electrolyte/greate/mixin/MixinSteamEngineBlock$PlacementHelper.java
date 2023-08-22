@@ -29,12 +29,12 @@ import static com.simibubi.create.content.kinetics.steamEngine.SteamEngineBlock.
 @Mixin(targets = "com/simibubi/create/content/kinetics/steamEngine/SteamEngineBlock$PlacementHelper")
 public abstract class MixinSteamEngineBlock$PlacementHelper {
 
-    @Inject(method = "getItemPredicate", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "getItemPredicate", at = @At("HEAD"), remap = false, cancellable = true)
     private void greate_getItemPredicate(CallbackInfoReturnable<Predicate<ItemStack>> cir) {
         cir.setReturnValue(i -> Block.byItem(i.getItem()) instanceof TieredShaftBlock || Block.byItem(i.getItem()).equals(AllBlocks.SHAFT.get()));
     }
 
-    @Inject(method = "getOffset(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/BlockHitResult;)Lcom/simibubi/create/foundation/placement/PlacementOffset;", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "getOffset(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/BlockHitResult;)Lcom/simibubi/create/foundation/placement/PlacementOffset;", at = @At("HEAD"), remap = false, cancellable = true)
     private void greate_getOffset(Player player, Level world, BlockState state, BlockPos pos, BlockHitResult ray, CallbackInfoReturnable<PlacementOffset> cir) {
         Block shaftType = Block.byItem(player.getMainHandItem().getItem());
         if (shaftType instanceof TieredShaftBlock) {
