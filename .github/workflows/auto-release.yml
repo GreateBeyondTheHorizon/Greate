@@ -14,8 +14,12 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
     - name: Build
-      run: ./gradlew build
+      uses: gradle/gradle-build-action@v2.4.2
+      with:
+          arguments: build
     - name: Upload Release
       uses: AButler/upload-release-assets@v2.0
       with:
