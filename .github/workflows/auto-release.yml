@@ -4,7 +4,6 @@ on:
   push:
     tags: 
       - 'v[0-9]+.[0-9]+.[0-9]+'
-    branches: ["master"]
 
 jobs:
   build:
@@ -16,9 +15,7 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
     - name: Build
-      uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
-      with:
-        arguments: build
+      run: ./gradlew build
     - name: Upload Release
       uses: AButler/upload-release-assets@v2.0
       with:
