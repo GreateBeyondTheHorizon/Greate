@@ -84,7 +84,11 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
     private Marker KINETICS = enterFolder("kinetics");
 
     GeneratedRecipe
-            ANDESITE_SHAFT = createMaterialShaftRecipe(Shafts.ANDESITE_SHAFT),
+            ANDESITE_SHAFT = create(Shafts.ANDESITE_SHAFT).returns(4).unlockedBy(AllItems.ANDESITE_ALLOY::get)
+            .viaShaped(b -> b.define('A', AllItems.ANDESITE_ALLOY.get())
+                    .define('S', GreateTags.forgeItemTag("tools/saws"))
+                    .pattern("S ")
+                    .pattern(" A")),
             STEEL_SHAFT = createMaterialShaftRecipe(Shafts.STEEL_SHAFT),
             ALUMINIUM_SHAFT = createMaterialShaftRecipe(Shafts.ALUMINIUM_SHAFT),
             STAINLESS_STEEL_SHAFT = createMaterialShaftRecipe(Shafts.STAINLESS_STEEL_SHAFT),

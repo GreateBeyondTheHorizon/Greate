@@ -1,4 +1,4 @@
-// 1.19.2	2023-08-23T20:04:36.0874713	Greate's Recipes
+// 1.19.2	2023-08-24T15:18:22.6916623	Greate's Recipes
 9e38ea0bf16030f801d8131e365c4751f5c575d6 data/greate/advancements/recipes/create.base/crafting/conversion/cogwheel_from_conversion.json
 f0bba2366d351fcfbd18bbcad8846825ebd08c58 data/greate/advancements/recipes/create.base/crafting/conversion/large_cogwheel_from_conversion.json
 8646e547c599a409504045a5739e3dade97fa03d data/greate/advancements/recipes/create.base/crafting/conversion/shaft_from_conversion.json
@@ -17,7 +17,7 @@ f76f467bc26981b89db385c3875914200d6a7720 data/greate/advancements/recipes/greate
 18184582a755b70f6650f5d043a58f431a6c4ba6 data/greate/advancements/recipes/greate/crafting/kinetics/andesite_gearbox.json
 8beca56c91e577ef0d54c297a469682c1d3b3b30 data/greate/advancements/recipes/greate/crafting/kinetics/andesite_gearbox_from_conversion.json
 9e16f99fa175841818bebfec4f3cc443d9aa6fe2 data/greate/advancements/recipes/greate/crafting/kinetics/andesite_millstone.json
-947caa1f1116e6065dc48ded6768738ffb8042a1 data/greate/advancements/recipes/greate/crafting/kinetics/andesite_shaft.json
+ff1467c96f1e43becf5b50e3902b63adb5585dbf data/greate/advancements/recipes/greate/crafting/kinetics/andesite_shaft.json
 bbcea73c0e8426da563c950e88b39c1551d6563a data/greate/advancements/recipes/greate/crafting/kinetics/andesite_vertical_gearbox_from_conversion.json
 51d298e93a85a618a437d7d6f84a1c901625417e data/greate/advancements/recipes/greate/crafting/kinetics/darmstadtium_cogwheel.json
 51325acbe7e98ad41ad5c9c2c25413eca0b3dbf5 data/greate/advancements/recipes/greate/crafting/kinetics/darmstadtium_gearbox.json
@@ -112,7 +112,7 @@ d858fb747565636dda2f66bd9bf705cfd1ac0da9 data/greate/recipes/crafting/kinetics/a
 006b8344b28f190b3c1978cb30b76f382fce90df data/greate/recipes/crafting/kinetics/andesite_gearbox.json
 df1ad40d2a905113b919997bc9465cf0d33918d6 data/greate/recipes/crafting/kinetics/andesite_gearbox_from_conversion.json
 e3a31ab1404a06acd36320c86bb3f06c8137fecb data/greate/recipes/crafting/kinetics/andesite_millstone.json
-675b878faa15714c68f7c54d48faaccd09c91a2a data/greate/recipes/crafting/kinetics/andesite_shaft.json
+8457d384aaa8a5d8891a5d75343f9c5c8927473f data/greate/recipes/crafting/kinetics/andesite_shaft.json
 e12ddaa6ee748ff7a92a772b415fe48be9916b46 data/greate/recipes/crafting/kinetics/andesite_vertical_gearbox_from_conversion.json
 e60eae7c2414b622908a6a71d9add92b994e88f3 data/greate/recipes/crafting/kinetics/darmstadtium_cogwheel.json
 ad0c449de08a08e5ce05d306bec762904f1bfda5 data/greate/recipes/crafting/kinetics/darmstadtium_gearbox.json
