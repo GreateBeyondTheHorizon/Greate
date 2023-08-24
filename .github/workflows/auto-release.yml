@@ -5,6 +5,8 @@ on:
     tags: 
       - 'v[0-9]+.[0-9]+.[0-9]+'
 
+  workflow_dispatch:
+
 permissions:
   contents: write
 
@@ -22,6 +24,7 @@ jobs:
     - name: Build
       uses: gradle/gradle-build-action@v2.4.2
       with:
+          cache-read-only: false
           arguments: build
     - name: Upload Release
       uses: softprops/action-gh-release@v1
