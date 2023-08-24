@@ -33,6 +33,7 @@ public class Greate {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::gatherData);
         REGISTRATE.registerEventListeners(eventBus);
         GreateLang.register();
+        GreateTags.init();
         Cogwheels.register();
         Gearboxes.register();
         Girders.register();

@@ -16,6 +16,7 @@ import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedSha
 import electrolyte.greate.content.kinetics.steamEngine.TieredPoweredShaftBlock;
 import electrolyte.greate.foundation.data.GreateBlockStateGen;
 import electrolyte.greate.foundation.data.GreateBuilderTransformers;
+import electrolyte.greate.registry.GreateTags.GreateItemTags;
 import net.minecraft.world.level.material.MaterialColor;
 
 import static electrolyte.greate.Greate.REGISTRATE;
@@ -36,7 +37,9 @@ public class Shafts {
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
             .onRegister(c -> c.setTier(TIER.ULTRA_LOW))
             .simpleItem()
-            .item().build()
+            .item()
+            .tag(GreateItemTags.SHAFTS.itemTag)
+            .tag(GreateItemTags.SHAFTS_ANDESITE.itemTag).build()
             .register();
 
     public static final BlockEntry<TieredPoweredShaftBlock> POWERED_ANDESITE_SHAFT = REGISTRATE
@@ -77,6 +80,9 @@ public class Shafts {
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
             .onRegister(c -> c.setTier(TIER.LOW))
             .simpleItem()
+            .item()
+            .tag(GreateItemTags.SHAFTS.itemTag)
+            .tag(GreateItemTags.SHAFTS_STEEL.itemTag).build()
             .register();
 
     public static final BlockEntry<TieredPoweredShaftBlock> POWERED_STEEL_SHAFT = REGISTRATE
@@ -117,6 +123,9 @@ public class Shafts {
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
             .onRegister(c -> c.setTier(TIER.MEDIUM))
             .simpleItem()
+            .item()
+            .tag(GreateItemTags.SHAFTS.itemTag)
+            .tag(GreateItemTags.SHAFTS_ALUMINIUM.itemTag).build()
             .register();
 
     public static final BlockEntry<TieredPoweredShaftBlock> POWERED_ALUMINIUM_SHAFT = REGISTRATE
@@ -157,6 +166,9 @@ public class Shafts {
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
             .onRegister(c -> c.setTier(TIER.HIGH))
             .simpleItem()
+            .item()
+            .tag(GreateItemTags.SHAFTS.itemTag)
+            .tag(GreateItemTags.SHAFTS_STAINLESS_STEEL.itemTag).build()
             .register();
 
     public static final BlockEntry<TieredPoweredShaftBlock> POWERED_STAINLESS_STEEL_SHAFT = REGISTRATE
@@ -197,6 +209,9 @@ public class Shafts {
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
             .onRegister(c -> c.setTier(TIER.EXTREME))
             .simpleItem()
+            .item()
+            .tag(GreateItemTags.SHAFTS.itemTag)
+            .tag(GreateItemTags.SHAFTS_TITANIUM.itemTag).build()
             .register();
 
     public static final BlockEntry<TieredPoweredShaftBlock> POWERED_TITANIUM_SHAFT = REGISTRATE
@@ -237,6 +252,9 @@ public class Shafts {
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
             .onRegister(c -> c.setTier(TIER.INSANE))
             .simpleItem()
+            .item()
+            .tag(GreateItemTags.SHAFTS.itemTag)
+            .tag(GreateItemTags.SHAFTS_TUNGSTENSTEEL.itemTag).build()
             .register();
 
     public static final BlockEntry<TieredPoweredShaftBlock> POWERED_TUNGSTENSTEEL_SHAFT = REGISTRATE
@@ -277,6 +295,9 @@ public class Shafts {
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
             .onRegister(c -> c.setTier(TIER.LUDICRIOUS))
             .simpleItem()
+            .item()
+            .tag(GreateItemTags.SHAFTS.itemTag)
+            .tag(GreateItemTags.SHAFTS_PALLADIUM.itemTag).build()
             .register();
 
     public static final BlockEntry<TieredPoweredShaftBlock> POWERED_PALLADIUM_SHAFT = REGISTRATE
@@ -317,6 +338,9 @@ public class Shafts {
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
             .onRegister(c -> c.setTier(TIER.ZPM))
             .simpleItem()
+            .item()
+            .tag(GreateItemTags.SHAFTS.itemTag)
+            .tag(GreateItemTags.SHAFTS_NAQUADAH.itemTag).build()
             .register();
 
     public static final BlockEntry<TieredPoweredShaftBlock> POWERED_NAQUADAH_SHAFT = REGISTRATE
@@ -357,6 +381,9 @@ public class Shafts {
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
             .onRegister(c -> c.setTier(TIER.ULTIMATE))
             .simpleItem()
+            .item()
+            .tag(GreateItemTags.SHAFTS.itemTag)
+            .tag(GreateItemTags.SHAFTS_DARMSTADTIUM.itemTag).build()
             .register();
 
     public static final BlockEntry<TieredPoweredShaftBlock> POWERED_DARMSTADTIUM_SHAFT = REGISTRATE
@@ -397,6 +424,9 @@ public class Shafts {
             .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
             .onRegister(c -> c.setTier(TIER.ULTIMATE_HIGH))
             .simpleItem()
+            .item()
+            .tag(GreateItemTags.SHAFTS.itemTag)
+            .tag(GreateItemTags.SHAFTS_NEUTRONIUM.itemTag).build()
             .register();
 
     public static final BlockEntry<TieredPoweredShaftBlock> POWERED_NEUTRONIUM_SHAFT = REGISTRATE
@@ -426,5 +456,6 @@ public class Shafts {
             .transform(TagGen.axeOrPickaxe())
             .onRegister(c -> c.setTier(TIER.ULTIMATE_HIGH))
             .register();
+
     public static void register() {}
 }
