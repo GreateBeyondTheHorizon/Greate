@@ -131,6 +131,7 @@
   "block.greate.tungstensteel_shaft": "Tungstensteel Shaft",
   "greate.jei.recipe_tier": "Recipe Tier: ",
   "greate.old_create_items_warning": "[Greate]: The conversion recipe for this item will be removed in a future version, once all recipes have been properly updated!",
+  "greate.recipe.milling": "Milling",
   "greate.tooltip.capacity": "Kinetic Capacity: ",
   "greate.tooltip.overcapacity": "Overcapacity",
   "greate.tooltip.overcapacity.description": "It appears that a shaft on this network has reached §fovercapacity.§7 Reduce the amount of su to an amount that the shaft can support.",
