@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "greate:large_andesite_cogwheel"
+    }
+  ],
+  "result": {
+    "item": "create:large_cogwheel"
+  }
+}

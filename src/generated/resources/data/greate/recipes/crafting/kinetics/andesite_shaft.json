@@ -1,9 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "key": {
-    "A": {
-      "item": "create:andesite_alloy"
-    },
+    "A": [],
     "S": {
       "tag": "forge:tools/saws"
     }
