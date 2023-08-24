@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "greate:palladium_vertical_gearbox"
+    }
+  ],
+  "result": {
+    "item": "greate:palladium_gearbox"
+  }
+}

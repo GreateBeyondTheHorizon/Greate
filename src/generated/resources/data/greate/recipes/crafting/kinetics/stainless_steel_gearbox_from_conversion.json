@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "greate:stainless_steel_vertical_gearbox"
+    }
+  ],
+  "result": {
+    "item": "greate:stainless_steel_gearbox"
+  }
+}

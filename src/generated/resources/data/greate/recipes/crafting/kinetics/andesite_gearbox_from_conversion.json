@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "greate:andesite_vertical_gearbox"
+    }
+  ],
+  "result": {
+    "item": "greate:andesite_gearbox"
+  }
+}
