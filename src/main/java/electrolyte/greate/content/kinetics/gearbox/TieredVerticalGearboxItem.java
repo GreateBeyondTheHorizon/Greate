@@ -9,28 +9,38 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class TieredVerticalGearboxItem extends BlockItem {
 
-    String material;
+    public static final Map<Block, TieredVerticalGearboxItem> MAP = new HashMap<>();
+    private String material;
+
     public TieredVerticalGearboxItem(Properties pProperties, Block pBlock) {
         super(pBlock, pProperties);
         material = pBlock.getName().getString();
         material = material.substring(13, material.length() - 8);
+        MAP.put(pBlock, this);
     }
 
     @Override
     public String getDescriptionId() {
-        return "item.greate.tiered_" + material + "_vertical_gearbox";
+        return "item.greate." +  material + "_vertical_gearbox";
     }
 
     @Override
     public void fillItemCategory(CreativeModeTab pGroup, NonNullList<ItemStack> pItems) {}
+
+    @Override
+    public void registerBlocks(Map<Block, Item> pBlockToItemMap, Item pItem) {}
 
     @Override
     protected boolean updateCustomBlockEntityTag(BlockPos pPos, Level pLevel, Player pPlayer, ItemStack pStack, BlockState pState) {
@@ -38,7 +48,7 @@ public class TieredVerticalGearboxItem extends BlockItem {
         for(Direction dir : Iterate.horizontalDirections) {
             BlockState state = pLevel.getBlockState(pPos.relative(dir));
             if(state.getBlock() instanceof IRotate) {
-                if(((IRotate) pState.getBlock()).hasShaftTowards(pLevel, pPos.relative(dir), state, dir.getOpposite())) {
+                if(((IRotate) state.getBlock()).hasShaftTowards(pLevel, pPos.relative(dir), state, dir.getOpposite())) {
                     if(axis != null && axis != dir.getAxis()) {
                         axis = null;
                         break;

@@ -7,7 +7,7 @@ import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.render.SuperByteBuffer;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.Iterate;
-import electrolyte.greate.content.kinetics.simpleRelays.ITieredHalfShaft;
+import electrolyte.greate.content.kinetics.simpleRelays.ITieredPartialModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider.Context;
@@ -34,7 +34,7 @@ public class TieredGearboxRenderer extends KineticBlockEntityRenderer<TieredGear
             if (boxAxis == axis)
                 continue;
 
-            SuperByteBuffer shaft = CachedBufferer.partialFacing(((ITieredHalfShaft) be.getBlockState().getBlock()).getHalfShaft(), be.getBlockState(), direction);
+            SuperByteBuffer shaft = CachedBufferer.partialFacing(((ITieredPartialModel) be.getBlockState().getBlock()).getPartialModel(), be.getBlockState(), direction);
             float offset = getRotationOffsetForPosition(be, pos, axis);
             float angle = (time * be.getSpeed() * 3f / 10) % 360;
 

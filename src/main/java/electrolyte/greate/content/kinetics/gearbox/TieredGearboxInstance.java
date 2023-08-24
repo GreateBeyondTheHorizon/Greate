@@ -8,7 +8,7 @@ import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.content.kinetics.base.flwdata.RotatingData;
 import com.simibubi.create.foundation.utility.Iterate;
 import electrolyte.greate.content.kinetics.base.TieredKineticBlockEntityInstance;
-import electrolyte.greate.content.kinetics.simpleRelays.ITieredHalfShaft;
+import electrolyte.greate.content.kinetics.simpleRelays.ITieredPartialModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
@@ -23,11 +23,11 @@ public class TieredGearboxInstance extends TieredKineticBlockEntityInstance<Tier
 
     protected final EnumMap<Direction, RotatingData> keys;
     protected Direction sourceFacing;
-    private PartialModel halfShaftModel;
+    private PartialModel partialModel;
 
     public TieredGearboxInstance(MaterialManager materialManager, TieredGearboxBlockEntity blockEntity) {
         super(materialManager, blockEntity);
-        halfShaftModel = ((ITieredHalfShaft) blockState.getBlock()).getHalfShaft();
+        partialModel = ((ITieredPartialModel) blockState.getBlock()).getPartialModel();
         keys = new EnumMap<>(Direction.class);
         final Axis boxAxis = blockState.getValue(BlockStateProperties.AXIS);
         int blockLight = world.getBrightness(LightLayer.BLOCK, pos);
@@ -37,7 +37,7 @@ public class TieredGearboxInstance extends TieredKineticBlockEntityInstance<Tier
         for(Direction direction : Iterate.directions) {
             final Axis axis = direction.getAxis();
             if(boxAxis == axis) continue;
-            Instancer<RotatingData> shaft = rotatingMaterial.getModel(halfShaftModel, blockState, direction);
+            Instancer<RotatingData> shaft = rotatingMaterial.getModel(partialModel, blockState, direction);
             RotatingData key = shaft.createInstance();
             key.setRotationAxis(Direction.get(AxisDirection.POSITIVE, axis).step())
                     .setRotationalSpeed(getSpeed(direction))

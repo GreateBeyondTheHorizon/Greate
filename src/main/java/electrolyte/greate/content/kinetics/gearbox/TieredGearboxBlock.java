@@ -5,13 +5,16 @@ import com.simibubi.create.content.kinetics.base.RotatedPillarKineticBlock;
 import com.simibubi.create.foundation.block.IBE;
 import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
-import electrolyte.greate.content.kinetics.simpleRelays.ITieredHalfShaft;
+import electrolyte.greate.content.kinetics.simpleRelays.ITieredPartialModel;
 import electrolyte.greate.registry.ModBlockEntityTypes;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
+import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -20,17 +23,41 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.storage.loot.LootContext.Builder;
+import net.minecraft.world.phys.HitResult;
 
 import java.util.List;
 
-public class TieredGearboxBlock extends RotatedPillarKineticBlock implements IBE<TieredGearboxBlockEntity>, ITieredBlock, ITieredHalfShaft {
+public class TieredGearboxBlock extends RotatedPillarKineticBlock implements IBE<TieredGearboxBlockEntity>, ITieredBlock, ITieredPartialModel {
 
     private TIER tier;
-    private PartialModel halfShaftModel;
+    private PartialModel partialModel;
 
-    public TieredGearboxBlock(Properties properties, PartialModel halfShaftModel) {
+    public TieredGearboxBlock(Properties properties, PartialModel partialModel) {
         super(properties);
-        this.halfShaftModel = halfShaftModel;
+        this.partialModel = partialModel;
+    }
+
+    @Override
+    public void fillItemCategory(CreativeModeTab pTab, NonNullList<ItemStack> pItems) {
+        super.fillItemCategory(pTab, pItems);
+        pItems.add(TieredVerticalGearboxItem.MAP.get(this).getDefaultInstance());
+    }
+
+    @Override
+    public List<ItemStack> getDrops(BlockState pState, Builder pBuilder) {
+        if(pState.getValue(AXIS).isVertical()) {
+            return super.getDrops(pState, pBuilder);
+        }
+        return List.of(TieredVerticalGearboxItem.MAP.get(this).getDefaultInstance());
+    }
+
+    @Override
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
+        if(state.getValue(AXIS).isVertical()) {
+            return super.getCloneItemStack(state, target, level, pos, player);
+        }
+        return TieredVerticalGearboxItem.MAP.get(this).getDefaultInstance();
     }
 
     @Override
@@ -74,8 +101,8 @@ public class TieredGearboxBlock extends RotatedPillarKineticBlock implements IBE
     }
 
     @Override
-    public PartialModel getHalfShaft() {
-        return halfShaftModel;
+    public PartialModel getPartialModel() {
+        return partialModel;
     }
 
     @Override

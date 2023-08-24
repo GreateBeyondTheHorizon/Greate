@@ -171,6 +171,7 @@ dependencies {
     implementation fg.deobf("curse.maven:ldlib-626676:4676440")
     implementation fg.deobf("curse.maven:configuration-444699:4519560")
     implementation fg.deobf("curse.maven:gregtechceu-modern-890405:4701156")
+    implementation fg.deobf("curse.maven:jade-324717:4433884")
 }
 
 mixin {
