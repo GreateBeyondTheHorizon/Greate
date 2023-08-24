@@ -14,7 +14,7 @@ public class TieredSingleRotatingInstance<T extends KineticBlockEntity> extends 
 
     public TieredSingleRotatingInstance(MaterialManager materialManager, T blockEntity) {
         super(materialManager, blockEntity);
-        state = ((ITieredShaftBlock) blockEntity.getBlockState().getBlock()).getShaft().defaultBlockState();
+        state = blockEntity.getBlockState().getBlock() instanceof ITieredShaftBlock shaftBlock ? shaftBlock.getShaft().defaultBlockState() : null;
     }
 
     @Override

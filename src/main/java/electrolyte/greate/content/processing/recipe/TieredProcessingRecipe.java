@@ -1,21 +1,19 @@
 package electrolyte.greate.content.processing.recipe;
 
 
-import com.google.gson.JsonObject;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
+import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import electrolyte.greate.Greate;
 import electrolyte.greate.GreateEnums.TIER;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.NonNullList;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.fluids.FluidStack;
@@ -25,11 +23,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public abstract class TieredProcessingRecipe<T extends Container> implements Recipe<T> {
+public abstract class TieredProcessingRecipe<T extends Container> extends ProcessingRecipe<T> {
 
     protected ResourceLocation id;
     protected NonNullList<Ingredient> ingredients;
@@ -46,6 +43,7 @@ public abstract class TieredProcessingRecipe<T extends Container> implements Rec
     private Supplier<ItemStack> forcedResult;
 
     public TieredProcessingRecipe(IRecipeTypeInfo typeInfo, TieredProcessingRecipeBuilder.TieredProcessingRecipeParams params) {
+        super(typeInfo, params);
         this.forcedResult = null;
         this.typeInfo = typeInfo;
         this.processingDuration = params.processingDuration;
@@ -59,27 +57,7 @@ public abstract class TieredProcessingRecipe<T extends Container> implements Rec
         this.recipeTier = params.recipeTier;
         this.id = params.id;
 
-        validate(typeInfo.getId());
-    }
-
-    protected abstract int getMaxInputCount();
-
-    protected abstract int getMaxOutputCount();
-
-    protected boolean canRequireHeat() {
-        return false;
-    }
-
-    protected boolean canSpecifyDuration() {
-        return true;
-    }
-
-    protected int getMaxFluidInputCount() {
-        return 0;
-    }
-
-    protected int getMaxFluidOutputCount() {
-        return 0;
+        this.validate(typeInfo.getId());
     }
 
     private void validate(ResourceLocation recipeTypeId) {
@@ -120,32 +98,32 @@ public abstract class TieredProcessingRecipe<T extends Container> implements Rec
         return ingredients;
     }
 
+    @Override
     public NonNullList<FluidIngredient> getFluidIngredients() {
         return fluidIngredients;
     }
 
+    @Override
     public List<ProcessingOutput> getRollableResults() {
         return results;
     }
 
+    @Override
     public NonNullList<FluidStack> getFluidResults() {
         return fluidResults;
     }
 
-    public List<ItemStack> getRollableResultsAsItemStacks() {
-        return getRollableResults().stream()
-                .map(ProcessingOutput::getStack)
-                .collect(Collectors.toList());
-    }
-
+    @Override
     public void enforceNextResult(Supplier<ItemStack> stack) {
         forcedResult = stack;
     }
 
+    @Override
     public List<ItemStack> rollResults() {
         return rollResults(this.getRollableResults());
     }
 
+    @Override
     public List<ItemStack> rollResults(List<ProcessingOutput> rollableResults) {
         List<ItemStack> results = new ArrayList<>();
         for (int i = 0; i < rollableResults.size(); i++) {
@@ -157,43 +135,18 @@ public abstract class TieredProcessingRecipe<T extends Container> implements Rec
         return results;
     }
 
+    @Override
     public int getProcessingDuration() {
         return processingDuration;
     }
 
+    @Override
     public HeatCondition getRequiredHeat() {
         return requiredHeat;
     }
 
     public TIER getRecipeTier() {
         return recipeTier;
-    }
-
-    @Override
-    public ItemStack assemble(T inv) {
-        return getResultItem();
-    }
-
-    @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return true;
-    }
-
-    @Override
-    public ItemStack getResultItem() {
-        return getRollableResults().isEmpty() ? ItemStack.EMPTY
-                : getRollableResults().get(0)
-                .getStack();
-    }
-
-    @Override
-    public boolean isSpecial() {
-        return true;
-    }
-
-    @Override
-    public String getGroup() {
-        return "processing";
     }
 
     @Override
@@ -211,16 +164,8 @@ public abstract class TieredProcessingRecipe<T extends Container> implements Rec
         return type;
     }
 
+    @Override
     public IRecipeTypeInfo getTypeInfo() {
         return typeInfo;
     }
-
-    public void readAdditional(JsonObject json) {}
-
-    public void readAdditional(FriendlyByteBuf buffer) {}
-
-    public void writeAdditional(JsonObject json) {}
-
-    public void writeAdditional(FriendlyByteBuf buffer) {}
-
 }

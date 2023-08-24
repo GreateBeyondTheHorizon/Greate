@@ -13,7 +13,7 @@ import com.simibubi.create.content.kinetics.base.flwdata.RotatingData;
 import com.simibubi.create.content.kinetics.simpleRelays.BracketedKineticBlockEntityRenderer;
 import com.simibubi.create.foundation.utility.Iterate;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredEncasedCogwheel;
-import electrolyte.greate.content.kinetics.simpleRelays.ITieredHalfShaft;
+import electrolyte.greate.content.kinetics.simpleRelays.ITieredPartialModel;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredKineticBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Block;
@@ -28,7 +28,7 @@ public class TieredEncasedCogInstance extends KineticBlockEntityInstance<TieredK
     protected RotatingData rotatingModel;
     protected Optional<RotatingData> rotatingTopShaft;
     protected Optional<RotatingData> rotatingBottomShaft;
-    protected PartialModel halfShaftModel, model;
+    protected PartialModel partialModel, model;
 
     public static TieredEncasedCogInstance small(MaterialManager manager, TieredKineticBlockEntity be) {
         return new TieredEncasedCogInstance(manager, be, false);
@@ -41,7 +41,7 @@ public class TieredEncasedCogInstance extends KineticBlockEntityInstance<TieredK
     public TieredEncasedCogInstance(MaterialManager materialManager, TieredKineticBlockEntity blockEntity, boolean large) {
         super(materialManager, blockEntity);
         this.large = large;
-        this.halfShaftModel = ((ITieredHalfShaft) blockState.getBlock()).getHalfShaft();
+        this.partialModel = ((ITieredPartialModel) blockState.getBlock()).getPartialModel();
         this.model = ((ITieredEncasedCogwheel) blockState.getBlock()).getCogwheelModel();
     }
 
@@ -56,7 +56,7 @@ public class TieredEncasedCogInstance extends KineticBlockEntityInstance<TieredK
         rotatingBottomShaft = Optional.empty();
         for(Direction d : Iterate.directionsInAxis(axis)) {
             if(!def.hasShaftTowards(blockEntity.getLevel(), blockEntity.getBlockPos(), blockState, d)) continue;
-        RotatingData data = setup(getRotatingMaterial().getModel(halfShaftModel, blockState, d).createInstance());
+        RotatingData data = setup(getRotatingMaterial().getModel(partialModel, blockState, d).createInstance());
             if(large) {
                 data.setRotationOffset(BracketedKineticBlockEntityRenderer.getShaftAngleOffset(axis, pos));
             }

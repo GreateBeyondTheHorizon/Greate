@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "A": {
+      "tag": "greate:shafts/neutronium"
+    },
+    "C": {
+      "tag": "forge:circuits/uhv"
+    },
+    "M": {
+      "item": "gtceu:uhv_machine_hull"
+    },
+    "S": {
+      "tag": "minecraft:wooden_slabs"
+    },
+    "W": {
+      "tag": "greate:cogwheels/neutronium"
+    }
+  },
+  "pattern": [
+    " W ",
+    "SMS",
+    "CAC"
+  ],
+  "result": {
+    "item": "greate:neutronium_millstone"
+  }
+}

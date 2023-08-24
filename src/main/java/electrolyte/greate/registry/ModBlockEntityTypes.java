@@ -11,6 +11,7 @@ import electrolyte.greate.content.kinetics.gearbox.TieredGearboxInstance;
 import electrolyte.greate.content.kinetics.gearbox.TieredGearboxRenderer;
 import electrolyte.greate.content.kinetics.millstone.TieredMillstoneBlockEntity;
 import electrolyte.greate.content.kinetics.millstone.TieredMillstoneCogInstance;
+import electrolyte.greate.content.kinetics.millstone.TieredMillstoneRenderer;
 import electrolyte.greate.content.kinetics.simpleRelays.*;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedCogInstance;
 import electrolyte.greate.content.kinetics.steamEngine.TieredPoweredShaftBlockEntity;
@@ -89,8 +90,10 @@ public class ModBlockEntityTypes {
     public static final BlockEntityEntry<TieredMillstoneBlockEntity> TIERED_MILLSTONE = REGISTRATE
             .blockEntity("tiered_millstone", TieredMillstoneBlockEntity::new)
             .instance(() -> TieredMillstoneCogInstance::new, false)
-            .validBlocks(Millstones.TEST_MILLSTONE)
-            .renderer(() -> KineticBlockEntityRenderer::new)
+            .validBlocks(Millstones.ANDESITE_MILLSTONE, Millstones.STEEL_MILLSTONE, Millstones.ALUMINIUM_MILLSTONE, Millstones.STAINLESS_STEEL_MILLSTONE,
+                    Millstones.TITANIUM_MILLSTONE, Millstones.TUNGSTENSTEEL_MILLSTONE, Millstones.PALLADIUM_MILLSTONE, Millstones.NAQUADAH_MILLSTONE,
+                    Millstones.DARMSTADTIUM_MILLSTONE, Millstones.NEUTRONIUM_MILLSTONE)
+            .renderer(() -> TieredMillstoneRenderer::new)
             .register();
 
     public static void register() {}

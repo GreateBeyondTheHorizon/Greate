@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "greate:darmstadtium_vertical_gearbox"
+          "name": "greate:darmstadtium_gearbox"
         }
       ],
       "rolls": 1.0

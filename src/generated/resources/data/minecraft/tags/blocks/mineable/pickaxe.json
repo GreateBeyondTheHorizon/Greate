@@ -119,6 +119,16 @@
     "greate:palladium_metal_girder_encased_shaft",
     "greate:naquadah_metal_girder_encased_shaft",
     "greate:darmstadtium_metal_girder_encased_shaft",
-    "greate:neutronium_metal_girder_encased_shaft"
+    "greate:neutronium_metal_girder_encased_shaft",
+    "greate:andesite_millstone",
+    "greate:steel_millstone",
+    "greate:aluminium_millstone",
+    "greate:stainless_steel_millstone",
+    "greate:titanium_millstone",
+    "greate:tungstensteel_millstone",
+    "greate:palladium_millstone",
+    "greate:naquadah_millstone",
+    "greate:darmstadtium_millstone",
+    "greate:neutronium_millstone"
   ]
 }

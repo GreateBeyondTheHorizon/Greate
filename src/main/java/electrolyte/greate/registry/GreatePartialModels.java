@@ -17,7 +17,18 @@ public class GreatePartialModels {
     PALLADIUM_SHAFTLESS_COGWHEEL = block("palladium_cogwheel_shaftless"), LARGE_PALLADIUM_SHAFTLESS_COGWHEEL = block("large_palladium_cogwheel_shaftless"), PALLADIUM_HALF_SHAFT = block("palladium_shaft_half"),
     NAQUADAH_SHAFTLESS_COGWHEEL = block("naquadah_cogwheel_shaftless"), LARGE_NAQUADAH_SHAFTLESS_COGWHEEL = block("large_naquadah_cogwheel_shaftless"), NAQUADAH_HALF_SHAFT = block("naquadah_shaft_half"),
     DARMSTADTIUM_SHAFTLESS_COGWHEEL = block("darmstadtium_cogwheel_shaftless"), LARGE_DARMSTADTIUM_SHAFTLESS_COGWHEEL = block("large_darmstadtium_cogwheel_shaftless"), DARMSTADTIUM_HALF_SHAFT = block("darmstadtium_shaft_half"),
-    NEUTRONIUM_SHAFTLESS_COGWHEEL = block("neutronium_cogwheel_shaftless"), LARGE_NEUTRONIUM_SHAFTLESS_COGWHEEL = block("large_neutronium_cogwheel_shaftless"), NEUTRONIUM_HALF_SHAFT = block("neutronium_shaft_half");
+    NEUTRONIUM_SHAFTLESS_COGWHEEL = block("neutronium_cogwheel_shaftless"), LARGE_NEUTRONIUM_SHAFTLESS_COGWHEEL = block("large_neutronium_cogwheel_shaftless"), NEUTRONIUM_HALF_SHAFT = block("neutronium_shaft_half"),
+
+    ANDESITE_MILLSTONE_INNER = block("andesite_millstone_inner"),
+    STEEL_MILLSTONE_INNER = block("steel_millstone_inner"),
+    ALUMINIUM_MILLSTONE_INNER = block("aluminium_millstone_inner"),
+    STAINLESS_STEEL_MILLSTONE_INNER = block("stainless_steel_millstone_inner"),
+    TITANIUM_MILLSTONE_INNER = block("titanium_millstone_inner"),
+    TUNGSTENSTEEL_MILLSTONE_INNER = block("tungstensteel_millstone_inner"),
+    PALLADIUM_MILLSTONE_INNER = block("palladium_millstone_inner"),
+    NAQUADAH_MILLSTONE_INNER = block("naquadah_millstone_inner"),
+    DARMSTADTIUM_MILLSTONE_INNER = block("darmstadtium_millstone_inner"),
+    NEUTRONIUM_MILLSTONE_INNER = block("neutronium_millstone_inner");
 
     private static PartialModel block(String path) {
         return new PartialModel(new ResourceLocation(Greate.MOD_ID, "block/" + path));

@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "A": {
+      "tag": "greate:shafts/steel"
+    },
+    "C": {
+      "tag": "forge:circuits/lv"
+    },
+    "M": {
+      "item": "gtceu:lv_machine_hull"
+    },
+    "S": {
+      "tag": "minecraft:wooden_slabs"
+    },
+    "W": {
+      "tag": "greate:cogwheels/steel"
+    }
+  },
+  "pattern": [
+    " W ",
+    "SMS",
+    "CAC"
+  ],
+  "result": {
+    "item": "greate:steel_millstone"
+  }
+}

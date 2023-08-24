@@ -1,0 +1,9 @@
+{
+  "parent": "greate:block/base/millstone/inner",
+  "textures": {
+    "1_0": "greate:block/titanium/axis",
+    "1_1": "greate:block/titanium/axis_top",
+    "5": "greate:block/titanium/millstone",
+    "particle": "greate:block/titanium/axis"
+  }
+}

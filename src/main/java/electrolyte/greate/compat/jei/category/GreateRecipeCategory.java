@@ -177,6 +177,6 @@ public abstract class GreateRecipeCategory<T extends Recipe<?>> implements IReci
     @Override
     public void draw(T recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
         IRecipeCategory.super.draw(recipe, recipeSlotsView, stack, mouseX, mouseY);
-        Minecraft.getInstance().font.draw(stack, Lang.builder(Greate.MOD_ID).translate("jei.recipe_tier").component().getString() + ((TieredProcessingRecipe<?>)recipe).getRecipeTier().getName(), 1, 58, 0xffffff);
+        Minecraft.getInstance().font.draw(stack, Lang.builder(Greate.MOD_ID).translate("jei.recipe_tier").component().getString() + ((TieredProcessingRecipe<?>)recipe).getRecipeTier().getName(), 1, 58, 0x3f3f3f);
     }
 }

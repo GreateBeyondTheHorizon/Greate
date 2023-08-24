@@ -1,0 +1,6 @@
+{
+  "parent": "greate:block/base/millstone/item",
+  "textures": {
+    "5": "greate:block/tungstensteel/millstone"
+  }
+}

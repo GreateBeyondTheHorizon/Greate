@@ -1,13 +1,14 @@
 package electrolyte.greate.content.kinetics.millstone;
 
+import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
+import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.sound.SoundScapes;
 import com.simibubi.create.foundation.utility.VecHelper;
-import electrolyte.greate.GreateEnums.TIER;
-import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
+import electrolyte.greate.GreateEnums;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredKineticBlockEntity;
 import electrolyte.greate.registry.ModRecipeTypes;
@@ -42,20 +43,20 @@ public class TieredMillstoneBlockEntity extends TieredKineticBlockEntity impleme
     public ItemStackHandler outputInv;
     public LazyOptional<IItemHandler> capability;
     public int timer;
-    private TieredMillingRecipe lastRecipe;
-    private TIER tier;
+    private ProcessingRecipe<RecipeWrapper> lastRecipe;
+    private int maxItemsPerRecipe;
 
     public TieredMillstoneBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
         super(typeIn, pos, state);
         inputInv = new ItemStackHandler(1);
         outputInv = new ItemStackHandler(1);
         capability = LazyOptional.of(TieredMillstoneInventoryHandler::new);
-        tier = ((ITieredBlock) state.getBlock()).getTier();
+        maxItemsPerRecipe = GreateEnums.TIER.getTierMultiplier(this.getTier(), 4);
     }
 
     @Override
     public double getMaxCapacity() {
-        return tier.getStressCapacity();
+        return this.getTier().getStressCapacity();
     }
 
     @Override
@@ -83,6 +84,7 @@ public class TieredMillstoneBlockEntity extends TieredKineticBlockEntity impleme
 
         for(int i = 0; i < outputInv.getSlots(); i++) {
             if(outputInv.getStackInSlot(i).getCount() == outputInv.getSlotLimit(i)) return;
+            if(outputInv.getStackInSlot(i).getCount() + maxItemsPerRecipe > outputInv.getSlotLimit(i)) return;
         }
 
         if(timer > 0) {
@@ -103,8 +105,8 @@ public class TieredMillstoneBlockEntity extends TieredKineticBlockEntity impleme
 
         RecipeWrapper inventoryIn = new RecipeWrapper(inputInv);
         if(lastRecipe == null || !lastRecipe.matches(inventoryIn, level)) {
-            Optional<TieredMillingRecipe> recipe = ModRecipeTypes.MILLING.find(inventoryIn, level, this);
-            if(!recipe.isPresent()) {
+            Optional<ProcessingRecipe<RecipeWrapper>> recipe = findRecipe(inventoryIn);
+            if(recipe.isEmpty()) {
                 timer = 100;
                 sendData();
             } else {
@@ -117,6 +119,14 @@ public class TieredMillstoneBlockEntity extends TieredKineticBlockEntity impleme
 
         timer = lastRecipe.getProcessingDuration();
         sendData();
+    }
+    
+    public Optional<ProcessingRecipe<RecipeWrapper>> findRecipe(RecipeWrapper wrapper) {
+        Optional<ProcessingRecipe<RecipeWrapper>> millingRecipe = ModRecipeTypes.MILLING.find(wrapper, level, this);
+        if(millingRecipe.isEmpty()) {
+            millingRecipe = AllRecipeTypes.MILLING.find(wrapper, level);
+        }
+        return millingRecipe;
     }
 
     @Override
@@ -136,17 +146,19 @@ public class TieredMillstoneBlockEntity extends TieredKineticBlockEntity impleme
         RecipeWrapper inventoryIn = new RecipeWrapper(inputInv);
 
         if(lastRecipe == null || !lastRecipe.matches(inventoryIn, level)) {
-            Optional<TieredMillingRecipe> recipe = ModRecipeTypes.MILLING.find(inventoryIn, level, this);
+            Optional<ProcessingRecipe<RecipeWrapper>> recipe = findRecipe(inventoryIn);
 
-            if(!recipe.isPresent()) {
-                lastRecipe = recipe.get();
-            }
+            if(recipe.isEmpty()) return;
+            lastRecipe = recipe.get();
         }
 
         ItemStack stackInSlot = inputInv.getStackInSlot(0);
-        stackInSlot.shrink(1);
+        int amountInSlot = stackInSlot.getCount();
+        stackInSlot.shrink(maxItemsPerRecipe);
         inputInv.setStackInSlot(0, stackInSlot);
-        lastRecipe.rollResults().forEach(stack -> ItemHandlerHelper.insertItemStacked(outputInv, stack, false));
+        for(int i = 0; i < Math.min(amountInSlot, maxItemsPerRecipe); i++) {
+            lastRecipe.rollResults().forEach(stack -> ItemHandlerHelper.insertItemStacked(outputInv, stack, false));
+        }
         award(AllAdvancements.MILLSTONE);
 
         sendData();
@@ -200,7 +212,7 @@ public class TieredMillstoneBlockEntity extends TieredKineticBlockEntity impleme
         RecipeWrapper inventoryIn = new RecipeWrapper(tester);
 
         if(lastRecipe != null && lastRecipe.matches(inventoryIn, level)) return true;
-        return ModRecipeTypes.MILLING.find(inventoryIn, level, this).isPresent();
+        return findRecipe(inventoryIn).isPresent();
     }
 
     private class TieredMillstoneInventoryHandler extends CombinedInvWrapper {

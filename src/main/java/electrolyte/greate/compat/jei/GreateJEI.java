@@ -1,6 +1,8 @@
 package electrolyte.greate.compat.jei;
 
+import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
+import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.compat.jei.DoubleItemIcon;
 import com.simibubi.create.compat.jei.EmptyBackground;
 import com.simibubi.create.compat.jei.ItemIcon;
@@ -14,10 +16,12 @@ import electrolyte.greate.compat.jei.category.GreateRecipeCategory;
 import electrolyte.greate.compat.jei.category.GreateRecipeCategory.Info;
 import electrolyte.greate.compat.jei.category.TieredMillingCategory;
 import electrolyte.greate.content.kinetics.crusher.TieredAbstractCrushingRecipe;
+import electrolyte.greate.content.kinetics.millstone.TieredMillingRecipe;
 import electrolyte.greate.registry.Millstones;
 import electrolyte.greate.registry.ModRecipeTypes;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
@@ -54,8 +58,18 @@ public class GreateJEI implements IModPlugin {
 
                 milling = builder(TieredAbstractCrushingRecipe.class)
                 .addTypedRecipes(ModRecipeTypes.MILLING)
-                .catalyst(Millstones.TEST_MILLSTONE::get)
-                .doubleIconItem(Millstones.TEST_MILLSTONE.get(), AllItems.WHEAT_FLOUR.get())
+                .addTypedRecipes(AllRecipeTypes.MILLING::getType, TieredMillingRecipe::convert)
+                .catalyst(Millstones.ANDESITE_MILLSTONE::get)
+                .catalyst(Millstones.STEEL_MILLSTONE::get)
+                .catalyst(Millstones.ALUMINIUM_MILLSTONE::get)
+                .catalyst(Millstones.STAINLESS_STEEL_MILLSTONE::get)
+                .catalyst(Millstones.TITANIUM_MILLSTONE::get)
+                .catalyst(Millstones.TUNGSTENSTEEL_MILLSTONE::get)
+                .catalyst(Millstones.PALLADIUM_MILLSTONE::get)
+                .catalyst(Millstones.NAQUADAH_MILLSTONE::get)
+                .catalyst(Millstones.DARMSTADTIUM_MILLSTONE::get)
+                .catalyst(Millstones.NEUTRONIUM_MILLSTONE::get)
+                .doubleIconItem(Millstones.NEUTRONIUM_MILLSTONE.get(), AllItems.WHEAT_FLOUR.get())
                 .emptyBackground(177, 68)
                 .build("milling", TieredMillingCategory::new);
     }
@@ -79,6 +93,7 @@ public class GreateJEI implements IModPlugin {
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
         ingredientManager = registration.getIngredientManager();
+        ingredientManager.removeIngredientsAtRuntime(VanillaTypes.ITEM_STACK, List.of(AllBlocks.MILLSTONE.asStack()));
         allCategories.forEach(c -> c.registerRecipes(registration));
     }
 
@@ -89,7 +104,7 @@ public class GreateJEI implements IModPlugin {
 
     private class CategoryBuilder<T extends Recipe<?>> {
         private final Class<? extends T> recipeClass;
-        private Predicate<CRecipes> predicate = CRecipes -> true;
+        private Predicate<CRecipes> predicate = cRecipes -> true;
 
         private IDrawable background;
         private IDrawable icon;
@@ -225,7 +240,7 @@ public class GreateJEI implements IModPlugin {
                     return recipes;
                 };
             } else {
-                recipesSupplier = () -> Collections.emptyList();
+                recipesSupplier = Collections::emptyList;
             }
 
             GreateRecipeCategory.Info<T> info = new Info<>(

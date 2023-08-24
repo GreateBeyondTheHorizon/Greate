@@ -11,6 +11,7 @@ import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
+import electrolyte.greate.content.kinetics.millstone.TieredMillstoneBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredCogwheelBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedCogwheelBlock;
@@ -24,6 +25,7 @@ import java.util.function.Supplier;
 
 import static com.simibubi.create.foundation.data.BlockStateGen.axisBlock;
 import static electrolyte.greate.foundation.data.GreateBlockStateGen.tieredEncasedShaftProvider;
+import static electrolyte.greate.foundation.data.GreateBlockStateGen.tieredMillstoneProvider;
 
 public class GreateBuilderTransformers {
 
@@ -83,5 +85,14 @@ public class GreateBuilderTransformers {
                 .properties(BlockBehaviour.Properties::noOcclusion)
                 .transform(BlockStressDefaults.setNoImpact())
                 .loot((p, loot) -> p.dropOther(loot, drop.get()));
+    }
+
+    public static <B extends TieredMillstoneBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> tieredMillstone() {
+        return b -> b.blockstate(tieredMillstoneProvider())
+                .item()
+                .model((c, p) -> {
+                    p.withExistingParent(c.getName(), p.modLoc("block/base/millstone/item"))
+                            .texture("5", p.modLoc("block/" + c.getName().substring(0, c.getName().length() - 10) + "/millstone"));
+                }).build();
     }
 }

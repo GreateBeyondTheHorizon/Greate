@@ -1,6 +1,5 @@
 package electrolyte.greate.content.kinetics.simpleRelays;
 
-import com.simibubi.create.AllShapes;
 import com.simibubi.create.content.kinetics.base.DirectionalKineticBlock;
 import com.simibubi.create.content.kinetics.base.HorizontalKineticBlock;
 import com.simibubi.create.content.kinetics.base.IRotate;
@@ -10,7 +9,6 @@ import com.simibubi.create.content.kinetics.simpleRelays.ICogWheel;
 import com.simibubi.create.foundation.placement.IPlacementHelper;
 import com.simibubi.create.foundation.placement.PlacementHelpers;
 import com.simibubi.create.foundation.placement.PlacementOffset;
-import com.simibubi.create.foundation.utility.Iterate;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -147,51 +145,6 @@ public class TieredCogwheelBlockItem extends BlockItem {
             }
 
             return super.getOffset(player, world, state, pos, ray);
-        }
-    }
-
-    @MethodsReturnNonnullByDefault
-    public abstract static class DiagonalCogHelper implements IPlacementHelper {
-
-        @Override
-        public Predicate<BlockState> getStatePredicate() {
-            return s -> ICogWheel.isSmallCog(s) || ICogWheel.isLargeCog(s);
-        }
-
-        @Override
-        public PlacementOffset getOffset(Player player, Level world, BlockState state, BlockPos pos,
-                                         BlockHitResult ray) {
-            // diagonal gears of different size
-            Direction.Axis axis = ((IRotate) state.getBlock()).getRotationAxis(state);
-            Direction closest = IPlacementHelper.orderedByDistanceExceptAxis(pos, ray.getLocation(), axis)
-                    .get(0);
-            List<Direction> directions = IPlacementHelper.orderedByDistanceExceptAxis(pos, ray.getLocation(), axis,
-                    d -> d.getAxis() != closest.getAxis());
-
-            for (Direction dir : directions) {
-                BlockPos newPos = pos.relative(dir)
-                        .relative(closest);
-                if (!world.getBlockState(newPos)
-                        .getMaterial()
-                        .isReplaceable())
-                    continue;
-
-                if (!TieredCogwheelBlock.isValidCogwheelPosition(ICogWheel.isLargeCog(state), world, newPos, axis))
-                    continue;
-
-                return PlacementOffset.success(newPos, s -> s.setValue(AXIS, axis));
-            }
-
-            return PlacementOffset.fail();
-        }
-
-        protected boolean hitOnShaft(BlockState state, BlockHitResult ray) {
-            return AllShapes.SIX_VOXEL_POLE.get(((IRotate) state.getBlock()).getRotationAxis(state))
-                    .bounds()
-                    .inflate(0.001)
-                    .contains(ray.getLocation()
-                            .subtract(ray.getLocation()
-                                    .align(Iterate.axisSet)));
         }
     }
 

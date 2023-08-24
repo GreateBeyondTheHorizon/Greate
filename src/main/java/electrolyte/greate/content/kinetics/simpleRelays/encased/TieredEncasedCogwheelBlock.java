@@ -53,15 +53,15 @@ public class TieredEncasedCogwheelBlock extends RotatedPillarKineticBlock implem
     private TIER tier;
     protected final boolean isLarge;
     private final Supplier<Block> casing, cogwheel, largeCogwheel;
-    private final PartialModel halfShaftModel, model, largeModel;
+    private final PartialModel partialModel, model, largeModel;
 
-    public TieredEncasedCogwheelBlock(Properties properties, boolean isLarge, Supplier<Block> casing, Supplier<Block> cogwheel, Supplier<Block> largeCogwheel, PartialModel halfShaftModel, PartialModel model, PartialModel largeModel) {
+    public TieredEncasedCogwheelBlock(Properties properties, boolean isLarge, Supplier<Block> casing, Supplier<Block> cogwheel, Supplier<Block> largeCogwheel, PartialModel partialModel, PartialModel model, PartialModel largeModel) {
         super(properties);
         this.isLarge = isLarge;
         this.casing = casing;
         this.cogwheel = cogwheel;
         this.largeCogwheel = largeCogwheel;
-        this.halfShaftModel = halfShaftModel;
+        this.partialModel = partialModel;
         this.model = model;
         this.largeModel = largeModel;
         registerDefaultState(defaultBlockState().setValue(TOP_SHAFT, false).setValue(BOTTOM_SHAFT, false));
@@ -274,8 +274,8 @@ public class TieredEncasedCogwheelBlock extends RotatedPillarKineticBlock implem
     }
 
     @Override
-    public PartialModel getHalfShaft() {
-        return this.halfShaftModel;
+    public PartialModel getPartialModel() {
+        return this.partialModel;
     }
 
     @Override

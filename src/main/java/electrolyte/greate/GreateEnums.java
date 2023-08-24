@@ -2,9 +2,12 @@ package electrolyte.greate;
 
 import net.minecraft.ChatFormatting;
 
+import java.util.Arrays;
+
 public class GreateEnums {
 
     public enum TIER implements Comparable<TIER> {
+        NONE("NONE", Double.MAX_VALUE, ChatFormatting.WHITE),
         ULTRA_LOW("ULS", Greate.CONFIG.ULS_CAPACITY, ChatFormatting.WHITE),
         LOW("LS", Greate.CONFIG.LS_CAPACITY, ChatFormatting.GRAY),
         MEDIUM("MS", Greate.CONFIG.MS_CAPACITY, ChatFormatting.AQUA),
@@ -14,8 +17,7 @@ public class GreateEnums {
         LUDICRIOUS("LuS", Greate.CONFIG.LUS_CAPACITY, ChatFormatting.LIGHT_PURPLE),
         ZPM("ZPMS", Greate.CONFIG.ZPMS_CAPACITY, ChatFormatting.RED),
         ULTIMATE("US", Greate.CONFIG.US_CAPACITY, ChatFormatting.DARK_AQUA),
-        ULTIMATE_HIGH("UHS", Greate.CONFIG.UHS_CAPACITY, ChatFormatting.DARK_RED),
-        NONE("NONE", Double.MAX_VALUE, ChatFormatting.WHITE);
+        ULTIMATE_HIGH("UHS", Greate.CONFIG.UHS_CAPACITY, ChatFormatting.DARK_RED);
 
         private final String name;
         private final double stressCapacity;
@@ -46,6 +48,10 @@ public class GreateEnums {
             }
             Greate.LOGGER.warn("Tried to deserialize invalid recipe tier condition: \"" + name + "\"");
             return NONE;
+        }
+
+        public static int getTierMultiplier(TIER tier, double machineMultiplier) {
+            return tier == ULTRA_LOW ? 1 : (int) (machineMultiplier * (Arrays.stream(values()).toList().indexOf(tier) - 1));
         }
     }
 }

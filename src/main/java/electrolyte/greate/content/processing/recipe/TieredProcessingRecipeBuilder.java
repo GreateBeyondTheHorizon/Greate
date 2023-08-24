@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
+import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder.ProcessingRecipeParams;
 import com.simibubi.create.foundation.data.SimpleDatagenIngredient;
 import com.simibubi.create.foundation.data.recipe.Mods;
 import com.simibubi.create.foundation.fluid.FluidHelper;
@@ -65,6 +66,12 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
     public TieredProcessingRecipeBuilder<T> withItemOutputs(NonNullList<ProcessingOutput> outputs) {
         params.results = outputs;
         return this;
+    }
+
+    public TieredProcessingRecipeBuilder<T> withItemOutputs(List<ProcessingOutput> outputs) {
+        NonNullList<ProcessingOutput> list = NonNullList.create();
+        list.addAll(outputs);
+        return withItemOutputs(list);
     }
 
     public TieredProcessingRecipeBuilder<T> withFluidIngredients(FluidIngredient... ingredients) {
@@ -218,7 +225,7 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
         T create(TieredProcessingRecipeParams params);
     }
 
-    public static class TieredProcessingRecipeParams {
+    public static class TieredProcessingRecipeParams extends ProcessingRecipeParams {
 
         protected ResourceLocation id;
         protected NonNullList<Ingredient> ingredients;
@@ -232,6 +239,7 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
         public boolean keepHeldItem;
 
         protected TieredProcessingRecipeParams(ResourceLocation id) {
+            super(id);
             this.id = id;
             ingredients = NonNullList.create();
             results = NonNullList.create();
