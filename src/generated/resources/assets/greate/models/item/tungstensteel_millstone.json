@@ -1,5 +1,5 @@
 {
-  "parent": "greate:block/base/millstone/item",
+  "parent": "create:block/millstone/item",
   "textures": {
     "5": "greate:block/tungstensteel/millstone"
   }

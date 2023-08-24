@@ -1,5 +1,5 @@
 {
-  "parent": "greate:block/base/gearbox/item",
+  "parent": "create:block/gearbox/item",
   "textures": {
     "1_0": "greate:block/neutronium/axis",
     "1_1": "greate:block/neutronium/axis_top",

@@ -1,5 +1,5 @@
 {
-  "parent": "greate:block/base/shaft",
+  "parent": "create:block/shaft",
   "textures": {
     "0": "greate:block/titanium/axis",
     "1": "greate:block/titanium/axis_top",

@@ -1,5 +1,5 @@
 {
-  "parent": "greate:block/base/large_cogwheel",
+  "parent": "create:block/large_cogwheel",
   "textures": {
     "0": "greate:block/stainless_steel/cogwheel_axis",
     "3": "greate:block/stainless_steel/axis_top",

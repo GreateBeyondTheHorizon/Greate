@@ -1,5 +1,5 @@
 {
-  "parent": "greate:block/base/large_cogwheel_shaftless",
+  "parent": "create:block/large_cogwheel_shaftless",
   "textures": {
     "4": "greate:block/palladium/large_cogwheel",
     "particle": "greate:block/palladium/large_cogwheel"

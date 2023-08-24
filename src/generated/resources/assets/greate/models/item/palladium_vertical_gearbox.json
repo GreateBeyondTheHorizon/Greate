@@ -1,5 +1,5 @@
 {
-  "parent": "greate:block/base/gearbox/item_vertical",
+  "parent": "create:block/gearbox/item_vertical",
   "textures": {
     "0": "greate:block/palladium/axis",
     "1": "greate:block/palladium/axis_top",

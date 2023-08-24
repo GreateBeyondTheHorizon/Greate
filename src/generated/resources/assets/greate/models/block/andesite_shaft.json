@@ -1,5 +1,5 @@
 {
-  "parent": "greate:block/base/shaft",
+  "parent": "create:block/shaft",
   "textures": {
     "0": "greate:block/andesite/axis",
     "1": "greate:block/andesite/axis_top",

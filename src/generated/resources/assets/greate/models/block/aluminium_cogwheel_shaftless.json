@@ -1,5 +1,5 @@
 {
-  "parent": "greate:block/base/cogwheel_shaftless",
+  "parent": "create:block/cogwheel_shaftless",
   "textures": {
     "1_2": "greate:block/aluminium/cogwheel",
     "particle": "greate:block/aluminium/cogwheel"

@@ -1,5 +1,5 @@
 {
-  "parent": "greate:block/base/shaft_half",
+  "parent": "create:block/shaft_half",
   "textures": {
     "0": "greate:block/aluminium/axis",
     "1": "greate:block/aluminium/axis_top",

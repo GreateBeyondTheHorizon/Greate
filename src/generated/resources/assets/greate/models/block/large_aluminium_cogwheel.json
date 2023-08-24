@@ -1,5 +1,5 @@
 {
-  "parent": "greate:block/base/large_cogwheel",
+  "parent": "create:block/large_cogwheel",
   "textures": {
     "0": "greate:block/aluminium/cogwheel_axis",
     "3": "greate:block/aluminium/axis_top",
