@@ -19,6 +19,10 @@ public class GreateRecipeRemoval {
         recipe.accept(Create.asResource("crafting/kinetics/cogwheel"));
         recipe.accept(Create.asResource("crafting/kinetics/large_cogwheel"));
         recipe.accept(Create.asResource("crafting/kinetics/large_cogwheel_from_little"));
+        recipe.accept(Create.asResource("crafting/kinetics/gearbox"));
+        recipe.accept(Create.asResource("crafting/kinetics/gearboxfrom_conversion"));
+        recipe.accept(Create.asResource("crafting/kinetics/vertical_gearboxfrom_conversion"));
+        recipe.accept(Create.asResource("crafting/kinetics/millstone"));
 
         recipe.accept(Create.asResource("cutting/andesite_alloy"));
     }
