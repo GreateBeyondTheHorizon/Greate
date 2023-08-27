@@ -2,6 +2,9 @@ package electrolyte.greate.content.processing.recipe;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.gregtechceu.gtceu.api.recipe.content.Content;
+import com.gregtechceu.gtceu.api.recipe.ingredient.SizedIngredient;
+import com.gregtechceu.gtceu.api.recipe.ingredient.forge.SizedIngredientImpl;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder.ProcessingRecipeParams;
@@ -55,6 +58,15 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
         return this;
     }
 
+    public TieredProcessingRecipeBuilder<T> withItemIngredientsGT(List<Content> ingredients) {
+        NonNullList<Ingredient> nonNullList = NonNullList.create();
+        for(Content c : ingredients) {
+            SizedIngredient ingredient = (SizedIngredient) c.getContent();
+            nonNullList.add(ingredient);
+        }
+        return withItemIngredients(nonNullList);
+    }
+
     public TieredProcessingRecipeBuilder<T> withSingleItemOutput(ItemStack output) {
         return withItemOutputs(new ProcessingOutput(output, 1));
     }
@@ -72,6 +84,17 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
         NonNullList<ProcessingOutput> list = NonNullList.create();
         list.addAll(outputs);
         return withItemOutputs(list);
+    }
+
+    public TieredProcessingRecipeBuilder<T> withItemOutputsGT(List<Content> list) {
+        NonNullList<ProcessingOutput> nonNullList = NonNullList.create();
+        for(Content c : list) {
+            ItemStack[] items = ((SizedIngredientImpl) c.content).getItems();
+            for (ItemStack item : items) {
+                nonNullList.add(new ProcessingOutput(item, c.chance));
+            }
+        }
+        return withItemOutputs(nonNullList);
     }
 
     public TieredProcessingRecipeBuilder<T> withFluidIngredients(FluidIngredient... ingredients) {

@@ -1,5 +1,8 @@
 package electrolyte.greate.compat.jei;
 
+import com.gregtechceu.gtceu.api.recipe.GTRecipe;
+import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
+import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.AllRecipeTypes;
@@ -58,7 +61,8 @@ public class GreateJEI implements IModPlugin {
 
                 milling = builder(TieredAbstractCrushingRecipe.class)
                 .addTypedRecipes(ModRecipeTypes.MILLING)
-                .addTypedRecipes(AllRecipeTypes.MILLING::getType, TieredMillingRecipe::convert)
+                .addTypedRecipes(AllRecipeTypes.MILLING::getType, TieredMillingRecipe::convertNormalMilling)
+                .addTypedRecipes(GTRecipeTypes.MACERATOR_RECIPES, TieredMillingRecipe::convertGT)
                 .catalyst(Millstones.ANDESITE_MILLSTONE::get)
                 .catalyst(Millstones.STEEL_MILLSTONE::get)
                 .catalyst(Millstones.ALUMINIUM_MILLSTONE::get)
@@ -161,6 +165,10 @@ public class GreateJEI implements IModPlugin {
 
         public CategoryBuilder<T> addTypedRecipes(Supplier<RecipeType<? extends T>> recipeType, Function<Recipe<?>, T> converter) {
             return addRecipeListConsumer(recipes -> GreateJEI.<T>consumeTypedRecipes(recipe -> recipes.add(converter.apply(recipe)), recipeType.get()));
+        }
+
+        public CategoryBuilder<T> addTypedRecipes(GTRecipeType recipeType, Function<GTRecipe, T> converter) {
+            return addRecipeListConsumer(recipes -> GreateJEI.<T>consumeTypedRecipes(recipe -> recipes.add(converter.apply((GTRecipe) recipe)), recipeType));
         }
 
         public CategoryBuilder<T> addTypedRecipesIf(Supplier<RecipeType<? extends T>> recipeType, Predicate<Recipe<?>> predicate) {

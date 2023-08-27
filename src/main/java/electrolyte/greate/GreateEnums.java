@@ -1,8 +1,10 @@
 package electrolyte.greate;
 
+import com.gregtechceu.gtceu.api.recipe.content.Content;
 import net.minecraft.ChatFormatting;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class GreateEnums {
 
@@ -52,6 +54,21 @@ public class GreateEnums {
 
         public static int getTierMultiplier(TIER tier, double machineMultiplier) {
             return tier == ULTRA_LOW ? 1 : (int) (machineMultiplier * (Arrays.stream(values()).toList().indexOf(tier) - 1));
+        }
+
+        public static TIER convertGTEUToTier(List<Content> content) {
+            if(content.isEmpty()) return TIER.ULTRA_LOW;
+            Long eut = (Long) content.get(0).getContent();
+            if(eut <= 8) return TIER.ULTRA_LOW;
+            else if(eut <= 32) return TIER.LOW;
+            else if(eut <= 128) return TIER.MEDIUM;
+            else if(eut <= 512) return TIER.HIGH;
+            else if(eut <= 2048) return TIER.EXTREME;
+            else if(eut <= 8192) return TIER.INSANE;
+            else if(eut <= 32768) return TIER.LUDICRIOUS;
+            else if(eut <= 131072) return TIER.ZPM;
+            else if(eut <= 524288) return TIER.ULTIMATE;
+            else return TIER.ULTIMATE_HIGH;
         }
     }
 }
