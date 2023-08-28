@@ -9,6 +9,7 @@
     "MixinKineticBlockEntity",
     "MixinKineticNetwork",
     "MixinRecipeManager",
+    "MixinRotationPropagator",
     "MixinSteamEngineBlock",
     "MixinSteamEngineBlock$PlacementHelper"
   ],

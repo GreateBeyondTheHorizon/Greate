@@ -1,5 +1,6 @@
 package electrolyte.greate.content.kinetics.simpleRelays;
 
+import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.content.decoration.encasing.EncasableBlock;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
@@ -42,9 +43,12 @@ public class TieredShaftBlock extends AbstractSimpleShaftBlock implements Encasa
 
     public static final int placementHelperId = PlacementHelpers.register(new PlacementHelper());
     private TIER tier;
+    private PartialModel shaftlessLargeCogwheel, cogwheelShaft;
 
-    public TieredShaftBlock(Properties properties) {
+    public TieredShaftBlock(Properties properties, PartialModel shaftlessLargeCogwheel, PartialModel cogwheelShaft) {
         super(properties);
+        this.shaftlessLargeCogwheel = shaftlessLargeCogwheel;
+        this.cogwheelShaft = cogwheelShaft;
     }
 
     @Override
@@ -122,6 +126,10 @@ public class TieredShaftBlock extends AbstractSimpleShaftBlock implements Encasa
     @Override
     public Block getShaft() {
         return this;
+    }
+
+    public PartialModel[] getPartialModels() {
+        return new PartialModel[]{shaftlessLargeCogwheel, cogwheelShaft};
     }
 
     @MethodsReturnNonnullByDefault

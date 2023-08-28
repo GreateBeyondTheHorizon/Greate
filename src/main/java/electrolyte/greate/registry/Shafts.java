@@ -28,7 +28,7 @@ public class Shafts {
     }
 
     public static final BlockEntry<TieredShaftBlock> ANDESITE_SHAFT = REGISTRATE
-            .block("andesite_shaft", TieredShaftBlock::new)
+            .block("andesite_shaft", p -> new TieredShaftBlock(p, GreatePartialModels.LARGE_ANDESITE_COGWHEEL_SHAFTLESS, GreatePartialModels.ANDESITE_COGWHEEL_SHAFT))
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.color(MaterialColor.METAL))
             .transform(BlockStressDefaults.setNoImpact())
@@ -71,7 +71,7 @@ public class Shafts {
             .register();
 
     public static final BlockEntry<TieredShaftBlock> STEEL_SHAFT = REGISTRATE
-            .block("steel_shaft", TieredShaftBlock::new)
+            .block("steel_shaft", p -> new TieredShaftBlock(p, GreatePartialModels.LARGE_STEEL_COGWHEEL_SHAFTLESS, GreatePartialModels.STEEL_COGWHEEL_SHAFT))
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.color(MaterialColor.METAL))
             .transform(BlockStressDefaults.setNoImpact())
@@ -114,7 +114,7 @@ public class Shafts {
             .register();
 
     public static final BlockEntry<TieredShaftBlock> ALUMINIUM_SHAFT = REGISTRATE
-            .block("aluminium_shaft", TieredShaftBlock::new)
+            .block("aluminium_shaft", p -> new TieredShaftBlock(p, GreatePartialModels.LARGE_ALUMINIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.ALUMINIUM_COGWHEEL_SHAFT))
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.color(MaterialColor.METAL))
             .transform(BlockStressDefaults.setNoImpact())
@@ -157,7 +157,7 @@ public class Shafts {
             .register();
 
     public static final BlockEntry<TieredShaftBlock> STAINLESS_STEEL_SHAFT = REGISTRATE
-            .block("stainless_steel_shaft", TieredShaftBlock::new)
+            .block("stainless_steel_shaft", p -> new TieredShaftBlock(p, GreatePartialModels.LARGE_STAINLESS_STEEL_COGWHEEL_SHAFTLESS, GreatePartialModels.STAINLESS_STEEL_COGWHEEL_SHAFT))
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.color(MaterialColor.METAL))
             .transform(BlockStressDefaults.setNoImpact())
@@ -200,7 +200,7 @@ public class Shafts {
             .register();
 
     public static final BlockEntry<TieredShaftBlock> TITANIUM_SHAFT = REGISTRATE
-            .block("titanium_shaft", TieredShaftBlock::new)
+            .block("titanium_shaft", p -> new TieredShaftBlock(p, GreatePartialModels.LARGE_TITANIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.TITANIUM_COGWHEEL_SHAFT))
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.color(MaterialColor.METAL))
             .transform(BlockStressDefaults.setNoImpact())
@@ -243,7 +243,7 @@ public class Shafts {
             .register();
 
     public static final BlockEntry<TieredShaftBlock> TUNGSTEN_STEEL_SHAFT = REGISTRATE
-            .block("tungsten_steel_shaft", TieredShaftBlock::new)
+            .block("tungsten_steel_shaft", p -> new TieredShaftBlock(p, GreatePartialModels.LARGE_TUNGSTEN_STEEL_COGWHEEL_SHAFTLESS, GreatePartialModels.TUNGSTEN_STEEL_COGWHEEL_SHAFT))
             .lang("Tungstensteel Shaft")
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.color(MaterialColor.METAL))
@@ -290,7 +290,7 @@ public class Shafts {
             .register();
 
     public static final BlockEntry<TieredShaftBlock> PALLADIUM_SHAFT = REGISTRATE
-            .block("palladium_shaft", TieredShaftBlock::new)
+            .block("palladium_shaft", p -> new TieredShaftBlock(p, GreatePartialModels.LARGE_PALLADIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.PALLADIUM_COGWHEEL_SHAFT))
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.color(MaterialColor.METAL))
             .transform(BlockStressDefaults.setNoImpact())
@@ -333,7 +333,7 @@ public class Shafts {
             .register();
 
     public static final BlockEntry<TieredShaftBlock> NAQUADAH_SHAFT = REGISTRATE
-            .block("naquadah_shaft", TieredShaftBlock::new)
+            .block("naquadah_shaft", p -> new TieredShaftBlock(p, GreatePartialModels.LARGE_NAQUADAH_COGWHEEL_SHAFTLESS, GreatePartialModels.NAQUADAH_COGWHEEL_SHAFT))
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.color(MaterialColor.METAL))
             .transform(BlockStressDefaults.setNoImpact())
@@ -376,7 +376,7 @@ public class Shafts {
             .register();
 
     public static final BlockEntry<TieredShaftBlock> DARMSTADTIUM_SHAFT = REGISTRATE
-            .block("darmstadtium_shaft", TieredShaftBlock::new)
+            .block("darmstadtium_shaft", p -> new TieredShaftBlock(p, GreatePartialModels.LARGE_DARMSTADTIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.DARMSTADTIUM_COGWHEEL_SHAFT))
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.color(MaterialColor.METAL))
             .transform(BlockStressDefaults.setNoImpact())
@@ -419,7 +419,7 @@ public class Shafts {
             .register();
 
     public static final BlockEntry<TieredShaftBlock> NEUTRONIUM_SHAFT = REGISTRATE
-            .block("neutronium_shaft", TieredShaftBlock::new)
+            .block("neutronium_shaft", p -> new TieredShaftBlock(p, GreatePartialModels.LARGE_NEUTRONIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.NEUTRONIUM_COGWHEEL_SHAFT))
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.color(MaterialColor.METAL))
             .transform(BlockStressDefaults.setNoImpact())

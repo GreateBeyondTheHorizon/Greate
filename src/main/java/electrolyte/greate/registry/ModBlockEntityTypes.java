@@ -14,6 +14,7 @@ import electrolyte.greate.content.kinetics.millstone.TieredMillstoneCogInstance;
 import electrolyte.greate.content.kinetics.millstone.TieredMillstoneRenderer;
 import electrolyte.greate.content.kinetics.simpleRelays.*;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedCogInstance;
+import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedCogRenderer;
 import electrolyte.greate.content.kinetics.steamEngine.TieredPoweredShaftBlockEntity;
 
 import static electrolyte.greate.Greate.REGISTRATE;
@@ -55,7 +56,7 @@ public class ModBlockEntityTypes {
                     Cogwheels.ANDESITE_ENCASED_TITANIUM_COGWHEEL, Cogwheels.BRASS_ENCASED_TITANIUM_COGWHEEL, Cogwheels.ANDESITE_ENCASED_TUNGSTEN_STEEL_COGWHEEL, Cogwheels.BRASS_ENCASED_TUNGSTEN_STEEL_COGWHEEL,
                     Cogwheels.ANDESITE_ENCASED_PALLADIUM_COGWHEEL, Cogwheels.BRASS_ENCASED_PALLADIUM_COGWHEEL, Cogwheels.ANDESITE_ENCASED_NAQUADAH_COGWHEEL, Cogwheels.BRASS_ENCASED_NAQUADAH_COGWHEEL,
                     Cogwheels.ANDESITE_ENCASED_DARMSTADTIUM_COGWHEEL, Cogwheels.BRASS_ENCASED_DARMSTADTIUM_COGWHEEL, Cogwheels.ANDESITE_ENCASED_NEUTRONIUM_COGWHEEL, Cogwheels.BRASS_ENCASED_NEUTRONIUM_COGWHEEL)
-            .renderer(() -> EncasedCogRenderer::small)
+            .renderer(() -> TieredEncasedCogRenderer::small)
             .register();
 
     public static final BlockEntityEntry<TieredSimpleKineticBlockEntity> TIERED_ENCASED_LARGE_COGWHEEL = REGISTRATE
@@ -66,7 +67,7 @@ public class ModBlockEntityTypes {
                     Cogwheels.ANDESITE_ENCASED_LARGE_TITANIUM_COGWHEEL, Cogwheels.BRASS_ENCASED_LARGE_TITANIUM_COGWHEEL, Cogwheels.ANDESITE_ENCASED_LARGE_TUNGSTEN_STEEL_COGWHEEL, Cogwheels.BRASS_ENCASED_LARGE_TUNGSTEN_STEEL_COGWHEEL,
                     Cogwheels.ANDESITE_ENCASED_LARGE_PALLADIUM_COGWHEEL, Cogwheels.BRASS_ENCASED_LARGE_PALLADIUM_COGWHEEL, Cogwheels.ANDESITE_ENCASED_LARGE_NAQUADAH_COGWHEEL, Cogwheels.BRASS_ENCASED_LARGE_NAQUADAH_COGWHEEL,
                     Cogwheels.ANDESITE_ENCASED_LARGE_DARMSTADTIUM_COGWHEEL, Cogwheels.BRASS_ENCASED_LARGE_DARMSTADTIUM_COGWHEEL, Cogwheels.ANDESITE_ENCASED_LARGE_NEUTRONIUM_COGWHEEL, Cogwheels.BRASS_ENCASED_LARGE_NEUTRONIUM_COGWHEEL)
-            .renderer(() -> EncasedCogRenderer::large)
+            .renderer(() -> TieredEncasedCogRenderer::large)
             .register();
 
     public static final BlockEntityEntry<TieredGearboxBlockEntity> TIERED_GEARBOX = REGISTRATE

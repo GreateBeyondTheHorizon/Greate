@@ -15,6 +15,10 @@ public class GreateBlockStateGen {
         return (ctx, prov) -> prov.getVariantBuilder(ctx.getEntry()).forAllStatesExcept(state -> {
             Axis axis = state.getValue(BlockStateProperties.AXIS);
             return ConfiguredModel.builder()
+                    .modelFile(prov.models().withExistingParent(ctx.getName().substring(0, ctx.getName().length() - 5) + "cogwheel_shaft", Create.asResource("block/cogwheel_shaft"))
+                            .texture("0", prov.modLoc("block/" + ctx.getName().substring(0, ctx.getName().length() - 6) + "/axis_top"))
+                            .texture("1", prov.modLoc("block/" + ctx.getName().substring(0, ctx.getName().length() - 6) + "/cogwheel_axis"))
+                            .texture("particle", prov.modLoc("block/" + ctx.getName().substring(0, ctx.getName().length() - 6) + "/axis_top")))
                     .modelFile(prov.models().withExistingParent(ctx.getName() + "_half", Create.asResource("block/shaft_half"))
                             .texture("particle", prov.modLoc("block/" + ctx.getName().substring(0, ctx.getName().length() - 6) + "/axis"))
                             .texture("0", prov.modLoc("block/" + ctx.getName().substring(0, ctx.getName().length() - 6) + "/axis"))
