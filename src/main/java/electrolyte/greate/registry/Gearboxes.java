@@ -26,7 +26,7 @@ public class Gearboxes {
     }
 
     public static final BlockEntry<TieredGearboxBlock> ANDESITE_GEARBOX = REGISTRATE
-            .block("andesite_gearbox", p -> new TieredGearboxBlock(p, GreatePartialModels.ANDESITE_HALF_SHAFT))
+            .block("andesite_gearbox", p -> new TieredGearboxBlock(p, GreatePartialModels.ANDESITE_SHAFT_HALF))
             .initialProperties(SharedProperties::stone)
             .properties(Properties::noOcclusion)
             .properties(p -> p.color(MaterialColor.PODZOL))
@@ -45,7 +45,7 @@ public class Gearboxes {
             .register();
 
     public static final BlockEntry<TieredGearboxBlock> STEEL_GEARBOX = REGISTRATE
-            .block("steel_gearbox", p -> new TieredGearboxBlock(p, GreatePartialModels.STEEL_HALF_SHAFT))
+            .block("steel_gearbox", p -> new TieredGearboxBlock(p, GreatePartialModels.STEEL_SHAFT_HALF))
             .initialProperties(SharedProperties::stone)
             .properties(Properties::noOcclusion)
             .properties(p -> p.color(MaterialColor.PODZOL))
@@ -64,7 +64,7 @@ public class Gearboxes {
             .register();
 
     public static final BlockEntry<TieredGearboxBlock> ALUMINIUM_GEARBOX = REGISTRATE
-            .block("aluminium_gearbox", p -> new TieredGearboxBlock(p, GreatePartialModels.ALUMINIUM_HALF_SHAFT))
+            .block("aluminium_gearbox", p -> new TieredGearboxBlock(p, GreatePartialModels.ALUMINIUM_SHAFT_HALF))
             .initialProperties(SharedProperties::stone)
             .properties(Properties::noOcclusion)
             .properties(p -> p.color(MaterialColor.PODZOL))
@@ -83,7 +83,7 @@ public class Gearboxes {
             .register();
 
     public static final BlockEntry<TieredGearboxBlock> STAINLESS_STEEL_GEARBOX = REGISTRATE
-            .block("stainless_steel_gearbox", p -> new TieredGearboxBlock(p, GreatePartialModels.STAINLESS_STEEL_HALF_SHAFT))
+            .block("stainless_steel_gearbox", p -> new TieredGearboxBlock(p, GreatePartialModels.STAINLESS_STEEL_SHAFT_HALF))
             .initialProperties(SharedProperties::stone)
             .properties(Properties::noOcclusion)
             .properties(p -> p.color(MaterialColor.PODZOL))
@@ -102,7 +102,7 @@ public class Gearboxes {
             .register();
 
     public static final BlockEntry<TieredGearboxBlock> TITANIUM_GEARBOX = REGISTRATE
-            .block("titanium_gearbox", p -> new TieredGearboxBlock(p, GreatePartialModels.TITANIUM_HALF_SHAFT))
+            .block("titanium_gearbox", p -> new TieredGearboxBlock(p, GreatePartialModels.TITANIUM_SHAFT_HALF))
             .initialProperties(SharedProperties::stone)
             .properties(Properties::noOcclusion)
             .properties(p -> p.color(MaterialColor.PODZOL))
@@ -121,7 +121,8 @@ public class Gearboxes {
             .register();
 
     public static final BlockEntry<TieredGearboxBlock> TUNGSTEN_STEEL_GEARBOX = REGISTRATE
-            .block("tungsten_steel_gearbox", p -> new TieredGearboxBlock(p, GreatePartialModels.TUNGSTEN_STEEL_HALF_SHAFT))
+            .block("tungsten_steel_gearbox", p -> new TieredGearboxBlock(p, GreatePartialModels.TUNGSTEN_STEEL_SHAFT_HALF))
+            .lang("Tungstensteel Gearbox")
             .initialProperties(SharedProperties::stone)
             .properties(Properties::noOcclusion)
             .properties(p -> p.color(MaterialColor.PODZOL))
@@ -136,11 +137,12 @@ public class Gearboxes {
 
     public static final ItemEntry<TieredVerticalGearboxItem> TUNGSTEN_STEEL_VERTICAL_GEARBOX = REGISTRATE
             .item("tungsten_steel_vertical_gearbox", p -> new TieredVerticalGearboxItem(p, TUNGSTEN_STEEL_GEARBOX.get()))
+            .lang("Tungstensteel Vertical Gearbox")
             .transform(GreateBuilderTransformers.tieredGearboxVertical())
             .register();
 
     public static final BlockEntry<TieredGearboxBlock> PALLADIUM_GEARBOX = REGISTRATE
-            .block("palladium_gearbox", p -> new TieredGearboxBlock(p, GreatePartialModels.PALLADIUM_HALF_SHAFT))
+            .block("palladium_gearbox", p -> new TieredGearboxBlock(p, GreatePartialModels.PALLADIUM_SHAFT_HALF))
             .initialProperties(SharedProperties::stone)
             .properties(Properties::noOcclusion)
             .properties(p -> p.color(MaterialColor.PODZOL))
@@ -159,7 +161,7 @@ public class Gearboxes {
             .register();
 
     public static final BlockEntry<TieredGearboxBlock> NAQUADAH_GEARBOX = REGISTRATE
-            .block("naquadah_gearbox", p -> new TieredGearboxBlock(p, GreatePartialModels.NAQUADAH_HALF_SHAFT))
+            .block("naquadah_gearbox", p -> new TieredGearboxBlock(p, GreatePartialModels.NAQUADAH_SHAFT_HALF))
             .initialProperties(SharedProperties::stone)
             .properties(Properties::noOcclusion)
             .properties(p -> p.color(MaterialColor.PODZOL))
@@ -178,7 +180,7 @@ public class Gearboxes {
             .register();
 
     public static final BlockEntry<TieredGearboxBlock> DARMSTADTIUM_GEARBOX = REGISTRATE
-            .block("darmstadtium_gearbox", p -> new TieredGearboxBlock(p, GreatePartialModels.DARMSTADTIUM_HALF_SHAFT))
+            .block("darmstadtium_gearbox", p -> new TieredGearboxBlock(p, GreatePartialModels.DARMSTADTIUM_SHAFT_HALF))
             .initialProperties(SharedProperties::stone)
             .properties(Properties::noOcclusion)
             .properties(p -> p.color(MaterialColor.PODZOL))
@@ -197,7 +199,7 @@ public class Gearboxes {
             .register();
 
     public static final BlockEntry<TieredGearboxBlock> NEUTRONIUM_GEARBOX = REGISTRATE
-            .block("neutronium_gearbox", p -> new TieredGearboxBlock(p, GreatePartialModels.NEUTRONIUM_HALF_SHAFT))
+            .block("neutronium_gearbox", p -> new TieredGearboxBlock(p, GreatePartialModels.NEUTRONIUM_SHAFT_HALF))
             .initialProperties(SharedProperties::stone)
             .properties(Properties::noOcclusion)
             .properties(p -> p.color(MaterialColor.PODZOL))

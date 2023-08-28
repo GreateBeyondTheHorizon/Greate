@@ -34,6 +34,7 @@ public class ModItems {
             .register();
     public static final ItemEntry<Item> TUNGSTEN_STEEL_ALLOY = REGISTRATE
             .item("tungsten_steel_alloy", Item::new)
+            .lang("Tungstensteel Alloy")
             .model((c, p) -> p.withExistingParent(c.getName(), "item/generated")
                     .texture("layer0", p.modLoc("item/" + c.getName().substring(0, c.getName().length() - 6) + "/alloy")))
             .register();

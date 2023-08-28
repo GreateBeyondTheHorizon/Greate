@@ -26,8 +26,8 @@ public class Girders {
         REGISTRATE.creativeModeTab(() -> Greate.GREATE_TAB);
     }
 
-    public static final BlockEntry<TieredGirderEncasableBlock> ANDESITE_METAL_GIRDER_ENCASED_SHAFT = REGISTRATE
-            .block("andesite_metal_girder_encased_shaft", (p) -> new TieredGirderEncasableBlock(p, Shafts.ANDESITE_SHAFT::get))
+    public static final BlockEntry<TieredGirderEncasableBlock> METAL_GIRDER_ENCASED_ANDESITE_SHAFT = REGISTRATE
+            .block("metal_girder_encased_andesite_shaft", (p) -> new TieredGirderEncasableBlock(p, Shafts.ANDESITE_SHAFT::get))
             .initialProperties(SharedProperties::softMetal)
             .blockstate(GreateGirderBlockStateGenerator::blockStateWithShaft)
             .properties(p -> p.color(MaterialColor.COLOR_GRAY))
@@ -42,8 +42,8 @@ public class Girders {
             .transform(GirderEncasingRegistry.addVariantTo(Shafts.ANDESITE_SHAFT))
             .register();
 
-    public static final BlockEntry<TieredGirderEncasableBlock> STEEL_METAL_GIRDER_ENCASED_SHAFT = REGISTRATE
-            .block("steel_metal_girder_encased_shaft", (p) -> new TieredGirderEncasableBlock(p, Shafts.STEEL_SHAFT::get))
+    public static final BlockEntry<TieredGirderEncasableBlock> METAL_GIRDER_ENCASED_STEEL_SHAFT = REGISTRATE
+            .block("metal_girder_encased_steel_shaft", (p) -> new TieredGirderEncasableBlock(p, Shafts.STEEL_SHAFT::get))
             .initialProperties(SharedProperties::softMetal)
             .blockstate(GreateGirderBlockStateGenerator::blockStateWithShaft)
             .properties(p -> p.color(MaterialColor.COLOR_GRAY))
@@ -57,8 +57,8 @@ public class Girders {
             .onRegister(c -> c.setTier(TIER.LOW))
             .transform(GirderEncasingRegistry.addVariantTo(Shafts.STEEL_SHAFT))
             .register();
-    public static final BlockEntry<TieredGirderEncasableBlock> ALUMINIUM_METAL_GIRDER_ENCASED_SHAFT = REGISTRATE
-            .block("aluminium_metal_girder_encased_shaft", (p) -> new TieredGirderEncasableBlock(p, Shafts.ALUMINIUM_SHAFT::get))
+    public static final BlockEntry<TieredGirderEncasableBlock> METAL_GIRDER_ENCASED_ALUMINIUM_SHAFT = REGISTRATE
+            .block("metal_girder_encased_aluminium_shaft", (p) -> new TieredGirderEncasableBlock(p, Shafts.ALUMINIUM_SHAFT::get))
             .initialProperties(SharedProperties::softMetal)
             .blockstate(GreateGirderBlockStateGenerator::blockStateWithShaft)
             .properties(p -> p.color(MaterialColor.COLOR_GRAY))
@@ -73,8 +73,8 @@ public class Girders {
             .transform(GirderEncasingRegistry.addVariantTo(Shafts.ALUMINIUM_SHAFT))
             .register();
 
-    public static final BlockEntry<TieredGirderEncasableBlock> STAINLESS_STEEL_METAL_GIRDER_ENCASED_SHAFT = REGISTRATE
-            .block("stainless_steel_metal_girder_encased_shaft", (p) -> new TieredGirderEncasableBlock(p, Shafts.STAINLESS_STEEL_SHAFT::get))
+    public static final BlockEntry<TieredGirderEncasableBlock> METAL_GIRDER_ENCASED_STAINLESS_STEEL_SHAFT = REGISTRATE
+            .block("metal_girder_encased_stainless_steel_shaft", (p) -> new TieredGirderEncasableBlock(p, Shafts.STAINLESS_STEEL_SHAFT::get))
             .initialProperties(SharedProperties::softMetal)
             .blockstate(GreateGirderBlockStateGenerator::blockStateWithShaft)
             .properties(p -> p.color(MaterialColor.COLOR_GRAY))
@@ -89,8 +89,8 @@ public class Girders {
             .transform(GirderEncasingRegistry.addVariantTo(Shafts.STAINLESS_STEEL_SHAFT))
             .register();
 
-    public static final BlockEntry<TieredGirderEncasableBlock> TITANIUM_METAL_GIRDER_ENCASED_SHAFT = REGISTRATE
-            .block("titanium_metal_girder_encased_shaft", (p) -> new TieredGirderEncasableBlock(p, Shafts.TITANIUM_SHAFT::get))
+    public static final BlockEntry<TieredGirderEncasableBlock> METAL_GIRDER_ENCASED_TITANIUM_SHAFT = REGISTRATE
+            .block("metal_girder_encased_titanium_shaft", (p) -> new TieredGirderEncasableBlock(p, Shafts.TITANIUM_SHAFT::get))
             .initialProperties(SharedProperties::softMetal)
             .blockstate(GreateGirderBlockStateGenerator::blockStateWithShaft)
             .properties(p -> p.color(MaterialColor.COLOR_GRAY))
@@ -105,8 +105,9 @@ public class Girders {
             .transform(GirderEncasingRegistry.addVariantTo(Shafts.TITANIUM_SHAFT))
             .register();
 
-    public static final BlockEntry<TieredGirderEncasableBlock> TUNGSTEN_STEEL_METAL_GIRDER_ENCASED_SHAFT = REGISTRATE
-            .block("tungsten_steel_metal_girder_encased_shaft", (p) -> new TieredGirderEncasableBlock(p, Shafts.TUNGSTEN_STEEL_SHAFT::get))
+    public static final BlockEntry<TieredGirderEncasableBlock> METAL_GIRDER_ENCASED_TUNGSTEN_STEEL_SHAFT = REGISTRATE
+            .block("metal_girder_encased_tungsten_steel_shaft", (p) -> new TieredGirderEncasableBlock(p, Shafts.TUNGSTEN_STEEL_SHAFT::get))
+            .lang("Metal Girder Encased Tungstensteel Shaft")
             .initialProperties(SharedProperties::softMetal)
             .blockstate(GreateGirderBlockStateGenerator::blockStateWithShaft)
             .properties(p -> p.color(MaterialColor.COLOR_GRAY))
@@ -121,8 +122,8 @@ public class Girders {
             .transform(GirderEncasingRegistry.addVariantTo(Shafts.TUNGSTEN_STEEL_SHAFT))
             .register();
 
-    public static final BlockEntry<TieredGirderEncasableBlock> PALLADIUM_METAL_GIRDER_ENCASED_SHAFT = REGISTRATE
-            .block("palladium_metal_girder_encased_shaft", (p) -> new TieredGirderEncasableBlock(p, Shafts.PALLADIUM_SHAFT::get))
+    public static final BlockEntry<TieredGirderEncasableBlock> METAL_GIRDER_ENCASED_PALLADIUM_SHAFT = REGISTRATE
+            .block("metal_girder_encased_palladium_shaft", (p) -> new TieredGirderEncasableBlock(p, Shafts.PALLADIUM_SHAFT::get))
             .initialProperties(SharedProperties::softMetal)
             .blockstate(GreateGirderBlockStateGenerator::blockStateWithShaft)
             .properties(p -> p.color(MaterialColor.COLOR_GRAY))
@@ -137,8 +138,8 @@ public class Girders {
             .transform(GirderEncasingRegistry.addVariantTo(Shafts.PALLADIUM_SHAFT))
             .register();
 
-    public static final BlockEntry<TieredGirderEncasableBlock> NAQUADAH_METAL_GIRDER_ENCASED_SHAFT = REGISTRATE
-            .block("naquadah_metal_girder_encased_shaft", (p) -> new TieredGirderEncasableBlock(p, Shafts.NAQUADAH_SHAFT::get))
+    public static final BlockEntry<TieredGirderEncasableBlock> METAL_GIRDER_ENCASED_NAQUADAH_SHAFT = REGISTRATE
+            .block("metal_girder_encased_naquadah_shaft", (p) -> new TieredGirderEncasableBlock(p, Shafts.NAQUADAH_SHAFT::get))
             .initialProperties(SharedProperties::softMetal)
             .blockstate(GreateGirderBlockStateGenerator::blockStateWithShaft)
             .properties(p -> p.color(MaterialColor.COLOR_GRAY))
@@ -153,8 +154,8 @@ public class Girders {
             .transform(GirderEncasingRegistry.addVariantTo(Shafts.NAQUADAH_SHAFT))
             .register();
 
-    public static final BlockEntry<TieredGirderEncasableBlock> DARMSTADTIUM_METAL_GIRDER_ENCASED_SHAFT = REGISTRATE
-            .block("darmstadtium_metal_girder_encased_shaft", (p) -> new TieredGirderEncasableBlock(p, Shafts.DARMSTADTIUM_SHAFT::get))
+    public static final BlockEntry<TieredGirderEncasableBlock> METAL_GIRDER_ENCASED_DARMSTADTIUM_SHAFT = REGISTRATE
+            .block("metal_girder_encased_darmstadtium_shaft", (p) -> new TieredGirderEncasableBlock(p, Shafts.DARMSTADTIUM_SHAFT::get))
             .initialProperties(SharedProperties::softMetal)
             .blockstate(GreateGirderBlockStateGenerator::blockStateWithShaft)
             .properties(p -> p.color(MaterialColor.COLOR_GRAY))
@@ -169,8 +170,8 @@ public class Girders {
             .transform(GirderEncasingRegistry.addVariantTo(Shafts.DARMSTADTIUM_SHAFT))
             .register();
 
-    public static final BlockEntry<TieredGirderEncasableBlock> NEUTRONIUM_METAL_GIRDER_ENCASED_SHAFT = REGISTRATE
-            .block("neutronium_metal_girder_encased_shaft", (p) -> new TieredGirderEncasableBlock(p, Shafts.NEUTRONIUM_SHAFT::get))
+    public static final BlockEntry<TieredGirderEncasableBlock> METAL_GIRDER_ENCASED_NEUTRONIUM_SHAFT = REGISTRATE
+            .block("metal_girder_encased_neutronium_shaft", (p) -> new TieredGirderEncasableBlock(p, Shafts.NEUTRONIUM_SHAFT::get))
             .initialProperties(SharedProperties::softMetal)
             .blockstate(GreateGirderBlockStateGenerator::blockStateWithShaft)
             .properties(p -> p.color(MaterialColor.COLOR_GRAY))

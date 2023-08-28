@@ -244,6 +244,7 @@ public class Shafts {
 
     public static final BlockEntry<TieredShaftBlock> TUNGSTEN_STEEL_SHAFT = REGISTRATE
             .block("tungsten_steel_shaft", TieredShaftBlock::new)
+            .lang("Tungstensteel Shaft")
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.color(MaterialColor.METAL))
             .transform(BlockStressDefaults.setNoImpact())
@@ -259,6 +260,7 @@ public class Shafts {
 
     public static final BlockEntry<TieredPoweredShaftBlock> POWERED_TUNGSTEN_STEEL_SHAFT = REGISTRATE
             .block("powered_tungsten_steel_shaft", p -> new TieredPoweredShaftBlock(p, Shafts.TUNGSTEN_STEEL_SHAFT::get))
+            .lang("Powered Tungstensteel Shaft")
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.color(MaterialColor.METAL))
             .transform(TagGen.pickaxeOnly())
@@ -269,6 +271,7 @@ public class Shafts {
 
     public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_TUNGSTEN_STEEL_SHAFT = REGISTRATE
             .block("andesite_encased_tungsten_steel_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.ANDESITE_CASING::get, Shafts.TUNGSTEN_STEEL_SHAFT::get))
+            .lang("Andesite Encased Tungstensteel Shaft")
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(TUNGSTEN_STEEL_SHAFT, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.TUNGSTEN_STEEL_SHAFT))
@@ -278,6 +281,7 @@ public class Shafts {
 
     public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_TUNGSTEN_STEEL_SHAFT = REGISTRATE
             .block("brass_encased_tungsten_steel_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.BRASS_CASING::get, Shafts.TUNGSTEN_STEEL_SHAFT::get))
+            .lang("Brass Encased Tungstensteel Shaft")
             .properties(p -> p.color(MaterialColor.TERRACOTTA_BROWN))
             .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(TUNGSTEN_STEEL_SHAFT, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.TUNGSTEN_STEEL_SHAFT))

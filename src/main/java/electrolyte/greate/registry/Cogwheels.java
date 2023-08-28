@@ -62,7 +62,7 @@ public class Cogwheels {
             .register();
 
     public static final BlockEntry<TieredEncasedCogwheelBlock> ANDESITE_ENCASED_ANDESITE_COGWHEEL = REGISTRATE
-            .block("andesite_encased_andesite_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.ANDESITE_CASING::get, ANDESITE_COGWHEEL::get, LARGE_ANDESITE_COGWHEEL::get, GreatePartialModels.ANDESITE_HALF_SHAFT, GreatePartialModels.ANDESITE_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_ANDESITE_SHAFTLESS_COGWHEEL))
+            .block("andesite_encased_andesite_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.ANDESITE_CASING::get, ANDESITE_COGWHEEL::get, LARGE_ANDESITE_COGWHEEL::get, GreatePartialModels.ANDESITE_SHAFT_HALF, GreatePartialModels.ANDESITE_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_ANDESITE_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedCogwheel(ANDESITE_COGWHEEL, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(ANDESITE_COGWHEEL))
@@ -72,8 +72,8 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .register();
 
-    public static final BlockEntry<TieredEncasedCogwheelBlock> LARGE_ANDESITE_ENCASED_ANDESITE_COGWHEEL = REGISTRATE
-            .block("large_andesite_encased_andesite_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.ANDESITE_CASING::get, ANDESITE_COGWHEEL::get, LARGE_ANDESITE_COGWHEEL::get, GreatePartialModels.ANDESITE_HALF_SHAFT, GreatePartialModels.ANDESITE_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_ANDESITE_SHAFTLESS_COGWHEEL))
+    public static final BlockEntry<TieredEncasedCogwheelBlock> ANDESITE_ENCASED_LARGE_ANDESITE_COGWHEEL = REGISTRATE
+            .block("andesite_encased_large_andesite_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.ANDESITE_CASING::get, ANDESITE_COGWHEEL::get, LARGE_ANDESITE_COGWHEEL::get, GreatePartialModels.ANDESITE_SHAFT_HALF, GreatePartialModels.ANDESITE_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_ANDESITE_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedLargeCogwheel(ANDESITE_COGWHEEL, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_ANDESITE_COGWHEEL))
@@ -82,7 +82,7 @@ public class Cogwheels {
             .register();
 
     public static final BlockEntry<TieredEncasedCogwheelBlock> BRASS_ENCASED_ANDESITE_COGWHEEL = REGISTRATE
-            .block("brass_encased_andesite_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.BRASS_CASING::get, ANDESITE_COGWHEEL::get, LARGE_ANDESITE_COGWHEEL::get, GreatePartialModels.ANDESITE_HALF_SHAFT, GreatePartialModels.ANDESITE_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_ANDESITE_SHAFTLESS_COGWHEEL))
+            .block("brass_encased_andesite_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.BRASS_CASING::get, ANDESITE_COGWHEEL::get, LARGE_ANDESITE_COGWHEEL::get, GreatePartialModels.ANDESITE_SHAFT_HALF, GreatePartialModels.ANDESITE_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_ANDESITE_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedCogwheel(ANDESITE_COGWHEEL, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(ANDESITE_COGWHEEL))
@@ -92,8 +92,8 @@ public class Cogwheels {
             .onRegister(c -> c.setTier(TIER.ULTRA_LOW))
             .register();
 
-    public static final BlockEntry<TieredEncasedCogwheelBlock> LARGE_BRASS_ENCASED_ANDESITE_COGWHEEL = REGISTRATE
-            .block("large_brass_encased_andesite_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.BRASS_CASING::get, ANDESITE_COGWHEEL::get, LARGE_ANDESITE_COGWHEEL::get, GreatePartialModels.ANDESITE_HALF_SHAFT, GreatePartialModels.ANDESITE_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_ANDESITE_SHAFTLESS_COGWHEEL))
+    public static final BlockEntry<TieredEncasedCogwheelBlock> BRASS_ENCASED_LARGE_ANDESITE_COGWHEEL = REGISTRATE
+            .block("brass_encased_large_andesite_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.BRASS_CASING::get, ANDESITE_COGWHEEL::get, LARGE_ANDESITE_COGWHEEL::get, GreatePartialModels.ANDESITE_SHAFT_HALF, GreatePartialModels.ANDESITE_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_ANDESITE_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedLargeCogwheel(ANDESITE_COGWHEEL, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_ANDESITE_COGWHEEL))
@@ -132,7 +132,7 @@ public class Cogwheels {
             .register();
 
     public static final BlockEntry<TieredEncasedCogwheelBlock> ANDESITE_ENCASED_STEEL_COGWHEEL = REGISTRATE
-            .block("andesite_encased_steel_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.ANDESITE_CASING::get, STEEL_COGWHEEL::get, LARGE_STEEL_COGWHEEL::get, GreatePartialModels.STEEL_HALF_SHAFT, GreatePartialModels.STEEL_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_STEEL_SHAFTLESS_COGWHEEL))
+            .block("andesite_encased_steel_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.ANDESITE_CASING::get, STEEL_COGWHEEL::get, LARGE_STEEL_COGWHEEL::get, GreatePartialModels.STEEL_SHAFT_HALF, GreatePartialModels.STEEL_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_STEEL_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedCogwheel(STEEL_COGWHEEL, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(STEEL_COGWHEEL))
@@ -142,8 +142,8 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .register();
 
-    public static final BlockEntry<TieredEncasedCogwheelBlock> LARGE_ANDESITE_ENCASED_STEEL_COGWHEEL = REGISTRATE
-            .block("large_andesite_encased_steel_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.ANDESITE_CASING::get, STEEL_COGWHEEL::get, LARGE_STEEL_COGWHEEL::get, GreatePartialModels.STEEL_HALF_SHAFT, GreatePartialModels.STEEL_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_STEEL_SHAFTLESS_COGWHEEL))
+    public static final BlockEntry<TieredEncasedCogwheelBlock> ANDESITE_ENCASED_LARGE_STEEL_COGWHEEL = REGISTRATE
+            .block("andesite_encased_large_steel_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.ANDESITE_CASING::get, STEEL_COGWHEEL::get, LARGE_STEEL_COGWHEEL::get, GreatePartialModels.STEEL_SHAFT_HALF, GreatePartialModels.STEEL_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_STEEL_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedLargeCogwheel(STEEL_COGWHEEL, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_STEEL_COGWHEEL))
@@ -152,7 +152,7 @@ public class Cogwheels {
             .register();
 
     public static final BlockEntry<TieredEncasedCogwheelBlock> BRASS_ENCASED_STEEL_COGWHEEL = REGISTRATE
-            .block("brass_encased_steel_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.BRASS_CASING::get, STEEL_COGWHEEL::get, LARGE_STEEL_COGWHEEL::get, GreatePartialModels.STEEL_HALF_SHAFT, GreatePartialModels.STEEL_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_STEEL_SHAFTLESS_COGWHEEL))
+            .block("brass_encased_steel_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.BRASS_CASING::get, STEEL_COGWHEEL::get, LARGE_STEEL_COGWHEEL::get, GreatePartialModels.STEEL_SHAFT_HALF, GreatePartialModels.STEEL_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_STEEL_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedCogwheel(STEEL_COGWHEEL, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(STEEL_COGWHEEL))
@@ -162,8 +162,8 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .register();
 
-    public static final BlockEntry<TieredEncasedCogwheelBlock> LARGE_BRASS_ENCASED_STEEL_COGWHEEL = REGISTRATE
-            .block("large_brass_encased_steel_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.BRASS_CASING::get, STEEL_COGWHEEL::get, LARGE_STEEL_COGWHEEL::get, GreatePartialModels.STEEL_HALF_SHAFT, GreatePartialModels.STEEL_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_STEEL_SHAFTLESS_COGWHEEL))
+    public static final BlockEntry<TieredEncasedCogwheelBlock> BRASS_ENCASED_LARGE_STEEL_COGWHEEL = REGISTRATE
+            .block("brass_encased_large_steel_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.BRASS_CASING::get, STEEL_COGWHEEL::get, LARGE_STEEL_COGWHEEL::get, GreatePartialModels.STEEL_SHAFT_HALF, GreatePartialModels.STEEL_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_STEEL_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedLargeCogwheel(STEEL_COGWHEEL, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_STEEL_COGWHEEL))
@@ -202,7 +202,7 @@ public class Cogwheels {
             .register();
 
     public static final BlockEntry<TieredEncasedCogwheelBlock> ANDESITE_ENCASED_ALUMINIUM_COGWHEEL = REGISTRATE
-            .block("andesite_encased_aluminium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.ANDESITE_CASING::get, ALUMINIUM_COGWHEEL::get, LARGE_ALUMINIUM_COGWHEEL::get, GreatePartialModels.ALUMINIUM_HALF_SHAFT, GreatePartialModels.ALUMINIUM_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_ALUMINIUM_SHAFTLESS_COGWHEEL))
+            .block("andesite_encased_aluminium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.ANDESITE_CASING::get, ALUMINIUM_COGWHEEL::get, LARGE_ALUMINIUM_COGWHEEL::get, GreatePartialModels.ALUMINIUM_SHAFT_HALF, GreatePartialModels.ALUMINIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_ALUMINIUM_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedCogwheel(ALUMINIUM_COGWHEEL, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(ALUMINIUM_COGWHEEL))
@@ -212,8 +212,8 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .register();
 
-    public static final BlockEntry<TieredEncasedCogwheelBlock> LARGE_ANDESITE_ENCASED_ALUMINIUM_COGWHEEL = REGISTRATE
-            .block("large_andesite_encased_aluminium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.ANDESITE_CASING::get, ALUMINIUM_COGWHEEL::get, LARGE_ALUMINIUM_COGWHEEL::get, GreatePartialModels.ALUMINIUM_HALF_SHAFT, GreatePartialModels.ALUMINIUM_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_ALUMINIUM_SHAFTLESS_COGWHEEL))
+    public static final BlockEntry<TieredEncasedCogwheelBlock> ANDESITE_ENCASED_LARGE_ALUMINIUM_COGWHEEL = REGISTRATE
+            .block("andesite_encased_large_aluminium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.ANDESITE_CASING::get, ALUMINIUM_COGWHEEL::get, LARGE_ALUMINIUM_COGWHEEL::get, GreatePartialModels.ALUMINIUM_SHAFT_HALF, GreatePartialModels.ALUMINIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_ALUMINIUM_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedLargeCogwheel(ALUMINIUM_COGWHEEL, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_ALUMINIUM_COGWHEEL))
@@ -222,7 +222,7 @@ public class Cogwheels {
             .register();
 
     public static final BlockEntry<TieredEncasedCogwheelBlock> BRASS_ENCASED_ALUMINIUM_COGWHEEL = REGISTRATE
-            .block("brass_encased_aluminium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.BRASS_CASING::get, ALUMINIUM_COGWHEEL::get, LARGE_ALUMINIUM_COGWHEEL::get, GreatePartialModels.ALUMINIUM_HALF_SHAFT, GreatePartialModels.ALUMINIUM_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_ALUMINIUM_SHAFTLESS_COGWHEEL))
+            .block("brass_encased_aluminium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.BRASS_CASING::get, ALUMINIUM_COGWHEEL::get, LARGE_ALUMINIUM_COGWHEEL::get, GreatePartialModels.ALUMINIUM_SHAFT_HALF, GreatePartialModels.ALUMINIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_ALUMINIUM_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedCogwheel(ALUMINIUM_COGWHEEL, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(ALUMINIUM_COGWHEEL))
@@ -232,8 +232,8 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .register();
 
-    public static final BlockEntry<TieredEncasedCogwheelBlock> LARGE_BRASS_ENCASED_ALUMINIUM_COGWHEEL = REGISTRATE
-            .block("large_brass_encased_aluminium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.BRASS_CASING::get, ALUMINIUM_COGWHEEL::get, LARGE_ALUMINIUM_COGWHEEL::get, GreatePartialModels.ALUMINIUM_HALF_SHAFT, GreatePartialModels.ALUMINIUM_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_ALUMINIUM_SHAFTLESS_COGWHEEL))
+    public static final BlockEntry<TieredEncasedCogwheelBlock> BRASS_ENCASED_LARGE_ALUMINIUM_COGWHEEL = REGISTRATE
+            .block("brass_encased_large_aluminium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.BRASS_CASING::get, ALUMINIUM_COGWHEEL::get, LARGE_ALUMINIUM_COGWHEEL::get, GreatePartialModels.ALUMINIUM_SHAFT_HALF, GreatePartialModels.ALUMINIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_ALUMINIUM_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedLargeCogwheel(ALUMINIUM_COGWHEEL, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_ALUMINIUM_COGWHEEL))
@@ -272,7 +272,7 @@ public class Cogwheels {
             .register();
 
     public static final BlockEntry<TieredEncasedCogwheelBlock> ANDESITE_ENCASED_STAINLESS_STEEL_COGWHEEL = REGISTRATE
-            .block("andesite_encased_stainless_steel_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.ANDESITE_CASING::get, STAINLESS_STEEL_COGWHEEL::get, LARGE_STAINLESS_STEEL_COGWHEEL::get, GreatePartialModels.STAINLESS_STEEL_HALF_SHAFT, GreatePartialModels.STAINLESS_STEEL_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_STAINLESS_STEEL_SHAFTLESS_COGWHEEL))
+            .block("andesite_encased_stainless_steel_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.ANDESITE_CASING::get, STAINLESS_STEEL_COGWHEEL::get, LARGE_STAINLESS_STEEL_COGWHEEL::get, GreatePartialModels.STAINLESS_STEEL_SHAFT_HALF, GreatePartialModels.STAINLESS_STEEL_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_STAINLESS_STEEL_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedCogwheel(STAINLESS_STEEL_COGWHEEL, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(STAINLESS_STEEL_COGWHEEL))
@@ -282,8 +282,8 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .register();
 
-    public static final BlockEntry<TieredEncasedCogwheelBlock> LARGE_ANDESITE_ENCASED_STAINLESS_STEEL_COGWHEEL = REGISTRATE
-            .block("large_andesite_encased_stainless_steel_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.ANDESITE_CASING::get, STAINLESS_STEEL_COGWHEEL::get, LARGE_STAINLESS_STEEL_COGWHEEL::get, GreatePartialModels.STAINLESS_STEEL_HALF_SHAFT, GreatePartialModels.STAINLESS_STEEL_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_STAINLESS_STEEL_SHAFTLESS_COGWHEEL))
+    public static final BlockEntry<TieredEncasedCogwheelBlock> ANDESITE_ENCASED_LARGE_STAINLESS_STEEL_COGWHEEL = REGISTRATE
+            .block("andesite_encased_large_stainless_steel_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.ANDESITE_CASING::get, STAINLESS_STEEL_COGWHEEL::get, LARGE_STAINLESS_STEEL_COGWHEEL::get, GreatePartialModels.STAINLESS_STEEL_SHAFT_HALF, GreatePartialModels.STAINLESS_STEEL_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_STAINLESS_STEEL_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedLargeCogwheel(STAINLESS_STEEL_COGWHEEL, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_STAINLESS_STEEL_COGWHEEL))
@@ -292,7 +292,7 @@ public class Cogwheels {
             .register();
 
     public static final BlockEntry<TieredEncasedCogwheelBlock> BRASS_ENCASED_STAINLESS_STEEL_COGWHEEL = REGISTRATE
-            .block("brass_encased_stainless_steel_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.BRASS_CASING::get, STAINLESS_STEEL_COGWHEEL::get, LARGE_STAINLESS_STEEL_COGWHEEL::get, GreatePartialModels.STAINLESS_STEEL_HALF_SHAFT, GreatePartialModels.STAINLESS_STEEL_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_STAINLESS_STEEL_SHAFTLESS_COGWHEEL))
+            .block("brass_encased_stainless_steel_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.BRASS_CASING::get, STAINLESS_STEEL_COGWHEEL::get, LARGE_STAINLESS_STEEL_COGWHEEL::get, GreatePartialModels.STAINLESS_STEEL_SHAFT_HALF, GreatePartialModels.STAINLESS_STEEL_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_STAINLESS_STEEL_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedCogwheel(STAINLESS_STEEL_COGWHEEL, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(STAINLESS_STEEL_COGWHEEL))
@@ -302,8 +302,8 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .register();
 
-    public static final BlockEntry<TieredEncasedCogwheelBlock> LARGE_BRASS_ENCASED_STAINLESS_STEEL_COGWHEEL = REGISTRATE
-            .block("large_brass_encased_stainless_steel_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.BRASS_CASING::get, STAINLESS_STEEL_COGWHEEL::get, LARGE_STAINLESS_STEEL_COGWHEEL::get, GreatePartialModels.STAINLESS_STEEL_HALF_SHAFT, GreatePartialModels.STAINLESS_STEEL_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_STAINLESS_STEEL_SHAFTLESS_COGWHEEL))
+    public static final BlockEntry<TieredEncasedCogwheelBlock> BRASS_ENCASED_LARGE_STAINLESS_STEEL_COGWHEEL = REGISTRATE
+            .block("brass_encased_large_stainless_steel_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.BRASS_CASING::get, STAINLESS_STEEL_COGWHEEL::get, LARGE_STAINLESS_STEEL_COGWHEEL::get, GreatePartialModels.STAINLESS_STEEL_SHAFT_HALF, GreatePartialModels.STAINLESS_STEEL_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_STAINLESS_STEEL_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedLargeCogwheel(STAINLESS_STEEL_COGWHEEL, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_STAINLESS_STEEL_COGWHEEL))
@@ -342,7 +342,7 @@ public class Cogwheels {
             .register();
 
     public static final BlockEntry<TieredEncasedCogwheelBlock> ANDESITE_ENCASED_TITANIUM_COGWHEEL = REGISTRATE
-            .block("andesite_encased_titanium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.ANDESITE_CASING::get, TITANIUM_COGWHEEL::get, LARGE_TITANIUM_COGWHEEL::get, GreatePartialModels.TITANIUM_HALF_SHAFT, GreatePartialModels.TITANIUM_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_TITANIUM_SHAFTLESS_COGWHEEL))
+            .block("andesite_encased_titanium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.ANDESITE_CASING::get, TITANIUM_COGWHEEL::get, LARGE_TITANIUM_COGWHEEL::get, GreatePartialModels.TITANIUM_SHAFT_HALF, GreatePartialModels.TITANIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_TITANIUM_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedCogwheel(TITANIUM_COGWHEEL, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(TITANIUM_COGWHEEL))
@@ -352,8 +352,8 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .register();
 
-    public static final BlockEntry<TieredEncasedCogwheelBlock> LARGE_ANDESITE_ENCASED_TITANIUM_COGWHEEL = REGISTRATE
-            .block("large_andesite_encased_titanium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.ANDESITE_CASING::get, TITANIUM_COGWHEEL::get, LARGE_TITANIUM_COGWHEEL::get, GreatePartialModels.TITANIUM_HALF_SHAFT, GreatePartialModels.TITANIUM_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_TITANIUM_SHAFTLESS_COGWHEEL))
+    public static final BlockEntry<TieredEncasedCogwheelBlock> ANDESITE_ENCASED_LARGE_TITANIUM_COGWHEEL = REGISTRATE
+            .block("andesite_encased_large_titanium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.ANDESITE_CASING::get, TITANIUM_COGWHEEL::get, LARGE_TITANIUM_COGWHEEL::get, GreatePartialModels.TITANIUM_SHAFT_HALF, GreatePartialModels.TITANIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_TITANIUM_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedLargeCogwheel(TITANIUM_COGWHEEL, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_TITANIUM_COGWHEEL))
@@ -362,7 +362,7 @@ public class Cogwheels {
             .register();
 
     public static final BlockEntry<TieredEncasedCogwheelBlock> BRASS_ENCASED_TITANIUM_COGWHEEL = REGISTRATE
-            .block("brass_encased_titanium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.BRASS_CASING::get, TITANIUM_COGWHEEL::get, LARGE_TITANIUM_COGWHEEL::get, GreatePartialModels.TITANIUM_HALF_SHAFT, GreatePartialModels.TITANIUM_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_TITANIUM_SHAFTLESS_COGWHEEL))
+            .block("brass_encased_titanium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.BRASS_CASING::get, TITANIUM_COGWHEEL::get, LARGE_TITANIUM_COGWHEEL::get, GreatePartialModels.TITANIUM_SHAFT_HALF, GreatePartialModels.TITANIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_TITANIUM_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedCogwheel(TITANIUM_COGWHEEL, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(TITANIUM_COGWHEEL))
@@ -372,8 +372,8 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .register();
 
-    public static final BlockEntry<TieredEncasedCogwheelBlock> LARGE_BRASS_ENCASED_TITANIUM_COGWHEEL = REGISTRATE
-            .block("large_brass_encased_titanium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.BRASS_CASING::get, TITANIUM_COGWHEEL::get, LARGE_TITANIUM_COGWHEEL::get, GreatePartialModels.TITANIUM_HALF_SHAFT, GreatePartialModels.TITANIUM_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_TITANIUM_SHAFTLESS_COGWHEEL))
+    public static final BlockEntry<TieredEncasedCogwheelBlock> BRASS_ENCASED_LARGE_TITANIUM_COGWHEEL = REGISTRATE
+            .block("brass_encased_large_titanium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.BRASS_CASING::get, TITANIUM_COGWHEEL::get, LARGE_TITANIUM_COGWHEEL::get, GreatePartialModels.TITANIUM_SHAFT_HALF, GreatePartialModels.TITANIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_TITANIUM_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedLargeCogwheel(TITANIUM_COGWHEEL, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_TITANIUM_COGWHEEL))
@@ -383,6 +383,7 @@ public class Cogwheels {
 
     public static final BlockEntry<TieredCogwheelBlock> TUNGSTEN_STEEL_COGWHEEL = REGISTRATE
             .block("tungsten_steel_cogwheel", TieredCogwheelBlock::small)
+            .lang("Tungstensteel Cogwheel")
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.sound(SoundType.WOOD))
             .properties(p -> p.color(MaterialColor.DIRT))
@@ -398,6 +399,7 @@ public class Cogwheels {
 
     public static final BlockEntry<TieredCogwheelBlock> LARGE_TUNGSTEN_STEEL_COGWHEEL = REGISTRATE
             .block("large_tungsten_steel_cogwheel", TieredCogwheelBlock::large)
+            .lang("Large Tungstensteel Cogwheel")
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.sound(SoundType.WOOD))
             .properties(p -> p.color(MaterialColor.DIRT))
@@ -412,7 +414,8 @@ public class Cogwheels {
             .register();
 
     public static final BlockEntry<TieredEncasedCogwheelBlock> ANDESITE_ENCASED_TUNGSTEN_STEEL_COGWHEEL = REGISTRATE
-            .block("andesite_encased_tungsten_steel_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.ANDESITE_CASING::get, TUNGSTEN_STEEL_COGWHEEL::get, LARGE_TUNGSTEN_STEEL_COGWHEEL::get, GreatePartialModels.TUNGSTEN_STEEL_HALF_SHAFT, GreatePartialModels.TUNGSTEN_STEEL_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_TUNGSTEN_STEEL_SHAFTLESS_COGWHEEL))
+            .block("andesite_encased_tungsten_steel_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.ANDESITE_CASING::get, TUNGSTEN_STEEL_COGWHEEL::get, LARGE_TUNGSTEN_STEEL_COGWHEEL::get, GreatePartialModels.TUNGSTEN_STEEL_SHAFT_HALF, GreatePartialModels.TUNGSTEN_STEEL_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_TUNGSTEN_STEEL_COGWHEEL))
+            .lang("Andesite Encased Tungstensteel Cogwheel")
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedCogwheel(TUNGSTEN_STEEL_COGWHEEL, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(TUNGSTEN_STEEL_COGWHEEL))
@@ -422,8 +425,9 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .register();
 
-    public static final BlockEntry<TieredEncasedCogwheelBlock> LARGE_ANDESITE_ENCASED_TUNGSTEN_STEEL_COGWHEEL = REGISTRATE
-            .block("large_andesite_encased_tungsten_steel_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.ANDESITE_CASING::get, TUNGSTEN_STEEL_COGWHEEL::get, LARGE_TUNGSTEN_STEEL_COGWHEEL::get, GreatePartialModels.TUNGSTEN_STEEL_HALF_SHAFT, GreatePartialModels.TUNGSTEN_STEEL_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_TUNGSTEN_STEEL_SHAFTLESS_COGWHEEL))
+    public static final BlockEntry<TieredEncasedCogwheelBlock> ANDESITE_ENCASED_LARGE_TUNGSTEN_STEEL_COGWHEEL = REGISTRATE
+            .block("andesite_encased_large_tungsten_steel_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.ANDESITE_CASING::get, TUNGSTEN_STEEL_COGWHEEL::get, LARGE_TUNGSTEN_STEEL_COGWHEEL::get, GreatePartialModels.TUNGSTEN_STEEL_SHAFT_HALF, GreatePartialModels.TUNGSTEN_STEEL_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_TUNGSTEN_STEEL_COGWHEEL))
+            .lang("Andesite Encased Large Tungstensteel Cogwheel")
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedLargeCogwheel(TUNGSTEN_STEEL_COGWHEEL, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_TUNGSTEN_STEEL_COGWHEEL))
@@ -432,7 +436,8 @@ public class Cogwheels {
             .register();
 
     public static final BlockEntry<TieredEncasedCogwheelBlock> BRASS_ENCASED_TUNGSTEN_STEEL_COGWHEEL = REGISTRATE
-            .block("brass_encased_tungsten_steel_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.BRASS_CASING::get, TUNGSTEN_STEEL_COGWHEEL::get, LARGE_TUNGSTEN_STEEL_COGWHEEL::get, GreatePartialModels.TUNGSTEN_STEEL_HALF_SHAFT, GreatePartialModels.TUNGSTEN_STEEL_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_TUNGSTEN_STEEL_SHAFTLESS_COGWHEEL))
+            .block("brass_encased_tungsten_steel_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.BRASS_CASING::get, TUNGSTEN_STEEL_COGWHEEL::get, LARGE_TUNGSTEN_STEEL_COGWHEEL::get, GreatePartialModels.TUNGSTEN_STEEL_SHAFT_HALF, GreatePartialModels.TUNGSTEN_STEEL_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_TUNGSTEN_STEEL_COGWHEEL))
+            .lang("Brass Encased Tungstensteel Cogwheel")
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedCogwheel(TUNGSTEN_STEEL_COGWHEEL, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(TUNGSTEN_STEEL_COGWHEEL))
@@ -442,8 +447,9 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .register();
 
-    public static final BlockEntry<TieredEncasedCogwheelBlock> LARGE_BRASS_ENCASED_TUNGSTEN_STEEL_COGWHEEL = REGISTRATE
-            .block("large_brass_encased_tungsten_steel_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.BRASS_CASING::get, TUNGSTEN_STEEL_COGWHEEL::get, LARGE_TUNGSTEN_STEEL_COGWHEEL::get, GreatePartialModels.TUNGSTEN_STEEL_HALF_SHAFT, GreatePartialModels.TUNGSTEN_STEEL_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_TUNGSTEN_STEEL_SHAFTLESS_COGWHEEL))
+    public static final BlockEntry<TieredEncasedCogwheelBlock> BRASS_ENCASED_LARGE_TUNGSTEN_STEEL_COGWHEEL = REGISTRATE
+            .block("brass_encased_large_tungsten_steel_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.BRASS_CASING::get, TUNGSTEN_STEEL_COGWHEEL::get, LARGE_TUNGSTEN_STEEL_COGWHEEL::get, GreatePartialModels.TUNGSTEN_STEEL_SHAFT_HALF, GreatePartialModels.TUNGSTEN_STEEL_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_TUNGSTEN_STEEL_COGWHEEL))
+            .lang("Brass Encased Large Tungstensteel Cogwheel")
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedLargeCogwheel(TUNGSTEN_STEEL_COGWHEEL, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_TUNGSTEN_STEEL_COGWHEEL))
@@ -482,7 +488,7 @@ public class Cogwheels {
             .register();
 
     public static final BlockEntry<TieredEncasedCogwheelBlock> ANDESITE_ENCASED_PALLADIUM_COGWHEEL = REGISTRATE
-            .block("andesite_encased_palladium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.ANDESITE_CASING::get, PALLADIUM_COGWHEEL::get, LARGE_PALLADIUM_COGWHEEL::get, GreatePartialModels.PALLADIUM_HALF_SHAFT, GreatePartialModels.PALLADIUM_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_PALLADIUM_SHAFTLESS_COGWHEEL))
+            .block("andesite_encased_palladium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.ANDESITE_CASING::get, PALLADIUM_COGWHEEL::get, LARGE_PALLADIUM_COGWHEEL::get, GreatePartialModels.PALLADIUM_SHAFT_HALF, GreatePartialModels.PALLADIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_PALLADIUM_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedCogwheel(PALLADIUM_COGWHEEL, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(PALLADIUM_COGWHEEL))
@@ -492,8 +498,8 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .register();
 
-    public static final BlockEntry<TieredEncasedCogwheelBlock> LARGE_ANDESITE_ENCASED_PALLADIUM_COGWHEEL = REGISTRATE
-            .block("large_andesite_encased_palladium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.ANDESITE_CASING::get, PALLADIUM_COGWHEEL::get, LARGE_PALLADIUM_COGWHEEL::get, GreatePartialModels.PALLADIUM_HALF_SHAFT, GreatePartialModels.PALLADIUM_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_PALLADIUM_SHAFTLESS_COGWHEEL))
+    public static final BlockEntry<TieredEncasedCogwheelBlock> ANDESITE_ENCASED_LARGE_PALLADIUM_COGWHEEL = REGISTRATE
+            .block("andesite_encased_large_palladium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.ANDESITE_CASING::get, PALLADIUM_COGWHEEL::get, LARGE_PALLADIUM_COGWHEEL::get, GreatePartialModels.PALLADIUM_SHAFT_HALF, GreatePartialModels.PALLADIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_PALLADIUM_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedLargeCogwheel(PALLADIUM_COGWHEEL, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_PALLADIUM_COGWHEEL))
@@ -502,7 +508,7 @@ public class Cogwheels {
             .register();
 
     public static final BlockEntry<TieredEncasedCogwheelBlock> BRASS_ENCASED_PALLADIUM_COGWHEEL = REGISTRATE
-            .block("brass_encased_palladium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.BRASS_CASING::get, PALLADIUM_COGWHEEL::get, LARGE_PALLADIUM_COGWHEEL::get, GreatePartialModels.PALLADIUM_HALF_SHAFT, GreatePartialModels.PALLADIUM_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_PALLADIUM_SHAFTLESS_COGWHEEL))
+            .block("brass_encased_palladium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.BRASS_CASING::get, PALLADIUM_COGWHEEL::get, LARGE_PALLADIUM_COGWHEEL::get, GreatePartialModels.PALLADIUM_SHAFT_HALF, GreatePartialModels.PALLADIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_PALLADIUM_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedCogwheel(PALLADIUM_COGWHEEL, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(PALLADIUM_COGWHEEL))
@@ -512,8 +518,8 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .register();
 
-    public static final BlockEntry<TieredEncasedCogwheelBlock> LARGE_BRASS_ENCASED_PALLADIUM_COGWHEEL = REGISTRATE
-            .block("large_brass_encased_palladium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.BRASS_CASING::get, PALLADIUM_COGWHEEL::get, LARGE_PALLADIUM_COGWHEEL::get, GreatePartialModels.PALLADIUM_HALF_SHAFT, GreatePartialModels.PALLADIUM_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_PALLADIUM_SHAFTLESS_COGWHEEL))
+    public static final BlockEntry<TieredEncasedCogwheelBlock> BRASS_ENCASED_LARGE_PALLADIUM_COGWHEEL = REGISTRATE
+            .block("brass_encased_large_palladium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.BRASS_CASING::get, PALLADIUM_COGWHEEL::get, LARGE_PALLADIUM_COGWHEEL::get, GreatePartialModels.PALLADIUM_SHAFT_HALF, GreatePartialModels.PALLADIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_PALLADIUM_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedLargeCogwheel(PALLADIUM_COGWHEEL, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_PALLADIUM_COGWHEEL))
@@ -552,7 +558,7 @@ public class Cogwheels {
             .register();
 
     public static final BlockEntry<TieredEncasedCogwheelBlock> ANDESITE_ENCASED_NAQUADAH_COGWHEEL = REGISTRATE
-            .block("andesite_encased_naquadah_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.ANDESITE_CASING::get, NAQUADAH_COGWHEEL::get, LARGE_NAQUADAH_COGWHEEL::get, GreatePartialModels.NAQUADAH_HALF_SHAFT, GreatePartialModels.NAQUADAH_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_NAQUADAH_SHAFTLESS_COGWHEEL))
+            .block("andesite_encased_naquadah_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.ANDESITE_CASING::get, NAQUADAH_COGWHEEL::get, LARGE_NAQUADAH_COGWHEEL::get, GreatePartialModels.NAQUADAH_SHAFT_HALF, GreatePartialModels.NAQUADAH_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_NAQUADAH_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedCogwheel(NAQUADAH_COGWHEEL, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(NAQUADAH_COGWHEEL))
@@ -562,8 +568,8 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .register();
 
-    public static final BlockEntry<TieredEncasedCogwheelBlock> LARGE_ANDESITE_ENCASED_NAQUADAH_COGWHEEL = REGISTRATE
-            .block("large_andesite_encased_naquadah_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.ANDESITE_CASING::get, NAQUADAH_COGWHEEL::get, LARGE_NAQUADAH_COGWHEEL::get, GreatePartialModels.NAQUADAH_HALF_SHAFT, GreatePartialModels.NAQUADAH_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_NAQUADAH_SHAFTLESS_COGWHEEL))
+    public static final BlockEntry<TieredEncasedCogwheelBlock> ANDESITE_ENCASED_LARGE_NAQUADAH_COGWHEEL = REGISTRATE
+            .block("andesite_encased_large_naquadah_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.ANDESITE_CASING::get, NAQUADAH_COGWHEEL::get, LARGE_NAQUADAH_COGWHEEL::get, GreatePartialModels.NAQUADAH_SHAFT_HALF, GreatePartialModels.NAQUADAH_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_NAQUADAH_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedLargeCogwheel(NAQUADAH_COGWHEEL, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_NAQUADAH_COGWHEEL))
@@ -572,7 +578,7 @@ public class Cogwheels {
             .register();
 
     public static final BlockEntry<TieredEncasedCogwheelBlock> BRASS_ENCASED_NAQUADAH_COGWHEEL = REGISTRATE
-            .block("brass_encased_naquadah_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.BRASS_CASING::get, NAQUADAH_COGWHEEL::get, LARGE_NAQUADAH_COGWHEEL::get, GreatePartialModels.NAQUADAH_HALF_SHAFT, GreatePartialModels.NAQUADAH_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_NAQUADAH_SHAFTLESS_COGWHEEL))
+            .block("brass_encased_naquadah_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.BRASS_CASING::get, NAQUADAH_COGWHEEL::get, LARGE_NAQUADAH_COGWHEEL::get, GreatePartialModels.NAQUADAH_SHAFT_HALF, GreatePartialModels.NAQUADAH_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_NAQUADAH_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedCogwheel(NAQUADAH_COGWHEEL, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(NAQUADAH_COGWHEEL))
@@ -582,8 +588,8 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .register();
 
-    public static final BlockEntry<TieredEncasedCogwheelBlock> LARGE_BRASS_ENCASED_NAQUADAH_COGWHEEL = REGISTRATE
-            .block("large_brass_encased_naquadah_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.BRASS_CASING::get, NAQUADAH_COGWHEEL::get, LARGE_NAQUADAH_COGWHEEL::get, GreatePartialModels.NAQUADAH_HALF_SHAFT, GreatePartialModels.NAQUADAH_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_NAQUADAH_SHAFTLESS_COGWHEEL))
+    public static final BlockEntry<TieredEncasedCogwheelBlock> BRASS_ENCASED_LARGE_NAQUADAH_COGWHEEL = REGISTRATE
+            .block("brass_encased_large_naquadah_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.BRASS_CASING::get, NAQUADAH_COGWHEEL::get, LARGE_NAQUADAH_COGWHEEL::get, GreatePartialModels.NAQUADAH_SHAFT_HALF, GreatePartialModels.NAQUADAH_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_NAQUADAH_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedLargeCogwheel(NAQUADAH_COGWHEEL, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_NAQUADAH_COGWHEEL))
@@ -622,7 +628,7 @@ public class Cogwheels {
             .register();
 
     public static final BlockEntry<TieredEncasedCogwheelBlock> ANDESITE_ENCASED_DARMSTADTIUM_COGWHEEL = REGISTRATE
-            .block("andesite_encased_darmstadtium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.ANDESITE_CASING::get, DARMSTADTIUM_COGWHEEL::get, LARGE_DARMSTADTIUM_COGWHEEL::get, GreatePartialModels.DARMSTADTIUM_HALF_SHAFT, GreatePartialModels.DARMSTADTIUM_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_DARMSTADTIUM_SHAFTLESS_COGWHEEL))
+            .block("andesite_encased_darmstadtium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.ANDESITE_CASING::get, DARMSTADTIUM_COGWHEEL::get, LARGE_DARMSTADTIUM_COGWHEEL::get, GreatePartialModels.DARMSTADTIUM_SHAFT_HALF, GreatePartialModels.DARMSTADTIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_DARMSTADTIUM_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedCogwheel(DARMSTADTIUM_COGWHEEL, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(DARMSTADTIUM_COGWHEEL))
@@ -632,8 +638,8 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .register();
 
-    public static final BlockEntry<TieredEncasedCogwheelBlock> LARGE_ANDESITE_ENCASED_DARMSTADTIUM_COGWHEEL = REGISTRATE
-            .block("large_andesite_encased_darmstadtium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.ANDESITE_CASING::get, DARMSTADTIUM_COGWHEEL::get, LARGE_DARMSTADTIUM_COGWHEEL::get, GreatePartialModels.DARMSTADTIUM_HALF_SHAFT, GreatePartialModels.DARMSTADTIUM_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_DARMSTADTIUM_SHAFTLESS_COGWHEEL))
+    public static final BlockEntry<TieredEncasedCogwheelBlock> ANDESITE_ENCASED_LARGE_DARMSTADTIUM_COGWHEEL = REGISTRATE
+            .block("andesite_encased_large_darmstadtium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.ANDESITE_CASING::get, DARMSTADTIUM_COGWHEEL::get, LARGE_DARMSTADTIUM_COGWHEEL::get, GreatePartialModels.DARMSTADTIUM_SHAFT_HALF, GreatePartialModels.DARMSTADTIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_DARMSTADTIUM_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedLargeCogwheel(DARMSTADTIUM_COGWHEEL, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_DARMSTADTIUM_COGWHEEL))
@@ -642,7 +648,7 @@ public class Cogwheels {
             .register();
 
     public static final BlockEntry<TieredEncasedCogwheelBlock> BRASS_ENCASED_DARMSTADTIUM_COGWHEEL = REGISTRATE
-            .block("brass_encased_darmstadtium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.BRASS_CASING::get, DARMSTADTIUM_COGWHEEL::get, LARGE_DARMSTADTIUM_COGWHEEL::get, GreatePartialModels.DARMSTADTIUM_HALF_SHAFT, GreatePartialModels.DARMSTADTIUM_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_DARMSTADTIUM_SHAFTLESS_COGWHEEL))
+            .block("brass_encased_darmstadtium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.BRASS_CASING::get, DARMSTADTIUM_COGWHEEL::get, LARGE_DARMSTADTIUM_COGWHEEL::get, GreatePartialModels.DARMSTADTIUM_SHAFT_HALF, GreatePartialModels.DARMSTADTIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_DARMSTADTIUM_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedCogwheel(DARMSTADTIUM_COGWHEEL, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(DARMSTADTIUM_COGWHEEL))
@@ -652,8 +658,8 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .register();
 
-    public static final BlockEntry<TieredEncasedCogwheelBlock> LARGE_BRASS_ENCASED_DARMSTADTIUM_COGWHEEL = REGISTRATE
-            .block("large_brass_encased_darmstadtium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.BRASS_CASING::get, DARMSTADTIUM_COGWHEEL::get, LARGE_DARMSTADTIUM_COGWHEEL::get, GreatePartialModels.DARMSTADTIUM_HALF_SHAFT, GreatePartialModels.DARMSTADTIUM_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_DARMSTADTIUM_SHAFTLESS_COGWHEEL))
+    public static final BlockEntry<TieredEncasedCogwheelBlock> BRASS_ENCASED_LARGE_DARMSTADTIUM_COGWHEEL = REGISTRATE
+            .block("brass_encased_large_darmstadtium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.BRASS_CASING::get, DARMSTADTIUM_COGWHEEL::get, LARGE_DARMSTADTIUM_COGWHEEL::get, GreatePartialModels.DARMSTADTIUM_SHAFT_HALF, GreatePartialModels.DARMSTADTIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_DARMSTADTIUM_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedLargeCogwheel(DARMSTADTIUM_COGWHEEL, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_DARMSTADTIUM_COGWHEEL))
@@ -692,7 +698,7 @@ public class Cogwheels {
             .register();
 
     public static final BlockEntry<TieredEncasedCogwheelBlock> ANDESITE_ENCASED_NEUTRONIUM_COGWHEEL = REGISTRATE
-            .block("andesite_encased_neutronium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.ANDESITE_CASING::get, NEUTRONIUM_COGWHEEL::get, LARGE_NEUTRONIUM_COGWHEEL::get, GreatePartialModels.NEUTRONIUM_HALF_SHAFT, GreatePartialModels.NEUTRONIUM_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_NEUTRONIUM_SHAFTLESS_COGWHEEL))
+            .block("andesite_encased_neutronium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.ANDESITE_CASING::get, NEUTRONIUM_COGWHEEL::get, LARGE_NEUTRONIUM_COGWHEEL::get, GreatePartialModels.NEUTRONIUM_SHAFT_HALF, GreatePartialModels.NEUTRONIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_NEUTRONIUM_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedCogwheel(NEUTRONIUM_COGWHEEL, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(NEUTRONIUM_COGWHEEL))
@@ -702,8 +708,8 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .register();
 
-    public static final BlockEntry<TieredEncasedCogwheelBlock> LARGE_ANDESITE_ENCASED_NEUTRONIUM_COGWHEEL = REGISTRATE
-            .block("large_andesite_encased_neutronium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.ANDESITE_CASING::get, NEUTRONIUM_COGWHEEL::get, LARGE_NEUTRONIUM_COGWHEEL::get, GreatePartialModels.NEUTRONIUM_HALF_SHAFT, GreatePartialModels.NEUTRONIUM_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_NEUTRONIUM_SHAFTLESS_COGWHEEL))
+    public static final BlockEntry<TieredEncasedCogwheelBlock> ANDESITE_ENCASED_LARGE_NEUTRONIUM_COGWHEEL = REGISTRATE
+            .block("andesite_encased_large_neutronium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.ANDESITE_CASING::get, NEUTRONIUM_COGWHEEL::get, LARGE_NEUTRONIUM_COGWHEEL::get, GreatePartialModels.NEUTRONIUM_SHAFT_HALF, GreatePartialModels.NEUTRONIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_NEUTRONIUM_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedLargeCogwheel(NEUTRONIUM_COGWHEEL, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_NEUTRONIUM_COGWHEEL))
@@ -712,7 +718,7 @@ public class Cogwheels {
             .register();
 
     public static final BlockEntry<TieredEncasedCogwheelBlock> BRASS_ENCASED_NEUTRONIUM_COGWHEEL = REGISTRATE
-            .block("brass_encased_neutronium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.BRASS_CASING::get, NEUTRONIUM_COGWHEEL::get, LARGE_NEUTRONIUM_COGWHEEL::get, GreatePartialModels.NEUTRONIUM_HALF_SHAFT, GreatePartialModels.NEUTRONIUM_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_NEUTRONIUM_SHAFTLESS_COGWHEEL))
+            .block("brass_encased_neutronium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,false, AllBlocks.BRASS_CASING::get, NEUTRONIUM_COGWHEEL::get, LARGE_NEUTRONIUM_COGWHEEL::get, GreatePartialModels.NEUTRONIUM_SHAFT_HALF, GreatePartialModels.NEUTRONIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_NEUTRONIUM_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedCogwheel(NEUTRONIUM_COGWHEEL, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(NEUTRONIUM_COGWHEEL))
@@ -722,8 +728,8 @@ public class Cogwheels {
             .transform(TagGen.axeOrPickaxe())
             .register();
 
-    public static final BlockEntry<TieredEncasedCogwheelBlock> LARGE_BRASS_ENCASED_NEUTRONIUM_COGWHEEL = REGISTRATE
-            .block("large_brass_encased_neutronium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.BRASS_CASING::get, NEUTRONIUM_COGWHEEL::get, LARGE_NEUTRONIUM_COGWHEEL::get, GreatePartialModels.NEUTRONIUM_HALF_SHAFT, GreatePartialModels.NEUTRONIUM_SHAFTLESS_COGWHEEL, GreatePartialModels.LARGE_NEUTRONIUM_SHAFTLESS_COGWHEEL))
+    public static final BlockEntry<TieredEncasedCogwheelBlock> BRASS_ENCASED_LARGE_NEUTRONIUM_COGWHEEL = REGISTRATE
+            .block("brass_encased_large_neutronium_cogwheel", p -> new TieredEncasedCogwheelBlock(p,true, AllBlocks.BRASS_CASING::get, NEUTRONIUM_COGWHEEL::get, LARGE_NEUTRONIUM_COGWHEEL::get, GreatePartialModels.NEUTRONIUM_SHAFT_HALF, GreatePartialModels.NEUTRONIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.SHAFTLESS_LARGE_NEUTRONIUM_COGWHEEL))
             .properties(p -> p.color(MaterialColor.PODZOL))
             .transform(tieredEncasedLargeCogwheel(NEUTRONIUM_COGWHEEL, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(LARGE_NEUTRONIUM_COGWHEEL))

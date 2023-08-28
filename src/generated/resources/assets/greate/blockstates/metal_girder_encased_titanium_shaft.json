@@ -2,7 +2,7 @@
   "multipart": [
     {
       "apply": {
-        "model": "greate:block/steel_metal_girder_encased_shaft",
+        "model": "greate:block/metal_girder_encased_titanium_shaft",
         "y": 90
       },
       "when": {
@@ -11,7 +11,7 @@
     },
     {
       "apply": {
-        "model": "greate:block/steel_metal_girder_encased_shaft"
+        "model": "greate:block/metal_girder_encased_titanium_shaft"
       },
       "when": {
         "axis": "z"
@@ -19,7 +19,7 @@
     },
     {
       "apply": {
-        "model": "greate:block/steel_metal_girder_encased_shaft_top"
+        "model": "greate:block/metal_girder_encased_titanium_shaft_top"
       },
       "when": {
         "top": "true"
@@ -27,7 +27,7 @@
     },
     {
       "apply": {
-        "model": "greate:block/steel_metal_girder_encased_shaft_bottom"
+        "model": "greate:block/metal_girder_encased_titanium_shaft_bottom"
       },
       "when": {
         "bottom": "true"

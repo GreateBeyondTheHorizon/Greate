@@ -70,6 +70,7 @@ public class Millstones {
 
     public static final BlockEntry<TieredMillstoneBlock> TUNGSTEN_STEEL_MILLSTONE = REGISTRATE
             .block("tungsten_steel_millstone", p -> new TieredMillstoneBlock(p, GreatePartialModels.TUNGSTEN_STEEL_MILLSTONE_INNER))
+            .lang("Tungstensteel Millstone")
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.color(MaterialColor.METAL))
             .transform(TagGen.pickaxeOnly())
