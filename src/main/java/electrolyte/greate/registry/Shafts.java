@@ -242,8 +242,8 @@ public class Shafts {
             .onRegister(c -> c.setTier(TIER.EXTREME))
             .register();
 
-    public static final BlockEntry<TieredShaftBlock> TUNGSTENSTEEL_SHAFT = REGISTRATE
-            .block("tungstensteel_shaft", TieredShaftBlock::new)
+    public static final BlockEntry<TieredShaftBlock> TUNGSTEN_STEEL_SHAFT = REGISTRATE
+            .block("tungsten_steel_shaft", TieredShaftBlock::new)
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.color(MaterialColor.METAL))
             .transform(BlockStressDefaults.setNoImpact())
@@ -254,33 +254,33 @@ public class Shafts {
             .simpleItem()
             .item()
             .tag(GreateItemTags.SHAFTS.itemTag)
-            .tag(GreateItemTags.SHAFTS_TUNGSTENSTEEL.itemTag).build()
+            .tag(GreateItemTags.SHAFTS_TUNGSTEN_STEEL.itemTag).build()
             .register();
 
-    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_TUNGSTENSTEEL_SHAFT = REGISTRATE
-            .block("powered_tungstensteel_shaft", p -> new TieredPoweredShaftBlock(p, Shafts.TUNGSTENSTEEL_SHAFT::get))
+    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_TUNGSTEN_STEEL_SHAFT = REGISTRATE
+            .block("powered_tungsten_steel_shaft", p -> new TieredPoweredShaftBlock(p, Shafts.TUNGSTEN_STEEL_SHAFT::get))
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.color(MaterialColor.METAL))
             .transform(TagGen.pickaxeOnly())
             .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
-            .loot((l, b) -> l.dropOther(b, TUNGSTENSTEEL_SHAFT.get()))
+            .loot((l, b) -> l.dropOther(b, TUNGSTEN_STEEL_SHAFT.get()))
             .onRegister(c -> c.setTier(TIER.INSANE))
             .register();
 
-    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_TUNGSTENSTEEL_SHAFT = REGISTRATE
-            .block("andesite_encased_tungstensteel_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.ANDESITE_CASING::get, Shafts.TUNGSTENSTEEL_SHAFT::get))
+    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_TUNGSTEN_STEEL_SHAFT = REGISTRATE
+            .block("andesite_encased_tungsten_steel_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.ANDESITE_CASING::get, Shafts.TUNGSTEN_STEEL_SHAFT::get))
             .properties(p -> p.color(MaterialColor.PODZOL))
-            .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(TUNGSTENSTEEL_SHAFT, () -> AllSpriteShifts.ANDESITE_CASING))
-            .transform(EncasingRegistry.addVariantTo(Shafts.TUNGSTENSTEEL_SHAFT))
+            .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(TUNGSTEN_STEEL_SHAFT, () -> AllSpriteShifts.ANDESITE_CASING))
+            .transform(EncasingRegistry.addVariantTo(Shafts.TUNGSTEN_STEEL_SHAFT))
             .transform(TagGen.axeOrPickaxe())
             .onRegister(c -> c.setTier(TIER.INSANE))
             .register();
 
-    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_TUNGSTENSTEEL_SHAFT = REGISTRATE
-            .block("brass_encased_tungstensteel_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.BRASS_CASING::get, Shafts.TUNGSTENSTEEL_SHAFT::get))
+    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_TUNGSTEN_STEEL_SHAFT = REGISTRATE
+            .block("brass_encased_tungsten_steel_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.BRASS_CASING::get, Shafts.TUNGSTEN_STEEL_SHAFT::get))
             .properties(p -> p.color(MaterialColor.TERRACOTTA_BROWN))
-            .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(TUNGSTENSTEEL_SHAFT, () -> AllSpriteShifts.BRASS_CASING))
-            .transform(EncasingRegistry.addVariantTo(Shafts.TUNGSTENSTEEL_SHAFT))
+            .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(TUNGSTEN_STEEL_SHAFT, () -> AllSpriteShifts.BRASS_CASING))
+            .transform(EncasingRegistry.addVariantTo(Shafts.TUNGSTEN_STEEL_SHAFT))
             .transform(TagGen.axeOrPickaxe())
             .onRegister(c -> c.setTier(TIER.INSANE))
             .register();

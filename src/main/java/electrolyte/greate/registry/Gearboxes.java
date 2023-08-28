@@ -120,8 +120,8 @@ public class Gearboxes {
             .transform(GreateBuilderTransformers.tieredGearboxVertical())
             .register();
 
-    public static final BlockEntry<TieredGearboxBlock> TUNGSTENSTEEL_GEARBOX = REGISTRATE
-            .block("tungstensteel_gearbox", p -> new TieredGearboxBlock(p, GreatePartialModels.TUNGSTENSTEEL_HALF_SHAFT))
+    public static final BlockEntry<TieredGearboxBlock> TUNGSTEN_STEEL_GEARBOX = REGISTRATE
+            .block("tungsten_steel_gearbox", p -> new TieredGearboxBlock(p, GreatePartialModels.TUNGSTEN_STEEL_HALF_SHAFT))
             .initialProperties(SharedProperties::stone)
             .properties(Properties::noOcclusion)
             .properties(p -> p.color(MaterialColor.PODZOL))
@@ -134,8 +134,8 @@ public class Gearboxes {
             .onRegister(c -> c.setTier(TIER.INSANE))
             .register();
 
-    public static final ItemEntry<TieredVerticalGearboxItem> TUNGSTENSTEEL_VERTICAL_GEARBOX = REGISTRATE
-            .item("tungstensteel_vertical_gearbox", p -> new TieredVerticalGearboxItem(p, TUNGSTENSTEEL_GEARBOX.get()))
+    public static final ItemEntry<TieredVerticalGearboxItem> TUNGSTEN_STEEL_VERTICAL_GEARBOX = REGISTRATE
+            .item("tungsten_steel_vertical_gearbox", p -> new TieredVerticalGearboxItem(p, TUNGSTEN_STEEL_GEARBOX.get()))
             .transform(GreateBuilderTransformers.tieredGearboxVertical())
             .register();
 

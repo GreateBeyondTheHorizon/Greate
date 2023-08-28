@@ -105,20 +105,20 @@ public class Girders {
             .transform(GirderEncasingRegistry.addVariantTo(Shafts.TITANIUM_SHAFT))
             .register();
 
-    public static final BlockEntry<TieredGirderEncasableBlock> TUNGSTENSTEEL_METAL_GIRDER_ENCASED_SHAFT = REGISTRATE
-            .block("tungstensteel_metal_girder_encased_shaft", (p) -> new TieredGirderEncasableBlock(p, Shafts.TUNGSTENSTEEL_SHAFT::get))
+    public static final BlockEntry<TieredGirderEncasableBlock> TUNGSTEN_STEEL_METAL_GIRDER_ENCASED_SHAFT = REGISTRATE
+            .block("tungsten_steel_metal_girder_encased_shaft", (p) -> new TieredGirderEncasableBlock(p, Shafts.TUNGSTEN_STEEL_SHAFT::get))
             .initialProperties(SharedProperties::softMetal)
             .blockstate(GreateGirderBlockStateGenerator::blockStateWithShaft)
             .properties(p -> p.color(MaterialColor.COLOR_GRAY))
             .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
             .transform(TagGen.pickaxeOnly())
             .loot((p, b) -> p.add(b, RegistrateBlockLootTables.createSingleItemTable(AllBlocks.METAL_GIRDER.get())
-                    .withPool(RegistrateBlockLootTables.applyExplosionCondition(Shafts.TUNGSTENSTEEL_SHAFT.get(), LootPool.lootPool()
+                    .withPool(RegistrateBlockLootTables.applyExplosionCondition(Shafts.TUNGSTEN_STEEL_SHAFT.get(), LootPool.lootPool()
                             .setRolls(ConstantValue.exactly(1.0F))
-                            .add(LootItem.lootTableItem(Shafts.TUNGSTENSTEEL_SHAFT.get()))))))
+                            .add(LootItem.lootTableItem(Shafts.TUNGSTEN_STEEL_SHAFT.get()))))))
             .onRegister(CreateRegistrate.blockModel(() -> ConnectedGirderModel::new))
             .onRegister(c -> c.setTier(TIER.INSANE))
-            .transform(GirderEncasingRegistry.addVariantTo(Shafts.TUNGSTENSTEEL_SHAFT))
+            .transform(GirderEncasingRegistry.addVariantTo(Shafts.TUNGSTEN_STEEL_SHAFT))
             .register();
 
     public static final BlockEntry<TieredGirderEncasableBlock> PALLADIUM_METAL_GIRDER_ENCASED_SHAFT = REGISTRATE

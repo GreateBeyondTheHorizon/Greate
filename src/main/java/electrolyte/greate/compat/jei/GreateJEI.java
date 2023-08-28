@@ -68,7 +68,7 @@ public class GreateJEI implements IModPlugin {
                 .catalyst(Millstones.ALUMINIUM_MILLSTONE::get)
                 .catalyst(Millstones.STAINLESS_STEEL_MILLSTONE::get)
                 .catalyst(Millstones.TITANIUM_MILLSTONE::get)
-                .catalyst(Millstones.TUNGSTENSTEEL_MILLSTONE::get)
+                .catalyst(Millstones.TUNGSTEN_STEEL_MILLSTONE::get)
                 .catalyst(Millstones.PALLADIUM_MILLSTONE::get)
                 .catalyst(Millstones.NAQUADAH_MILLSTONE::get)
                 .catalyst(Millstones.DARMSTADTIUM_MILLSTONE::get)

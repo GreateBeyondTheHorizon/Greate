@@ -68,8 +68,8 @@ public class Millstones {
             .onRegister(c -> c.setTier(TIER.EXTREME))
             .register();
 
-    public static final BlockEntry<TieredMillstoneBlock> TUNGSTENSTEEL_MILLSTONE = REGISTRATE
-            .block("tungstensteel_millstone", p -> new TieredMillstoneBlock(p, GreatePartialModels.TUNGSTENSTEEL_MILLSTONE_INNER))
+    public static final BlockEntry<TieredMillstoneBlock> TUNGSTEN_STEEL_MILLSTONE = REGISTRATE
+            .block("tungsten_steel_millstone", p -> new TieredMillstoneBlock(p, GreatePartialModels.TUNGSTEN_STEEL_MILLSTONE_INNER))
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.color(MaterialColor.METAL))
             .transform(TagGen.pickaxeOnly())

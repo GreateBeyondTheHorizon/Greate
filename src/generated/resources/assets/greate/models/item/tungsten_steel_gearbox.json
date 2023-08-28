@@ -1,0 +1,8 @@
+{
+  "parent": "create:block/gearbox/item",
+  "textures": {
+    "1_0": "greate:block/tungsten_steel/axis",
+    "1_1": "greate:block/tungsten_steel/axis_top",
+    "particle": "greate:block/tungsten_steel/axis"
+  }
+}

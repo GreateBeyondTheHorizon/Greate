@@ -32,8 +32,8 @@ public class ModItems {
             .model((c, p) -> p.withExistingParent(c.getName(), "item/generated")
                     .texture("layer0", p.modLoc("item/" + c.getName().substring(0, c.getName().length() - 6) + "/alloy")))
             .register();
-    public static final ItemEntry<Item> TUNGSTENSTEEL_ALLOY = REGISTRATE
-            .item("tungstensteel_alloy", Item::new)
+    public static final ItemEntry<Item> TUNGSTEN_STEEL_ALLOY = REGISTRATE
+            .item("tungsten_steel_alloy", Item::new)
             .model((c, p) -> p.withExistingParent(c.getName(), "item/generated")
                     .texture("layer0", p.modLoc("item/" + c.getName().substring(0, c.getName().length() - 6) + "/alloy")))
             .register();

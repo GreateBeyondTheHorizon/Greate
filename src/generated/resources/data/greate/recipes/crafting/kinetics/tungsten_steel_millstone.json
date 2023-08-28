@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "A": {
+      "tag": "greate:shafts/tungsten_steel"
+    },
+    "C": {
+      "tag": "forge:circuits/iv"
+    },
+    "M": {
+      "item": "gtceu:iv_machine_hull"
+    },
+    "S": {
+      "tag": "minecraft:wooden_slabs"
+    },
+    "W": {
+      "tag": "greate:cogwheels/tungsten_steel"
+    }
+  },
+  "pattern": [
+    " W ",
+    "SMS",
+    "CAC"
+  ],
+  "result": {
+    "item": "greate:tungsten_steel_millstone"
+  }
+}
