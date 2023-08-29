@@ -1,10 +1,12 @@
 package electrolyte.greate.compat.jei.category;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.simibubi.create.compat.jei.category.animations.AnimatedMillstone;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
+import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.compat.jei.category.animations.TieredAnimatedMillstone;
 import electrolyte.greate.content.kinetics.crusher.TieredAbstractCrushingRecipe;
+import electrolyte.greate.registry.Millstones;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.IFocusGroup;
@@ -15,8 +17,6 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 public class TieredMillingCategory extends GreateRecipeCategory<TieredAbstractCrushingRecipe> {
-
-    private final AnimatedMillstone millstone = new AnimatedMillstone();
 
     public TieredMillingCategory(Info<TieredAbstractCrushingRecipe> info) {
         super(info);
@@ -43,10 +43,10 @@ public class TieredMillingCategory extends GreateRecipeCategory<TieredAbstractCr
     }
 
     @Override
-    public void draw(TieredAbstractCrushingRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
-        super.draw(recipe, recipeSlotsView, stack, mouseX, mouseY);
+    public void draw(TieredAbstractCrushingRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double x, double y) {
+        super.draw(recipe, recipeSlotsView, stack, 1, 57);
         AllGuiTextures.JEI_ARROW.render(stack, 85, 32);
         AllGuiTextures.JEI_DOWN_ARROW.render(stack, 43, 4);
-        millstone.draw(stack, 48, 27);
+        new TieredAnimatedMillstone(Millstones.MILLSTONES.get(TIER.indexOfTier(recipe.getRecipeTier()))).draw(stack, 48, 27);
     }
 }

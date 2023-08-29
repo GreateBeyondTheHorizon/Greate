@@ -128,7 +128,7 @@ public class TieredMillstoneBlockEntity extends TieredKineticBlockEntity impleme
     }
     
     public Optional<ProcessingRecipe<RecipeWrapper>> findRecipe(RecipeWrapper wrapper) {
-        Optional<ProcessingRecipe<RecipeWrapper>> millingRecipe = ModRecipeTypes.MILLING.find(wrapper, level, this);
+        Optional<ProcessingRecipe<RecipeWrapper>> millingRecipe = ModRecipeTypes.MILLING.find(wrapper, level, this.getTier());
         if(millingRecipe.isEmpty()) {
             millingRecipe = AllRecipeTypes.MILLING.find(wrapper, level);
         }

@@ -9,7 +9,6 @@ import java.util.List;
 public class GreateEnums {
 
     public enum TIER implements Comparable<TIER> {
-        NONE("NONE", Double.MAX_VALUE, ChatFormatting.WHITE),
         ULTRA_LOW("ULS", Greate.CONFIG.ULS_CAPACITY, ChatFormatting.WHITE),
         LOW("LS", Greate.CONFIG.LS_CAPACITY, ChatFormatting.GRAY),
         MEDIUM("MS", Greate.CONFIG.MS_CAPACITY, ChatFormatting.AQUA),
@@ -49,11 +48,11 @@ public class GreateEnums {
                     return tier;
             }
             Greate.LOGGER.warn("Tried to deserialize invalid recipe tier condition: \"" + name + "\"");
-            return NONE;
+            return ULTRA_LOW;
         }
 
         public static int getTierMultiplier(TIER tier, double machineMultiplier) {
-            return tier == ULTRA_LOW ? 1 : (int) (machineMultiplier * (Arrays.stream(values()).toList().indexOf(tier) - 1));
+            return tier == ULTRA_LOW ? 1 : (int) (machineMultiplier * indexOfTier(tier));
         }
 
         public static TIER convertGTEUToTier(List<Content> content) {
@@ -69,6 +68,10 @@ public class GreateEnums {
             else if(eut <= 131072) return TIER.ZPM;
             else if(eut <= 524288) return TIER.ULTIMATE;
             else return TIER.ULTIMATE_HIGH;
+        }
+
+        public static int indexOfTier(TIER tier) {
+            return Arrays.stream(values()).toList().indexOf(tier);
         }
     }
 }

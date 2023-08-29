@@ -1,0 +1,7 @@
+{
+  "parent": "create:block/crushing_wheel/textures",
+  "textures": {
+    "axis": "greate:block/neutronium/axis",
+    "axis_top": "greate:block/neutronium/axis_top"
+  }
+}

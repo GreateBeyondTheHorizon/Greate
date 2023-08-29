@@ -1,5 +1,6 @@
 package electrolyte.greate.compat.jei;
 
+import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
@@ -17,9 +18,12 @@ import com.simibubi.create.infrastructure.config.CRecipes;
 import electrolyte.greate.Greate;
 import electrolyte.greate.compat.jei.category.GreateRecipeCategory;
 import electrolyte.greate.compat.jei.category.GreateRecipeCategory.Info;
+import electrolyte.greate.compat.jei.category.TieredCrushingCategory;
 import electrolyte.greate.compat.jei.category.TieredMillingCategory;
 import electrolyte.greate.content.kinetics.crusher.TieredAbstractCrushingRecipe;
+import electrolyte.greate.content.kinetics.crusher.TieredCrushingRecipe;
 import electrolyte.greate.content.kinetics.millstone.TieredMillingRecipe;
+import electrolyte.greate.registry.CrushingWheels;
 import electrolyte.greate.registry.Millstones;
 import electrolyte.greate.registry.ModRecipeTypes;
 import mezz.jei.api.IModPlugin;
@@ -34,6 +38,7 @@ import mezz.jei.api.runtime.IIngredientManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ItemLike;
@@ -60,22 +65,41 @@ public class GreateJEI implements IModPlugin {
         GreateRecipeCategory<?>
 
                 milling = builder(TieredAbstractCrushingRecipe.class)
-                .addTypedRecipes(ModRecipeTypes.MILLING)
-                .addTypedRecipes(AllRecipeTypes.MILLING::getType, TieredMillingRecipe::convertNormalMilling)
-                .addTypedRecipes(GTRecipeTypes.MACERATOR_RECIPES, TieredMillingRecipe::convertGT)
-                .catalyst(Millstones.ANDESITE_MILLSTONE::get)
-                .catalyst(Millstones.STEEL_MILLSTONE::get)
-                .catalyst(Millstones.ALUMINIUM_MILLSTONE::get)
-                .catalyst(Millstones.STAINLESS_STEEL_MILLSTONE::get)
-                .catalyst(Millstones.TITANIUM_MILLSTONE::get)
-                .catalyst(Millstones.TUNGSTEN_STEEL_MILLSTONE::get)
-                .catalyst(Millstones.PALLADIUM_MILLSTONE::get)
-                .catalyst(Millstones.NAQUADAH_MILLSTONE::get)
-                .catalyst(Millstones.DARMSTADTIUM_MILLSTONE::get)
-                .catalyst(Millstones.NEUTRONIUM_MILLSTONE::get)
-                .doubleIconItem(Millstones.NEUTRONIUM_MILLSTONE.get(), AllItems.WHEAT_FLOUR.get())
-                .emptyBackground(177, 68)
-                .build("milling", TieredMillingCategory::new);
+                    .addTypedRecipes(ModRecipeTypes.MILLING)
+                    .addTypedRecipes(AllRecipeTypes.MILLING::getType, TieredMillingRecipe::convertNormalMilling)
+                    .addTypedRecipes(GTRecipeTypes.MACERATOR_RECIPES, TieredMillingRecipe::convertGT)
+                    .catalyst(Millstones.ANDESITE_MILLSTONE::get)
+                    .catalyst(Millstones.STEEL_MILLSTONE::get)
+                    .catalyst(Millstones.ALUMINIUM_MILLSTONE::get)
+                    .catalyst(Millstones.STAINLESS_STEEL_MILLSTONE::get)
+                    .catalyst(Millstones.TITANIUM_MILLSTONE::get)
+                    .catalyst(Millstones.TUNGSTEN_STEEL_MILLSTONE::get)
+                    .catalyst(Millstones.PALLADIUM_MILLSTONE::get)
+                    .catalyst(Millstones.NAQUADAH_MILLSTONE::get)
+                    .catalyst(Millstones.DARMSTADTIUM_MILLSTONE::get)
+                    .catalyst(Millstones.NEUTRONIUM_MILLSTONE::get)
+                    .doubleIconItem(Millstones.NEUTRONIUM_MILLSTONE.get(), AllItems.WHEAT_FLOUR.get())
+                    .emptyBackground(177, 68)
+                    .build("milling", TieredMillingCategory::new),
+
+                crushing = builder(TieredAbstractCrushingRecipe.class)
+                        .addTypedRecipes(GTRecipeTypes.MACERATOR_RECIPES, r -> TieredCrushingRecipe.convertGT(r, 0))
+                        .addTypedRecipes(ModRecipeTypes.CRUSHING::getType, r -> TieredCrushingRecipe.convertTieredCrushing(r, 0))
+                        .addTypedRecipesExcludingGT(AllRecipeTypes.CRUSHING::getType, GTRecipeTypes.MACERATOR_RECIPES, r -> TieredCrushingRecipe.convertNormalCrushing(r, 0))
+                        .addTypedRecipesExcluding(AllRecipeTypes.MILLING::getType, AllRecipeTypes.CRUSHING::getType, r -> TieredCrushingRecipe.convertNormalCrushing(r, 0))
+                        .catalyst(CrushingWheels.ANDESITE_CRUSHING_WHEEL::get)
+                        .catalyst(CrushingWheels.STEEL_CRUSHING_WHEEL::get)
+                        .catalyst(CrushingWheels.ALUMINIUM_CRUSHING_WHEEL::get)
+                        .catalyst(CrushingWheels.STAINLESS_STEEL_CRUSHING_WHEEL::get)
+                        .catalyst(CrushingWheels.TITANIUM_CRUSHING_WHEEL::get)
+                        .catalyst(CrushingWheels.TUNGSTEN_STEEL_CRUSHING_WHEEL::get)
+                        .catalyst(CrushingWheels.PALLADIUM_CRUSHING_WHEEL::get)
+                        .catalyst(CrushingWheels.NAQUADAH_CRUSHING_WHEEL::get)
+                        .catalyst(CrushingWheels.DARMSTADTIUM_CRUSHING_WHEEL::get)
+                        .catalyst(CrushingWheels.NEUTRONIUM_CRUSHING_WHEEL::get)
+                        .doubleIconItem(CrushingWheels.NEUTRONIUM_CRUSHING_WHEEL.get(), AllItems.CRUSHED_GOLD.get())
+                        .emptyBackground(177, 115)
+                        .build("crushing", TieredCrushingCategory::new);
     }
 
     @Override
@@ -98,6 +122,7 @@ public class GreateJEI implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         ingredientManager = registration.getIngredientManager();
         ingredientManager.removeIngredientsAtRuntime(VanillaTypes.ITEM_STACK, List.of(AllBlocks.MILLSTONE.asStack()));
+        ingredientManager.removeIngredientsAtRuntime(VanillaTypes.ITEM_STACK, List.of(AllBlocks.CRUSHING_WHEEL.asStack()));
         allCategories.forEach(c -> c.registerRecipes(registration));
     }
 
@@ -177,7 +202,7 @@ public class GreateJEI implements IModPlugin {
             }, recipeType.get()));
         }
 
-        public CategoryBuilder<T> addTypedRecipesExcluding(Supplier<RecipeType<? extends T>> recipeType, Supplier<RecipeType<? extends T>> excluded) {
+        public CategoryBuilder<T> addTypedRecipesExcluding(Supplier<RecipeType<? extends T>> recipeType, Supplier<RecipeType<? extends T>> excluded, Function<Recipe<?>, T> converter) {
             return addRecipeListConsumer(recipes -> {
                 List<Recipe<?>> excludedRecipes = getTypedRecipes(excluded.get());
                 GreateJEI.<T>consumeTypedRecipes(recipe -> {
@@ -186,7 +211,21 @@ public class GreateJEI implements IModPlugin {
                            return;
                        }
                    }
-                   recipes.add(recipe);
+                   recipes.add(converter.apply(recipe));
+                }, recipeType.get());
+            });
+        }
+
+        public CategoryBuilder<T> addTypedRecipesExcludingGT(Supplier<RecipeType<? extends T>> recipeType, GTRecipeType excluded, Function<Recipe<?>, T> converter) {
+            return addRecipeListConsumer(recipes -> {
+                List<Recipe<?>> excludedRecipes = getTypedRecipes(excluded);
+                GreateJEI.<T>consumeTypedRecipes(recipe -> {
+                    for(Recipe<?> excludedRecipe : excludedRecipes) {
+                        if(doInputsMatchGT(recipe, excludedRecipe)) {
+                            return;
+                        }
+                    }
+                    recipes.add(converter.apply(recipe));
                 }, recipeType.get());
             });
         }
@@ -288,6 +327,15 @@ public class GreateJEI implements IModPlugin {
         ItemStack[] matchingStacks = recipe1.getIngredients().get(0).getItems();
         if(matchingStacks.length == 0) return false;
         return recipe2.getIngredients().get(0).test(matchingStacks[0]);
+    }
+
+    public static boolean doInputsMatchGT(Recipe<?> recipe1, Recipe<?> recipe2) {
+        GTRecipe gtRecipe = (GTRecipe) recipe2;
+        if(recipe1.getIngredients().isEmpty() || ((Ingredient) gtRecipe.getInputContents(ItemRecipeCapability.CAP).get(0).getContent()).isEmpty()) return false;
+        ItemStack[] matchingStacks = recipe1.getIngredients().get(0).getItems();
+        if(matchingStacks.length == 0) return false;
+        Ingredient ing = (Ingredient) gtRecipe.getInputContents(ItemRecipeCapability.CAP).get(0).getContent();
+        return ing.test(matchingStacks[0]);
     }
 
     public static boolean doOutputsMatch(Recipe<?> recipe1, Recipe<?> recipe2) {

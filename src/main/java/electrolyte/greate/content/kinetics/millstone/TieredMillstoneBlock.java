@@ -10,6 +10,7 @@ import electrolyte.greate.GreateEnums;
 import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredPartialModel;
+import electrolyte.greate.registry.Millstones;
 import electrolyte.greate.registry.ModBlockEntityTypes;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -48,6 +49,7 @@ public class TieredMillstoneBlock extends KineticBlock implements IBE<TieredMill
     public TieredMillstoneBlock(Properties properties, PartialModel model) {
         super(properties);
         this.model = model;
+        Millstones.MILLSTONES.add(this);
     }
 
     @Override

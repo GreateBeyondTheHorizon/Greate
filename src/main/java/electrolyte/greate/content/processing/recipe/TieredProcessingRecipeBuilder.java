@@ -86,12 +86,28 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
         return withItemOutputs(list);
     }
 
-    public TieredProcessingRecipeBuilder<T> withItemOutputsGT(List<Content> list) {
+    public TieredProcessingRecipeBuilder<T> withItemOutputs(List<ProcessingOutput> outputs, float extraTierPercent) {
+        NonNullList<ProcessingOutput> list = NonNullList.create();
+        for(ProcessingOutput output : outputs) {
+            if(output.getChance() == 1) {
+                list.add(new ProcessingOutput(output.getStack(), output.getChance()));
+            } else {
+                list.add(new ProcessingOutput(output.getStack(), output.getChance() + extraTierPercent));
+            }
+        }
+        return withItemOutputs(list);
+    }
+
+    public TieredProcessingRecipeBuilder<T> withItemOutputsGT(List<Content> list, float extraTierPercent) {
         NonNullList<ProcessingOutput> nonNullList = NonNullList.create();
         for(Content c : list) {
             ItemStack[] items = ((SizedIngredientImpl) c.content).getItems();
             for (ItemStack item : items) {
-                nonNullList.add(new ProcessingOutput(item, c.chance));
+                if(c.chance == 1) {
+                    nonNullList.add(new ProcessingOutput(item, c.chance));
+                } else {
+                    nonNullList.add(new ProcessingOutput(item, c.chance + extraTierPercent));
+                }
             }
         }
         return withItemOutputs(nonNullList);
@@ -270,7 +286,7 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
             fluidResults = NonNullList.create();
             processingDuration = 0;
             requiredHeat = HeatCondition.NONE;
-            recipeTier = TIER.NONE;
+            recipeTier = TIER.ULTRA_LOW;
             keepHeldItem = false;
         }
     }

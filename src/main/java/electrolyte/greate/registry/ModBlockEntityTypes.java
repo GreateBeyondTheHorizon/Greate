@@ -1,11 +1,13 @@
 package electrolyte.greate.registry;
 
+import com.simibubi.create.content.kinetics.base.CutoutRotatingInstance;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.simibubi.create.content.kinetics.base.ShaftRenderer;
-import com.simibubi.create.content.kinetics.simpleRelays.encased.EncasedCogRenderer;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import electrolyte.greate.content.kinetics.base.TieredShaftInstance;
 import electrolyte.greate.content.kinetics.base.TieredSingleRotatingInstance;
+import electrolyte.greate.content.kinetics.crusher.TieredCrushingWheelBlockEntity;
+import electrolyte.greate.content.kinetics.crusher.TieredCrushingWheelControllerBlockEntity;
 import electrolyte.greate.content.kinetics.gearbox.TieredGearboxBlockEntity;
 import electrolyte.greate.content.kinetics.gearbox.TieredGearboxInstance;
 import electrolyte.greate.content.kinetics.gearbox.TieredGearboxRenderer;
@@ -95,6 +97,22 @@ public class ModBlockEntityTypes {
                     Millstones.TITANIUM_MILLSTONE, Millstones.TUNGSTEN_STEEL_MILLSTONE, Millstones.PALLADIUM_MILLSTONE, Millstones.NAQUADAH_MILLSTONE,
                     Millstones.DARMSTADTIUM_MILLSTONE, Millstones.NEUTRONIUM_MILLSTONE)
             .renderer(() -> TieredMillstoneRenderer::new)
+            .register();
+
+    public static final BlockEntityEntry<TieredCrushingWheelBlockEntity> TIERED_CRUSHING_WHEEL = REGISTRATE
+            .blockEntity("tiered_crushing_wheel", TieredCrushingWheelBlockEntity::new)
+            .instance(() -> CutoutRotatingInstance::new, false)
+            .validBlocks(CrushingWheels.ANDESITE_CRUSHING_WHEEL, CrushingWheels.STEEL_CRUSHING_WHEEL, CrushingWheels.ALUMINIUM_CRUSHING_WHEEL, CrushingWheels.STAINLESS_STEEL_CRUSHING_WHEEL,
+                    CrushingWheels.TITANIUM_CRUSHING_WHEEL, CrushingWheels.TUNGSTEN_STEEL_CRUSHING_WHEEL, CrushingWheels.PALLADIUM_CRUSHING_WHEEL, CrushingWheels.NAQUADAH_CRUSHING_WHEEL,
+                    CrushingWheels.DARMSTADTIUM_CRUSHING_WHEEL, CrushingWheels.NEUTRONIUM_CRUSHING_WHEEL)
+            .renderer(() -> KineticBlockEntityRenderer::new)
+            .register();
+
+    public static final BlockEntityEntry<TieredCrushingWheelControllerBlockEntity> TIERED_CRUSHING_WHEEL_CONTROLLER = REGISTRATE
+            .blockEntity("tiered_crushing_wheel_controller", TieredCrushingWheelControllerBlockEntity::new)
+            .validBlocks(CrushingWheels.ANDESITE_CRUSHING_WHEEL_CONTROLLER, CrushingWheels.STEEL_CRUSHING_WHEEL_CONTROLLER, CrushingWheels.ALUMINIUM_CRUSHING_WHEEL_CONTROLLER, CrushingWheels.STAINLESS_STEEL_CRUSHING_WHEEL_CONTROLLER,
+                    CrushingWheels.TITANIUM_CRUSHING_WHEEL_CONTROLLER, CrushingWheels.TUNGSTEN_STEEL_CRUSHING_WHEEL_CONTROLLER, CrushingWheels.PALLADIUM_CRUSHING_WHEEL_CONTROLLER, CrushingWheels.NAQUADAH_CRUSHING_WHEEL_CONTROLLER,
+                    CrushingWheels.DARMSTADTIUM_CRUSHING_WHEEL_CONTROLLER, CrushingWheels.NEUTRONIUM_CRUSHING_WHEEL_CONTROLLER)
             .register();
 
     public static void register() {}

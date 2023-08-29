@@ -1,0 +1,7 @@
+{
+  "parent": "create:block/crushing_wheel/textures",
+  "textures": {
+    "axis": "greate:block/darmstadtium/axis",
+    "axis_top": "greate:block/darmstadtium/axis_top"
+  }
+}

@@ -14,6 +14,8 @@ import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
+import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.content.kinetics.crusher.TieredCrushingWheelBlock;
 import electrolyte.greate.content.kinetics.gearbox.TieredGearboxBlock;
 import electrolyte.greate.content.kinetics.gearbox.TieredVerticalGearboxItem;
 import electrolyte.greate.content.kinetics.millstone.TieredMillstoneBlock;
@@ -22,10 +24,13 @@ import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedCogwheelBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedShaftBlock;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraftforge.client.model.generators.loaders.ObjModelBuilder;
 
 import java.util.function.Supplier;
 
@@ -128,4 +133,23 @@ public class GreateBuilderTransformers {
                             .texture("5", p.modLoc("block/" + c.getName().substring(0, c.getName().length() - 10) + "/millstone"));
                 }).build();
     }
+
+    public static <B extends TieredCrushingWheelBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> tieredCrushingWheel() {
+        return b -> b.blockstate(tieredCrushingWheelProvider())
+                .item()
+                .model((c, p) -> {
+                    p.withExistingParent(c.getName(), p.modLoc("block/" + c.getName() + "_textures"))
+                            .customLoader(ObjModelBuilder::begin).modelLocation(Create.asResource("models/block/crushing_wheel/crushing_wheel.obj")).flipV(true).end()
+                            .transforms()
+                            .transform(TransformType.GUI)
+                            .rotation(30, 225, 0)
+                            .scale(0.45F, 0.45F, 0.45F)
+                            .end()
+                            .transform(TransformType.FIXED)
+                            .rotation(90, 0, 0)
+                            .scale(0.45F, 0.45F, 0.45F)
+                            .end();
+                }).build();
+    }
+
 }

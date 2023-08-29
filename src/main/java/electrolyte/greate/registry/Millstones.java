@@ -10,6 +10,8 @@ import electrolyte.greate.content.kinetics.millstone.TieredMillstoneBlock;
 import electrolyte.greate.foundation.data.GreateBuilderTransformers;
 import net.minecraft.world.level.material.MaterialColor;
 
+import java.util.ArrayList;
+
 import static electrolyte.greate.Greate.REGISTRATE;
 
 public class Millstones {
@@ -18,12 +20,13 @@ public class Millstones {
         REGISTRATE.creativeModeTab(() -> Greate.GREATE_TAB);
     }
 
+    public static ArrayList<TieredMillstoneBlock> MILLSTONES = new ArrayList<>();
+
     public static final BlockEntry<TieredMillstoneBlock> ANDESITE_MILLSTONE = REGISTRATE
             .block("andesite_millstone", p -> new TieredMillstoneBlock(p, GreatePartialModels.ANDESITE_MILLSTONE_INNER))
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.color(MaterialColor.METAL))
             .transform(TagGen.pickaxeOnly())
-            .transform(BlockStressDefaults.setImpact(4.0))
             .transform(GreateBuilderTransformers.tieredMillstone())
             .onRegister(c -> c.setTier(TIER.ULTRA_LOW))
             .register();

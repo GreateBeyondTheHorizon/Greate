@@ -35,6 +35,7 @@ public class Greate {
         GreateLang.register();
         GreateTags.init();
         Cogwheels.register();
+        CrushingWheels.register();
         Gearboxes.register();
         Girders.register();
         Millstones.register();

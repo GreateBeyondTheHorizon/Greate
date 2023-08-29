@@ -6,8 +6,9 @@ import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.RegisteredObjects;
 import electrolyte.greate.Greate;
+import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.content.kinetics.crusher.TieredCrushingRecipe;
 import electrolyte.greate.content.kinetics.millstone.TieredMillingRecipe;
-import electrolyte.greate.content.kinetics.simpleRelays.TieredKineticBlockEntity;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeFactory;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeSerializer;
@@ -31,7 +32,8 @@ import java.util.function.Supplier;
 
 public enum ModRecipeTypes implements IRecipeTypeInfo {
 
-	MILLING(TieredMillingRecipe::new);
+	MILLING(TieredMillingRecipe::new),
+	CRUSHING(TieredCrushingRecipe::new);
 
 	private final ResourceLocation id;
 	private final RegistryObject<RecipeSerializer<?>> serializerObject;
@@ -87,11 +89,11 @@ public enum ModRecipeTypes implements IRecipeTypeInfo {
 		return (T) type.get();
 	}
 
-	public <C extends Container, T extends Recipe<C>> Optional<T> find(C inv, Level world, TieredKineticBlockEntity tkbe) {
+	public <C extends Container, T extends Recipe<C>> Optional<T> find(C inv, Level world, TIER tier) {
 		Optional<T> recipe = world.getRecipeManager().getRecipeFor(getType(), inv, world);
 		if(recipe.isPresent()) {
 			if(recipe.get() instanceof TieredProcessingRecipe<?> tieredRecipe) {
-				if(tieredRecipe.getRecipeTier().compareTo(tkbe.getTier()) <= 0) {
+				if(tieredRecipe.getRecipeTier().compareTo(tier) <= 0) {
 					return recipe;
 				}
 			}

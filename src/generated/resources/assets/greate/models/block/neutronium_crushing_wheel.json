@@ -1,0 +1,6 @@
+{
+  "parent": "greate:block/neutronium_crushing_wheel_textures",
+  "flip_v": true,
+  "loader": "forge:obj",
+  "model": "create:models/block/crushing_wheel/crushing_wheel.obj"
+}

@@ -106,6 +106,15 @@ public abstract class GreateRecipeCategory<T extends Recipe<?>> implements IReci
         };
     }
 
+    public static IRecipeSlotTooltipCallback addStochasticTooltipWithExtraPercent(ProcessingOutput output, float extraPercent) {
+        return (view, tooltip) -> {
+            float chance = output.getChance();
+            if (chance != 1) {
+                tooltip.add(1, Lang.translateDirect("recipe.processing.chance", chance < 0.01 ? "<1" : (int) ((chance) * 100)).append(" + " + (extraPercent * 100) + Lang.builder(Greate.MOD_ID).translate("recipe.processing.extra_chance").component().getString()).withStyle(ChatFormatting.GOLD));
+            }
+        };
+    }
+
     public static List<FluidStack> withImprovedVisibility(List<FluidStack> stacks) {
         return stacks.stream().map(GreateRecipeCategory::withImprovedVisibility).collect(Collectors.toList());
     }
@@ -175,8 +184,8 @@ public abstract class GreateRecipeCategory<T extends Recipe<?>> implements IReci
     }
 
     @Override
-    public void draw(T recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
-        IRecipeCategory.super.draw(recipe, recipeSlotsView, stack, mouseX, mouseY);
-        Minecraft.getInstance().font.draw(stack, Lang.builder(Greate.MOD_ID).translate("jei.recipe_tier").component().getString() + ((TieredProcessingRecipe<?>)recipe).getRecipeTier().getName(), 1, 58, 0x3f3f3f);
+    public void draw(T recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double x, double y) {
+        IRecipeCategory.super.draw(recipe, recipeSlotsView, stack, x, y);
+        Minecraft.getInstance().font.draw(stack, Lang.builder(Greate.MOD_ID).translate("jei.recipe_tier").component().getString() + ((TieredProcessingRecipe<?>) recipe).getRecipeTier().getName(), (float) x, (float) y, 0x3f3f3f);
     }
 }

@@ -8,6 +8,8 @@ import net.minecraft.core.Direction.Axis;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.client.model.generators.ModelFile.UncheckedModelFile;
+import net.minecraftforge.client.model.generators.loaders.ObjModelBuilder;
 
 public class GreateBlockStateGen {
 
@@ -120,5 +122,26 @@ public class GreateBlockStateGen {
                         .texture("1_1", p.modLoc("block/" + c.getName().substring(0, c.getName().length() - 10) + "/axis_top")))
                 .modelFile(p.models().withExistingParent(c.getName(), Create.asResource("block/millstone/block")))
                 .build());
+    }
+
+    public static <T extends Block> NonNullBiConsumer<DataGenContext<Block, T>, RegistrateBlockstateProvider> tieredCrushingWheelProvider() {
+        return (c, p) -> p.getVariantBuilder(c.getEntry()).forAllStates(state -> {
+            Axis axis = state.getValue(BlockStateProperties.AXIS);
+            return ConfiguredModel.builder()
+                    .modelFile(p.models().withExistingParent(c.getName() + "_textures", Create.asResource("block/crushing_wheel/textures"))
+                            .texture("axis", p.modLoc("block/" + c.getName().substring(0, c.getName().length() - 15)) + "/axis")
+                            .texture("axis_top", p.modLoc("block/" + c.getName().substring(0, c.getName().length() - 15)) + "/axis_top"))
+                    .modelFile(p.models().withExistingParent(c.getName(), p.modLoc("block/" + c.getName() + "_textures"))
+                    .customLoader(ObjModelBuilder::begin).modelLocation(Create.asResource("models/block/crushing_wheel/crushing_wheel.obj")).flipV(true).end())
+                    .rotationX(axis == Axis.X ? 90 : axis == Axis.Z ? 90 : 0)
+                    .rotationY(axis == Axis.X ? 90 : axis == Axis.Z ? 180 : 0)
+                    .build();
+        });
+    }
+
+    public static <T extends Block> NonNullBiConsumer<DataGenContext<Block, T>, RegistrateBlockstateProvider> tieredCrushingWheelControllerProvider() {
+        return (c, p) -> p.getVariantBuilder(c.getEntry()).forAllStatesExcept(state -> ConfiguredModel.builder()
+                .modelFile(new UncheckedModelFile("minecraft:block/air"))
+                .build(), BlockStateProperties.FACING);
     }
 }

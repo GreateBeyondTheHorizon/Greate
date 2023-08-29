@@ -50,8 +50,7 @@ public class TieredProcessingRecipeSerializer<T extends TieredProcessingRecipe<?
         if (requiredHeat != HeatCondition.NONE)
             json.addProperty("heatRequirement", requiredHeat.serialize());
         TIER recipeTier = recipe.getRecipeTier();
-        if(recipeTier != TIER.NONE)
-            json.addProperty("recipeTier", recipeTier.getName());
+        json.addProperty("recipeTier", recipeTier.getName());
         recipe.writeAdditional(json);
     }
 

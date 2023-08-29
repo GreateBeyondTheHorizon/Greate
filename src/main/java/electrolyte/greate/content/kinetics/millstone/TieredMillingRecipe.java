@@ -14,12 +14,9 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.ArrayList;
 
 @ParametersAreNonnullByDefault
 public class TieredMillingRecipe extends TieredAbstractCrushingRecipe {
-
-    public static final ArrayList<ProcessingRecipe<RecipeWrapper>> recipes = new ArrayList<>();
 
     public TieredMillingRecipe(TieredProcessingRecipeParams params) {
         super(ModRecipeTypes.MILLING, params);
@@ -41,8 +38,6 @@ public class TieredMillingRecipe extends TieredAbstractCrushingRecipe {
     }
 
     public static TieredMillingRecipe convertGT(GTRecipe recipe) {
-        TieredMillingRecipe convertedRecipe = new TieredProcessingRecipeBuilder<>(TieredMillingRecipe::new, recipe.getId()).duration(recipe.duration).withItemIngredientsGT(recipe.getInputContents(ItemRecipeCapability.CAP)).output(recipe.getResultItem()).withItemOutputsGT(recipe.getOutputContents(ItemRecipeCapability.CAP)).recipeTier(TIER.convertGTEUToTier(recipe.getTickInputContents(EURecipeCapability.CAP))).build();
-        recipes.add(convertedRecipe);
-        return convertedRecipe;
+        return new TieredProcessingRecipeBuilder<>(TieredMillingRecipe::new, recipe.getId()).duration(recipe.duration).withItemIngredientsGT(recipe.getInputContents(ItemRecipeCapability.CAP)).output(recipe.getResultItem()).withItemOutputsGT(recipe.getOutputContents(ItemRecipeCapability.CAP), 0).recipeTier(TIER.convertGTEUToTier(recipe.getTickInputContents(EURecipeCapability.CAP))).build();
     }
 }

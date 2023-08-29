@@ -1,0 +1,7 @@
+{
+  "parent": "create:block/crushing_wheel/textures",
+  "textures": {
+    "axis": "greate:block/titanium/axis",
+    "axis_top": "greate:block/titanium/axis_top"
+  }
+}
