@@ -1,0 +1,26 @@
+{
+  "type": "create:mechanical_crafting",
+  "acceptMirrored": true,
+  "key": {
+    "A": {
+      "item": "greate:neutronium_alloy"
+    },
+    "C": {
+      "tag": "forge:circuits/uhv"
+    },
+    "S": {
+      "tag": "greate:shafts/neutronium"
+    }
+  },
+  "pattern": [
+    " AAA ",
+    "AACAA",
+    "ACSCA",
+    "AACAA",
+    " AAA "
+  ],
+  "result": {
+    "count": 2,
+    "item": "greate:neutronium_crushing_wheel"
+  }
+}

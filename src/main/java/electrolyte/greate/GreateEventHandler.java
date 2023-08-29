@@ -15,7 +15,8 @@ public class GreateEventHandler {
     public static void onItemTooltip(ItemTooltipEvent event) {
         if(event.getItemStack().getItem() == AllBlocks.SHAFT.get().asItem() ||
             event.getItemStack().getItem() == AllBlocks.COGWHEEL.get().asItem() ||
-            event.getItemStack().getItem() == AllBlocks.LARGE_COGWHEEL.get().asItem()) {
+            event.getItemStack().getItem() == AllBlocks.LARGE_COGWHEEL.get().asItem() ||
+            event.getItemStack().getItem() == AllBlocks.CRUSHING_WHEEL.get().asItem()) {
             event.getToolTip().add(Lang.builder(Greate.MOD_ID).translate("old_create_items_warning").component().withStyle(ChatFormatting.RED));
         }
     }

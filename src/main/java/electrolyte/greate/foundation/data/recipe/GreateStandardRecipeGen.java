@@ -9,6 +9,7 @@ import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.data.recipe.CreateRecipeProvider.GeneratedRecipe;
 import com.simibubi.create.foundation.utility.RegisteredObjects;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
+import electrolyte.greate.Greate;
 import electrolyte.greate.registry.*;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.DataGenerator;
@@ -50,7 +51,8 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
 
             SHAFT_CYCLE = conversionCycle(ImmutableList.of(AllBlocks.SHAFT, Shafts.ANDESITE_SHAFT)),
             COGWHEEL_CYCLE = conversionCycle(ImmutableList.of(AllBlocks.COGWHEEL, Cogwheels.ANDESITE_COGWHEEL)),
-            LARGE_COGWHEEL_CYCLE = conversionCycle(ImmutableList.of(AllBlocks.LARGE_COGWHEEL, Cogwheels.LARGE_ANDESITE_COGWHEEL));
+            LARGE_COGWHEEL_CYCLE = conversionCycle(ImmutableList.of(AllBlocks.LARGE_COGWHEEL, Cogwheels.LARGE_ANDESITE_COGWHEEL)),
+            CRUSHING_WHEEL_CYCLE = conversionCycle(ImmutableList.of(AllBlocks.CRUSHING_WHEEL, CrushingWheels.ANDESITE_CRUSHING_WHEEL));
 
     private Marker MATERIALS = enterFolder("materials");
 
@@ -178,8 +180,8 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
 
     private GeneratedRecipe createMaterialShaftRecipe(ItemProviderEntry<? extends ItemLike> shaft) {
         String material = shaft.getId().getPath().substring(0, shaft.getId().getPath().length() - 6);
-        return create(shaft).returns(4).unlockedBy(ForgeRegistries.ITEMS.getValue(new ResourceLocation("greate", material + "_alloy"))::asItem)
-                .viaShaped(b -> b.define('A', ForgeRegistries.ITEMS.getValue(new ResourceLocation("greate", material + "_alloy")))
+        return create(shaft).returns(4).unlockedBy(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Greate.MOD_ID, material + "_alloy"))::asItem)
+                .viaShaped(b -> b.define('A', ForgeRegistries.ITEMS.getValue(new ResourceLocation(Greate.MOD_ID, material + "_alloy")))
                         .define('S', GreateTags.forgeItemTag("tools/saws"))
                         .pattern("S ")
                         .pattern(" A"));

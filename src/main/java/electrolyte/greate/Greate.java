@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import dev.toma.configuration.Configuration;
 import dev.toma.configuration.config.format.ConfigFormats;
+import electrolyte.greate.foundation.data.recipe.GreateMechanicalCraftingRecipeGen;
 import electrolyte.greate.foundation.data.recipe.GreateStandardRecipeGen;
 import electrolyte.greate.registry.*;
 import net.minecraft.world.item.CreativeModeTab;
@@ -59,6 +60,7 @@ public class Greate {
     private void gatherData(GatherDataEvent event) {
         if(event.includeServer()) {
             event.getGenerator().addProvider(true, new GreateStandardRecipeGen(event.getGenerator()));
+            event.getGenerator().addProvider(true, new GreateMechanicalCraftingRecipeGen(event.getGenerator()));
         }
     }
 }

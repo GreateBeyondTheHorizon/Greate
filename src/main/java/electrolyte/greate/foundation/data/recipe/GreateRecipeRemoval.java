@@ -25,5 +25,7 @@ public class GreateRecipeRemoval {
         recipe.accept(Create.asResource("crafting/kinetics/millstone"));
 
         recipe.accept(Create.asResource("cutting/andesite_alloy"));
+
+        recipe.accept(Create.asResource("mechanical_crafting/crushing_wheel"));
     }
 }
