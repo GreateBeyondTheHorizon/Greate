@@ -9,16 +9,16 @@ import java.util.List;
 public class GreateEnums {
 
     public enum TIER implements Comparable<TIER> {
-        ULTRA_LOW("ULS", Greate.CONFIG.ULS_CAPACITY, ChatFormatting.WHITE),
-        LOW("LS", Greate.CONFIG.LS_CAPACITY, ChatFormatting.GRAY),
-        MEDIUM("MS", Greate.CONFIG.MS_CAPACITY, ChatFormatting.AQUA),
-        HIGH("HS", Greate.CONFIG.HS_CAPACITY, ChatFormatting.GOLD),
-        EXTREME("ES", Greate.CONFIG.ES_CAPACITY, ChatFormatting.DARK_PURPLE),
-        INSANE("IS", Greate.CONFIG.IS_CAPACITY, ChatFormatting.DARK_BLUE),
-        LUDICRIOUS("LuS", Greate.CONFIG.LUS_CAPACITY, ChatFormatting.LIGHT_PURPLE),
-        ZPM("ZPMS", Greate.CONFIG.ZPMS_CAPACITY, ChatFormatting.RED),
-        ULTIMATE("US", Greate.CONFIG.US_CAPACITY, ChatFormatting.DARK_AQUA),
-        ULTIMATE_HIGH("UHS", Greate.CONFIG.UHS_CAPACITY, ChatFormatting.DARK_RED);
+        ULTRA_LOW("ULS", Greate.CONFIG.ULS.CAPACITY, ChatFormatting.WHITE),
+        LOW("LS", Greate.CONFIG.LS.CAPACITY, ChatFormatting.GRAY),
+        MEDIUM("MS", Greate.CONFIG.MS.CAPACITY, ChatFormatting.AQUA),
+        HIGH("HS", Greate.CONFIG.HS.CAPACITY, ChatFormatting.GOLD),
+        EXTREME("ES", Greate.CONFIG.ES.CAPACITY, ChatFormatting.DARK_PURPLE),
+        INSANE("IS", Greate.CONFIG.IS.CAPACITY, ChatFormatting.DARK_BLUE),
+        LUDICRIOUS("LuS", Greate.CONFIG.LUS.CAPACITY, ChatFormatting.LIGHT_PURPLE),
+        ZPM("ZPMS", Greate.CONFIG.ZPM.CAPACITY, ChatFormatting.RED),
+        ULTIMATE("US", Greate.CONFIG.US.CAPACITY, ChatFormatting.DARK_AQUA),
+        ULTIMATE_HIGH("UHS", Greate.CONFIG.UHS.CAPACITY, ChatFormatting.DARK_RED);
 
         private final String name;
         private final double stressCapacity;

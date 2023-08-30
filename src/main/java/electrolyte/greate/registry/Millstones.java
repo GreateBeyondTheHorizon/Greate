@@ -28,6 +28,7 @@ public class Millstones {
             .properties(p -> p.color(MaterialColor.METAL))
             .transform(TagGen.pickaxeOnly())
             .transform(GreateBuilderTransformers.tieredMillstone())
+            .transform(BlockStressDefaults.setImpact(Greate.CONFIG.ULS.MILLSTONE_IMPACT))
             .onRegister(c -> c.setTier(TIER.ULTRA_LOW))
             .register();
 
@@ -36,7 +37,7 @@ public class Millstones {
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.color(MaterialColor.METAL))
             .transform(TagGen.pickaxeOnly())
-            .transform(BlockStressDefaults.setImpact(4.0))
+            .transform(BlockStressDefaults.setImpact(Greate.CONFIG.LS.MILLSTONE_IMPACT))
             .transform(GreateBuilderTransformers.tieredMillstone())
             .onRegister(c -> c.setTier(TIER.LOW))
             .register();
@@ -46,7 +47,7 @@ public class Millstones {
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.color(MaterialColor.METAL))
             .transform(TagGen.pickaxeOnly())
-            .transform(BlockStressDefaults.setImpact(4.0))
+            .transform(BlockStressDefaults.setImpact(Greate.CONFIG.MS.MILLSTONE_IMPACT))
             .transform(GreateBuilderTransformers.tieredMillstone())
             .onRegister(c -> c.setTier(TIER.MEDIUM))
             .register();
@@ -56,7 +57,7 @@ public class Millstones {
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.color(MaterialColor.METAL))
             .transform(TagGen.pickaxeOnly())
-            .transform(BlockStressDefaults.setImpact(4.0))
+            .transform(BlockStressDefaults.setImpact(Greate.CONFIG.HS.MILLSTONE_IMPACT))
             .transform(GreateBuilderTransformers.tieredMillstone())
             .onRegister(c -> c.setTier(TIER.HIGH))
             .register();
@@ -66,7 +67,7 @@ public class Millstones {
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.color(MaterialColor.METAL))
             .transform(TagGen.pickaxeOnly())
-            .transform(BlockStressDefaults.setImpact(4.0))
+            .transform(BlockStressDefaults.setImpact(Greate.CONFIG.ES.MILLSTONE_IMPACT))
             .transform(GreateBuilderTransformers.tieredMillstone())
             .onRegister(c -> c.setTier(TIER.EXTREME))
             .register();
@@ -77,7 +78,7 @@ public class Millstones {
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.color(MaterialColor.METAL))
             .transform(TagGen.pickaxeOnly())
-            .transform(BlockStressDefaults.setImpact(4.0))
+            .transform(BlockStressDefaults.setImpact(Greate.CONFIG.IS.MILLSTONE_IMPACT))
             .transform(GreateBuilderTransformers.tieredMillstone())
             .onRegister(c -> c.setTier(TIER.INSANE))
             .register();
@@ -87,7 +88,7 @@ public class Millstones {
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.color(MaterialColor.METAL))
             .transform(TagGen.pickaxeOnly())
-            .transform(BlockStressDefaults.setImpact(4.0))
+            .transform(BlockStressDefaults.setImpact(Greate.CONFIG.LUS.MILLSTONE_IMPACT))
             .transform(GreateBuilderTransformers.tieredMillstone())
             .onRegister(c -> c.setTier(TIER.LUDICRIOUS))
             .register();
@@ -97,7 +98,7 @@ public class Millstones {
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.color(MaterialColor.METAL))
             .transform(TagGen.pickaxeOnly())
-            .transform(BlockStressDefaults.setImpact(4.0))
+            .transform(BlockStressDefaults.setImpact(Greate.CONFIG.ZPM.MILLSTONE_IMPACT))
             .transform(GreateBuilderTransformers.tieredMillstone())
             .onRegister(c -> c.setTier(TIER.ZPM))
             .register();
@@ -107,7 +108,7 @@ public class Millstones {
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.color(MaterialColor.METAL))
             .transform(TagGen.pickaxeOnly())
-            .transform(BlockStressDefaults.setImpact(4.0))
+            .transform(BlockStressDefaults.setImpact(Greate.CONFIG.US.MILLSTONE_IMPACT))
             .transform(GreateBuilderTransformers.tieredMillstone())
             .onRegister(c -> c.setTier(TIER.ULTIMATE))
             .register();
@@ -117,7 +118,7 @@ public class Millstones {
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.color(MaterialColor.METAL))
             .transform(TagGen.pickaxeOnly())
-            .transform(BlockStressDefaults.setImpact(4.0))
+            .transform(BlockStressDefaults.setImpact(Greate.CONFIG.UHS.MILLSTONE_IMPACT))
             .transform(GreateBuilderTransformers.tieredMillstone())
             .onRegister(c -> c.setTier(TIER.ULTIMATE_HIGH))
             .register();

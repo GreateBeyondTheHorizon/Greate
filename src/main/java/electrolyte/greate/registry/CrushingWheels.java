@@ -34,7 +34,7 @@ public class CrushingWheels {
                     .transform(TagGen.pickaxeOnly())
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(GreateBuilderTransformers.tieredCrushingWheel())
-                    .transform(BlockStressDefaults.setImpact(1.0))
+                    .transform(BlockStressDefaults.setImpact(Greate.CONFIG.ULS.CRUSHING_WHEEL_IMPACT))
                     .onRegister(c -> c.setTier(TIER.ULTRA_LOW))
                     .register();
 
@@ -56,7 +56,7 @@ public class CrushingWheels {
                     .transform(TagGen.pickaxeOnly())
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(GreateBuilderTransformers.tieredCrushingWheel())
-                    .transform(BlockStressDefaults.setImpact(1.0))
+                    .transform(BlockStressDefaults.setImpact(Greate.CONFIG.LS.CRUSHING_WHEEL_IMPACT))
                     .onRegister(c -> c.setTier(TIER.LOW))
                     .register();
 
@@ -78,7 +78,7 @@ public class CrushingWheels {
                     .transform(TagGen.pickaxeOnly())
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(GreateBuilderTransformers.tieredCrushingWheel())
-                    .transform(BlockStressDefaults.setImpact(1.0))
+                    .transform(BlockStressDefaults.setImpact(Greate.CONFIG.MS.CRUSHING_WHEEL_IMPACT))
                     .onRegister(c -> c.setTier(TIER.MEDIUM))
                     .register();
 
@@ -100,7 +100,7 @@ public class CrushingWheels {
                     .transform(TagGen.pickaxeOnly())
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(GreateBuilderTransformers.tieredCrushingWheel())
-                    .transform(BlockStressDefaults.setImpact(1.0))
+                    .transform(BlockStressDefaults.setImpact(Greate.CONFIG.HS.CRUSHING_WHEEL_IMPACT))
                     .onRegister(c -> c.setTier(TIER.HIGH))
                     .register();
 
@@ -122,7 +122,7 @@ public class CrushingWheels {
                     .transform(TagGen.pickaxeOnly())
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(GreateBuilderTransformers.tieredCrushingWheel())
-                    .transform(BlockStressDefaults.setImpact(1.0))
+                    .transform(BlockStressDefaults.setImpact(Greate.CONFIG.ES.CRUSHING_WHEEL_IMPACT))
                     .onRegister(c -> c.setTier(TIER.EXTREME))
                     .register();
 
@@ -145,7 +145,7 @@ public class CrushingWheels {
                     .transform(TagGen.pickaxeOnly())
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(GreateBuilderTransformers.tieredCrushingWheel())
-                    .transform(BlockStressDefaults.setImpact(1.0))
+                    .transform(BlockStressDefaults.setImpact(Greate.CONFIG.IS.CRUSHING_WHEEL_IMPACT))
                     .onRegister(c -> c.setTier(TIER.INSANE))
                     .register();
 
@@ -168,7 +168,7 @@ public class CrushingWheels {
                     .transform(TagGen.pickaxeOnly())
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(GreateBuilderTransformers.tieredCrushingWheel())
-                    .transform(BlockStressDefaults.setImpact(1.0))
+                    .transform(BlockStressDefaults.setImpact(Greate.CONFIG.LUS.CRUSHING_WHEEL_IMPACT))
                     .onRegister(c -> c.setTier(TIER.LUDICRIOUS))
                     .register();
 
@@ -190,7 +190,7 @@ public class CrushingWheels {
                     .transform(TagGen.pickaxeOnly())
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(GreateBuilderTransformers.tieredCrushingWheel())
-                    .transform(BlockStressDefaults.setImpact(1.0))
+                    .transform(BlockStressDefaults.setImpact(Greate.CONFIG.ZPM.CRUSHING_WHEEL_IMPACT))
                     .onRegister(c -> c.setTier(TIER.ZPM))
                     .register();
 
@@ -212,8 +212,8 @@ public class CrushingWheels {
                     .transform(TagGen.pickaxeOnly())
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(GreateBuilderTransformers.tieredCrushingWheel())
-                    .transform(BlockStressDefaults.setImpact(1.0))
-                    .onRegister(c -> c.setTier(TIER.HIGH))
+                    .transform(BlockStressDefaults.setImpact(Greate.CONFIG.US.CRUSHING_WHEEL_IMPACT))
+                    .onRegister(c -> c.setTier(TIER.ULTIMATE))
                     .register();
 
     public static final BlockEntry<TieredCrushingWheelControllerBlock> DARMSTADTIUM_CRUSHING_WHEEL_CONTROLLER =
@@ -223,7 +223,7 @@ public class CrushingWheels {
                     .properties(p -> p.noOcclusion()
                             .noLootTable().air())
                     .blockstate(GreateBlockStateGen.tieredCrushingWheelControllerProvider())
-                    .onRegister(c -> c.setTier(TIER.HIGH))
+                    .onRegister(c -> c.setTier(TIER.ULTIMATE))
                     .register();
 
     public static final BlockEntry<TieredCrushingWheelBlock> NEUTRONIUM_CRUSHING_WHEEL =
@@ -234,7 +234,7 @@ public class CrushingWheels {
                     .transform(TagGen.pickaxeOnly())
                     .addLayer(() -> RenderType::cutoutMipped)
                     .transform(GreateBuilderTransformers.tieredCrushingWheel())
-                    .transform(BlockStressDefaults.setImpact(1.0))
+                    .transform(BlockStressDefaults.setImpact(Greate.CONFIG.UHS.CRUSHING_WHEEL_IMPACT))
                     .onRegister(c -> c.setTier(TIER.ULTIMATE_HIGH))
                     .register();
 

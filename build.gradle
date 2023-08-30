@@ -6,7 +6,7 @@ plugins {
     id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
 }
 
-version = '0.0.2'
+version = '0.0.3'
 group = 'electrolyte.greate' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'greate'
 

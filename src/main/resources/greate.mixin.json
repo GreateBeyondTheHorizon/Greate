@@ -2,7 +2,7 @@
   "required": true,
   "package": "electrolyte.greate.mixin",
   "minVersion": "0.8",
-  "compatabilityLevel": "JAVA_16",
+  "compatibilityLevel": "JAVA_16",
   "mixins": [
     "MixinBlockStressDefaults",
     "MixinGirderBlock",
