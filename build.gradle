@@ -168,6 +168,7 @@ dependencies {
     implementation fg.deobf("dev.architectury:architectury-forge:${architectury_version}")
     implementation fg.deobf("dev.latvian.mods:rhino-forge:${rhino_version}")
     implementation fg.deobf("dev.latvian.mods:kubejs-forge:${kubejs_version}")
+    implementation fg.deobf("dev.latvian.mods:kubejs-create-forge:${kubejs_create_version}")
     implementation fg.deobf("curse.maven:ldlib-626676:4676440")
     implementation fg.deobf("curse.maven:configuration-444699:4519560")
     implementation fg.deobf("curse.maven:gregtechceu-modern-890405:4711834")

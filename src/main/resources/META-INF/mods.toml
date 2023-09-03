@@ -15,6 +15,13 @@ authors="Electrolyte"
 description="Create Gregified"
 
 [[dependencies.greate]]
+    modId="kubejs_create"
+    mandatory=true
+    versionRange="[1902.2.4-build.29,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.greate]]
     modId="create"
     mandatory=true
     versionRange="[0.5.1.c,)"
