@@ -33,8 +33,8 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
@@ -100,7 +100,7 @@ public class TieredMillstoneBlock extends KineticBlock implements IBE<TieredMill
     public void updateEntityAfterFallOn(BlockGetter pLevel, Entity pEntity) {
         super.updateEntityAfterFallOn(pLevel, pEntity);
 
-        if(pEntity.level.isClientSide) return;
+        if(pEntity.level().isClientSide) return;
         if(!(pEntity instanceof ItemEntity itemEntity)) return;
         if(!pEntity.isAlive()) return;
 
@@ -111,7 +111,7 @@ public class TieredMillstoneBlock extends KineticBlock implements IBE<TieredMill
             }
         if(millstone == null) return;
 
-        LazyOptional<IItemHandler> capability = millstone.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
+        LazyOptional<IItemHandler> capability = millstone.getCapability(ForgeCapabilities.ITEM_HANDLER);
         if(!capability.isPresent()) return;
 
         ItemStack remainder = capability.orElse(new ItemStackHandler()).insertItem(0, itemEntity.getItem(), false);

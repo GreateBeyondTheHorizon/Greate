@@ -11,10 +11,8 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -22,8 +20,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.PushReaction;
-import net.minecraft.world.level.storage.loot.LootContext.Builder;
+import net.minecraft.world.level.storage.loot.LootParams.Builder;
 import net.minecraft.world.phys.HitResult;
 
 import java.util.List;
@@ -36,12 +33,6 @@ public class TieredGearboxBlock extends RotatedPillarKineticBlock implements IBE
     public TieredGearboxBlock(Properties properties, PartialModel partialModel) {
         super(properties);
         this.partialModel = partialModel;
-    }
-
-    @Override
-    public void fillItemCategory(CreativeModeTab pTab, NonNullList<ItemStack> pItems) {
-        super.fillItemCategory(pTab, pItems);
-        pItems.add(TieredVerticalGearboxItem.MAP.get(this).getDefaultInstance());
     }
 
     @Override
@@ -58,11 +49,6 @@ public class TieredGearboxBlock extends RotatedPillarKineticBlock implements IBE
             return super.getCloneItemStack(state, target, level, pos, player);
         }
         return TieredVerticalGearboxItem.MAP.get(this).getDefaultInstance();
-    }
-
-    @Override
-    public PushReaction getPistonPushReaction(BlockState pState) {
-        return PushReaction.PUSH_ONLY;
     }
 
     @Override

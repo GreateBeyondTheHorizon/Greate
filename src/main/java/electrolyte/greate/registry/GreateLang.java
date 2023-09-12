@@ -14,6 +14,19 @@ public class GreateLang {
         REGISTRATE.addRawLang("greate.jei.recipe_tier", "Recipe Tier: ");
         REGISTRATE.addRawLang("greate.recipe.processing.extra_chance", "% per tier");
         REGISTRATE.addRawLang("greate.old_create_items_warning", "[Greate]: The conversion recipe for this item will be removed in a future version, once all recipes have been properly updated!");
+        REGISTRATE.addRawLang("config.greate.option.ULS", "ULS Settings");
+        REGISTRATE.addRawLang("config.greate.option.LS", "LS Settings");
+        REGISTRATE.addRawLang("config.greate.option.MS", "MS Settings");
+        REGISTRATE.addRawLang("config.greate.option.HS", "HS Settings");
+        REGISTRATE.addRawLang("config.greate.option.ES", "ES Settings");
+        REGISTRATE.addRawLang("config.greate.option.IS", "IS Settings");
+        REGISTRATE.addRawLang("config.greate.option.LUS", "LUS Settings");
+        REGISTRATE.addRawLang("config.greate.option.ZPM", "ZPM Settings");
+        REGISTRATE.addRawLang("config.greate.option.US", "US Settings");
+        REGISTRATE.addRawLang("config.greate.option.UHS", "UHS Settings");
+        REGISTRATE.addRawLang("config.greate.option.CAPACITY", "Tier Capacity");
+        REGISTRATE.addRawLang("config.greate.option.MILLSTONE_IMPACT", "Millstone Impact");
+        REGISTRATE.addRawLang("config.greate.option.CRUSHING_WHEEL_IMPACT", "Crushing Wheel Impact");
     }
 
     public static void register() {}

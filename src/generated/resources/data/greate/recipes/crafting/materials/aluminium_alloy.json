@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "A": {
       "item": "minecraft:andesite"
@@ -21,5 +22,6 @@
   ],
   "result": {
     "item": "greate:aluminium_alloy"
-  }
+  },
+  "show_notification": true
 }

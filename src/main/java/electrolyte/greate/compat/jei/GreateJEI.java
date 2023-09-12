@@ -36,6 +36,7 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.runtime.IIngredientManager;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -339,6 +340,7 @@ public class GreateJEI implements IModPlugin {
     }
 
     public static boolean doOutputsMatch(Recipe<?> recipe1, Recipe<?> recipe2) {
-        return ItemStack.isSame(recipe1.getResultItem(), recipe2.getResultItem());
+        RegistryAccess registryAccess = Minecraft.getInstance().level.registryAccess();
+        return ItemStack.isSameItem(recipe1.getResultItem(registryAccess), recipe2.getResultItem(registryAccess));
     }
 }

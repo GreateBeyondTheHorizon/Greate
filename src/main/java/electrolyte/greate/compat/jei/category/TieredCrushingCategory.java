@@ -1,6 +1,5 @@
 package electrolyte.greate.compat.jei.category;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
@@ -13,6 +12,7 @@ import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
+import net.minecraft.client.gui.GuiGraphics;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
@@ -55,9 +55,9 @@ public class TieredCrushingCategory extends GreateRecipeCategory<TieredAbstractC
     private record LayoutEntry(ProcessingOutput output, int posX, int posY) {}
 
     @Override
-    public void draw(TieredAbstractCrushingRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double x, double y) {
-        super.draw(recipe, recipeSlotsView, stack, 1, 103);
-        AllGuiTextures.JEI_DOWN_ARROW.render(stack, 72, 7);
-        new TieredAnimatedCrushingWheels(CrushingWheels.CRUSHING_WHEELS.get(TIER.indexOfTier(recipe.getRecipeTier()))).draw(stack, 62, 59);
+    public void draw(TieredAbstractCrushingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double x, double y) {
+        super.draw(recipe, recipeSlotsView, graphics, 1, 103);
+        AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 72, 7);
+        new TieredAnimatedCrushingWheels(CrushingWheels.CRUSHING_WHEELS.get(TIER.indexOfTier(recipe.getRecipeTier()))).draw(graphics, 62, 59);
     }
 }

@@ -1,6 +1,6 @@
 package electrolyte.greate.content.kinetics.crusher;
 
-import com.simibubi.create.content.kinetics.crusher.CrushingWheelBlockEntity;
+import com.simibubi.create.AllDamageTypes;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.utility.Iterate;
@@ -64,14 +64,13 @@ public class TieredCrushingWheelBlockEntity extends TieredKineticBlockEntity imp
 
     @SubscribeEvent
     public static void fortunateCrushing(LootingLevelEvent event) {
-        if(event.getDamageSource() != CrushingWheelBlockEntity.DAMAGE_SOURCE) return;
+        if(event.getDamageSource() != AllDamageTypes.CRUSH.source(event.getEntity().level())) return;
         event.setLootingLevel(2);
-        //todo: check if the drops are good with this damage source
     }
 
     @SubscribeEvent
     public static void handleCrushedDrops(LivingDropsEvent event) {
-        if(event.getSource() != CrushingWheelBlockEntity.DAMAGE_SOURCE) return;
+        if(event.getSource() != AllDamageTypes.CRUSH.source(event.getEntity().level())) return;
         for(ItemEntity ie : event.getDrops()) {
             ie.setDeltaMovement(Vec3.ZERO);
         }

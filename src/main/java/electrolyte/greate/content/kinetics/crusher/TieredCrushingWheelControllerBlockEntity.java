@@ -4,9 +4,9 @@ import com.gregtechceu.gtceu.api.capability.recipe.EURecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
+import com.simibubi.create.AllDamageTypes;
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
-import com.simibubi.create.content.kinetics.crusher.CrushingWheelBlockEntity;
 import com.simibubi.create.content.processing.recipe.ProcessingInventory;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
@@ -44,12 +44,11 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,7 +125,7 @@ public class TieredCrushingWheelControllerBlockEntity extends SmartBlockEntity {
             if(inventory.remainingTime > 0) return;
             inventory.remainingTime = 0;
             if(dir != Direction.UP) {
-                BlockPos pos = worldPosition.offset(dir.getAxis() == Axis.X ? 1F * offset : 0F, (-1F), dir.getAxis() == Axis.Z ? 1F * offset : 0F);
+                BlockPos pos = worldPosition.offset(dir.getAxis() == Axis.X ? 1 * offset : 0, (-1), dir.getAxis() == Axis.Z ? 1 * offset : 0);
                 DirectBeltInputBehaviour behaviour = BlockEntityBehaviour.get(level, pos, DirectBeltInputBehaviour.TYPE);
                 if(behaviour != null) {
                     boolean changed = false;
@@ -186,7 +185,7 @@ public class TieredCrushingWheelControllerBlockEntity extends SmartBlockEntity {
                     processingEntity.setPos(entityPos.x, entityPos.y, entityPos.z);
                 }
             }
-            processingEntity.hurt(CrushingWheelBlockEntity.DAMAGE_SOURCE, crusherDamage);
+            processingEntity.hurt(AllDamageTypes.CRUSH.source(getLevel()), crusherDamage);
             if (!processingEntity.isAlive()) {
                 processingEntity.setPos(entityPos.x, entityPos.y, entityPos.z);
             }
@@ -330,8 +329,8 @@ public class TieredCrushingWheelControllerBlockEntity extends SmartBlockEntity {
     }
 
     @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
-        if(cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) return handler.cast();
+    public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+        if(cap == ForgeCapabilities.ITEM_HANDLER) return handler.cast();
         return super.getCapability(cap, side);
     }
 

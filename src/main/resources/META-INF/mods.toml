@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[43,)"
+loaderVersion="[47,)"
 license="MIT"
 issueTrackerURL="https://github.com/GreateBeyondTheHorizon/Greate/issues"
 
@@ -16,7 +16,7 @@ description="Create Gregified"
 
 [[dependencies.greate]]
     modId="kubejs_create"
-    mandatory=true
+    mandatory=false
     versionRange="[1902.2.4-build.29,)"
     ordering="NONE"
     side="BOTH"
@@ -31,27 +31,20 @@ description="Create Gregified"
 [[dependencies.greate]]
     modId="gtceu"
     mandatory=true
-    versionRange="[1.0.10,)"
-    ordering="NONE"
-    side="BOTH"
-
-[[dependencies.greate]]
-    modId="configuration"
-    mandatory=true
-    versionRange="[2.1.0,)"
+    versionRange="[1.0.11.b,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.greate]]
     modId="forge"
     mandatory=true
-    versionRange="[43.2.3,)"
+    versionRange="[47.1.0,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.greate]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19.2]"
+    versionRange="[1.20.1]"
     ordering="NONE"
     side="BOTH"

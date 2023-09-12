@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "A": {
       "tag": "greate:shafts/palladium"
@@ -24,5 +25,6 @@
   ],
   "result": {
     "item": "greate:palladium_millstone"
-  }
+  },
+  "show_notification": true
 }

@@ -11,52 +11,52 @@ public class GreateConfig {
 
     @Configurable
     @Synchronized
-    @Comment("Settings related to ULS tier Machines")
+    @Comment("Settings related to ULS tier machines")
     public ULS ULS = new ULS();
 
     @Configurable
     @Synchronized
-    @Comment("Settings related to LS tier Machines")
+    @Comment("Settings related to LS tier machines")
     public LS LS = new LS();
 
     @Configurable
     @Synchronized
-    @Comment("Settings related to MS tier Machines")
+    @Comment("Settings related to MS tier machines")
     public MS MS = new MS();
 
     @Configurable
     @Synchronized
-    @Comment("Settings related to HS tier Machines")
+    @Comment("Settings related to HS tier machines")
     public HS HS = new HS();
 
     @Configurable
     @Synchronized
-    @Comment("Settings related to ES tier Machines")
+    @Comment("Settings related to ES tier machines")
     public ES ES = new ES();
 
     @Configurable
     @Synchronized
-    @Comment("Settings related to IS tier Machines")
+    @Comment("Settings related to IS tier machines")
     public IS IS = new IS();
 
     @Configurable
     @Synchronized
-    @Comment("Settings related to LUS tier Machines")
+    @Comment("Settings related to LUS tier machines")
     public LUS LUS = new LUS();
 
     @Configurable
     @Synchronized
-    @Comment("Settings related to ZPM tier Machines")
+    @Comment("Settings related to ZPM tier machines")
     public ZPM ZPM = new ZPM();
 
     @Configurable
     @Synchronized
-    @Comment("Settings related to US tier Machines")
+    @Comment("Settings related to US tier machines")
     public US US = new US();
 
     @Configurable
     @Synchronized
-    @Comment("Settings related to UHS tier Machines")
+    @Comment("Settings related to UHS tier machines")
     public UHS UHS = new UHS();
 
     public static class ULS {

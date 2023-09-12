@@ -15,21 +15,22 @@ import electrolyte.greate.content.kinetics.gearbox.TieredGearboxBlock;
 import electrolyte.greate.content.kinetics.gearbox.TieredVerticalGearboxItem;
 import electrolyte.greate.foundation.data.GreateBuilderTransformers;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 
 import static electrolyte.greate.Greate.REGISTRATE;
 
 public class Gearboxes {
 
     static {
-        REGISTRATE.creativeModeTab(() -> Greate.GREATE_TAB);
+        REGISTRATE.useCreativeTab(Greate.GREATE_TAB);
     }
 
     public static final BlockEntry<TieredGearboxBlock> ANDESITE_GEARBOX = REGISTRATE
             .block("andesite_gearbox", p -> new TieredGearboxBlock(p, GreatePartialModels.ANDESITE_SHAFT_HALF))
             .initialProperties(SharedProperties::stone)
             .properties(Properties::noOcclusion)
-            .properties(p -> p.color(MaterialColor.PODZOL))
+            .properties(p -> p.mapColor(MapColor.PODZOL).pushReaction(PushReaction.PUSH_ONLY))
             .transform(BlockStressDefaults.setNoImpact())
             .transform(TagGen.axeOrPickaxe())
             .transform(GreateBuilderTransformers.tieredGearbox())
@@ -48,7 +49,7 @@ public class Gearboxes {
             .block("steel_gearbox", p -> new TieredGearboxBlock(p, GreatePartialModels.STEEL_SHAFT_HALF))
             .initialProperties(SharedProperties::stone)
             .properties(Properties::noOcclusion)
-            .properties(p -> p.color(MaterialColor.PODZOL))
+            .properties(p -> p.mapColor(MapColor.PODZOL).pushReaction(PushReaction.PUSH_ONLY))
             .transform(BlockStressDefaults.setNoImpact())
             .transform(TagGen.axeOrPickaxe())
             .transform(GreateBuilderTransformers.tieredGearbox())
@@ -67,7 +68,7 @@ public class Gearboxes {
             .block("aluminium_gearbox", p -> new TieredGearboxBlock(p, GreatePartialModels.ALUMINIUM_SHAFT_HALF))
             .initialProperties(SharedProperties::stone)
             .properties(Properties::noOcclusion)
-            .properties(p -> p.color(MaterialColor.PODZOL))
+            .properties(p -> p.mapColor(MapColor.PODZOL).pushReaction(PushReaction.PUSH_ONLY))
             .transform(BlockStressDefaults.setNoImpact())
             .transform(TagGen.axeOrPickaxe())
             .onRegister(CreateRegistrate.connectedTextures(() -> new EncasedCTBehaviour(AllSpriteShifts.ANDESITE_CASING)))
@@ -86,7 +87,7 @@ public class Gearboxes {
             .block("stainless_steel_gearbox", p -> new TieredGearboxBlock(p, GreatePartialModels.STAINLESS_STEEL_SHAFT_HALF))
             .initialProperties(SharedProperties::stone)
             .properties(Properties::noOcclusion)
-            .properties(p -> p.color(MaterialColor.PODZOL))
+            .properties(p -> p.mapColor(MapColor.PODZOL).pushReaction(PushReaction.PUSH_ONLY))
             .transform(BlockStressDefaults.setNoImpact())
             .transform(TagGen.axeOrPickaxe())
             .transform(GreateBuilderTransformers.tieredGearbox())
@@ -105,7 +106,7 @@ public class Gearboxes {
             .block("titanium_gearbox", p -> new TieredGearboxBlock(p, GreatePartialModels.TITANIUM_SHAFT_HALF))
             .initialProperties(SharedProperties::stone)
             .properties(Properties::noOcclusion)
-            .properties(p -> p.color(MaterialColor.PODZOL))
+            .properties(p -> p.mapColor(MapColor.PODZOL).pushReaction(PushReaction.PUSH_ONLY))
             .transform(BlockStressDefaults.setNoImpact())
             .transform(TagGen.axeOrPickaxe())
             .transform(GreateBuilderTransformers.tieredGearbox())
@@ -125,7 +126,7 @@ public class Gearboxes {
             .lang("Tungstensteel Gearbox")
             .initialProperties(SharedProperties::stone)
             .properties(Properties::noOcclusion)
-            .properties(p -> p.color(MaterialColor.PODZOL))
+            .properties(p -> p.mapColor(MapColor.PODZOL).pushReaction(PushReaction.PUSH_ONLY))
             .transform(BlockStressDefaults.setNoImpact())
             .transform(TagGen.axeOrPickaxe())
             .transform(GreateBuilderTransformers.tieredGearbox())
@@ -145,7 +146,7 @@ public class Gearboxes {
             .block("palladium_gearbox", p -> new TieredGearboxBlock(p, GreatePartialModels.PALLADIUM_SHAFT_HALF))
             .initialProperties(SharedProperties::stone)
             .properties(Properties::noOcclusion)
-            .properties(p -> p.color(MaterialColor.PODZOL))
+            .properties(p -> p.mapColor(MapColor.PODZOL).pushReaction(PushReaction.PUSH_ONLY))
             .transform(BlockStressDefaults.setNoImpact())
             .transform(TagGen.axeOrPickaxe())
             .transform(GreateBuilderTransformers.tieredGearbox())
@@ -164,7 +165,7 @@ public class Gearboxes {
             .block("naquadah_gearbox", p -> new TieredGearboxBlock(p, GreatePartialModels.NAQUADAH_SHAFT_HALF))
             .initialProperties(SharedProperties::stone)
             .properties(Properties::noOcclusion)
-            .properties(p -> p.color(MaterialColor.PODZOL))
+            .properties(p -> p.mapColor(MapColor.PODZOL).pushReaction(PushReaction.PUSH_ONLY))
             .transform(BlockStressDefaults.setNoImpact())
             .transform(TagGen.axeOrPickaxe())
             .transform(GreateBuilderTransformers.tieredGearbox())
@@ -183,7 +184,7 @@ public class Gearboxes {
             .block("darmstadtium_gearbox", p -> new TieredGearboxBlock(p, GreatePartialModels.DARMSTADTIUM_SHAFT_HALF))
             .initialProperties(SharedProperties::stone)
             .properties(Properties::noOcclusion)
-            .properties(p -> p.color(MaterialColor.PODZOL))
+            .properties(p -> p.mapColor(MapColor.PODZOL).pushReaction(PushReaction.PUSH_ONLY))
             .transform(BlockStressDefaults.setNoImpact())
             .transform(TagGen.axeOrPickaxe())
             .transform(GreateBuilderTransformers.tieredGearbox())
@@ -202,7 +203,7 @@ public class Gearboxes {
             .block("neutronium_gearbox", p -> new TieredGearboxBlock(p, GreatePartialModels.NEUTRONIUM_SHAFT_HALF))
             .initialProperties(SharedProperties::stone)
             .properties(Properties::noOcclusion)
-            .properties(p -> p.color(MaterialColor.PODZOL))
+            .properties(p -> p.mapColor(MapColor.PODZOL).pushReaction(PushReaction.PUSH_ONLY))
             .transform(BlockStressDefaults.setNoImpact())
             .transform(TagGen.axeOrPickaxe())
             .transform(GreateBuilderTransformers.tieredGearbox())

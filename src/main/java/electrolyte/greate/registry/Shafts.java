@@ -17,20 +17,20 @@ import electrolyte.greate.content.kinetics.steamEngine.TieredPoweredShaftBlock;
 import electrolyte.greate.foundation.data.GreateBlockStateGen;
 import electrolyte.greate.foundation.data.GreateBuilderTransformers;
 import electrolyte.greate.registry.GreateTags.GreateItemTags;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 
 import static electrolyte.greate.Greate.REGISTRATE;
 
 public class Shafts {
 
     static {
-        REGISTRATE.creativeModeTab(() -> Greate.GREATE_TAB);
+        REGISTRATE.useCreativeTab(Greate.GREATE_TAB);
     }
 
     public static final BlockEntry<TieredShaftBlock> ANDESITE_SHAFT = REGISTRATE
             .block("andesite_shaft", p -> new TieredShaftBlock(p, GreatePartialModels.LARGE_ANDESITE_COGWHEEL_SHAFTLESS, GreatePartialModels.ANDESITE_COGWHEEL_SHAFT))
             .initialProperties(SharedProperties::stone)
-            .properties(p -> p.color(MaterialColor.METAL))
+            .properties(p -> p.mapColor(MapColor.METAL))
             .transform(BlockStressDefaults.setNoImpact())
             .transform(TagGen.pickaxeOnly())
             .blockstate(GreateBlockStateGen.tieredShaftProvider())
@@ -45,7 +45,7 @@ public class Shafts {
     public static final BlockEntry<TieredPoweredShaftBlock> POWERED_ANDESITE_SHAFT = REGISTRATE
             .block("powered_andesite_shaft", p -> new TieredPoweredShaftBlock(p, Shafts.ANDESITE_SHAFT::get))
             .initialProperties(SharedProperties::stone)
-            .properties(p -> p.color(MaterialColor.METAL))
+            .properties(p -> p.mapColor(MapColor.METAL))
             .transform(TagGen.pickaxeOnly())
             .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
             .loot((l, b) -> l.dropOther(b, ANDESITE_SHAFT.get()))
@@ -54,7 +54,7 @@ public class Shafts {
 
     public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_ANDESITE_SHAFT = REGISTRATE
             .block("andesite_encased_andesite_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.ANDESITE_CASING::get, Shafts.ANDESITE_SHAFT::get))
-            .properties(p -> p.color(MaterialColor.PODZOL))
+            .properties(p -> p.mapColor(MapColor.PODZOL))
             .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(ANDESITE_SHAFT, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.ANDESITE_SHAFT))
             .transform(TagGen.axeOrPickaxe())
@@ -63,7 +63,7 @@ public class Shafts {
 
     public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_ANDESITE_SHAFT = REGISTRATE
             .block("brass_encased_andesite_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.BRASS_CASING::get, Shafts.ANDESITE_SHAFT::get))
-            .properties(p -> p.color(MaterialColor.TERRACOTTA_BROWN))
+            .properties(p -> p.mapColor(MapColor.TERRACOTTA_BROWN))
             .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(ANDESITE_SHAFT, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.ANDESITE_SHAFT))
             .transform(TagGen.axeOrPickaxe())
@@ -73,7 +73,7 @@ public class Shafts {
     public static final BlockEntry<TieredShaftBlock> STEEL_SHAFT = REGISTRATE
             .block("steel_shaft", p -> new TieredShaftBlock(p, GreatePartialModels.LARGE_STEEL_COGWHEEL_SHAFTLESS, GreatePartialModels.STEEL_COGWHEEL_SHAFT))
             .initialProperties(SharedProperties::stone)
-            .properties(p -> p.color(MaterialColor.METAL))
+            .properties(p -> p.mapColor(MapColor.METAL))
             .transform(BlockStressDefaults.setNoImpact())
             .transform(TagGen.pickaxeOnly())
             .blockstate(GreateBlockStateGen.tieredShaftProvider())
@@ -88,7 +88,7 @@ public class Shafts {
     public static final BlockEntry<TieredPoweredShaftBlock> POWERED_STEEL_SHAFT = REGISTRATE
             .block("powered_steel_shaft", p -> new TieredPoweredShaftBlock(p, Shafts.STEEL_SHAFT::get))
             .initialProperties(SharedProperties::stone)
-            .properties(p -> p.color(MaterialColor.METAL))
+            .properties(p -> p.mapColor(MapColor.METAL))
             .transform(TagGen.pickaxeOnly())
             .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
             .loot((l, b) -> l.dropOther(b, STEEL_SHAFT.get()))
@@ -97,7 +97,7 @@ public class Shafts {
 
     public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_STEEL_SHAFT = REGISTRATE
             .block("andesite_encased_steel_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.ANDESITE_CASING::get, Shafts.STEEL_SHAFT::get))
-            .properties(p -> p.color(MaterialColor.PODZOL))
+            .properties(p -> p.mapColor(MapColor.PODZOL))
             .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(STEEL_SHAFT, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.STEEL_SHAFT))
             .transform(TagGen.axeOrPickaxe())
@@ -106,7 +106,7 @@ public class Shafts {
 
     public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_STEEL_SHAFT = REGISTRATE
             .block("brass_encased_steel_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.BRASS_CASING::get, Shafts.STEEL_SHAFT::get))
-            .properties(p -> p.color(MaterialColor.TERRACOTTA_BROWN))
+            .properties(p -> p.mapColor(MapColor.TERRACOTTA_BROWN))
             .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(STEEL_SHAFT, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.STEEL_SHAFT))
             .transform(TagGen.axeOrPickaxe())
@@ -116,7 +116,7 @@ public class Shafts {
     public static final BlockEntry<TieredShaftBlock> ALUMINIUM_SHAFT = REGISTRATE
             .block("aluminium_shaft", p -> new TieredShaftBlock(p, GreatePartialModels.LARGE_ALUMINIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.ALUMINIUM_COGWHEEL_SHAFT))
             .initialProperties(SharedProperties::stone)
-            .properties(p -> p.color(MaterialColor.METAL))
+            .properties(p -> p.mapColor(MapColor.METAL))
             .transform(BlockStressDefaults.setNoImpact())
             .transform(TagGen.pickaxeOnly())
             .blockstate(GreateBlockStateGen.tieredShaftProvider())
@@ -131,7 +131,7 @@ public class Shafts {
     public static final BlockEntry<TieredPoweredShaftBlock> POWERED_ALUMINIUM_SHAFT = REGISTRATE
             .block("powered_aluminium_shaft", p -> new TieredPoweredShaftBlock(p, Shafts.ALUMINIUM_SHAFT::get))
             .initialProperties(SharedProperties::stone)
-            .properties(p -> p.color(MaterialColor.METAL))
+            .properties(p -> p.mapColor(MapColor.METAL))
             .transform(TagGen.pickaxeOnly())
             .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
             .loot((l, b) -> l.dropOther(b, ALUMINIUM_SHAFT.get()))
@@ -140,7 +140,7 @@ public class Shafts {
 
     public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_ALUMINIUM_SHAFT = REGISTRATE
             .block("andesite_encased_aluminium_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.ANDESITE_CASING::get, Shafts.ALUMINIUM_SHAFT::get))
-            .properties(p -> p.color(MaterialColor.PODZOL))
+            .properties(p -> p.mapColor(MapColor.PODZOL))
             .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(ALUMINIUM_SHAFT, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.ALUMINIUM_SHAFT))
             .transform(TagGen.axeOrPickaxe())
@@ -149,7 +149,7 @@ public class Shafts {
 
     public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_ALUMINIUM_SHAFT = REGISTRATE
             .block("brass_encased_aluminium_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.BRASS_CASING::get, Shafts.ALUMINIUM_SHAFT::get))
-            .properties(p -> p.color(MaterialColor.TERRACOTTA_BROWN))
+            .properties(p -> p.mapColor(MapColor.TERRACOTTA_BROWN))
             .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(ALUMINIUM_SHAFT, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.ALUMINIUM_SHAFT))
             .transform(TagGen.axeOrPickaxe())
@@ -159,7 +159,7 @@ public class Shafts {
     public static final BlockEntry<TieredShaftBlock> STAINLESS_STEEL_SHAFT = REGISTRATE
             .block("stainless_steel_shaft", p -> new TieredShaftBlock(p, GreatePartialModels.LARGE_STAINLESS_STEEL_COGWHEEL_SHAFTLESS, GreatePartialModels.STAINLESS_STEEL_COGWHEEL_SHAFT))
             .initialProperties(SharedProperties::stone)
-            .properties(p -> p.color(MaterialColor.METAL))
+            .properties(p -> p.mapColor(MapColor.METAL))
             .transform(BlockStressDefaults.setNoImpact())
             .transform(TagGen.pickaxeOnly())
             .blockstate(GreateBlockStateGen.tieredShaftProvider())
@@ -174,7 +174,7 @@ public class Shafts {
     public static final BlockEntry<TieredPoweredShaftBlock> POWERED_STAINLESS_STEEL_SHAFT = REGISTRATE
             .block("powered_stainless_steel_shaft", p -> new TieredPoweredShaftBlock(p, Shafts.STAINLESS_STEEL_SHAFT::get))
             .initialProperties(SharedProperties::stone)
-            .properties(p -> p.color(MaterialColor.METAL))
+            .properties(p -> p.mapColor(MapColor.METAL))
             .transform(TagGen.pickaxeOnly())
             .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
             .loot((l, b) -> l.dropOther(b, STAINLESS_STEEL_SHAFT.get()))
@@ -183,7 +183,7 @@ public class Shafts {
 
     public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_STAINLESS_STEEL_SHAFT = REGISTRATE
             .block("andesite_encased_stainless_steel_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.ANDESITE_CASING::get, Shafts.STAINLESS_STEEL_SHAFT::get))
-            .properties(p -> p.color(MaterialColor.PODZOL))
+            .properties(p -> p.mapColor(MapColor.PODZOL))
             .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(STAINLESS_STEEL_SHAFT, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.STAINLESS_STEEL_SHAFT))
             .transform(TagGen.axeOrPickaxe())
@@ -192,7 +192,7 @@ public class Shafts {
 
     public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_STAINLESS_STEEL_SHAFT = REGISTRATE
             .block("brass_encased_stainless_steel_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.BRASS_CASING::get, Shafts.STAINLESS_STEEL_SHAFT::get))
-            .properties(p -> p.color(MaterialColor.TERRACOTTA_BROWN))
+            .properties(p -> p.mapColor(MapColor.TERRACOTTA_BROWN))
             .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(STAINLESS_STEEL_SHAFT, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.STAINLESS_STEEL_SHAFT))
             .transform(TagGen.axeOrPickaxe())
@@ -202,7 +202,7 @@ public class Shafts {
     public static final BlockEntry<TieredShaftBlock> TITANIUM_SHAFT = REGISTRATE
             .block("titanium_shaft", p -> new TieredShaftBlock(p, GreatePartialModels.LARGE_TITANIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.TITANIUM_COGWHEEL_SHAFT))
             .initialProperties(SharedProperties::stone)
-            .properties(p -> p.color(MaterialColor.METAL))
+            .properties(p -> p.mapColor(MapColor.METAL))
             .transform(BlockStressDefaults.setNoImpact())
             .transform(TagGen.pickaxeOnly())
             .blockstate(GreateBlockStateGen.tieredShaftProvider())
@@ -217,7 +217,7 @@ public class Shafts {
     public static final BlockEntry<TieredPoweredShaftBlock> POWERED_TITANIUM_SHAFT = REGISTRATE
             .block("powered_titanium_shaft", p -> new TieredPoweredShaftBlock(p, Shafts.TITANIUM_SHAFT::get))
             .initialProperties(SharedProperties::stone)
-            .properties(p -> p.color(MaterialColor.METAL))
+            .properties(p -> p.mapColor(MapColor.METAL))
             .transform(TagGen.pickaxeOnly())
             .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
             .loot((l, b) -> l.dropOther(b, TITANIUM_SHAFT.get()))
@@ -226,7 +226,7 @@ public class Shafts {
 
     public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_TITANIUM_SHAFT = REGISTRATE
             .block("andesite_encased_titanium_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.ANDESITE_CASING::get, Shafts.TITANIUM_SHAFT::get))
-            .properties(p -> p.color(MaterialColor.PODZOL))
+            .properties(p -> p.mapColor(MapColor.PODZOL))
             .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(TITANIUM_SHAFT, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.TITANIUM_SHAFT))
             .transform(TagGen.axeOrPickaxe())
@@ -235,7 +235,7 @@ public class Shafts {
 
     public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_TITANIUM_SHAFT = REGISTRATE
             .block("brass_encased_titanium_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.BRASS_CASING::get, Shafts.TITANIUM_SHAFT::get))
-            .properties(p -> p.color(MaterialColor.TERRACOTTA_BROWN))
+            .properties(p -> p.mapColor(MapColor.TERRACOTTA_BROWN))
             .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(TITANIUM_SHAFT, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.TITANIUM_SHAFT))
             .transform(TagGen.axeOrPickaxe())
@@ -246,7 +246,7 @@ public class Shafts {
             .block("tungsten_steel_shaft", p -> new TieredShaftBlock(p, GreatePartialModels.LARGE_TUNGSTEN_STEEL_COGWHEEL_SHAFTLESS, GreatePartialModels.TUNGSTEN_STEEL_COGWHEEL_SHAFT))
             .lang("Tungstensteel Shaft")
             .initialProperties(SharedProperties::stone)
-            .properties(p -> p.color(MaterialColor.METAL))
+            .properties(p -> p.mapColor(MapColor.METAL))
             .transform(BlockStressDefaults.setNoImpact())
             .transform(TagGen.pickaxeOnly())
             .blockstate(GreateBlockStateGen.tieredShaftProvider())
@@ -262,7 +262,7 @@ public class Shafts {
             .block("powered_tungsten_steel_shaft", p -> new TieredPoweredShaftBlock(p, Shafts.TUNGSTEN_STEEL_SHAFT::get))
             .lang("Powered Tungstensteel Shaft")
             .initialProperties(SharedProperties::stone)
-            .properties(p -> p.color(MaterialColor.METAL))
+            .properties(p -> p.mapColor(MapColor.METAL))
             .transform(TagGen.pickaxeOnly())
             .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
             .loot((l, b) -> l.dropOther(b, TUNGSTEN_STEEL_SHAFT.get()))
@@ -272,7 +272,7 @@ public class Shafts {
     public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_TUNGSTEN_STEEL_SHAFT = REGISTRATE
             .block("andesite_encased_tungsten_steel_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.ANDESITE_CASING::get, Shafts.TUNGSTEN_STEEL_SHAFT::get))
             .lang("Andesite Encased Tungstensteel Shaft")
-            .properties(p -> p.color(MaterialColor.PODZOL))
+            .properties(p -> p.mapColor(MapColor.PODZOL))
             .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(TUNGSTEN_STEEL_SHAFT, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.TUNGSTEN_STEEL_SHAFT))
             .transform(TagGen.axeOrPickaxe())
@@ -282,7 +282,7 @@ public class Shafts {
     public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_TUNGSTEN_STEEL_SHAFT = REGISTRATE
             .block("brass_encased_tungsten_steel_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.BRASS_CASING::get, Shafts.TUNGSTEN_STEEL_SHAFT::get))
             .lang("Brass Encased Tungstensteel Shaft")
-            .properties(p -> p.color(MaterialColor.TERRACOTTA_BROWN))
+            .properties(p -> p.mapColor(MapColor.TERRACOTTA_BROWN))
             .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(TUNGSTEN_STEEL_SHAFT, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.TUNGSTEN_STEEL_SHAFT))
             .transform(TagGen.axeOrPickaxe())
@@ -292,7 +292,7 @@ public class Shafts {
     public static final BlockEntry<TieredShaftBlock> PALLADIUM_SHAFT = REGISTRATE
             .block("palladium_shaft", p -> new TieredShaftBlock(p, GreatePartialModels.LARGE_PALLADIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.PALLADIUM_COGWHEEL_SHAFT))
             .initialProperties(SharedProperties::stone)
-            .properties(p -> p.color(MaterialColor.METAL))
+            .properties(p -> p.mapColor(MapColor.METAL))
             .transform(BlockStressDefaults.setNoImpact())
             .transform(TagGen.pickaxeOnly())
             .blockstate(GreateBlockStateGen.tieredShaftProvider())
@@ -307,7 +307,7 @@ public class Shafts {
     public static final BlockEntry<TieredPoweredShaftBlock> POWERED_PALLADIUM_SHAFT = REGISTRATE
             .block("powered_palladium_shaft", p -> new TieredPoweredShaftBlock(p, Shafts.PALLADIUM_SHAFT::get))
             .initialProperties(SharedProperties::stone)
-            .properties(p -> p.color(MaterialColor.METAL))
+            .properties(p -> p.mapColor(MapColor.METAL))
             .transform(TagGen.pickaxeOnly())
             .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
             .loot((l, b) -> l.dropOther(b, PALLADIUM_SHAFT.get()))
@@ -316,7 +316,7 @@ public class Shafts {
 
     public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_PALLADIUM_SHAFT = REGISTRATE
             .block("andesite_encased_palladium_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.ANDESITE_CASING::get, Shafts.PALLADIUM_SHAFT::get))
-            .properties(p -> p.color(MaterialColor.PODZOL))
+            .properties(p -> p.mapColor(MapColor.PODZOL))
             .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(PALLADIUM_SHAFT, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.PALLADIUM_SHAFT))
             .transform(TagGen.axeOrPickaxe())
@@ -325,7 +325,7 @@ public class Shafts {
 
     public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_PALLADIUM_SHAFT = REGISTRATE
             .block("brass_encased_palladium_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.BRASS_CASING::get, Shafts.PALLADIUM_SHAFT::get))
-            .properties(p -> p.color(MaterialColor.TERRACOTTA_BROWN))
+            .properties(p -> p.mapColor(MapColor.TERRACOTTA_BROWN))
             .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(PALLADIUM_SHAFT, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.PALLADIUM_SHAFT))
             .transform(TagGen.axeOrPickaxe())
@@ -335,7 +335,7 @@ public class Shafts {
     public static final BlockEntry<TieredShaftBlock> NAQUADAH_SHAFT = REGISTRATE
             .block("naquadah_shaft", p -> new TieredShaftBlock(p, GreatePartialModels.LARGE_NAQUADAH_COGWHEEL_SHAFTLESS, GreatePartialModels.NAQUADAH_COGWHEEL_SHAFT))
             .initialProperties(SharedProperties::stone)
-            .properties(p -> p.color(MaterialColor.METAL))
+            .properties(p -> p.mapColor(MapColor.METAL))
             .transform(BlockStressDefaults.setNoImpact())
             .transform(TagGen.pickaxeOnly())
             .blockstate(GreateBlockStateGen.tieredShaftProvider())
@@ -350,7 +350,7 @@ public class Shafts {
     public static final BlockEntry<TieredPoweredShaftBlock> POWERED_NAQUADAH_SHAFT = REGISTRATE
             .block("powered_naquadah_shaft", p -> new TieredPoweredShaftBlock(p, Shafts.NAQUADAH_SHAFT::get))
             .initialProperties(SharedProperties::stone)
-            .properties(p -> p.color(MaterialColor.METAL))
+            .properties(p -> p.mapColor(MapColor.METAL))
             .transform(TagGen.pickaxeOnly())
             .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
             .loot((l, b) -> l.dropOther(b, NAQUADAH_SHAFT.get()))
@@ -359,7 +359,7 @@ public class Shafts {
 
     public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_NAQUADAH_SHAFT = REGISTRATE
             .block("andesite_encased_naquadah_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.ANDESITE_CASING::get, Shafts.NAQUADAH_SHAFT::get))
-            .properties(p -> p.color(MaterialColor.PODZOL))
+            .properties(p -> p.mapColor(MapColor.PODZOL))
             .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(NAQUADAH_SHAFT, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.NAQUADAH_SHAFT))
             .transform(TagGen.axeOrPickaxe())
@@ -368,7 +368,7 @@ public class Shafts {
 
     public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_NAQUADAH_SHAFT = REGISTRATE
             .block("brass_encased_naquadah_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.BRASS_CASING::get, Shafts.NAQUADAH_SHAFT::get))
-            .properties(p -> p.color(MaterialColor.TERRACOTTA_BROWN))
+            .properties(p -> p.mapColor(MapColor.TERRACOTTA_BROWN))
             .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(NAQUADAH_SHAFT, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.NAQUADAH_SHAFT))
             .transform(TagGen.axeOrPickaxe())
@@ -378,7 +378,7 @@ public class Shafts {
     public static final BlockEntry<TieredShaftBlock> DARMSTADTIUM_SHAFT = REGISTRATE
             .block("darmstadtium_shaft", p -> new TieredShaftBlock(p, GreatePartialModels.LARGE_DARMSTADTIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.DARMSTADTIUM_COGWHEEL_SHAFT))
             .initialProperties(SharedProperties::stone)
-            .properties(p -> p.color(MaterialColor.METAL))
+            .properties(p -> p.mapColor(MapColor.METAL))
             .transform(BlockStressDefaults.setNoImpact())
             .transform(TagGen.pickaxeOnly())
             .blockstate(GreateBlockStateGen.tieredShaftProvider())
@@ -393,7 +393,7 @@ public class Shafts {
     public static final BlockEntry<TieredPoweredShaftBlock> POWERED_DARMSTADTIUM_SHAFT = REGISTRATE
             .block("powered_darmstadtium_shaft", p -> new TieredPoweredShaftBlock(p, Shafts.DARMSTADTIUM_SHAFT::get))
             .initialProperties(SharedProperties::stone)
-            .properties(p -> p.color(MaterialColor.METAL))
+            .properties(p -> p.mapColor(MapColor.METAL))
             .transform(TagGen.pickaxeOnly())
             .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
             .loot((l, b) -> l.dropOther(b, DARMSTADTIUM_SHAFT.get()))
@@ -402,7 +402,7 @@ public class Shafts {
 
     public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_DARMSTADTIUM_SHAFT = REGISTRATE
             .block("andesite_encased_darmstadtium_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.ANDESITE_CASING::get, Shafts.DARMSTADTIUM_SHAFT::get))
-            .properties(p -> p.color(MaterialColor.PODZOL))
+            .properties(p -> p.mapColor(MapColor.PODZOL))
             .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(DARMSTADTIUM_SHAFT, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.DARMSTADTIUM_SHAFT))
             .transform(TagGen.axeOrPickaxe())
@@ -411,7 +411,7 @@ public class Shafts {
 
     public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_DARMSTADTIUM_SHAFT = REGISTRATE
             .block("brass_encased_darmstadtium_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.BRASS_CASING::get, Shafts.DARMSTADTIUM_SHAFT::get))
-            .properties(p -> p.color(MaterialColor.TERRACOTTA_BROWN))
+            .properties(p -> p.mapColor(MapColor.TERRACOTTA_BROWN))
             .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(DARMSTADTIUM_SHAFT, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.DARMSTADTIUM_SHAFT))
             .transform(TagGen.axeOrPickaxe())
@@ -421,7 +421,7 @@ public class Shafts {
     public static final BlockEntry<TieredShaftBlock> NEUTRONIUM_SHAFT = REGISTRATE
             .block("neutronium_shaft", p -> new TieredShaftBlock(p, GreatePartialModels.LARGE_NEUTRONIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.NEUTRONIUM_COGWHEEL_SHAFT))
             .initialProperties(SharedProperties::stone)
-            .properties(p -> p.color(MaterialColor.METAL))
+            .properties(p -> p.mapColor(MapColor.METAL))
             .transform(BlockStressDefaults.setNoImpact())
             .transform(TagGen.pickaxeOnly())
             .blockstate(GreateBlockStateGen.tieredShaftProvider())
@@ -436,7 +436,7 @@ public class Shafts {
     public static final BlockEntry<TieredPoweredShaftBlock> POWERED_NEUTRONIUM_SHAFT = REGISTRATE
             .block("powered_neutronium_shaft", p -> new TieredPoweredShaftBlock(p, Shafts.NEUTRONIUM_SHAFT::get))
             .initialProperties(SharedProperties::stone)
-            .properties(p -> p.color(MaterialColor.METAL))
+            .properties(p -> p.mapColor(MapColor.METAL))
             .transform(TagGen.pickaxeOnly())
             .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
             .loot((l, b) -> l.dropOther(b, NEUTRONIUM_SHAFT.get()))
@@ -445,7 +445,7 @@ public class Shafts {
 
     public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_NEUTRONIUM_SHAFT = REGISTRATE
             .block("andesite_encased_neutronium_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.ANDESITE_CASING::get, Shafts.NEUTRONIUM_SHAFT::get))
-            .properties(p -> p.color(MaterialColor.PODZOL))
+            .properties(p -> p.mapColor(MapColor.PODZOL))
             .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(NEUTRONIUM_SHAFT, () -> AllSpriteShifts.ANDESITE_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.NEUTRONIUM_SHAFT))
             .transform(TagGen.axeOrPickaxe())
@@ -454,7 +454,7 @@ public class Shafts {
 
     public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_NEUTRONIUM_SHAFT = REGISTRATE
             .block("brass_encased_neutronium_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.BRASS_CASING::get, Shafts.NEUTRONIUM_SHAFT::get))
-            .properties(p -> p.color(MaterialColor.TERRACOTTA_BROWN))
+            .properties(p -> p.mapColor(MapColor.TERRACOTTA_BROWN))
             .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(NEUTRONIUM_SHAFT, () -> AllSpriteShifts.BRASS_CASING))
             .transform(EncasingRegistry.addVariantTo(Shafts.NEUTRONIUM_SHAFT))
             .transform(TagGen.axeOrPickaxe())

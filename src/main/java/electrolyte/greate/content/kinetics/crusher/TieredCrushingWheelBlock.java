@@ -101,7 +101,7 @@ public class TieredCrushingWheelBlock extends RotatedPillarKineticBlock implemen
         }
 
         if(!controllerExists) {
-            if(!level.getBlockState(controllerPos).getMaterial().isReplaceable()) return;
+            if(!level.getBlockState(controllerPos).canBeReplaced()) return;
             level.setBlockAndUpdate(controllerPos, TieredCrushingWheelControllerBlock.MAP.get(this).defaultBlockState()
                     .setValue(VALID, controllerShouldBeValid)
                     .setValue(CrushingWheelControllerBlock.FACING, controllerNewDirection));
@@ -116,7 +116,7 @@ public class TieredCrushingWheelBlock extends RotatedPillarKineticBlock implemen
 
     @Override
     public void entityInside(BlockState pState, Level pLevel, BlockPos pPos, Entity pEntity) {
-        if(pEntity.getY() < pPos.getY() + 1.25F || !pEntity.isOnGround()) return;
+        if(pEntity.getY() < pPos.getY() + 1.25F || !pEntity.onGround()) return;
         float speed = getBlockEntityOptional(pLevel, pPos).map(TieredCrushingWheelBlockEntity::getSpeed).orElse(0F);
         double x = 0, z = 0;
         if(pState.getValue(AXIS) == Axis.X) {

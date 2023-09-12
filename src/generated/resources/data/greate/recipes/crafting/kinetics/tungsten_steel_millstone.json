@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "category": "misc",
   "key": {
     "A": {
       "tag": "greate:shafts/tungsten_steel"
@@ -24,5 +25,6 @@
   ],
   "result": {
     "item": "greate:tungsten_steel_millstone"
-  }
+  },
+  "show_notification": true
 }

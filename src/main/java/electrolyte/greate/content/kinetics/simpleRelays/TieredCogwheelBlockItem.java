@@ -91,9 +91,7 @@ public class TieredCogwheelBlockItem extends BlockItem {
                     if (!TieredCogwheelBlock.isValidCogwheelPosition(false, world, newPos, axis))
                         continue;
 
-                    if (!world.getBlockState(newPos)
-                            .getMaterial()
-                            .isReplaceable())
+                    if (!world.getBlockState(newPos).canBeReplaced())
                         continue;
 
                     return PlacementOffset.success(newPos, s -> s.setValue(AXIS, axis));
@@ -133,9 +131,7 @@ public class TieredCogwheelBlockItem extends BlockItem {
                     if (!TieredCogwheelBlock.isValidCogwheelPosition(true, world, newPos, dir.getAxis()))
                         continue;
 
-                    if (!world.getBlockState(newPos)
-                            .getMaterial()
-                            .isReplaceable())
+                    if (!world.getBlockState(newPos).canBeReplaced())
                         continue;
 
                     return PlacementOffset.success(newPos, s -> s.setValue(AXIS, dir.getAxis()));
@@ -188,9 +184,7 @@ public class TieredCogwheelBlockItem extends BlockItem {
                 BlockPos newPos = pos.relative(face)
                         .relative(d);
 
-                if (!world.getBlockState(newPos)
-                        .getMaterial()
-                        .isReplaceable())
+                if (!world.getBlockState(newPos).canBeReplaced())
                     continue;
 
                 if (!TieredCogwheelBlock.isValidCogwheelPosition(false, world, newPos, newAxis))
@@ -242,9 +236,7 @@ public class TieredCogwheelBlockItem extends BlockItem {
             for (Direction d : directions) {
                 BlockPos newPos = pos.relative(d);
 
-                if (!world.getBlockState(newPos)
-                        .getMaterial()
-                        .isReplaceable())
+                if (!world.getBlockState(newPos).canBeReplaced())
                     continue;
 
                 if (!TieredCogwheelBlock.isValidCogwheelPosition(false, world, newPos, newAxis))

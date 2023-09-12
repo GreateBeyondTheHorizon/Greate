@@ -1,6 +1,5 @@
 package electrolyte.greate.compat.jei.category;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.AllFluids;
 import com.simibubi.create.content.fluids.potion.PotionFluidHandler;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
@@ -19,6 +18,7 @@ import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
@@ -171,8 +171,8 @@ public abstract class GreateRecipeCategory<T extends Recipe<?>> implements IReci
             }
 
             @Override
-            public void draw(PoseStack poseStack, int xOffset, int yOffset) {
-                texture.render(poseStack, xOffset, yOffset);
+            public void draw(GuiGraphics graphics, int xOffset, int yOffset) {
+                texture.render(graphics, xOffset, yOffset);
             }
         };
     }
@@ -184,8 +184,8 @@ public abstract class GreateRecipeCategory<T extends Recipe<?>> implements IReci
     }
 
     @Override
-    public void draw(T recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double x, double y) {
-        IRecipeCategory.super.draw(recipe, recipeSlotsView, stack, x, y);
-        Minecraft.getInstance().font.draw(stack, Lang.builder(Greate.MOD_ID).translate("jei.recipe_tier").component().getString() + ((TieredProcessingRecipe<?>) recipe).getRecipeTier().getName(), (float) x, (float) y, 0x3f3f3f);
+    public void draw(T recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double x, double y) {
+        IRecipeCategory.super.draw(recipe, recipeSlotsView, graphics, x, y);
+        graphics.drawString(Minecraft.getInstance().font, Lang.builder(Greate.MOD_ID).translate("jei.recipe_tier").component().getString() + ((TieredProcessingRecipe<?>) recipe).getRecipeTier().getName(), (float) x, (float) y, 0x3f3f3f, false);
     }
 }

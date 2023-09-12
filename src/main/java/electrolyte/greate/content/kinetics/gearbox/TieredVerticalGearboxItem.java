@@ -5,10 +5,8 @@ import com.simibubi.create.foundation.utility.Iterate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
-import net.minecraft.core.NonNullList;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -35,9 +33,6 @@ public class TieredVerticalGearboxItem extends BlockItem {
     public String getDescriptionId() {
         return "item.greate." +  material + "_vertical_gearbox";
     }
-
-    @Override
-    public void fillItemCategory(CreativeModeTab pGroup, NonNullList<ItemStack> pItems) {}
 
     @Override
     public void registerBlocks(Map<Block, Item> pBlockToItemMap, Item pItem) {}

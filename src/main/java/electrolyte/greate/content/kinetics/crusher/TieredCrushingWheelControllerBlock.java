@@ -94,7 +94,7 @@ public class TieredCrushingWheelControllerBlock extends DirectionalBlock impleme
         if(be.isOccupied()) return;
         boolean isPlayer = entity instanceof Player;
         if(isPlayer && ((Player) entity).isCreative()) return;
-        if(isPlayer && entity.level.getDifficulty() == Difficulty.PEACEFUL) return;
+        if(isPlayer && entity.level().getDifficulty() == Difficulty.PEACEFUL) return;
         be.startCrushing(entity);
     }
 

@@ -48,7 +48,7 @@ public abstract class MixinSteamEngineBlock$PlacementHelper {
             }
 
             BlockState newState = world.getBlockState(shaftPos);
-            if (!newState.getMaterial().isReplaceable())
+            if (!newState.canBeReplaced())
                 cir.setReturnValue(PlacementOffset.fail());
             Axis axis = shaft.getValue(ShaftBlock.AXIS);
             cir.setReturnValue(PlacementOffset.success(shaftPos,

@@ -6,7 +6,7 @@ import com.jozufozu.flywheel.api.MaterialManager;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.simibubi.create.content.kinetics.base.IRotate;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityInstance;
 import com.simibubi.create.content.kinetics.base.flwdata.RotatingData;
@@ -98,7 +98,7 @@ public class TieredEncasedCogInstance extends KineticBlockEntityInstance<TieredK
             TransformStack.cast(stack)
                     .centre()
                     .rotateToFace(facing)
-                    .multiply(Vector3f.XN.rotationDegrees(90))
+                    .multiply(Axis.XN.rotationDegrees(90))
                     .unCentre();
             return stack;
         });
