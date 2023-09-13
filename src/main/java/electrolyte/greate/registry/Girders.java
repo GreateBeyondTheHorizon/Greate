@@ -10,7 +10,8 @@ import electrolyte.greate.Greate;
 import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.content.decoration.encasing.GirderEncasingRegistry;
 import electrolyte.greate.content.decoration.girder.GreateGirderBlockStateGenerator;
-import electrolyte.greate.content.decoration.girder.TieredGirderEncasableBlock;
+import electrolyte.greate.content.decoration.girder.TieredGirderEncasedShaftBlock;
+import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -25,165 +26,34 @@ public class Girders {
         REGISTRATE.useCreativeTab(Greate.GREATE_TAB);
     }
 
-    public static final BlockEntry<TieredGirderEncasableBlock> METAL_GIRDER_ENCASED_ANDESITE_SHAFT = REGISTRATE
-            .block("metal_girder_encased_andesite_shaft", (p) -> new TieredGirderEncasableBlock(p, Shafts.ANDESITE_SHAFT::get))
-            .initialProperties(SharedProperties::softMetal)
-            .blockstate(GreateGirderBlockStateGenerator::blockStateWithShaft)
-            .properties(p -> p.mapColor(MapColor.COLOR_GRAY))
-            .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-            .transform(TagGen.pickaxeOnly())
-            .loot((p, b) -> p.add(b, p.createSingleItemTable(AllBlocks.METAL_GIRDER.get())
-                    .withPool(p.applyExplosionCondition(Shafts.ANDESITE_SHAFT.get(), LootPool.lootPool()
-                            .setRolls(ConstantValue.exactly(1.0F))
-                            .add(LootItem.lootTableItem(Shafts.ANDESITE_SHAFT.get()))))))
-            .onRegister(CreateRegistrate.blockModel(() -> ConnectedGirderModel::new))
-            .onRegister(c -> c.setTier(TIER.ULTRA_LOW))
-            .transform(GirderEncasingRegistry.addVariantTo(Shafts.ANDESITE_SHAFT))
-            .register();
+    public static BlockEntry<TieredGirderEncasedShaftBlock> metalGirderEncasedShaft(String name, TIER tier, BlockEntry<TieredShaftBlock> shaft) {
+        return REGISTRATE
+                .block(name, p -> new TieredGirderEncasedShaftBlock(p, shaft::get))
+                .initialProperties(SharedProperties::softMetal)
+                .blockstate(GreateGirderBlockStateGenerator::blockStateWithShaft)
+                .properties(p -> p.mapColor(MapColor.COLOR_GRAY))
+                .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
+                .transform(TagGen.pickaxeOnly())
+                .loot((p, b) -> p.add(b, p.createSingleItemTable(AllBlocks.METAL_GIRDER.get())
+                        .withPool(p.applyExplosionCondition(shaft.get(), LootPool.lootPool()
+                                .setRolls(ConstantValue.exactly(1.0F))
+                                .add(LootItem.lootTableItem(shaft.get()))))))
+                .onRegister(CreateRegistrate.blockModel(() -> ConnectedGirderModel::new))
+                .onRegister(c -> c.setTier(tier))
+                .transform(GirderEncasingRegistry.addVariantTo(shaft))
+                .register();
+    }
 
-    public static final BlockEntry<TieredGirderEncasableBlock> METAL_GIRDER_ENCASED_STEEL_SHAFT = REGISTRATE
-            .block("metal_girder_encased_steel_shaft", (p) -> new TieredGirderEncasableBlock(p, Shafts.STEEL_SHAFT::get))
-            .initialProperties(SharedProperties::softMetal)
-            .blockstate(GreateGirderBlockStateGenerator::blockStateWithShaft)
-            .properties(p -> p.mapColor(MapColor.COLOR_GRAY))
-            .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-            .transform(TagGen.pickaxeOnly())
-            .loot((p, b) -> p.add(b, p.createSingleItemTable(AllBlocks.METAL_GIRDER.get())
-                    .withPool(p.applyExplosionCondition(Shafts.STEEL_SHAFT.get(), LootPool.lootPool()
-                            .setRolls(ConstantValue.exactly(1.0F))
-                            .add(LootItem.lootTableItem(Shafts.STEEL_SHAFT.get()))))))
-            .onRegister(CreateRegistrate.blockModel(() -> ConnectedGirderModel::new))
-            .onRegister(c -> c.setTier(TIER.LOW))
-            .transform(GirderEncasingRegistry.addVariantTo(Shafts.STEEL_SHAFT))
-            .register();
-    public static final BlockEntry<TieredGirderEncasableBlock> METAL_GIRDER_ENCASED_ALUMINIUM_SHAFT = REGISTRATE
-            .block("metal_girder_encased_aluminium_shaft", (p) -> new TieredGirderEncasableBlock(p, Shafts.ALUMINIUM_SHAFT::get))
-            .initialProperties(SharedProperties::softMetal)
-            .blockstate(GreateGirderBlockStateGenerator::blockStateWithShaft)
-            .properties(p -> p.mapColor(MapColor.COLOR_GRAY))
-            .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-            .transform(TagGen.pickaxeOnly())
-            .loot((p, b) -> p.add(b, p.createSingleItemTable(AllBlocks.METAL_GIRDER.get())
-                    .withPool(p.applyExplosionCondition(Shafts.ALUMINIUM_SHAFT.get(), LootPool.lootPool()
-                            .setRolls(ConstantValue.exactly(1.0F))
-                            .add(LootItem.lootTableItem(Shafts.ALUMINIUM_SHAFT.get()))))))
-            .onRegister(CreateRegistrate.blockModel(() -> ConnectedGirderModel::new))
-            .onRegister(c -> c.setTier(TIER.MEDIUM))
-            .transform(GirderEncasingRegistry.addVariantTo(Shafts.ALUMINIUM_SHAFT))
-            .register();
-
-    public static final BlockEntry<TieredGirderEncasableBlock> METAL_GIRDER_ENCASED_STAINLESS_STEEL_SHAFT = REGISTRATE
-            .block("metal_girder_encased_stainless_steel_shaft", (p) -> new TieredGirderEncasableBlock(p, Shafts.STAINLESS_STEEL_SHAFT::get))
-            .initialProperties(SharedProperties::softMetal)
-            .blockstate(GreateGirderBlockStateGenerator::blockStateWithShaft)
-            .properties(p -> p.mapColor(MapColor.COLOR_GRAY))
-            .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-            .transform(TagGen.pickaxeOnly())
-            .loot((p, b) -> p.add(b, p.createSingleItemTable(AllBlocks.METAL_GIRDER.get())
-                    .withPool(p.applyExplosionCondition(Shafts.STAINLESS_STEEL_SHAFT.get(), LootPool.lootPool()
-                            .setRolls(ConstantValue.exactly(1.0F))
-                            .add(LootItem.lootTableItem(Shafts.STAINLESS_STEEL_SHAFT.get()))))))
-            .onRegister(CreateRegistrate.blockModel(() -> ConnectedGirderModel::new))
-            .onRegister(c -> c.setTier(TIER.HIGH))
-            .transform(GirderEncasingRegistry.addVariantTo(Shafts.STAINLESS_STEEL_SHAFT))
-            .register();
-
-    public static final BlockEntry<TieredGirderEncasableBlock> METAL_GIRDER_ENCASED_TITANIUM_SHAFT = REGISTRATE
-            .block("metal_girder_encased_titanium_shaft", (p) -> new TieredGirderEncasableBlock(p, Shafts.TITANIUM_SHAFT::get))
-            .initialProperties(SharedProperties::softMetal)
-            .blockstate(GreateGirderBlockStateGenerator::blockStateWithShaft)
-            .properties(p -> p.mapColor(MapColor.COLOR_GRAY))
-            .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-            .transform(TagGen.pickaxeOnly())
-            .loot((p, b) -> p.add(b, p.createSingleItemTable(AllBlocks.METAL_GIRDER.get())
-                    .withPool(p.applyExplosionCondition(Shafts.TITANIUM_SHAFT.get(), LootPool.lootPool()
-                            .setRolls(ConstantValue.exactly(1.0F))
-                            .add(LootItem.lootTableItem(Shafts.TITANIUM_SHAFT.get()))))))
-            .onRegister(CreateRegistrate.blockModel(() -> ConnectedGirderModel::new))
-            .onRegister(c -> c.setTier(TIER.EXTREME))
-            .transform(GirderEncasingRegistry.addVariantTo(Shafts.TITANIUM_SHAFT))
-            .register();
-
-    public static final BlockEntry<TieredGirderEncasableBlock> METAL_GIRDER_ENCASED_TUNGSTEN_STEEL_SHAFT = REGISTRATE
-            .block("metal_girder_encased_tungsten_steel_shaft", (p) -> new TieredGirderEncasableBlock(p, Shafts.TUNGSTEN_STEEL_SHAFT::get))
-            .lang("Metal Girder Encased Tungstensteel Shaft")
-            .initialProperties(SharedProperties::softMetal)
-            .blockstate(GreateGirderBlockStateGenerator::blockStateWithShaft)
-            .properties(p -> p.mapColor(MapColor.COLOR_GRAY))
-            .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-            .transform(TagGen.pickaxeOnly())
-            .loot((p, b) -> p.add(b, p.createSingleItemTable(AllBlocks.METAL_GIRDER.get())
-                    .withPool(p.applyExplosionCondition(Shafts.TUNGSTEN_STEEL_SHAFT.get(), LootPool.lootPool()
-                            .setRolls(ConstantValue.exactly(1.0F))
-                            .add(LootItem.lootTableItem(Shafts.TUNGSTEN_STEEL_SHAFT.get()))))))
-            .onRegister(CreateRegistrate.blockModel(() -> ConnectedGirderModel::new))
-            .onRegister(c -> c.setTier(TIER.INSANE))
-            .transform(GirderEncasingRegistry.addVariantTo(Shafts.TUNGSTEN_STEEL_SHAFT))
-            .register();
-
-    public static final BlockEntry<TieredGirderEncasableBlock> METAL_GIRDER_ENCASED_PALLADIUM_SHAFT = REGISTRATE
-            .block("metal_girder_encased_palladium_shaft", (p) -> new TieredGirderEncasableBlock(p, Shafts.PALLADIUM_SHAFT::get))
-            .initialProperties(SharedProperties::softMetal)
-            .blockstate(GreateGirderBlockStateGenerator::blockStateWithShaft)
-            .properties(p -> p.mapColor(MapColor.COLOR_GRAY))
-            .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-            .transform(TagGen.pickaxeOnly())
-            .loot((p, b) -> p.add(b, p.createSingleItemTable(AllBlocks.METAL_GIRDER.get())
-                    .withPool(p.applyExplosionCondition(Shafts.PALLADIUM_SHAFT.get(), LootPool.lootPool()
-                            .setRolls(ConstantValue.exactly(1.0F))
-                            .add(LootItem.lootTableItem(Shafts.PALLADIUM_SHAFT.get()))))))
-            .onRegister(CreateRegistrate.blockModel(() -> ConnectedGirderModel::new))
-            .onRegister(c -> c.setTier(TIER.LUDICRIOUS))
-            .transform(GirderEncasingRegistry.addVariantTo(Shafts.PALLADIUM_SHAFT))
-            .register();
-
-    public static final BlockEntry<TieredGirderEncasableBlock> METAL_GIRDER_ENCASED_NAQUADAH_SHAFT = REGISTRATE
-            .block("metal_girder_encased_naquadah_shaft", (p) -> new TieredGirderEncasableBlock(p, Shafts.NAQUADAH_SHAFT::get))
-            .initialProperties(SharedProperties::softMetal)
-            .blockstate(GreateGirderBlockStateGenerator::blockStateWithShaft)
-            .properties(p -> p.mapColor(MapColor.COLOR_GRAY))
-            .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-            .transform(TagGen.pickaxeOnly())
-            .loot((p, b) -> p.add(b, p.createSingleItemTable(AllBlocks.METAL_GIRDER.get())
-                    .withPool(p.applyExplosionCondition(Shafts.NAQUADAH_SHAFT.get(), LootPool.lootPool()
-                            .setRolls(ConstantValue.exactly(1.0F))
-                            .add(LootItem.lootTableItem(Shafts.NAQUADAH_SHAFT.get()))))))
-            .onRegister(CreateRegistrate.blockModel(() -> ConnectedGirderModel::new))
-            .onRegister(c -> c.setTier(TIER.ZPM))
-            .transform(GirderEncasingRegistry.addVariantTo(Shafts.NAQUADAH_SHAFT))
-            .register();
-
-    public static final BlockEntry<TieredGirderEncasableBlock> METAL_GIRDER_ENCASED_DARMSTADTIUM_SHAFT = REGISTRATE
-            .block("metal_girder_encased_darmstadtium_shaft", (p) -> new TieredGirderEncasableBlock(p, Shafts.DARMSTADTIUM_SHAFT::get))
-            .initialProperties(SharedProperties::softMetal)
-            .blockstate(GreateGirderBlockStateGenerator::blockStateWithShaft)
-            .properties(p -> p.mapColor(MapColor.COLOR_GRAY))
-            .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-            .transform(TagGen.pickaxeOnly())
-            .loot((p, b) -> p.add(b, p.createSingleItemTable(AllBlocks.METAL_GIRDER.get())
-                    .withPool(p.applyExplosionCondition(Shafts.DARMSTADTIUM_SHAFT.get(), LootPool.lootPool()
-                            .setRolls(ConstantValue.exactly(1.0F))
-                            .add(LootItem.lootTableItem(Shafts.DARMSTADTIUM_SHAFT.get()))))))
-            .onRegister(CreateRegistrate.blockModel(() -> ConnectedGirderModel::new))
-            .onRegister(c -> c.setTier(TIER.ULTIMATE))
-            .transform(GirderEncasingRegistry.addVariantTo(Shafts.DARMSTADTIUM_SHAFT))
-            .register();
-
-    public static final BlockEntry<TieredGirderEncasableBlock> METAL_GIRDER_ENCASED_NEUTRONIUM_SHAFT = REGISTRATE
-            .block("metal_girder_encased_neutronium_shaft", (p) -> new TieredGirderEncasableBlock(p, Shafts.NEUTRONIUM_SHAFT::get))
-            .initialProperties(SharedProperties::softMetal)
-            .blockstate(GreateGirderBlockStateGenerator::blockStateWithShaft)
-            .properties(p -> p.mapColor(MapColor.COLOR_GRAY))
-            .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
-            .transform(TagGen.pickaxeOnly())
-            .loot((p, b) -> p.add(b, p.createSingleItemTable(AllBlocks.METAL_GIRDER.get())
-                    .withPool(p.applyExplosionCondition(Shafts.NEUTRONIUM_SHAFT.get(), LootPool.lootPool()
-                            .setRolls(ConstantValue.exactly(1.0F))
-                            .add(LootItem.lootTableItem(Shafts.NEUTRONIUM_SHAFT.get()))))))
-            .onRegister(CreateRegistrate.blockModel(() -> ConnectedGirderModel::new))
-            .onRegister(c -> c.setTier(TIER.ULTIMATE_HIGH))
-            .transform(GirderEncasingRegistry.addVariantTo(Shafts.NEUTRONIUM_SHAFT))
-            .register();
+    public static final BlockEntry<TieredGirderEncasedShaftBlock> METAL_GIRDER_ENCASED_ANDESITE_SHAFT = metalGirderEncasedShaft("metal_girder_encased_andesite_shaft", TIER.ULTRA_LOW, Shafts.ANDESITE_SHAFT);
+    public static final BlockEntry<TieredGirderEncasedShaftBlock> METAL_GIRDER_ENCASED_STEEL_SHAFT = metalGirderEncasedShaft("metal_girder_encased_steel_shaft", TIER.LOW, Shafts.STEEL_SHAFT);
+    public static final BlockEntry<TieredGirderEncasedShaftBlock> METAL_GIRDER_ENCASED_ALUMINIUM_SHAFT = metalGirderEncasedShaft("metal_girder_encased_aluminium_shaft", TIER.MEDIUM, Shafts.ALUMINIUM_SHAFT);
+    public static final BlockEntry<TieredGirderEncasedShaftBlock> METAL_GIRDER_ENCASED_STAINLESS_STEEL_SHAFT = metalGirderEncasedShaft("metal_girder_encased_stainless_steel_shaft", TIER.HIGH, Shafts.STAINLESS_STEEL_SHAFT);
+    public static final BlockEntry<TieredGirderEncasedShaftBlock> METAL_GIRDER_ENCASED_TITANIUM_SHAFT = metalGirderEncasedShaft("metal_girder_encased_titanium_shaft", TIER.EXTREME, Shafts.TITANIUM_SHAFT);
+    public static final BlockEntry<TieredGirderEncasedShaftBlock> METAL_GIRDER_ENCASED_TUNGSTENSTEEL_SHAFT = metalGirderEncasedShaft("metal_girder_encased_tungstensteel_shaft", TIER.INSANE, Shafts.TUNGSTENSTEEL_SHAFT);
+    public static final BlockEntry<TieredGirderEncasedShaftBlock> METAL_GIRDER_ENCASED_PALLADIUM_SHAFT = metalGirderEncasedShaft("metal_girder_encased_palladium_shaft", TIER.LUDICRIOUS, Shafts.PALLADIUM_SHAFT);
+    public static final BlockEntry<TieredGirderEncasedShaftBlock> METAL_GIRDER_ENCASED_NAQUADAH_SHAFT = metalGirderEncasedShaft("metal_girder_encased_naquadah_shaft", TIER.ZPM, Shafts.NAQUADAH_SHAFT);
+    public static final BlockEntry<TieredGirderEncasedShaftBlock> METAL_GIRDER_ENCASED_DARMSTADTIUM_SHAFT = metalGirderEncasedShaft("metal_girder_encased_darmstadtium_shaft", TIER.ULTIMATE, Shafts.DARMSTADTIUM_SHAFT);
+    public static final BlockEntry<TieredGirderEncasedShaftBlock> METAL_GIRDER_ENCASED_NEUTRONIUM_SHAFT = metalGirderEncasedShaft("metal_girder_encased_neutronium_shaft", TIER.ULTIMATE_HIGH, Shafts.NEUTRONIUM_SHAFT);
 
     public static void register() {}
 }

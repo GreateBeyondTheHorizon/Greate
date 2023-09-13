@@ -39,7 +39,7 @@ public class GreateMechanicalCraftingRecipeGen extends GreateRecipeProvider {
             ALUMINIUM_CRUSHING_WHEEL = createMaterialCrushingWheelRecipe(CrushingWheels.ALUMINIUM_CRUSHING_WHEEL, "mv"),
             STAINLESS_STEEL_CRUSHING_WHEEL = createMaterialCrushingWheelRecipe(CrushingWheels.STAINLESS_STEEL_CRUSHING_WHEEL, "hv"),
             TITANIUM_CRUSHING_WHEEL = createMaterialCrushingWheelRecipe(CrushingWheels.TITANIUM_CRUSHING_WHEEL, "ev"),
-            TUNGSTEN_STEEL_CRUSHING_WHEEL = createMaterialCrushingWheelRecipe(CrushingWheels.TUNGSTEN_STEEL_CRUSHING_WHEEL, "iv"),
+            TUNGSTENSTEEL_CRUSHING_WHEEL = createMaterialCrushingWheelRecipe(CrushingWheels.TUNGSTENSTEEL_CRUSHING_WHEEL, "iv"),
             PALLADIUM_CRUSHING_WHEEL = createMaterialCrushingWheelRecipe(CrushingWheels.PALLADIUM_CRUSHING_WHEEL, "luv"),
             NAQUADAH_CRUSHING_WHEEL = createMaterialCrushingWheelRecipe(CrushingWheels.NAQUADAH_CRUSHING_WHEEL, "zpm"),
             DARMSTADTIUM_CRUSHING_WHEEL = createMaterialCrushingWheelRecipe(CrushingWheels.DARMSTADTIUM_CRUSHING_WHEEL, "uv"),

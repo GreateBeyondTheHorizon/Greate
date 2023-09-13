@@ -1,4 +1,4 @@
-// 1.20.1	2023-09-11T22:42:40.5840688	Greate's Mechanical Crafting Recipes
+// 1.20.1	2023-09-12T21:44:04.5750098	Greate's Mechanical Crafting Recipes
 f917f7cccfca66d3b19e0e0e44e86522f3b71a11 data/greate/recipes/mechanical_crafting/aluminium_crushing_wheel.json
 87507655f63b138029148c38b6b348f03ee85703 data/greate/recipes/mechanical_crafting/andesite_crushing_wheel.json
 f3f226f4e24d5bf9be5385ec8e95541ec4a87306 data/greate/recipes/mechanical_crafting/darmstadtium_crushing_wheel.json
@@ -8,4 +8,4 @@ b34dd2080ff149f9c36776a5d2324a32ccff3d02 data/greate/recipes/mechanical_crafting
 468cb48c9987d6557b9124c565210085a405f5b2 data/greate/recipes/mechanical_crafting/stainless_steel_crushing_wheel.json
 8e506103ab191b38921487c189db5abfed7225df data/greate/recipes/mechanical_crafting/steel_crushing_wheel.json
 db7d34390e61200835899b60cb7517bf213b802d data/greate/recipes/mechanical_crafting/titanium_crushing_wheel.json
-ef8865ba1505446ee4cb505c51a1c44c62b592c1 data/greate/recipes/mechanical_crafting/tungsten_steel_crushing_wheel.json
+659212af4a3b2f08f5ca3759b25382c0c46178c0 data/greate/recipes/mechanical_crafting/tungstensteel_crushing_wheel.json

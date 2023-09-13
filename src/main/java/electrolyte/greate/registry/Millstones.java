@@ -1,5 +1,6 @@
 package electrolyte.greate.registry;
 
+import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.content.kinetics.BlockStressDefaults;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
@@ -22,106 +23,28 @@ public class Millstones {
 
     public static ArrayList<TieredMillstoneBlock> MILLSTONES = new ArrayList<>();
 
-    public static final BlockEntry<TieredMillstoneBlock> ANDESITE_MILLSTONE = REGISTRATE
-            .block("andesite_millstone", p -> new TieredMillstoneBlock(p, GreatePartialModels.ANDESITE_MILLSTONE_INNER))
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.METAL))
-            .transform(TagGen.pickaxeOnly())
-            .transform(GreateBuilderTransformers.tieredMillstone())
-            .transform(BlockStressDefaults.setImpact(Greate.CONFIG.ULS.MILLSTONE_IMPACT))
-            .onRegister(c -> c.setTier(TIER.ULTRA_LOW))
-            .register();
+    public static final BlockEntry<TieredMillstoneBlock> ANDESITE_MILLSTONE = millstone("andesite_millstone", TIER.ULTRA_LOW, GreatePartialModels.ANDESITE_MILLSTONE_INNER, Greate.CONFIG.ULS.MILLSTONE_IMPACT);
+    public static final BlockEntry<TieredMillstoneBlock> STEEL_MILLSTONE = millstone("steel_millstone", TIER.LOW, GreatePartialModels.STEEL_MILLSTONE_INNER, Greate.CONFIG.LS.MILLSTONE_IMPACT);
+    public static final BlockEntry<TieredMillstoneBlock> ALUMINIUM_MILLSTONE = millstone("aluminium_millstone", TIER.MEDIUM, GreatePartialModels.ALUMINIUM_MILLSTONE_INNER, Greate.CONFIG.MS.MILLSTONE_IMPACT);
+    public static final BlockEntry<TieredMillstoneBlock> STAINLESS_STEEL_MILLSTONE = millstone("stainless_steel_millstone", TIER.HIGH, GreatePartialModels.STAINLESS_STEEL_MILLSTONE_INNER, Greate.CONFIG.HS.MILLSTONE_IMPACT);
+    public static final BlockEntry<TieredMillstoneBlock> TITANIUM_MILLSTONE = millstone("titanium_millstone", TIER.EXTREME, GreatePartialModels.TITANIUM_MILLSTONE_INNER, Greate.CONFIG.ES.MILLSTONE_IMPACT);
+    public static final BlockEntry<TieredMillstoneBlock> TUNGSTENSTEEL_MILLSTONE = millstone("tungstensteel_millstone", TIER.INSANE, GreatePartialModels.TUNGSTENSTEEL_MILLSTONE_INNER, Greate.CONFIG.IS.MILLSTONE_IMPACT);
+    public static final BlockEntry<TieredMillstoneBlock> PALLADIUM_MILLSTONE = millstone("palladium_millstone", TIER.LUDICRIOUS, GreatePartialModels.PALLADIUM_MILLSTONE_INNER, Greate.CONFIG.LUS.MILLSTONE_IMPACT);
+    public static final BlockEntry<TieredMillstoneBlock> NAQUADAH_MILLSTONE = millstone("naquadah_millstone", TIER.ZPM, GreatePartialModels.NAQUADAH_MILLSTONE_INNER, Greate.CONFIG.ZPM.MILLSTONE_IMPACT);
+    public static final BlockEntry<TieredMillstoneBlock> DARMSTADTIUM_MILLSTONE = millstone("darmstadtium_millstone", TIER.ULTIMATE, GreatePartialModels.DARMSTADTIUM_MILLSTONE_INNER, Greate.CONFIG.US.MILLSTONE_IMPACT);
+    public static final BlockEntry<TieredMillstoneBlock> NEUTRONIUM_MILLSTONE = millstone("neutronium_millstone", TIER.ULTIMATE_HIGH, GreatePartialModels.NEUTRONIUM_MILLSTONE_INNER, Greate.CONFIG.UHS.MILLSTONE_IMPACT);
 
-    public static final BlockEntry<TieredMillstoneBlock> STEEL_MILLSTONE = REGISTRATE
-            .block("steel_millstone", p -> new TieredMillstoneBlock(p, GreatePartialModels.STEEL_MILLSTONE_INNER))
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.METAL))
-            .transform(TagGen.pickaxeOnly())
-            .transform(BlockStressDefaults.setImpact(Greate.CONFIG.LS.MILLSTONE_IMPACT))
-            .transform(GreateBuilderTransformers.tieredMillstone())
-            .onRegister(c -> c.setTier(TIER.LOW))
-            .register();
-
-    public static final BlockEntry<TieredMillstoneBlock> ALUMINIUM_MILLSTONE = REGISTRATE
-            .block("aluminium_millstone", p -> new TieredMillstoneBlock(p, GreatePartialModels.ALUMINIUM_MILLSTONE_INNER))
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.METAL))
-            .transform(TagGen.pickaxeOnly())
-            .transform(BlockStressDefaults.setImpact(Greate.CONFIG.MS.MILLSTONE_IMPACT))
-            .transform(GreateBuilderTransformers.tieredMillstone())
-            .onRegister(c -> c.setTier(TIER.MEDIUM))
-            .register();
-
-    public static final BlockEntry<TieredMillstoneBlock> STAINLESS_STEEL_MILLSTONE = REGISTRATE
-            .block("stainless_steel_millstone", p -> new TieredMillstoneBlock(p, GreatePartialModels.STAINLESS_STEEL_MILLSTONE_INNER))
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.METAL))
-            .transform(TagGen.pickaxeOnly())
-            .transform(BlockStressDefaults.setImpact(Greate.CONFIG.HS.MILLSTONE_IMPACT))
-            .transform(GreateBuilderTransformers.tieredMillstone())
-            .onRegister(c -> c.setTier(TIER.HIGH))
-            .register();
-
-    public static final BlockEntry<TieredMillstoneBlock> TITANIUM_MILLSTONE = REGISTRATE
-            .block("titanium_millstone", p -> new TieredMillstoneBlock(p, GreatePartialModels.TITANIUM_MILLSTONE_INNER))
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.METAL))
-            .transform(TagGen.pickaxeOnly())
-            .transform(BlockStressDefaults.setImpact(Greate.CONFIG.ES.MILLSTONE_IMPACT))
-            .transform(GreateBuilderTransformers.tieredMillstone())
-            .onRegister(c -> c.setTier(TIER.EXTREME))
-            .register();
-
-    public static final BlockEntry<TieredMillstoneBlock> TUNGSTEN_STEEL_MILLSTONE = REGISTRATE
-            .block("tungsten_steel_millstone", p -> new TieredMillstoneBlock(p, GreatePartialModels.TUNGSTEN_STEEL_MILLSTONE_INNER))
-            .lang("Tungstensteel Millstone")
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.METAL))
-            .transform(TagGen.pickaxeOnly())
-            .transform(BlockStressDefaults.setImpact(Greate.CONFIG.IS.MILLSTONE_IMPACT))
-            .transform(GreateBuilderTransformers.tieredMillstone())
-            .onRegister(c -> c.setTier(TIER.INSANE))
-            .register();
-
-    public static final BlockEntry<TieredMillstoneBlock> PALLADIUM_MILLSTONE = REGISTRATE
-            .block("palladium_millstone", p -> new TieredMillstoneBlock(p, GreatePartialModels.PALLADIUM_MILLSTONE_INNER))
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.METAL))
-            .transform(TagGen.pickaxeOnly())
-            .transform(BlockStressDefaults.setImpact(Greate.CONFIG.LUS.MILLSTONE_IMPACT))
-            .transform(GreateBuilderTransformers.tieredMillstone())
-            .onRegister(c -> c.setTier(TIER.LUDICRIOUS))
-            .register();
-
-    public static final BlockEntry<TieredMillstoneBlock> NAQUADAH_MILLSTONE = REGISTRATE
-            .block("naquadah_millstone", p -> new TieredMillstoneBlock(p, GreatePartialModels.NAQUADAH_MILLSTONE_INNER))
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.METAL))
-            .transform(TagGen.pickaxeOnly())
-            .transform(BlockStressDefaults.setImpact(Greate.CONFIG.ZPM.MILLSTONE_IMPACT))
-            .transform(GreateBuilderTransformers.tieredMillstone())
-            .onRegister(c -> c.setTier(TIER.ZPM))
-            .register();
-
-    public static final BlockEntry<TieredMillstoneBlock> DARMSTADTIUM_MILLSTONE = REGISTRATE
-            .block("darmstadtium_millstone", p -> new TieredMillstoneBlock(p, GreatePartialModels.DARMSTADTIUM_MILLSTONE_INNER))
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.METAL))
-            .transform(TagGen.pickaxeOnly())
-            .transform(BlockStressDefaults.setImpact(Greate.CONFIG.US.MILLSTONE_IMPACT))
-            .transform(GreateBuilderTransformers.tieredMillstone())
-            .onRegister(c -> c.setTier(TIER.ULTIMATE))
-            .register();
-
-    public static final BlockEntry<TieredMillstoneBlock> NEUTRONIUM_MILLSTONE = REGISTRATE
-            .block("neutronium_millstone", p -> new TieredMillstoneBlock(p, GreatePartialModels.NEUTRONIUM_MILLSTONE_INNER))
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.METAL))
-            .transform(TagGen.pickaxeOnly())
-            .transform(BlockStressDefaults.setImpact(Greate.CONFIG.UHS.MILLSTONE_IMPACT))
-            .transform(GreateBuilderTransformers.tieredMillstone())
-            .onRegister(c -> c.setTier(TIER.ULTIMATE_HIGH))
-            .register();
+    public static BlockEntry<TieredMillstoneBlock> millstone(String name, TIER tier, PartialModel millstoneInnerModel, double millstoneImpact) {
+        return REGISTRATE
+                .block(name, p -> new TieredMillstoneBlock(p, millstoneInnerModel))
+                .initialProperties(SharedProperties::stone)
+                .properties(p -> p.mapColor(MapColor.METAL))
+                .transform(TagGen.pickaxeOnly())
+                .transform(GreateBuilderTransformers.tieredMillstone())
+                .transform(BlockStressDefaults.setImpact(millstoneImpact))
+                .onRegister(c -> c.setTier(tier))
+                .register();
+    }
 
     public static void register() {}
 }

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:andesite"
+    },
+    "F": {
+      "tag": "forge:tools/files"
+    },
+    "H": {
+      "tag": "forge:tools/hammers"
+    },
+    "N": {
+      "tag": "forge:nuggets/tungstensteel"
+    }
+  },
+  "pattern": [
+    "NA",
+    "AN",
+    "FH"
+  ],
+  "result": {
+    "item": "greate:tungstensteel_alloy"
+  },
+  "show_notification": true
+}

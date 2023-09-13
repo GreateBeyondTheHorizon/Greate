@@ -50,18 +50,24 @@ public class TieredEncasedCogwheelBlock extends RotatedPillarKineticBlock implem
 
     private TIER tier;
     protected final boolean isLarge;
-    private final Supplier<Block> casing, cogwheel, largeCogwheel;
-    private final PartialModel partialModel, model, largeModel;
+    private final Supplier<Block> casing, cogwheel;
+    private final PartialModel partialModel, cogwheelShaftlessModel;
 
-    public TieredEncasedCogwheelBlock(Properties properties, boolean isLarge, Supplier<Block> casing, Supplier<Block> cogwheel, Supplier<Block> largeCogwheel, PartialModel partialModel, PartialModel model, PartialModel largeModel) {
+    public static TieredEncasedCogwheelBlock small(Properties properties, Supplier<Block> casing, Supplier<Block> cogwheel, PartialModel partialModel, PartialModel cogwheelShaftlessModel) {
+        return new TieredEncasedCogwheelBlock(properties, false, casing, cogwheel, partialModel, cogwheelShaftlessModel);
+    }
+
+    public static TieredEncasedCogwheelBlock large(Properties properties, Supplier<Block> casing, Supplier<Block> cogwheel, PartialModel partialModel, PartialModel cogwheelShaftlessModel) {
+        return new TieredEncasedCogwheelBlock(properties, true, casing, cogwheel, partialModel, cogwheelShaftlessModel);
+    }
+
+    public TieredEncasedCogwheelBlock(Properties properties, boolean isLarge, Supplier<Block> casing, Supplier<Block> cogwheel, PartialModel partialModel, PartialModel cogwheelShaftlessModel) {
         super(properties);
         this.isLarge = isLarge;
         this.casing = casing;
         this.cogwheel = cogwheel;
-        this.largeCogwheel = largeCogwheel;
         this.partialModel = partialModel;
-        this.model = model;
-        this.largeModel = largeModel;
+        this.cogwheelShaftlessModel = cogwheelShaftlessModel;
         registerDefaultState(defaultBlockState().setValue(TOP_SHAFT, false).setValue(BOTTOM_SHAFT, false));
     }
 
@@ -222,7 +228,7 @@ public class TieredEncasedCogwheelBlock extends RotatedPillarKineticBlock implem
     }
 
     public Block getCogWheel() {
-        return isLarge ? largeCogwheel.get() : cogwheel.get();
+        return cogwheel.get();
     }
 
     @Override
@@ -275,6 +281,6 @@ public class TieredEncasedCogwheelBlock extends RotatedPillarKineticBlock implem
 
     @Override
     public PartialModel getCogwheelModel() {
-        return isLarge ? this.largeModel : this.model;
+        return this.cogwheelShaftlessModel;
     }
 }

@@ -1,5 +1,6 @@
 package electrolyte.greate.registry;
 
+import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllSpriteShifts;
 import com.simibubi.create.content.decoration.encasing.EncasingRegistry;
@@ -17,6 +18,8 @@ import electrolyte.greate.content.kinetics.steamEngine.TieredPoweredShaftBlock;
 import electrolyte.greate.foundation.data.GreateBlockStateGen;
 import electrolyte.greate.foundation.data.GreateBuilderTransformers;
 import electrolyte.greate.registry.GreateTags.GreateItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.material.MapColor;
 
 import static electrolyte.greate.Greate.REGISTRATE;
@@ -27,439 +30,97 @@ public class Shafts {
         REGISTRATE.useCreativeTab(Greate.GREATE_TAB);
     }
 
-    public static final BlockEntry<TieredShaftBlock> ANDESITE_SHAFT = REGISTRATE
-            .block("andesite_shaft", p -> new TieredShaftBlock(p, GreatePartialModels.LARGE_ANDESITE_COGWHEEL_SHAFTLESS, GreatePartialModels.ANDESITE_COGWHEEL_SHAFT))
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.METAL))
-            .transform(BlockStressDefaults.setNoImpact())
-            .transform(TagGen.pickaxeOnly())
-            .blockstate(GreateBlockStateGen.tieredShaftProvider())
-            .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
-            .onRegister(c -> c.setTier(TIER.ULTRA_LOW))
-            .simpleItem()
-            .item()
-            .tag(GreateItemTags.SHAFTS.itemTag)
-            .tag(GreateItemTags.SHAFTS_ANDESITE.itemTag).build()
-            .register();
+    public static final BlockEntry<TieredShaftBlock> ANDESITE_SHAFT = shaft("andesite_shaft", TIER.ULTRA_LOW, GreatePartialModels.LARGE_ANDESITE_COGWHEEL_SHAFTLESS, GreatePartialModels.ANDESITE_COGWHEEL_SHAFT, GreateItemTags.SHAFTS_ANDESITE.itemTag);
+    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_ANDESITE_SHAFT = poweredShaft("powered_andesite_shaft", TIER.ULTRA_LOW, Shafts.ANDESITE_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_ANDESITE_SHAFT = andesiteEncasedShaft("andesite_encased_andesite_shaft", TIER.ULTRA_LOW, Shafts.ANDESITE_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_ANDESITE_SHAFT = brassEncasedShaft("brass_encased_andesite_shaft", TIER.ULTRA_LOW, Shafts.ANDESITE_SHAFT);
+    public static final BlockEntry<TieredShaftBlock> STEEL_SHAFT = shaft("steel_shaft", TIER.LOW, GreatePartialModels.LARGE_STEEL_COGWHEEL_SHAFTLESS, GreatePartialModels.STEEL_COGWHEEL_SHAFT, GreateItemTags.SHAFTS_STEEL.itemTag);
+    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_STEEL_SHAFT = poweredShaft("powered_steel_shaft", TIER.LOW, Shafts.STEEL_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_STEEL_SHAFT = andesiteEncasedShaft("andesite_encased_steel_shaft", TIER.LOW, Shafts.STEEL_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_STEEL_SHAFT = brassEncasedShaft("brass_encased_steel_shaft", TIER.LOW, Shafts.STEEL_SHAFT);
+    public static final BlockEntry<TieredShaftBlock> ALUMINIUM_SHAFT = shaft("aluminium_shaft", TIER.MEDIUM, GreatePartialModels.LARGE_ALUMINIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.ALUMINIUM_COGWHEEL_SHAFT, GreateItemTags.SHAFTS_ALUMINIUM.itemTag);
+    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_ALUMINIUM_SHAFT = poweredShaft("powered_aluminium_shaft", TIER.MEDIUM, Shafts.ALUMINIUM_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_ALUMINIUM_SHAFT = andesiteEncasedShaft("andesite_encased_aluminium_shaft", TIER.MEDIUM, Shafts.ALUMINIUM_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_ALUMINIUM_SHAFT = brassEncasedShaft("brass_encased_aluminium_shaft", TIER.MEDIUM, Shafts.ALUMINIUM_SHAFT);
+    public static final BlockEntry<TieredShaftBlock> STAINLESS_STEEL_SHAFT = shaft("stainless_steel_shaft", TIER.HIGH, GreatePartialModels.LARGE_STAINLESS_STEEL_COGWHEEL_SHAFTLESS, GreatePartialModels.STAINLESS_STEEL_COGWHEEL_SHAFT, GreateItemTags.SHAFTS_STAINLESS_STEEL.itemTag);
+    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_STAINLESS_STEEL_SHAFT = poweredShaft("powered_stainless_steel_shaft", TIER.HIGH, Shafts.STAINLESS_STEEL_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_STAINLESS_STEEL_SHAFT = andesiteEncasedShaft("andesite_encased_stainless_steel_shaft", TIER.HIGH, Shafts.STAINLESS_STEEL_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_STAINLESS_STEEL_SHAFT = brassEncasedShaft("brass_encased_stainless_steel_shaft", TIER.HIGH, Shafts.STAINLESS_STEEL_SHAFT);
+    public static final BlockEntry<TieredShaftBlock> TITANIUM_SHAFT = shaft("titanium_shaft", TIER.EXTREME, GreatePartialModels.LARGE_TITANIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.TITANIUM_COGWHEEL_SHAFT, GreateItemTags.SHAFTS_TITANIUM.itemTag);
+    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_TITANIUM_SHAFT = poweredShaft("powered_titanium_shaft", TIER.EXTREME, Shafts.TITANIUM_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_TITANIUM_SHAFT = andesiteEncasedShaft("andesite_encased_titanium_shaft", TIER.EXTREME, Shafts.TITANIUM_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_TITANIUM_SHAFT = brassEncasedShaft("brass_encased_titanium_shaft", TIER.EXTREME, Shafts.TITANIUM_SHAFT);
+    public static final BlockEntry<TieredShaftBlock> TUNGSTENSTEEL_SHAFT = shaft("tungstensteel_shaft", TIER.INSANE, GreatePartialModels.LARGE_TUNGSTENSTEEL_COGWHEEL_SHAFTLESS, GreatePartialModels.TUNGSTENSTEEL_COGWHEEL_SHAFT, GreateItemTags.SHAFTS_TUNGSTENSTEEL.itemTag);
+    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_TUNGSTENSTEEL_SHAFT = poweredShaft("powered_tungstensteel_shaft", TIER.INSANE, Shafts.TUNGSTENSTEEL_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_TUNGSTENSTEEL_SHAFT = andesiteEncasedShaft("andesite_encased_tungstensteel_shaft", TIER.INSANE, Shafts.TUNGSTENSTEEL_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_TUNGSTENSTEEL_SHAFT = brassEncasedShaft("brass_encased_tungstensteel_shaft", TIER.INSANE, Shafts.TUNGSTENSTEEL_SHAFT);
+    public static final BlockEntry<TieredShaftBlock> PALLADIUM_SHAFT = shaft("palladium_shaft", TIER.LUDICRIOUS, GreatePartialModels.LARGE_PALLADIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.PALLADIUM_COGWHEEL_SHAFT, GreateItemTags.SHAFTS_PALLADIUM.itemTag);
+    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_PALLADIUM_SHAFT = poweredShaft("powered_palladium_shaft", TIER.LUDICRIOUS, Shafts.PALLADIUM_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_PALLADIUM_SHAFT = andesiteEncasedShaft("andesite_encased_palladium_shaft", TIER.LUDICRIOUS, Shafts.PALLADIUM_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_PALLADIUM_SHAFT = brassEncasedShaft("brass_encased_palladium_shaft", TIER.LUDICRIOUS, Shafts.PALLADIUM_SHAFT);
+    public static final BlockEntry<TieredShaftBlock> NAQUADAH_SHAFT = shaft("naquadah_shaft", TIER.ZPM, GreatePartialModels.LARGE_NAQUADAH_COGWHEEL_SHAFTLESS, GreatePartialModels.NAQUADAH_COGWHEEL_SHAFT, GreateItemTags.SHAFTS_NAQUADAH.itemTag);
+    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_NAQUADAH_SHAFT = poweredShaft("powered_naquadah_shaft", TIER.ZPM, Shafts.NAQUADAH_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_NAQUADAH_SHAFT = andesiteEncasedShaft("andesite_encased_naquadah_shaft", TIER.ZPM, Shafts.NAQUADAH_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_NAQUADAH_SHAFT = brassEncasedShaft("brass_encased_naquadah_shaft", TIER.ZPM, Shafts.NAQUADAH_SHAFT);
+    public static final BlockEntry<TieredShaftBlock> DARMSTADTIUM_SHAFT = shaft("darmstadtium_shaft", TIER.ULTIMATE, GreatePartialModels.LARGE_DARMSTADTIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.DARMSTADTIUM_COGWHEEL_SHAFT, GreateItemTags.SHAFTS_DARMSTADTIUM.itemTag);
+    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_DARMSTADTIUM_SHAFT = poweredShaft("powered_darmstadtium_shaft", TIER.ULTIMATE, Shafts.DARMSTADTIUM_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_DARMSTADTIUM_SHAFT = andesiteEncasedShaft("andesite_encased_darmstadtium_shaft", TIER.ULTIMATE, Shafts.DARMSTADTIUM_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_DARMSTADTIUM_SHAFT = brassEncasedShaft("brass_encased_darmstadtium_shaft", TIER.ULTIMATE, Shafts.DARMSTADTIUM_SHAFT);
+    public static final BlockEntry<TieredShaftBlock> NEUTRONIUM_SHAFT = shaft("neutronium_shaft", TIER.ULTIMATE_HIGH, GreatePartialModels.LARGE_NEUTRONIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.NEUTRONIUM_COGWHEEL_SHAFT, GreateItemTags.SHAFTS_NEUTRONIUM.itemTag);
+    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_NEUTRONIUM_SHAFT = poweredShaft("powered_neutronium_shaft", TIER.ULTIMATE_HIGH, Shafts.NEUTRONIUM_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_NEUTRONIUM_SHAFT = andesiteEncasedShaft("andesite_encased_neutronium_shaft", TIER.ULTIMATE_HIGH, Shafts.NEUTRONIUM_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_NEUTRONIUM_SHAFT = brassEncasedShaft("brass_encased_neutronium_shaft", TIER.ULTIMATE_HIGH, Shafts.NEUTRONIUM_SHAFT);
 
-    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_ANDESITE_SHAFT = REGISTRATE
-            .block("powered_andesite_shaft", p -> new TieredPoweredShaftBlock(p, Shafts.ANDESITE_SHAFT::get))
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.METAL))
-            .transform(TagGen.pickaxeOnly())
-            .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
-            .loot((l, b) -> l.dropOther(b, ANDESITE_SHAFT.get()))
-            .onRegister(c -> c.setTier(TIER.ULTRA_LOW))
-            .register();
+    public static BlockEntry<TieredShaftBlock> shaft(String name, TIER tier, PartialModel largeCogwheelShaftlessModel, PartialModel cogwheelShaftModel, TagKey<Item> shaftTag) {
+        return REGISTRATE
+                .block(name, p -> new TieredShaftBlock(p, largeCogwheelShaftlessModel, cogwheelShaftModel))
+                .initialProperties(SharedProperties::stone)
+                .properties(p -> p.mapColor(MapColor.METAL))
+                .transform(BlockStressDefaults.setNoImpact())
+                .transform(TagGen.pickaxeOnly())
+                .blockstate(GreateBlockStateGen.tieredShaftProvider())
+                .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+                .onRegister(c -> c.setTier(tier))
+                .simpleItem()
+                .item()
+                .tag(GreateItemTags.SHAFTS.itemTag)
+                .tag(shaftTag).build()
+                .register();
+    }
 
-    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_ANDESITE_SHAFT = REGISTRATE
-            .block("andesite_encased_andesite_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.ANDESITE_CASING::get, Shafts.ANDESITE_SHAFT::get))
-            .properties(p -> p.mapColor(MapColor.PODZOL))
-            .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(ANDESITE_SHAFT, () -> AllSpriteShifts.ANDESITE_CASING))
-            .transform(EncasingRegistry.addVariantTo(Shafts.ANDESITE_SHAFT))
-            .transform(TagGen.axeOrPickaxe())
-            .onRegister(c -> c.setTier(TIER.ULTRA_LOW))
-            .register();
+    public static BlockEntry<TieredPoweredShaftBlock> poweredShaft(String name, TIER tier, BlockEntry<TieredShaftBlock> shaft) {
+        return REGISTRATE
+                .block(name, p -> new TieredPoweredShaftBlock(p, shaft::get))
+                .initialProperties(SharedProperties::stone)
+                .properties(p -> p.mapColor(MapColor.METAL))
+                .transform(TagGen.pickaxeOnly())
+                .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
+                .loot((l, b) -> l.dropOther(b, shaft.get()))
+                .onRegister(c -> c.setTier(tier))
+                .register();
+    }
 
-    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_ANDESITE_SHAFT = REGISTRATE
-            .block("brass_encased_andesite_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.BRASS_CASING::get, Shafts.ANDESITE_SHAFT::get))
-            .properties(p -> p.mapColor(MapColor.TERRACOTTA_BROWN))
-            .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(ANDESITE_SHAFT, () -> AllSpriteShifts.BRASS_CASING))
-            .transform(EncasingRegistry.addVariantTo(Shafts.ANDESITE_SHAFT))
-            .transform(TagGen.axeOrPickaxe())
-            .onRegister(c -> c.setTier(TIER.ULTRA_LOW))
-            .register();
+    public static BlockEntry<TieredEncasedShaftBlock> andesiteEncasedShaft(String name, TIER tier, BlockEntry<TieredShaftBlock> shaft) {
+        return REGISTRATE
+                .block(name, p -> new TieredEncasedShaftBlock(p, AllBlocks.ANDESITE_CASING::get, shaft::get))
+                .properties(p -> p.mapColor(MapColor.PODZOL))
+                .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(shaft, () -> AllSpriteShifts.ANDESITE_CASING))
+                .transform(EncasingRegistry.addVariantTo(shaft))
+                .transform(TagGen.axeOrPickaxe())
+                .onRegister(c -> c.setTier(tier))
+                .register();
+    }
 
-    public static final BlockEntry<TieredShaftBlock> STEEL_SHAFT = REGISTRATE
-            .block("steel_shaft", p -> new TieredShaftBlock(p, GreatePartialModels.LARGE_STEEL_COGWHEEL_SHAFTLESS, GreatePartialModels.STEEL_COGWHEEL_SHAFT))
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.METAL))
-            .transform(BlockStressDefaults.setNoImpact())
-            .transform(TagGen.pickaxeOnly())
-            .blockstate(GreateBlockStateGen.tieredShaftProvider())
-            .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
-            .onRegister(c -> c.setTier(TIER.LOW))
-            .simpleItem()
-            .item()
-            .tag(GreateItemTags.SHAFTS.itemTag)
-            .tag(GreateItemTags.SHAFTS_STEEL.itemTag).build()
-            .register();
-
-    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_STEEL_SHAFT = REGISTRATE
-            .block("powered_steel_shaft", p -> new TieredPoweredShaftBlock(p, Shafts.STEEL_SHAFT::get))
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.METAL))
-            .transform(TagGen.pickaxeOnly())
-            .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
-            .loot((l, b) -> l.dropOther(b, STEEL_SHAFT.get()))
-            .onRegister(c -> c.setTier(TIER.LOW))
-            .register();
-
-    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_STEEL_SHAFT = REGISTRATE
-            .block("andesite_encased_steel_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.ANDESITE_CASING::get, Shafts.STEEL_SHAFT::get))
-            .properties(p -> p.mapColor(MapColor.PODZOL))
-            .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(STEEL_SHAFT, () -> AllSpriteShifts.ANDESITE_CASING))
-            .transform(EncasingRegistry.addVariantTo(Shafts.STEEL_SHAFT))
-            .transform(TagGen.axeOrPickaxe())
-            .onRegister(c -> c.setTier(TIER.LOW))
-            .register();
-
-    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_STEEL_SHAFT = REGISTRATE
-            .block("brass_encased_steel_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.BRASS_CASING::get, Shafts.STEEL_SHAFT::get))
-            .properties(p -> p.mapColor(MapColor.TERRACOTTA_BROWN))
-            .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(STEEL_SHAFT, () -> AllSpriteShifts.BRASS_CASING))
-            .transform(EncasingRegistry.addVariantTo(Shafts.STEEL_SHAFT))
-            .transform(TagGen.axeOrPickaxe())
-            .onRegister(c -> c.setTier(TIER.LOW))
-            .register();
-
-    public static final BlockEntry<TieredShaftBlock> ALUMINIUM_SHAFT = REGISTRATE
-            .block("aluminium_shaft", p -> new TieredShaftBlock(p, GreatePartialModels.LARGE_ALUMINIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.ALUMINIUM_COGWHEEL_SHAFT))
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.METAL))
-            .transform(BlockStressDefaults.setNoImpact())
-            .transform(TagGen.pickaxeOnly())
-            .blockstate(GreateBlockStateGen.tieredShaftProvider())
-            .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
-            .onRegister(c -> c.setTier(TIER.MEDIUM))
-            .simpleItem()
-            .item()
-            .tag(GreateItemTags.SHAFTS.itemTag)
-            .tag(GreateItemTags.SHAFTS_ALUMINIUM.itemTag).build()
-            .register();
-
-    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_ALUMINIUM_SHAFT = REGISTRATE
-            .block("powered_aluminium_shaft", p -> new TieredPoweredShaftBlock(p, Shafts.ALUMINIUM_SHAFT::get))
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.METAL))
-            .transform(TagGen.pickaxeOnly())
-            .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
-            .loot((l, b) -> l.dropOther(b, ALUMINIUM_SHAFT.get()))
-            .onRegister(c -> c.setTier(TIER.MEDIUM))
-            .register();
-
-    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_ALUMINIUM_SHAFT = REGISTRATE
-            .block("andesite_encased_aluminium_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.ANDESITE_CASING::get, Shafts.ALUMINIUM_SHAFT::get))
-            .properties(p -> p.mapColor(MapColor.PODZOL))
-            .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(ALUMINIUM_SHAFT, () -> AllSpriteShifts.ANDESITE_CASING))
-            .transform(EncasingRegistry.addVariantTo(Shafts.ALUMINIUM_SHAFT))
-            .transform(TagGen.axeOrPickaxe())
-            .onRegister(c -> c.setTier(TIER.MEDIUM))
-            .register();
-
-    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_ALUMINIUM_SHAFT = REGISTRATE
-            .block("brass_encased_aluminium_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.BRASS_CASING::get, Shafts.ALUMINIUM_SHAFT::get))
-            .properties(p -> p.mapColor(MapColor.TERRACOTTA_BROWN))
-            .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(ALUMINIUM_SHAFT, () -> AllSpriteShifts.BRASS_CASING))
-            .transform(EncasingRegistry.addVariantTo(Shafts.ALUMINIUM_SHAFT))
-            .transform(TagGen.axeOrPickaxe())
-            .onRegister(c -> c.setTier(TIER.MEDIUM))
-            .register();
-
-    public static final BlockEntry<TieredShaftBlock> STAINLESS_STEEL_SHAFT = REGISTRATE
-            .block("stainless_steel_shaft", p -> new TieredShaftBlock(p, GreatePartialModels.LARGE_STAINLESS_STEEL_COGWHEEL_SHAFTLESS, GreatePartialModels.STAINLESS_STEEL_COGWHEEL_SHAFT))
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.METAL))
-            .transform(BlockStressDefaults.setNoImpact())
-            .transform(TagGen.pickaxeOnly())
-            .blockstate(GreateBlockStateGen.tieredShaftProvider())
-            .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
-            .onRegister(c -> c.setTier(TIER.HIGH))
-            .simpleItem()
-            .item()
-            .tag(GreateItemTags.SHAFTS.itemTag)
-            .tag(GreateItemTags.SHAFTS_STAINLESS_STEEL.itemTag).build()
-            .register();
-
-    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_STAINLESS_STEEL_SHAFT = REGISTRATE
-            .block("powered_stainless_steel_shaft", p -> new TieredPoweredShaftBlock(p, Shafts.STAINLESS_STEEL_SHAFT::get))
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.METAL))
-            .transform(TagGen.pickaxeOnly())
-            .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
-            .loot((l, b) -> l.dropOther(b, STAINLESS_STEEL_SHAFT.get()))
-            .onRegister(c -> c.setTier(TIER.HIGH))
-            .register();
-
-    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_STAINLESS_STEEL_SHAFT = REGISTRATE
-            .block("andesite_encased_stainless_steel_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.ANDESITE_CASING::get, Shafts.STAINLESS_STEEL_SHAFT::get))
-            .properties(p -> p.mapColor(MapColor.PODZOL))
-            .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(STAINLESS_STEEL_SHAFT, () -> AllSpriteShifts.ANDESITE_CASING))
-            .transform(EncasingRegistry.addVariantTo(Shafts.STAINLESS_STEEL_SHAFT))
-            .transform(TagGen.axeOrPickaxe())
-            .onRegister(c -> c.setTier(TIER.HIGH))
-            .register();
-
-    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_STAINLESS_STEEL_SHAFT = REGISTRATE
-            .block("brass_encased_stainless_steel_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.BRASS_CASING::get, Shafts.STAINLESS_STEEL_SHAFT::get))
-            .properties(p -> p.mapColor(MapColor.TERRACOTTA_BROWN))
-            .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(STAINLESS_STEEL_SHAFT, () -> AllSpriteShifts.BRASS_CASING))
-            .transform(EncasingRegistry.addVariantTo(Shafts.STAINLESS_STEEL_SHAFT))
-            .transform(TagGen.axeOrPickaxe())
-            .onRegister(c -> c.setTier(TIER.HIGH))
-            .register();
-
-    public static final BlockEntry<TieredShaftBlock> TITANIUM_SHAFT = REGISTRATE
-            .block("titanium_shaft", p -> new TieredShaftBlock(p, GreatePartialModels.LARGE_TITANIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.TITANIUM_COGWHEEL_SHAFT))
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.METAL))
-            .transform(BlockStressDefaults.setNoImpact())
-            .transform(TagGen.pickaxeOnly())
-            .blockstate(GreateBlockStateGen.tieredShaftProvider())
-            .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
-            .onRegister(c -> c.setTier(TIER.EXTREME))
-            .simpleItem()
-            .item()
-            .tag(GreateItemTags.SHAFTS.itemTag)
-            .tag(GreateItemTags.SHAFTS_TITANIUM.itemTag).build()
-            .register();
-
-    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_TITANIUM_SHAFT = REGISTRATE
-            .block("powered_titanium_shaft", p -> new TieredPoweredShaftBlock(p, Shafts.TITANIUM_SHAFT::get))
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.METAL))
-            .transform(TagGen.pickaxeOnly())
-            .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
-            .loot((l, b) -> l.dropOther(b, TITANIUM_SHAFT.get()))
-            .onRegister(c -> c.setTier(TIER.EXTREME))
-            .register();
-
-    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_TITANIUM_SHAFT = REGISTRATE
-            .block("andesite_encased_titanium_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.ANDESITE_CASING::get, Shafts.TITANIUM_SHAFT::get))
-            .properties(p -> p.mapColor(MapColor.PODZOL))
-            .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(TITANIUM_SHAFT, () -> AllSpriteShifts.ANDESITE_CASING))
-            .transform(EncasingRegistry.addVariantTo(Shafts.TITANIUM_SHAFT))
-            .transform(TagGen.axeOrPickaxe())
-            .onRegister(c -> c.setTier(TIER.EXTREME))
-            .register();
-
-    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_TITANIUM_SHAFT = REGISTRATE
-            .block("brass_encased_titanium_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.BRASS_CASING::get, Shafts.TITANIUM_SHAFT::get))
-            .properties(p -> p.mapColor(MapColor.TERRACOTTA_BROWN))
-            .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(TITANIUM_SHAFT, () -> AllSpriteShifts.BRASS_CASING))
-            .transform(EncasingRegistry.addVariantTo(Shafts.TITANIUM_SHAFT))
-            .transform(TagGen.axeOrPickaxe())
-            .onRegister(c -> c.setTier(TIER.EXTREME))
-            .register();
-
-    public static final BlockEntry<TieredShaftBlock> TUNGSTEN_STEEL_SHAFT = REGISTRATE
-            .block("tungsten_steel_shaft", p -> new TieredShaftBlock(p, GreatePartialModels.LARGE_TUNGSTEN_STEEL_COGWHEEL_SHAFTLESS, GreatePartialModels.TUNGSTEN_STEEL_COGWHEEL_SHAFT))
-            .lang("Tungstensteel Shaft")
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.METAL))
-            .transform(BlockStressDefaults.setNoImpact())
-            .transform(TagGen.pickaxeOnly())
-            .blockstate(GreateBlockStateGen.tieredShaftProvider())
-            .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
-            .onRegister(c -> c.setTier(TIER.INSANE))
-            .simpleItem()
-            .item()
-            .tag(GreateItemTags.SHAFTS.itemTag)
-            .tag(GreateItemTags.SHAFTS_TUNGSTEN_STEEL.itemTag).build()
-            .register();
-
-    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_TUNGSTEN_STEEL_SHAFT = REGISTRATE
-            .block("powered_tungsten_steel_shaft", p -> new TieredPoweredShaftBlock(p, Shafts.TUNGSTEN_STEEL_SHAFT::get))
-            .lang("Powered Tungstensteel Shaft")
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.METAL))
-            .transform(TagGen.pickaxeOnly())
-            .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
-            .loot((l, b) -> l.dropOther(b, TUNGSTEN_STEEL_SHAFT.get()))
-            .onRegister(c -> c.setTier(TIER.INSANE))
-            .register();
-
-    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_TUNGSTEN_STEEL_SHAFT = REGISTRATE
-            .block("andesite_encased_tungsten_steel_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.ANDESITE_CASING::get, Shafts.TUNGSTEN_STEEL_SHAFT::get))
-            .lang("Andesite Encased Tungstensteel Shaft")
-            .properties(p -> p.mapColor(MapColor.PODZOL))
-            .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(TUNGSTEN_STEEL_SHAFT, () -> AllSpriteShifts.ANDESITE_CASING))
-            .transform(EncasingRegistry.addVariantTo(Shafts.TUNGSTEN_STEEL_SHAFT))
-            .transform(TagGen.axeOrPickaxe())
-            .onRegister(c -> c.setTier(TIER.INSANE))
-            .register();
-
-    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_TUNGSTEN_STEEL_SHAFT = REGISTRATE
-            .block("brass_encased_tungsten_steel_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.BRASS_CASING::get, Shafts.TUNGSTEN_STEEL_SHAFT::get))
-            .lang("Brass Encased Tungstensteel Shaft")
-            .properties(p -> p.mapColor(MapColor.TERRACOTTA_BROWN))
-            .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(TUNGSTEN_STEEL_SHAFT, () -> AllSpriteShifts.BRASS_CASING))
-            .transform(EncasingRegistry.addVariantTo(Shafts.TUNGSTEN_STEEL_SHAFT))
-            .transform(TagGen.axeOrPickaxe())
-            .onRegister(c -> c.setTier(TIER.INSANE))
-            .register();
-
-    public static final BlockEntry<TieredShaftBlock> PALLADIUM_SHAFT = REGISTRATE
-            .block("palladium_shaft", p -> new TieredShaftBlock(p, GreatePartialModels.LARGE_PALLADIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.PALLADIUM_COGWHEEL_SHAFT))
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.METAL))
-            .transform(BlockStressDefaults.setNoImpact())
-            .transform(TagGen.pickaxeOnly())
-            .blockstate(GreateBlockStateGen.tieredShaftProvider())
-            .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
-            .onRegister(c -> c.setTier(TIER.LUDICRIOUS))
-            .simpleItem()
-            .item()
-            .tag(GreateItemTags.SHAFTS.itemTag)
-            .tag(GreateItemTags.SHAFTS_PALLADIUM.itemTag).build()
-            .register();
-
-    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_PALLADIUM_SHAFT = REGISTRATE
-            .block("powered_palladium_shaft", p -> new TieredPoweredShaftBlock(p, Shafts.PALLADIUM_SHAFT::get))
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.METAL))
-            .transform(TagGen.pickaxeOnly())
-            .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
-            .loot((l, b) -> l.dropOther(b, PALLADIUM_SHAFT.get()))
-            .onRegister(c -> c.setTier(TIER.LUDICRIOUS))
-            .register();
-
-    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_PALLADIUM_SHAFT = REGISTRATE
-            .block("andesite_encased_palladium_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.ANDESITE_CASING::get, Shafts.PALLADIUM_SHAFT::get))
-            .properties(p -> p.mapColor(MapColor.PODZOL))
-            .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(PALLADIUM_SHAFT, () -> AllSpriteShifts.ANDESITE_CASING))
-            .transform(EncasingRegistry.addVariantTo(Shafts.PALLADIUM_SHAFT))
-            .transform(TagGen.axeOrPickaxe())
-            .onRegister(c -> c.setTier(TIER.LUDICRIOUS))
-            .register();
-
-    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_PALLADIUM_SHAFT = REGISTRATE
-            .block("brass_encased_palladium_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.BRASS_CASING::get, Shafts.PALLADIUM_SHAFT::get))
-            .properties(p -> p.mapColor(MapColor.TERRACOTTA_BROWN))
-            .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(PALLADIUM_SHAFT, () -> AllSpriteShifts.BRASS_CASING))
-            .transform(EncasingRegistry.addVariantTo(Shafts.PALLADIUM_SHAFT))
-            .transform(TagGen.axeOrPickaxe())
-            .onRegister(c -> c.setTier(TIER.LUDICRIOUS))
-            .register();
-
-    public static final BlockEntry<TieredShaftBlock> NAQUADAH_SHAFT = REGISTRATE
-            .block("naquadah_shaft", p -> new TieredShaftBlock(p, GreatePartialModels.LARGE_NAQUADAH_COGWHEEL_SHAFTLESS, GreatePartialModels.NAQUADAH_COGWHEEL_SHAFT))
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.METAL))
-            .transform(BlockStressDefaults.setNoImpact())
-            .transform(TagGen.pickaxeOnly())
-            .blockstate(GreateBlockStateGen.tieredShaftProvider())
-            .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
-            .onRegister(c -> c.setTier(TIER.ZPM))
-            .simpleItem()
-            .item()
-            .tag(GreateItemTags.SHAFTS.itemTag)
-            .tag(GreateItemTags.SHAFTS_NAQUADAH.itemTag).build()
-            .register();
-
-    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_NAQUADAH_SHAFT = REGISTRATE
-            .block("powered_naquadah_shaft", p -> new TieredPoweredShaftBlock(p, Shafts.NAQUADAH_SHAFT::get))
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.METAL))
-            .transform(TagGen.pickaxeOnly())
-            .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
-            .loot((l, b) -> l.dropOther(b, NAQUADAH_SHAFT.get()))
-            .onRegister(c -> c.setTier(TIER.ZPM))
-            .register();
-
-    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_NAQUADAH_SHAFT = REGISTRATE
-            .block("andesite_encased_naquadah_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.ANDESITE_CASING::get, Shafts.NAQUADAH_SHAFT::get))
-            .properties(p -> p.mapColor(MapColor.PODZOL))
-            .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(NAQUADAH_SHAFT, () -> AllSpriteShifts.ANDESITE_CASING))
-            .transform(EncasingRegistry.addVariantTo(Shafts.NAQUADAH_SHAFT))
-            .transform(TagGen.axeOrPickaxe())
-            .onRegister(c -> c.setTier(TIER.ZPM))
-            .register();
-
-    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_NAQUADAH_SHAFT = REGISTRATE
-            .block("brass_encased_naquadah_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.BRASS_CASING::get, Shafts.NAQUADAH_SHAFT::get))
-            .properties(p -> p.mapColor(MapColor.TERRACOTTA_BROWN))
-            .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(NAQUADAH_SHAFT, () -> AllSpriteShifts.BRASS_CASING))
-            .transform(EncasingRegistry.addVariantTo(Shafts.NAQUADAH_SHAFT))
-            .transform(TagGen.axeOrPickaxe())
-            .onRegister(c -> c.setTier(TIER.ZPM))
-            .register();
-
-    public static final BlockEntry<TieredShaftBlock> DARMSTADTIUM_SHAFT = REGISTRATE
-            .block("darmstadtium_shaft", p -> new TieredShaftBlock(p, GreatePartialModels.LARGE_DARMSTADTIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.DARMSTADTIUM_COGWHEEL_SHAFT))
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.METAL))
-            .transform(BlockStressDefaults.setNoImpact())
-            .transform(TagGen.pickaxeOnly())
-            .blockstate(GreateBlockStateGen.tieredShaftProvider())
-            .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
-            .onRegister(c -> c.setTier(TIER.ULTIMATE))
-            .simpleItem()
-            .item()
-            .tag(GreateItemTags.SHAFTS.itemTag)
-            .tag(GreateItemTags.SHAFTS_DARMSTADTIUM.itemTag).build()
-            .register();
-
-    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_DARMSTADTIUM_SHAFT = REGISTRATE
-            .block("powered_darmstadtium_shaft", p -> new TieredPoweredShaftBlock(p, Shafts.DARMSTADTIUM_SHAFT::get))
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.METAL))
-            .transform(TagGen.pickaxeOnly())
-            .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
-            .loot((l, b) -> l.dropOther(b, DARMSTADTIUM_SHAFT.get()))
-            .onRegister(c -> c.setTier(TIER.ULTIMATE))
-            .register();
-
-    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_DARMSTADTIUM_SHAFT = REGISTRATE
-            .block("andesite_encased_darmstadtium_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.ANDESITE_CASING::get, Shafts.DARMSTADTIUM_SHAFT::get))
-            .properties(p -> p.mapColor(MapColor.PODZOL))
-            .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(DARMSTADTIUM_SHAFT, () -> AllSpriteShifts.ANDESITE_CASING))
-            .transform(EncasingRegistry.addVariantTo(Shafts.DARMSTADTIUM_SHAFT))
-            .transform(TagGen.axeOrPickaxe())
-            .onRegister(c -> c.setTier(TIER.ULTIMATE))
-            .register();
-
-    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_DARMSTADTIUM_SHAFT = REGISTRATE
-            .block("brass_encased_darmstadtium_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.BRASS_CASING::get, Shafts.DARMSTADTIUM_SHAFT::get))
-            .properties(p -> p.mapColor(MapColor.TERRACOTTA_BROWN))
-            .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(DARMSTADTIUM_SHAFT, () -> AllSpriteShifts.BRASS_CASING))
-            .transform(EncasingRegistry.addVariantTo(Shafts.DARMSTADTIUM_SHAFT))
-            .transform(TagGen.axeOrPickaxe())
-            .onRegister(c -> c.setTier(TIER.ULTIMATE))
-            .register();
-
-    public static final BlockEntry<TieredShaftBlock> NEUTRONIUM_SHAFT = REGISTRATE
-            .block("neutronium_shaft", p -> new TieredShaftBlock(p, GreatePartialModels.LARGE_NEUTRONIUM_COGWHEEL_SHAFTLESS, GreatePartialModels.NEUTRONIUM_COGWHEEL_SHAFT))
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.METAL))
-            .transform(BlockStressDefaults.setNoImpact())
-            .transform(TagGen.pickaxeOnly())
-            .blockstate(GreateBlockStateGen.tieredShaftProvider())
-            .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
-            .onRegister(c -> c.setTier(TIER.ULTIMATE_HIGH))
-            .simpleItem()
-            .item()
-            .tag(GreateItemTags.SHAFTS.itemTag)
-            .tag(GreateItemTags.SHAFTS_NEUTRONIUM.itemTag).build()
-            .register();
-
-    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_NEUTRONIUM_SHAFT = REGISTRATE
-            .block("powered_neutronium_shaft", p -> new TieredPoweredShaftBlock(p, Shafts.NEUTRONIUM_SHAFT::get))
-            .initialProperties(SharedProperties::stone)
-            .properties(p -> p.mapColor(MapColor.METAL))
-            .transform(TagGen.pickaxeOnly())
-            .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
-            .loot((l, b) -> l.dropOther(b, NEUTRONIUM_SHAFT.get()))
-            .onRegister(c -> c.setTier(TIER.ULTIMATE_HIGH))
-            .register();
-
-    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_NEUTRONIUM_SHAFT = REGISTRATE
-            .block("andesite_encased_neutronium_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.ANDESITE_CASING::get, Shafts.NEUTRONIUM_SHAFT::get))
-            .properties(p -> p.mapColor(MapColor.PODZOL))
-            .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(NEUTRONIUM_SHAFT, () -> AllSpriteShifts.ANDESITE_CASING))
-            .transform(EncasingRegistry.addVariantTo(Shafts.NEUTRONIUM_SHAFT))
-            .transform(TagGen.axeOrPickaxe())
-            .onRegister(c -> c.setTier(TIER.ULTIMATE_HIGH))
-            .register();
-
-    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_NEUTRONIUM_SHAFT = REGISTRATE
-            .block("brass_encased_neutronium_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.BRASS_CASING::get, Shafts.NEUTRONIUM_SHAFT::get))
-            .properties(p -> p.mapColor(MapColor.TERRACOTTA_BROWN))
-            .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(NEUTRONIUM_SHAFT, () -> AllSpriteShifts.BRASS_CASING))
-            .transform(EncasingRegistry.addVariantTo(Shafts.NEUTRONIUM_SHAFT))
-            .transform(TagGen.axeOrPickaxe())
-            .onRegister(c -> c.setTier(TIER.ULTIMATE_HIGH))
-            .register();
+    public static BlockEntry<TieredEncasedShaftBlock> brassEncasedShaft(String name, TIER tier, BlockEntry<TieredShaftBlock> shaft) {
+        return REGISTRATE
+                .block(name, p -> new TieredEncasedShaftBlock(p, AllBlocks.BRASS_CASING::get, shaft::get))
+                .properties(p -> p.mapColor(MapColor.PODZOL))
+                .transform(GreateBuilderTransformers.tieredBrassEncasedShaft(shaft, () -> AllSpriteShifts.BRASS_CASING))
+                .transform(EncasingRegistry.addVariantTo(shaft))
+                .transform(TagGen.axeOrPickaxe())
+                .onRegister(c -> c.setTier(tier))
+                .register();
+    }
 
     public static void register() {}
 }
