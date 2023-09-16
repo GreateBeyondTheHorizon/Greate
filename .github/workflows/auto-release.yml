@@ -36,6 +36,11 @@ jobs:
         modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
         version-type: alpha
 
+        dependencies: |
+          create-fabric(required)
+          fabric-api(required)
+          gregtechceu-modern(required)
+
         github-token: ${{ secrets.GITHUB_TOKEN }}
         github-generate-changelog: true
         github-prerelease: true
