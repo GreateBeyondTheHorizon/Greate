@@ -6,6 +6,8 @@ import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import dev.toma.configuration.Configuration;
 import dev.toma.configuration.config.format.ConfigFormats;
+import electrolyte.greate.foundation.data.GreateTagGen;
+import electrolyte.greate.foundation.data.GreateTagGen.GreateBlockTagGen;
 import electrolyte.greate.foundation.data.recipe.GreateMechanicalCraftingRecipeGen;
 import electrolyte.greate.foundation.data.recipe.GreateStandardRecipeGen;
 import electrolyte.greate.registry.*;
@@ -79,6 +81,9 @@ public class Greate {
         if(event.includeServer()) {
             event.getGenerator().addProvider(true, new GreateStandardRecipeGen(event.getGenerator().getPackOutput()));
             event.getGenerator().addProvider(true, new GreateMechanicalCraftingRecipeGen(event.getGenerator().getPackOutput()));
+            GreateBlockTagGen blockTags = new GreateBlockTagGen(event.getGenerator().getPackOutput(), event.getLookupProvider(), Greate.MOD_ID, event.getExistingFileHelper());
+            event.getGenerator().addProvider(true, blockTags);
+            event.getGenerator().addProvider(true, new GreateTagGen(event.getGenerator().getPackOutput(), event.getLookupProvider(), blockTags.contentsGetter(), Greate.MOD_ID, event.getExistingFileHelper()));
         }
     }
 

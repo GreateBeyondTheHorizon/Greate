@@ -6,14 +6,13 @@ plugins {
     id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
 }
 
-version = '0.0.4'
+version = 'forge-0.0.5'
 group = 'electrolyte.greate'
 archivesBaseName = 'greate'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
-jarJar.enable()
 minecraft {
     mappings channel: 'parchment', version: "${parchment_version}-${minecraft_version}"
 
@@ -159,9 +158,6 @@ dependencies {
     implementation fg.deobf("curse.maven:gregtechceu-modern-890405:${gregtech_version}")
     runtimeOnly fg.deobf("curse.maven:jade-324717:${jade_version}")
     runtimeOnly fg.deobf("curse.maven:spark-361579:${spark_version}")
-
-    jarJar(group: 'com.tterrag.registrate', name: 'Registrate', version: "[${registrate_version},)")
-    jarJar(group: 'dev.toma.configuration', name: "configuration-forge-${minecraft_version}", version: "[2.2.0,)")
 }
 
 mixin {

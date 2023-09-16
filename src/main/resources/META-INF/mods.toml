@@ -5,7 +5,7 @@ issueTrackerURL="https://github.com/GreateBeyondTheHorizon/Greate/issues"
 
 [[mods]]
 modId="greate"
-version="${file.jarVersion}"
+version="0.0.5"
 displayName="Greate"
 displayURL="https://modrinth.com/mod/greate"
 #logoFile="examplemod.png"

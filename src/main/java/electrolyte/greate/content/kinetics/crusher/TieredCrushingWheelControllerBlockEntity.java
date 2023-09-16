@@ -278,7 +278,7 @@ public class TieredCrushingWheelControllerBlockEntity extends SmartBlockEntity {
                 ((Ingredient) r.getInputContents(ItemRecipeCapability.CAP).get(0).getContent()).test(wrapper.getItem(0))).findFirst();
         if(recipe.isPresent()) {
             TieredProcessingRecipe<RecipeWrapper> convertedRecipe = TieredCrushingRecipe.convertGT(recipe.get(), getExtraPercentGT(0.085F, recipe.get()));
-            if(convertedRecipe.getRecipeTier().compareTo(((TieredCrushingWheelBlock) TieredCrushingWheelControllerBlock.MAP.get(getBlockState().getBlock())).getTier()) <= 0) {
+            if(convertedRecipe.getRecipeTier().compareTo(((TieredCrushingWheelControllerBlock) getBlockState().getBlock()).getTier()) <= 0) {
                 return Optional.of(convertedRecipe);
             }
         }

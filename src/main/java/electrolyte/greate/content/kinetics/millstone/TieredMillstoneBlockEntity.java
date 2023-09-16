@@ -89,7 +89,7 @@ public class TieredMillstoneBlockEntity extends TieredKineticBlockEntity impleme
 
         for(int i = 0; i < outputInv.getSlots(); i++) {
             if(outputInv.getStackInSlot(i).getCount() == outputInv.getSlotLimit(i)) return;
-            if(outputInv.getStackInSlot(i).getCount() + maxItemsPerRecipe > outputInv.getSlotLimit(i)) return;
+            if(outputInv.getStackInSlot(i).getCount() + Math.min(inputInv.getStackInSlot(0).getCount(), maxItemsPerRecipe) > outputInv.getSlotLimit(i)) return;
         }
 
         RecipeWrapper inventoryIn = new RecipeWrapper(inputInv);
