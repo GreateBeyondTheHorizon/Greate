@@ -35,12 +35,6 @@ jobs:
         modrinth-featured: true
         modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
         version-type: alpha
-        loaders: |
-            fabric
-        game-versions: |
-          [1.20.1]
-        java: |
-          17
 
         github-token: ${{ secrets.GITHUB_TOKEN }}
         github-generate-changelog: true
