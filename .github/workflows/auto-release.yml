@@ -1,9 +1,8 @@
 name: Create Release
 
 on:
-  push:
-    tags: 
-      - '*'
+  release:
+    types: [prereleased]
 
   workflow_dispatch:
 
@@ -35,6 +34,9 @@ jobs:
         modrinth-featured: true
         modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
         version-type: alpha
+
+        game-versions: |
+          1.20.1
 
         dependencies: |
           create(required)
