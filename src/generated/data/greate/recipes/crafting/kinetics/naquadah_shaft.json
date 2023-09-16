@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "greate:naquadah_alloy"
+    },
+    "S": {
+      "tag": "c:saws"
+    }
+  },
+  "pattern": [
+    "S ",
+    " A"
+  ],
+  "result": {
+    "count": 4,
+    "item": "greate:naquadah_shaft"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": {
+      "tag": "c:files"
+    },
+    "P": {
+      "tag": "c:darmstadtium_plates"
+    },
+    "S": {
+      "item": "greate:neutronium_shaft"
+    }
+  },
+  "pattern": [
+    "SP",
+    "F "
+  ],
+  "result": {
+    "item": "greate:neutronium_cogwheel"
+  },
+  "show_notification": true
+}

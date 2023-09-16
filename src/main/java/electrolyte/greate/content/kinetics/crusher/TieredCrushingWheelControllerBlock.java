@@ -8,6 +8,7 @@ import com.simibubi.create.foundation.utility.Iterate;
 import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.registry.ModBlockEntityTypes;
+import io.github.fabricators_of_create.porting_lib.block.CustomRunningEffectsBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
@@ -41,7 +42,7 @@ import java.util.Map;
 
 import static com.simibubi.create.content.kinetics.crusher.CrushingWheelControllerBlock.VALID;
 
-public class TieredCrushingWheelControllerBlock extends DirectionalBlock implements IBE<TieredCrushingWheelControllerBlockEntity>, ITieredBlock {
+public class TieredCrushingWheelControllerBlock extends DirectionalBlock implements IBE<TieredCrushingWheelControllerBlockEntity>, ITieredBlock, CustomRunningEffectsBlock {
 
     private TIER tier;
     private final Block crushingWheel;
@@ -87,7 +88,7 @@ public class TieredCrushingWheelControllerBlock extends DirectionalBlock impleme
         TieredCrushingWheelControllerBlockEntity be = getBlockEntity(level, pos);
         if(be == null) return;
         if(be.crushingSpeed == 0) return;
-        CompoundTag tag = entity.getPersistentData();
+        CompoundTag tag = entity.getCustomData();
         if(tag.contains("BypassCrushingWheel")) {
             if(pos.equals(NbtUtils.readBlockPos(tag.getCompound("BypassCrushingWheel")))) return;
         }
@@ -141,7 +142,7 @@ public class TieredCrushingWheelControllerBlock extends DirectionalBlock impleme
         if(!(pContext instanceof EntityCollisionContext ecc)) return standardShape;
         Entity entity = ecc.getEntity();
         if(entity == null) return standardShape;
-        CompoundTag tag = entity.getPersistentData();
+        CompoundTag tag = entity.getCustomData();
         if(tag.contains("BypassCrushingWheel")) {
             if(pPos.equals(NbtUtils.readBlockPos(tag.getCompound("BypassCrushingWheel")))) {
                 if(pState.getValue(FACING) != Direction.UP) {

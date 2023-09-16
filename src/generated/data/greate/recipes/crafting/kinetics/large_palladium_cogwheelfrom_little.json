@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": {
+      "tag": "c:files"
+    },
+    "P": {
+      "tag": "c:tungstensteel_plates"
+    },
+    "S": {
+      "item": "greate:palladium_cogwheel"
+    }
+  },
+  "pattern": [
+    "SP",
+    "F "
+  ],
+  "result": {
+    "item": "greate:large_palladium_cogwheel"
+  },
+  "show_notification": true
+}

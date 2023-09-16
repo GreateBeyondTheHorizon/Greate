@@ -31,7 +31,7 @@ import static electrolyte.greate.foundation.data.GreateBuilderTransformers.tiere
 public class Cogwheels {
 
     static {
-        REGISTRATE.useCreativeTab(Greate.GREATE_TAB);
+        REGISTRATE.useCreativeTab(Greate.CREATIVE_TAB_KEY);
     }
 
     public static final BlockEntry<TieredCogwheelBlock> ANDESITE_COGWHEEL = registerCogwheel("andesite_cogwheel", TIER.ULTRA_LOW, GreateItemTags.COGWHEELS_ANDESITE.itemTag);

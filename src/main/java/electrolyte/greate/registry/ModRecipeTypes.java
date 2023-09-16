@@ -12,18 +12,15 @@ import electrolyte.greate.content.kinetics.millstone.TieredMillingRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeFactory;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeSerializer;
-import net.minecraft.core.registries.Registries;
+import io.github.fabricators_of_create.porting_lib.util.ShapedRecipeUtil;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -36,40 +33,49 @@ public enum ModRecipeTypes implements IRecipeTypeInfo {
 	CRUSHING(TieredCrushingRecipe::new);
 
 	private final ResourceLocation id;
-	private final RegistryObject<RecipeSerializer<?>> serializerObject;
+	private final RecipeSerializer<?> serializerObject;
 	@Nullable
-	private final RegistryObject<RecipeType<?>> typeObject;
+	private final RecipeType<?> typeObject;
 	private final Supplier<RecipeType<?>> type;
 
 	ModRecipeTypes(Supplier<RecipeSerializer<?>> serializerSupplier, Supplier<RecipeType<?>> typeSupplier, boolean registerType) {
 		String name = Lang.asId(name());
 		id = Create.asResource(name);
-		serializerObject = Registers.SERIALIZER_REGISTER.register(name, serializerSupplier);
+		serializerObject = Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, id, serializerSupplier.get());
 		if (registerType) {
-			typeObject = Registers.TYPE_REGISTER.register(name, typeSupplier);
-			type = typeObject;
-		} else {
+			typeObject = typeSupplier.get();
+			Registry.register(BuiltInRegistries.RECIPE_TYPE, id, typeObject);
+        } else {
 			typeObject = null;
-			type = typeSupplier;
-		}
-	}
+        }
+        type = typeSupplier;
+    }
 
 	ModRecipeTypes(Supplier<RecipeSerializer<?>> serializerSupplier) {
 		String name = Lang.asId(name());
 		id = new ResourceLocation(Greate.MOD_ID, name);
-		serializerObject = Registers.SERIALIZER_REGISTER.register(name, serializerSupplier);
-		typeObject = Registers.TYPE_REGISTER.register(name, () -> RecipeType.simple(id));
-		type = typeObject;
+		serializerObject = Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, id, serializerSupplier.get());
+		typeObject = simpleType(id);
+		Registry.register(BuiltInRegistries.RECIPE_TYPE, id, typeObject);
+		type = () -> typeObject;
 	}
 
 	ModRecipeTypes(TieredProcessingRecipeFactory<?> processingFactory) {
 		this(() -> new TieredProcessingRecipeSerializer<>(processingFactory));
 	}
 
-	public static void register(IEventBus modEventBus) {
-		ShapedRecipe.setCraftingSize(9, 9);
-		Registers.SERIALIZER_REGISTER.register(modEventBus);
-		Registers.TYPE_REGISTER.register(modEventBus);
+	public static <T extends Recipe<?>> RecipeType<T> simpleType(ResourceLocation id) {
+		String s = id.toString();
+		return new RecipeType<>() {
+            @Override
+            public String toString() {
+                return s;
+            }
+        };
+	}
+
+	public static void register() {
+		ShapedRecipeUtil.setCraftingSize(9, 9);
 	}
 
 	@Override
@@ -80,7 +86,7 @@ public enum ModRecipeTypes implements IRecipeTypeInfo {
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends RecipeSerializer<?>> T getSerializer() {
-		return (T) serializerObject.get();
+		return (T) serializerObject;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -112,10 +118,4 @@ public enum ModRecipeTypes implements IRecipeTypeInfo {
 			.getPath()
 			.endsWith("_manual_only");
 	}
-
-	private static class Registers {
-		private static final DeferredRegister<RecipeSerializer<?>> SERIALIZER_REGISTER = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Greate.MOD_ID);
-		private static final DeferredRegister<RecipeType<?>> TYPE_REGISTER = DeferredRegister.create(Registries.RECIPE_TYPE, Greate.MOD_ID);
-	}
-
 }

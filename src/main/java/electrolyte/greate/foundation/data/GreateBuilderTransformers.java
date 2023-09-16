@@ -14,6 +14,7 @@ import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
+import electrolyte.greate.ObjModelBuilder;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingWheelBlock;
 import electrolyte.greate.content.kinetics.gearbox.TieredGearboxBlock;
 import electrolyte.greate.content.kinetics.gearbox.TieredVerticalGearboxItem;
@@ -28,7 +29,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraftforge.client.model.generators.loaders.ObjModelBuilder;
 
 import java.util.function.Supplier;
 

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": {
+      "tag": "c:files"
+    },
+    "P": {
+      "tag": "c:wood_plates"
+    },
+    "S": {
+      "item": "greate:andesite_cogwheel"
+    }
+  },
+  "pattern": [
+    "SP",
+    "F "
+  ],
+  "result": {
+    "item": "greate:large_andesite_cogwheel"
+  },
+  "show_notification": true
+}

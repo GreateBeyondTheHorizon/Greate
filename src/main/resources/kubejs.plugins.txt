@@ -1,1 +1,0 @@
-electrolyte.greate.compat.kubejs.GreateKubeJSPlugin

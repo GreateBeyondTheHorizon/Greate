@@ -9,6 +9,7 @@ import com.simibubi.create.content.kinetics.simpleRelays.ICogWheel;
 import com.simibubi.create.foundation.placement.IPlacementHelper;
 import com.simibubi.create.foundation.placement.PlacementHelpers;
 import com.simibubi.create.foundation.placement.PlacementOffset;
+import io.github.fabricators_of_create.porting_lib.item.UseFirstBehaviorItem;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -26,7 +27,7 @@ import java.util.function.Predicate;
 
 import static com.simibubi.create.content.kinetics.base.RotatedPillarKineticBlock.AXIS;
 
-public class TieredCogwheelBlockItem extends BlockItem {
+public class TieredCogwheelBlockItem extends BlockItem implements UseFirstBehaviorItem {
 
     boolean large;
 
@@ -64,7 +65,7 @@ public class TieredCogwheelBlockItem extends BlockItem {
             }
         }
 
-        return super.onItemUseFirst(stack, context);
+        return InteractionResult.PASS;
     }
 
     @MethodsReturnNonnullByDefault

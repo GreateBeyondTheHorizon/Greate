@@ -19,6 +19,7 @@ import electrolyte.greate.content.kinetics.simpleRelays.ITieredEncasedCogwheel;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredCogwheelBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredSimpleKineticBlockEntity;
 import electrolyte.greate.registry.ModBlockEntityTypes;
+import net.fabricmc.fabric.api.block.BlockPickInteractionAware;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -43,7 +44,7 @@ import net.minecraft.world.phys.HitResult;
 
 import java.util.function.Supplier;
 
-public class TieredEncasedCogwheelBlock extends RotatedPillarKineticBlock implements ICogWheel, IBE<TieredSimpleKineticBlockEntity>, ISpecialBlockItemRequirement, ITransformableBlock, EncasedBlock, ITieredBlock, ITieredEncasedCogwheel {
+public class TieredEncasedCogwheelBlock extends RotatedPillarKineticBlock implements ICogWheel, IBE<TieredSimpleKineticBlockEntity>, ISpecialBlockItemRequirement, ITransformableBlock, EncasedBlock, ITieredBlock, ITieredEncasedCogwheel, BlockPickInteractionAware {
 
     public static final BooleanProperty TOP_SHAFT = BooleanProperty.create("top_shaft");
     public static final BooleanProperty BOTTOM_SHAFT = BooleanProperty.create("bottom_shaft");
@@ -77,13 +78,13 @@ public class TieredEncasedCogwheelBlock extends RotatedPillarKineticBlock implem
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
+    public ItemStack getPickedStack(BlockState state, BlockGetter level, BlockPos pos, Player player, HitResult target) {
         if(target instanceof BlockHitResult) {
             return ((BlockHitResult) target).getDirection().getAxis() != getRotationAxis(state) ?
                     getCogWheel().asItem().getDefaultInstance() :
                     getCasing().asItem().getDefaultInstance();
         }
-        return super.getCloneItemStack(state, target, level, pos, player);
+        return ItemStack.EMPTY;
     }
 
     @Override

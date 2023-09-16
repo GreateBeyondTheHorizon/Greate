@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": {
+      "tag": "c:files"
+    },
+    "P": {
+      "tag": "c:aluminium_plates"
+    },
+    "S": {
+      "item": "greate:stainless_steel_shaft"
+    }
+  },
+  "pattern": [
+    "SP",
+    "F "
+  ],
+  "result": {
+    "item": "greate:stainless_steel_cogwheel"
+  },
+  "show_notification": true
+}

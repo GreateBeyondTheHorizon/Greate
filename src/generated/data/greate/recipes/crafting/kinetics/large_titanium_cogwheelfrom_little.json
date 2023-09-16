@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": {
+      "tag": "c:files"
+    },
+    "P": {
+      "tag": "c:stainless_steel_plates"
+    },
+    "S": {
+      "item": "greate:titanium_cogwheel"
+    }
+  },
+  "pattern": [
+    "SP",
+    "F "
+  ],
+  "result": {
+    "item": "greate:large_titanium_cogwheel"
+  },
+  "show_notification": true
+}

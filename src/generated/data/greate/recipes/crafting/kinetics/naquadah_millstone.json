@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "greate:naquadah_shafts"
+    },
+    "C": {
+      "tag": "c:zpm_circuits"
+    },
+    "M": {
+      "item": "gtceu:zpm_machine_hull"
+    },
+    "S": {
+      "tag": "minecraft:wooden_slabs"
+    },
+    "W": {
+      "tag": "greate:naquadah_cogwheels"
+    }
+  },
+  "pattern": [
+    " W ",
+    "SMS",
+    "CAC"
+  ],
+  "result": {
+    "item": "greate:naquadah_millstone"
+  },
+  "show_notification": true
+}

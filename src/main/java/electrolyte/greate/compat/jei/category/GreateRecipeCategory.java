@@ -1,14 +1,14 @@
 package electrolyte.greate.compat.jei.category;
 
-import com.simibubi.create.AllFluids;
-import com.simibubi.create.content.fluids.potion.PotionFluidHandler;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import com.simibubi.create.foundation.utility.Components;
 import com.simibubi.create.foundation.utility.Lang;
 import electrolyte.greate.Greate;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
-import mezz.jei.api.forge.ForgeTypes;
+import io.github.fabricators_of_create.porting_lib.util.FluidStack;
+import mezz.jei.api.fabric.constants.FabricTypes;
+import mezz.jei.api.fabric.ingredients.fluids.IJeiFluidIngredient;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotTooltipCallback;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
@@ -22,14 +22,14 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+
+import static com.simibubi.create.compat.jei.category.CreateRecipeCategory.fromJei;
 
 public abstract class GreateRecipeCategory<T extends Recipe<?>> implements IRecipeCategory<T> {
 
@@ -132,28 +132,18 @@ public abstract class GreateRecipeCategory<T extends Recipe<?>> implements IReci
 
     public static IRecipeSlotTooltipCallback addFluidTooltip(int mbAmount) {
         return (view, tooltip) -> {
-            Optional<FluidStack> displayed = view.getDisplayedIngredient(ForgeTypes.FLUID_STACK);
+            Optional<IJeiFluidIngredient> displayed = view.getDisplayedIngredient(FabricTypes.FLUID_STACK);
             if (displayed.isEmpty()) return;
 
-            FluidStack fluidStack = displayed.get();
+            FluidStack fluidStack = fromJei(displayed.get());
 
-            if (fluidStack.getFluid().isSame(AllFluids.POTION.get())) {
-                Component name = fluidStack.getDisplayName();
-                if (tooltip.isEmpty()) tooltip.add(0, name);
-                else tooltip.set(0, name);
-
-                ArrayList<Component> potionTooltip = new ArrayList<>();
-                PotionFluidHandler.addPotionTooltip(fluidStack, potionTooltip, 1);
-                tooltip.addAll(1, potionTooltip.stream().toList());
-            }
-
-            int amount = mbAmount == -1 ? fluidStack.getAmount() : mbAmount;
+            long amount = mbAmount == -1 ? fluidStack.getAmount() : mbAmount;
             Component text = Components.literal(String.valueOf(amount)).append(Lang.translateDirect("generic.unit.millibuckets")).withStyle(ChatFormatting.GOLD);
             if (tooltip.isEmpty()) tooltip.add(0, text);
             else {
-                List<Component> siblings = tooltip.get(0).getSiblings();
-                siblings.add(Components.literal(" "));
-                siblings.add(text);
+                Component name = tooltip.get(0);
+                Component nameWithAmount = name.copy().append(" ").append(text);
+                tooltip.set(0, nameWithAmount);
             }
         };
     }
@@ -186,6 +176,6 @@ public abstract class GreateRecipeCategory<T extends Recipe<?>> implements IReci
     @Override
     public void draw(T recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double x, double y) {
         IRecipeCategory.super.draw(recipe, recipeSlotsView, graphics, x, y);
-        graphics.drawString(Minecraft.getInstance().font, Lang.builder(Greate.MOD_ID).translate("jei.recipe_tier").component().getString() + ((TieredProcessingRecipe<?>) recipe).getRecipeTier().getName(), (float) x, (float) y, 0x3f3f3f, false);
+        graphics.drawString(Minecraft.getInstance().font, Lang.builder(Greate.MOD_ID).translate("jei.recipe_tier").component().getString() + ((TieredProcessingRecipe<?>) recipe).getRecipeTier().getName(), (int) x, (int) y, 0x3f3f3f, false);
     }
 }

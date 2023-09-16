@@ -3,8 +3,6 @@ package electrolyte.greate.content.processing.recipe;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.gregtechceu.gtceu.api.recipe.content.Content;
-import com.gregtechceu.gtceu.api.recipe.ingredient.SizedIngredient;
-import com.gregtechceu.gtceu.api.recipe.ingredient.forge.SizedIngredientImpl;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder.ProcessingRecipeParams;
@@ -16,6 +14,11 @@ import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import com.simibubi.create.foundation.utility.Pair;
 import com.tterrag.registrate.util.DataIngredient;
 import electrolyte.greate.GreateEnums.TIER;
+import io.github.fabricators_of_create.porting_lib.util.FluidStack;
+import net.fabricmc.fabric.api.resource.conditions.v1.ConditionJsonProvider;
+import net.fabricmc.fabric.api.resource.conditions.v1.DefaultResourceConditions;
+import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions;
+import net.fabricmc.fabric.impl.recipe.ingredient.CustomIngredientImpl;
 import net.minecraft.core.NonNullList;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
@@ -26,11 +29,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.common.crafting.conditions.ICondition;
-import net.minecraftforge.common.crafting.conditions.ModLoadedCondition;
-import net.minecraftforge.common.crafting.conditions.NotCondition;
-import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,11 +38,11 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
 
 
     protected TieredProcessingRecipeFactory<T> factory;
-    protected TieredProcessingRecipeBuilder.TieredProcessingRecipeParams params;
-    protected List<ICondition> recipeConditions;
+    protected TieredProcessingRecipeParams params;
+    protected List<ConditionJsonProvider> recipeConditions;
 
     public TieredProcessingRecipeBuilder(TieredProcessingRecipeFactory<T> factory, ResourceLocation recipeId) {
-        params = new TieredProcessingRecipeBuilder.TieredProcessingRecipeParams(recipeId);
+        params = new TieredProcessingRecipeParams(recipeId);
         recipeConditions = new ArrayList<>();
         this.factory = factory;
     }
@@ -61,7 +59,7 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
     public TieredProcessingRecipeBuilder<T> withItemIngredientsGT(List<Content> ingredients) {
         NonNullList<Ingredient> nonNullList = NonNullList.create();
         for(Content c : ingredients) {
-            SizedIngredient ingredient = (SizedIngredient) c.getContent();
+            CustomIngredientImpl ingredient = (CustomIngredientImpl) c.getContent();
             nonNullList.add(ingredient);
         }
         return withItemIngredients(nonNullList);
@@ -101,7 +99,7 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
     public TieredProcessingRecipeBuilder<T> withItemOutputsGT(List<Content> list, float extraTierPercent) {
         NonNullList<ProcessingOutput> nonNullList = NonNullList.create();
         for(Content c : list) {
-            ItemStack[] items = ((SizedIngredientImpl) c.content).getItems();
+            ItemStack[] items = ((CustomIngredientImpl) c.content).getItems();
             for (ItemStack item : items) {
                 if(c.chance == 1) {
                     nonNullList.add(new ProcessingOutput(item, c.chance));
@@ -155,7 +153,7 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
     }
 
     public void build(Consumer<FinishedRecipe> consumer) {
-        consumer.accept(new TieredProcessingRecipeBuilder.DataGenResult<>(build(), recipeConditions));
+        consumer.accept(new DataGenResult<>(build(), recipeConditions));
     }
 
     public TieredProcessingRecipeBuilder<T> require(TagKey<Item> tag) {
@@ -247,14 +245,14 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
     }
 
     public TieredProcessingRecipeBuilder<T> whenModLoaded(String modid) {
-        return withCondition(new ModLoadedCondition(modid));
+        return withCondition(DefaultResourceConditions.allModsLoaded(modid));
     }
 
     public TieredProcessingRecipeBuilder<T> whenModMissing(String modid) {
-        return withCondition(new NotCondition(new ModLoadedCondition(modid)));
+        return withCondition(DefaultResourceConditions.not(DefaultResourceConditions.allModsLoaded(modid)));
     }
 
-    public TieredProcessingRecipeBuilder<T> withCondition(ICondition condition) {
+    public TieredProcessingRecipeBuilder<T> withCondition(ConditionJsonProvider condition) {
         recipeConditions.add(condition);
         return this;
     }
@@ -293,13 +291,13 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
 
     public static class DataGenResult<S extends TieredProcessingRecipe<?>> implements FinishedRecipe {
 
-        private List<ICondition> recipeConditions;
+        private List<ConditionJsonProvider> recipeConditions;
         private TieredProcessingRecipeSerializer<S> serializer;
         private ResourceLocation id;
         private S recipe;
 
         @SuppressWarnings("unchecked")
-        public DataGenResult(S recipe, List<ICondition> recipeConditions) {
+        public DataGenResult(S recipe, List<ConditionJsonProvider> recipeConditions) {
             this.recipe = recipe;
             this.recipeConditions = recipeConditions;
             IRecipeTypeInfo recipeType = this.recipe.getTypeInfo();
@@ -320,8 +318,8 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
                 return;
 
             JsonArray conds = new JsonArray();
-            recipeConditions.forEach(c -> conds.add(CraftingHelper.serialize(c)));
-            json.add("conditions", conds);
+            recipeConditions.forEach(c -> conds.add(c.toJson()));
+            json.add(ResourceConditions.CONDITIONS_KEY, conds);
         }
 
         @Override

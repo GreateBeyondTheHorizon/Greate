@@ -1,0 +1,6 @@
+{
+  "parent": "greate:block/tungstensteel_crushing_wheel_textures",
+  "flip_v": true,
+  "model": "create:models/block/crushing_wheel/crushing_wheel.obj",
+  "porting_lib:loader": "porting_lib:obj"
+}

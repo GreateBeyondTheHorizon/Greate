@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "greate:aluminium_shafts"
+    },
+    "C": {
+      "tag": "c:mv_circuits"
+    },
+    "M": {
+      "item": "gtceu:mv_machine_hull"
+    },
+    "S": {
+      "tag": "minecraft:wooden_slabs"
+    },
+    "W": {
+      "tag": "greate:aluminium_cogwheels"
+    }
+  },
+  "pattern": [
+    " W ",
+    "SMS",
+    "CAC"
+  ],
+  "result": {
+    "item": "greate:aluminium_millstone"
+  },
+  "show_notification": true
+}

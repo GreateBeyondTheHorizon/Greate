@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "greate",
+  "version": "${version}",
+  "name": "Greate",
+  "description": "Gregifying Create.",
+  "authors": ["Electrolyte"],
+  "contact": {
+    "sources": "https://github.com/GreateBeyondTheHorizon/Greate"
+  },
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["electrolyte.greate.Greate"],
+    "fabric-datagen": ["electrolyte.greate.GreateDataGen"],
+    "jei_mod_plugin": ["electrolyte.greate.compat.jei.GreateJEI"]
+  },
+  "mixins": [
+    "greate.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.21",
+    "minecraft": "~1.20.1",
+    "java": ">=17",
+    "fabric-api": "*",
+    "create": "*",
+    "gtceu": "*"
+  }
+}

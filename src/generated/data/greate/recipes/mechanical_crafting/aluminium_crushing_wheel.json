@@ -1,0 +1,26 @@
+{
+  "type": "create:mechanical_crafting",
+  "acceptMirrored": true,
+  "key": {
+    "A": {
+      "item": "greate:aluminium_alloy"
+    },
+    "C": {
+      "tag": "c:mv_circuits"
+    },
+    "S": {
+      "tag": "greate:aluminium_shafts"
+    }
+  },
+  "pattern": [
+    " AAA ",
+    "AACAA",
+    "ACSCA",
+    "AACAA",
+    " AAA "
+  ],
+  "result": {
+    "count": 2,
+    "item": "greate:aluminium_crushing_wheel"
+  }
+}

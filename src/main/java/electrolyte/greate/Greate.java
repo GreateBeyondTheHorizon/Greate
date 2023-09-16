@@ -6,27 +6,23 @@ import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import dev.toma.configuration.Configuration;
 import dev.toma.configuration.config.format.ConfigFormats;
-import electrolyte.greate.foundation.data.recipe.GreateMechanicalCraftingRecipeGen;
-import electrolyte.greate.foundation.data.recipe.GreateStandardRecipeGen;
 import electrolyte.greate.registry.*;
 import it.unimi.dsi.fastutil.objects.ReferenceArrayList;
 import it.unimi.dsi.fastutil.objects.ReferenceLinkedOpenHashSet;
 import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet;
+import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.CreativeModeTab.DisplayItemsGenerator;
 import net.minecraft.world.item.CreativeModeTab.ItemDisplayParameters;
 import net.minecraft.world.item.CreativeModeTab.Output;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 
 import java.util.LinkedList;
@@ -34,24 +30,19 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
-@Mod(Greate.MOD_ID)
-public class Greate {
+public class Greate implements ModInitializer {
 
     public static final String MOD_ID = "greate";
     public static final Logger LOGGER = LogUtils.getLogger();
     public static GreateConfig CONFIG;
     public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(Greate.MOD_ID);
-    public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Greate.MOD_ID);
 
-    public Greate() {
+    @Override
+    public void onInitialize() {
         CONFIG = Configuration.registerConfig(GreateConfig.class, ConfigFormats.yaml()).getConfigInstance();
-        IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        MinecraftForge.EVENT_BUS.register(this);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::gatherData);
-        CREATIVE_TABS.register(eventBus);
-        REGISTRATE.registerEventListeners(eventBus);
+        CommonEvents.register();
         GreateLang.register();
+        GreatePartialModels.register();
         GreateTags.init();
         Cogwheels.register();
         CrushingWheels.register();
@@ -61,28 +52,20 @@ public class Greate {
         Shafts.register();
         ModBlockEntityTypes.register();
         ModItems.register();
-        ModRecipeTypes.register(eventBus);
+        ModRecipeTypes.register();
+        REGISTRATE.register();
     }
 
-    public static final RegistryObject<CreativeModeTab> GREATE_TAB = CREATIVE_TABS.register("greate",
-            () -> CreativeModeTab.builder()
+    public static final ResourceKey<CreativeModeTab> CREATIVE_TAB_KEY = ResourceKey.create(Registries.CREATIVE_MODE_TAB, new ResourceLocation(Greate.MOD_ID, "tab"));
+    public static final CreativeModeTab GREATE_TAB = Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, CREATIVE_TAB_KEY,
+            FabricItemGroup.builder()
                     .title(Component.translatable("itemGroup.greate"))
                     .icon(() -> new ItemStack(Items.GOLDEN_APPLE))
                     .displayItems(new GreateRegistrateDisplayItemsGenerator())
                     .build());
 
-    private void clientSetup(FMLClientSetupEvent event) {
-        GreatePartialModels.register();
-    }
-
-    private void gatherData(GatherDataEvent event) {
-        if(event.includeServer()) {
-            event.getGenerator().addProvider(true, new GreateStandardRecipeGen(event.getGenerator().getPackOutput()));
-            event.getGenerator().addProvider(true, new GreateMechanicalCraftingRecipeGen(event.getGenerator().getPackOutput()));
-        }
-    }
-
     public static class GreateRegistrateDisplayItemsGenerator implements DisplayItemsGenerator {
+
 
         @Override
         public void accept(ItemDisplayParameters itemDisplayParameters, Output output) {
@@ -169,7 +152,7 @@ public class Greate {
         private List<Item> collectBlocks(Predicate<Item> exclusionPredicate) {
             List<Item> items = new ReferenceArrayList<>();
             for(RegistryEntry<Block> entry : REGISTRATE.getAll(Registries.BLOCK)) {
-                if(!REGISTRATE.isInCreativeTab(entry, GREATE_TAB)) continue;
+                if(!REGISTRATE.isInCreativeTab(entry, CREATIVE_TAB_KEY)) continue;
                 Item item = entry.get().asItem();
                 if(item == Items.AIR) continue;
                 if(!exclusionPredicate.test(item)) items.add(item);
@@ -181,7 +164,7 @@ public class Greate {
         private List<Item> collectItems(Predicate<Item> exclusionPredicate) {
             List<Item> items = new ReferenceArrayList<>();
             for(RegistryEntry<Item> entry : REGISTRATE.getAll(Registries.ITEM)) {
-                if(!REGISTRATE.isInCreativeTab(entry, GREATE_TAB)) continue;
+                if(!REGISTRATE.isInCreativeTab(entry, CREATIVE_TAB_KEY)) continue;
                 if(entry.get() instanceof BlockItem) continue;
                 if(!exclusionPredicate.test(entry.get())) items.add(entry.get());
             }

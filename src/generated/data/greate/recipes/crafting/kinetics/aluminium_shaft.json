@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "greate:aluminium_alloy"
+    },
+    "S": {
+      "tag": "c:saws"
+    }
+  },
+  "pattern": [
+    "S ",
+    " A"
+  ],
+  "result": {
+    "count": 4,
+    "item": "greate:aluminium_shaft"
+  },
+  "show_notification": true
+}

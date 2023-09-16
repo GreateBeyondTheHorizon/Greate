@@ -3,9 +3,9 @@ package electrolyte.greate.content.decoration.girder;
 import com.simibubi.create.Create;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
+import io.github.fabricators_of_create.porting_lib.models.generators.block.MultiPartBlockStateBuilder;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;
 
 public class GreateGirderBlockStateGenerator {
 

@@ -10,9 +10,9 @@ import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilde
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeParams;
 import electrolyte.greate.registry.ModRecipeTypes;
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.Container;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -28,20 +28,20 @@ public class TieredCrushingRecipe extends TieredAbstractCrushingRecipe {
     }
 
     @Override
-    public boolean matches(RecipeWrapper pContainer, Level pLevel) {
+    public boolean matches(Container pContainer, Level pLevel) {
         if(pContainer.isEmpty()) return false;
         return ingredients.get(0).test(pContainer.getItem(0));
     }
 
     public static TieredCrushingRecipe convertNormalCrushing(Recipe<?> recipe, float extraPercent) {
-        return new TieredProcessingRecipeBuilder<>(TieredCrushingRecipe::new, recipe.getId()).duration(((ProcessingRecipe<?>) recipe).getProcessingDuration()).withItemIngredients(recipe.getIngredients()).output(recipe.getResultItem(Minecraft.getInstance().getConnection().registryAccess())).withItemOutputs(((ProcessingRecipe<?>) recipe).getRollableResults(), extraPercent).recipeTier(TIER.ULTRA_LOW).build();
+        return new TieredProcessingRecipeBuilder<>(TieredCrushingRecipe::new, recipe.getId()).duration(((ProcessingRecipe<?>) recipe).getProcessingDuration()).withItemIngredients(recipe.getIngredients()).output(recipe.getResultItem(Minecraft.getInstance().level.registryAccess())).withItemOutputs(((ProcessingRecipe<?>) recipe).getRollableResults(), extraPercent).recipeTier(TIER.ULTRA_LOW).build();
     }
 
     public static TieredCrushingRecipe convertTieredCrushing(Recipe<?> recipe, float extraPercent) {
-        return new TieredProcessingRecipeBuilder<>(TieredCrushingRecipe::new, recipe.getId()).duration(((ProcessingRecipe<?>) recipe).getProcessingDuration()).withItemIngredients(recipe.getIngredients()).output(recipe.getResultItem(Minecraft.getInstance().getConnection().registryAccess())).withItemOutputs(((ProcessingRecipe<?>) recipe).getRollableResults(), extraPercent).recipeTier(((TieredProcessingRecipe<?>) recipe).getRecipeTier()).build();
+        return new TieredProcessingRecipeBuilder<>(TieredCrushingRecipe::new, recipe.getId()).duration(((ProcessingRecipe<?>) recipe).getProcessingDuration()).withItemIngredients(recipe.getIngredients()).output(recipe.getResultItem(Minecraft.getInstance().level.registryAccess())).withItemOutputs(((ProcessingRecipe<?>) recipe).getRollableResults(), extraPercent).recipeTier(((TieredProcessingRecipe<?>) recipe).getRecipeTier()).build();
     }
 
     public static TieredCrushingRecipe convertGT(GTRecipe recipe, float extraPercent) {
-        return new TieredProcessingRecipeBuilder<>(TieredCrushingRecipe::new, recipe.getId()).duration(recipe.duration).withItemIngredientsGT(recipe.getInputContents(ItemRecipeCapability.CAP)).output(recipe.getResultItem(Minecraft.getInstance().getConnection().registryAccess())).withItemOutputsGT(recipe.getOutputContents(ItemRecipeCapability.CAP), extraPercent).recipeTier(TIER.convertGTEUToTier(recipe.getTickInputContents(EURecipeCapability.CAP))).build();
+        return new TieredProcessingRecipeBuilder<>(TieredCrushingRecipe::new, recipe.getId()).duration(recipe.duration).withItemIngredientsGT(recipe.getInputContents(ItemRecipeCapability.CAP)).output(recipe.getResultItem(Minecraft.getInstance().level.registryAccess())).withItemOutputsGT(recipe.getOutputContents(ItemRecipeCapability.CAP), extraPercent).recipeTier(TIER.convertGTEUToTier(recipe.getTickInputContents(EURecipeCapability.CAP))).build();
     }
 }

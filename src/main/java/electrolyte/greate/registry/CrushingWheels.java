@@ -22,7 +22,7 @@ import static electrolyte.greate.Greate.REGISTRATE;
 public class CrushingWheels {
 
     static {
-        REGISTRATE.useCreativeTab(Greate.GREATE_TAB);
+        REGISTRATE.useCreativeTab(Greate.CREATIVE_TAB_KEY);
     }
 
     public static ArrayList<TieredCrushingWheelBlock> CRUSHING_WHEELS = new ArrayList<>();

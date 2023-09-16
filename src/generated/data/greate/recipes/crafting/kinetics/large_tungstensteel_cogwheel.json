@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": {
+      "tag": "c:files"
+    },
+    "P": {
+      "tag": "c:titanium_plates"
+    },
+    "S": {
+      "item": "greate:tungstensteel_shaft"
+    }
+  },
+  "pattern": [
+    "SP",
+    "PF"
+  ],
+  "result": {
+    "item": "greate:large_tungstensteel_cogwheel"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,26 @@
+{
+  "type": "create:mechanical_crafting",
+  "acceptMirrored": true,
+  "key": {
+    "A": {
+      "item": "greate:titanium_alloy"
+    },
+    "C": {
+      "tag": "c:ev_circuits"
+    },
+    "S": {
+      "tag": "greate:titanium_shafts"
+    }
+  },
+  "pattern": [
+    " AAA ",
+    "AACAA",
+    "ACSCA",
+    "AACAA",
+    " AAA "
+  ],
+  "result": {
+    "count": 2,
+    "item": "greate:titanium_crushing_wheel"
+  }
+}

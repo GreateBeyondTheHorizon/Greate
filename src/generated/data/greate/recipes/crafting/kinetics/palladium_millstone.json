@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "greate:palladium_shafts"
+    },
+    "C": {
+      "tag": "c:luv_circuits"
+    },
+    "M": {
+      "item": "gtceu:luv_machine_hull"
+    },
+    "S": {
+      "tag": "minecraft:wooden_slabs"
+    },
+    "W": {
+      "tag": "greate:palladium_cogwheels"
+    }
+  },
+  "pattern": [
+    " W ",
+    "SMS",
+    "CAC"
+  ],
+  "result": {
+    "item": "greate:palladium_millstone"
+  },
+  "show_notification": true
+}

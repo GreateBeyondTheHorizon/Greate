@@ -11,6 +11,7 @@ import com.simibubi.create.compat.jei.DoubleItemIcon;
 import com.simibubi.create.compat.jei.EmptyBackground;
 import com.simibubi.create.compat.jei.ItemIcon;
 import com.simibubi.create.foundation.config.ConfigBase.ConfigBool;
+import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.infrastructure.config.AllConfigs;
@@ -26,6 +27,7 @@ import electrolyte.greate.content.kinetics.millstone.TieredMillingRecipe;
 import electrolyte.greate.registry.CrushingWheels;
 import electrolyte.greate.registry.Millstones;
 import electrolyte.greate.registry.ModRecipeTypes;
+import io.github.fabricators_of_create.porting_lib.mixin.accessors.common.accessor.RecipeManagerAccessor;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
@@ -305,7 +307,7 @@ public class GreateJEI implements IModPlugin {
     }
 
     public static <T extends Recipe<?>> void consumeTypedRecipes(Consumer<T> consumer, RecipeType<?> type) {
-        Map<ResourceLocation, Recipe<?>> map = Minecraft.getInstance().getConnection().getRecipeManager().recipes.get(type);
+        Map<ResourceLocation, Recipe<?>> map = ((RecipeManagerAccessor) Minecraft.getInstance().getConnection().getRecipeManager()).port_lib$getRecipes().get(type);
         if(map != null) {
             map.values().forEach(recipe -> consumer.accept((T) recipe));
         }
@@ -341,6 +343,6 @@ public class GreateJEI implements IModPlugin {
 
     public static boolean doOutputsMatch(Recipe<?> recipe1, Recipe<?> recipe2) {
         RegistryAccess registryAccess = Minecraft.getInstance().level.registryAccess();
-        return ItemStack.isSameItem(recipe1.getResultItem(registryAccess), recipe2.getResultItem(registryAccess));
+        return ItemHelper.sameItem(recipe1.getResultItem(registryAccess), recipe2.getResultItem(registryAccess));
     }
 }

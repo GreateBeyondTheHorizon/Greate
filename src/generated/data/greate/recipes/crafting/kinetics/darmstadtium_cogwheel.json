@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": {
+      "tag": "c:files"
+    },
+    "P": {
+      "tag": "c:naquadah_plates"
+    },
+    "S": {
+      "item": "greate:darmstadtium_shaft"
+    }
+  },
+  "pattern": [
+    "SP",
+    "F "
+  ],
+  "result": {
+    "item": "greate:darmstadtium_cogwheel"
+  },
+  "show_notification": true
+}

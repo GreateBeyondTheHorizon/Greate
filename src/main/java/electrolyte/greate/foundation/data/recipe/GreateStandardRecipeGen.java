@@ -2,7 +2,6 @@ package electrolyte.greate.foundation.data.recipe;
 
 import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableList;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
@@ -11,8 +10,11 @@ import com.simibubi.create.foundation.utility.RegisteredObjects;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import electrolyte.greate.Greate;
 import electrolyte.greate.registry.*;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.resource.conditions.v1.ConditionJsonProvider;
+import net.fabricmc.fabric.api.resource.conditions.v1.DefaultResourceConditions;
 import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.data.PackOutput;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -23,11 +25,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.common.crafting.conditions.ICondition;
-import net.minecraftforge.common.crafting.conditions.ModLoadedCondition;
-import net.minecraftforge.common.crafting.conditions.NotCondition;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,10 +32,10 @@ import java.util.function.UnaryOperator;
 
 @SuppressWarnings("unused")
 public class GreateStandardRecipeGen extends GreateRecipeProvider {
-    public GreateStandardRecipeGen(PackOutput output) {
+
+    public GreateStandardRecipeGen(FabricDataOutput output) {
         super(output);
     }
-
     @Override
     public String getName() {
         return "Greate's Recipes";
@@ -48,7 +45,6 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
     private Marker CONVERSION_TEMP = enterFolder("conversion");
 
     GeneratedRecipe
-
             SHAFT_CYCLE = conversionCycle(ImmutableList.of(AllBlocks.SHAFT, Shafts.ANDESITE_SHAFT)),
             COGWHEEL_CYCLE = conversionCycle(ImmutableList.of(AllBlocks.COGWHEEL, Cogwheels.ANDESITE_COGWHEEL)),
             LARGE_COGWHEEL_CYCLE = conversionCycle(ImmutableList.of(AllBlocks.LARGE_COGWHEEL, Cogwheels.LARGE_ANDESITE_COGWHEEL)),
@@ -57,19 +53,19 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
     private Marker MATERIALS = enterFolder("materials");
 
     GeneratedRecipe
-            ANDESITE_ALLOY = create(AllItems.ANDESITE_ALLOY).unlockedByTag(GreateTags.forgeItemTag("nuggets/iron"))
-            .viaShaped(b -> b.define('N', GreateTags.forgeItemTag("nuggets/iron"))
+            ANDESITE_ALLOY = create(AllItems.ANDESITE_ALLOY).unlockedByTag(GreateTags.forgeItemTag("iron_nuggets"))
+            .viaShaped(b -> b.define('N', GreateTags.forgeItemTag("iron_nuggets"))
                     .define('A', Blocks.ANDESITE)
-                    .define('F', GreateTags.forgeItemTag("tools/files"))
-                    .define('H', GreateTags.forgeItemTag("tools/hammers"))
+                    .define('F', GreateTags.forgeItemTag("files"))
+                    .define('H', GreateTags.forgeItemTag("hammers"))
                     .pattern("NA")
                     .pattern("AN")
                     .pattern("FH")),
-            ANDESITE_ALLOY_FROM_ZINC = create(AllItems.ANDESITE_ALLOY).withSuffix("_from_zinc").unlockedByTag(GreateTags.forgeItemTag("nuggets/zinc"))
-                    .viaShaped(b -> b.define('N', GreateTags.forgeItemTag("nuggets/zinc"))
+            ANDESITE_ALLOY_FROM_ZINC = create(AllItems.ANDESITE_ALLOY).withSuffix("_from_zinc").unlockedByTag(GreateTags.forgeItemTag("zinc_nuggets"))
+                    .viaShaped(b -> b.define('N', GreateTags.forgeItemTag("zinc_nuggets"))
                             .define('A', Blocks.ANDESITE)
-                            .define('F', GreateTags.forgeItemTag("tools/files"))
-                            .define('H', GreateTags.forgeItemTag("tools/hammers"))
+                            .define('F', GreateTags.forgeItemTag("files"))
+                            .define('H', GreateTags.forgeItemTag("hammers"))
                             .pattern("NA")
                             .pattern("AN")
                             .pattern("FH")),
@@ -88,7 +84,7 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
     GeneratedRecipe
             ANDESITE_SHAFT = create(Shafts.ANDESITE_SHAFT).returns(4).unlockedBy(AllItems.ANDESITE_ALLOY::get)
             .viaShaped(b -> b.define('A', AllItems.ANDESITE_ALLOY.get())
-                    .define('S', GreateTags.forgeItemTag("tools/saws"))
+                    .define('S', GreateTags.forgeItemTag("saws"))
                     .pattern("S ")
                     .pattern(" A")),
             STEEL_SHAFT = createMaterialShaftRecipe(Shafts.STEEL_SHAFT),
@@ -168,11 +164,11 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
             NEUTRONIUM_MILLSTONE = createMaterialMillstoneRecipe(Millstones.NEUTRONIUM_MILLSTONE, "uhv");
     private GeneratedRecipe createMaterialAlloyRecipe(ItemProviderEntry<? extends ItemLike> alloy) {
         String material = alloy.getId().getPath().substring(0, alloy.getId().getPath().length() - 6);
-        return create(alloy).unlockedByTag(GreateTags.forgeItemTag("ingots/" + material))
-                .viaShaped(b -> b.define('N', GreateTags.forgeItemTag("nuggets/" + material))
+        return create(alloy).unlockedByTag(GreateTags.forgeItemTag(material + "_ingots"))
+                .viaShaped(b -> b.define('N', GreateTags.forgeItemTag(material + "_nuggets"))
                         .define('A', Blocks.ANDESITE)
-                        .define('F', GreateTags.forgeItemTag("tools/files"))
-                        .define('H', GreateTags.forgeItemTag("tools/hammers"))
+                        .define('F', GreateTags.forgeItemTag("files"))
+                        .define('H', GreateTags.forgeItemTag("hammers"))
                         .pattern("NA")
                         .pattern("AN")
                         .pattern("FH"));
@@ -180,9 +176,9 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
 
     private GeneratedRecipe createMaterialShaftRecipe(ItemProviderEntry<? extends ItemLike> shaft) {
         String material = shaft.getId().getPath().substring(0, shaft.getId().getPath().length() - 6);
-        return create(shaft).returns(4).unlockedBy(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Greate.MOD_ID, material + "_alloy"))::asItem)
-                .viaShaped(b -> b.define('A', ForgeRegistries.ITEMS.getValue(new ResourceLocation(Greate.MOD_ID, material + "_alloy")))
-                        .define('S', GreateTags.forgeItemTag("tools/saws"))
+        return create(shaft).returns(4).unlockedBy(BuiltInRegistries.ITEM.get(new ResourceLocation(Greate.MOD_ID, material + "_alloy"))::asItem)
+                .viaShaped(b -> b.define('A', BuiltInRegistries.ITEM.get(new ResourceLocation(Greate.MOD_ID, material + "_alloy")))
+                        .define('S', GreateTags.forgeItemTag("saws"))
                         .pattern("S ")
                         .pattern(" A"));
     }
@@ -190,8 +186,8 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
     private GeneratedRecipe createMaterialCogwheelRecipe(ItemProviderEntry<? extends ItemLike> cogwheel, ItemProviderEntry<? extends ItemLike> shaft, String material) {
         return create(cogwheel).unlockedBy(shaft::get)
                 .viaShaped(b -> b.define('S', shaft.get())
-                        .define('P', GreateTags.forgeItemTag("plates/" + material))
-                        .define('F', GreateTags.forgeItemTag("tools/files"))
+                        .define('P', GreateTags.forgeItemTag(material + "_plates"))
+                        .define('F', GreateTags.forgeItemTag("files"))
                         .pattern("SP")
                         .pattern("F "));
     }
@@ -199,8 +195,8 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
     private GeneratedRecipe createMaterialLargeCogwheelRecipe(ItemProviderEntry<? extends ItemLike> cogwheel, ItemProviderEntry<? extends ItemLike> shaft, String material) {
         return create(cogwheel).unlockedBy(shaft::get)
                 .viaShaped(b -> b.define('S', shaft.get())
-                        .define('P', GreateTags.forgeItemTag("plates/" + material))
-                        .define('F', GreateTags.forgeItemTag("tools/files"))
+                        .define('P', GreateTags.forgeItemTag(material + "_plates"))
+                        .define('F', GreateTags.forgeItemTag("files"))
                         .pattern("SP")
                         .pattern("PF"));
     }
@@ -208,20 +204,20 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
     private GeneratedRecipe createMaterialLargeCogwheelFromSmallRecipe(ItemProviderEntry<? extends ItemLike> cogwheel, ItemProviderEntry<? extends ItemLike> smallCogwheel, String material) {
         return create(cogwheel).withSuffix("from_little").unlockedBy(smallCogwheel::get)
                 .viaShaped(b -> b.define('S', smallCogwheel.get())
-                        .define('P', GreateTags.forgeItemTag("plates/" + material))
-                        .define('F', GreateTags.forgeItemTag("tools/files"))
+                        .define('P', GreateTags.forgeItemTag(material + "_plates"))
+                        .define('F', GreateTags.forgeItemTag("files"))
                         .pattern("SP")
                         .pattern("F "));
     }
 
     private GeneratedRecipe createMaterialMillstoneRecipe(ItemProviderEntry<? extends ItemLike> millstone, String tier) {
         String material = millstone.getId().getPath().substring(0, millstone.getId().getPath().length() - 10);
-        return create(millstone).unlockedBy(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("gtceu", tier + "_machine_hull"))::asItem)
-                .viaShaped(b -> b.define('W', GreateTags.greateItemTag("cogwheels/" + material))
+        return create(millstone).unlockedBy(BuiltInRegistries.BLOCK.get(new ResourceLocation("gtceu", tier + "_machine_hull"))::asItem)
+                .viaShaped(b -> b.define('W', GreateTags.greateItemTag(material + "_cogwheels"))
                         .define('S', GreateTags.mcItemTag("wooden_slabs"))
-                        .define('M', ForgeRegistries.BLOCKS.getValue(new ResourceLocation("gtceu", tier + "_machine_hull")))
-                        .define('C', GreateTags.forgeItemTag("circuits/" + tier))
-                        .define('A', GreateTags.greateItemTag("shafts/" + material))
+                        .define('M', BuiltInRegistries.BLOCK.get(new ResourceLocation("gtceu", tier + "_machine_hull")))
+                        .define('C', GreateTags.forgeItemTag(tier + "_circuits"))
+                        .define('A', GreateTags.greateItemTag(material + "_shafts"))
                         .pattern(" W ")
                         .pattern("SMS")
                         .pattern("CAC"));
@@ -229,11 +225,11 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
 
     private GeneratedRecipe createMaterialGearboxRecipe(ItemProviderEntry<? extends ItemLike> gearbox) {
         String material = gearbox.getId().getPath().substring(0, gearbox.getId().getPath().length() - 8);
-        return create(gearbox).unlockedByTag(GreateTags.greateItemTag("cogwheels/" + material))
-                .viaShaped(b -> b.define('S', GreateTags.greateItemTag("shafts/" + material))
+        return create(gearbox).unlockedByTag(GreateTags.greateItemTag(material + "_cogwheels"))
+                .viaShaped(b -> b.define('S', GreateTags.greateItemTag(material + "_shafts"))
                         .define('M', AllBlocks.ANDESITE_CASING.get())
-                        .define('F', GreateTags.forgeItemTag("tools/files"))
-                        .define('H', GreateTags.forgeItemTag("tools/hammers"))
+                        .define('F', GreateTags.forgeItemTag("files"))
+                        .define('H', GreateTags.forgeItemTag("hammers"))
                         .pattern(" S ")
                         .pattern("SMS")
                         .pattern("FSH"));
@@ -277,7 +273,7 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
         private String suffix;
         private Supplier<? extends ItemLike> result;
         private ResourceLocation compatDatagenOutput;
-        List<ICondition> recipeConditions;
+        List<ConditionJsonProvider> recipeConditions;
 
         private Supplier<ItemPredicate> unlockedBy;
         private int amount;
@@ -319,14 +315,14 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
         }
 
         GreateStandardRecipeGen.GeneratedRecipeBuilder whenModLoaded(String modid) {
-            return withCondition(new ModLoadedCondition(modid));
+            return withCondition(DefaultResourceConditions.allModsLoaded(modid));
         }
 
         GreateStandardRecipeGen.GeneratedRecipeBuilder whenModMissing(String modid) {
-            return withCondition(new NotCondition(new ModLoadedCondition(modid)));
+            return withCondition(DefaultResourceConditions.not(DefaultResourceConditions.allModsLoaded(modid)));
         }
 
-        GreateStandardRecipeGen.GeneratedRecipeBuilder withCondition(ICondition condition) {
+        GreateStandardRecipeGen.GeneratedRecipeBuilder withCondition(ConditionJsonProvider condition) {
             recipeConditions.add(condition);
             return this;
         }
@@ -471,10 +467,10 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
 
         private FinishedRecipe wrapped;
         private ResourceLocation outputOverride;
-        private List<ICondition> conditions;
+        private List<ConditionJsonProvider> conditions;
 
         public ModdedCookingRecipeResult(FinishedRecipe wrapped, ResourceLocation outputOverride,
-                                         List<ICondition> conditions) {
+                                         List<ConditionJsonProvider> conditions) {
             this.wrapped = wrapped;
             this.outputOverride = outputOverride;
             this.conditions = conditions;
@@ -505,9 +501,7 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
             wrapped.serializeRecipeData(object);
             object.addProperty("result", outputOverride.toString());
 
-            JsonArray conds = new JsonArray();
-            conditions.forEach(c -> conds.add(CraftingHelper.serialize(c)));
-            object.add("conditions", conds);
+            ConditionJsonProvider.write(object, conditions.toArray(new ConditionJsonProvider[0]));
         }
     }
 }

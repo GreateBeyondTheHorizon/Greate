@@ -20,6 +20,12 @@ import com.simibubi.create.infrastructure.config.AllConfigs;
 import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import electrolyte.greate.registry.ModRecipeTypes;
+import io.github.fabricators_of_create.porting_lib.util.EnvExecutor;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
+import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
+import net.fabricmc.fabric.api.transfer.v1.storage.base.SidedStorageBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
@@ -41,39 +47,28 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public class TieredCrushingWheelControllerBlockEntity extends SmartBlockEntity {
+public class TieredCrushingWheelControllerBlockEntity extends SmartBlockEntity implements SidedStorageBlockEntity {
 
     public Entity processingEntity;
     private UUID entityUUID;
     protected boolean searchForEntity;
     public ProcessingInventory inventory;
-    protected LazyOptional<IItemHandlerModifiable> handler = LazyOptional.of(() -> inventory);
-    private RecipeWrapper wrapper;
     public float crushingSpeed;
 
     public TieredCrushingWheelControllerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         inventory = new ProcessingInventory(this::itemInserted) {
             @Override
-            public boolean isItemValid(int slot, ItemStack stack) {
+            public boolean isItemValid(int slot, ItemVariant stack) {
                 return super.isItemValid(slot, stack) && processingEntity == null;
             }
         };
-        wrapper = new RecipeWrapper(inventory);
     }
 
     @Override
@@ -99,7 +94,7 @@ public class TieredCrushingWheelControllerBlockEntity extends SmartBlockEntity {
 
         if(!isOccupied()) return;
         if(crushingSpeed == 0) return;
-        if(level.isClientSide) DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> this::tickAudio);
+        if(level.isClientSide) EnvExecutor.runWhenOn(EnvType.CLIENT, () -> this::tickAudio);
 
         float speed = crushingSpeed * 4;
 
@@ -130,11 +125,11 @@ public class TieredCrushingWheelControllerBlockEntity extends SmartBlockEntity {
                 if(behaviour != null) {
                     boolean changed = false;
                     if(!behaviour.canInsertFromSide(dir)) return;
-                    for(int slot = 0; slot < inventory.getSlots(); slot++) {
+                    for(int slot = 0; slot < inventory.getSlotCount(); slot++) {
                         ItemStack stack = inventory.getStackInSlot(slot);
                         if(stack.isEmpty()) continue;
                         ItemStack remainder = behaviour.handleInsertion(stack, dir, false);
-                        if(remainder.equals(stack, false)) continue;
+                        if(ItemStack.matches(stack, remainder)) continue;
                         inventory.setStackInSlot(slot, remainder);
                         changed = true;
                     }
@@ -146,12 +141,12 @@ public class TieredCrushingWheelControllerBlockEntity extends SmartBlockEntity {
                 }
             }
 
-            for(int slot = 0; slot < inventory.getSlots(); slot++) {
+            for(int slot = 0; slot < inventory.getSlotCount(); slot++) {
                 ItemStack stack = inventory.getStackInSlot(slot);
                 if(stack.isEmpty()) continue;
                 ItemEntity itemEntity = new ItemEntity(level, outPos.x, outPos.y, outPos.z, stack);
                 itemEntity.setDeltaMovement(outSpeed);
-                itemEntity.getPersistentData().put("BypassCrushingWheel", NbtUtils.writeBlockPos(worldPosition));
+                itemEntity.getCustomData().put("BypassCrushingWheel", NbtUtils.writeBlockPos(worldPosition));
                 level.addFreshEntity(itemEntity);
             }
             inventory.clear();
@@ -208,7 +203,7 @@ public class TieredCrushingWheelControllerBlockEntity extends SmartBlockEntity {
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void tickAudio() {
         float pitch = Mth.clamp((crushingSpeed / 256F) + 0.45F, 0.85F, 1F);
         if(entityUUID == null && inventory.getStackInSlot(0).isEmpty()) return;
@@ -238,7 +233,7 @@ public class TieredCrushingWheelControllerBlockEntity extends SmartBlockEntity {
     }
 
     private void applyRecipe() {
-        Optional<ProcessingRecipe<RecipeWrapper>> recipe = findRecipe();
+        Optional<TieredCrushingRecipe> recipe = findRecipe();
         List<ItemStack> list = new ArrayList<>();
         if(recipe.isPresent()) {
             int rolls = inventory.getStackInSlot(0).getCount();
@@ -250,7 +245,7 @@ public class TieredCrushingWheelControllerBlockEntity extends SmartBlockEntity {
                     ItemHelper.addToList(stack, list);
                 }
             }
-            for(int slot = 0; slot < list.size() && slot + 1 < inventory.getSlots(); slot++) {
+            for(int slot = 0; slot < list.size() && slot + 1 < inventory.getSlotCount(); slot++) {
                 inventory.setStackInSlot(slot + 1, list.get(slot));
             }
         } else {
@@ -258,27 +253,32 @@ public class TieredCrushingWheelControllerBlockEntity extends SmartBlockEntity {
         }
     }
 
-    public Optional<ProcessingRecipe<RecipeWrapper>> findRecipe() {
-        Optional<ProcessingRecipe<RecipeWrapper>> crushingRecipe = AllRecipeTypes.CRUSHING.find(wrapper, level);
+    @Override
+    public Storage<ItemVariant> getItemStorage(Direction side) {
+        return inventory;
+    }
+
+    public Optional<TieredCrushingRecipe> findRecipe() {
+        Optional<TieredCrushingRecipe> crushingRecipe = AllRecipeTypes.CRUSHING.find(inventory, level);
         if(crushingRecipe.isPresent()) {
-            TieredProcessingRecipe<RecipeWrapper> modifiedRecipe = TieredCrushingRecipe.convertNormalCrushing(crushingRecipe.get(), getExtraPercent(0.085F, crushingRecipe.get()));
+            TieredCrushingRecipe modifiedRecipe = TieredCrushingRecipe.convertNormalCrushing(crushingRecipe.get(), getExtraPercent(0.085F, crushingRecipe.get()));
             return Optional.of(modifiedRecipe);
         }
-        crushingRecipe = AllRecipeTypes.MILLING.find(wrapper, level);
+        crushingRecipe = AllRecipeTypes.MILLING.find(inventory, level);
         if(crushingRecipe.isPresent()) {
-            TieredProcessingRecipe<RecipeWrapper> modifiedRecipe = TieredCrushingRecipe.convertNormalCrushing(crushingRecipe.get(), getExtraPercent(0.085F, crushingRecipe.get()));
+            TieredCrushingRecipe modifiedRecipe = TieredCrushingRecipe.convertNormalCrushing(crushingRecipe.get(), getExtraPercent(0.085F, crushingRecipe.get()));
             return Optional.of(modifiedRecipe);
         }
-        crushingRecipe = ModRecipeTypes.CRUSHING.find(wrapper, level, ((TieredCrushingWheelControllerBlock) getBlockState().getBlock()).getTier());
+        crushingRecipe = ModRecipeTypes.CRUSHING.find(inventory, level, ((TieredCrushingWheelControllerBlock) getBlockState().getBlock()).getTier());
         if(crushingRecipe.isPresent()) {
-            TieredProcessingRecipe<RecipeWrapper> modifiedRecipe = TieredCrushingRecipe.convertTieredCrushing(crushingRecipe.get(), getExtraPercent(0.085F, crushingRecipe.get()));
+            TieredCrushingRecipe modifiedRecipe = TieredCrushingRecipe.convertTieredCrushing(crushingRecipe.get(), getExtraPercent(0.085F, crushingRecipe.get()));
             return Optional.of(modifiedRecipe);
         }
         Optional<GTRecipe> recipe = level.getRecipeManager().getAllRecipesFor(GTRecipeTypes.MACERATOR_RECIPES).stream().filter(r ->
-                ((Ingredient) r.getInputContents(ItemRecipeCapability.CAP).get(0).getContent()).test(wrapper.getItem(0))).findFirst();
+                ((Ingredient) r.getInputContents(ItemRecipeCapability.CAP).get(0).getContent()).test(inventory.getItem(0))).findFirst();
         if(recipe.isPresent()) {
-            TieredProcessingRecipe<RecipeWrapper> convertedRecipe = TieredCrushingRecipe.convertGT(recipe.get(), getExtraPercentGT(0.085F, recipe.get()));
-            if(convertedRecipe.getRecipeTier().compareTo(((TieredCrushingWheelBlock) TieredCrushingWheelControllerBlock.MAP.get(getBlockState().getBlock())).getTier()) <= 0) {
+            TieredCrushingRecipe convertedRecipe = TieredCrushingRecipe.convertGT(recipe.get(), getExtraPercentGT(0.085F, recipe.get()));
+            if(convertedRecipe.getRecipeTier().compareTo(((TieredCrushingWheelControllerBlock) getBlockState().getBlock()).getTier()) <= 0) {
                 return Optional.of(convertedRecipe);
             }
         }
@@ -323,15 +323,9 @@ public class TieredCrushingWheelControllerBlockEntity extends SmartBlockEntity {
     }
 
     private void itemInserted(ItemStack stack) {
-        Optional<ProcessingRecipe<RecipeWrapper>> recipe = findRecipe();
+        Optional<TieredCrushingRecipe> recipe = findRecipe();
         inventory.remainingTime = recipe.map(ProcessingRecipe::getProcessingDuration).orElse(100);
         inventory.appliedRecipe = false;
-    }
-
-    @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-        if(cap == ForgeCapabilities.ITEM_HANDLER) return handler.cast();
-        return super.getCapability(cap, side);
     }
 
     public void clear() {

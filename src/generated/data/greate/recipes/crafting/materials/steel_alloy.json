@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:andesite"
+    },
+    "F": {
+      "tag": "c:files"
+    },
+    "H": {
+      "tag": "c:hammers"
+    },
+    "N": {
+      "tag": "c:steel_nuggets"
+    }
+  },
+  "pattern": [
+    "NA",
+    "AN",
+    "FH"
+  ],
+  "result": {
+    "item": "greate:steel_alloy"
+  },
+  "show_notification": true
+}

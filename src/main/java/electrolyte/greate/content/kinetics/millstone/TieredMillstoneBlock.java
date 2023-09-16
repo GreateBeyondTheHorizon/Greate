@@ -12,6 +12,12 @@ import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredPartialModel;
 import electrolyte.greate.registry.Millstones;
 import electrolyte.greate.registry.ModBlockEntityTypes;
+import io.github.fabricators_of_create.porting_lib.transfer.TransferUtil;
+import io.github.fabricators_of_create.porting_lib.transfer.item.ItemHandlerHelper;
+import io.github.fabricators_of_create.porting_lib.transfer.item.ItemStackHandler;
+import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
+import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
+import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -33,11 +39,6 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.ItemStackHandler;
 
 import java.util.List;
 
@@ -74,8 +75,8 @@ public class TieredMillstoneBlock extends KineticBlock implements IBE<TieredMill
 
         withBlockEntityDo(pLevel, pPos, millstone -> {
             boolean emptyOutput = true;
-            IItemHandlerModifiable inv = millstone.outputInv;
-            for(int slot = 0; slot < inv.getSlots(); slot++) {
+            ItemStackHandler inv = millstone.outputInv;
+            for(int slot = 0; slot < inv.getSlotCount(); slot++) {
                 ItemStack stackInSlot = inv.getStackInSlot(slot);
                 if(!stackInSlot.isEmpty()) emptyOutput = false;
                 pPlayer.getInventory().placeItemBackInInventory(stackInSlot);
@@ -84,7 +85,7 @@ public class TieredMillstoneBlock extends KineticBlock implements IBE<TieredMill
 
             if(emptyOutput) {
                 inv = millstone.inputInv;
-                for(int slot = 0; slot < inv.getSlots(); slot++) {
+                for(int slot = 0; slot < inv.getSlotCount(); slot++) {
                     pPlayer.getInventory().placeItemBackInInventory(inv.getStackInSlot(slot));
                     inv.setStackInSlot(slot, ItemStack.EMPTY);
                 }
@@ -111,14 +112,15 @@ public class TieredMillstoneBlock extends KineticBlock implements IBE<TieredMill
             }
         if(millstone == null) return;
 
-        LazyOptional<IItemHandler> capability = millstone.getCapability(ForgeCapabilities.ITEM_HANDLER);
-        if(!capability.isPresent()) return;
-
-        ItemStack remainder = capability.orElse(new ItemStackHandler()).insertItem(0, itemEntity.getItem(), false);
-        if(remainder.isEmpty()) itemEntity.discard();
-        if(remainder.getCount() < itemEntity.getItem().getCount()) {
-            itemEntity.setItem(remainder);
-        }
+        Storage<ItemVariant> handler = millstone.getItemStorage(null);
+        if(handler == null) return;
+        try (Transaction t = TransferUtil.getTransaction()) {
+           ItemStack stack = itemEntity.getItem();
+           long inserted = handler.insert(ItemVariant.of(stack), stack.getCount(), t);
+           if(inserted == stack.getCount()) itemEntity.discard();
+           else itemEntity.setItem(ItemHandlerHelper.copyStackWithSize(stack, (int) (stack.getCount() - inserted)));
+           t.commit();
+       }
     }
 
     @Override

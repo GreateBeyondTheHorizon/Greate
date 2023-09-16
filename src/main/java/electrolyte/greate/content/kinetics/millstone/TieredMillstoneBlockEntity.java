@@ -16,46 +16,51 @@ import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntit
 import electrolyte.greate.content.kinetics.simpleRelays.TieredKineticBlockEntity;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import electrolyte.greate.registry.ModRecipeTypes;
+import io.github.fabricators_of_create.porting_lib.transfer.TransferUtil;
+import io.github.fabricators_of_create.porting_lib.transfer.ViewOnlyWrappedStorageView;
+import io.github.fabricators_of_create.porting_lib.transfer.item.ItemStackHandler;
+import io.github.fabricators_of_create.porting_lib.transfer.item.ItemStackHandlerContainer;
+import io.github.fabricators_of_create.porting_lib.transfer.item.ItemStackHandlerSlot;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
+import net.fabricmc.fabric.api.transfer.v1.storage.Storage;
+import net.fabricmc.fabric.api.transfer.v1.storage.StorageView;
+import net.fabricmc.fabric.api.transfer.v1.storage.base.CombinedStorage;
+import net.fabricmc.fabric.api.transfer.v1.storage.base.SidedStorageBlockEntity;
+import net.fabricmc.fabric.api.transfer.v1.transaction.Transaction;
+import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
+import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.wrapper.CombinedInvWrapper;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
-public class TieredMillstoneBlockEntity extends TieredKineticBlockEntity implements ITieredKineticBlockEntity {
+public class TieredMillstoneBlockEntity extends TieredKineticBlockEntity implements ITieredKineticBlockEntity, SidedStorageBlockEntity {
 
-    public ItemStackHandler inputInv;
+    public ItemStackHandlerContainer inputInv;
     public ItemStackHandler outputInv;
-    public LazyOptional<IItemHandler> capability;
+    public TieredMillstoneInventoryHandler capability;
     public int timer;
-    private ProcessingRecipe<RecipeWrapper> lastRecipe;
+    private ProcessingRecipe<Container> lastRecipe;
     private int maxItemsPerRecipe;
 
     public TieredMillstoneBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
         super(typeIn, pos, state);
-        inputInv = new ItemStackHandler(1);
-        outputInv = new ItemStackHandler(1);
-        capability = LazyOptional.of(TieredMillstoneInventoryHandler::new);
+        inputInv = new ItemStackHandlerContainer(1);
+        outputInv = new ItemStackHandler(9);
+        capability = new TieredMillstoneInventoryHandler();
         maxItemsPerRecipe = GreateEnums.TIER.getTierMultiplier(this.getTier(), 2);
     }
 
@@ -72,7 +77,7 @@ public class TieredMillstoneBlockEntity extends TieredKineticBlockEntity impleme
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
+    @Environment(EnvType.CLIENT)
     public void tickAudio() {
         super.tickAudio();
         if(getSpeed() == 0) return;
@@ -87,14 +92,12 @@ public class TieredMillstoneBlockEntity extends TieredKineticBlockEntity impleme
 
         if(getSpeed() == 0) return;
 
-        for(int i = 0; i < outputInv.getSlots(); i++) {
+        for(int i = 0; i < outputInv.getSlotCount(); i++) {
             if(outputInv.getStackInSlot(i).getCount() == outputInv.getSlotLimit(i)) return;
             if(outputInv.getStackInSlot(i).getCount() + maxItemsPerRecipe > outputInv.getSlotLimit(i)) return;
         }
 
-        RecipeWrapper inventoryIn = new RecipeWrapper(inputInv);
-
-        if(timer > 0 && lastRecipe != null && lastRecipe.matches(inventoryIn, level)) {
+        if(timer > 0 && lastRecipe != null && lastRecipe.matches(inputInv, level)) {
             timer -= getProcessingSpeed();
 
             if(level.isClientSide) {
@@ -110,8 +113,8 @@ public class TieredMillstoneBlockEntity extends TieredKineticBlockEntity impleme
 
         if(inputInv.getStackInSlot(0).isEmpty()) return;
 
-        if(lastRecipe == null || !lastRecipe.matches(inventoryIn, level)) {
-            Optional<ProcessingRecipe<RecipeWrapper>> recipe = findRecipe(inventoryIn);
+        if(lastRecipe == null || !lastRecipe.matches(inputInv, level)) {
+            Optional<ProcessingRecipe<Container>> recipe = findRecipe();
             if(recipe.isEmpty()) {
                 timer = 100;
                 sendData();
@@ -126,17 +129,17 @@ public class TieredMillstoneBlockEntity extends TieredKineticBlockEntity impleme
         timer = lastRecipe.getProcessingDuration();
         sendData();
     }
-    
-    public Optional<ProcessingRecipe<RecipeWrapper>> findRecipe(RecipeWrapper wrapper) {
-        Optional<ProcessingRecipe<RecipeWrapper>> millingRecipe = ModRecipeTypes.MILLING.find(wrapper, level, this.getTier());
+
+    public Optional<ProcessingRecipe<Container>> findRecipe() {
+        Optional<ProcessingRecipe<Container>> millingRecipe = ModRecipeTypes.MILLING.find(inputInv, level, this.getTier());
         if(millingRecipe.isEmpty()) {
-            millingRecipe = AllRecipeTypes.MILLING.find(wrapper, level);
+            millingRecipe = AllRecipeTypes.MILLING.find(inputInv, level);
         }
         if (millingRecipe.isEmpty()) {
             Optional<GTRecipe> test = level.getRecipeManager().getAllRecipesFor(GTRecipeTypes.MACERATOR_RECIPES).stream().filter(r ->
-                    ((Ingredient) r.getInputContents(ItemRecipeCapability.CAP).get(0).getContent()).test(wrapper.getItem(0))).findFirst();
+                    ((Ingredient) r.getInputContents(ItemRecipeCapability.CAP).get(0).getContent()).test(inputInv.getItem(0))).findFirst();
             if(test.isPresent()) {
-                TieredProcessingRecipe<RecipeWrapper> convertedRecipe = TieredMillingRecipe.convertGT(test.get());
+                TieredProcessingRecipe<Container> convertedRecipe = TieredMillingRecipe.convertGT(test.get());
                 if(convertedRecipe.getRecipeTier().compareTo(this.getTier()) <= 0) {
                     return Optional.of(convertedRecipe);
                 }
@@ -148,7 +151,6 @@ public class TieredMillstoneBlockEntity extends TieredKineticBlockEntity impleme
     @Override
     public void invalidate() {
         super.invalidate();
-        capability.invalidate();
     }
 
     @Override
@@ -159,21 +161,19 @@ public class TieredMillstoneBlockEntity extends TieredKineticBlockEntity impleme
     }
 
     private void process() {
-        RecipeWrapper inventoryIn = new RecipeWrapper(inputInv);
-
-        if(lastRecipe == null || !lastRecipe.matches(inventoryIn, level)) {
-            Optional<ProcessingRecipe<RecipeWrapper>> recipe = findRecipe(inventoryIn);
-
+        if(lastRecipe == null || !lastRecipe.matches(inputInv, level)) {
+            Optional<ProcessingRecipe<Container>> recipe = findRecipe();
             if(recipe.isEmpty()) return;
             lastRecipe = recipe.get();
         }
 
-        ItemStack stackInSlot = inputInv.getStackInSlot(0);
-        int amountInSlot = stackInSlot.getCount();
-        stackInSlot.shrink(maxItemsPerRecipe);
-        inputInv.setStackInSlot(0, stackInSlot);
-        for(int i = 0; i < Math.min(amountInSlot, maxItemsPerRecipe); i++) {
-            lastRecipe.rollResults().forEach(stack -> ItemHandlerHelper.insertItemStacked(outputInv, stack, false));
+        for(int i = 0; i < Math.min(inputInv.getStackInSlot(0).getCount(), maxItemsPerRecipe); i++) {
+            try(Transaction t = TransferUtil.getTransaction()) {
+                ItemStackHandlerSlot slot = inputInv.getSlot(0);
+                slot.extract(slot.getResource(), 1, t);
+                lastRecipe.rollResults().forEach(stack -> outputInv.insert(ItemVariant.of(stack), stack.getCount(), t));
+                t.commit();
+            }
         }
         award(AllAdvancements.MILLSTONE);
 
@@ -217,43 +217,63 @@ public class TieredMillstoneBlockEntity extends TieredKineticBlockEntity impleme
     }
 
     @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if(isItemHandlerCap(cap)) return capability.cast();
-        return super.getCapability(cap, side);
+    public Storage<ItemVariant> getItemStorage(Direction side) {
+        return capability;
     }
 
     private boolean canProcess(ItemStack stack) {
-        ItemStackHandler tester = new ItemStackHandler(1);
+        ItemStackHandlerContainer tester = new ItemStackHandlerContainer(1);
         tester.setStackInSlot(0, stack);
-        RecipeWrapper inventoryIn = new RecipeWrapper(tester);
 
-        if(lastRecipe != null && lastRecipe.matches(inventoryIn, level)) return true;
+        if(lastRecipe != null && lastRecipe.matches(tester, level)) return true;
         return inputInv.getStackInSlot(0).isEmpty() && outputInv.getStackInSlot(0).isEmpty();
     }
 
-    private class TieredMillstoneInventoryHandler extends CombinedInvWrapper {
+    private class TieredMillstoneInventoryHandler extends CombinedStorage<ItemVariant, ItemStackHandler> {
 
         public TieredMillstoneInventoryHandler() {
-            super(inputInv, outputInv);
+            super(List.of(inputInv, outputInv));
         }
 
         @Override
-        public boolean isItemValid(int slot, ItemStack stack) {
-            if(outputInv == getHandlerFromIndex(getIndexForSlot(slot))) return false;
-            return canProcess(stack) && super.isItemValid(slot, stack);
+        public long insert(ItemVariant resource, long amount, TransactionContext t) {
+            if(canProcess(resource.toStack())) return inputInv.insert(resource, amount, t);
+            return 0;
         }
 
         @Override
-        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-            if(outputInv == getHandlerFromIndex(getIndexForSlot(slot))) return stack;
-            if(!isItemValid(slot, stack)) return stack;
-            return super.insertItem(slot, stack, simulate);
+        public long extract(ItemVariant resource, long amount, TransactionContext t) {
+            return outputInv.extract(resource, amount, t);
         }
 
         @Override
-        public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            if(inputInv == getHandlerFromIndex(getIndexForSlot(slot))) return ItemStack.EMPTY;
-            return super.extractItem(slot, amount, simulate);
+        public Iterator<StorageView<ItemVariant>> iterator() {
+            return new MillstoneInventoryHandlerIterator();
+        }
+
+        private class MillstoneInventoryHandlerIterator implements Iterator<StorageView<ItemVariant>> {
+            private boolean output = true;
+            private Iterator<StorageView<ItemVariant>> wrapped;
+
+            public MillstoneInventoryHandlerIterator() {
+                wrapped = outputInv.iterator();
+            }
+
+            @Override
+            public boolean hasNext() {
+                return wrapped.hasNext();
+            }
+
+            @Override
+            public StorageView<ItemVariant> next() {
+                StorageView<ItemVariant> view = wrapped.next();
+                if(!output) view = new ViewOnlyWrappedStorageView<>(view);
+                if(output && !hasNext()) {
+                    wrapped = inputInv.iterator();
+                    output = false;
+                }
+                return view;
+            }
         }
     }
 }

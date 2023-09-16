@@ -2,8 +2,8 @@ package electrolyte.greate.content.decoration.encasing;
 
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.*;
 import java.util.function.Supplier;
@@ -22,7 +22,7 @@ public class GirderEncasingRegistry {
 
     public static <B extends Block & IGirderEncasedBlock, P, E extends Block & IGirderEncasableBlock> NonNullUnaryOperator<BlockBuilder<B, P>> addVariantTo(Supplier<E> encasable) {
         return builder -> {
-            builder.onRegisterAfter(ForgeRegistries.BLOCKS.getRegistryKey(), b -> addVariant(encasable.get(), b));
+            builder.onRegisterAfter(Registries.BLOCK, b -> addVariant(encasable.get(), b));
             return builder;
         };
     }

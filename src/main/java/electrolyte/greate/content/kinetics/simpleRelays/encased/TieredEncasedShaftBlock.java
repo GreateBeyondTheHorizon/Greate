@@ -12,6 +12,7 @@ import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredShaftBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredKineticBlockEntity;
 import electrolyte.greate.registry.ModBlockEntityTypes;
+import net.fabricmc.fabric.api.block.BlockPickInteractionAware;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -29,7 +30,7 @@ import net.minecraft.world.phys.HitResult;
 
 import java.util.function.Supplier;
 
-public class TieredEncasedShaftBlock extends AbstractEncasedShaftBlock implements IBE<TieredKineticBlockEntity>, ISpecialBlockItemRequirement, EncasedBlock, ITieredBlock, ITieredShaftBlock {
+public class TieredEncasedShaftBlock extends AbstractEncasedShaftBlock implements IBE<TieredKineticBlockEntity>, ISpecialBlockItemRequirement, EncasedBlock, ITieredBlock, ITieredShaftBlock, BlockPickInteractionAware {
 
     private final Supplier<Block> casing;
     private final Supplier<Block> shaft;
@@ -50,11 +51,11 @@ public class TieredEncasedShaftBlock extends AbstractEncasedShaftBlock implement
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
+    public ItemStack getPickedStack(BlockState state, BlockGetter level, BlockPos pos, Player player, HitResult target) {
         if(target instanceof HitResult) {
             return ((BlockHitResult) target).getDirection().getAxis() == getRotationAxis(state) ? getShaft().asItem().getDefaultInstance() : getCasing().asItem().getDefaultInstance();
         }
-        return super.getCloneItemStack(state, target, level, pos, player);
+        return ItemStack.EMPTY;
     }
 
     @Override

@@ -1,0 +1,26 @@
+{
+  "type": "create:mechanical_crafting",
+  "acceptMirrored": true,
+  "key": {
+    "A": {
+      "item": "greate:darmstadtium_alloy"
+    },
+    "C": {
+      "tag": "c:uv_circuits"
+    },
+    "S": {
+      "tag": "greate:darmstadtium_shafts"
+    }
+  },
+  "pattern": [
+    " AAA ",
+    "AACAA",
+    "ACSCA",
+    "AACAA",
+    " AAA "
+  ],
+  "result": {
+    "count": 2,
+    "item": "greate:darmstadtium_crushing_wheel"
+  }
+}

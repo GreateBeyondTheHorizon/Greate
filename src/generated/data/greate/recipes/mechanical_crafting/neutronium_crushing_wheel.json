@@ -1,0 +1,26 @@
+{
+  "type": "create:mechanical_crafting",
+  "acceptMirrored": true,
+  "key": {
+    "A": {
+      "item": "greate:neutronium_alloy"
+    },
+    "C": {
+      "tag": "c:uhv_circuits"
+    },
+    "S": {
+      "tag": "greate:neutronium_shafts"
+    }
+  },
+  "pattern": [
+    " AAA ",
+    "AACAA",
+    "ACSCA",
+    "AACAA",
+    " AAA "
+  ],
+  "result": {
+    "count": 2,
+    "item": "greate:neutronium_crushing_wheel"
+  }
+}

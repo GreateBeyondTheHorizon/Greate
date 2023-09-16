@@ -8,6 +8,8 @@ import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.foundation.fluid.FluidHelper;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
 import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeFactory;
+import io.github.fabricators_of_create.porting_lib.util.FluidStack;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
@@ -15,7 +17,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraftforge.fluids.FluidStack;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -23,9 +24,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class TieredProcessingRecipeSerializer<T extends TieredProcessingRecipe<?>> implements RecipeSerializer<T> {
 
-    private final TieredProcessingRecipeBuilder.TieredProcessingRecipeFactory<T> factory;
+    private final TieredProcessingRecipeFactory<T> factory;
 
-    public TieredProcessingRecipeSerializer(TieredProcessingRecipeBuilder.TieredProcessingRecipeFactory<T> factory) {
+    public TieredProcessingRecipeSerializer(TieredProcessingRecipeFactory<T> factory) {
         this.factory = factory;
     }
 
@@ -169,7 +170,7 @@ public class TieredProcessingRecipeSerializer<T extends TieredProcessingRecipe<?
         return readFromBuffer(id, buffer);
     }
 
-    public TieredProcessingRecipeBuilder.TieredProcessingRecipeFactory<T> getFactory() {
+    public TieredProcessingRecipeFactory<T> getFactory() {
         return factory;
     }
 }

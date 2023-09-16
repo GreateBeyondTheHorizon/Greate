@@ -10,14 +10,14 @@ import com.simibubi.create.foundation.utility.Iterate;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredPartialModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider.Context;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 public class TieredGearboxRenderer extends KineticBlockEntityRenderer<TieredGearboxBlockEntity> {
-    public TieredGearboxRenderer(Context context) {
+    public TieredGearboxRenderer(BlockEntityRendererProvider.Context context) {
         super(context);
     }
 

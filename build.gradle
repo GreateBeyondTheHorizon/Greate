@@ -1,127 +1,58 @@
 plugins {
-    id 'eclipse'
+    id 'fabric-loom' version '1.3-SNAPSHOT'
     id 'maven-publish'
-    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
-    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
-    id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
+    id 'java'
 }
 
-version = '0.0.4'
+version = 'fabric-0.0.5'
 group = 'electrolyte.greate'
 archivesBaseName = 'greate'
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
-
-println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
-jarJar.enable()
-minecraft {
-    mappings channel: 'parchment', version: "${parchment_version}-${minecraft_version}"
-
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg') //needed since gt dependency does not include one
-
+loom {
     runs {
-        client {
-            workingDirectory project.file('run')
+        datagenClient {
+            inherit client
+            name "Datagen"
+            vmArg "-Dfabric-api.datagen"
+            vmArg "-Dfabric-api.datagen.output-dir=${file("src/generated")}"
+            vmArg "-Dfabric-api.datagen.modid=greate"
+            vmArg "-Dporting_lib.datagen.existing_resources=${file("src/main/resources")}"
 
-            property 'forge.logging.markers', 'REGISTRIES'
-
-            property 'forge.logging.console.level', 'debug'
-
-            property 'forge.enabledGameTestNamespaces', 'greate'
-
-            property "mixin.env.remapRefMap", 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-
-            arg "-mixin.config=greate.mixin.json"
-
-            mods {
-                greate {
-                    source sourceSets.main
-                }
-            }
+            runDir "build/datagen"
         }
-
-        server {
-            workingDirectory project.file('run')
-
-            property 'forge.logging.markers', 'REGISTRIES'
-
-            property 'forge.logging.console.level', 'debug'
-
-            property 'forge.enabledGameTestNamespaces', 'greate'
-
-            property "mixin.env.remapRefMap", 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-
-            arg "-mixin.config=greate.mixin.json"
-
-            mods {
-                greate {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        gameTestServer {
-            workingDirectory project.file('run')
-
-            property 'forge.logging.markers', 'REGISTRIES'
-
-            property 'forge.logging.console.level', 'debug'
-
-            property 'forge.enabledGameTestNamespaces', 'greate'
-
-            mods {
-                greate {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        data {
-            workingDirectory project.file('run')
-
-            property 'forge.logging.markers', 'REGISTRIES'
-
-            property 'forge.logging.console.level', 'debug'
-
-            property "mixin.env.remapRefMap", 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-
-            arg "-mixin.config=greate.mixin.json"
-
-            args '--mod', 'greate', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing-mod', 'create'
-
-            mods {
-                greate {
-                    source sourceSets.main
-                }
-            }
+    }
+    mods {
+        "greate" {
+            sourceSet sourceSets.main
         }
     }
 }
 
-sourceSets.main.resources { srcDir 'src/generated/resources' }
+sourceSets {
+    main {
+        resources {
+            srcDirs += [
+                    'src/generated'
+            ]
+        }
+    }
+}
 
 repositories {
     flatDir {
         dir 'libs'
     }
-    maven { url = 'https://maven.tterrag.com/'
-        content {
-            includeGroup "com.simibubi.create"
-            includeGroup "com.jozufozu.flywheel"
-            includeGroup "com.tterrag.registrate"
-        }
-    }
+    maven { url = "https://mvn.devos.one/snapshots/" } //Create fabric & dependencies
+    maven { url = "https://maven.jamieswhiteshirt.com/libs-release" } // Reach Entity Attributes
     maven { url = 'https://maven.blamejared.com'
         content {
             includeGroup "mezz.jei"
         }
     }
-    maven { url = 'https://maven.architectury.dev/'
+    maven {
+        url = 'https://maven.tterrag.com'
         content {
-            includeGroup "dev.architectury"
+            includeGroup "com.jozufozu.flywheel"
         }
     }
     maven { url = 'https://maven.saps.dev/minecraft'
@@ -134,63 +65,53 @@ repositories {
             includeGroup "curse.maven"
         }
     }
-    maven { url = 'https://jitpack.io' } //mixinextras
+    maven { url = 'https://jitpack.io' } //mixinextras (kubejs dep.)
+    maven { url = 'https://maven.parchmentmc.org' }
+    maven { url = "https://maven.architectury.dev/" }
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    mappings loom.layered() {
+        officialMojangMappings()
+        parchment("org.parchmentmc.data:parchment-${minecraft_version}:${parchment_version}@zip")
+    }
 
-    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}+${minecraft_version}"
 
-    implementation fg.deobf("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
-    implementation fg.deobf("com.jozufozu.flywheel:flywheel-forge-${minecraft_version}:${flywheel_version}")
-    implementation fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
+    modImplementation ("com.simibubi.create:create-fabric-${minecraft_version}:${create_version}+mc${minecraft_version}")
 
-    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
-    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
-    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
-
-    implementation fg.deobf("dev.architectury:architectury-forge:${architectury_version}")
-    implementation fg.deobf("dev.latvian.mods:rhino-forge:${rhino_version}")
-    implementation fg.deobf("dev.latvian.mods:kubejs-forge:${kubejs_version}")
-    implementation fg.deobf("dev.latvian.mods:kubejs-create-forge:${kubejs_create_version}")
-    implementation fg.deobf("curse.maven:ldlib-626676:${ldlib_version}")
-    implementation fg.deobf("curse.maven:configuration-444699:${configuration_version}")
-    implementation fg.deobf("curse.maven:gregtechceu-modern-890405:${gregtech_version}")
-    runtimeOnly fg.deobf("curse.maven:jade-324717:${jade_version}")
-    runtimeOnly fg.deobf("curse.maven:spark-361579:${spark_version}")
-
-    jarJar(group: 'com.tterrag.registrate', name: 'Registrate', version: "[${registrate_version},)")
-    jarJar(group: 'dev.toma.configuration', name: "configuration-forge-${minecraft_version}", version: "[2.2.0,)")
+    modCompileOnly ("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
+    modCompileOnly ("mezz.jei:jei-${minecraft_version}-fabric-api:${jei_version}")
+    modImplementation ("mezz.jei:jei-${minecraft_version}-fabric:${jei_version}")
+    modImplementation "dev.latvian.mods:rhino-fabric:${rhino_version}"
+    modImplementation "dev.latvian.mods:kubejs-fabric:${kubejs_version}"
+    modImplementation "curse.maven:ldlib-626676:${ldlib_version}"
+    modImplementation "curse.maven:configuration-444699:${configuration_version}"
+    modImplementation "curse.maven:gregtechceu-modern-890405:${gregtech_version}"
+    modRuntimeOnly "curse.maven:jade-324717:${jade_version}"
+    modRuntimeOnly "curse.maven:spark-361579:${spark_version}"
 }
 
-mixin {
-    add sourceSets.main, "greate.mixin-refmap.json"
+java {
+    withSourcesJar()
+
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
 }
 
 jar {
-    manifest {
-        attributes([
-                "Specification-Title"     : "greate",
-                "Specification-Vendor"    : "electrolyte",
-                "Specification-Version"   : "1",
-                "Implementation-Title"    : project.name,
-                "Implementation-Version"  : project.jar.archiveVersion,
-                "Implementation-Vendor"   : "electrolyte",
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
-                "TweakOrder": 0,
-                "MixinConfigs": "greate.mixin.json"
-        ])
+    from("LICENSE") {
+        rename { "${it}_greate"}
     }
 }
 
-jar.finalizedBy('reobfJar')
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            artifact jar
+            from components.java
         }
     }
     repositories {
@@ -199,7 +120,6 @@ publishing {
         }
     }
 }
-
 tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
+    it.options.release = 17
 }

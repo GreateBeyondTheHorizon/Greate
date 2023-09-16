@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "greate:darmstadtium_shafts"
+    },
+    "C": {
+      "tag": "c:uv_circuits"
+    },
+    "M": {
+      "item": "gtceu:uv_machine_hull"
+    },
+    "S": {
+      "tag": "minecraft:wooden_slabs"
+    },
+    "W": {
+      "tag": "greate:darmstadtium_cogwheels"
+    }
+  },
+  "pattern": [
+    " W ",
+    "SMS",
+    "CAC"
+  ],
+  "result": {
+    "item": "greate:darmstadtium_millstone"
+  },
+  "show_notification": true
+}

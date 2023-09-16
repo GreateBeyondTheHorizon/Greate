@@ -7,6 +7,7 @@ import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredPartialModel;
 import electrolyte.greate.registry.ModBlockEntityTypes;
+import net.fabricmc.fabric.api.block.BlockPickInteractionAware;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -25,7 +26,7 @@ import net.minecraft.world.phys.HitResult;
 
 import java.util.List;
 
-public class TieredGearboxBlock extends RotatedPillarKineticBlock implements IBE<TieredGearboxBlockEntity>, ITieredBlock, ITieredPartialModel {
+public class TieredGearboxBlock extends RotatedPillarKineticBlock implements IBE<TieredGearboxBlockEntity>, ITieredBlock, ITieredPartialModel, BlockPickInteractionAware {
 
     private TIER tier;
     private PartialModel partialModel;
@@ -44,9 +45,9 @@ public class TieredGearboxBlock extends RotatedPillarKineticBlock implements IBE
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
+    public ItemStack getPickedStack(BlockState state, BlockGetter level, BlockPos pos, Player player, HitResult hit) {
         if(state.getValue(AXIS).isVertical()) {
-            return super.getCloneItemStack(state, target, level, pos, player);
+            return super.getCloneItemStack(level, pos, state);
         }
         return TieredVerticalGearboxItem.MAP.get(this).getDefaultInstance();
     }

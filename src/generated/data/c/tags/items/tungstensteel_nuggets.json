@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#c:tungsten_steel_nuggets",
+      "required": false
+    }
+  ]
+}

@@ -8,15 +8,15 @@ import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import electrolyte.greate.Greate;
 import electrolyte.greate.registry.CrushingWheels;
 import electrolyte.greate.registry.GreateTags;
-import net.minecraft.data.PackOutput;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.UnaryOperator;
 
 public class GreateMechanicalCraftingRecipeGen extends GreateRecipeProvider {
-    public GreateMechanicalCraftingRecipeGen(PackOutput output) {
+    public GreateMechanicalCraftingRecipeGen(FabricDataOutput output) {
         super(output);
     }
 
@@ -28,8 +28,8 @@ public class GreateMechanicalCraftingRecipeGen extends GreateRecipeProvider {
     GeneratedRecipe
             ANDESITE_CRUSHING_WHEEL = create(CrushingWheels.ANDESITE_CRUSHING_WHEEL).returns(2)
             .recipe(b -> b.key('A', AllItems.ANDESITE_ALLOY::get)
-                    .key('C', GreateTags.forgeItemTag("circuits/ulv"))
-                    .key('S', GreateTags.greateItemTag("shafts/andesite"))
+                    .key('C', GreateTags.forgeItemTag("ulv_circuits"))
+                    .key('S', GreateTags.greateItemTag("andesite_shafts"))
                     .patternLine(" AAA ")
                     .patternLine("AACAA")
                     .patternLine("ACSCA")
@@ -51,9 +51,9 @@ public class GreateMechanicalCraftingRecipeGen extends GreateRecipeProvider {
     GeneratedRecipe createMaterialCrushingWheelRecipe(ItemProviderEntry<? extends ItemLike> crushingWheel, String tier) {
         String material = crushingWheel.getId().getPath().substring(0, crushingWheel.getId().getPath().length() - 15);
         return create(crushingWheel).returns(2)
-                .recipe(b -> b.key('A', ForgeRegistries.ITEMS.getValue(new ResourceLocation(Greate.MOD_ID, material + "_alloy"))::asItem)
-                        .key('C', GreateTags.forgeItemTag("circuits/" + tier))
-                        .key('S', GreateTags.greateItemTag("shafts/" + material))
+                .recipe(b -> b.key('A', BuiltInRegistries.ITEM.get(new ResourceLocation(Greate.MOD_ID, material + "_alloy"))::asItem)
+                        .key('C', GreateTags.forgeItemTag(tier + "_circuits"))
+                        .key('S', GreateTags.greateItemTag(material + "_shafts"))
                         .patternLine(" AAA ")
                         .patternLine("AACAA")
                         .patternLine("ACSCA")

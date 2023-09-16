@@ -8,19 +8,17 @@ import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntit
 import electrolyte.greate.content.kinetics.simpleRelays.TieredKineticBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.entity.living.LootingLevelEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
+import java.util.Collection;
 import java.util.List;
 
-@EventBusSubscriber
 public class TieredCrushingWheelBlockEntity extends TieredKineticBlockEntity implements ITieredKineticBlockEntity {
 
     public TieredCrushingWheelBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
@@ -62,17 +60,16 @@ public class TieredCrushingWheelBlockEntity extends TieredKineticBlockEntity imp
         fixControllers();
     }
 
-    @SubscribeEvent
-    public static void fortunateCrushing(LootingLevelEvent event) {
-        if(event.getDamageSource() != AllDamageTypes.CRUSH.source(event.getEntity().level())) return;
-        event.setLootingLevel(2);
+    public static int fortunateCrushing(DamageSource source, LivingEntity entity, int currentLevel, boolean recentlyHit) {
+        if(!AllDamageTypes.CRUSH.is(source)) return 0;
+        return 2;
     }
 
-    @SubscribeEvent
-    public static void handleCrushedDrops(LivingDropsEvent event) {
-        if(event.getSource() != AllDamageTypes.CRUSH.source(event.getEntity().level())) return;
-        for(ItemEntity ie : event.getDrops()) {
-            ie.setDeltaMovement(Vec3.ZERO);
+    public static boolean handleCrushedDrops(LivingEntity entity, DamageSource source, Collection<ItemEntity> drops, int lootingLevel, boolean recentlyHit) {
+        if(!AllDamageTypes.CRUSH.is(source)) return false;
+        for(ItemEntity itemEntity : drops) {
+            itemEntity.setDeltaMovement(Vec3.ZERO);
         }
+        return false;
     }
 }
