@@ -14,6 +14,7 @@ import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
+import electrolyte.greate.Greate;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingWheelBlock;
 import electrolyte.greate.content.kinetics.gearbox.TieredGearboxBlock;
 import electrolyte.greate.content.kinetics.gearbox.TieredVerticalGearboxItem;
@@ -44,6 +45,15 @@ public class GreateBuilderTransformers {
                         (s, f) -> f.getAxis() != s.getValue(EncasedShaftBlock.AXIS))))
                 .blockstate(tieredEncasedShaftProvider())
                 .item()
+                .model((c, p) -> {
+                   String material = c.getName().substring(17, c.getName().length() - 6);
+                   p.withExistingParent(c.getName(), Create.asResource("block/encased_shaft/item"))
+                           .texture("0", Create.asResource("block/andesite_casing"))
+                           .texture("1", Create.asResource("block/gearbox"))
+                           .texture("particle", Create.asResource("block/andesite_casing"))
+                           .texture("1_0", new ResourceLocation(Greate.MOD_ID, "block/" + material + "/axis"))
+                           .texture("1_1", new ResourceLocation(Greate.MOD_ID, "block/" + material + "/axis_top"));
+                })
                 .build();
     }
 
@@ -54,6 +64,15 @@ public class GreateBuilderTransformers {
                         (s, f) -> f.getAxis() != s.getValue(EncasedShaftBlock.AXIS))))
                 .blockstate(tieredEncasedShaftProvider())
                 .item()
+                .model((c, p) -> {
+                    String material = c.getName().substring(14, c.getName().length() - 6);
+                    p.withExistingParent(c.getName(), Create.asResource("block/encased_shaft/item"))
+                            .texture("0", Create.asResource("block/brass_casing"))
+                            .texture("1", Create.asResource("block/brass_gearbox"))
+                            .texture("particle", Create.asResource("block/brass_casing"))
+                            .texture("1_0", new ResourceLocation(Greate.MOD_ID, "block/" + material + "/axis"))
+                            .texture("1_1", new ResourceLocation(Greate.MOD_ID, "block/" + material + "/axis_top"));
+                })
                 .build();
     }
 
