@@ -1,6 +1,5 @@
 package electrolyte.greate.foundation.advancement;
 
-import com.google.gson.JsonObject;
 import com.simibubi.create.Create;
 import com.simibubi.create.foundation.advancement.AllTriggers;
 import com.simibubi.create.foundation.advancement.SimpleCreateTrigger;

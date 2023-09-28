@@ -1,7 +1,6 @@
 package electrolyte.greate.foundation.advancement;
 
 import com.google.common.collect.Sets;
-import com.google.gson.JsonObject;
 import com.simibubi.create.AllItems;
 import electrolyte.greate.foundation.advancement.GreateAdvancement.Builder;
 import electrolyte.greate.registry.Belts;
@@ -22,7 +21,8 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
 
-import static electrolyte.greate.foundation.advancement.GreateAdvancement.TaskType.*;
+import static electrolyte.greate.foundation.advancement.GreateAdvancement.TaskType.SECRET_NOISY;
+import static electrolyte.greate.foundation.advancement.GreateAdvancement.TaskType.SILENT;
 
 public class GreateAdvancements implements DataProvider {
 
@@ -43,11 +43,11 @@ public class GreateAdvancements implements DataProvider {
             .special(SILENT)),
 
     EAT_ALL_BELTS = create("eat_all_belts", b -> b
-            .icon(Belts.SILICON_BELT)
+            .icon(Belts.SILICONE_RUBBER_BELT)
             .title("Tasty!")
             .description("Consume every type of belt")
             .whenItemConsumed(Belts.RUBBER_BELT_CONNECTOR)
-            .whenItemConsumed(Belts.SILICON_BELT_CONNECTOR)
+            .whenItemConsumed(Belts.SILICONE_RUBBER_BELT_CONNECTOR)
             .whenItemConsumed(Belts.POLYETHYLENE_BELT_CONNECTOR)
             .whenItemConsumed(Belts.POLYTETRAFLUOROETHYLENE_BELT_CONNECTOR)
             .whenItemConsumed(Belts.POLYBENZIMIDAZOLE_BELT_CONNECTOR)

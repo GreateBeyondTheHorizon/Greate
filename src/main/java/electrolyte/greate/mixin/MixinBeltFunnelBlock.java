@@ -1,11 +1,8 @@
 package electrolyte.greate.mixin;
 
-import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.kinetics.belt.BeltBlock;
 import com.simibubi.create.content.logistics.funnel.BeltFunnelBlock;
 import com.simibubi.create.content.logistics.funnel.BeltFunnelBlock.Shape;
-import electrolyte.greate.content.kinetics.belt.TieredBeltBlock;
-import electrolyte.greate.registry.Belts;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;

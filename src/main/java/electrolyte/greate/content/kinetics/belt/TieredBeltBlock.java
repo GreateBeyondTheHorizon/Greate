@@ -21,9 +21,11 @@ import com.simibubi.create.foundation.utility.Iterate;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import electrolyte.greate.GreateEnums.BELT_TYPE;
 import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.content.kinetics.belt.item.TieredBeltConnectorItem;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingWheelControllerBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
+import electrolyte.greate.registry.Belts;
 import electrolyte.greate.registry.GreateSpriteShifts;
 import electrolyte.greate.registry.ModBlockEntityTypes;
 import net.minecraft.core.BlockPos;
@@ -60,7 +62,10 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import org.apache.commons.lang3.mutable.MutableBoolean;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.AXIS;
 
@@ -68,20 +73,15 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
 
     private ItemStack shaftType;
     private TIER tier;
-    private BELT_TYPE type;
-    public static final Map<Block, List<ItemStack>> BELTS = new HashMap<>();
+    private BELT_TYPE beltType;
 
     public TieredBeltBlock(Properties properties) {
         super(properties);
     }
 
-    private ItemStack getBeltItemStack() {
-        return TieredBeltConnectorItem.BELTS.stream().filter(b -> b.getFirst() == this).findFirst().get().getSecond().getDefaultInstance();
-    }
-
     @Override
     public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
-        return getBeltItemStack();
+        return this.asItem().getDefaultInstance();
     }
 
     @Override
@@ -124,7 +124,7 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
         }
         if(DivingBootsItem.isWornBy(pEntity))
             return;
-        TieredBeltBlockEntity beltBE = TieredBeltHelper.getSegmentBE(pLevel, pPos);
+        BeltBlockEntity beltBE = BeltHelper.getSegmentBE(pLevel, pPos);
         if(beltBE == null)
             return;
         if(pEntity instanceof ItemEntity itemEntity && pEntity.isAlive()) {
@@ -176,17 +176,19 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
             return onBlockEntityUse(pLevel, pPos, be -> be.applyColor(DyeColor.getColor(heldItem)) ? InteractionResult.SUCCESS : InteractionResult.PASS);
         }
         if(isConnector) {
-            return BeltSlicer.useConnector(pState, pLevel, pPos, pPlayer, pHand, pHit, new Feedback());
+            if(((TieredBeltConnectorItem) heldItem.getItem()).getBeltType() == ((TieredBeltBlock) pLevel.getBlockState(pPos).getBlock()).getBeltType()) {
+                return BeltSlicer.useConnector(pState, pLevel, pPos, pPlayer, pHand, pHit, new Feedback());
+            }
         }
         if(isWrench) {
             return BeltSlicer.useWrench(pState, pLevel, pPos, pPlayer, pHand, pHit, new Feedback());
         }
 
-        TieredBeltBlockEntity beltBE = TieredBeltHelper.getSegmentBE(pLevel, pPos);
+        BeltBlockEntity beltBE = BeltHelper.getSegmentBE(pLevel, pPos);
         if(beltBE == null)
             return InteractionResult.PASS;
         if(isHand) {
-            TieredBeltBlockEntity controllerBE = beltBE.getControllerBE();
+            BeltBlockEntity controllerBE = beltBE.getControllerBE();
             if(controllerBE == null)
                 return InteractionResult.PASS;
             if(pLevel.isClientSide)
@@ -201,7 +203,7 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
                 pLevel.playSound(null, pPos, SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.2F, 1F + new Random().nextFloat());
             }
         }
-        if(isShaft && heldItem.is(beltBE.getShaftType().getItem())) {
+        if(isShaft && heldItem.is(((TieredBeltBlockEntity) beltBE).getShaftType().getItem())) {
             if(pState.getValue(PART) != BeltPart.MIDDLE) return InteractionResult.PASS;
             if(pLevel.isClientSide) return InteractionResult.SUCCESS;
             if(!pPlayer.isCreative()) heldItem.shrink(1);
@@ -248,8 +250,7 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
 
     public static void initBelt(Level level, BlockPos pos) {
         if(level.isClientSide) return;
-        if(level instanceof ServerLevel serverLevel && serverLevel.getChunkSource().getGenerator() instanceof DebugLevelSource)
-            return;
+        if(level instanceof ServerLevel serverLevel && serverLevel.getChunkSource().getGenerator() instanceof DebugLevelSource) return;
         BlockState state = level.getBlockState(pos);
         if(!(state.getBlock() instanceof TieredBeltBlock)) return;
         int limit = 1000;
@@ -371,15 +372,14 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
     public static List<BlockPos> getBeltChain(Level level, BlockPos controllerPos) {
         List<BlockPos> positions = new LinkedList<>();
         BlockState state = level.getBlockState(controllerPos);
-        if(! (state.getBlock() instanceof TieredBeltBlock)) return positions; //todo, may need to add a check for the tier, to make sure the block AND tier match and no false positives are found
+        if(!(state.getBlock() instanceof TieredBeltBlock)) return positions;
         int limit = 1000;
         BlockPos currentPos = controllerPos;
         while(limit-- > 0 && currentPos != null) {
             BlockState currentState = level.getBlockState(currentPos);
-            if(! (currentState.getBlock() instanceof TieredBeltBlock))
-                break;
+            if(!(currentState.getBlock() instanceof TieredBeltBlock)) break;
             positions.add(currentPos);
-            currentPos = nextSegmentPosition(state, currentPos, true);
+            currentPos = nextSegmentPosition(currentState, currentPos, true);
         }
         return positions;
     }
@@ -393,22 +393,12 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
     public ItemRequirement getRequiredItems(BlockState state, BlockEntity blockEntity) {
         List<ItemStack> required = new ArrayList<>();
         if(state.getValue(PART) != BeltPart.MIDDLE)
-            required.add(BELTS.get(this).stream().filter(s -> s.is(state.getBlock().asItem())).findFirst().get());
+            required.add(Belts.VALID_SHAFTS.get(this).stream().filter(s -> s.asItem().getDefaultInstance().is(state.getBlock().asItem())).findFirst().get().asItem().getDefaultInstance());
         if(state.getValue(PART) == BeltPart.START)
-            required.add(getBeltItemStack());
+            required.add(this.asItem().getDefaultInstance());
         if(required.isEmpty())
             return ItemRequirement.NONE;
         return new ItemRequirement(ItemUseType.CONSUME, required);
-    }
-
-    @Override
-    public BELT_TYPE getType() {
-        return type;
-    }
-
-    @Override
-    public void setType(BELT_TYPE type) {
-        this.type = type;
     }
 
     @Override
@@ -430,12 +420,22 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
     }
 
     public void validShafts(List<BlockEntry<TieredShaftBlock>> shafts) {
-        List<ItemStack> shaftStack = new ArrayList<>();
-        shafts.forEach(s -> shaftStack.add(s.asStack()));
-        BELTS.put(this, shaftStack);
+        List<Block> shaftList = new ArrayList<>();
+        shafts.forEach(s -> shaftList.add(s.get()));
+        Belts.VALID_SHAFTS.put(this, shaftList);
     }
 
     public void setupBeltModel() {
         GreateSpriteShifts.populateMaps(this);
+    }
+
+    @Override
+    public BELT_TYPE getBeltType() {
+        return beltType;
+    }
+
+    @Override
+    public void setBeltType(BELT_TYPE beltType) {
+        this.beltType = beltType;
     }
 }

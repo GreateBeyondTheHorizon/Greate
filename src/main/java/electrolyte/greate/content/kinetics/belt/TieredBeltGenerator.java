@@ -6,13 +6,13 @@ import com.simibubi.create.content.kinetics.belt.BeltPart;
 import com.simibubi.create.content.kinetics.belt.BeltSlope;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
+import electrolyte.greate.registry.Belts;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.ModelFile.UncheckedModelFile;
@@ -70,8 +70,6 @@ public class TieredBeltGenerator {
         if (casing && vertical)
             slope = BeltSlope.SIDEWAYS;
 
-        //todo: check
-        //String path = "block/" + ctx.getName() + (casing ? "_casing/" : "/");
         String path = "block/belt" + (casing ? "_casing/" : "/");
         String slopeName = slope.getSerializedName();
         String partName = part.getSerializedName();
@@ -85,9 +83,9 @@ public class TieredBeltGenerator {
     }
 
     public <T extends TieredBeltBlock> void generate(DataGenContext<Block, T> c, RegistrateBlockstateProvider p) {
-        ItemStack shaft = TieredBeltBlock.BELTS.get(c.get()).get(0);
+        ItemStack shaft = Belts.VALID_SHAFTS.get(c.get()).get(0).asItem().getDefaultInstance();
         String shaftMaterial = shaft.toString().substring(2, shaft.toString().length() - 6);
-        ItemStack shaft1 = TieredBeltBlock.BELTS.get(c.get()).get(1);
+        ItemStack shaft1 = Belts.VALID_SHAFTS.get(c.get()).get(1).asItem().getDefaultInstance();
         String shaftMaterial1 = shaft1.toString().substring(2, shaft1.toString().length() - 6);
         String beltMaterial = c.getName().substring(0, c.getName().length() - 5);
         p.getVariantBuilder(c.getEntry())

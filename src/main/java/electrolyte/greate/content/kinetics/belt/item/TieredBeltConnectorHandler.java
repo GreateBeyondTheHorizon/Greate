@@ -1,7 +1,6 @@
 package electrolyte.greate.content.kinetics.belt.item;
 
 import com.simibubi.create.infrastructure.config.AllConfigs;
-import electrolyte.greate.content.kinetics.belt.TieredBeltConnectorItem;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -63,7 +62,7 @@ public class TieredBeltConnectorHandler {
             }
             if(!selected.closerThan(first, AllConfigs.server().kinetics.maxBeltLength.get())) return; //todo: variable for each tier of belt
 
-            boolean canConnect = TieredBeltConnectorItem.validateAxis(level, selected) && TieredBeltConnectorItem.canConnect(level, first, selected);
+            boolean canConnect = TieredBeltConnectorItem.validateAxis(level, selected) && TieredBeltConnectorItem.canConnect(level, first, selected, heldStack);
             Vec3 start = Vec3.atLowerCornerOf(first);
             Vec3 end = Vec3.atLowerCornerOf(selected);
             Vec3 actualDiff = end.subtract(start);

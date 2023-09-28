@@ -275,7 +275,7 @@ public class TieredBeltRenderer extends SafeBlockEntityRenderer<TieredBeltBlockE
                 Entity renderViewEntity = Minecraft.getInstance().cameraEntity;
                 if (renderViewEntity != null) {
                     Vec3 positionVec = renderViewEntity.position();
-                    Vec3 vectorForOffset = TieredBeltHelper.getVectorForOffset(be, offset);
+                    Vec3 vectorForOffset = BeltHelper.getVectorForOffset(be, offset);
                     Vec3 diff = vectorForOffset.subtract(positionVec);
                     float yRot = (float) (Mth.atan2(diff.x, diff.z) + Math.PI);
                     ms.mulPose(Axis.YP.rotation(yRot));

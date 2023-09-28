@@ -77,7 +77,7 @@ public class GreateEnums {
 
     public enum BELT_TYPE implements Comparable<BELT_TYPE> {
         RUBBER,
-        SILICON,
+        SILICONE_RUBBER,
         POLYETHYLENE,
         PTFE,
         PBI

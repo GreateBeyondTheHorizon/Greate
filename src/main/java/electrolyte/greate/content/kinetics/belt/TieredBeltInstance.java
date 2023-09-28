@@ -67,7 +67,6 @@ public class TieredBeltInstance extends TieredKineticBlockEntityInstance<TieredB
             PartialModel beltPartial = TieredBeltRenderer.getBeltPartial(((TieredBeltBlock) blockState.getBlock()), diagonal, start, end, bottom);
             SpriteShiftEntry spriteShift = TieredBeltRenderer.getSpriteShiftEntry((TieredBeltBlock) blockState.getBlock(), color, diagonal, bottom);
             Instancer<BeltData> beltModel = materialManager.defaultSolid().material(AllMaterialSpecs.BELTS).getModel(beltPartial, blockState);
-
             keys.add(setup(beltModel.createInstance(), bottom, spriteShift));
             if(diagonal) break;
         }
@@ -164,7 +163,6 @@ public class TieredBeltInstance extends TieredKineticBlockEntityInstance<TieredB
                 .setPosition(getInstancePosition())
                 .setBlockLight(world.getBrightness(LightLayer.BLOCK, pos))
                 .setSkyLight(world.getBrightness(LightLayer.SKY, pos));
-
         return key;
     }
 }

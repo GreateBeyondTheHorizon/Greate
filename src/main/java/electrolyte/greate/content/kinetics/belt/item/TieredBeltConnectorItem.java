@@ -1,7 +1,5 @@
-package electrolyte.greate.content.kinetics.belt;
+package electrolyte.greate.content.kinetics.belt.item;
 
-import com.mojang.datafixers.util.Pair;
-import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.belt.BeltBlock;
 import com.simibubi.create.content.kinetics.belt.BeltPart;
@@ -14,8 +12,12 @@ import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.infrastructure.config.AllConfigs;
 import electrolyte.greate.GreateEnums.BELT_TYPE;
 import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.content.kinetics.belt.ITieredBelt;
+import electrolyte.greate.content.kinetics.belt.TieredBeltBlock;
+import electrolyte.greate.content.kinetics.belt.TieredBeltBlockEntity;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredKineticBlockEntity;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
+import electrolyte.greate.registry.Belts;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
@@ -36,19 +38,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
 public class TieredBeltConnectorItem extends BlockItem implements ITieredBelt {
-
-    public static final ArrayList<Pair<Block, TieredBeltConnectorItem>> BELTS = new ArrayList<>();
-    private BELT_TYPE type;
+    private BELT_TYPE beltType;
 
     public TieredBeltConnectorItem(Block pBlock, Properties pProperties) {
         super(pBlock, pProperties);
-        BELTS.add(new Pair<>(pBlock, this));
     }
 
     @Override
@@ -80,9 +77,9 @@ public class TieredBeltConnectorItem extends BlockItem implements ITieredBelt {
 
         if(!validAxis || player == null) return InteractionResult.FAIL;
         if(tag.contains("FirstPulley")) {
-            if(!canConnect(level, firstPulley, pos)) return InteractionResult.FAIL;
+            if(!canConnect(level, firstPulley, pos, pContext.getItemInHand())) return InteractionResult.FAIL;
             if(firstPulley != null && !firstPulley.equals(pos)) {
-                createBelts(level, firstPulley, pos, pContext.getItemInHand());
+                createBelts(level, firstPulley, pos);
                 AllAdvancements.BELT.awardTo(player);
                 if(!player.isCreative()) {
                     pContext.getItemInHand().shrink(1);
@@ -101,7 +98,7 @@ public class TieredBeltConnectorItem extends BlockItem implements ITieredBelt {
         return InteractionResult.SUCCESS;
     }
 
-    public static void createBelts(Level level, BlockPos start, BlockPos end, ItemStack beltConnector) {
+    public void createBelts(Level level, BlockPos start, BlockPos end) {
         level.playSound(null, BlockPos.containing(VecHelper.getCenterOf(start.offset(end)).scale(0.5F)), SoundEvents.WOOL_PLACE, SoundSource.BLOCKS, 0.5F, 1F);
         BeltSlope slope = getSlopeBetween(start, end);
         Direction facing = getFacingFromTo(start, end);
@@ -111,8 +108,7 @@ public class TieredBeltConnectorItem extends BlockItem implements ITieredBelt {
         }
 
         List<BlockPos> beltsToCreate = getBeltChainBetween(start, end, slope, facing);
-        Optional<Pair<Block, TieredBeltConnectorItem>> optional = BELTS.stream().filter(pair -> pair.getSecond() == beltConnector.getItem()).findFirst(); //todo: this probably needs to match tier/shaft too
-        BlockState state = optional.map(pair -> pair.getFirst().defaultBlockState()).orElseGet(AllBlocks.BELT::getDefaultState);
+        BlockState state = Block.byItem(this).defaultBlockState();
         boolean failed = false;
         TIER tier = null;
         ItemStack shaftType = null;
@@ -191,7 +187,7 @@ public class TieredBeltConnectorItem extends BlockItem implements ITieredBelt {
         return positions;
     }
 
-    public static boolean canConnect(Level level, BlockPos first, BlockPos second) {
+    public static boolean canConnect(Level level, BlockPos first, BlockPos second, ItemStack heldStack) {
         if(!level.isLoaded(first) || !level.isLoaded(second)) return false;
         if(!second.closerThan(first, maxLength())) return false;
         BlockPos diff = second.subtract(first);
@@ -209,7 +205,10 @@ public class TieredBeltConnectorItem extends BlockItem implements ITieredBelt {
         BlockEntity be2 = level.getBlockEntity(second);
         if(!(be instanceof TieredKineticBlockEntity kbe)) return false;
         if(!(be2 instanceof TieredKineticBlockEntity kbe2)) return false;
-        if(kbe.getTier() != kbe2.getTier()) return false; //todo: check
+        if(level.getBlockState(first).getBlock() != level.getBlockState(second).getBlock()) return false;
+        List<Block> validShafts = Belts.VALID_SHAFTS.get(Block.byItem(heldStack.getItem()));
+        if(!validShafts.contains(level.getBlockState(first).getBlock())) return false;
+        if(!validShafts.contains(level.getBlockState(second).getBlock())) return false;
         float speed = kbe.getTheoreticalSpeed();
         float speed2 = kbe2.getTheoreticalSpeed();
 
@@ -236,12 +235,12 @@ public class TieredBeltConnectorItem extends BlockItem implements ITieredBelt {
     }
 
     @Override
-    public BELT_TYPE getType() {
-        return type;
+    public BELT_TYPE getBeltType() {
+        return beltType;
     }
 
     @Override
-    public void setType(BELT_TYPE type) {
-        this.type = type;
+    public void setBeltType(BELT_TYPE beltType) {
+        this.beltType = beltType;
     }
 }

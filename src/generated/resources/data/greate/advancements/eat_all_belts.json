@@ -15,7 +15,7 @@
       "conditions": {
         "item": {
           "items": [
-            "greate:silicon_belt_connector"
+            "greate:silicone_rubber_belt_connector"
           ]
         }
       },
@@ -61,7 +61,7 @@
     "frame": "challenge",
     "hidden": true,
     "icon": {
-      "item": "greate:silicon_belt_connector"
+      "item": "greate:silicone_rubber_belt_connector"
     },
     "show_toast": true,
     "title": {

@@ -30,6 +30,7 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
@@ -94,8 +95,7 @@ public class TieredShaftBlock extends AbstractSimpleShaftBlock implements Encasa
 
     public BlockState pickCorrectShaftType(BlockState stateForPlacement, Level level, BlockPos pos) {
         return PoweredShaftBlock.stillValid(stateForPlacement, level, pos) ?
-            this.getEquivalent(stateForPlacement) :
-                stateForPlacement;
+            this.getEquivalent(stateForPlacement) : stateForPlacement;
     }
 
     public BlockState getEquivalent(BlockState stateForPlacement) {
@@ -116,7 +116,7 @@ public class TieredShaftBlock extends AbstractSimpleShaftBlock implements Encasa
         if (resultGirderEncase.consumesAction()) return resultGirderEncase;
 
         IPlacementHelper helper = PlacementHelpers.get(placementHelperId);
-        if (helper.matchesItem(heldItem))
+        if (Block.byItem(heldItem.getItem()) == pState.getBlock())
             return helper.getOffset(pPlayer, pLevel, pState, pPos, pHit)
                     .placeInWorld(pLevel, (BlockItem) heldItem.getItem(), pPlayer, pHand, pHit);
 
@@ -156,9 +156,11 @@ public class TieredShaftBlock extends AbstractSimpleShaftBlock implements Encasa
             if (offset.isSuccessful())
                 offset.withTransform(offset.getTransform().andThen(s -> {
                     if(s.getBlock() instanceof TieredShaftBlock tsb) {
-                        return tsb.pickCorrectShaftType(s, world, offset.getBlockPos());
+                        if(tsb == state.getBlock()) {
+                            return tsb.pickCorrectShaftType(s, world, offset.getBlockPos());
+                        }
                     }
-                    return ShaftBlock.pickCorrectShaftType(s, world, offset.getBlockPos());
+                    return Blocks.AIR.defaultBlockState();
                 }));
             return offset;
         }

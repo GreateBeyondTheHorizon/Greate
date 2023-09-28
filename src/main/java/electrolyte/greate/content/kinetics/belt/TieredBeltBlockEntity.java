@@ -4,14 +4,12 @@ import com.jozufozu.flywheel.light.LightListener;
 import com.jozufozu.flywheel.light.LightUpdater;
 import com.jozufozu.flywheel.util.box.GridAlignedBB;
 import com.jozufozu.flywheel.util.box.ImmutableBox;
-import com.simibubi.create.content.kinetics.belt.BeltBlock;
-import com.simibubi.create.content.kinetics.belt.BeltBlockEntity;
-import com.simibubi.create.content.kinetics.belt.BeltPart;
-import com.simibubi.create.content.kinetics.belt.BeltSlope;
+import com.simibubi.create.content.kinetics.belt.*;
 import com.simibubi.create.content.kinetics.belt.transport.BeltMovementHandler;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import electrolyte.greate.Greate;
+import electrolyte.greate.GreateEnums.BELT_TYPE;
 import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import net.minecraft.ChatFormatting;
@@ -26,7 +24,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.LightLayer;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
@@ -43,6 +40,7 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
 
     private double networkMaxCapacity;
     private TIER tier;
+    private BELT_TYPE beltType;
     private ItemStack shaftType;
 
     @OnlyIn(Dist.CLIENT)
@@ -54,15 +52,16 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
         itemHandler = LazyOptional.empty();
         casing = CasingType.NONE;
         color = Optional.empty();
+        beltType = ((ITieredBelt) state.getBlock()).getBeltType();
     }
 
     @Override
     public void tick() {
-        if(!(level.getBlockState(worldPosition).getBlock() instanceof TieredBeltBlock)) return;
         if(beltLength == 0) {
             TieredBeltBlock.initBelt(level, worldPosition);
         }
         super.tick();
+        if(!(level.getBlockState(worldPosition).getBlock() instanceof TieredBeltBlock)) return;
         initializeItemHandler();
         if(!isController()) return;
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
@@ -134,22 +133,13 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
         if(level.isClientSide()) return true;
 
         for(BlockPos pos : TieredBeltBlock.getBeltChain(level, getController())) {
-            TieredBeltBlockEntity tbbe = TieredBeltHelper.getSegmentBE(level, pos);
-            if(tbbe == null) continue;
-            tbbe.color = Optional.ofNullable(colorIn);
-            tbbe.setChanged();
-            tbbe.sendData();
+            BeltBlockEntity bbe = BeltHelper.getSegmentBE(level, pos);
+            if(bbe == null) continue;
+            bbe.color = Optional.ofNullable(colorIn);
+            bbe.setChanged();
+            bbe.sendData();
         }
         return true;
-    }
-
-    @Override
-    public TieredBeltBlockEntity getControllerBE() {
-        if(controller == null) return null;
-        if(!level.isLoaded(controller)) return null;
-        BlockEntity be = level.getBlockEntity(controller);
-        if(!(be instanceof TieredBeltBlockEntity tbbe)) return null;
-        return tbbe;
     }
 
     @Override
@@ -183,7 +173,7 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
 
         @Override
         public GridAlignedBB getVolume() {
-            BlockPos endPos = TieredBeltHelper.getPositionForOffset(TieredBeltBlockEntity.this, beltLength - 1);
+            BlockPos endPos = BeltHelper.getPositionForOffset(TieredBeltBlockEntity.this, beltLength - 1);
             GridAlignedBB bb = GridAlignedBB.from(worldPosition, endPos);
             bb.fixMinMax();
             return bb;

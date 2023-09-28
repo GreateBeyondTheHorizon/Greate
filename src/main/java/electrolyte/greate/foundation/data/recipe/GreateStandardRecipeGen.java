@@ -52,7 +52,8 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
             SHAFT_CYCLE = conversionCycle(ImmutableList.of(AllBlocks.SHAFT, Shafts.ANDESITE_SHAFT)),
             COGWHEEL_CYCLE = conversionCycle(ImmutableList.of(AllBlocks.COGWHEEL, Cogwheels.ANDESITE_COGWHEEL)),
             LARGE_COGWHEEL_CYCLE = conversionCycle(ImmutableList.of(AllBlocks.LARGE_COGWHEEL, Cogwheels.LARGE_ANDESITE_COGWHEEL)),
-            CRUSHING_WHEEL_CYCLE = conversionCycle(ImmutableList.of(AllBlocks.CRUSHING_WHEEL, CrushingWheels.ANDESITE_CRUSHING_WHEEL));
+            CRUSHING_WHEEL_CYCLE = conversionCycle(ImmutableList.of(AllBlocks.CRUSHING_WHEEL, CrushingWheels.ANDESITE_CRUSHING_WHEEL)),
+            BELT_CYCLE = conversionCycle(ImmutableList.of(AllItems.BELT_CONNECTOR, Belts.RUBBER_BELT_CONNECTOR));
 
     private Marker MATERIALS = enterFolder("materials");
 
@@ -165,7 +166,13 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
             PALLADIUM_MILLSTONE = createMaterialMillstoneRecipe(Millstones.PALLADIUM_MILLSTONE, "luv"),
             NAQUADAH_MILLSTONE = createMaterialMillstoneRecipe(Millstones.NAQUADAH_MILLSTONE, "zpm"),
             DARMSTADTIUM_MILLSTONE = createMaterialMillstoneRecipe(Millstones.DARMSTADTIUM_MILLSTONE, "uv"),
-            NEUTRONIUM_MILLSTONE = createMaterialMillstoneRecipe(Millstones.NEUTRONIUM_MILLSTONE, "uhv");
+            NEUTRONIUM_MILLSTONE = createMaterialMillstoneRecipe(Millstones.NEUTRONIUM_MILLSTONE, "uhv"),
+
+            RUBBER_BELT_CONNECTOR = createBeltConnectorRecipe(Belts.RUBBER_BELT_CONNECTOR),
+            SILICONE_RUBBER_BELT_CONNECTOR = createBeltConnectorRecipe(Belts.SILICONE_RUBBER_BELT_CONNECTOR),
+            POLYETHYLENE_BELT_CONNECTOR = createBeltConnectorRecipe(Belts.POLYETHYLENE_BELT_CONNECTOR),
+            POLYTETRAFLUOROETHYLENE_BELT_CONNECTOR = createBeltConnectorRecipe(Belts.POLYTETRAFLUOROETHYLENE_BELT_CONNECTOR),
+            POLYBENZIMIDAZOLE_BELT_CONNECTOR = createBeltConnectorRecipe(Belts.POLYBENZIMIDAZOLE_BELT_CONNECTOR);
     private GeneratedRecipe createMaterialAlloyRecipe(ItemProviderEntry<? extends ItemLike> alloy) {
         String material = alloy.getId().getPath().substring(0, alloy.getId().getPath().length() - 6);
         return create(alloy).unlockedByTag(GreateTags.forgeItemTag("ingots/" + material))
@@ -237,6 +244,14 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
                         .pattern(" S ")
                         .pattern("SMS")
                         .pattern("FSH"));
+    }
+
+    private GeneratedRecipe createBeltConnectorRecipe(ItemProviderEntry<? extends ItemLike> belt) {
+        String beltMaterial = belt.getId().getPath().substring(0, belt.getId().getPath().length() - 15);
+        return create(belt).unlockedBy(ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu", beltMaterial + "_foil"))::asItem)
+                .viaShaped(b -> b.define('F', ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu", beltMaterial + "_foil")))
+                        .pattern("FFF")
+                        .pattern("FFF"));
     }
 
     String currentFolder = "";

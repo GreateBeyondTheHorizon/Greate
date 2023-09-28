@@ -3,9 +3,6 @@ package electrolyte.greate.registry;
 import com.simibubi.create.content.kinetics.base.CutoutRotatingInstance;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.simibubi.create.content.kinetics.base.ShaftRenderer;
-import com.simibubi.create.content.kinetics.belt.BeltBlockEntity;
-import com.simibubi.create.content.kinetics.belt.BeltInstance;
-import com.simibubi.create.content.kinetics.belt.BeltRenderer;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import electrolyte.greate.content.kinetics.base.TieredShaftInstance;
 import electrolyte.greate.content.kinetics.base.TieredSingleRotatingInstance;
@@ -124,7 +121,7 @@ public class ModBlockEntityTypes {
     public static final BlockEntityEntry<TieredBeltBlockEntity> TIERED_BELT = REGISTRATE
             .blockEntity("tiered_belt", TieredBeltBlockEntity::new)
             .instance(() -> TieredBeltInstance::new, TieredBeltBlockEntity::shouldRenderNormally)
-            .validBlocks(Belts.RUBBER_BELT, Belts.SILICON_BELT, Belts.POLYETHYLENE_BELT,
+            .validBlocks(Belts.RUBBER_BELT, Belts.SILICONE_RUBBER_BELT, Belts.POLYETHYLENE_BELT,
                     Belts.POLYTETRAFLUOROETHYLENE_BELT, Belts.POLYBENZIMIDAZOLE_BELT)
             .renderer(() -> TieredBeltRenderer::new)
             .register();
