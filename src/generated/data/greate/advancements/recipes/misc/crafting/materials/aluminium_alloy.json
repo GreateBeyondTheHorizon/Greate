@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:aluminium_ingots"
+            "tag": "c:ingots/aluminium"
           }
         ]
       },

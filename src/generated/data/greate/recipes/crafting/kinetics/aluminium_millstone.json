@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "greate:aluminium_shafts"
+      "tag": "greate:shafts/aluminium"
     },
     "C": {
-      "tag": "c:mv_circuits"
+      "tag": "c:circuits/mv"
     },
     "M": {
       "item": "gtceu:mv_machine_hull"
@@ -15,7 +15,7 @@
       "tag": "minecraft:wooden_slabs"
     },
     "W": {
-      "tag": "greate:aluminium_cogwheels"
+      "tag": "greate:cogwheels/aluminium"
     }
   },
   "pattern": [

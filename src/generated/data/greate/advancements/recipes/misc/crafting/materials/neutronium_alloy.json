@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:neutronium_ingots"
+            "tag": "c:ingots/neutronium"
           }
         ]
       },

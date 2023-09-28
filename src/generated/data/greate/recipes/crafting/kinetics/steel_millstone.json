@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "greate:steel_shafts"
+      "tag": "greate:shafts/steel"
     },
     "C": {
-      "tag": "c:lv_circuits"
+      "tag": "c:circuits/lv"
     },
     "M": {
       "item": "gtceu:lv_machine_hull"
@@ -15,7 +15,7 @@
       "tag": "minecraft:wooden_slabs"
     },
     "W": {
-      "tag": "greate:steel_cogwheels"
+      "tag": "greate:cogwheels/steel"
     }
   },
   "pattern": [

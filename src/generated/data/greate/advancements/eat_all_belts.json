@@ -1,0 +1,89 @@
+{
+  "parent": "greate:root",
+  "criteria": {
+    "0": {
+      "conditions": {
+        "item": {
+          "items": [
+            "greate:rubber_belt_connector"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "1": {
+      "conditions": {
+        "item": {
+          "items": [
+            "greate:silicone_rubber_belt_connector"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "2": {
+      "conditions": {
+        "item": {
+          "items": [
+            "greate:polyethylene_belt_connector"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "3": {
+      "conditions": {
+        "item": {
+          "items": [
+            "greate:polytetrafluoroethylene_belt_connector"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "4": {
+      "conditions": {
+        "item": {
+          "items": [
+            "greate:polybenzimidazole_belt_connector"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "color": "#DBA213",
+      "translate": "advancement.greate.eat_all_belts.desc"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "greate:silicone_rubber_belt_connector"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.greate.eat_all_belts"
+    }
+  },
+  "requirements": [
+    [
+      "0"
+    ],
+    [
+      "1"
+    ],
+    [
+      "2"
+    ],
+    [
+      "3"
+    ],
+    [
+      "4"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

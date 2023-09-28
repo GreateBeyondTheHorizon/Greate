@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "greate:andesite_shafts"
+      "tag": "greate:shafts/andesite"
     },
     "C": {
-      "tag": "c:ulv_circuits"
+      "tag": "c:circuits/ulv"
     },
     "M": {
       "item": "gtceu:ulv_machine_hull"
@@ -15,7 +15,7 @@
       "tag": "minecraft:wooden_slabs"
     },
     "W": {
-      "tag": "greate:andesite_cogwheels"
+      "tag": "greate:cogwheels/andesite"
     }
   },
   "pattern": [

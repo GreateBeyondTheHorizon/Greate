@@ -1,5 +1,6 @@
 package electrolyte.greate.content.kinetics.simpleRelays;
 
+import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.content.decoration.encasing.EncasableBlock;
@@ -47,18 +48,21 @@ public class TieredCogwheelBlock extends AbstractSimpleShaftBlock implements ICo
 
     boolean isLarge;
     TIER tier;
+    PartialModel shaftlessLargeCogwheel, cogwheelShaft;
 
-    protected TieredCogwheelBlock(boolean large, Properties properties) {
+    protected TieredCogwheelBlock(boolean large, Properties properties, PartialModel shaftlessLargeCogwheel, PartialModel cogwheelShaft) {
         super(properties);
         this.isLarge = large;
+        this.shaftlessLargeCogwheel = shaftlessLargeCogwheel;
+        this.cogwheelShaft = cogwheelShaft;
     }
 
-    public static TieredCogwheelBlock small(Properties properties) {
-        return new TieredCogwheelBlock(false, properties);
+    public static TieredCogwheelBlock small(Properties properties, PartialModel shaftlessLargeCogwheel, PartialModel cogwheelShaft) {
+        return new TieredCogwheelBlock(false, properties, shaftlessLargeCogwheel, cogwheelShaft);
     }
 
-    public static TieredCogwheelBlock large(Properties properties) {
-        return new TieredCogwheelBlock(true, properties);
+    public static TieredCogwheelBlock large(Properties properties, PartialModel shaftlessLargeCogwheel, PartialModel cogwheelShaft) {
+        return new TieredCogwheelBlock(true, properties, shaftlessLargeCogwheel, cogwheelShaft);
     }
 
     @Override
@@ -220,5 +224,9 @@ public class TieredCogwheelBlock extends AbstractSimpleShaftBlock implements ICo
     @Override
     public void appendHoverText(ItemStack pStack, BlockGetter pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
         pTooltip.add(Component.translatable("greate.tooltip.capacity").append(Component.literal(String.valueOf(tier.getStressCapacity())).withStyle(tier.getTierColor())).append(" (").append(Component.literal(tier.getName()).withStyle(tier.getTierColor())).append(")").withStyle(ChatFormatting.DARK_GRAY));
+    }
+
+    public PartialModel[] getPartialModels() {
+        return new PartialModel[]{shaftlessLargeCogwheel, cogwheelShaft};
     }
 }

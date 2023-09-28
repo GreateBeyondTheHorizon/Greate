@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "F": {
-      "tag": "c:files"
+      "tag": "c:tools/files"
     },
     "P": {
-      "tag": "c:stone_plates"
+      "tag": "c:plates/stone"
     },
     "S": {
       "item": "greate:steel_cogwheel"

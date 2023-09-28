@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "create:belt_connector"
+    }
+  ],
+  "result": {
+    "item": "greate:rubber_belt_connector"
+  }
+}

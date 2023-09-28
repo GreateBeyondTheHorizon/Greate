@@ -1,0 +1,7 @@
+{
+  "parent": "create:block/belt/diagonal_start",
+  "textures": {
+    "0": "greate:block/silicone_rubber/belt_diagonal",
+    "particle": "greate:block/silicone_rubber/belt_diagonal"
+  }
+}

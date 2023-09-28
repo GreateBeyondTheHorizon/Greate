@@ -12,6 +12,7 @@
   "environment": "*",
   "entrypoints": {
     "main": ["electrolyte.greate.Greate"],
+    "client": ["electrolyte.greate.GreateClient"],
     "fabric-datagen": ["electrolyte.greate.GreateDataGen"],
     "jei_mod_plugin": ["electrolyte.greate.compat.jei.GreateJEI"]
   },
@@ -23,7 +24,7 @@
     "minecraft": "~1.20.1",
     "java": ">=17",
     "fabric-api": "*",
-    "create": "<0.5.1.e",
+    "create": "*",
     "gtceu": "*"
   }
 }

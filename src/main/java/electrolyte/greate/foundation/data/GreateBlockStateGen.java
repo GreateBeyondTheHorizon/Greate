@@ -132,7 +132,7 @@ public class GreateBlockStateGen {
                             .texture("axis", p.modLoc("block/" + c.getName().substring(0, c.getName().length() - 15)) + "/axis")
                             .texture("axis_top", p.modLoc("block/" + c.getName().substring(0, c.getName().length() - 15)) + "/axis_top"))
                     .modelFile(p.models().withExistingParent(c.getName(), p.modLoc("block/" + c.getName() + "_textures"))
-                    .customLoader(ObjModelBuilder::begin).modelLocation(Create.asResource("models/block/crushing_wheel/crushing_wheel.obj")).flipV(true).end())
+                            .customLoader(ObjModelBuilder::begin).modelLocation(Create.asResource("models/block/crushing_wheel/crushing_wheel.obj")).flipV(true).end())
                     .rotationX(axis == Axis.X ? 90 : axis == Axis.Z ? 90 : 0)
                     .rotationY(axis == Axis.X ? 90 : axis == Axis.Z ? 180 : 0)
                     .build();

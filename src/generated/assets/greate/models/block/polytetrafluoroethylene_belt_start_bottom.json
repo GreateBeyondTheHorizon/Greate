@@ -1,0 +1,6 @@
+{
+  "parent": "create:block/belt/start_bottom",
+  "textures": {
+    "1": "greate:block/polytetrafluoroethylene/belt_offset"
+  }
+}

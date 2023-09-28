@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "F": {
-      "tag": "c:files"
+      "tag": "c:tools/files"
     },
     "P": {
-      "tag": "c:wood_plates"
+      "tag": "c:plates/wood"
     },
     "S": {
       "item": "greate:andesite_cogwheel"

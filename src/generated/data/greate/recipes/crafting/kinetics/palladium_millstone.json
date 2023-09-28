@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "greate:palladium_shafts"
+      "tag": "greate:shafts/palladium"
     },
     "C": {
-      "tag": "c:luv_circuits"
+      "tag": "c:circuits/luv"
     },
     "M": {
       "item": "gtceu:luv_machine_hull"
@@ -15,7 +15,7 @@
       "tag": "minecraft:wooden_slabs"
     },
     "W": {
-      "tag": "greate:palladium_cogwheels"
+      "tag": "greate:cogwheels/palladium"
     }
   },
   "pattern": [

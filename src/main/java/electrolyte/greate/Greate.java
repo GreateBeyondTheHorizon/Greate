@@ -42,8 +42,8 @@ public class Greate implements ModInitializer {
         CONFIG = Configuration.registerConfig(GreateConfig.class, ConfigFormats.yaml()).getConfigInstance();
         CommonEvents.register();
         GreateLang.register();
-        GreatePartialModels.register();
         GreateTags.init();
+        Belts.register();
         Cogwheels.register();
         CrushingWheels.register();
         Gearboxes.register();

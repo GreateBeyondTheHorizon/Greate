@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:darmstadtium_ingots"
+            "tag": "c:ingots/darmstadtium"
           }
         ]
       },

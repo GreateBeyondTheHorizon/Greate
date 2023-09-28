@@ -1,7 +1,9 @@
-package electrolyte.greate;
+package electrolyte.greate.foundation.events;
 
 import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.utility.Lang;
+import electrolyte.greate.Greate;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
@@ -14,8 +16,10 @@ public class GreateEventHandler {
                 if(stack.getItem() == AllBlocks.SHAFT.get().asItem() ||
                         stack.getItem() == AllBlocks.COGWHEEL.get().asItem() ||
                         stack.getItem() == AllBlocks.LARGE_COGWHEEL.get().asItem() ||
-                        stack.getItem() == AllBlocks.CRUSHING_WHEEL.get().asItem()) {
-                    componentList.add(Lang.builder(Greate.MOD_ID).translate("old_create_items_warning").component().withStyle(ChatFormatting.RED));
+                        stack.getItem() == AllBlocks.CRUSHING_WHEEL.get().asItem() ||
+                        stack.getItem() == AllItems.BELT_CONNECTOR.get()) {
+                    componentList.add(Lang.builder(Greate.MOD_ID).translate("old_create_items_warning.1").component().withStyle(ChatFormatting.RED));
+                    componentList.add(Lang.builder(Greate.MOD_ID).translate("old_create_items_warning.2").component().withStyle(ChatFormatting.RED));
                 }
             });
 }

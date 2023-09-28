@@ -8,7 +8,6 @@ import com.simibubi.create.foundation.fluid.FluidIngredient;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import electrolyte.greate.Greate;
 import electrolyte.greate.GreateEnums.TIER;
-import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeParams;
 import io.github.fabricators_of_create.porting_lib.util.FluidStack;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.NonNullList;
@@ -43,7 +42,7 @@ public abstract class TieredProcessingRecipe<T extends Container> extends Proces
     private IRecipeTypeInfo typeInfo;
     private Supplier<ItemStack> forcedResult;
 
-    public TieredProcessingRecipe(IRecipeTypeInfo typeInfo, TieredProcessingRecipeParams params) {
+    public TieredProcessingRecipe(IRecipeTypeInfo typeInfo, TieredProcessingRecipeBuilder.TieredProcessingRecipeParams params) {
         super(typeInfo, params);
         this.forcedResult = null;
         this.typeInfo = typeInfo;

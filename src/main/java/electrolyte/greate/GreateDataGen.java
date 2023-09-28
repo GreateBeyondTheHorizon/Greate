@@ -1,5 +1,7 @@
 package electrolyte.greate;
 
+import com.tterrag.registrate.providers.ProviderType;
+import electrolyte.greate.foundation.advancement.GreateAdvancements;
 import electrolyte.greate.foundation.data.GreateTagGen;
 import electrolyte.greate.foundation.data.recipe.GreateMechanicalCraftingRecipeGen;
 import electrolyte.greate.foundation.data.recipe.GreateStandardRecipeGen;
@@ -20,6 +22,8 @@ public class GreateDataGen implements DataGeneratorEntrypoint {
         ExistingFileHelper helper = new ExistingFileHelper(List.of(Paths.get(System.getProperty(ExistingFileHelper.EXISTING_RESOURCES))), Set.of("create"), false, null, null);
         Pack pack = fabricDataGenerator.createPack();
         REGISTRATE.setupDatagen(pack, helper);
+        REGISTRATE.addDataGenerator(ProviderType.LANG, p -> GreateAdvancements.provideLang(p::add));
+        pack.addProvider(GreateAdvancements::new);
         pack.addProvider(GreateStandardRecipeGen::new);
         pack.addProvider(GreateMechanicalCraftingRecipeGen::new);
         pack.addProvider(GreateTagGen::new);

@@ -1,0 +1,7 @@
+{
+  "parent": "create:block/belt/diagonal_middle",
+  "textures": {
+    "0": "greate:block/rubber/belt_diagonal",
+    "particle": "greate:block/rubber/belt_diagonal"
+  }
+}

@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "F": {
-      "tag": "c:files"
+      "tag": "c:tools/files"
     },
     "P": {
-      "tag": "c:stainless_steel_plates"
+      "tag": "c:plates/stainless_steel"
     },
     "S": {
       "item": "greate:titanium_shaft"

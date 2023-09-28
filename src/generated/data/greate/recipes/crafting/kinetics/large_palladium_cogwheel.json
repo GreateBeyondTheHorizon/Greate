@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "F": {
-      "tag": "c:files"
+      "tag": "c:tools/files"
     },
     "P": {
-      "tag": "c:tungstensteel_plates"
+      "tag": "c:plates/tungstensteel"
     },
     "S": {
       "item": "greate:palladium_shaft"

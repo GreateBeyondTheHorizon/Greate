@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "greate:naquadah_shafts"
+      "tag": "greate:shafts/naquadah"
     },
     "C": {
-      "tag": "c:zpm_circuits"
+      "tag": "c:circuits/zpm"
     },
     "M": {
       "item": "gtceu:zpm_machine_hull"
@@ -15,7 +15,7 @@
       "tag": "minecraft:wooden_slabs"
     },
     "W": {
-      "tag": "greate:naquadah_cogwheels"
+      "tag": "greate:cogwheels/naquadah"
     }
   },
   "pattern": [
