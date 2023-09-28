@@ -1,8 +1,10 @@
-package electrolyte.greate;
+package electrolyte.greate.foundation.events;
 
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.foundation.utility.Lang;
+import electrolyte.greate.Greate;
 import net.minecraft.ChatFormatting;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;

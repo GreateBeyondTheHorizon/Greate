@@ -1,0 +1,6 @@
+{
+  "parent": "create:block/belt/start",
+  "textures": {
+    "0": "greate:block/polytetrafluoroethylene/belt"
+  }
+}

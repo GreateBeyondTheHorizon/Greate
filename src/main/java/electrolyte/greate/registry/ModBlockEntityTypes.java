@@ -3,9 +3,15 @@ package electrolyte.greate.registry;
 import com.simibubi.create.content.kinetics.base.CutoutRotatingInstance;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.simibubi.create.content.kinetics.base.ShaftRenderer;
+import com.simibubi.create.content.kinetics.belt.BeltBlockEntity;
+import com.simibubi.create.content.kinetics.belt.BeltInstance;
+import com.simibubi.create.content.kinetics.belt.BeltRenderer;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import electrolyte.greate.content.kinetics.base.TieredShaftInstance;
 import electrolyte.greate.content.kinetics.base.TieredSingleRotatingInstance;
+import electrolyte.greate.content.kinetics.belt.TieredBeltBlockEntity;
+import electrolyte.greate.content.kinetics.belt.TieredBeltInstance;
+import electrolyte.greate.content.kinetics.belt.TieredBeltRenderer;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingWheelBlockEntity;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingWheelControllerBlockEntity;
 import electrolyte.greate.content.kinetics.gearbox.TieredGearboxBlockEntity;
@@ -113,6 +119,14 @@ public class ModBlockEntityTypes {
             .validBlocks(CrushingWheels.ANDESITE_CRUSHING_WHEEL_CONTROLLER, CrushingWheels.STEEL_CRUSHING_WHEEL_CONTROLLER, CrushingWheels.ALUMINIUM_CRUSHING_WHEEL_CONTROLLER, CrushingWheels.STAINLESS_STEEL_CRUSHING_WHEEL_CONTROLLER,
                     CrushingWheels.TITANIUM_CRUSHING_WHEEL_CONTROLLER, CrushingWheels.TUNGSTENSTEEL_CRUSHING_WHEEL_CONTROLLER, CrushingWheels.PALLADIUM_CRUSHING_WHEEL_CONTROLLER, CrushingWheels.NAQUADAH_CRUSHING_WHEEL_CONTROLLER,
                     CrushingWheels.DARMSTADTIUM_CRUSHING_WHEEL_CONTROLLER, CrushingWheels.NEUTRONIUM_CRUSHING_WHEEL_CONTROLLER)
+            .register();
+
+    public static final BlockEntityEntry<TieredBeltBlockEntity> TIERED_BELT = REGISTRATE
+            .blockEntity("tiered_belt", TieredBeltBlockEntity::new)
+            .instance(() -> TieredBeltInstance::new, TieredBeltBlockEntity::shouldRenderNormally)
+            .validBlocks(Belts.RUBBER_BELT, Belts.SILICON_BELT, Belts.POLYETHYLENE_BELT,
+                    Belts.POLYTETRAFLUOROETHYLENE_BELT, Belts.POLYBENZIMIDAZOLE_BELT)
+            .renderer(() -> TieredBeltRenderer::new)
             .register();
 
     public static void register() {}

@@ -4,6 +4,9 @@
   "minVersion": "0.8",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
+    "MixinBeltBlock",
+    "MixinBeltFunnelBlock",
+    "MixinBeltTunnelBlock",
     "MixinBlockStressDefaults",
     "MixinGirderBlock",
     "MixinKineticBlockEntity",

@@ -1,0 +1,7 @@
+{
+  "parent": "create:block/belt/diagonal_end",
+  "textures": {
+    "0": "greate:block/polytetrafluoroethylene/belt_diagonal",
+    "particle": "greate:block/polytetrafluoroethylene/belt_diagonal"
+  }
+}

@@ -74,4 +74,12 @@ public class GreateEnums {
             return Arrays.stream(values()).toList().indexOf(tier);
         }
     }
+
+    public enum BELT_TYPE implements Comparable<BELT_TYPE> {
+        RUBBER,
+        SILICON,
+        POLYETHYLENE,
+        PTFE,
+        PBI
+    }
 }

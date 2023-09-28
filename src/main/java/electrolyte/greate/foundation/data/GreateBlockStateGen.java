@@ -1,15 +1,31 @@
 package electrolyte.greate.foundation.data;
 
+import com.google.common.base.Predicates;
 import com.simibubi.create.Create;
+import com.simibubi.create.content.kinetics.belt.BeltBlock;
+import com.simibubi.create.content.kinetics.belt.BeltPart;
+import com.simibubi.create.content.kinetics.belt.BeltSlope;
+import com.sun.jna.platform.unix.solaris.LibKstat.Kstat;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
+import electrolyte.greate.content.kinetics.belt.TieredBeltBlock;
+import electrolyte.greate.registry.Belts;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
+import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile.UncheckedModelFile;
+import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;
+import net.minecraftforge.client.model.generators.VariantBlockStateBuilder;
+import net.minecraftforge.client.model.generators.VariantBlockStateBuilder.PartialBlockstate;
 import net.minecraftforge.client.model.generators.loaders.ObjModelBuilder;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class GreateBlockStateGen {
 
@@ -144,4 +160,30 @@ public class GreateBlockStateGen {
                 .modelFile(new UncheckedModelFile("minecraft:block/air"))
                 .build(), BlockStateProperties.FACING);
     }
+
+
+
+   /* public static void tieredBeltProvider(DataGenContext<Block, TieredBeltBlock> c, RegistrateBlockstateProvider p) {
+        VariantBlockStateBuilder builder =  p.getVariantBuilder(c.get());
+        String material = c.getName().substring(0, c.getName().length() - 5);
+        final ConfiguredModel[][] models = {new ConfiguredModel[1]};
+        builder.forAllStates(state -> {
+            Direction dir = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
+            BeltSlope slope = state.getValue(BeltBlock.SLOPE);
+            if(!state.getValue(BeltBlock.CASING)) {
+                models[0] = ConfiguredModel.builder()
+                        .modelFile(new UncheckedModelFile(p.modLoc("block/" + material + "/particle")))
+                        .rotationX(slope == BeltSlope.VERTICAL ? 90 : slope == BeltSlope.SIDEWAYS && dir.getAxisDirection() == AxisDirection.NEGATIVE ? 180 : 0)
+                        .rotationY((dir.getAxis().isVertical() ? 0 : (int) dir.toYRot()) + (slope == BeltSlope.UPWARD ? 180 : 0) + ())
+                        .build();
+            }
+            if(state.getValue(BeltBlock.CASING)) {
+                models[0] = ConfiguredModel.builder()
+                        .modelFile(new UncheckedModelFile(p.modLoc("block/" + material + "/particle")))
+                        .build();
+            }
+
+            return models[0];
+        });
+    }*/
 }

@@ -1,0 +1,6 @@
+{
+  "parent": "create:block/belt/end",
+  "textures": {
+    "0": "greate:block/rubber/belt"
+  }
+}

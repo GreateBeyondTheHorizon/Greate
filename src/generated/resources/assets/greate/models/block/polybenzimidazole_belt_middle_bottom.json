@@ -1,0 +1,6 @@
+{
+  "parent": "create:block/belt/middle_bottom",
+  "textures": {
+    "1": "greate:block/polybenzimidazole/belt_offset"
+  }
+}

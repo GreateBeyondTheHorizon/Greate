@@ -4,7 +4,11 @@ import com.jozufozu.flywheel.core.PartialModel;
 import electrolyte.greate.Greate;
 import net.minecraft.resources.ResourceLocation;
 
+import java.util.ArrayList;
+
 public class GreatePartialModels {
+
+    public static final ArrayList<PartialModel> PARTIAL_MODELS = new ArrayList<>();
 
     public static final PartialModel
 
@@ -37,10 +41,52 @@ public class GreatePartialModels {
     PALLADIUM_MILLSTONE_INNER = block("palladium_millstone_inner"),
     NAQUADAH_MILLSTONE_INNER = block("naquadah_millstone_inner"),
     DARMSTADTIUM_MILLSTONE_INNER = block("darmstadtium_millstone_inner"),
-    NEUTRONIUM_MILLSTONE_INNER = block("neutronium_millstone_inner");
+    NEUTRONIUM_MILLSTONE_INNER = block("neutronium_millstone_inner"),
+
+    RUBBER_BELT_ANDESITE_PULLEY = block("rubber_belt_andesite_pulley"),
+    RUBBER_BELT_STEEL_PULLEY = block("rubber_belt_steel_pulley"),
+    RUBBER_BELT_START = block("rubber_belt_start"), RUBBER_BELT_MIDDLE = block("rubber_belt_middle"),
+    RUBBER_BELT_END = block("rubber_belt_end"), RUBBER_BELT_START_BOTTOM = block("rubber_belt_start_bottom"),
+    RUBBER_BELT_MIDDLE_BOTTOM = block("rubber_belt_middle_bottom"), RUBBER_BELT_END_BOTTOM = block("rubber_belt_end_bottom"),
+    RUBBER_BELT_DIAGONAL_START = block("rubber_belt_diagonal_start"), RUBBER_BELT_DIAGONAL_MIDDLE = block("rubber_belt_diagonal_middle"),
+    RUBBER_BELT_DIAGONAL_END = block("rubber_belt_diagonal_end"),
+
+    SILICON_BELT_ALUMINIUM_PULLEY = block("silicon_belt_aluminium_pulley"),
+    SILICON_BELT_STAINLESS_STEEL_PULLEY = block("silicon_belt_stainless_steel_pulley"),
+    SILICON_BELT_START = block("silicon_belt_start"), SILICON_BELT_MIDDLE = block("silicon_belt_middle"),
+    SILICON_BELT_END = block("silicon_belt_end"), SILICON_BELT_START_BOTTOM = block("silicon_belt_start_bottom"),
+    SILICON_BELT_MIDDLE_BOTTOM = block("silicon_belt_middle_bottom"), SILICON_BELT_END_BOTTOM = block("silicon_belt_end_bottom"),
+    SILICON_BELT_DIAGONAL_START = block("silicon_belt_diagonal_start"), SILICON_BELT_DIAGONAL_MIDDLE = block("silicon_belt_diagonal_middle"),
+    SILICON_BELT_DIAGONAL_END = block("silicon_belt_diagonal_end"),
+
+    POLYETHYLENE_BELT_TITANIUM_PULLEY = block("polyethylene_belt_titanium_pulley"),
+    POLYETHYLENE_BELT_TUNGSTENSTEEL_PULLEY = block("polyethylene_belt_tungstensteel_pulley"),
+    POLYETHYLENE_BELT_START = block("polyethylene_belt_start"), POLYETHYLENE_BELT_MIDDLE = block("polyethylene_belt_middle"),
+    POLYETHYLENE_BELT_END = block("polyethylene_belt_end"), POLYETHYLENE_BELT_START_BOTTOM = block("polyethylene_belt_start_bottom"),
+    POLYETHYLENE_BELT_MIDDLE_BOTTOM = block("polyethylene_belt_middle_bottom"), POLYETHYLENE_BELT_END_BOTTOM = block("polyethylene_belt_end_bottom"),
+    POLYETHYLENE_BELT_DIAGONAL_START = block("polyethylene_belt_diagonal_start"), POLYETHYLENE_BELT_DIAGONAL_MIDDLE = block("polyethylene_belt_diagonal_middle"),
+    POLYETHYLENE_BELT_DIAGONAL_END = block("polyethylene_belt_diagonal_end"),
+
+    POLYTETRAFLUOROETHYLENE_BELT_PALLADIUM_PULLEY = block("polytetrafluoroethylene_belt_palladium_pulley"),
+    POLYTETRAFLUOROETHYLENE_BELT_NAQUADAH_PULLEY = block("polytetrafluoroethylene_belt_naquadah_pulley"),
+    POLYTETRAFLUOROETHYLENE_BELT_START = block("polytetrafluoroethylene_belt_start"), POLYTETRAFLUOROETHYLENE_BELT_MIDDLE = block("polytetrafluoroethylene_belt_middle"),
+    POLYTETRAFLUOROETHYLENE_BELT_END = block("polytetrafluoroethylene_belt_end"), POLYTETRAFLUOROETHYLENE_BELT_START_BOTTOM = block("polytetrafluoroethylene_belt_start_bottom"),
+    POLYTETRAFLUOROETHYLENE_BELT_MIDDLE_BOTTOM = block("polytetrafluoroethylene_belt_middle_bottom"), POLYTETRAFLUOROETHYLENE_BELT_END_BOTTOM = block("polytetrafluoroethylene_belt_end_bottom"),
+    POLYTETRAFLUOROETHYLENE_BELT_DIAGONAL_START = block("polytetrafluoroethylene_belt_diagonal_start"), POLYTETRAFLUOROETHYLENE_BELT_DIAGONAL_MIDDLE = block("polytetrafluoroethylene_belt_diagonal_middle"),
+    POLYTETRAFLUOROETHYLENE_BELT_DIAGONAL_END = block("polytetrafluoroethylene_belt_diagonal_end"),
+
+    POLYBENZIMIDAZOLE_BELT_DARMSTADTIUM_PULLEY = block("polybenzimidazole_belt_darmstadtium_pulley"),
+    POLYBENZIMIDAZOLE_BELT_NEUTRONIUM_PULLEY = block("polybenzimidazole_belt_neutronium_pulley"),
+    POLYBENZIMIDAZOLE_BELT_START = block("polybenzimidazole_belt_start"), POLYBENZIMIDAZOLE_BELT_MIDDLE = block("polybenzimidazole_belt_middle"),
+    POLYBENZIMIDAZOLE_BELT_END = block("polybenzimidazole_belt_end"), POLYBENZIMIDAZOLE_BELT_START_BOTTOM = block("polybenzimidazole_belt_start_bottom"),
+    POLYBENZIMIDAZOLE_BELT_MIDDLE_BOTTOM = block("polybenzimidazole_belt_middle_bottom"), POLYBENZIMIDAZOLE_BELT_END_BOTTOM = block("polybenzimidazole_belt_end_bottom"),
+    POLYBENZIMIDAZOLE_BELT_DIAGONAL_START = block("polybenzimidazole_belt_diagonal_start"), POLYBENZIMIDAZOLE_BELT_DIAGONAL_MIDDLE = block("polybenzimidazole_belt_diagonal_middle"),
+    POLYBENZIMIDAZOLE_BELT_DIAGONAL_END = block("polybenzimidazole_belt_diagonal_end");
 
     private static PartialModel block(String path) {
-        return new PartialModel(new ResourceLocation(Greate.MOD_ID, "block/" + path));
+        PartialModel partialModel = new PartialModel(new ResourceLocation(Greate.MOD_ID, "block/" + path));
+        PARTIAL_MODELS.add(partialModel);
+        return partialModel;
     }
 
     public static void register() {}

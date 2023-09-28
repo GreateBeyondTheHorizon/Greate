@@ -1,7 +1,5 @@
 package electrolyte.greate.content.kinetics.simpleRelays;
 
-import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
-import com.simibubi.create.content.equipment.goggles.IHaveHoveringInformation;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.foundation.utility.Lang;
 import electrolyte.greate.Greate;
@@ -16,10 +14,10 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 
-public class TieredKineticBlockEntity extends KineticBlockEntity implements IHaveGoggleInformation, IHaveHoveringInformation, ITieredKineticBlockEntity {
+public class TieredKineticBlockEntity extends KineticBlockEntity implements ITieredKineticBlockEntity {
 
     private double networkMaxCapacity;
-    private TIER tier;
+    protected TIER tier;
     public TieredKineticEffectHandler effects;
 
     public TieredKineticBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {

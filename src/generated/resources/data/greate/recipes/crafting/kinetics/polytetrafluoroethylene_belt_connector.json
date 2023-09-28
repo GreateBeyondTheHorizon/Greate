@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": {
+      "item": "gtceu:polytetrafluoroethylene_foil"
+    }
+  },
+  "pattern": [
+    "FFF",
+    "FFF"
+  ],
+  "result": {
+    "item": "greate:polytetrafluoroethylene_belt_connector"
+  },
+  "show_notification": true
+}

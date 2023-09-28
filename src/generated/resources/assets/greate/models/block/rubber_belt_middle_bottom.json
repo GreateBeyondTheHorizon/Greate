@@ -1,0 +1,6 @@
+{
+  "parent": "create:block/belt/middle_bottom",
+  "textures": {
+    "1": "greate:block/rubber/belt_offset"
+  }
+}
