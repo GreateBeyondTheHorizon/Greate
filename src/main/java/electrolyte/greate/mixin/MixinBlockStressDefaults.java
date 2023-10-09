@@ -15,17 +15,15 @@ import java.util.Map;
 @Mixin(BlockStressDefaults.class)
 public class MixinBlockStressDefaults {
 
-    // Force all stress entries to update to the new defaults on worlds that used Create before installing this mod.
-    @Shadow @Final public static final int FORCED_UPDATE_VERSION = 3;
     @Shadow @Final public static Map<ResourceLocation, Double> DEFAULT_CAPACITIES;
     @Unique private static final Map<ResourceLocation, Double> greate_NEW_DEFAULT_CAPACITIES = Map.ofEntries(
-            Map.entry(new ResourceLocation("create:hand_crank"), 1.),
-            Map.entry(new ResourceLocation("create:copper_valve_handle"), 1.),
-            Map.entry(new ResourceLocation("create:water_wheel"), 1.),
-            Map.entry(new ResourceLocation("create:large_water_wheel"), 8.),
-            Map.entry(new ResourceLocation("create:windmill_bearing"), 128.),
-            Map.entry(new ResourceLocation("create:steam_engine"), 256.),
-            Map.entry(new ResourceLocation("create:creative_motor"), 2097152.)
+            Map.entry(new ResourceLocation("create:hand_crank"), 1d),
+            Map.entry(new ResourceLocation("create:copper_valve_handle"), 1d),
+            Map.entry(new ResourceLocation("create:water_wheel"), 1d),
+            Map.entry(new ResourceLocation("create:large_water_wheel"), 8d),
+            Map.entry(new ResourceLocation("create:windmill_bearing"), 128d),
+            Map.entry(new ResourceLocation("create:steam_engine"), 256d),
+            Map.entry(new ResourceLocation("create:creative_motor"), 2097152d)
     );
 
     @Inject(method = "setDefaultCapacity", at = @At("RETURN"), remap = false)
