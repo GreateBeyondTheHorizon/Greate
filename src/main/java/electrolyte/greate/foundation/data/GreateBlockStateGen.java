@@ -144,30 +144,4 @@ public class GreateBlockStateGen {
                 .modelFile(new UncheckedModelFile("minecraft:block/air"))
                 .build(), BlockStateProperties.FACING);
     }
-
-
-
-   /* public static void tieredBeltProvider(DataGenContext<Block, TieredBeltBlock> c, RegistrateBlockstateProvider p) {
-        VariantBlockStateBuilder builder =  p.getVariantBuilder(c.get());
-        String material = c.getName().substring(0, c.getName().length() - 5);
-        final ConfiguredModel[][] models = {new ConfiguredModel[1]};
-        builder.forAllStates(state -> {
-            Direction dir = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
-            BeltSlope slope = state.getValue(BeltBlock.SLOPE);
-            if(!state.getValue(BeltBlock.CASING)) {
-                models[0] = ConfiguredModel.builder()
-                        .modelFile(new UncheckedModelFile(p.modLoc("block/" + material + "/particle")))
-                        .rotationX(slope == BeltSlope.VERTICAL ? 90 : slope == BeltSlope.SIDEWAYS && dir.getAxisDirection() == AxisDirection.NEGATIVE ? 180 : 0)
-                        .rotationY((dir.getAxis().isVertical() ? 0 : (int) dir.toYRot()) + (slope == BeltSlope.UPWARD ? 180 : 0) + ())
-                        .build();
-            }
-            if(state.getValue(BeltBlock.CASING)) {
-                models[0] = ConfiguredModel.builder()
-                        .modelFile(new UncheckedModelFile(p.modLoc("block/" + material + "/particle")))
-                        .build();
-            }
-
-            return models[0];
-        });
-    }*/
 }
