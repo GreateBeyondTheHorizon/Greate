@@ -23,7 +23,7 @@ import static electrolyte.greate.Greate.REGISTRATE;
 public class Girders {
 
     static {
-        REGISTRATE.useCreativeTab(Greate.GREATE_TAB);
+        REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
     }
 
     public static BlockEntry<TieredGirderEncasedShaftBlock> metalGirderEncasedShaft(String name, TIER tier, BlockEntry<TieredShaftBlock> shaft) {

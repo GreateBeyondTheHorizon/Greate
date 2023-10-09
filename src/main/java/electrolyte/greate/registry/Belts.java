@@ -34,7 +34,7 @@ public class Belts {
     public static final Map<Block, List<Block>> VALID_SHAFTS = new HashMap<>();
 
     static {
-        REGISTRATE.useCreativeTab(Greate.GREATE_TAB);
+        REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
     }
 
     public static final BlockEntry<TieredBeltBlock> RUBBER_BELT = belt("rubber_belt", BELT_TYPE.RUBBER, List.of(Shafts.ANDESITE_SHAFT, Shafts.STEEL_SHAFT));

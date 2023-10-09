@@ -64,13 +64,13 @@ public class TieredCrushingWheelBlockEntity extends TieredKineticBlockEntity imp
 
     @SubscribeEvent
     public static void fortunateCrushing(LootingLevelEvent event) {
-        if(event.getDamageSource() != AllDamageTypes.CRUSH.source(event.getEntity().level())) return;
+        if(event.getDamageSource() == null || !event.getDamageSource().is(AllDamageTypes.CRUSH)) return;
         event.setLootingLevel(2);
     }
 
     @SubscribeEvent
     public static void handleCrushedDrops(LivingDropsEvent event) {
-        if(event.getSource() != AllDamageTypes.CRUSH.source(event.getEntity().level())) return;
+        if(event.getSource() == null || !event.getSource().is(AllDamageTypes.CRUSH)) return;
         for(ItemEntity ie : event.getDrops()) {
             ie.setDeltaMovement(Vec3.ZERO);
         }

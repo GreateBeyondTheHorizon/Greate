@@ -18,7 +18,7 @@ import static electrolyte.greate.Greate.REGISTRATE;
 public class Millstones {
 
     static {
-        REGISTRATE.useCreativeTab(Greate.GREATE_TAB);
+        REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
     }
 
     public static ArrayList<TieredMillstoneBlock> MILLSTONES = new ArrayList<>();

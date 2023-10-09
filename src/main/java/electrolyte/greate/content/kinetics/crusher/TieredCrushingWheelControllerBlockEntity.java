@@ -4,13 +4,13 @@ import com.gregtechceu.gtceu.api.capability.recipe.EURecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
-import com.simibubi.create.AllDamageTypes;
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
 import com.simibubi.create.content.processing.recipe.ProcessingInventory;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import com.simibubi.create.foundation.damageTypes.CreateDamageSources;
 import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.sound.SoundScapes;
 import com.simibubi.create.foundation.sound.SoundScapes.AmbienceGroup;
@@ -185,7 +185,7 @@ public class TieredCrushingWheelControllerBlockEntity extends SmartBlockEntity {
                     processingEntity.setPos(entityPos.x, entityPos.y, entityPos.z);
                 }
             }
-            processingEntity.hurt(AllDamageTypes.CRUSH.source(getLevel()), crusherDamage);
+            processingEntity.hurt(CreateDamageSources.crush(level), crusherDamage);
             if (!processingEntity.isAlive()) {
                 processingEntity.setPos(entityPos.x, entityPos.y, entityPos.z);
             }

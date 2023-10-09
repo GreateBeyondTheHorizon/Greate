@@ -24,7 +24,7 @@ import static electrolyte.greate.Greate.REGISTRATE;
 public class Gearboxes {
 
     static {
-        REGISTRATE.useCreativeTab(Greate.GREATE_TAB);
+        REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
     }
 
     public static final BlockEntry<TieredGearboxBlock> ANDESITE_GEARBOX = gearbox("andesite_gearbox", TIER.ULTRA_LOW, GreatePartialModels.ANDESITE_SHAFT_HALF);

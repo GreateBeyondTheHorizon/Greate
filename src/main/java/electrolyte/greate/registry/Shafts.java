@@ -26,7 +26,7 @@ import static electrolyte.greate.Greate.REGISTRATE;
 public class Shafts {
 
     static {
-        REGISTRATE.useCreativeTab(Greate.GREATE_TAB);
+        REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
     }
 
     public static final BlockEntry<TieredShaftBlock> ANDESITE_SHAFT = shaft("andesite_shaft", TIER.ULTRA_LOW, GreateItemTags.SHAFTS_ANDESITE.itemTag);
