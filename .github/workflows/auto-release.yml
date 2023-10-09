@@ -1,9 +1,6 @@
 name: Create Release
 
 on:
-  release:
-    types: [prereleased]
-
   workflow_dispatch:
 
 permissions:

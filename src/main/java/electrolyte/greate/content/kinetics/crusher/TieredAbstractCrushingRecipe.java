@@ -15,4 +15,9 @@ public abstract class TieredAbstractCrushingRecipe extends TieredProcessingRecip
     protected int getMaxInputCount() {
         return 1;
     }
+
+    @Override
+    protected boolean canSpecifyDuration() {
+        return true;
+    }
 }
