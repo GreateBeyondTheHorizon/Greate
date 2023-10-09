@@ -15,6 +15,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.Direction.AxisDirection;
 
+//TODO: FIX COGWHEEL SHOWING ON BARE SHAFT WHEN INSTANCING IS TURNED OFF
+
 public class TieredBracketedKineticBlockEntityRenderer extends KineticBlockEntityRenderer<TieredBracketedKineticBlockEntity> {
     public TieredBracketedKineticBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
         super(context);
@@ -22,8 +24,7 @@ public class TieredBracketedKineticBlockEntityRenderer extends KineticBlockEntit
 
     @Override
     protected void renderSafe(TieredBracketedKineticBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
-        if (Backend.canUseInstancing(be.getLevel()))
-            return;
+        if (Backend.canUseInstancing(be.getLevel())) return;
 
         if (be.getBlockState().getBlock() instanceof TieredCogwheelBlock tcb && tcb.isLarge) {
             super.renderSafe(be, partialTicks, ms, buffer, light, overlay);

@@ -1,0 +1,7 @@
+{
+  "parent": "create:block/belt/diagonal_start",
+  "textures": {
+    "0": "greate:block/belt_overlay/empty",
+    "particle": "greate:block/polybenzimidazole/belt_diagonal"
+  }
+}

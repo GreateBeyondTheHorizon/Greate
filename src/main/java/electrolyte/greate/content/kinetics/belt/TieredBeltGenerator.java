@@ -88,46 +88,88 @@ public class TieredBeltGenerator {
         ItemStack shaft1 = Belts.VALID_SHAFTS.get(c.get()).get(1).asItem().getDefaultInstance();
         String shaftMaterial1 = shaft1.toString().substring(2, shaft1.toString().length() - 6);
         String beltMaterial = c.getName().substring(0, c.getName().length() - 5);
-        p.getVariantBuilder(c.getEntry())
-                .forAllStates(state -> ConfiguredModel.builder()
-                        .modelFile(p.models().withExistingParent(c.getName() + "_" + shaftMaterial + "_pulley", Create.asResource("block/belt_pulley"))
-                                .texture("0", p.modLoc("block/" + shaftMaterial + "/axis"))
-                                .texture("1", p.modLoc("block/" + shaftMaterial + "/axis_top")))
-                        .modelFile(p.models().withExistingParent(c.getName() + "_" + shaftMaterial1 + "_pulley", Create.asResource("block/belt_pulley"))
-                                .texture("0", p.modLoc("block/" + shaftMaterial1 + "/axis"))
-                                .texture("1", p.modLoc("block/" + shaftMaterial1 + "/axis_top")))
 
-                        .modelFile(p.models().withExistingParent(c.getName() + "_diagonal_end", Create.asResource("block/belt/diagonal_end"))
-                                .texture("0", p.modLoc("block/" + beltMaterial + "/belt_diagonal"))
-                                .texture("particle", p.modLoc("block/" + beltMaterial + "/belt_diagonal")))
-                        .modelFile(p.models().withExistingParent(c.getName() + "_diagonal_middle", Create.asResource("block/belt/diagonal_middle"))
-                                .texture("0", p.modLoc("block/" + beltMaterial + "/belt_diagonal"))
-                                .texture("particle", p.modLoc("block/" + beltMaterial + "/belt_diagonal")))
-                        .modelFile(p.models().withExistingParent(c.getName() + "_diagonal_start", Create.asResource("block/belt/diagonal_start"))
-                                .texture("0", p.modLoc("block/" + beltMaterial + "/belt_diagonal"))
-                                .texture("particle", p.modLoc("block/" + beltMaterial + "/belt_diagonal")))
+        p.models().withExistingParent(c.getName() + "_" + shaftMaterial + "_pulley", Create.asResource("block/belt_pulley"))
+                .texture("0", p.modLoc("block/" + shaftMaterial + "/axis"))
+                .texture("1", p.modLoc("block/" + shaftMaterial + "/axis_top"));
 
-                        .modelFile(p.models().withExistingParent(c.getName() + "_end", Create.asResource("block/belt/end"))
-                                .texture("0", p.modLoc("block/" + beltMaterial + "/belt")))
-                        .modelFile(p.models().withExistingParent(c.getName() + "_end_bottom", Create.asResource("block/belt/end_bottom"))
-                                .texture("1", p.modLoc("block/" + beltMaterial + "/belt_offset")))
+        p.models().withExistingParent(c.getName() + "_" + shaftMaterial1 + "_pulley", Create.asResource("block/belt_pulley"))
+                .texture("0", p.modLoc("block/" + shaftMaterial1 + "/axis"))
+                .texture("1", p.modLoc("block/" + shaftMaterial1 + "/axis_top"));
 
-                        .modelFile(p.models().withExistingParent(c.getName() + "_middle", Create.asResource("block/belt/middle"))
-                                .texture("0", p.modLoc("block/" + beltMaterial + "/belt")))
-                        .modelFile(p.models().withExistingParent(c.getName() + "_middle_bottom", Create.asResource("block/belt/middle_bottom"))
-                                .texture("1", p.modLoc("block/" + beltMaterial + "/belt_offset")))
 
-                        .modelFile(p.models().withExistingParent(c.getName() + "_particle", Create.asResource("block/belt/particle"))
-                                .texture("particle", p.modLoc("block/" + beltMaterial + "/belt")))
+        p.models().withExistingParent(c.getName() + "_diagonal_end", Create.asResource("block/belt/diagonal_end"))
+                .texture("0", p.modLoc("block/" + beltMaterial + "/belt_diagonal"))
+                .texture("particle", p.modLoc("block/" + beltMaterial + "/belt_diagonal"));
 
-                        .modelFile(p.models().withExistingParent(c.getName() + "_start", Create.asResource("block/belt/start"))
-                                .texture("0", p.modLoc("block/" + beltMaterial + "/belt")))
-                        .modelFile(p.models().withExistingParent(c.getName() + "_start_bottom", Create.asResource("block/belt/start_bottom"))
-                                .texture("1", p.modLoc("block/" + beltMaterial + "/belt_offset")))
+        p.models().withExistingParent("belt_overlay_diagonal_end", Create.asResource("block/belt/diagonal_end"))
+                .texture("0", p.modLoc("block/belt_overlay/empty"))
+                .texture("particle", p.modLoc("block/" + beltMaterial + "/belt_diagonal"));
 
-                        .modelFile(getModel(c, p, state))
-                        .rotationX((getXRotation(state) + 360) % 360)
-                        .rotationY((getYRotation(state) + 360) % 360)
-                        .build());
+        p.models().withExistingParent(c.getName() + "_diagonal_middle", Create.asResource("block/belt/diagonal_middle"))
+                .texture("0", p.modLoc("block/" + beltMaterial + "/belt_diagonal"))
+                .texture("particle", p.modLoc("block/" + beltMaterial + "/belt_diagonal"));
+
+        p.models().withExistingParent("belt_overlay_diagonal_middle", Create.asResource("block/belt/diagonal_middle"))
+                .texture("0", p.modLoc("block/belt_overlay/empty"))
+                .texture("particle", p.modLoc("block/" + beltMaterial + "/belt_diagonal"));
+
+        p.models().withExistingParent(c.getName() + "_diagonal_start", Create.asResource("block/belt/diagonal_start"))
+                .texture("0", p.modLoc("block/" + beltMaterial + "/belt_diagonal"))
+                .texture("particle", p.modLoc("block/" + beltMaterial + "/belt_diagonal"));
+
+        p.models().withExistingParent("belt_overlay_diagonal_start", Create.asResource("block/belt/diagonal_start"))
+                .texture("0", p.modLoc("block/belt_overlay/empty"))
+                .texture("particle", p.modLoc("block/" + beltMaterial + "/belt_diagonal"));
+
+
+        p.models().withExistingParent(c.getName() + "_end", Create.asResource("block/belt/end"))
+                .texture("0", p.modLoc("block/" + beltMaterial + "/belt"));
+
+        p.models().withExistingParent("belt_overlay_end", Create.asResource("block/belt/end"))
+                .texture("0", p.modLoc("block/belt_overlay/empty"));
+
+        p.models().withExistingParent(c.getName() + "_end_bottom", Create.asResource("block/belt/end_bottom"))
+                .texture("1", p.modLoc("block/" + beltMaterial + "/belt_offset"));
+
+        p.models().withExistingParent("belt_overlay_end_bottom", Create.asResource("block/belt/end_bottom"))
+                .texture("1", p.modLoc("block/belt_overlay/empty"));
+
+
+        p.models().withExistingParent(c.getName() + "_middle", Create.asResource("block/belt/middle"))
+                .texture("0", p.modLoc("block/" + beltMaterial + "/belt"));
+
+        p.models().withExistingParent("belt_overlay_middle", Create.asResource("block/belt/middle"))
+                .texture("0", p.modLoc("block/belt_overlay/empty"));
+
+        p.models().withExistingParent(c.getName() + "_middle_bottom", Create.asResource("block/belt/middle_bottom"))
+                .texture("1", p.modLoc("block/" + beltMaterial + "/belt_offset"));
+
+        p.models().withExistingParent("belt_overlay_middle_bottom", Create.asResource("block/belt/middle_bottom"))
+                .texture("1", p.modLoc("block/belt_overlay/empty"));
+
+
+        p.models().withExistingParent(c.getName() + "_particle", Create.asResource("block/belt/particle"))
+                .texture("particle", p.modLoc("block/" + beltMaterial + "/belt"));
+
+
+        p.models().withExistingParent(c.getName() + "_start", Create.asResource("block/belt/start"))
+                .texture("0", p.modLoc("block/" + beltMaterial + "/belt"));
+
+        p.models().withExistingParent("belt_overlay_start", Create.asResource("block/belt/start"))
+                .texture("0", p.modLoc("block/belt_overlay/empty"));
+
+        p.models().withExistingParent(c.getName() + "_start_bottom", Create.asResource("block/belt/start_bottom"))
+                .texture("1", p.modLoc("block/" + beltMaterial + "/belt_offset"));
+
+        p.models().withExistingParent("belt_overlay_start_bottom", Create.asResource("block/belt/start_bottom"))
+                .texture("1", p.modLoc("block/belt_overlay/empty"));
+
+
+        p.getVariantBuilder(c.getEntry()).forAllStates(state -> ConfiguredModel.builder()
+                .modelFile(getModel(c, p, state))
+                .rotationX((getXRotation(state) + 360) % 360)
+                .rotationY((getYRotation(state) + 360) % 360)
+                .build());
     }
 }

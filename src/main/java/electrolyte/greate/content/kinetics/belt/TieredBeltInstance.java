@@ -42,6 +42,7 @@ public class TieredBeltInstance extends TieredKineticBlockEntityInstance<TieredB
     BeltSlope beltSlope;
     Direction facing;
     protected ArrayList<BeltData> keys;
+    protected ArrayList<BeltData> overlayKeys;
     protected RotatingData pulleyKey;
 
     public TieredBeltInstance(MaterialManager materialManager, TieredBeltBlockEntity blockEntity) {
@@ -50,6 +51,7 @@ public class TieredBeltInstance extends TieredKineticBlockEntityInstance<TieredB
         if(!(blockState.getBlock() instanceof TieredBeltBlock)) return;
 
         keys = new ArrayList<>(2);
+        overlayKeys = new ArrayList<>(2);
         beltSlope = blockState.getValue(BeltBlock.SLOPE);
         facing = blockState.getValue(BeltBlock.HORIZONTAL_FACING);
         upward = beltSlope == BeltSlope.UPWARD;
@@ -65,9 +67,13 @@ public class TieredBeltInstance extends TieredKineticBlockEntityInstance<TieredB
 
         for(boolean bottom : Iterate.trueAndFalse) {
             PartialModel beltPartial = TieredBeltRenderer.getBeltPartial(((TieredBeltBlock) blockState.getBlock()), diagonal, start, end, bottom);
-            SpriteShiftEntry spriteShift = TieredBeltRenderer.getSpriteShiftEntry((TieredBeltBlock) blockState.getBlock(), color, diagonal, bottom);
-            Instancer<BeltData> beltModel = materialManager.defaultSolid().material(AllMaterialSpecs.BELTS).getModel(beltPartial, blockState);
+            PartialModel overlayPartial = TieredBeltRenderer.getOverlayPartial(diagonal, start, end, bottom);
+            SpriteShiftEntry spriteShift = TieredBeltRenderer.getSpriteShiftEntry((TieredBeltBlock) blockState.getBlock(), diagonal, bottom);
+            SpriteShiftEntry overlayShift = TieredBeltRenderer.getDyeOverlayEntry((TieredBeltBlock) blockState.getBlock(), color, diagonal);
+            Instancer<BeltData> beltModel = materialManager.defaultCutout().material(AllMaterialSpecs.BELTS).getModel(beltPartial, blockState);
+            Instancer<BeltData> overlayModel = materialManager.defaultTransparent().material(AllMaterialSpecs.BELTS).getModel(overlayPartial, blockState);
             keys.add(setup(beltModel.createInstance(), bottom, spriteShift));
+            overlayKeys.add(setup(overlayModel.createInstance(), bottom, overlayShift));
             if(diagonal) break;
         }
 
@@ -82,9 +88,14 @@ public class TieredBeltInstance extends TieredKineticBlockEntityInstance<TieredB
         DyeColor color = blockEntity.color.orElse(null);
         boolean bottom = true;
         for(BeltData key : keys) {
-            SpriteShiftEntry spriteShiftEntry = TieredBeltRenderer.getSpriteShiftEntry((TieredBeltBlock) blockState.getBlock(), color, diagonal, bottom);
+            SpriteShiftEntry spriteShiftEntry = TieredBeltRenderer.getSpriteShiftEntry((TieredBeltBlock) blockState.getBlock(), diagonal, bottom);
             key.setScrollTexture(spriteShiftEntry).setColor(blockEntity).setRotationalSpeed(getScrollSpeed());
             bottom = false;
+        }
+
+        for(BeltData key : overlayKeys) {
+            SpriteShiftEntry overlayEntry = TieredBeltRenderer.getDyeOverlayEntry((TieredBeltBlock) blockState.getBlock(), color, diagonal);
+            key.setScrollTexture(overlayEntry).setColor(blockEntity).setRotationalSpeed(getScrollSpeed());
         }
 
         if(pulleyKey != null) updateRotation(pulleyKey);
@@ -93,6 +104,7 @@ public class TieredBeltInstance extends TieredKineticBlockEntityInstance<TieredB
     @Override
     public void updateLight() {
         relight(pos, keys.stream());
+        relight(pos, overlayKeys.stream());
         if(pulleyKey != null) relight(pos, pulleyKey);
     }
 
@@ -100,6 +112,8 @@ public class TieredBeltInstance extends TieredKineticBlockEntityInstance<TieredB
     protected void remove() {
         keys.forEach(InstanceData::delete);
         keys.clear();
+        overlayKeys.forEach(InstanceData::delete);
+        overlayKeys.clear();
         if(pulleyKey != null) pulleyKey.delete();
         pulleyKey = null;
     }

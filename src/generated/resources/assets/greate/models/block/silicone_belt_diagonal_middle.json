@@ -1,7 +1,0 @@
-{
-  "parent": "create:block/belt/diagonal_middle",
-  "textures": {
-    "0": "greate:block/silicone/belt_diagonal",
-    "particle": "greate:block/silicone/belt_diagonal"
-  }
-}

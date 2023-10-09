@@ -1,6 +1,0 @@
-{
-  "parent": "create:block/belt/particle",
-  "textures": {
-    "particle": "greate:block/silicon/belt"
-  }
-}

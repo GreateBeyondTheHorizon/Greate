@@ -1,0 +1,6 @@
+{
+  "parent": "create:block/belt/middle",
+  "textures": {
+    "0": "greate:block/belt_overlay/empty"
+  }
+}

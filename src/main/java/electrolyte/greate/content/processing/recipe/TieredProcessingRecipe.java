@@ -75,6 +75,7 @@ public abstract class TieredProcessingRecipe<T extends Container> extends Proces
                     + getMaxOutputCount() + ").");
 
         if (processingDuration > 0 && !canSpecifyDuration())
+            //todo: this happens now for some reason
             logger.warn(messageHeader + " specified a duration. Durations have no impact on this type of recipe.");
 
         if (requiredHeat != HeatCondition.NONE && !canRequireHeat())

@@ -76,7 +76,7 @@ public class TieredBeltRenderer extends SafeBlockEntityRenderer<TieredBeltBlockE
 
             PoseStack localTransforms = new PoseStack();
             TransformStack msr = TransformStack.cast(localTransforms);
-            VertexConsumer vb = buffer.getBuffer(RenderType.solid());
+            VertexConsumer vb = buffer.getBuffer(RenderType.cutout());
             float renderTick = AnimationTickHolder.getRenderTime(be.getLevel());
 
             msr.centre()
@@ -96,12 +96,13 @@ public class TieredBeltRenderer extends SafeBlockEntityRenderer<TieredBeltBlockE
             for (boolean bottom : Iterate.trueAndFalse) {
 
                 PartialModel beltPartial = getBeltPartial((TieredBeltBlock) blockState.getBlock(), diagonal, start, end, bottom);
+                PartialModel overlayPartial = getOverlayPartial(diagonal, start, end, bottom);
 
-                SuperByteBuffer beltBuffer = CachedBufferer.partial(beltPartial, blockState)
-                        .light(light);
+                SuperByteBuffer beltBuffer = CachedBufferer.partial(beltPartial, blockState).light(light);
+                SuperByteBuffer overlayBuffer = CachedBufferer.partial(overlayPartial, blockState).light(light);
 
-                SpriteShiftEntry spriteShift = getSpriteShiftEntry((TieredBeltBlock) blockState.getBlock(), color, diagonal, bottom);
-
+                SpriteShiftEntry spriteShift = getSpriteShiftEntry((TieredBeltBlock) blockState.getBlock(), diagonal, bottom);
+                SpriteShiftEntry overlayShift = getDyeOverlayEntry((TieredBeltBlock) blockState.getBlock(), color, diagonal);
                 float speed = be.getSpeed();
                 if (speed != 0 || be.color.isPresent()) {
                     float time = renderTick * axisDirection.getStep();
@@ -117,11 +118,11 @@ public class TieredBeltRenderer extends SafeBlockEntityRenderer<TieredBeltBlockE
                     scroll = scroll * spriteSize * scrollMult;
 
                     beltBuffer.shiftUVScrolling(spriteShift, (float) scroll);
-                }
+                    overlayBuffer.shiftUVScrolling(overlayShift, (float) scroll);
+                    }
 
-                beltBuffer
-                        .transform(localTransforms)
-                        .renderInto(ms, vb);
+                beltBuffer.transform(localTransforms).renderInto(ms, vb);
+                overlayBuffer.transform(localTransforms).renderInto(ms, vb);
 
                 if (diagonal) break;
             }
@@ -141,8 +142,13 @@ public class TieredBeltRenderer extends SafeBlockEntityRenderer<TieredBeltBlockE
                 };
 
                 String beltMaterial = ForgeRegistries.BLOCKS.getKey(blockState.getBlock()).toString().substring(Greate.MOD_ID.length() + 1);
-                String shaftMaterial = be.getShaftType().toString().substring(2, be.getShaftType().toString().length() - 5);
-                PartialModel model = GreatePartialModels.PARTIAL_MODELS.stream().filter(p -> p.getLocation().equals(new ResourceLocation(Greate.MOD_ID, beltMaterial + "_" + shaftMaterial + "pulley"))).findFirst().orElse(AllPartialModels.BELT_PULLEY);
+                String shaftMaterial;
+                if(((TieredBeltBlock) blockState.getBlock()).getShaftType() != null) {
+                    shaftMaterial = ((TieredBeltBlock) blockState.getBlock()).getShaftType().toString().substring(2, ((TieredBeltBlock) blockState.getBlock()).getShaftType().toString().length() - 5);
+                } else {
+                    shaftMaterial = be.getShaftType().toString().substring(2, be.getShaftType().toString().length() - 5);
+                }
+                PartialModel model = GreatePartialModels.PARTIAL_MODELS.stream().filter(p -> p.getLocation().equals(new ResourceLocation(Greate.MOD_ID, "block/" + beltMaterial + "_" + shaftMaterial + "pulley"))).findFirst().orElse(AllPartialModels.BELT_PULLEY);
                 if(model == AllPartialModels.BELT_PULLEY) Greate.LOGGER.error("Unable to find {} pulley model for {}, using default instead.", shaftMaterial, beltMaterial);
                 SuperByteBuffer superBuffer = CachedBufferer.partialDirectional(model, blockState, dir, matrixStackSupplier);
                 KineticBlockEntityRenderer.standardKineticRotationTransform(superBuffer, be, light).renderInto(ms, vb);
@@ -152,13 +158,17 @@ public class TieredBeltRenderer extends SafeBlockEntityRenderer<TieredBeltBlockE
         renderItems(be, partialTicks, ms, buffer, light, overlay);
     }
 
-    public static SpriteShiftEntry getSpriteShiftEntry(TieredBeltBlock block, DyeColor color, boolean diagonal, boolean bottom) {
-        if (color != null) {
-            return (diagonal ? GreateSpriteShifts.DYED_DIAGONAL_BELTS.get(block)
-                    : bottom ? GreateSpriteShifts.DYED_OFFSET_BELTS.get(block) : GreateSpriteShifts.DYED_BELTS.get(block)).get(color);
-        } else
-            return diagonal ? GreateSpriteShifts.BELT_SPRITES.get(block).get(2) :
-                    bottom ? GreateSpriteShifts.BELT_SPRITES.get(block).get(1) : GreateSpriteShifts.BELT_SPRITES.get(block).get(0);
+    public static SpriteShiftEntry getSpriteShiftEntry(TieredBeltBlock block, boolean diagonal, boolean bottom) {
+        return diagonal ? GreateSpriteShifts.BELT_SPRITES.get(block).get(2) :
+                bottom ? GreateSpriteShifts.BELT_SPRITES.get(block).get(1) : GreateSpriteShifts.BELT_SPRITES.get(block).get(0);
+    }
+
+    public static SpriteShiftEntry getDyeOverlayEntry(TieredBeltBlock block, DyeColor color, boolean diagonal) {
+        if(color != null) {
+            return diagonal ? GreateSpriteShifts.DYED_DIAGONAL_BELTS.get(block).get(color) : GreateSpriteShifts.DYED_BELTS.get(block).get(color);
+        } else {
+            return GreateSpriteShifts.BELT_SPRITES.get(block).get(3);
+        }
     }
 
     public static PartialModel getBeltPartial(TieredBeltBlock block, boolean diagonal, boolean start, boolean end, boolean bottom) {
@@ -178,11 +188,27 @@ public class TieredBeltRenderer extends SafeBlockEntityRenderer<TieredBeltBlockE
         }
     }
 
+    public static PartialModel getOverlayPartial(boolean diagonal, boolean start, boolean end, boolean bottom) {
+        if(diagonal) {
+            if(start) return GreatePartialModels.BELT_OVERLAY_DIAGONAL_START;
+            if(end) return GreatePartialModels.BELT_OVERLAY_DIAGONAL_END;
+            return GreatePartialModels.BELT_OVERLAY_DIAGONAL_MIDDLE;
+        } else if (bottom) {
+            if(start) return GreatePartialModels.BELT_OVERLAY_START_BOTTOM;
+            if(end) return GreatePartialModels.BELT_OVERLAY_END_BOTTOM;
+            return GreatePartialModels.BELT_OVERLAY_MIDDLE_BOTTOM;
+        } else {
+            if(start) return GreatePartialModels.BELT_OVERLAY_START;
+            if(end) return GreatePartialModels.BELT_OVERLAY_END;
+            return GreatePartialModels.BELT_OVERLAY_MIDDLE;
+        }
+    }
+
     private static PartialModel findModel(String path, PartialModel defaultModel) {
         return GreatePartialModels.PARTIAL_MODELS.stream().filter(p -> p.getLocation().equals(new ResourceLocation(Greate.MOD_ID, "block/" + path))).findFirst().orElse(defaultModel);
     }
-    protected void renderItems(TieredBeltBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer,
-                               int light, int overlay) {
+
+    protected void renderItems(TieredBeltBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
         if (!be.isController())
             return;
         if (be.beltLength == 0)

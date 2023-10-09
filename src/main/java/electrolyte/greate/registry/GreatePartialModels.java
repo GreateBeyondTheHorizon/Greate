@@ -81,7 +81,11 @@ public class GreatePartialModels {
     POLYBENZIMIDAZOLE_BELT_END = block("polybenzimidazole_belt_end"), POLYBENZIMIDAZOLE_BELT_START_BOTTOM = block("polybenzimidazole_belt_start_bottom"),
     POLYBENZIMIDAZOLE_BELT_MIDDLE_BOTTOM = block("polybenzimidazole_belt_middle_bottom"), POLYBENZIMIDAZOLE_BELT_END_BOTTOM = block("polybenzimidazole_belt_end_bottom"),
     POLYBENZIMIDAZOLE_BELT_DIAGONAL_START = block("polybenzimidazole_belt_diagonal_start"), POLYBENZIMIDAZOLE_BELT_DIAGONAL_MIDDLE = block("polybenzimidazole_belt_diagonal_middle"),
-    POLYBENZIMIDAZOLE_BELT_DIAGONAL_END = block("polybenzimidazole_belt_diagonal_end");
+    POLYBENZIMIDAZOLE_BELT_DIAGONAL_END = block("polybenzimidazole_belt_diagonal_end"),
+    BELT_OVERLAY_DIAGONAL_START = block("belt_overlay_diagonal_start"), BELT_OVERLAY_DIAGONAL_END = block("belt_overlay_diagonal_end"), BELT_OVERLAY_DIAGONAL_MIDDLE = block("belt_overlay_diagonal_middle"),
+    BELT_OVERLAY_START_BOTTOM = block("belt_overlay_start_bottom"), BELT_OVERLAY_END_BOTTOM = block("belt_overlay_end_bottom"), BELT_OVERLAY_MIDDLE_BOTTOM = block("belt_overlay_middle_bottom"),
+    BELT_OVERLAY_START = block("belt_overlay_start"), BELT_OVERLAY_END = block("belt_overlay_end"), BELT_OVERLAY_MIDDLE = block("belt_overlay_middle");
+
 
     private static PartialModel block(String path) {
         PartialModel partialModel = new PartialModel(new ResourceLocation(Greate.MOD_ID, "block/" + path));
