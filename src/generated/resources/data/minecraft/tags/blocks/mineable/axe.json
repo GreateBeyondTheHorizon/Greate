@@ -94,6 +94,16 @@
     "greate:palladium_gearbox",
     "greate:naquadah_gearbox",
     "greate:darmstadtium_gearbox",
-    "greate:neutronium_gearbox"
+    "greate:neutronium_gearbox",
+    "greate:andesite_mechanical_press",
+    "greate:steel_mechanical_press",
+    "greate:aluminium_mechanical_press",
+    "greate:stainless_steel_mechanical_press",
+    "greate:titanium_mechanical_press",
+    "greate:tungstensteel_mechanical_press",
+    "greate:palladium_mechanical_press",
+    "greate:naquadah_mechanical_press",
+    "greate:darmstadtium_mechanical_press",
+    "greate:neutronium_mechanical_press"
   ]
 }

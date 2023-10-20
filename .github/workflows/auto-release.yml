@@ -27,6 +27,9 @@ jobs:
     - name: Upload Release to Github & Modrinth
       uses: Kir-Antipov/mc-publish@v3.3
       with:
+
+        changelog-file: changelog.*
+
         modrinth-id: 8wDcQuht
         modrinth-featured: true
         modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
@@ -40,9 +43,9 @@ jobs:
           gregtechceu-modern(required)
 
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        github-generate-changelog: true
+        github-generate-changelog: false
         github-prerelease: true
 
         files: |
-          build/libs/*.jar
+          build/libs/*[0-9].jar
        

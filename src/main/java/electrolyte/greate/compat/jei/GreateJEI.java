@@ -20,10 +20,13 @@ import electrolyte.greate.compat.jei.category.GreateRecipeCategory;
 import electrolyte.greate.compat.jei.category.GreateRecipeCategory.Info;
 import electrolyte.greate.compat.jei.category.TieredCrushingCategory;
 import electrolyte.greate.compat.jei.category.TieredMillingCategory;
+import electrolyte.greate.compat.jei.category.TieredPressingCategory;
 import electrolyte.greate.content.kinetics.crusher.TieredAbstractCrushingRecipe;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingRecipe;
 import electrolyte.greate.content.kinetics.millstone.TieredMillingRecipe;
+import electrolyte.greate.content.kinetics.press.TieredPressingRecipe;
 import electrolyte.greate.registry.CrushingWheels;
+import electrolyte.greate.registry.MechanicalPresses;
 import electrolyte.greate.registry.Millstones;
 import electrolyte.greate.registry.ModRecipeTypes;
 import mezz.jei.api.IModPlugin;
@@ -68,7 +71,7 @@ public class GreateJEI implements IModPlugin {
                 milling = builder(TieredAbstractCrushingRecipe.class)
                     .addTypedRecipes(ModRecipeTypes.MILLING)
                     .addTypedRecipes(AllRecipeTypes.MILLING::getType, TieredMillingRecipe::convertNormalMilling)
-                    .addTypedRecipes(GTRecipeTypes.MACERATOR_RECIPES, TieredMillingRecipe::convertGT)
+                    .addTypedRecipesGT(GTRecipeTypes.MACERATOR_RECIPES, TieredMillingRecipe::convertGT)
                     .catalyst(Millstones.ANDESITE_MILLSTONE::get)
                     .catalyst(Millstones.STEEL_MILLSTONE::get)
                     .catalyst(Millstones.ALUMINIUM_MILLSTONE::get)
@@ -84,7 +87,7 @@ public class GreateJEI implements IModPlugin {
                     .build("milling", TieredMillingCategory::new),
 
                 crushing = builder(TieredAbstractCrushingRecipe.class)
-                        .addTypedRecipes(GTRecipeTypes.MACERATOR_RECIPES, r -> TieredCrushingRecipe.convertGT(r, 0))
+                        .addTypedRecipesGT(GTRecipeTypes.MACERATOR_RECIPES, r -> TieredCrushingRecipe.convertGT(r, 0))
                         .addTypedRecipes(ModRecipeTypes.CRUSHING::getType, r -> TieredCrushingRecipe.convertTieredCrushing(r, 0))
                         .addTypedRecipesExcludingGT(AllRecipeTypes.CRUSHING::getType, GTRecipeTypes.MACERATOR_RECIPES, r -> TieredCrushingRecipe.convertNormalCrushing(r, 0))
                         .addTypedRecipesExcluding(AllRecipeTypes.MILLING::getType, AllRecipeTypes.CRUSHING::getType, r -> TieredCrushingRecipe.convertNormalCrushing(r, 0))
@@ -100,7 +103,25 @@ public class GreateJEI implements IModPlugin {
                         .catalyst(CrushingWheels.NEUTRONIUM_CRUSHING_WHEEL::get)
                         .doubleIconItem(CrushingWheels.NEUTRONIUM_CRUSHING_WHEEL.get(), AllItems.CRUSHED_GOLD.get())
                         .emptyBackground(177, 115)
-                        .build("crushing", TieredCrushingCategory::new);
+                        .build("crushing", TieredCrushingCategory::new),
+
+                pressing = builder(TieredPressingRecipe.class)
+                        .addTypedRecipesGT(GTRecipeTypes.BENDER_RECIPES, TieredPressingRecipe::convertGT)
+                        .addTypedRecipes(ModRecipeTypes.PRESSING::getType)
+                        .addTypedRecipesExcludingGT(AllRecipeTypes.PRESSING::getType, GTRecipeTypes.BENDER_RECIPES, TieredPressingRecipe::convertNormalPressing)
+                        .catalyst(MechanicalPresses.ANDESITE_MECHANICAL_PRESS::get)
+                        .catalyst(MechanicalPresses.STEEL_MECHANICAL_PRESS::get)
+                        .catalyst(MechanicalPresses.ALUMINIUM_MECHANICAL_PRESS::get)
+                        .catalyst(MechanicalPresses.STAINLESS_STEEL_MECHANICAL_PRESS::get)
+                        .catalyst(MechanicalPresses.TITANIUM_MECHANICAL_PRESS::get)
+                        .catalyst(MechanicalPresses.TUNGSTENSTEEL_MECHANICAL_PRESS::get)
+                        .catalyst(MechanicalPresses.PALLADIUM_MECHANICAL_PRESS::get)
+                        .catalyst(MechanicalPresses.NAQUADAH_MECHANICAL_PRESS::get)
+                        .catalyst(MechanicalPresses.DARMSTADTIUM_MECHANICAL_PRESS::get)
+                        .catalyst(MechanicalPresses.NEUTRONIUM_MECHANICAL_PRESS::get)
+                        .doubleIconItem(MechanicalPresses.NEUTRONIUM_MECHANICAL_PRESS.get(), AllItems.IRON_SHEET.get())
+                        .emptyBackground(177, 85)
+                        .build("pressing", TieredPressingCategory::new);
     }
 
     @Override
@@ -122,8 +143,7 @@ public class GreateJEI implements IModPlugin {
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
         ingredientManager = registration.getIngredientManager();
-        ingredientManager.removeIngredientsAtRuntime(VanillaTypes.ITEM_STACK, List.of(AllBlocks.MILLSTONE.asStack()));
-        ingredientManager.removeIngredientsAtRuntime(VanillaTypes.ITEM_STACK, List.of(AllBlocks.CRUSHING_WHEEL.asStack()));
+        ingredientManager.removeIngredientsAtRuntime(VanillaTypes.ITEM_STACK, List.of(AllBlocks.MILLSTONE.asStack(), AllBlocks.CRUSHING_WHEEL.asStack(), AllBlocks.MECHANICAL_PRESS.asStack()));
         allCategories.forEach(c -> c.registerRecipes(registration));
     }
 
@@ -193,7 +213,7 @@ public class GreateJEI implements IModPlugin {
             return addRecipeListConsumer(recipes -> GreateJEI.<T>consumeTypedRecipes(recipe -> recipes.add(converter.apply(recipe)), recipeType.get()));
         }
 
-        public CategoryBuilder<T> addTypedRecipes(GTRecipeType recipeType, Function<GTRecipe, T> converter) {
+        public CategoryBuilder<T> addTypedRecipesGT(GTRecipeType recipeType, Function<GTRecipe, T> converter) {
             return addRecipeListConsumer(recipes -> GreateJEI.<T>consumeTypedRecipes(recipe -> recipes.add(converter.apply((GTRecipe) recipe)), recipeType));
         }
 

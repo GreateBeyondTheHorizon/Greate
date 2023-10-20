@@ -7,6 +7,7 @@ import com.simibubi.create.content.kinetics.base.RotatedPillarKineticBlock;
 import com.simibubi.create.content.kinetics.simpleRelays.encased.EncasedCogCTBehaviour;
 import com.simibubi.create.content.kinetics.simpleRelays.encased.EncasedCogwheelBlock;
 import com.simibubi.create.content.kinetics.simpleRelays.encased.EncasedShaftBlock;
+import com.simibubi.create.content.processing.AssemblyOperatorBlockItem;
 import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
@@ -19,6 +20,7 @@ import electrolyte.greate.content.kinetics.crusher.TieredCrushingWheelBlock;
 import electrolyte.greate.content.kinetics.gearbox.TieredGearboxBlock;
 import electrolyte.greate.content.kinetics.gearbox.TieredVerticalGearboxItem;
 import electrolyte.greate.content.kinetics.millstone.TieredMillstoneBlock;
+import electrolyte.greate.content.kinetics.press.TieredMechanicalPressBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredCogwheelBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedCogwheelBlock;
@@ -166,6 +168,19 @@ public class GreateBuilderTransformers {
                             .rotation(90, 0, 0)
                             .scale(0.45F, 0.45F, 0.45F)
                             .end();
+                }).build();
+    }
+
+    public static <B extends TieredMechanicalPressBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> tieredMechanicalPress() {
+        return b -> b.blockstate(tieredMechanicalPressProvider())
+                .item(AssemblyOperatorBlockItem::new)
+                .model((c, p) -> {
+                    p.withExistingParent(c.getName(), Create.asResource("block/mechanical_press/item"))
+                            .texture("0", p.modLoc("block/" + c.getName().substring(0, c.getName().length() - 17) + "/axis"))
+                            .texture("1", p.modLoc("block/" + c.getName().substring(0, c.getName().length() - 17) + "/axis_top"))
+                            .texture("mechanical_press_head", p.modLoc("block/" + c.getName().substring(0, c.getName().length() - 17) + "/mechanical_press_head"))
+                            .texture("8", p.modLoc("block/mechanical_press_side"))
+                            .texture("particle", p.modLoc("block/mechanical_press_side"));
                 }).build();
     }
 }

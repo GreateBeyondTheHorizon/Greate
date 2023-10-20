@@ -4,6 +4,7 @@ import com.simibubi.create.Create;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -143,5 +144,19 @@ public class GreateBlockStateGen {
         return (c, p) -> p.getVariantBuilder(c.getEntry()).forAllStatesExcept(state -> ConfiguredModel.builder()
                 .modelFile(new UncheckedModelFile("minecraft:block/air"))
                 .build(), BlockStateProperties.FACING);
+    }
+
+    public static <T extends Block> NonNullBiConsumer<DataGenContext<Block, T>, RegistrateBlockstateProvider> tieredMechanicalPressProvider() {
+        return (c, p) -> p.getVariantBuilder(c.getEntry()).forAllStates(state -> {
+            Direction dir = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
+            return ConfiguredModel.builder()
+                    .modelFile(p.models().withExistingParent(c.getName() + "_head", Create.asResource("block/mechanical_press/head"))
+                            .texture("mechanical_press_head", p.modLoc("block/" + c.getName().substring(0, c.getName().length() - 17) + "/mechanical_press_head")))
+                    .modelFile(p.models().withExistingParent(c.getName(), Create.asResource("block/mechanical_press/block"))
+                            .texture("4", p.modLoc("block/mechanical_press_side"))
+                            .texture("particle", p.modLoc("block/mechanical_press_side")))
+                    .rotationY(dir == Direction.EAST ? 90 : dir == Direction.SOUTH ? 180 : dir == Direction.WEST ? 270 : 0)
+                    .build();
+        });
     }
 }

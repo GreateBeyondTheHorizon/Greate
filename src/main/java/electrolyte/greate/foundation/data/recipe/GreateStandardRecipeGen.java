@@ -53,7 +53,8 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
             COGWHEEL_CYCLE = conversionCycle(ImmutableList.of(AllBlocks.COGWHEEL, Cogwheels.ANDESITE_COGWHEEL)),
             LARGE_COGWHEEL_CYCLE = conversionCycle(ImmutableList.of(AllBlocks.LARGE_COGWHEEL, Cogwheels.LARGE_ANDESITE_COGWHEEL)),
             CRUSHING_WHEEL_CYCLE = conversionCycle(ImmutableList.of(AllBlocks.CRUSHING_WHEEL, CrushingWheels.ANDESITE_CRUSHING_WHEEL)),
-            BELT_CYCLE = conversionCycle(ImmutableList.of(AllItems.BELT_CONNECTOR, Belts.RUBBER_BELT_CONNECTOR));
+            BELT_CYCLE = conversionCycle(ImmutableList.of(AllItems.BELT_CONNECTOR, Belts.RUBBER_BELT_CONNECTOR)),
+            MECHANICAL_PRESS_CYCLE = conversionCycle(ImmutableList.of(AllBlocks.MECHANICAL_PRESS, MechanicalPresses.ANDESITE_MECHANICAL_PRESS));
 
     private Marker MATERIALS = enterFolder("materials");
 
@@ -172,7 +173,18 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
             SILICONE_RUBBER_BELT_CONNECTOR = createBeltConnectorRecipe(Belts.SILICONE_RUBBER_BELT_CONNECTOR),
             POLYETHYLENE_BELT_CONNECTOR = createBeltConnectorRecipe(Belts.POLYETHYLENE_BELT_CONNECTOR),
             POLYTETRAFLUOROETHYLENE_BELT_CONNECTOR = createBeltConnectorRecipe(Belts.POLYTETRAFLUOROETHYLENE_BELT_CONNECTOR),
-            POLYBENZIMIDAZOLE_BELT_CONNECTOR = createBeltConnectorRecipe(Belts.POLYBENZIMIDAZOLE_BELT_CONNECTOR);
+            POLYBENZIMIDAZOLE_BELT_CONNECTOR = createBeltConnectorRecipe(Belts.POLYBENZIMIDAZOLE_BELT_CONNECTOR),
+
+            ANDESITE_MECHANICAL_PRESS = createMaterialMechanicalPressRecipe(MechanicalPresses.ANDESITE_MECHANICAL_PRESS, "ulv"),
+            STEEL_MECHANICAL_PRESS = createMaterialMechanicalPressRecipe(MechanicalPresses.STEEL_MECHANICAL_PRESS, "lv"),
+            ALUMINIUM_MECHANICAL_PRESS = createMaterialMechanicalPressRecipe(MechanicalPresses.ALUMINIUM_MECHANICAL_PRESS, "mv"),
+            STAINLESS_STEEL_MECHANICAL_PRESS = createMaterialMechanicalPressRecipe(MechanicalPresses.STAINLESS_STEEL_MECHANICAL_PRESS, "hv"),
+            TITANIUM_MECHANICAL_PRESS = createMaterialMechanicalPressRecipe(MechanicalPresses.TITANIUM_MECHANICAL_PRESS, "ev"),
+            TUNGSTENSTEEL_MECHANICAL_PRESS = createMaterialMechanicalPressRecipe(MechanicalPresses.TUNGSTENSTEEL_MECHANICAL_PRESS, "iv"),
+            PALLADIUM_MECHANICAL_PRESS = createMaterialMechanicalPressRecipe(MechanicalPresses.PALLADIUM_MECHANICAL_PRESS, "luv"),
+            NAQUADAH_MECHANICAL_PRESS = createMaterialMechanicalPressRecipe(MechanicalPresses.NAQUADAH_MECHANICAL_PRESS, "zpm"),
+            DARMSTADTIUM_MECHANICAL_PRESS = createMaterialMechanicalPressRecipe(MechanicalPresses.DARMSTADTIUM_MECHANICAL_PRESS, "uv"),
+            NEUTRONIUM_MECHANICAL_PRESS = createMaterialMechanicalPressRecipe(MechanicalPresses.NEUTRONIUM_MECHANICAL_PRESS, "uhv");
     private GeneratedRecipe createMaterialAlloyRecipe(ItemProviderEntry<? extends ItemLike> alloy) {
         String material = alloy.getId().getPath().substring(0, alloy.getId().getPath().length() - 6);
         return create(alloy).unlockedByTag(GreateTags.forgeItemTag("ingots/" + material))
@@ -254,6 +266,18 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
                         .pattern("FFF"));
     }
 
+    private GeneratedRecipe createMaterialMechanicalPressRecipe(ItemProviderEntry<? extends ItemLike> mechanicalPress, String tier) {
+        String material = mechanicalPress.getId().getPath().substring(0, mechanicalPress.getId().getPath().length() - 17);
+        return create(mechanicalPress).unlockedBy(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("gtceu", tier + "_machine_hull"))::asItem)
+                .viaShaped(b -> b.define('M', ForgeRegistries.BLOCKS.getValue(new ResourceLocation("gtceu", tier + "_machine_hull")))
+                        .define('C', GreateTags.forgeItemTag("circuits/" + tier))
+                        .define('S', GreateTags.greateItemTag("shafts/" + material))
+                        .define('B', Blocks.IRON_BLOCK)
+                        .pattern(" S ")
+                        .pattern("CMC")
+                        .pattern(" B "));
+    }
+
     String currentFolder = "";
 
     Marker enterFolder(String folder) {
@@ -285,7 +309,6 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
         return result;
     }
 
-    //modified from StandardRecipeGen#GeneratedRecipeBuilder
     class GeneratedRecipeBuilder {
 
         private String path;

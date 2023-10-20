@@ -7,7 +7,7 @@ plugins {
     id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
 }
 
-version = 'forge-0.0.6'
+version = 'forge-0.0.7'
 group = 'electrolyte.greate'
 archivesBaseName = 'greate'
 

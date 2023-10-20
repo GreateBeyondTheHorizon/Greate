@@ -17,6 +17,9 @@ import electrolyte.greate.content.kinetics.gearbox.TieredGearboxRenderer;
 import electrolyte.greate.content.kinetics.millstone.TieredMillstoneBlockEntity;
 import electrolyte.greate.content.kinetics.millstone.TieredMillstoneCogInstance;
 import electrolyte.greate.content.kinetics.millstone.TieredMillstoneRenderer;
+import electrolyte.greate.content.kinetics.press.TieredMechanicalPressBlockEntity;
+import electrolyte.greate.content.kinetics.press.TieredMechanicalPressInstance;
+import electrolyte.greate.content.kinetics.press.TieredMechanicalPressRenderer;
 import electrolyte.greate.content.kinetics.simpleRelays.*;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedCogInstance;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedCogRenderer;
@@ -124,6 +127,15 @@ public class ModBlockEntityTypes {
             .validBlocks(Belts.RUBBER_BELT, Belts.SILICONE_RUBBER_BELT, Belts.POLYETHYLENE_BELT,
                     Belts.POLYTETRAFLUOROETHYLENE_BELT, Belts.POLYBENZIMIDAZOLE_BELT)
             .renderer(() -> TieredBeltRenderer::new)
+            .register();
+
+    public static final BlockEntityEntry<TieredMechanicalPressBlockEntity> TIERED_MECHANICAL_PRESS = REGISTRATE
+            .blockEntity("tiered_mechanical_press", TieredMechanicalPressBlockEntity::new)
+            .instance(() -> TieredMechanicalPressInstance::new)
+            .validBlocks(MechanicalPresses.ANDESITE_MECHANICAL_PRESS, MechanicalPresses.STEEL_MECHANICAL_PRESS, MechanicalPresses.ALUMINIUM_MECHANICAL_PRESS, MechanicalPresses.STAINLESS_STEEL_MECHANICAL_PRESS,
+                    MechanicalPresses.TITANIUM_MECHANICAL_PRESS, MechanicalPresses.TUNGSTENSTEEL_MECHANICAL_PRESS, MechanicalPresses.PALLADIUM_MECHANICAL_PRESS, MechanicalPresses.NAQUADAH_MECHANICAL_PRESS,
+                    MechanicalPresses.DARMSTADTIUM_MECHANICAL_PRESS, MechanicalPresses.NEUTRONIUM_MECHANICAL_PRESS)
+            .renderer(() -> TieredMechanicalPressRenderer::new)
             .register();
 
     public static void register() {}

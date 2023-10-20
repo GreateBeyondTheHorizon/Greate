@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.gregtechceu.gtceu.api.recipe.content.Content;
 import com.gregtechceu.gtceu.api.recipe.ingredient.SizedIngredient;
 import com.gregtechceu.gtceu.api.recipe.ingredient.forge.SizedIngredientImpl;
+import com.gregtechceu.gtceu.common.data.GTItems;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder.ProcessingRecipeParams;
@@ -62,7 +63,9 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
         NonNullList<Ingredient> nonNullList = NonNullList.create();
         for(Content c : ingredients) {
             SizedIngredient ingredient = (SizedIngredient) c.getContent();
-            nonNullList.add(ingredient);
+            if(!ingredient.getItems()[0].is(GTItems.INTEGRATED_CIRCUIT.asItem())) {
+                nonNullList.add(ingredient);
+            }
         }
         return withItemIngredients(nonNullList);
     }
@@ -147,6 +150,16 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
 
     public TieredProcessingRecipeBuilder<T> recipeTier(TIER condition) {
         params.recipeTier = condition;
+        return this;
+    }
+
+    public TieredProcessingRecipeBuilder<T> recipeCircuit(int condition) {
+        params.circuitNumber = condition;
+        return this;
+    }
+
+    public TieredProcessingRecipeBuilder<T> noCircuit() {
+        params.circuitNumber = -1;
         return this;
     }
 
@@ -274,6 +287,7 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
         protected int processingDuration;
         protected HeatCondition requiredHeat;
         protected TIER recipeTier;
+        protected int circuitNumber;
 
         public boolean keepHeldItem;
 
@@ -287,6 +301,7 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
             processingDuration = 0;
             requiredHeat = HeatCondition.NONE;
             recipeTier = TIER.ULTRA_LOW;
+            circuitNumber = -1;
             keepHeldItem = false;
         }
     }

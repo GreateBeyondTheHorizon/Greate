@@ -84,7 +84,17 @@ public class GreatePartialModels {
     POLYBENZIMIDAZOLE_BELT_DIAGONAL_END = block("polybenzimidazole_belt_diagonal_end"),
     BELT_OVERLAY_DIAGONAL_START = block("belt_overlay_diagonal_start"), BELT_OVERLAY_DIAGONAL_END = block("belt_overlay_diagonal_end"), BELT_OVERLAY_DIAGONAL_MIDDLE = block("belt_overlay_diagonal_middle"),
     BELT_OVERLAY_START_BOTTOM = block("belt_overlay_start_bottom"), BELT_OVERLAY_END_BOTTOM = block("belt_overlay_end_bottom"), BELT_OVERLAY_MIDDLE_BOTTOM = block("belt_overlay_middle_bottom"),
-    BELT_OVERLAY_START = block("belt_overlay_start"), BELT_OVERLAY_END = block("belt_overlay_end"), BELT_OVERLAY_MIDDLE = block("belt_overlay_middle");
+    BELT_OVERLAY_START = block("belt_overlay_start"), BELT_OVERLAY_END = block("belt_overlay_end"), BELT_OVERLAY_MIDDLE = block("belt_overlay_middle"),
+    ANDESITE_MECHANICAL_PRESS_HEAD = block("andesite_mechanical_press_head"),
+    STEEL_MECHANICAL_PRESS_HEAD = block("steel_mechanical_press_head"),
+    ALUMINIUM_MECHANICAL_PRESS_HEAD = block("aluminium_mechanical_press_head"),
+    STAINLESS_STEEL_MECHANICAL_PRESS_HEAD = block("stainless_steel_mechanical_press_head"),
+    TITANIUM_MECHANICAL_PRESS_HEAD = block("titanium_mechanical_press_head"),
+    TUNGSTENSTEEL_MECHANICAL_PRESS_HEAD = block("tungstensteel_mechanical_press_head"),
+    PALLADIUM_MECHANICAL_PRESS_HEAD = block("palladium_mechanical_press_head"),
+    NAQUADAH_MECHANICAL_PRESS_HEAD = block("naquadah_mechanical_press_head"),
+    DARMSTADTIUM_MECHANICAL_PRESS_HEAD = block("darmstadtium_mechanical_press_head"),
+    NEUTRONIUM_MECHANICAL_PRESS_HEAD = block("neutronium_mechanical_press_head");
 
 
     private static PartialModel block(String path) {

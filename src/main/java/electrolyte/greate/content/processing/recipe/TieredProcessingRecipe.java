@@ -8,6 +8,7 @@ import com.simibubi.create.foundation.fluid.FluidIngredient;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import electrolyte.greate.Greate;
 import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeParams;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
@@ -36,13 +37,14 @@ public abstract class TieredProcessingRecipe<T extends Container> extends Proces
     protected int processingDuration;
     protected HeatCondition requiredHeat;
     protected TIER recipeTier;
+    protected int circuitNumber;
 
     private RecipeType<?> type;
     private RecipeSerializer<?> serializer;
     private IRecipeTypeInfo typeInfo;
     private Supplier<ItemStack> forcedResult;
 
-    public TieredProcessingRecipe(IRecipeTypeInfo typeInfo, TieredProcessingRecipeBuilder.TieredProcessingRecipeParams params) {
+    public TieredProcessingRecipe(IRecipeTypeInfo typeInfo, TieredProcessingRecipeParams params) {
         super(typeInfo, params);
         this.forcedResult = null;
         this.typeInfo = typeInfo;
@@ -55,6 +57,7 @@ public abstract class TieredProcessingRecipe<T extends Container> extends Proces
         this.type = typeInfo.getType();
         this.results = params.results;
         this.recipeTier = params.recipeTier;
+        this.circuitNumber = params.circuitNumber;
         this.id = params.id;
 
         this.validate(typeInfo.getId());
@@ -147,6 +150,10 @@ public abstract class TieredProcessingRecipe<T extends Container> extends Proces
 
     public TIER getRecipeTier() {
         return recipeTier;
+    }
+
+    public int getCircuitNumber() {
+        return circuitNumber;
     }
 
     @Override

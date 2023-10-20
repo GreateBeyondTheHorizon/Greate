@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:iron_block"
+    },
+    "C": {
+      "tag": "forge:circuits/uhv"
+    },
+    "M": {
+      "item": "gtceu:uhv_machine_hull"
+    },
+    "S": {
+      "tag": "greate:shafts/neutronium"
+    }
+  },
+  "pattern": [
+    " S ",
+    "CMC",
+    " B "
+  ],
+  "result": {
+    "item": "greate:neutronium_mechanical_press"
+  },
+  "show_notification": true
+}
