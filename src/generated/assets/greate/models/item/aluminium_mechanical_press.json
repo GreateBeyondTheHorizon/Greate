@@ -1,0 +1,10 @@
+{
+  "parent": "create:block/mechanical_press/item",
+  "textures": {
+    "0": "greate:block/aluminium/axis",
+    "1": "greate:block/aluminium/axis_top",
+    "8": "greate:block/mechanical_press_side",
+    "mechanical_press_head": "greate:block/aluminium/mechanical_press_head",
+    "particle": "greate:block/mechanical_press_side"
+  }
+}

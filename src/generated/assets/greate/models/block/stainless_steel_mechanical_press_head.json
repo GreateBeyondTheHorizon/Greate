@@ -1,0 +1,6 @@
+{
+  "parent": "create:block/mechanical_press/head",
+  "textures": {
+    "mechanical_press_head": "greate:block/stainless_steel/mechanical_press_head"
+  }
+}

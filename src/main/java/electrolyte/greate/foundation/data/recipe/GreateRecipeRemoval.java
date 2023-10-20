@@ -21,6 +21,7 @@ public class GreateRecipeRemoval {
         recipe.accept(Create.asResource("crafting/kinetics/gearboxfrom_conversion"));
         recipe.accept(Create.asResource("crafting/kinetics/large_cogwheel"));
         recipe.accept(Create.asResource("crafting/kinetics/large_cogwheel_from_little"));
+        recipe.accept(Create.asResource("crafting/kinetics/mechanical_press"));
         recipe.accept(Create.asResource("crafting/kinetics/millstone"));
         recipe.accept(Create.asResource("crafting/kinetics/shaft"));
         recipe.accept(Create.asResource("crafting/kinetics/vertical_gearboxfrom_conversion"));
@@ -28,5 +29,10 @@ public class GreateRecipeRemoval {
         recipe.accept(Create.asResource("cutting/andesite_alloy"));
 
         recipe.accept(Create.asResource("mechanical_crafting/crushing_wheel"));
+
+        recipe.accept(Create.asResource("pressing/iron_ingot"));
+        recipe.accept(Create.asResource("pressing/gold_ingot"));
+        recipe.accept(Create.asResource("pressing/copper_ingot"));
+        recipe.accept(Create.asResource("pressing/brass_ingot"));
     }
 }

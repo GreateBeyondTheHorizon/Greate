@@ -1,0 +1,7 @@
+{
+  "parent": "create:block/mechanical_press/block",
+  "textures": {
+    "4": "greate:block/mechanical_press_side",
+    "particle": "greate:block/mechanical_press_side"
+  }
+}

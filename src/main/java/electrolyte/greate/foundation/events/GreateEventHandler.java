@@ -17,7 +17,8 @@ public class GreateEventHandler {
                         stack.getItem() == AllBlocks.COGWHEEL.get().asItem() ||
                         stack.getItem() == AllBlocks.LARGE_COGWHEEL.get().asItem() ||
                         stack.getItem() == AllBlocks.CRUSHING_WHEEL.get().asItem() ||
-                        stack.getItem() == AllItems.BELT_CONNECTOR.get()) {
+                        stack.getItem() == AllItems.BELT_CONNECTOR.get() ||
+                        stack.getItem() == AllBlocks.MECHANICAL_PRESS.get().asItem()) {
                     componentList.add(Lang.builder(Greate.MOD_ID).translate("old_create_items_warning.1").component().withStyle(ChatFormatting.RED));
                     componentList.add(Lang.builder(Greate.MOD_ID).translate("old_create_items_warning.2").component().withStyle(ChatFormatting.RED));
                 }

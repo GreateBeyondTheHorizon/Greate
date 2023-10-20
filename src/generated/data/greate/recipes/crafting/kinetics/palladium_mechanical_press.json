@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:iron_block"
+    },
+    "C": {
+      "tag": "forge:circuits/luv"
+    },
+    "M": {
+      "item": "gtceu:luv_machine_hull"
+    },
+    "S": {
+      "tag": "greate:shafts/palladium"
+    }
+  },
+  "pattern": [
+    " S ",
+    "CMC",
+    " B "
+  ],
+  "result": {
+    "item": "greate:palladium_mechanical_press"
+  },
+  "show_notification": true
+}

@@ -4,7 +4,7 @@ plugins {
     id 'java'
 }
 
-version = 'fabric-0.0.5'
+version = '0.0.7'
 group = 'electrolyte.greate'
 archivesBaseName = 'greate'
 

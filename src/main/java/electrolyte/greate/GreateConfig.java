@@ -65,18 +65,24 @@ public class GreateConfig {
         @Range(min = 1)
         @Comment("Maximum stress capacity for ULS tier machines")
         public double CAPACITY = 8;
-        
-        @Configurable
-        @Synchronized
-        @Range(min = 0)
-        @Comment("Stress impact for a ULS tier millstone")
-        public double MILLSTONE_IMPACT = 0.5;
 
         @Configurable
         @Synchronized
         @Range(min = 0)
         @Comment("Stress impact for a ULS tier crushing wheel")
         public double CRUSHING_WHEEL_IMPACT = 0.5;
+
+        @Configurable
+        @Synchronized
+        @Range(min = 0)
+        @Comment("Stress impact for a ULS tier mechanical press")
+        public double MECHANICAL_PRESS_IMPACT = 1.0;
+
+        @Configurable
+        @Synchronized
+        @Range(min = 0)
+        @Comment("Stress impact for a ULS tier millstone")
+        public double MILLSTONE_IMPACT = 0.5;
     }
 
     public static class LS {
@@ -89,14 +95,20 @@ public class GreateConfig {
         @Configurable
         @Synchronized
         @Range(min = 0)
-        @Comment("Stress impact for a LS tier millstone")
-        public double MILLSTONE_IMPACT = 1.0;
+        @Comment("Stress impact for a LS tier crushing wheel")
+        public double CRUSHING_WHEEL_IMPACT = 1.0;
 
         @Configurable
         @Synchronized
         @Range(min = 0)
-        @Comment("Stress impact for a LS tier crushing wheel")
-        public double CRUSHING_WHEEL_IMPACT = 1.0;
+        @Comment("Stress impact for a LS tier mechanical press")
+        public double MECHANICAL_PRESS_IMPACT = 2.0;
+
+        @Configurable
+        @Synchronized
+        @Range(min = 0)
+        @Comment("Stress impact for a LS tier millstone")
+        public double MILLSTONE_IMPACT = 1.0;
     }
 
     public static class MS {
@@ -108,15 +120,21 @@ public class GreateConfig {
 
         @Configurable
         @Synchronized
-        @Comment("Stress impact for a MS tier millstone")
         @Range(min = 0)
-        public double MILLSTONE_IMPACT = 1.5;
+        @Comment("Stress impact for a MS tier crushing wheel")
+        public double CRUSHING_WHEEL_IMPACT = 1.5;
 
         @Configurable
         @Synchronized
         @Range(min = 0)
-        @Comment("Stress impact for a MS tier crushing wheel")
-        public double CRUSHING_WHEEL_IMPACT = 1.5;
+        @Comment("Stress impact for a MS tier mechanical press")
+        public double MECHANICAL_PRESS_IMPACT = 3.0;
+
+        @Configurable
+        @Synchronized
+        @Comment("Stress impact for a MS tier millstone")
+        @Range(min = 0)
+        public double MILLSTONE_IMPACT = 1.5;
     }
 
     public static class HS {
@@ -129,14 +147,20 @@ public class GreateConfig {
         @Configurable
         @Synchronized
         @Range(min = 0)
-        @Comment("Stress impact for a HS tier millstone")
-        public double MILLSTONE_IMPACT = 2.0;
+        @Comment("Stress impact for a HS tier crushing wheel")
+        public double CRUSHING_WHEEL_IMPACT = 2.0;
 
         @Configurable
         @Synchronized
         @Range(min = 0)
-        @Comment("Stress impact for a HS tier crushing wheel")
-        public double CRUSHING_WHEEL_IMPACT = 2.0;
+        @Comment("Stress impact for a HS tier mechanical press")
+        public double MECHANICAL_PRESS_IMPACT = 4.0;
+
+        @Configurable
+        @Synchronized
+        @Range(min = 0)
+        @Comment("Stress impact for a HS tier millstone")
+        public double MILLSTONE_IMPACT = 2.0;
     }
 
     public static class ES {
@@ -149,14 +173,20 @@ public class GreateConfig {
         @Configurable
         @Synchronized
         @Range(min = 0)
-        @Comment("Stress impact for a ES tier millstone")
-        public double MILLSTONE_IMPACT = 2.5;
+        @Comment("Stress impact for a ES tier crushing wheel")
+        public double CRUSHING_WHEEL_IMPACT = 2.5;
 
         @Configurable
         @Synchronized
         @Range(min = 0)
-        @Comment("Stress impact for a ES tier crushing wheel")
-        public double CRUSHING_WHEEL_IMPACT = 2.5;
+        @Comment("Stress impact for a ES tier mechanical press")
+        public double MECHANICAL_PRESS_IMPACT = 5.0;
+
+        @Configurable
+        @Synchronized
+        @Range(min = 0)
+        @Comment("Stress impact for a ES tier millstone")
+        public double MILLSTONE_IMPACT = 2.5;
     }
 
     public static class IS {
@@ -169,14 +199,20 @@ public class GreateConfig {
         @Configurable
         @Synchronized
         @Range(min = 0)
-        @Comment("Stress impact for a IS tier millstone")
-        public double MILLSTONE_IMPACT = 3.0;
+        @Comment("Stress impact for a IS tier crushing wheel")
+        public double CRUSHING_WHEEL_IMPACT = 3.0;
 
         @Configurable
         @Synchronized
         @Range(min = 0)
-        @Comment("Stress impact for a IS tier crushing wheel")
-        public double CRUSHING_WHEEL_IMPACT = 3.0;
+        @Comment("Stress impact for a IS tier mechanical press")
+        public double MECHANICAL_PRESS_IMPACT = 6.0;
+
+        @Configurable
+        @Synchronized
+        @Range(min = 0)
+        @Comment("Stress impact for a IS tier millstone")
+        public double MILLSTONE_IMPACT = 3.0;
 
     }
 
@@ -190,14 +226,20 @@ public class GreateConfig {
         @Configurable
         @Synchronized
         @Range(min = 0)
-        @Comment("Stress impact for a LUS tier millstone")
-        public double MILLSTONE_IMPACT = 3.5;
+        @Comment("Stress impact for a LUS tier crushing wheel")
+        public double CRUSHING_WHEEL_IMPACT = 3.5;
 
         @Configurable
         @Synchronized
         @Range(min = 0)
-        @Comment("Stress impact for a LUS tier crushing wheel")
-        public double CRUSHING_WHEEL_IMPACT = 3.5;
+        @Comment("Stress impact for a LUS tier mechanical press")
+        public double MECHANICAL_PRESS_IMPACT = 7.0;
+
+        @Configurable
+        @Synchronized
+        @Range(min = 0)
+        @Comment("Stress impact for a LUS tier millstone")
+        public double MILLSTONE_IMPACT = 3.5;
     }
 
     public static class ZPM {
@@ -210,14 +252,20 @@ public class GreateConfig {
         @Configurable
         @Synchronized
         @Range(min = 0)
-        @Comment("Stress impact for a ZPM tier millstone")
-        public double MILLSTONE_IMPACT = 4.0;
+        @Comment("Stress impact for a ZPM tier crushing wheel")
+        public double CRUSHING_WHEEL_IMPACT = 4.0;
 
         @Configurable
         @Synchronized
         @Range(min = 0)
-        @Comment("Stress impact for a ZPM tier crushing wheel")
-        public double CRUSHING_WHEEL_IMPACT = 4.0;
+        @Comment("Stress impact for a ZPM tier mechanical press")
+        public double MECHANICAL_PRESS_IMPACT = 8.0;
+
+        @Configurable
+        @Synchronized
+        @Range(min = 0)
+        @Comment("Stress impact for a ZPM tier millstone")
+        public double MILLSTONE_IMPACT = 4.0;
     }
 
     public static class US {
@@ -230,14 +278,20 @@ public class GreateConfig {
         @Configurable
         @Synchronized
         @Range(min = 0)
-        @Comment("Stress impact for a US tier millstone")
-        public double MILLSTONE_IMPACT = 4.5;
+        @Comment("Stress impact for a US tier crushing wheel")
+        public double CRUSHING_WHEEL_IMPACT = 4.5;
 
         @Configurable
         @Synchronized
         @Range(min = 0)
-        @Comment("Stress impact for a US tier crushing wheel")
-        public double CRUSHING_WHEEL_IMPACT = 4.5;
+        @Comment("Stress impact for a US tier mechanical press")
+        public double MECHANICAL_PRESS_IMPACT = 9.0;
+
+        @Configurable
+        @Synchronized
+        @Range(min = 0)
+        @Comment("Stress impact for a US tier millstone")
+        public double MILLSTONE_IMPACT = 4.5;
     }
 
     public static class UHS {
@@ -250,13 +304,19 @@ public class GreateConfig {
         @Configurable
         @Synchronized
         @Range(min = 0)
-        @Comment("Stress impact for a UHS tier millstone")
-        public double MILLSTONE_IMPACT = 5.0;
+        @Comment("Stress impact for a UHS tier crushing wheel")
+        public double CRUSHING_WHEEL_IMPACT = 5.0;
 
         @Configurable
         @Synchronized
         @Range(min = 0)
-        @Comment("Stress impact for a UHS tier crushing wheel")
-        public double CRUSHING_WHEEL_IMPACT = 5.0;
+        @Comment("Stress impact for a UHS tier mechanical press")
+        public double MECHANICAL_PRESS_IMPACT = 10.0;
+
+        @Configurable
+        @Synchronized
+        @Range(min = 0)
+        @Comment("Stress impact for a UHS tier millstone")
+        public double MILLSTONE_IMPACT = 5.0;
     }
 }
