@@ -6,13 +6,13 @@
       "item": "minecraft:iron_block"
     },
     "C": {
-      "tag": "forge:circuits/uhv"
+      "tag": "c:uhv_circuits"
     },
     "M": {
       "item": "gtceu:uhv_machine_hull"
     },
     "S": {
-      "tag": "greate:shafts/neutronium"
+      "tag": "greate:neutronium_shafts"
     }
   },
   "pattern": [

@@ -1,9 +1,8 @@
 package electrolyte.greate.content.kinetics.steamEngine;
 
-import com.simibubi.create.AllShapes;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
-import com.simibubi.create.content.kinetics.simpleRelays.AbstractShaftBlock;
 import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
+import com.simibubi.create.content.kinetics.steamEngine.PoweredShaftBlock;
 import com.simibubi.create.foundation.placement.IPlacementHelper;
 import com.simibubi.create.foundation.placement.PlacementHelpers;
 import electrolyte.greate.GreateEnums.TIER;
@@ -21,22 +20,16 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import static com.simibubi.create.content.kinetics.steamEngine.PoweredShaftBlock.stillValid;
-
-public class TieredPoweredShaftBlock extends AbstractShaftBlock implements ITieredBlock, ITieredShaftBlock {
+public class TieredPoweredShaftBlock extends PoweredShaftBlock implements ITieredBlock, ITieredShaftBlock {
 
     private TIER tier;
     private Block shaftType;
@@ -46,11 +39,6 @@ public class TieredPoweredShaftBlock extends AbstractShaftBlock implements ITier
         super(properties);
         this.shaftType = shaftType.get();
         SHAFTS.put((TieredShaftBlock) shaftType.get(), this);
-    }
-
-    @Override
-    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
-        return AllShapes.EIGHT_VOXEL_POLE.get(pState.getValue(AXIS));
     }
 
     @Override
@@ -71,11 +59,6 @@ public class TieredPoweredShaftBlock extends AbstractShaftBlock implements ITier
     }
 
     @Override
-    public RenderShape getRenderShape(BlockState pState) {
-        return RenderShape.ENTITYBLOCK_ANIMATED;
-    }
-
-    @Override
     public void tick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
         if(!stillValid(pState, pLevel, pPos)) {
             pLevel.setBlock(pPos, getShaft().defaultBlockState()
@@ -84,14 +67,15 @@ public class TieredPoweredShaftBlock extends AbstractShaftBlock implements ITier
         }
     }
 
-    @Override
-    public ItemStack getCloneItemStack(BlockGetter pLevel, BlockPos pPos, BlockState pState) {
-        return getShaft().asItem().getDefaultInstance();
+    public static BlockState getEquivalent(BlockState stateForPlacement) {
+        return stateForPlacement.getBlock().defaultBlockState()
+                .setValue(PoweredShaftBlock.AXIS, stateForPlacement.getValue(ShaftBlock.AXIS))
+                .setValue(WATERLOGGED, stateForPlacement.getValue(WATERLOGGED));
     }
 
     @Override
-    public boolean canSurvive(BlockState pState, LevelReader pLevel, BlockPos pPos) {
-        return stillValid(pState, pLevel, pPos);
+    public ItemStack getCloneItemStack(BlockGetter pLevel, BlockPos pPos, BlockState pState) {
+        return getShaft().asItem().getDefaultInstance();
     }
 
     @Override

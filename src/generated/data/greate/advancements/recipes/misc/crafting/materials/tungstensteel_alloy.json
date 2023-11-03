@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:ingots/tungstensteel"
+            "tag": "c:tungstensteel_ingots"
           }
         ]
       },

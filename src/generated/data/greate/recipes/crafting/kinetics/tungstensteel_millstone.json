@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "greate:shafts/tungstensteel"
+      "tag": "greate:tungstensteel_shafts"
     },
     "C": {
-      "tag": "c:circuits/iv"
+      "tag": "c:iv_circuits"
     },
     "M": {
       "item": "gtceu:iv_machine_hull"
@@ -15,7 +15,7 @@
       "tag": "minecraft:wooden_slabs"
     },
     "W": {
-      "tag": "greate:cogwheels/tungstensteel"
+      "tag": "greate:tungstensteel_cogwheels"
     }
   },
   "pattern": [

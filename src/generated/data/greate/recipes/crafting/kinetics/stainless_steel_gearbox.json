@@ -3,16 +3,16 @@
   "category": "misc",
   "key": {
     "F": {
-      "tag": "c:tools/files"
+      "tag": "c:files"
     },
     "H": {
-      "tag": "c:tools/hammers"
+      "tag": "c:hammers"
     },
     "M": {
       "item": "create:andesite_casing"
     },
     "S": {
-      "tag": "greate:shafts/stainless_steel"
+      "tag": "greate:stainless_steel_shafts"
     }
   },
   "pattern": [

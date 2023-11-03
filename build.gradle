@@ -88,8 +88,8 @@ dependencies {
     modImplementation "dev.latvian.mods:rhino-fabric:${rhino_version}"
     modImplementation "dev.latvian.mods:kubejs-fabric:${kubejs_version}"
     modImplementation "curse.maven:ldlib-626676:${ldlib_version}"
-    modImplementation "curse.maven:configuration-444699:${configuration_version}"
     modImplementation "curse.maven:gregtechceu-modern-890405:${gregtech_version}"
+    modRuntimeOnly "curse.maven:configuration-444699:${configuration_version}"
     modRuntimeOnly "curse.maven:jade-324717:${jade_version}"
     modRuntimeOnly "curse.maven:spark-361579:${spark_version}"
 }

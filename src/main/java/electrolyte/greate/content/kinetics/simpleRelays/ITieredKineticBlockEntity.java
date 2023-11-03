@@ -1,8 +1,31 @@
 package electrolyte.greate.content.kinetics.simpleRelays;
 
+import com.simibubi.create.foundation.utility.Lang;
+import electrolyte.greate.Greate;
+import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.infrastructure.config.GConfigUtility;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+
+import java.util.List;
+
 public interface ITieredKineticBlockEntity {
 
     double getMaxCapacity();
 
     void updateFromNetwork(float maxStress, float currentStress, int networkSize, double networkMaxCapacity);
+
+    default boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking, TIER tier, double capacity) {
+        if(tier != null) {
+            if(!tooltip.isEmpty()) {
+                Lang.builder().space();
+            } else {
+                Lang.translate("gui.goggles.kinetic_stats").forGoggles(tooltip);
+            }
+            Lang.builder(Greate.MOD_ID).translate("tooltip.capacity").style(ChatFormatting.GRAY).forGoggles(tooltip);
+            Lang.number(capacity).style(ChatFormatting.AQUA).add(Lang.text("su")).space().add(Lang.text("/").space().add(Lang.number(GConfigUtility.getMaxCapacityFromTier(tier))).add(Lang.text("su").space().add(Lang.text("at current shaft tier").style(ChatFormatting.DARK_GRAY)))).forGoggles(tooltip, 1);
+            return true;
+        }
+        return false;
+    }
 }

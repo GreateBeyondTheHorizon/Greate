@@ -4,7 +4,6 @@ import com.gregtechceu.gtceu.api.capability.recipe.EURecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.content.Content;
-import com.gregtechceu.gtceu.api.recipe.ingredient.fabric.SizedIngredientImpl;
 import com.gregtechceu.gtceu.common.data.GTItems;
 import com.gregtechceu.gtceu.common.item.IntCircuitBehaviour;
 import com.simibubi.create.compat.recipeViewerCommon.SequencedAssemblySubCategoryType;
@@ -17,6 +16,7 @@ import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilde
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeParams;
 import electrolyte.greate.registry.MechanicalPresses;
 import electrolyte.greate.registry.ModRecipeTypes;
+import net.fabricmc.fabric.impl.recipe.ingredient.CustomIngredientImpl;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
@@ -78,8 +78,8 @@ public class TieredPressingRecipe extends TieredProcessingRecipe<Container> impl
         List<Content> inputContents = recipe.getInputContents(ItemRecipeCapability.CAP);
         int circuitNumber = -1;
         for(Content c : inputContents) {
-            if(((SizedIngredientImpl) c.getContent()).getItems()[0].is(GTItems.INTEGRATED_CIRCUIT.asItem())) {
-                ItemStack circuit = ((SizedIngredientImpl) c.getContent()).getItems()[0];
+            if(((CustomIngredientImpl) c.getContent()).getItems()[0].is(GTItems.INTEGRATED_CIRCUIT.asItem())) {
+                ItemStack circuit = ((CustomIngredientImpl) c.getContent()).getItems()[0];
                 circuitNumber = IntCircuitBehaviour.getCircuitConfiguration(circuit);
                 break;
             }

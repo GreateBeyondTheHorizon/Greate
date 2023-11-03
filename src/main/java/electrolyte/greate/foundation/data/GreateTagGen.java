@@ -21,9 +21,9 @@ public class GreateTagGen extends ItemTagProvider {
      */
     @Override
     protected void addTags(Provider arg) {
-        getOrCreateTagBuilder(GreateTags.forgeItemTag("tungstensteel_plates"))
+        getOrCreateTagBuilder(GreateTags.fabricItemTag("tungstensteel_plates"))
                 .addOptionalTag(new ResourceLocation("c", "tungsten_steel_plates"));
-        getOrCreateTagBuilder(GreateTags.forgeItemTag("tungstensteel_nuggets"))
+        getOrCreateTagBuilder(GreateTags.fabricItemTag("tungstensteel_nuggets"))
                 .addOptionalTag(new ResourceLocation("c", "tungsten_steel_nuggets"));
     }
 }

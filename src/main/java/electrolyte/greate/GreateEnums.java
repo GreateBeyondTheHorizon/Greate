@@ -9,33 +9,27 @@ import java.util.List;
 public class GreateEnums {
 
     public enum TIER implements Comparable<TIER> {
-        ULTRA_LOW("ULS", Greate.CONFIG.ULS.CAPACITY, ChatFormatting.WHITE),
-        LOW("LS", Greate.CONFIG.LS.CAPACITY, ChatFormatting.GRAY),
-        MEDIUM("MS", Greate.CONFIG.MS.CAPACITY, ChatFormatting.AQUA),
-        HIGH("HS", Greate.CONFIG.HS.CAPACITY, ChatFormatting.GOLD),
-        EXTREME("ES", Greate.CONFIG.ES.CAPACITY, ChatFormatting.DARK_PURPLE),
-        INSANE("IS", Greate.CONFIG.IS.CAPACITY, ChatFormatting.DARK_BLUE),
-        LUDICRIOUS("LuS", Greate.CONFIG.LUS.CAPACITY, ChatFormatting.LIGHT_PURPLE),
-        ZPM("ZPMS", Greate.CONFIG.ZPM.CAPACITY, ChatFormatting.RED),
-        ULTIMATE("US", Greate.CONFIG.US.CAPACITY, ChatFormatting.DARK_AQUA),
-        ULTIMATE_HIGH("UHS", Greate.CONFIG.UHS.CAPACITY, ChatFormatting.DARK_RED);
+        ULTRA_LOW("ULS", ChatFormatting.WHITE),
+        LOW("LS", ChatFormatting.GRAY),
+        MEDIUM("MS", ChatFormatting.AQUA),
+        HIGH("HS", ChatFormatting.GOLD),
+        EXTREME("ES", ChatFormatting.DARK_PURPLE),
+        INSANE("IS", ChatFormatting.DARK_BLUE),
+        LUDICRIOUS("LuS", ChatFormatting.LIGHT_PURPLE),
+        ZPM("ZPMS", ChatFormatting.RED),
+        ULTIMATE("US", ChatFormatting.DARK_AQUA),
+        ULTIMATE_HIGH("UHS", ChatFormatting.DARK_RED);
 
         private final String name;
-        private final double stressCapacity;
         private final ChatFormatting tierColor;
 
-        TIER(String name, double stressCapacity, ChatFormatting tierColor) {
+        TIER(String name, ChatFormatting tierColor) {
             this.name = name;
-            this.stressCapacity = stressCapacity;
             this.tierColor = tierColor;
         }
 
         public String getName() {
             return name;
-        }
-
-        public double getStressCapacity() {
-            return stressCapacity;
         }
 
         public ChatFormatting getTierColor() {
@@ -75,11 +69,24 @@ public class GreateEnums {
         }
     }
 
-    public enum BELT_TYPE implements Comparable<BELT_TYPE> {
+    public enum BELT_TYPE {
         RUBBER,
         SILICONE_RUBBER,
         POLYETHYLENE,
-        PTFE,
-        PBI
+        POLYTETRAFLUOROETHYLENE,
+        POLYBENZIMIDAZOLE
+    }
+
+    public enum MATERIAL_TYPE {
+        ANDESITE,
+        STEEL,
+        ALUMINIUM,
+        STAINLESS_STEEL,
+        TITANIUM,
+        TUNGSTENSTEEL,
+        PALLADIUM,
+        NAQUADAH,
+        DARMSTADTIUM,
+        NEUTRONIUM
     }
 }

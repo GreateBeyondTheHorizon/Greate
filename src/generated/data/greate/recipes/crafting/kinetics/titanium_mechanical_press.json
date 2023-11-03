@@ -6,13 +6,13 @@
       "item": "minecraft:iron_block"
     },
     "C": {
-      "tag": "forge:circuits/ev"
+      "tag": "c:ev_circuits"
     },
     "M": {
       "item": "gtceu:ev_machine_hull"
     },
     "S": {
-      "tag": "greate:shafts/titanium"
+      "tag": "greate:titanium_shafts"
     }
   },
   "pattern": [

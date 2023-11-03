@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "F": {
-      "tag": "c:tools/files"
+      "tag": "c:files"
     },
     "P": {
-      "tag": "c:plates/aluminium"
+      "tag": "c:aluminium_plates"
     },
     "S": {
       "item": "greate:stainless_steel_cogwheel"

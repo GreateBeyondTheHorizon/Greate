@@ -28,7 +28,7 @@ public class GreateMechanicalCraftingRecipeGen extends GreateRecipeProvider {
     GeneratedRecipe
             ANDESITE_CRUSHING_WHEEL = create(CrushingWheels.ANDESITE_CRUSHING_WHEEL).returns(2)
             .recipe(b -> b.key('A', AllItems.ANDESITE_ALLOY::get)
-                    .key('C', GreateTags.forgeItemTag("ulv_circuits"))
+                    .key('C', GreateTags.fabricItemTag("ulv_circuits"))
                     .key('S', GreateTags.greateItemTag("andesite_shafts"))
                     .patternLine(" AAA ")
                     .patternLine("AACAA")
@@ -52,7 +52,7 @@ public class GreateMechanicalCraftingRecipeGen extends GreateRecipeProvider {
         String material = crushingWheel.getId().getPath().substring(0, crushingWheel.getId().getPath().length() - 15);
         return create(crushingWheel).returns(2)
                 .recipe(b -> b.key('A', BuiltInRegistries.ITEM.get(new ResourceLocation(Greate.MOD_ID, material + "_alloy"))::asItem)
-                        .key('C', GreateTags.forgeItemTag(tier + "_circuits"))
+                        .key('C', GreateTags.fabricItemTag(tier + "_circuits"))
                         .key('S', GreateTags.greateItemTag(material + "_shafts"))
                         .patternLine(" AAA ")
                         .patternLine("AACAA")

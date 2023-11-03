@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "c:ingots/palladium"
+            "tag": "c:palladium_ingots"
           }
         ]
       },

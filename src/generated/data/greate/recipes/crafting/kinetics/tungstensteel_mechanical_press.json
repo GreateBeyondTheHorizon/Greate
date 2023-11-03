@@ -6,13 +6,13 @@
       "item": "minecraft:iron_block"
     },
     "C": {
-      "tag": "forge:circuits/iv"
+      "tag": "c:iv_circuits"
     },
     "M": {
       "item": "gtceu:iv_machine_hull"
     },
     "S": {
-      "tag": "greate:shafts/tungstensteel"
+      "tag": "greate:tungstensteel_shafts"
     }
   },
   "pattern": [

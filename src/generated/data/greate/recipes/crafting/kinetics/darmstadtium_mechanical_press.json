@@ -6,13 +6,13 @@
       "item": "minecraft:iron_block"
     },
     "C": {
-      "tag": "forge:circuits/uv"
+      "tag": "c:uv_circuits"
     },
     "M": {
       "item": "gtceu:uv_machine_hull"
     },
     "S": {
-      "tag": "greate:shafts/darmstadtium"
+      "tag": "greate:darmstadtium_shafts"
     }
   },
   "pattern": [

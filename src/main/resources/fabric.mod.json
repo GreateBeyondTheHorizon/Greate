@@ -1,14 +1,16 @@
 {
   "schemaVersion": 1,
   "id": "greate",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "name": "Greate",
   "description": "Gregifying Create.",
   "authors": ["Electrolyte"],
   "contact": {
-    "sources": "https://github.com/GreateBeyondTheHorizon/Greate"
+    "sources": "https://github.com/GreateBeyondTheHorizon/Greate",
+    "issues": "https://github.com/GreateBeyondTheHorizon/Greate/issues"
   },
   "license": "MIT",
+  "icon": "logo.png",
   "environment": "*",
   "entrypoints": {
     "main": ["electrolyte.greate.Greate"],

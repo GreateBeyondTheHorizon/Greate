@@ -6,13 +6,13 @@
       "item": "minecraft:iron_block"
     },
     "C": {
-      "tag": "forge:circuits/luv"
+      "tag": "c:luv_circuits"
     },
     "M": {
       "item": "gtceu:luv_machine_hull"
     },
     "S": {
-      "tag": "greate:shafts/palladium"
+      "tag": "greate:palladium_shafts"
     }
   },
   "pattern": [

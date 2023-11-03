@@ -6,13 +6,13 @@
       "item": "minecraft:andesite"
     },
     "F": {
-      "tag": "c:tools/files"
+      "tag": "c:files"
     },
     "H": {
-      "tag": "c:tools/hammers"
+      "tag": "c:hammers"
     },
     "N": {
-      "tag": "c:nuggets/palladium"
+      "tag": "c:palladium_nuggets"
     }
   },
   "pattern": [

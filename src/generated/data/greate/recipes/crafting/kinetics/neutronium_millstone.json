@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "greate:shafts/neutronium"
+      "tag": "greate:neutronium_shafts"
     },
     "C": {
-      "tag": "c:circuits/uhv"
+      "tag": "c:uhv_circuits"
     },
     "M": {
       "item": "gtceu:uhv_machine_hull"
@@ -15,7 +15,7 @@
       "tag": "minecraft:wooden_slabs"
     },
     "W": {
-      "tag": "greate:cogwheels/neutronium"
+      "tag": "greate:neutronium_cogwheels"
     }
   },
   "pattern": [

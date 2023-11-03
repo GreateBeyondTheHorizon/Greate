@@ -33,7 +33,6 @@ import static net.minecraft.world.level.block.state.properties.BlockStatePropert
 public class MixinGirderBlock {
 
     @Shadow @Final public static BooleanProperty TOP;
-
     @Shadow @Final public static BooleanProperty BOTTOM;
 
     @Shadow @Final public static BooleanProperty X;

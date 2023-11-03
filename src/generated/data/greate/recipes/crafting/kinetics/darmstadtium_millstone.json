@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "greate:shafts/darmstadtium"
+      "tag": "greate:darmstadtium_shafts"
     },
     "C": {
-      "tag": "c:circuits/uv"
+      "tag": "c:uv_circuits"
     },
     "M": {
       "item": "gtceu:uv_machine_hull"
@@ -15,7 +15,7 @@
       "tag": "minecraft:wooden_slabs"
     },
     "W": {
-      "tag": "greate:cogwheels/darmstadtium"
+      "tag": "greate:darmstadtium_cogwheels"
     }
   },
   "pattern": [

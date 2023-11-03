@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "F": {
-      "tag": "c:tools/files"
+      "tag": "c:files"
     },
     "P": {
-      "tag": "c:plates/palladium"
+      "tag": "c:palladium_plates"
     },
     "S": {
       "item": "greate:naquadah_cogwheel"

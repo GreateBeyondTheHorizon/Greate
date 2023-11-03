@@ -56,19 +56,19 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
     private Marker MATERIALS = enterFolder("materials");
 
     GeneratedRecipe
-            ANDESITE_ALLOY = create(AllItems.ANDESITE_ALLOY).unlockedByTag(GreateTags.forgeItemTag("nuggets/iron"))
-            .viaShaped(b -> b.define('N', GreateTags.forgeItemTag("nuggets/iron"))
+            ANDESITE_ALLOY = create(AllItems.ANDESITE_ALLOY).unlockedByTag(GreateTags.fabricItemTag("iron_nuggets"))
+            .viaShaped(b -> b.define('N', GreateTags.fabricItemTag("iron_nuggets"))
                     .define('A', Blocks.ANDESITE)
-                    .define('F', GreateTags.forgeItemTag("tools/files"))
-                    .define('H', GreateTags.forgeItemTag("tools/hammers"))
+                    .define('F', GreateTags.fabricItemTag("files"))
+                    .define('H', GreateTags.fabricItemTag("hammers"))
                     .pattern("NA")
                     .pattern("AN")
                     .pattern("FH")),
-            ANDESITE_ALLOY_FROM_ZINC = create(AllItems.ANDESITE_ALLOY).withSuffix("_from_zinc").unlockedByTag(GreateTags.forgeItemTag("nuggets/zinc"))
-                    .viaShaped(b -> b.define('N', GreateTags.forgeItemTag("nuggets/zinc"))
+            ANDESITE_ALLOY_FROM_ZINC = create(AllItems.ANDESITE_ALLOY).withSuffix("_from_zinc").unlockedByTag(GreateTags.fabricItemTag("zinc_nuggets"))
+                    .viaShaped(b -> b.define('N', GreateTags.fabricItemTag("zinc_nuggets"))
                             .define('A', Blocks.ANDESITE)
-                            .define('F', GreateTags.forgeItemTag("tools/files"))
-                            .define('H', GreateTags.forgeItemTag("tools/hammers"))
+                            .define('F', GreateTags.fabricItemTag("files"))
+                            .define('H', GreateTags.fabricItemTag("hammers"))
                             .pattern("NA")
                             .pattern("AN")
                             .pattern("FH")),
@@ -87,7 +87,7 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
     GeneratedRecipe
             ANDESITE_SHAFT = create(Shafts.ANDESITE_SHAFT).returns(4).unlockedBy(AllItems.ANDESITE_ALLOY::get)
             .viaShaped(b -> b.define('A', AllItems.ANDESITE_ALLOY.get())
-                    .define('S', GreateTags.forgeItemTag("tools/saws"))
+                    .define('S', GreateTags.fabricItemTag("saws"))
                     .pattern("S ")
                     .pattern(" A")),
             STEEL_SHAFT = createMaterialShaftRecipe(Shafts.STEEL_SHAFT),
@@ -184,11 +184,11 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
             NEUTRONIUM_MECHANICAL_PRESS = createMaterialMechanicalPressRecipe(MechanicalPresses.NEUTRONIUM_MECHANICAL_PRESS, "uhv");
     private GeneratedRecipe createMaterialAlloyRecipe(ItemProviderEntry<? extends ItemLike> alloy) {
         String material = alloy.getId().getPath().substring(0, alloy.getId().getPath().length() - 6);
-        return create(alloy).unlockedByTag(GreateTags.forgeItemTag("ingots/" + material))
-                .viaShaped(b -> b.define('N', GreateTags.forgeItemTag("nuggets/" + material))
+        return create(alloy).unlockedByTag(GreateTags.fabricItemTag(material + "_ingots"))
+                .viaShaped(b -> b.define('N', GreateTags.fabricItemTag(material + "_nuggets"))
                         .define('A', Blocks.ANDESITE)
-                        .define('F', GreateTags.forgeItemTag("tools/files"))
-                        .define('H', GreateTags.forgeItemTag("tools/hammers"))
+                        .define('F', GreateTags.fabricItemTag("files"))
+                        .define('H', GreateTags.fabricItemTag("hammers"))
                         .pattern("NA")
                         .pattern("AN")
                         .pattern("FH"));
@@ -198,7 +198,7 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
         String material = shaft.getId().getPath().substring(0, shaft.getId().getPath().length() - 6);
         return create(shaft).returns(4).unlockedBy(BuiltInRegistries.ITEM.get(new ResourceLocation(Greate.MOD_ID, material + "_alloy"))::asItem)
                 .viaShaped(b -> b.define('A', BuiltInRegistries.ITEM.get(new ResourceLocation(Greate.MOD_ID, material + "_alloy")))
-                        .define('S', GreateTags.forgeItemTag("tools/saws"))
+                        .define('S', GreateTags.fabricItemTag("saws"))
                         .pattern("S ")
                         .pattern(" A"));
     }
@@ -206,8 +206,8 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
     private GeneratedRecipe createMaterialCogwheelRecipe(ItemProviderEntry<? extends ItemLike> cogwheel, ItemProviderEntry<? extends ItemLike> shaft, String material) {
         return create(cogwheel).unlockedBy(shaft::get)
                 .viaShaped(b -> b.define('S', shaft.get())
-                        .define('P', GreateTags.forgeItemTag("plates/" + material))
-                        .define('F', GreateTags.forgeItemTag("tools/files"))
+                        .define('P', GreateTags.fabricItemTag(material + "_plates"))
+                        .define('F', GreateTags.fabricItemTag("files"))
                         .pattern("SP")
                         .pattern("F "));
     }
@@ -215,8 +215,8 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
     private GeneratedRecipe createMaterialLargeCogwheelRecipe(ItemProviderEntry<? extends ItemLike> cogwheel, ItemProviderEntry<? extends ItemLike> shaft, String material) {
         return create(cogwheel).unlockedBy(shaft::get)
                 .viaShaped(b -> b.define('S', shaft.get())
-                        .define('P', GreateTags.forgeItemTag("plates/" + material))
-                        .define('F', GreateTags.forgeItemTag("tools/files"))
+                        .define('P', GreateTags.fabricItemTag(material + "_plates"))
+                        .define('F', GreateTags.fabricItemTag("files"))
                         .pattern("SP")
                         .pattern("PF"));
     }
@@ -224,8 +224,8 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
     private GeneratedRecipe createMaterialLargeCogwheelFromSmallRecipe(ItemProviderEntry<? extends ItemLike> cogwheel, ItemProviderEntry<? extends ItemLike> smallCogwheel, String material) {
         return create(cogwheel).withSuffix("from_little").unlockedBy(smallCogwheel::get)
                 .viaShaped(b -> b.define('S', smallCogwheel.get())
-                        .define('P', GreateTags.forgeItemTag("plates/" + material))
-                        .define('F', GreateTags.forgeItemTag("tools/files"))
+                        .define('P', GreateTags.fabricItemTag(material + "_plates"))
+                        .define('F', GreateTags.fabricItemTag("files"))
                         .pattern("SP")
                         .pattern("F "));
     }
@@ -233,11 +233,11 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
     private GeneratedRecipe createMaterialMillstoneRecipe(ItemProviderEntry<? extends ItemLike> millstone, String tier) {
         String material = millstone.getId().getPath().substring(0, millstone.getId().getPath().length() - 10);
         return create(millstone).unlockedBy(BuiltInRegistries.BLOCK.get(new ResourceLocation("gtceu", tier + "_machine_hull"))::asItem)
-                .viaShaped(b -> b.define('W', GreateTags.greateItemTag("cogwheels/" + material))
+                .viaShaped(b -> b.define('W', GreateTags.greateItemTag(material + "_cogwheels"))
                         .define('S', GreateTags.mcItemTag("wooden_slabs"))
                         .define('M', BuiltInRegistries.BLOCK.get(new ResourceLocation("gtceu", tier + "_machine_hull")))
-                        .define('C', GreateTags.forgeItemTag("circuits/" + tier))
-                        .define('A', GreateTags.greateItemTag("shafts/" + material))
+                        .define('C', GreateTags.fabricItemTag(tier + "_circuits"))
+                        .define('A', GreateTags.greateItemTag(material + "_shafts"))
                         .pattern(" W ")
                         .pattern("SMS")
                         .pattern("CAC"));
@@ -245,11 +245,11 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
 
     private GeneratedRecipe createMaterialGearboxRecipe(ItemProviderEntry<? extends ItemLike> gearbox) {
         String material = gearbox.getId().getPath().substring(0, gearbox.getId().getPath().length() - 8);
-        return create(gearbox).unlockedByTag(GreateTags.greateItemTag("cogwheels/" + material))
-                .viaShaped(b -> b.define('S', GreateTags.greateItemTag("shafts/" + material))
+        return create(gearbox).unlockedByTag(GreateTags.greateItemTag(material + "_cogwheels"))
+                .viaShaped(b -> b.define('S', GreateTags.greateItemTag(material + "_shafts"))
                         .define('M', AllBlocks.ANDESITE_CASING.get())
-                        .define('F', GreateTags.forgeItemTag("tools/files"))
-                        .define('H', GreateTags.forgeItemTag("tools/hammers"))
+                        .define('F', GreateTags.fabricItemTag("files"))
+                        .define('H', GreateTags.fabricItemTag("hammers"))
                         .pattern(" S ")
                         .pattern("SMS")
                         .pattern("FSH"));
@@ -267,8 +267,8 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
         String material = mechanicalPress.getId().getPath().substring(0, mechanicalPress.getId().getPath().length() - 17);
         return create(mechanicalPress).unlockedBy(BuiltInRegistries.BLOCK.get(new ResourceLocation("gtceu", tier + "_machine_hull"))::asItem)
                 .viaShaped(b -> b.define('M', BuiltInRegistries.BLOCK.get(new ResourceLocation("gtceu", tier + "_machine_hull")))
-                        .define('C', GreateTags.forgeItemTag("circuits/" + tier))
-                        .define('S', GreateTags.greateItemTag("shafts/" + material))
+                        .define('C', GreateTags.fabricItemTag(tier + "_circuits"))
+                        .define('S', GreateTags.greateItemTag(material + "_shafts"))
                         .define('B', Blocks.IRON_BLOCK)
                         .pattern(" S ")
                         .pattern("CMC")

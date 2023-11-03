@@ -29,15 +29,15 @@ public class GreateTags {
         return modTag(BuiltInRegistries.FLUID, new ResourceLocation(location));
     }
 
-    public static TagKey<Block> forgeBlockTag(String location) {
+    public static TagKey<Block> fabricBlockTag(String location) {
         return modTag(BuiltInRegistries.BLOCK, new ResourceLocation("c", location));
     }
 
-    public static TagKey<Item> forgeItemTag(String location) {
+    public static TagKey<Item> fabricItemTag(String location) {
         return modTag(BuiltInRegistries.ITEM, new ResourceLocation("c", location));
     }
 
-    public static TagKey<Fluid> forgeFluidTag(String location) {
+    public static TagKey<Fluid> fabricFluidTag(String location) {
         return modTag(BuiltInRegistries.FLUID, new ResourceLocation("c", location));
     }
 

@@ -9,14 +9,14 @@ import com.simibubi.create.content.kinetics.simpleRelays.AbstractSimpleShaftBloc
 import com.simibubi.create.foundation.advancement.AllAdvancements;
 import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
 import com.simibubi.create.foundation.utility.VecHelper;
-import com.simibubi.create.infrastructure.config.AllConfigs;
 import electrolyte.greate.GreateEnums.BELT_TYPE;
 import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.content.kinetics.belt.ITieredBelt;
 import electrolyte.greate.content.kinetics.belt.TieredBeltBlock;
 import electrolyte.greate.content.kinetics.belt.TieredBeltBlockEntity;
-import electrolyte.greate.content.kinetics.simpleRelays.TieredKineticBlockEntity;
+import electrolyte.greate.content.kinetics.simpleRelays.TieredBracketedKineticBlockEntity;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
+import electrolyte.greate.infrastructure.config.GConfigUtility;
 import electrolyte.greate.registry.Belts;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -69,7 +69,8 @@ public class TieredBeltConnectorItem extends BlockItem implements ITieredBelt {
         BlockPos firstPulley = null;
         if(tag.contains("FirstPulley")) {
             firstPulley = NbtUtils.readBlockPos(tag.getCompound("FirstPulley"));
-            if(!validateAxis(level, firstPulley) || !firstPulley.closerThan(pos, maxLength() * 2)) {
+            if(!validateAxis(level, firstPulley) || !firstPulley.closerThan(pos,
+                    GConfigUtility.getBeltLengthFromType(((TieredBeltConnectorItem) pContext.getItemInHand().getItem()).getBeltType()) * 2)) {
                 tag.remove("FirstPulley");
                 pContext.getItemInHand().setTag(tag);
             }
@@ -189,7 +190,8 @@ public class TieredBeltConnectorItem extends BlockItem implements ITieredBelt {
 
     public static boolean canConnect(Level level, BlockPos first, BlockPos second, ItemStack heldStack) {
         if(!level.isLoaded(first) || !level.isLoaded(second)) return false;
-        if(!second.closerThan(first, maxLength())) return false;
+        if(!(heldStack.getItem() instanceof TieredBeltConnectorItem tbci)) return false;
+        if(!second.closerThan(first, GConfigUtility.getBeltLengthFromType(tbci.getBeltType()))) return false;
         BlockPos diff = second.subtract(first);
         Axis shaftAxis = level.getBlockState(first).getValue(BlockStateProperties.AXIS);
         int x = diff.getX();
@@ -203,8 +205,8 @@ public class TieredBeltConnectorItem extends BlockItem implements ITieredBelt {
         if(shaftAxis == Axis.Y && x != 0 && z != 0) return false;
         BlockEntity be = level.getBlockEntity(first);
         BlockEntity be2 = level.getBlockEntity(second);
-        if(!(be instanceof TieredKineticBlockEntity kbe)) return false;
-        if(!(be2 instanceof TieredKineticBlockEntity kbe2)) return false;
+        if(!(be instanceof TieredBracketedKineticBlockEntity kbe)) return false;
+        if(!(be2 instanceof TieredBracketedKineticBlockEntity kbe2)) return false;
         if(level.getBlockState(first).getBlock() != level.getBlockState(second).getBlock()) return false;
         List<Block> validShafts = Belts.VALID_SHAFTS.get(Block.byItem(heldStack.getItem()));
         if(!validShafts.contains(level.getBlockState(first).getBlock())) return false;
@@ -222,10 +224,6 @@ public class TieredBeltConnectorItem extends BlockItem implements ITieredBelt {
             if(!blockState.canBeReplaced()) return false;
         }
         return true;
-    }
-
-    public static int maxLength() {
-        return AllConfigs.server().kinetics.maxBeltLength.get();  //todo: max belt length could be by belt tier
     }
 
     public static boolean validateAxis(Level level, BlockPos pos) {

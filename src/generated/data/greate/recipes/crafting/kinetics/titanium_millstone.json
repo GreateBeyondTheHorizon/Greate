@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "greate:shafts/titanium"
+      "tag": "greate:titanium_shafts"
     },
     "C": {
-      "tag": "c:circuits/ev"
+      "tag": "c:ev_circuits"
     },
     "M": {
       "item": "gtceu:ev_machine_hull"
@@ -15,7 +15,7 @@
       "tag": "minecraft:wooden_slabs"
     },
     "W": {
-      "tag": "greate:cogwheels/titanium"
+      "tag": "greate:titanium_cogwheels"
     }
   },
   "pattern": [

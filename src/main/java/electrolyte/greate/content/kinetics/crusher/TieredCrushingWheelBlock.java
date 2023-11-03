@@ -1,59 +1,38 @@
 package electrolyte.greate.content.kinetics.crusher;
 
-import com.simibubi.create.AllShapes;
-import com.simibubi.create.content.kinetics.base.RotatedPillarKineticBlock;
+import com.simibubi.create.content.kinetics.crusher.CrushingWheelBlock;
+import com.simibubi.create.content.kinetics.crusher.CrushingWheelBlockEntity;
 import com.simibubi.create.content.kinetics.crusher.CrushingWheelControllerBlock;
-import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.utility.Iterate;
 import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.registry.CrushingWheels;
 import electrolyte.greate.registry.ModBlockEntityTypes;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.List;
 
 import static com.simibubi.create.content.kinetics.crusher.CrushingWheelControllerBlock.VALID;
 
-public class TieredCrushingWheelBlock extends RotatedPillarKineticBlock implements IBE<TieredCrushingWheelBlockEntity>, ITieredBlock {
+public class TieredCrushingWheelBlock extends CrushingWheelBlock implements ITieredBlock {
 
     private TIER tier;
 
     public TieredCrushingWheelBlock(Properties properties) {
         super(properties);
         CrushingWheels.CRUSHING_WHEELS.add(this);
-    }
-
-    @Override
-    public Axis getRotationAxis(BlockState state) {
-        return state.getValue(AXIS);
-    }
-
-    @Override
-    public RenderShape getRenderShape(BlockState pState) {
-        return RenderShape.ENTITYBLOCK_ANIMATED;
-    }
-
-    @Override
-    public VoxelShape getCollisionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
-        return AllShapes.CRUSHING_WHEEL_COLLISION_SHAPE;
     }
 
     @Override
@@ -67,6 +46,7 @@ public class TieredCrushingWheelBlock extends RotatedPillarKineticBlock implemen
         super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
     }
 
+    @Override
     public void updateControllers(BlockState state, Level level, BlockPos pos, Direction direction) {
         if(direction.getAxis() == state.getValue(AXIS)) return;
         if(level == null) return;
@@ -81,8 +61,8 @@ public class TieredCrushingWheelBlock extends RotatedPillarKineticBlock implemen
         BlockState otherState = level.getBlockState(otherWheelPos);
         if(this == otherState.getBlock()) {
             controllerShouldExist = true;
-            TieredCrushingWheelBlockEntity be = getBlockEntity(level, pos);
-            TieredCrushingWheelBlockEntity otherBE = getBlockEntity(level, otherWheelPos);
+            CrushingWheelBlockEntity be = getBlockEntity(level, pos);
+            CrushingWheelBlockEntity otherBE = getBlockEntity(level, otherWheelPos);
 
             if(be != null && otherBE != null && (be.getSpeed() > 0) != (otherBE.getSpeed() > 0) && be.getSpeed() != 0) {
                 Axis wheelAxis = state.getValue(AXIS);
@@ -115,22 +95,6 @@ public class TieredCrushingWheelBlock extends RotatedPillarKineticBlock implemen
     }
 
     @Override
-    public void entityInside(BlockState pState, Level pLevel, BlockPos pPos, Entity pEntity) {
-        if(pEntity.getY() < pPos.getY() + 1.25F || !pEntity.onGround()) return;
-        float speed = getBlockEntityOptional(pLevel, pPos).map(TieredCrushingWheelBlockEntity::getSpeed).orElse(0F);
-        double x = 0, z = 0;
-        if(pState.getValue(AXIS) == Axis.X) {
-            z = speed / 20F;
-            x += (pPos.getZ() + 0.5F - pEntity.getZ()) * 0.1F;
-        }
-        if(pState.getValue(AXIS) == Axis.Z) {
-            x = speed / -20F;
-            z += (pPos.getZ() + 0.5F - pEntity.getZ()) * 0.1F;
-        }
-        pEntity.setDeltaMovement(pEntity.getDeltaMovement().add(x, 0, z));
-    }
-
-    @Override
     public boolean canSurvive(BlockState pState, LevelReader pLevel, BlockPos pPos) {
         for (Direction direction : Iterate.directions) {
             BlockPos pos = pPos.relative(direction);
@@ -144,27 +108,7 @@ public class TieredCrushingWheelBlock extends RotatedPillarKineticBlock implemen
     }
 
     @Override
-    public boolean hasShaftTowards(LevelReader world, BlockPos pos, BlockState state, Direction face) {
-        return face.getAxis() == state.getValue(AXIS);
-    }
-
-    @Override
-    public float getParticleInitialRadius() {
-        return 1F;
-    }
-
-    @Override
-    public float getParticleTargetRadius() {
-        return 1.125F;
-    }
-
-    @Override
-    public Class<TieredCrushingWheelBlockEntity> getBlockEntityClass() {
-        return TieredCrushingWheelBlockEntity.class;
-    }
-
-    @Override
-    public BlockEntityType<? extends TieredCrushingWheelBlockEntity> getBlockEntityType() {
+    public BlockEntityType<? extends CrushingWheelBlockEntity> getBlockEntityType() {
         return ModBlockEntityTypes.TIERED_CRUSHING_WHEEL.get();
     }
 
@@ -180,6 +124,6 @@ public class TieredCrushingWheelBlock extends RotatedPillarKineticBlock implemen
 
     @Override
     public void appendHoverText(ItemStack pStack, BlockGetter pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
-        pTooltip.add(Component.translatable("greate.tooltip.capacity").append(Component.literal(String.valueOf(tier.getStressCapacity())).withStyle(tier.getTierColor())).append(" (").append(Component.literal(tier.getName()).withStyle(tier.getTierColor())).append(")").withStyle(ChatFormatting.DARK_GRAY));
+        ITieredBlock.super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
     }
 }

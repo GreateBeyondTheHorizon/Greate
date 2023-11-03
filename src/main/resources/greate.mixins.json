@@ -9,10 +9,10 @@
     "MixinBeltTunnelBlock",
     "MixinBlockStressDefaults",
     "MixinGirderBlock",
+    "MixinGirderEncasedShaftBlock",
     "MixinKineticBlockEntity",
     "MixinKineticNetwork",
     "MixinRecipeManager",
-    "MixinRotationPropagator",
     "MixinSteamEngineBlock",
     "MixinSteamEngineBlock$PlacementHelper"
   ],

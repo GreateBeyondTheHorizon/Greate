@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "F": {
-      "tag": "c:tools/files"
+      "tag": "c:files"
     },
     "P": {
-      "tag": "c:plates/titanium"
+      "tag": "c:titanium_plates"
     },
     "S": {
       "item": "greate:tungstensteel_cogwheel"

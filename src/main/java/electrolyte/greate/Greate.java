@@ -4,8 +4,7 @@ import com.mojang.logging.LogUtils;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
-import dev.toma.configuration.Configuration;
-import dev.toma.configuration.config.format.ConfigFormats;
+import electrolyte.greate.infrastructure.config.GreateConfigs;
 import electrolyte.greate.registry.*;
 import it.unimi.dsi.fastutil.objects.ReferenceArrayList;
 import it.unimi.dsi.fastutil.objects.ReferenceLinkedOpenHashSet;
@@ -34,13 +33,10 @@ public class Greate implements ModInitializer {
 
     public static final String MOD_ID = "greate";
     public static final Logger LOGGER = LogUtils.getLogger();
-    public static GreateConfig CONFIG;
     public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(Greate.MOD_ID);
 
     @Override
     public void onInitialize() {
-        CONFIG = Configuration.registerConfig(GreateConfig.class, ConfigFormats.yaml()).getConfigInstance();
-        CommonEvents.register();
         GreateLang.register();
         GreateTags.init();
         Belts.register();
@@ -48,12 +44,14 @@ public class Greate implements ModInitializer {
         CrushingWheels.register();
         Gearboxes.register();
         Girders.register();
+        MechanicalPresses.register();
         Millstones.register();
         Shafts.register();
         ModBlockEntityTypes.register();
         ModItems.register();
         ModRecipeTypes.register();
         REGISTRATE.register();
+        GreateConfigs.register();
     }
 
     public static final ResourceKey<CreativeModeTab> CREATIVE_TAB_KEY = ResourceKey.create(Registries.CREATIVE_MODE_TAB, new ResourceLocation(Greate.MOD_ID, "tab"));

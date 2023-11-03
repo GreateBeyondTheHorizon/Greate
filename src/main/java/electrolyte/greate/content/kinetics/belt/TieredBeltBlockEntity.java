@@ -6,16 +6,13 @@ import com.jozufozu.flywheel.util.box.GridAlignedBB;
 import com.jozufozu.flywheel.util.box.ImmutableBox;
 import com.simibubi.create.content.kinetics.belt.*;
 import com.simibubi.create.content.kinetics.belt.transport.BeltMovementHandler;
-import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.NBTHelper;
-import electrolyte.greate.Greate;
-import electrolyte.greate.GreateEnums.BELT_TYPE;
 import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
+import electrolyte.greate.infrastructure.config.GConfigUtility;
 import io.github.fabricators_of_create.porting_lib.util.EnvExecutor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
@@ -39,7 +36,6 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
 
     private double networkMaxCapacity;
     private TIER tier;
-    private BELT_TYPE beltType;
     private ItemStack shaftType;
 
     @Environment(EnvType.CLIENT)
@@ -51,7 +47,6 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
         itemHandler = null;
         casing = CasingType.NONE;
         color = Optional.empty();
-        beltType = ((ITieredBelt) state.getBlock()).getBeltType();
     }
 
     @Override
@@ -232,7 +227,7 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
 
     @Override
     public double getMaxCapacity() {
-        return tier.getStressCapacity();
+        return GConfigUtility.getMaxCapacityFromTier(tier);
     }
 
     @Override
@@ -261,16 +256,6 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
-        if(tier != null) {
-            if(!tooltip.isEmpty()) {
-                Lang.builder().space();
-            } else {
-                Lang.translate("gui.goggles.kinetic_stats").forGoggles(tooltip);
-            }
-            Lang.builder(Greate.MOD_ID).translate("tooltip.capacity").style(ChatFormatting.GRAY).forGoggles(tooltip);
-            Lang.number(capacity).style(ChatFormatting.AQUA).add(Lang.text("su")).space().add(Lang.text("/").space().add(Lang.number(tier.getStressCapacity())).add(Lang.text("su").space().add(Lang.text("at current shaft tier").style(ChatFormatting.DARK_GRAY)))).forGoggles(tooltip, 1);
-            return true;
-        }
-        return false;
+        return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, tier, capacity);
     }
 }
