@@ -1,11 +1,9 @@
 package electrolyte.greate.content.kinetics.simpleRelays;
 
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
-import com.simibubi.create.foundation.utility.Lang;
-import electrolyte.greate.Greate;
 import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.content.kinetics.base.TieredKineticEffectHandler;
-import net.minecraft.ChatFormatting;
+import electrolyte.greate.infrastructure.config.GConfigUtility;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -28,7 +26,7 @@ public class TieredKineticBlockEntity extends KineticBlockEntity implements ITie
 
     @Override
     public double getMaxCapacity() {
-        return tier.getStressCapacity();
+        return GConfigUtility.getMaxCapacityFromTier(tier);
     }
 
     public TIER getTier() {
@@ -69,13 +67,6 @@ public class TieredKineticBlockEntity extends KineticBlockEntity implements ITie
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
-        if(!tooltip.isEmpty()) {
-            Lang.builder().space();
-        } else {
-            Lang.translate("gui.goggles.kinetic_stats").forGoggles(tooltip);
-        }
-        Lang.builder(Greate.MOD_ID).translate("tooltip.capacity").style(ChatFormatting.GRAY).forGoggles(tooltip);
-        Lang.number(capacity).style(ChatFormatting.AQUA).add(Lang.text("su")).space().add(Lang.text("/").space().add(Lang.number(tier.getStressCapacity())).add(Lang.text("su").space().add(Lang.text("at current shaft tier").style(ChatFormatting.DARK_GRAY)))).forGoggles(tooltip, 1);
-        return true;
+        return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, tier, capacity);
     }
 }

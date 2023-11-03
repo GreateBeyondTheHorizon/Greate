@@ -5,10 +5,10 @@ issueTrackerURL="https://github.com/GreateBeyondTheHorizon/Greate/issues"
 
 [[mods]]
 modId="greate"
-version="0.0.7"
+version="${file.jarVersion}"
 displayName="Greate"
 displayURL="https://modrinth.com/mod/greate"
-#logoFile="examplemod.png"
+logoFile="logo.png"
 credits="Both the Create & Gregtech devs for making awesome mods!"
 authors="Electrolyte"
 

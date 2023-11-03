@@ -1,17 +1,60 @@
 package electrolyte.greate.content.kinetics.gearbox;
 
-import electrolyte.greate.content.kinetics.base.TieredDirectionalShaftHalvesBlockEntity;
+import com.simibubi.create.content.kinetics.gearbox.GearboxBlockEntity;
+import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
+import electrolyte.greate.infrastructure.config.GConfigUtility;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class TieredGearboxBlockEntity extends TieredDirectionalShaftHalvesBlockEntity {
-    public TieredGearboxBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
-        super(typeIn, pos, state);
+import java.util.List;
+
+public class TieredGearboxBlockEntity extends GearboxBlockEntity implements ITieredKineticBlockEntity {
+
+    private TIER tier;
+    private double networkMaxCapacity;
+
+    public TieredGearboxBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+        super(type, pos, state);
+        tier = ((TieredGearboxBlock) state.getBlock()).getTier();
     }
 
     @Override
-    protected boolean isNoisy() {
-        return false;
+    public double getMaxCapacity() {
+        return GConfigUtility.getMaxCapacityFromTier(tier);
+    }
+
+    @Override
+    protected void read(CompoundTag compound, boolean clientPacket) {
+        if(compound.contains("Network")) {
+            CompoundTag networkTag = compound.getCompound("Network");
+            this.networkMaxCapacity = networkTag.getDouble("MaxCapacity");
+        }
+        super.read(compound, clientPacket);
+    }
+
+    @Override
+    protected void write(CompoundTag compound, boolean clientPacket) {
+        super.write(compound, clientPacket);
+        if(hasNetwork()) {
+            CompoundTag networkTag = compound.getCompound("Network");
+            networkTag.putDouble("MaxCapacity", this.networkMaxCapacity);
+        }
+    }
+
+    @Override
+    public void updateFromNetwork(float maxStress, float currentStress, int networkSize, double networkMaxCapacity) {
+        super.updateFromNetwork(maxStress, currentStress, networkSize);
+        this.networkMaxCapacity = networkMaxCapacity;
+        sendData();
+    }
+
+    @Override
+    public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
+        super.addToGoggleTooltip(tooltip, isPlayerSneaking);
+        return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, tier, capacity);
     }
 }

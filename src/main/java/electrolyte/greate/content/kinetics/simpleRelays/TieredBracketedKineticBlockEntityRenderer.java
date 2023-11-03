@@ -4,6 +4,7 @@ import com.jozufozu.flywheel.backend.Backend;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
+import com.simibubi.create.content.kinetics.simpleRelays.SimpleKineticBlockEntity;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.render.SuperByteBuffer;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
@@ -24,7 +25,7 @@ public class TieredBracketedKineticBlockEntityRenderer extends KineticBlockEntit
     protected void renderSafe(TieredBracketedKineticBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
         if (Backend.canUseInstancing(be.getLevel())) return;
 
-        if (!(be.getBlockState().getBlock() instanceof TieredCogwheelBlock tcb && tcb.isLarge)) {
+        if (!(be.getBlockState().getBlock() instanceof TieredCogwheelBlock tcb && tcb.isLargeCog())) {
             super.renderSafe(be, partialTicks, ms, buffer, light, overlay);
             return;
         }
@@ -43,7 +44,7 @@ public class TieredBracketedKineticBlockEntityRenderer extends KineticBlockEntit
         shaft.renderInto(ms, buffer.getBuffer(RenderType.solid()));
     }
 
-    public static float getAngleForLargeCogShaft(TieredSimpleKineticBlockEntity be, Axis axis) {
+    public static float getAngleForLargeCogShaft(SimpleKineticBlockEntity be, Axis axis) {
         BlockPos pos = be.getBlockPos();
         float offset = getShaftAngleOffset(axis, pos);
         float time = AnimationTickHolder.getRenderTime(be.getLevel());

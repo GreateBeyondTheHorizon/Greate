@@ -29,8 +29,8 @@ import static electrolyte.greate.Greate.REGISTRATE;
 
 public class ModBlockEntityTypes {
 
-    public static final BlockEntityEntry<TieredBracketedKineticBlockEntity> TIERED_KINETIC = REGISTRATE
-            .blockEntity("tiered_kinetic", TieredBracketedKineticBlockEntity::new)
+    public static final BlockEntityEntry<TieredBracketedKineticBlockEntity> TIERED_BRACKETED_KINETIC = REGISTRATE
+            .blockEntity("tiered_bracketed_kinetic", TieredBracketedKineticBlockEntity::new)
             .instance(() -> TieredBracketedKineticBlockEntityInstance::new, false)
             .validBlocks(Shafts.ANDESITE_SHAFT, Shafts.STEEL_SHAFT, Shafts.ALUMINIUM_SHAFT, Shafts.STAINLESS_STEEL_SHAFT,
                     Shafts.TITANIUM_SHAFT, Shafts.TUNGSTENSTEEL_SHAFT, Shafts.PALLADIUM_SHAFT, Shafts.NAQUADAH_SHAFT,

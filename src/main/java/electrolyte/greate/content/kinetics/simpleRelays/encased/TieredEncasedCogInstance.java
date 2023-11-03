@@ -8,13 +8,13 @@ import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.simibubi.create.content.kinetics.base.IRotate;
+import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityInstance;
 import com.simibubi.create.content.kinetics.base.flwdata.RotatingData;
 import com.simibubi.create.content.kinetics.simpleRelays.BracketedKineticBlockEntityRenderer;
 import com.simibubi.create.foundation.utility.Iterate;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredEncasedCogwheel;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredPartialModel;
-import electrolyte.greate.content.kinetics.simpleRelays.TieredKineticBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -22,7 +22,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 import java.util.Optional;
 
-public class TieredEncasedCogInstance extends KineticBlockEntityInstance<TieredKineticBlockEntity> {
+public class TieredEncasedCogInstance extends KineticBlockEntityInstance<KineticBlockEntity> {
 
     private boolean large;
     protected RotatingData rotatingModel;
@@ -30,15 +30,15 @@ public class TieredEncasedCogInstance extends KineticBlockEntityInstance<TieredK
     protected Optional<RotatingData> rotatingBottomShaft;
     protected PartialModel partialModel, model;
 
-    public static TieredEncasedCogInstance small(MaterialManager manager, TieredKineticBlockEntity be) {
+    public static TieredEncasedCogInstance small(MaterialManager manager, KineticBlockEntity be) {
         return new TieredEncasedCogInstance(manager, be, false);
     }
 
-    public static TieredEncasedCogInstance large(MaterialManager manager, TieredKineticBlockEntity be) {
+    public static TieredEncasedCogInstance large(MaterialManager manager, KineticBlockEntity be) {
         return new TieredEncasedCogInstance(manager, be, true);
     }
 
-    public TieredEncasedCogInstance(MaterialManager materialManager, TieredKineticBlockEntity blockEntity, boolean large) {
+    public TieredEncasedCogInstance(MaterialManager materialManager, KineticBlockEntity blockEntity, boolean large) {
         super(materialManager, blockEntity);
         this.large = large;
         this.partialModel = ((ITieredPartialModel) blockState.getBlock()).getPartialModel();

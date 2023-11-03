@@ -1,23 +1,18 @@
 package electrolyte.greate.content.kinetics.gearbox;
 
 import com.jozufozu.flywheel.core.PartialModel;
-import com.simibubi.create.content.kinetics.base.RotatedPillarKineticBlock;
-import com.simibubi.create.foundation.block.IBE;
+import com.simibubi.create.content.kinetics.gearbox.GearboxBlock;
+import com.simibubi.create.content.kinetics.gearbox.GearboxBlockEntity;
 import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredPartialModel;
 import electrolyte.greate.registry.ModBlockEntityTypes;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.Direction.Axis;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams.Builder;
@@ -25,7 +20,7 @@ import net.minecraft.world.phys.HitResult;
 
 import java.util.List;
 
-public class TieredGearboxBlock extends RotatedPillarKineticBlock implements IBE<TieredGearboxBlockEntity>, ITieredBlock, ITieredPartialModel {
+public class TieredGearboxBlock extends GearboxBlock implements ITieredBlock, ITieredPartialModel {
 
     private TIER tier;
     private PartialModel partialModel;
@@ -52,27 +47,7 @@ public class TieredGearboxBlock extends RotatedPillarKineticBlock implements IBE
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return defaultBlockState().setValue(AXIS, Axis.Y);
-    }
-
-    @Override
-    public boolean hasShaftTowards(LevelReader world, BlockPos pos, BlockState state, Direction face) {
-        return face.getAxis() != state.getValue(AXIS);
-    }
-
-    @Override
-    public Axis getRotationAxis(BlockState state) {
-        return state.getValue(AXIS);
-    }
-
-    @Override
-    public Class<TieredGearboxBlockEntity> getBlockEntityClass() {
-        return TieredGearboxBlockEntity.class;
-    }
-
-    @Override
-    public BlockEntityType<? extends TieredGearboxBlockEntity> getBlockEntityType() {
+    public BlockEntityType<? extends GearboxBlockEntity> getBlockEntityType() {
         return ModBlockEntityTypes.TIERED_GEARBOX.get();
     }
 
@@ -93,6 +68,6 @@ public class TieredGearboxBlock extends RotatedPillarKineticBlock implements IBE
 
     @Override
     public void appendHoverText(ItemStack pStack, BlockGetter pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
-        pTooltip.add(Component.translatable("greate.tooltip.capacity").append(Component.literal(String.valueOf(tier.getStressCapacity())).withStyle(tier.getTierColor())).append(" (").append(Component.literal(tier.getName()).withStyle(tier.getTierColor())).append(")").withStyle(ChatFormatting.DARK_GRAY));
+        ITieredBlock.super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
     }
 }

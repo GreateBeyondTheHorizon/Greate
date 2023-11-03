@@ -9,6 +9,7 @@ import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import electrolyte.greate.Greate;
 import electrolyte.greate.GreateEnums.BELT_TYPE;
+import electrolyte.greate.content.kinetics.TieredBlockMaterials;
 import electrolyte.greate.content.kinetics.belt.TieredBeltBlock;
 import electrolyte.greate.content.kinetics.belt.TieredBeltGenerator;
 import electrolyte.greate.content.kinetics.belt.item.TieredBeltConnectorItem;
@@ -43,9 +44,9 @@ public class Belts {
     public static final ItemEntry<TieredBeltConnectorItem> SILICONE_RUBBER_BELT_CONNECTOR = beltConnector("silicone_rubber_belt_connector", SILICONE_RUBBER_BELT);
     public static final BlockEntry<TieredBeltBlock> POLYETHYLENE_BELT = belt("polyethylene_belt", BELT_TYPE.POLYETHYLENE, List.of(Shafts.TITANIUM_SHAFT, Shafts.TUNGSTENSTEEL_SHAFT));
     public static final ItemEntry<TieredBeltConnectorItem> POLYETHYLENE_BELT_CONNECTOR = beltConnector("polyethylene_belt_connector", POLYETHYLENE_BELT);
-    public static final BlockEntry<TieredBeltBlock> POLYTETRAFLUOROETHYLENE_BELT = belt("polytetrafluoroethylene_belt", BELT_TYPE.PTFE, List.of(Shafts.PALLADIUM_SHAFT, Shafts.NAQUADAH_SHAFT));
+    public static final BlockEntry<TieredBeltBlock> POLYTETRAFLUOROETHYLENE_BELT = belt("polytetrafluoroethylene_belt", BELT_TYPE.POLYTETRAFLUOROETHYLENE, List.of(Shafts.PALLADIUM_SHAFT, Shafts.NAQUADAH_SHAFT));
     public static final ItemEntry<TieredBeltConnectorItem> POLYTETRAFLUOROETHYLENE_BELT_CONNECTOR = beltConnector("polytetrafluoroethylene_belt_connector", POLYTETRAFLUOROETHYLENE_BELT);
-    public static final BlockEntry<TieredBeltBlock> POLYBENZIMIDAZOLE_BELT = belt("polybenzimidazole_belt", BELT_TYPE.PBI, List.of(Shafts.DARMSTADTIUM_SHAFT, Shafts.NEUTRONIUM_SHAFT));
+    public static final BlockEntry<TieredBeltBlock> POLYBENZIMIDAZOLE_BELT = belt("polybenzimidazole_belt", BELT_TYPE.POLYBENZIMIDAZOLE, List.of(Shafts.DARMSTADTIUM_SHAFT, Shafts.NEUTRONIUM_SHAFT));
     public static final ItemEntry<TieredBeltConnectorItem> POLYBENZIMIDAZOLE_BELT_CONNECTOR = beltConnector("polybenzimidazole_belt_connector", POLYBENZIMIDAZOLE_BELT);
 
     public static BlockEntry<TieredBeltBlock> belt(String name, BELT_TYPE beltType, List<BlockEntry<TieredShaftBlock>> validShafts) {
@@ -56,7 +57,8 @@ public class Belts {
                 .properties(p -> p.strength(0.8F))
                 .properties(p -> p.mapColor(MapColor.COLOR_GRAY))
                 .transform(TagGen.axeOrPickaxe())
-                .transform(BlockStressDefaults.setNoImpact())
+                .transform(BlockStressDefaults.setImpact(0))
+                .transform(TieredBlockMaterials.setBeltTypeForBlock(beltType))
                 .blockstate(new TieredBeltGenerator()::generate)
                 .onRegisterAfter(ForgeRegistries.ITEMS.getRegistryKey(), c -> c.validShafts(validShafts))
                 .onRegister(TieredBeltBlock::setupBeltModel)

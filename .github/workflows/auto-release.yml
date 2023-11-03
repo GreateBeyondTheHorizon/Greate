@@ -6,6 +6,9 @@ on:
 permissions:
   contents: write
 
+env:
+  RELEASE_VERSION: 0.0.7
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,13 +25,20 @@ jobs:
     - name: Build
       uses: gradle/gradle-build-action@v2.4.2
       with:
-          cache-read-only: false
+          cache-disabled: true
           arguments: build
     - name: Upload Release to Github & Modrinth
       uses: Kir-Antipov/mc-publish@v3.3
       with:
 
-        changelog-file: changelog.*
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github-tag: ${{ env.RELEASE_VERSION }}-forge
+        github-generate-changelog: false
+        github-prerelease: true
+
+        name: Greate ${{ env.RELEASE_VERSION }} [FORGE]
+        version: ${{ env.RELEASE_VERSION }}
+        changelog-file: changelog.md
 
         modrinth-id: 8wDcQuht
         modrinth-featured: true
@@ -41,10 +51,6 @@ jobs:
         dependencies: |
           create(required)
           gregtechceu-modern(required)
-
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        github-generate-changelog: false
-        github-prerelease: true
 
         files: |
           build/libs/*[0-9].jar

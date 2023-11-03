@@ -4,81 +4,75 @@ import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.simibubi.create.AllRecipeTypes;
-import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
+import com.simibubi.create.content.kinetics.millstone.MillstoneBlockEntity;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
-import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
-import com.simibubi.create.foundation.item.ItemHelper;
-import com.simibubi.create.foundation.sound.SoundScapes;
-import com.simibubi.create.foundation.utility.VecHelper;
 import electrolyte.greate.GreateEnums;
+import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
-import electrolyte.greate.content.kinetics.simpleRelays.TieredKineticBlockEntity;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
+import electrolyte.greate.infrastructure.config.GConfigUtility;
 import electrolyte.greate.registry.ModRecipeTypes;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ItemParticleOption;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.Mth;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
 
-public class TieredMillstoneBlockEntity extends TieredKineticBlockEntity implements ITieredKineticBlockEntity {
+public class TieredMillstoneBlockEntity extends MillstoneBlockEntity implements ITieredKineticBlockEntity {
 
-    public ItemStackHandler inputInv;
-    public ItemStackHandler outputInv;
-    public LazyOptional<IItemHandler> capability;
-    public int timer;
     private ProcessingRecipe<RecipeWrapper> lastRecipe;
+    private TIER tier;
     private int maxItemsPerRecipe;
+    private double networkMaxCapacity;
 
     public TieredMillstoneBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
         super(typeIn, pos, state);
         inputInv = new ItemStackHandler(1);
         outputInv = new ItemStackHandler(1);
         capability = LazyOptional.of(TieredMillstoneInventoryHandler::new);
-        maxItemsPerRecipe = GreateEnums.TIER.getTierMultiplier(this.getTier(), 2);
+        tier = ((TieredMillstoneBlock) state.getBlock()).getTier();
+        maxItemsPerRecipe = GreateEnums.TIER.getTierMultiplier(tier, 2);
     }
 
     @Override
     public double getMaxCapacity() {
-        return this.getTier().getStressCapacity();
+        return GConfigUtility.getMaxCapacityFromTier(tier);
     }
 
     @Override
-    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
-        behaviours.add(new DirectBeltInputBehaviour(this));
-        super.addBehaviours(behaviours);
-        registerAwardables(behaviours, AllAdvancements.MILLSTONE);
+    protected void read(CompoundTag compound, boolean clientPacket) {
+        if(compound.contains("Network")) {
+            CompoundTag networkTag = compound.getCompound("Network");
+            this.networkMaxCapacity = networkTag.getDouble("MaxCapacity");
+        }
+        super.read(compound, clientPacket);
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
-    public void tickAudio() {
-        super.tickAudio();
-        if(getSpeed() == 0) return;
-        if(inputInv.getStackInSlot(0).isEmpty()) return;
-        float pitch = Mth.clamp((Math.abs(getSpeed()) / 256f) + .45f, .85f, 1f);
-        SoundScapes.play(SoundScapes.AmbienceGroup.MILLING, worldPosition, pitch);
+    public void write(CompoundTag compound, boolean clientPacket) {
+        super.write(compound, clientPacket);
+        if(hasNetwork()) {
+            CompoundTag networkTag = compound.getCompound("Network");
+            networkTag.putDouble("MaxCapacity", this.networkMaxCapacity);
+        }
+    }
+
+    @Override
+    public void updateFromNetwork(float maxStress, float currentStress, int networkSize, double networkMaxCapacity) {
+        super.updateFromNetwork(maxStress, currentStress, networkSize);
+        this.networkMaxCapacity = networkMaxCapacity;
+        sendData();
     }
 
     @Override
@@ -126,9 +120,16 @@ public class TieredMillstoneBlockEntity extends TieredKineticBlockEntity impleme
         timer = lastRecipe.getProcessingDuration();
         sendData();
     }
-    
+
+    @Override
+    public void spawnParticles() {
+        if(lastRecipe != null && lastRecipe.matches(new RecipeWrapper(inputInv), level)) {
+            super.spawnParticles();
+        }
+    }
+
     public Optional<ProcessingRecipe<RecipeWrapper>> findRecipe(RecipeWrapper wrapper) {
-        Optional<ProcessingRecipe<RecipeWrapper>> millingRecipe = ModRecipeTypes.MILLING.find(wrapper, level, this.getTier());
+        Optional<ProcessingRecipe<RecipeWrapper>> millingRecipe = ModRecipeTypes.MILLING.find(wrapper, level, tier);
         if(millingRecipe.isEmpty()) {
             millingRecipe = AllRecipeTypes.MILLING.find(wrapper, level);
         }
@@ -137,25 +138,12 @@ public class TieredMillstoneBlockEntity extends TieredKineticBlockEntity impleme
                     ((Ingredient) r.getInputContents(ItemRecipeCapability.CAP).get(0).getContent()).test(wrapper.getItem(0))).findFirst();
             if(test.isPresent()) {
                 TieredProcessingRecipe<RecipeWrapper> convertedRecipe = TieredMillingRecipe.convertGT(test.get());
-                if(convertedRecipe.getRecipeTier().compareTo(this.getTier()) <= 0) {
+                if(convertedRecipe.getRecipeTier().compareTo(tier) <= 0) {
                     return Optional.of(convertedRecipe);
                 }
             }
         }
         return millingRecipe;
-    }
-
-    @Override
-    public void invalidate() {
-        super.invalidate();
-        capability.invalidate();
-    }
-
-    @Override
-    public void destroy() {
-        super.destroy();
-        ItemHelper.dropContents(level, worldPosition, inputInv);
-        ItemHelper.dropContents(level, worldPosition, outputInv);
     }
 
     private void process() {
@@ -181,47 +169,6 @@ public class TieredMillstoneBlockEntity extends TieredKineticBlockEntity impleme
         setChanged();
     }
 
-    public void spawnParticles() {
-        ItemStack stackInSlot = inputInv.getStackInSlot(0);
-        if(stackInSlot.isEmpty()) return;
-
-        ItemParticleOption data = new ItemParticleOption(ParticleTypes.ITEM, stackInSlot);
-        float angle = level.random.nextFloat() * 360;
-        Vec3 offset = new Vec3(0,0, 0.5f);
-        offset = VecHelper.rotate(offset, angle, Direction.Axis.Y);
-        Vec3 target = VecHelper.rotate(offset, getSpeed() > 0 ? 25 : -25, Direction.Axis.Y);
-
-        Vec3 center = offset.add(VecHelper.getCenterOf(worldPosition));
-        target = VecHelper.offsetRandomly(target.subtract(offset), level.random, 1 / 128f);
-        level.addParticle(data, center.x, center.y, center.z, target.x, target.y, target.z);
-    }
-
-    @Override
-    protected void write(CompoundTag compound, boolean clientPacket) {
-        compound.putInt("Timer", timer);
-        compound.put("InputInventory", inputInv.serializeNBT());
-        compound.put("OutputInventory", outputInv.serializeNBT());
-        super.write(compound, clientPacket);
-    }
-
-    @Override
-    protected void read(CompoundTag compound, boolean clientPacket) {
-        timer = compound.getInt("Timer");
-        inputInv.deserializeNBT(compound.getCompound("InputInventory"));
-        outputInv.deserializeNBT(compound.getCompound("OutputInventory"));
-        super.read(compound, clientPacket);
-    }
-
-    public int getProcessingSpeed() {
-        return Mth.clamp((int) Math.abs(getSpeed() / 16f), 1, 512);
-    }
-
-    @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if(isItemHandlerCap(cap)) return capability.cast();
-        return super.getCapability(cap, side);
-    }
-
     private boolean canProcess(ItemStack stack) {
         ItemStackHandler tester = new ItemStackHandler(1);
         tester.setStackInSlot(0, stack);
@@ -229,6 +176,12 @@ public class TieredMillstoneBlockEntity extends TieredKineticBlockEntity impleme
 
         if(lastRecipe != null && lastRecipe.matches(inventoryIn, level)) return true;
         return inputInv.getStackInSlot(0).isEmpty() && outputInv.getStackInSlot(0).isEmpty();
+    }
+
+    @Override
+    public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
+        super.addToGoggleTooltip(tooltip, isPlayerSneaking);
+        return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, tier, capacity);
     }
 
     private class TieredMillstoneInventoryHandler extends CombinedInvWrapper {

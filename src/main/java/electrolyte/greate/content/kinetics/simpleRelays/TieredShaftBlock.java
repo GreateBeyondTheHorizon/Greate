@@ -1,7 +1,5 @@
 package electrolyte.greate.content.kinetics.simpleRelays;
 
-import com.simibubi.create.AllShapes;
-import com.simibubi.create.content.decoration.encasing.EncasableBlock;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.simpleRelays.AbstractSimpleShaftBlock;
 import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
@@ -14,8 +12,6 @@ import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.content.decoration.encasing.IGirderEncasableBlock;
 import electrolyte.greate.content.kinetics.steamEngine.TieredPoweredShaftBlock;
 import electrolyte.greate.registry.ModBlockEntityTypes;
-import net.minecraft.ChatFormatting;
-import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.network.chat.Component;
@@ -29,17 +25,14 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.List;
 import java.util.function.Predicate;
 
-public class TieredShaftBlock extends AbstractSimpleShaftBlock implements EncasableBlock, ITieredBlock, ITieredShaftBlock, IGirderEncasableBlock {
+public class TieredShaftBlock extends ShaftBlock implements ITieredBlock, ITieredShaftBlock, IGirderEncasableBlock {
 
     public static final int placementHelperId = PlacementHelpers.register(new PlacementHelper());
     private TIER tier;
@@ -50,7 +43,7 @@ public class TieredShaftBlock extends AbstractSimpleShaftBlock implements Encasa
 
     @Override
     public BlockEntityType<? extends KineticBlockEntity> getBlockEntityType() {
-        return ModBlockEntityTypes.TIERED_KINETIC.get();
+        return ModBlockEntityTypes.TIERED_BRACKETED_KINETIC.get();
     }
 
     @Override
@@ -64,23 +57,8 @@ public class TieredShaftBlock extends AbstractSimpleShaftBlock implements Encasa
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        return AllShapes.SIX_VOXEL_POLE.get(state.getValue(AXIS));
-    }
-
-    @Override
-    public float getParticleTargetRadius() {
-        return .35f;
-    }
-
-    @Override
-    public float getParticleInitialRadius() {
-        return .125f;
-    }
-
-    @Override
     public void appendHoverText(ItemStack pStack, BlockGetter pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
-        pTooltip.add(Component.translatable("greate.tooltip.capacity").append(Component.literal(String.valueOf(tier.getStressCapacity())).withStyle(tier.getTierColor())).append(" (").append(Component.literal(tier.getName()).withStyle(tier.getTierColor())).append(")").withStyle(ChatFormatting.DARK_GRAY));
+        ITieredBlock.super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
     }
 
     @Override
@@ -89,15 +67,9 @@ public class TieredShaftBlock extends AbstractSimpleShaftBlock implements Encasa
         return pickCorrectShaftType(stateForPlacement, context.getLevel(), context.getClickedPos());
     }
 
-    public BlockState pickCorrectShaftType(BlockState stateForPlacement, Level level, BlockPos pos) {
+    public static BlockState pickCorrectShaftType(BlockState stateForPlacement, Level level, BlockPos pos) {
         return PoweredShaftBlock.stillValid(stateForPlacement, level, pos) ?
-            this.getEquivalent(stateForPlacement) : stateForPlacement;
-    }
-
-    public BlockState getEquivalent(BlockState stateForPlacement) {
-        return getShaft().defaultBlockState()
-                .setValue(PoweredShaftBlock.AXIS, stateForPlacement.getValue(ShaftBlock.AXIS))
-                .setValue(WATERLOGGED, stateForPlacement.getValue(WATERLOGGED));
+            TieredPoweredShaftBlock.getEquivalent(stateForPlacement) : stateForPlacement;
     }
 
     @Override
@@ -124,7 +96,6 @@ public class TieredShaftBlock extends AbstractSimpleShaftBlock implements Encasa
         return this;
     }
 
-    @MethodsReturnNonnullByDefault
     private static class PlacementHelper extends PoleHelper<Axis> {
         private PlacementHelper() {
             super(state -> state.getBlock() instanceof AbstractSimpleShaftBlock
@@ -146,14 +117,8 @@ public class TieredShaftBlock extends AbstractSimpleShaftBlock implements Encasa
         public PlacementOffset getOffset(Player player, Level world, BlockState state, BlockPos pos, BlockHitResult ray) {
             PlacementOffset offset = super.getOffset(player, world, state, pos, ray);
             if (offset.isSuccessful())
-                offset.withTransform(offset.getTransform().andThen(s -> {
-                    if(s.getBlock() instanceof TieredShaftBlock tsb) {
-                        if(tsb == state.getBlock()) {
-                            return tsb.pickCorrectShaftType(s, world, offset.getBlockPos());
-                        }
-                    }
-                    return Blocks.AIR.defaultBlockState();
-                }));
+                offset.withTransform(offset.getTransform()
+                        .andThen(s -> TieredShaftBlock.pickCorrectShaftType(s, world, offset.getBlockPos())));
             return offset;
         }
 

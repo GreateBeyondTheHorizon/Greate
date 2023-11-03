@@ -27,8 +27,8 @@ import electrolyte.greate.Greate;
 import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredProcessingRecipeHolder;
+import electrolyte.greate.infrastructure.config.GConfigUtility;
 import electrolyte.greate.registry.ModRecipeTypes;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -101,7 +101,7 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
 
     @Override
     public double getMaxCapacity() {
-        return tier.getStressCapacity();
+        return GConfigUtility.getMaxCapacityFromTier(tier);
     }
 
     @Override
@@ -114,17 +114,7 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
-        if(tier != null) {
-            if(!tooltip.isEmpty()) {
-                Lang.builder().space();
-            } else {
-                Lang.translate("gui.goggles.kinetic_stats").forGoggles(tooltip);
-            }
-            Lang.builder(Greate.MOD_ID).translate("tooltip.capacity").style(ChatFormatting.GRAY).forGoggles(tooltip);
-            Lang.number(capacity).style(ChatFormatting.AQUA).add(Lang.text("su")).space().add(Lang.text("/").space().add(Lang.number(tier.getStressCapacity())).add(Lang.text("su").space().add(Lang.text("at current shaft tier").style(ChatFormatting.DARK_GRAY)))).forGoggles(tooltip, 1);
-            return true;
-        }
-        return false;
+        return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, tier, capacity);
     }
 
     @Override

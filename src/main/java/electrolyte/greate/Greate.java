@@ -5,13 +5,12 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
-import dev.toma.configuration.Configuration;
-import dev.toma.configuration.config.format.ConfigFormats;
 import electrolyte.greate.foundation.advancement.GreateAdvancements;
 import electrolyte.greate.foundation.data.GreateTagGen;
 import electrolyte.greate.foundation.data.GreateTagGen.GreateBlockTagGen;
 import electrolyte.greate.foundation.data.recipe.GreateMechanicalCraftingRecipeGen;
 import electrolyte.greate.foundation.data.recipe.GreateStandardRecipeGen;
+import electrolyte.greate.infrastructure.config.GreateConfigs;
 import electrolyte.greate.registry.*;
 import it.unimi.dsi.fastutil.objects.ReferenceArrayList;
 import it.unimi.dsi.fastutil.objects.ReferenceLinkedOpenHashSet;
@@ -26,6 +25,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -43,12 +43,10 @@ public class Greate {
 
     public static final String MOD_ID = "greate";
     public static final Logger LOGGER = LogUtils.getLogger();
-    public static GreateConfig CONFIG;
     public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(Greate.MOD_ID);
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Greate.MOD_ID);
 
     public Greate() {
-        CONFIG = Configuration.registerConfig(GreateConfig.class, ConfigFormats.yaml()).getConfigInstance();
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
         MinecraftForge.EVENT_BUS.register(this);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
@@ -67,6 +65,7 @@ public class Greate {
         ModBlockEntityTypes.register();
         ModItems.register();
         ModRecipeTypes.register(eventBus);
+        GreateConfigs.register(ModLoadingContext.get());
     }
 
     public static final RegistryObject<CreativeModeTab> GREATE_TAB = CREATIVE_TABS.register("greate",
