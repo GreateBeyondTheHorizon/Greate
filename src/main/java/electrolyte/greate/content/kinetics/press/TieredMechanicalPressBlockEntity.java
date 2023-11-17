@@ -252,7 +252,9 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
                         }
                     }
                 } else if(recipe.getType() == AllRecipeTypes.PRESSING.getType()) {
-                    return Optional.of(TieredPressingRecipe.convertNormalPressing(recipe));
+                    TieredPressingRecipe tpr = TieredPressingRecipe.convertNormalPressing(recipe);
+                    currentPressingRecipe = tpr;
+                    return Optional.of(tpr);
                 } else {
                     TieredPressingRecipe tpr = (TieredPressingRecipe) recipe;
                     for(Ingredient i : recipe.getIngredients()) {
