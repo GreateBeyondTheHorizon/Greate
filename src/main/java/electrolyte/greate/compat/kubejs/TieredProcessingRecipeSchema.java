@@ -1,4 +1,3 @@
-/*
 package electrolyte.greate.compat.kubejs;
 
 import dev.latvian.mods.kubejs.create.ProcessingRecipeSchema;
@@ -29,4 +28,3 @@ public interface TieredProcessingRecipeSchema extends ProcessingRecipeSchema {
     RecipeSchema PROCESSING_WITH_TIME = new RecipeSchema(TieredProcessingRecipeJS.class, TieredProcessingRecipeJS::new, RESULTS, INGREDIENTS, PROCESSING_TIME_REQUIRED, HEAT_REQUIREMENT, RECIPE_TIER);
     RecipeSchema PROCESSING_UNWRAPPED = new RecipeSchema(TieredProcessingRecipeJS.class, TieredProcessingRecipeJS::new, RESULTS, INGREDIENTS_UNWRAPPED, PROCESSING_TIME, HEAT_REQUIREMENT, RECIPE_TIER);
 }
-*/

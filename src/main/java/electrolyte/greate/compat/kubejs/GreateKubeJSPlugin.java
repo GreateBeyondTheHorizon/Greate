@@ -1,4 +1,3 @@
-/*
 package electrolyte.greate.compat.kubejs;
 
 import dev.latvian.mods.kubejs.KubeJSPlugin;
@@ -26,4 +25,3 @@ public class GreateKubeJSPlugin extends KubeJSPlugin {
         }
     }
 }
-*/
