@@ -1,0 +1,55 @@
+name: Bug Report
+description: File a bug report
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: mc_version
+    attributes:
+      label: Minecraft Version
+      description: What version of minecraft are you using?
+      options:
+        - 1.19.2
+        - 1.20.1
+    validations:
+      required: true
+  - type: dropdown
+    id: moadloader
+    attributes:
+      label: Modloader
+      description: What modloader are you using?
+      options: 
+        - Forge
+        - Fabric
+    validations:
+      required: true
+  - type: input
+    id: modloader_version
+    attributes:
+      label: Modloader Version
+      description: What version of Forge/Fabric are you using?
+    validations:
+      required: true
+  - type: input
+    id: greate_version
+    attributes:
+      label: Greate Version
+      description: What version of Greate are you using?
+    validations:
+      required: true
+  - type: textarea
+    id: what_happened
+    attributes:
+      label: What happened?
+      description: How did this bug ouccur? (Include steps to reproduce, if relevant)
+      placeholder: Tell us what you see!
+      value: "A bug happened!"
+    validations:
+      required: true
+  - type: textarea
+    id: log
+    attributes:
+      label: Log/Crash Report
+      description: Please include a log file/crash report (if relevant)
+    validations:
+      required: false
