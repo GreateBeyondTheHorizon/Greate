@@ -7,8 +7,10 @@ import com.simibubi.create.foundation.gui.AllGuiTextures;
 import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.compat.jei.category.animations.TieredAnimatedMechanicalPress;
 import electrolyte.greate.content.kinetics.press.TieredPressingRecipe;
+import electrolyte.greate.content.processing.recipe.TieredProcessingOutput;
 import electrolyte.greate.registry.MechanicalPresses;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
+import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
@@ -34,10 +36,14 @@ public class TieredPressingCategory extends GreateRecipeCategory<TieredPressingR
         List<ProcessingOutput> results = recipe.getRollableResults();
         int i = 0;
         for(ProcessingOutput output : results) {
-            builder.addSlot(RecipeIngredientRole.OUTPUT, 131 + 19 * i, 50)
+            IRecipeSlotBuilder baseBuilder = builder.addSlot(RecipeIngredientRole.OUTPUT, 131 + 19 * i, 50)
                     .setBackground(getRenderedSlot(output), -1, -1)
-                    .addItemStack(output.getStack())
-                    .addTooltipCallback(addStochasticTooltip(output));
+                    .addItemStack(output.getStack());
+            if(output instanceof TieredProcessingOutput tieredProcessingOutput) {
+                baseBuilder.addTooltipCallback(addStochasticTooltipWithExtraPercent(tieredProcessingOutput, tieredProcessingOutput.getExtraTierChance()));
+            } else {
+                baseBuilder.addTooltipCallback(addStochasticTooltip(output));
+            }
             i++;
         }
 

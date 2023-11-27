@@ -1,6 +1,5 @@
 package electrolyte.greate.content.processing.recipe;
 
-
 import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
@@ -13,17 +12,12 @@ import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.fluids.FluidStack;
 import org.slf4j.Logger;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
@@ -39,22 +33,13 @@ public abstract class TieredProcessingRecipe<T extends Container> extends Proces
     protected TIER recipeTier;
     protected int circuitNumber;
 
-    private RecipeType<?> type;
-    private RecipeSerializer<?> serializer;
-    private IRecipeTypeInfo typeInfo;
-    private Supplier<ItemStack> forcedResult;
-
     public TieredProcessingRecipe(IRecipeTypeInfo typeInfo, TieredProcessingRecipeParams params) {
         super(typeInfo, params);
-        this.forcedResult = null;
-        this.typeInfo = typeInfo;
         this.processingDuration = params.processingDuration;
         this.fluidIngredients = params.fluidIngredients;
         this.fluidResults = params.fluidResults;
-        this.serializer = typeInfo.getSerializer();
         this.requiredHeat = params.requiredHeat;
         this.ingredients = params.ingredients;
-        this.type = typeInfo.getType();
         this.results = params.results;
         this.recipeTier = params.recipeTier;
         this.circuitNumber = params.circuitNumber;
@@ -117,28 +102,6 @@ public abstract class TieredProcessingRecipe<T extends Container> extends Proces
     }
 
     @Override
-    public void enforceNextResult(Supplier<ItemStack> stack) {
-        forcedResult = stack;
-    }
-
-    @Override
-    public List<ItemStack> rollResults() {
-        return rollResults(this.getRollableResults());
-    }
-
-    @Override
-    public List<ItemStack> rollResults(List<ProcessingOutput> rollableResults) {
-        List<ItemStack> results = new ArrayList<>();
-        for (int i = 0; i < rollableResults.size(); i++) {
-            ProcessingOutput output = rollableResults.get(i);
-            ItemStack stack = i == 0 && forcedResult != null ? forcedResult.get() : output.rollOutput();
-            if (!stack.isEmpty())
-                results.add(stack);
-        }
-        return results;
-    }
-
-    @Override
     public int getProcessingDuration() {
         return processingDuration;
     }
@@ -159,20 +122,5 @@ public abstract class TieredProcessingRecipe<T extends Container> extends Proces
     @Override
     public ResourceLocation getId() {
         return id;
-    }
-
-    @Override
-    public RecipeSerializer<?> getSerializer() {
-        return serializer;
-    }
-
-    @Override
-    public RecipeType<?> getType() {
-        return type;
-    }
-
-    @Override
-    public IRecipeTypeInfo getTypeInfo() {
-        return typeInfo;
     }
 }

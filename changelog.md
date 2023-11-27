@@ -1,11 +1,5 @@
-## Forge 0.0.7 
+-Re-add KubeJS support
 
--Add Tiered Mechanical Presses
+-Refactor how output bonus chances are handled in certain recipe types
 
--Swap to Create style config
-
--Add config option for max length of tiered belts
-
--Add config option to disable conversion tooltip on some Create items
-
--Code Refactoring
+-Fix circuit number not being respected in certain tiered recipes

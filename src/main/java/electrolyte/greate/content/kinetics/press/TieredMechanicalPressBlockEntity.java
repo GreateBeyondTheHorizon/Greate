@@ -71,7 +71,7 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
         behaviours.add(pressingBehaviour);
         targetCircuit = new ScrollValueBehaviour(Lang.builder(Greate.MOD_ID).translate("tooltip.circuit_number").component(),
                 this, new CircuitValueBoxTransform());
-        targetCircuit.between(0, 24);
+        targetCircuit.between(0, 32);
         targetCircuit.value = DEFAULT_CIRCUIT;
         behaviours.add(targetCircuit);
     }
@@ -244,7 +244,7 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
                             if(((Ingredient) c.getContent()).getItems()[0].is(GTItems.INTEGRATED_CIRCUIT.get())) {
                                 int circuit = IntCircuitBehaviour.getCircuitConfiguration(((Ingredient) c.getContent()).getItems()[0]);
                                 if(circuit == targetCircuit.getValue()) {
-                                    TieredPressingRecipe convertedRecipe = TieredPressingRecipe.convertGT((GTRecipe) recipe);
+                                    TieredPressingRecipe convertedRecipe = TieredPressingRecipe.convertGT((GTRecipe) recipe, this.tier);
                                     currentPressingRecipe = convertedRecipe;
                                     return Optional.of(convertedRecipe);
                                 }
@@ -257,18 +257,10 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
                     return Optional.of(tpr);
                 } else {
                     TieredPressingRecipe tpr = (TieredPressingRecipe) recipe;
-                    for(Ingredient i : recipe.getIngredients()) {
-                        if(tpr.getRecipeTier().compareTo(this.tier) <= 0) {
-                            if(i.getItems()[0].is(GTItems.INTEGRATED_CIRCUIT.get())) {
-                                int circuit = IntCircuitBehaviour.getCircuitConfiguration(i.getItems()[0]);
-                                if(circuit == targetCircuit.getValue()) {
-                                    currentPressingRecipe = tpr;
-                                    return Optional.of(tpr);
-                                }
-                            } else {
-                                currentPressingRecipe = tpr;
-                                return Optional.of(tpr);
-                            }
+                    if(tpr.getRecipeTier().compareTo(this.tier) <= 0) {
+                        if(tpr.getCircuitNumber() == this.targetCircuit.getValue()) {
+                            currentPressingRecipe = tpr;
+                            return Optional.of(tpr);
                         }
                     }
                 }

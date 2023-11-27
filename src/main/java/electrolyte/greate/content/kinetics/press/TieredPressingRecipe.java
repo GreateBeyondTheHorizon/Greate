@@ -75,7 +75,7 @@ public class TieredPressingRecipe extends TieredProcessingRecipe<RecipeWrapper> 
         return new TieredProcessingRecipeBuilder<>(TieredPressingRecipe::new, recipe.getId()).withItemIngredients(recipe.getIngredients()).output(recipe.getResultItem(Minecraft.getInstance().level.registryAccess())).withItemOutputs(((ProcessingRecipe<?>) recipe).getRollableResults()).recipeTier(TIER.ULTRA_LOW).noCircuit().build();
     }
 
-    public static TieredPressingRecipe convertGT(GTRecipe recipe) {
+    public static TieredPressingRecipe convertGT(GTRecipe recipe, TIER machineTier) {
         List<Content> inputContents = recipe.getInputContents(ItemRecipeCapability.CAP);
         int circuitNumber = -1;
         for(Content c : inputContents) {
@@ -85,6 +85,7 @@ public class TieredPressingRecipe extends TieredProcessingRecipe<RecipeWrapper> 
                 break;
             }
         }
-        return new TieredProcessingRecipeBuilder<>(TieredPressingRecipe::new, recipe.getId()).withItemIngredientsGT(inputContents).output(recipe.getResultItem(Minecraft.getInstance().level.registryAccess())).withItemOutputsGT(recipe.getOutputContents(ItemRecipeCapability.CAP), 0).recipeTier(TIER.convertGTEUToTier(recipe.getTickInputContents(EURecipeCapability.CAP))).recipeCircuit(circuitNumber).build();
+        TIER recipeTier = TIER.convertGTEUToTier(recipe.getTickInputContents(EURecipeCapability.CAP));
+        return new TieredProcessingRecipeBuilder<>(TieredPressingRecipe::new, recipe.getId()).withItemIngredientsGT(inputContents).output(recipe.getResultItem(Minecraft.getInstance().level.registryAccess())).withItemOutputsGT(recipe.getOutputContents(ItemRecipeCapability.CAP), recipeTier, machineTier).recipeTier(recipeTier).recipeCircuit(circuitNumber).build();
     }
 }

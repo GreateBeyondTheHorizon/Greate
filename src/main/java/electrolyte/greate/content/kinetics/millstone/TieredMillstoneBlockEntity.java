@@ -137,7 +137,7 @@ public class TieredMillstoneBlockEntity extends MillstoneBlockEntity implements 
             Optional<GTRecipe> test = level.getRecipeManager().getAllRecipesFor(GTRecipeTypes.MACERATOR_RECIPES).stream().filter(r ->
                     ((Ingredient) r.getInputContents(ItemRecipeCapability.CAP).get(0).getContent()).test(wrapper.getItem(0))).findFirst();
             if(test.isPresent()) {
-                TieredProcessingRecipe<RecipeWrapper> convertedRecipe = TieredMillingRecipe.convertGT(test.get());
+                TieredProcessingRecipe<RecipeWrapper> convertedRecipe = TieredMillingRecipe.convertGT(test.get(), tier);
                 if(convertedRecipe.getRecipeTier().compareTo(tier) <= 0) {
                     return Optional.of(convertedRecipe);
                 }

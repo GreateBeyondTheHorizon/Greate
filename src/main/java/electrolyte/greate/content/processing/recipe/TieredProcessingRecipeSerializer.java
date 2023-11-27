@@ -8,6 +8,7 @@ import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.foundation.fluid.FluidHelper;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
 import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeFactory;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
@@ -23,9 +24,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class TieredProcessingRecipeSerializer<T extends TieredProcessingRecipe<?>> implements RecipeSerializer<T> {
 
-    private final TieredProcessingRecipeBuilder.TieredProcessingRecipeFactory<T> factory;
+    private final TieredProcessingRecipeFactory<T> factory;
 
-    public TieredProcessingRecipeSerializer(TieredProcessingRecipeBuilder.TieredProcessingRecipeFactory<T> factory) {
+    public TieredProcessingRecipeSerializer(TieredProcessingRecipeFactory<T> factory) {
         this.factory = factory;
     }
 
@@ -73,7 +74,7 @@ public class TieredProcessingRecipeSerializer<T extends TieredProcessingRecipe<?
             if (GsonHelper.isValidNode(jsonObject, "fluid"))
                 fluidResults.add(FluidHelper.deserializeFluidStack(jsonObject));
             else
-                results.add(ProcessingOutput.deserialize(je));
+                results.add(TieredProcessingOutput.deserialize(je));
         }
 
         builder.withItemIngredients(ingredients)
@@ -87,6 +88,8 @@ public class TieredProcessingRecipeSerializer<T extends TieredProcessingRecipe<?
             builder.requiresHeat(HeatCondition.deserialize(GsonHelper.getAsString(json, "heatRequirement")));
         if (GsonHelper.isValidNode(json, "recipeTier"))
             builder.recipeTier(TIER.deserialize(GsonHelper.getAsString(json, "recipeTier")));
+        if (GsonHelper.isValidNode(json, "circuitNumber"))
+            builder.recipeCircuit(GsonHelper.getAsInt(json, "circuitNumber"));
         T recipe = builder.build();
         recipe.readAdditional(json);
         return recipe;
@@ -132,7 +135,7 @@ public class TieredProcessingRecipeSerializer<T extends TieredProcessingRecipe<?
 
         size = buffer.readVarInt();
         for (int i = 0; i < size; i++)
-            results.add(ProcessingOutput.read(buffer));
+            results.add(TieredProcessingOutput.read(buffer));
 
         size = buffer.readVarInt();
         for (int i = 0; i < size; i++)

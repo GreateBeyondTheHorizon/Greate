@@ -7,8 +7,10 @@ import com.simibubi.create.foundation.ponder.ui.LayoutHelper;
 import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.compat.jei.category.animations.TieredAnimatedCrushingWheels;
 import electrolyte.greate.content.kinetics.crusher.TieredAbstractCrushingRecipe;
+import electrolyte.greate.content.processing.recipe.TieredProcessingOutput;
 import electrolyte.greate.registry.CrushingWheels;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
+import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
@@ -34,11 +36,18 @@ public class TieredCrushingCategory extends GreateRecipeCategory<TieredAbstractC
         int xOffset = getBackground().getWidth() / 2;
         int yOffset = 86;
 
-        layoutOutput(recipe).forEach(entry ->
-                builder.addSlot(RecipeIngredientRole.OUTPUT, (xOffset) + entry.posX() + 1, yOffset + entry.posY() + 1)
-                .setBackground(getRenderedSlot(entry.output()), -1, -1)
-                .addItemStack(entry.output().getStack())
-                .addTooltipCallback(addStochasticTooltipWithExtraPercent(entry.output(), 0.085F)));
+        layoutOutput(recipe).forEach(entry -> {
+            IRecipeSlotBuilder baseBuilder = builder
+                    .addSlot(RecipeIngredientRole.OUTPUT, (xOffset) + entry.posX() + 1, yOffset + entry.posY() + 1)
+                    .setBackground(getRenderedSlot(entry.output()), - 1, - 1)
+                    .addItemStack(entry.output().getStack());
+
+            if(entry.output instanceof TieredProcessingOutput tieredProcessingOutput) {
+                baseBuilder.addTooltipCallback(addStochasticTooltipWithExtraPercent(tieredProcessingOutput, tieredProcessingOutput.getExtraTierChance()));
+            } else {
+                baseBuilder.addTooltipCallback(addStochasticTooltip(entry.output));
+            }
+        });
     }
 
     private List<LayoutEntry> layoutOutput(ProcessingRecipe<?> recipe) {

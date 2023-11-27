@@ -33,15 +33,16 @@ public class TieredCrushingRecipe extends TieredAbstractCrushingRecipe {
         return ingredients.get(0).test(pContainer.getItem(0));
     }
 
-    public static TieredCrushingRecipe convertNormalCrushing(Recipe<?> recipe, float extraPercent) {
-        return new TieredProcessingRecipeBuilder<>(TieredCrushingRecipe::new, recipe.getId()).duration(((ProcessingRecipe<?>) recipe).getProcessingDuration()).withItemIngredients(recipe.getIngredients()).output(recipe.getResultItem(Minecraft.getInstance().getConnection().registryAccess())).withItemOutputs(((ProcessingRecipe<?>) recipe).getRollableResults(), extraPercent).recipeTier(TIER.ULTRA_LOW).build();
+    public static TieredCrushingRecipe convertNormalCrushing(Recipe<?> recipe, TIER machineTier) {
+        return new TieredProcessingRecipeBuilder<>(TieredCrushingRecipe::new, recipe.getId()).duration(((ProcessingRecipe<?>) recipe).getProcessingDuration()).withItemIngredients(recipe.getIngredients()).output(recipe.getResultItem(Minecraft.getInstance().getConnection().registryAccess())).withItemOutputs(((ProcessingRecipe<?>) recipe).getRollableResults(), TIER.ULTRA_LOW, machineTier).recipeTier(TIER.ULTRA_LOW).build();
     }
 
-    public static TieredCrushingRecipe convertTieredCrushing(Recipe<?> recipe, float extraPercent) {
-        return new TieredProcessingRecipeBuilder<>(TieredCrushingRecipe::new, recipe.getId()).duration(((ProcessingRecipe<?>) recipe).getProcessingDuration()).withItemIngredients(recipe.getIngredients()).output(recipe.getResultItem(Minecraft.getInstance().getConnection().registryAccess())).withItemOutputs(((ProcessingRecipe<?>) recipe).getRollableResults(), extraPercent).recipeTier(((TieredProcessingRecipe<?>) recipe).getRecipeTier()).build();
+    public static TieredCrushingRecipe convertTieredCrushing(Recipe<?> recipe, TIER machineTier) {
+        return new TieredProcessingRecipeBuilder<>(TieredCrushingRecipe::new, recipe.getId()).duration(((ProcessingRecipe<?>) recipe).getProcessingDuration()).withItemIngredients(recipe.getIngredients()).output(recipe.getResultItem(Minecraft.getInstance().getConnection().registryAccess())).withItemOutputs(((ProcessingRecipe<?>) recipe).getRollableResults(), ((TieredProcessingRecipe<?>) recipe).getRecipeTier(), machineTier).recipeTier(((TieredProcessingRecipe<?>) recipe).getRecipeTier()).build();
     }
 
-    public static TieredCrushingRecipe convertGT(GTRecipe recipe, float extraPercent) {
-        return new TieredProcessingRecipeBuilder<>(TieredCrushingRecipe::new, recipe.getId()).duration(recipe.duration).withItemIngredientsGT(recipe.getInputContents(ItemRecipeCapability.CAP)).output(recipe.getResultItem(Minecraft.getInstance().getConnection().registryAccess())).withItemOutputsGT(recipe.getOutputContents(ItemRecipeCapability.CAP), extraPercent).recipeTier(TIER.convertGTEUToTier(recipe.getTickInputContents(EURecipeCapability.CAP))).build();
+    public static TieredCrushingRecipe convertGT(GTRecipe recipe, TIER machineTier) {
+        TIER recipeTier = TIER.convertGTEUToTier(recipe.getTickInputContents(EURecipeCapability.CAP));
+        return new TieredProcessingRecipeBuilder<>(TieredCrushingRecipe::new, recipe.getId()).duration(recipe.duration).withItemIngredientsGT(recipe.getInputContents(ItemRecipeCapability.CAP)).output(recipe.getResultItem(Minecraft.getInstance().getConnection().registryAccess())).withItemOutputsGT(recipe.getOutputContents(ItemRecipeCapability.CAP), recipeTier, machineTier).recipeTier(recipeTier).build();
     }
 }

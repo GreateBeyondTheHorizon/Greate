@@ -186,7 +186,7 @@
   "greate.recipe.crushing": "Crushing",
   "greate.recipe.milling": "Milling",
   "greate.recipe.pressing": "Pressing",
-  "greate.recipe.processing.extra_chance": "% per tier",
+  "greate.recipe.processing.extra_chance": "% extra chance per tier",
   "greate.tooltip.capacity": "Kinetic Capacity: ",
   "greate.tooltip.circuit_number": "Circuit Number",
   "greate.tooltip.overcapacity": "Overcapacity",

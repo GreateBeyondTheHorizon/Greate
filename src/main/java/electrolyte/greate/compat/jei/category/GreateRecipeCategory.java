@@ -20,6 +20,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraftforge.fluids.FluidStack;
@@ -101,7 +102,7 @@ public abstract class GreateRecipeCategory<T extends Recipe<?>> implements IReci
         return (view, tooltip) -> {
             float chance = output.getChance();
             if(chance != 1) {
-                tooltip.add(1, Lang.translateDirect("recipe.processing.chance", chance < 0.01 ? "<1" : (int) (chance * 100)).withStyle(ChatFormatting.GOLD));
+                tooltip.add(1, Lang.translateDirect("recipe.processing.chance", chance < 0.01 ? "<1" : chance * 100).withStyle(ChatFormatting.GOLD));
             }
         };
     }
@@ -110,7 +111,12 @@ public abstract class GreateRecipeCategory<T extends Recipe<?>> implements IReci
         return (view, tooltip) -> {
             float chance = output.getChance();
             if (chance != 1) {
-                tooltip.add(1, Lang.translateDirect("recipe.processing.chance", chance < 0.01 ? "<1" : (int) ((chance) * 100)).append(" + " + (extraPercent * 100) + Lang.builder(Greate.MOD_ID).translate("recipe.processing.extra_chance").component().getString()).withStyle(ChatFormatting.GOLD));
+                MutableComponent component = Lang.translateDirect("recipe.processing.chance", chance < 0.01 ? "<1" : chance * 100);
+                tooltip.add(1, component.withStyle(ChatFormatting.GOLD));
+                if(extraPercent != 0) {
+                    String s = String.format("%2.2f", extraPercent * 100);
+                    component.append(" + " + s + Lang.builder(Greate.MOD_ID).translate("recipe.processing.extra_chance").component().getString());
+                }
             }
         };
     }

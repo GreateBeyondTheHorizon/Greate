@@ -41,11 +41,11 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
 
 
     protected TieredProcessingRecipeFactory<T> factory;
-    protected TieredProcessingRecipeBuilder.TieredProcessingRecipeParams params;
+    protected TieredProcessingRecipeParams params;
     protected List<ICondition> recipeConditions;
 
     public TieredProcessingRecipeBuilder(TieredProcessingRecipeFactory<T> factory, ResourceLocation recipeId) {
-        params = new TieredProcessingRecipeBuilder.TieredProcessingRecipeParams(recipeId);
+        params = new TieredProcessingRecipeParams(recipeId);
         recipeConditions = new ArrayList<>();
         this.factory = factory;
     }
@@ -89,31 +89,32 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
         return withItemOutputs(list);
     }
 
-    public TieredProcessingRecipeBuilder<T> withItemOutputs(List<ProcessingOutput> outputs, float extraTierPercent) {
+    public TieredProcessingRecipeBuilder<T> withItemOutputs(List<ProcessingOutput> outputs, TIER recipeTier, TIER machineTier) {
         NonNullList<ProcessingOutput> list = NonNullList.create();
         for(ProcessingOutput output : outputs) {
-            if(output.getChance() == 1) {
-                list.add(new ProcessingOutput(output.getStack(), output.getChance()));
+            if(output instanceof TieredProcessingOutput tieredOutput) {
+                list.add(new TieredProcessingOutput(output.getStack(), output.getChance(), getExtraPercent(tieredOutput.getExtraTierChance(), recipeTier, machineTier, false)));
             } else {
-                list.add(new ProcessingOutput(output.getStack(), output.getChance() + extraTierPercent));
+                list.add(new TieredProcessingOutput(output.getStack(), output.getChance(), 0));
             }
         }
         return withItemOutputs(list);
     }
 
-    public TieredProcessingRecipeBuilder<T> withItemOutputsGT(List<Content> list, float extraTierPercent) {
+    public TieredProcessingRecipeBuilder<T> withItemOutputsGT(List<Content> list, TIER recipeTier, TIER machineTier) {
         NonNullList<ProcessingOutput> nonNullList = NonNullList.create();
         for(Content c : list) {
             ItemStack[] items = ((SizedIngredientImpl) c.content).getItems();
             for (ItemStack item : items) {
-                if(c.chance == 1) {
-                    nonNullList.add(new ProcessingOutput(item, c.chance));
-                } else {
-                    nonNullList.add(new ProcessingOutput(item, c.chance + extraTierPercent));
-                }
+                nonNullList.add(new TieredProcessingOutput(item, c.chance, getExtraPercent(c.tierChanceBoost, recipeTier, machineTier, true)));
             }
         }
         return withItemOutputs(nonNullList);
+    }
+
+    private float getExtraPercent(float baseExtraPercent, TIER recipeTier, TIER machineTier, boolean addJEIOffset) {
+        int jeiOffset = addJEIOffset ? 1 : 0;
+        return baseExtraPercent * jeiOffset + (TIER.indexOfTier(machineTier) - TIER.indexOfTier(recipeTier));
     }
 
     public TieredProcessingRecipeBuilder<T> withFluidIngredients(FluidIngredient... ingredients) {
@@ -288,7 +289,6 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
         protected HeatCondition requiredHeat;
         protected TIER recipeTier;
         protected int circuitNumber;
-
         public boolean keepHeldItem;
 
         protected TieredProcessingRecipeParams(ResourceLocation id) {

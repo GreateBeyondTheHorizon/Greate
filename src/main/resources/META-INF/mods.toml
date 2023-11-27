@@ -16,8 +16,8 @@ description="Create Gregified"
 
 [[dependencies.greate]]
     modId="kubejs_create"
-    mandatory=false
-    versionRange="[1902.2.4-build.29,)"
+    mandatory=true
+    versionRange="[2001.2.5,)"
     ordering="NONE"
     side="BOTH"
 

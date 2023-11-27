@@ -1,6 +1,0 @@
-{
-  "parent": "create:block/belt/start_bottom",
-  "textures": {
-    "1": "greate:block/belt_overlay/empty"
-  }
-}

@@ -5,8 +5,10 @@ import com.simibubi.create.foundation.gui.AllGuiTextures;
 import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.compat.jei.category.animations.TieredAnimatedMillstone;
 import electrolyte.greate.content.kinetics.crusher.TieredAbstractCrushingRecipe;
+import electrolyte.greate.content.processing.recipe.TieredProcessingOutput;
 import electrolyte.greate.registry.Millstones;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
+import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
@@ -34,10 +36,14 @@ public class TieredMillingCategory extends GreateRecipeCategory<TieredAbstractCr
         for(ProcessingOutput output : results) {
             int xOffset = i % 2 == 0 ? 0 : 19;
             int yOffset = (i / 2)  * -19;
-            builder.addSlot(RecipeIngredientRole.OUTPUT, single ? 139 : 133 + xOffset, 27 + yOffset)
+            IRecipeSlotBuilder baseBuilder = builder.addSlot(RecipeIngredientRole.OUTPUT, single ? 139 : 133 + xOffset, 27 + yOffset)
                     .setBackground(getRenderedSlot(output), -1, -1)
-                    .addItemStack(output.getStack())
-                    .addTooltipCallback(addStochasticTooltip(output));
+                    .addItemStack(output.getStack());
+            if(output instanceof TieredProcessingOutput tieredProcessingOutput) {
+                baseBuilder.addTooltipCallback(addStochasticTooltipWithExtraPercent(tieredProcessingOutput, tieredProcessingOutput.getExtraTierChance()));
+            } else {
+                baseBuilder.addTooltipCallback(addStochasticTooltip(output));
+            }
             i++;
         }
     }
