@@ -37,11 +37,11 @@ public class GreateEnums {
         }
 
         public static TIER deserialize(String name) {
-            for (TIER tier : values()) {
-                if (tier.name().equalsIgnoreCase(name))
+            for(TIER tier : values()) {
+                if (tier.name().equalsIgnoreCase(name) || tier.getName().equalsIgnoreCase(name)) {
                     return tier;
+                }
             }
-            Greate.LOGGER.warn("Tried to deserialize invalid recipe tier condition: \"" + name + "\"");
             return ULTRA_LOW;
         }
 

@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/mechanical_mixer/item",
+  "textures": {
+    "1_2": "greate:block/neutronium/cogwheel",
+    "4": "greate:block/mechanical_mixer_base_side",
+    "6": "greate:block/neutronium/mixer_head",
+    "particle": "greate:block/mechanical_mixer_base_side"
+  }
+}

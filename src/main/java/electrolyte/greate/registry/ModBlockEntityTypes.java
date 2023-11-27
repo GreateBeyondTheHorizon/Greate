@@ -17,6 +17,9 @@ import electrolyte.greate.content.kinetics.gearbox.TieredGearboxRenderer;
 import electrolyte.greate.content.kinetics.millstone.TieredMillstoneBlockEntity;
 import electrolyte.greate.content.kinetics.millstone.TieredMillstoneCogInstance;
 import electrolyte.greate.content.kinetics.millstone.TieredMillstoneRenderer;
+import electrolyte.greate.content.kinetics.mixer.TieredMechanicalMixerBlockEntity;
+import electrolyte.greate.content.kinetics.mixer.TieredMechanicalMixerInstance;
+import electrolyte.greate.content.kinetics.mixer.TieredMechanicalMixerRenderer;
 import electrolyte.greate.content.kinetics.press.TieredMechanicalPressBlockEntity;
 import electrolyte.greate.content.kinetics.press.TieredMechanicalPressInstance;
 import electrolyte.greate.content.kinetics.press.TieredMechanicalPressRenderer;
@@ -136,6 +139,15 @@ public class ModBlockEntityTypes {
                     MechanicalPresses.TITANIUM_MECHANICAL_PRESS, MechanicalPresses.TUNGSTENSTEEL_MECHANICAL_PRESS, MechanicalPresses.PALLADIUM_MECHANICAL_PRESS, MechanicalPresses.NAQUADAH_MECHANICAL_PRESS,
                     MechanicalPresses.DARMSTADTIUM_MECHANICAL_PRESS, MechanicalPresses.NEUTRONIUM_MECHANICAL_PRESS)
             .renderer(() -> TieredMechanicalPressRenderer::new)
+            .register();
+
+    public static final BlockEntityEntry<TieredMechanicalMixerBlockEntity> TIERED_MECHANICAL_MIXER = REGISTRATE
+            .blockEntity("tiered_mechanical_mixer", TieredMechanicalMixerBlockEntity::new)
+            .instance(() -> TieredMechanicalMixerInstance::new)
+            .validBlocks(MechanicalMixers.ANDESITE_MECHANICAL_MIXER, MechanicalMixers.STEEL_MECHANICAL_MIXER, MechanicalMixers.ALUMINIUM_MECHANICAL_MIXER, MechanicalMixers.STAINLESS_STEEL_MECHANICAL_MIXER,
+                    MechanicalMixers.TITANIUM_MECHANICAL_MIXER, MechanicalMixers.TUNGSTENSTEEL_MECHANICAL_MIXER, MechanicalMixers.PALLADIUM_MECHANICAL_MIXER, MechanicalMixers.NAQUADAH_MECHANICAL_MIXER,
+                    MechanicalMixers.DARMSTADTIUM_MECHANICAL_MIXER, MechanicalMixers.NEUTRONIUM_MECHANICAL_MIXER)
+            .renderer(() -> TieredMechanicalMixerRenderer::new)
             .register();
 
     public static void register() {}

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "gtceu:ulv_machine_casing"
+    },
+    "C": {
+      "item": "greate:andesite_cogwheel"
+    },
+    "I": {
+      "tag": "forge:circuits/ulv"
+    },
+    "W": {
+      "item": "create:whisk"
+    }
+  },
+  "pattern": [
+    " C ",
+    "IAI",
+    " W "
+  ],
+  "result": {
+    "item": "greate:andesite_mechanical_mixer"
+  },
+  "show_notification": true
+}

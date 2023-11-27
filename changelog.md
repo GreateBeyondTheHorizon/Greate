@@ -1,5 +1,11 @@
--Re-add KubeJS support
+-Increase Basin fluid tank size to 16 buckets
 
--Refactor how output bonus chances are handled in certain recipe types
+-Allow tier name to be used in recipeTier field (`ultra_low` or `uls` can now be used to specify an ultra low tier recipe for example)
 
--Fix circuit number not being respected in certain tiered recipes
+-Add Tiered Mechanical Mixers
+
+-Add Tiered Brewing Recipes to Tiered Mixers
+
+-Add Tiered Compacting Recipes to Tiered Presses
+
+-Modify recipe for Tiered Mechanical Presses

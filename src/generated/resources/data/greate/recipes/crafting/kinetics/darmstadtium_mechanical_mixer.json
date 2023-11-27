@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "gtceu:uv_machine_hull"
+    },
+    "C": {
+      "tag": "greate:cogwheels/darmstadtium"
+    },
+    "I": {
+      "tag": "forge:circuits/uv"
+    },
+    "W": {
+      "item": "greate:darmstadtium_whisk"
+    }
+  },
+  "pattern": [
+    " C ",
+    "IAI",
+    " W "
+  ],
+  "result": {
+    "item": "greate:darmstadtium_mechanical_mixer"
+  },
+  "show_notification": true
+}

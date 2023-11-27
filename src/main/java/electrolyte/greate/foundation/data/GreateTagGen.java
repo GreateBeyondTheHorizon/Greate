@@ -23,6 +23,8 @@ public class GreateTagGen extends ItemTagsProvider {
                 .addOptionalTag(new ResourceLocation("forge", "plates/tungsten_steel"));
         getOrCreateRawBuilder(GreateTags.forgeItemTag("nuggets/tungstensteel"))
                 .addOptionalTag(new ResourceLocation("forge", "nuggets/tungsten_steel"));
+        getOrCreateRawBuilder(GreateTags.forgeItemTag("storage_blocks/tungstensteel"))
+                .addOptionalTag(new ResourceLocation("forge", "storage_blocks/tungsten_steel"));
     }
 
     public static class GreateBlockTagGen extends BlockTagsProvider {

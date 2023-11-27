@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "gtceu:lv_machine_hull"
+    },
+    "C": {
+      "tag": "greate:cogwheels/steel"
+    },
+    "I": {
+      "tag": "forge:circuits/lv"
+    },
+    "W": {
+      "item": "greate:steel_whisk"
+    }
+  },
+  "pattern": [
+    " C ",
+    "IAI",
+    " W "
+  ],
+  "result": {
+    "item": "greate:steel_mechanical_mixer"
+  },
+  "show_notification": true
+}

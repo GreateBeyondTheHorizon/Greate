@@ -4,6 +4,7 @@ import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.gregtechceu.gtceu.common.data.GTBlocks;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.data.recipe.CreateRecipeProvider.GeneratedRecipe;
@@ -54,7 +55,8 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
             LARGE_COGWHEEL_CYCLE = conversionCycle(ImmutableList.of(AllBlocks.LARGE_COGWHEEL, Cogwheels.LARGE_ANDESITE_COGWHEEL)),
             CRUSHING_WHEEL_CYCLE = conversionCycle(ImmutableList.of(AllBlocks.CRUSHING_WHEEL, CrushingWheels.ANDESITE_CRUSHING_WHEEL)),
             BELT_CYCLE = conversionCycle(ImmutableList.of(AllItems.BELT_CONNECTOR, Belts.RUBBER_BELT_CONNECTOR)),
-            MECHANICAL_PRESS_CYCLE = conversionCycle(ImmutableList.of(AllBlocks.MECHANICAL_PRESS, MechanicalPresses.ANDESITE_MECHANICAL_PRESS));
+            MECHANICAL_PRESS_CYCLE = conversionCycle(ImmutableList.of(AllBlocks.MECHANICAL_PRESS, MechanicalPresses.ANDESITE_MECHANICAL_PRESS)),
+            MECHANICAL_MIXER_CYCLE = conversionCycle(ImmutableList.of(AllBlocks.MECHANICAL_MIXER, MechanicalMixers.ANDESITE_MECHANICAL_MIXER));
 
     private Marker MATERIALS = enterFolder("materials");
 
@@ -184,7 +186,46 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
             PALLADIUM_MECHANICAL_PRESS = createMaterialMechanicalPressRecipe(MechanicalPresses.PALLADIUM_MECHANICAL_PRESS, "luv"),
             NAQUADAH_MECHANICAL_PRESS = createMaterialMechanicalPressRecipe(MechanicalPresses.NAQUADAH_MECHANICAL_PRESS, "zpm"),
             DARMSTADTIUM_MECHANICAL_PRESS = createMaterialMechanicalPressRecipe(MechanicalPresses.DARMSTADTIUM_MECHANICAL_PRESS, "uv"),
-            NEUTRONIUM_MECHANICAL_PRESS = createMaterialMechanicalPressRecipe(MechanicalPresses.NEUTRONIUM_MECHANICAL_PRESS, "uhv");
+            NEUTRONIUM_MECHANICAL_PRESS = createMaterialMechanicalPressRecipe(MechanicalPresses.NEUTRONIUM_MECHANICAL_PRESS, "uhv"),
+
+
+            ANDESITE_WHISK = create(AllItems.WHISK).unlockedBy(AllItems.ANDESITE_ALLOY::asItem)
+                    .viaShaped(b -> b.define('F', GreateTags.forgeItemTag("tools/files"))
+                            .define('S', GreateTags.forgeItemTag("tools/screwdrivers"))
+                            .define('A', AllItems.ANDESITE_ALLOY)
+                            .define('P', GreateTags.forgeItemTag("plates/iron"))
+                            .pattern("FAS")
+                            .pattern("PAP")
+                            .pattern("PPP")),
+            STEEL_WHISK = createMaterialWhiskRecipe(ModItems.STEEL_WHISK),
+            ALUMINIUM_WHISK = createMaterialWhiskRecipe(ModItems.ALUMINIUM_WHISK),
+            STAINLESS_STEEL_WHISK = createMaterialWhiskRecipe(ModItems.STAINLESS_STEEL_WHISK),
+            TITANIUM_WHISK = createMaterialWhiskRecipe(ModItems.TITANIUM_WHISK),
+            TUNGSTENSTEEL_WHISK = createMaterialWhiskRecipe(ModItems.TUNGSTENSTEEL_WHISK),
+            PALLADIUM_WHISK = createMaterialWhiskRecipe(ModItems.PALLADIUM_WHISK),
+            NAQUADAH_WHISK = createMaterialWhiskRecipe(ModItems.NAQUADAH_WHISK),
+            DARMSTADTIUM_WHISK = createMaterialWhiskRecipe(ModItems.DARMSTADTIUM_WHISK),
+            NEUTRONIUM_WHISK = createMaterialWhiskRecipe(ModItems.NEUTRONIUM_WHISK),
+
+            ANDESITE_MIXER = create(MechanicalMixers.ANDESITE_MECHANICAL_MIXER).unlockedBy(GTBlocks.MACHINE_CASING_ULV::asItem)
+                    .viaShaped(b -> b.define('C', Cogwheels.ANDESITE_COGWHEEL)
+                            .define('I', GreateTags.forgeItemTag("circuits/ulv"))
+                            .define('A', GTBlocks.MACHINE_CASING_ULV)
+                            .define('W', AllItems.WHISK)
+                            .pattern(" C ")
+                            .pattern("IAI")
+                            .pattern(" W ")),
+
+            STEEL_MECHANICAL_MIXER = createMaterialMechanicalMixerRecipe(MechanicalMixers.STEEL_MECHANICAL_MIXER, "lv"),
+            ALUMINIUM_MECHANICAL_MIXER = createMaterialMechanicalMixerRecipe(MechanicalMixers.ALUMINIUM_MECHANICAL_MIXER, "mv"),
+            STAINLESS_STEEL_MECHANICAL_MIXER = createMaterialMechanicalMixerRecipe(MechanicalMixers.STAINLESS_STEEL_MECHANICAL_MIXER, "hv"),
+            TITANIUM_MECHANICAL_MIXER = createMaterialMechanicalMixerRecipe(MechanicalMixers.TITANIUM_MECHANICAL_MIXER, "ev"),
+            TUNGSTENSTEEL_MECHANICAL_MIXER = createMaterialMechanicalMixerRecipe(MechanicalMixers.TUNGSTENSTEEL_MECHANICAL_MIXER, "iv"),
+            PALLADIUM_MECHANICAL_MIXER = createMaterialMechanicalMixerRecipe(MechanicalMixers.PALLADIUM_MECHANICAL_MIXER, "luv"),
+            NAQUADAH_MECHANICAL_MIXER = createMaterialMechanicalMixerRecipe(MechanicalMixers.NAQUADAH_MECHANICAL_MIXER, "zpm"),
+            DARMSTADTIUM_MECHANICAL_MIXER = createMaterialMechanicalMixerRecipe(MechanicalMixers.DARMSTADTIUM_MECHANICAL_MIXER, "uv"),
+            NEUTRONIUM_MECHANICAL_MIXER = createMaterialMechanicalMixerRecipe(MechanicalMixers.NEUTRONIUM_MECHANICAL_MIXER, "uhv");
+
     private GeneratedRecipe createMaterialAlloyRecipe(ItemProviderEntry<? extends ItemLike> alloy) {
         String material = alloy.getId().getPath().substring(0, alloy.getId().getPath().length() - 6);
         return create(alloy).unlockedByTag(GreateTags.forgeItemTag("ingots/" + material))
@@ -272,10 +313,34 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
                 .viaShaped(b -> b.define('M', ForgeRegistries.BLOCKS.getValue(new ResourceLocation("gtceu", tier + "_machine_hull")))
                         .define('C', GreateTags.forgeItemTag("circuits/" + tier))
                         .define('S', GreateTags.greateItemTag("shafts/" + material))
-                        .define('B', Blocks.IRON_BLOCK)
+                        .define('B', GreateTags.forgeItemTag("storage_blocks/" + material))
                         .pattern(" S ")
                         .pattern("CMC")
                         .pattern(" B "));
+    }
+
+    private GeneratedRecipe createMaterialWhiskRecipe(ItemProviderEntry<? extends ItemLike> whisk) {
+        String material = whisk.getId().getPath().substring(0, whisk.getId().getPath().length() - 6);
+        return create(whisk).unlockedBy(ForgeRegistries.ITEMS.getValue(new ResourceLocation(Greate.MOD_ID, material + "_alloy"))::asItem)
+                .viaShaped(b -> b.define('F', GreateTags.forgeItemTag("tools/files"))
+                        .define('S', GreateTags.forgeItemTag("tools/screwdrivers"))
+                        .define('A', ForgeRegistries.ITEMS.getValue(new ResourceLocation(Greate.MOD_ID, material + "_alloy")))
+                        .define('P', GreateTags.forgeItemTag("plates/" + material))
+                        .pattern("FAS")
+                        .pattern("PAP")
+                        .pattern("PPP"));
+    }
+
+    private GeneratedRecipe createMaterialMechanicalMixerRecipe(ItemProviderEntry<? extends ItemLike> mixer, String tier) {
+        String material = mixer.getId().getPath().substring(0, mixer.getId().getPath().length() - 17);
+        return create(mixer).unlockedBy(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("gtceu", tier + "_machine_hull"))::asItem)
+                .viaShaped(b -> b.define('C', GreateTags.greateItemTag("cogwheels/" + material))
+                        .define('I', GreateTags.forgeItemTag("circuits/" + tier))
+                        .define('A', ForgeRegistries.BLOCKS.getValue(new ResourceLocation("gtceu", tier + "_machine_hull"))::asItem)
+                        .define('W', ForgeRegistries.ITEMS.getValue(new ResourceLocation(Greate.MOD_ID, material + "_whisk")))
+                        .pattern(" C ")
+                        .pattern("IAI")
+                        .pattern(" W "));
     }
 
     String currentFolder = "";

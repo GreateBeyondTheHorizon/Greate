@@ -7,7 +7,7 @@ plugins {
     id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
 }
 
-version = '0.0.8'
+version = '0.0.9'
 group = 'electrolyte.greate'
 archivesBaseName = 'greate'
 
@@ -131,6 +131,11 @@ repositories {
             includeGroup "curse.maven"
         }
     }
+    maven { url = 'https://maven.firstdarkdev.xyz/snapshots'
+        content {
+            includeGroup 'com.lowdragmc.ldlib'
+        }
+    }
     maven { url = 'https://jitpack.io' } //mixinextras
 }
 
@@ -151,7 +156,7 @@ dependencies {
     implementation fg.deobf("dev.latvian.mods:rhino-forge:${rhino_version}")
     implementation fg.deobf("dev.latvian.mods:kubejs-forge:${kubejs_version}")
     implementation fg.deobf("dev.latvian.mods:kubejs-create-forge:${kubejs_create_version}")
-    implementation fg.deobf("curse.maven:ldlib-626676:${ldlib_version}")
+    implementation fg.deobf("com.lowdragmc.ldlib:ldlib-forge-${minecraft_version}:${ldlib_version}") { transitive = false }
     implementation fg.deobf("curse.maven:gregtechceu-modern-890405:${gregtech_version}")
     runtimeOnly fg.deobf("curse.maven:configuration-444699:${configuration_version}")
     runtimeOnly fg.deobf("curse.maven:jade-324717:${jade_version}")

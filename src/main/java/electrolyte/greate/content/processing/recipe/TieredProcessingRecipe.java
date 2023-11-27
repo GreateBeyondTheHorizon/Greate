@@ -1,9 +1,12 @@
 package electrolyte.greate.content.processing.recipe;
 
+import com.gregtechceu.gtceu.api.recipe.content.Content;
+import com.gregtechceu.gtceu.api.recipe.ingredient.forge.SizedIngredientImpl;
+import com.gregtechceu.gtceu.common.data.GTItems;
+import com.gregtechceu.gtceu.common.item.IntCircuitBehaviour;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
-import com.simibubi.create.foundation.fluid.FluidIngredient;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import electrolyte.greate.Greate;
 import electrolyte.greate.GreateEnums.TIER;
@@ -12,8 +15,7 @@ import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.fluids.FluidStack;
+import net.minecraft.world.item.ItemStack;
 import org.slf4j.Logger;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -23,13 +25,6 @@ import java.util.List;
 @ParametersAreNonnullByDefault
 public abstract class TieredProcessingRecipe<T extends Container> extends ProcessingRecipe<T> {
 
-    protected ResourceLocation id;
-    protected NonNullList<Ingredient> ingredients;
-    protected NonNullList<ProcessingOutput> results;
-    protected NonNullList<FluidIngredient> fluidIngredients;
-    protected NonNullList<FluidStack> fluidResults;
-    protected int processingDuration;
-    protected HeatCondition requiredHeat;
     protected TIER recipeTier;
     protected int circuitNumber;
 
@@ -82,33 +77,8 @@ public abstract class TieredProcessingRecipe<T extends Container> extends Proces
     }
 
     @Override
-    public NonNullList<Ingredient> getIngredients() {
-        return ingredients;
-    }
-
-    @Override
-    public NonNullList<FluidIngredient> getFluidIngredients() {
-        return fluidIngredients;
-    }
-
-    @Override
-    public List<ProcessingOutput> getRollableResults() {
+    public NonNullList<ProcessingOutput> getRollableResults() {
         return results;
-    }
-
-    @Override
-    public NonNullList<FluidStack> getFluidResults() {
-        return fluidResults;
-    }
-
-    @Override
-    public int getProcessingDuration() {
-        return processingDuration;
-    }
-
-    @Override
-    public HeatCondition getRequiredHeat() {
-        return requiredHeat;
     }
 
     public TIER getRecipeTier() {
@@ -119,8 +89,15 @@ public abstract class TieredProcessingRecipe<T extends Container> extends Proces
         return circuitNumber;
     }
 
-    @Override
-    public ResourceLocation getId() {
-        return id;
+    public static int getCircuitFromGTRecipe(List<Content> inputContents) {
+        int circuitNumber = -1;
+        for(Content c : inputContents) {
+            if(((SizedIngredientImpl) c.getContent()).getItems()[0].is(GTItems.INTEGRATED_CIRCUIT.asItem())) {
+                ItemStack circuit = ((SizedIngredientImpl) c.getContent()).getItems()[0];
+                circuitNumber = IntCircuitBehaviour.getCircuitConfiguration(circuit);
+                break;
+            }
+        }
+        return circuitNumber;
     }
 }

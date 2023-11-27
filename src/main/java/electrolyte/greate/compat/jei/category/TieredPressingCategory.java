@@ -1,7 +1,5 @@
 package electrolyte.greate.compat.jei.category;
 
-import com.gregtechceu.gtceu.common.data.GTItems;
-import com.gregtechceu.gtceu.common.item.IntCircuitBehaviour;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import electrolyte.greate.GreateEnums.TIER;
@@ -47,9 +45,8 @@ public class TieredPressingCategory extends GreateRecipeCategory<TieredPressingR
             i++;
         }
 
-        if(recipe.getCircuitNumber() != -1) {
-            ItemStack circuitStack = new ItemStack(GTItems.INTEGRATED_CIRCUIT);
-            IntCircuitBehaviour.setCircuitConfiguration(circuitStack, recipe.getCircuitNumber());
+        ItemStack circuitStack = getCircuitStack(recipe);
+        if(!circuitStack.isEmpty()) {
             builder.addSlot(RecipeIngredientRole.RENDER_ONLY, getBackground().getWidth() / 2 - 37, 2)
                     .setBackground(getRenderedSlot(), -1, -1)
                     .addItemStack(circuitStack);

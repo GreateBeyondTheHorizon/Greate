@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "gtceu:iv_machine_hull"
+    },
+    "C": {
+      "tag": "greate:cogwheels/tungstensteel"
+    },
+    "I": {
+      "tag": "forge:circuits/iv"
+    },
+    "W": {
+      "item": "greate:tungstensteel_whisk"
+    }
+  },
+  "pattern": [
+    " C ",
+    "IAI",
+    " W "
+  ],
+  "result": {
+    "item": "greate:tungstensteel_mechanical_mixer"
+  },
+  "show_notification": true
+}

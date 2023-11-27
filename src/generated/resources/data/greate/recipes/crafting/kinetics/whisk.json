@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "create:andesite_alloy"
+    },
+    "F": {
+      "tag": "forge:tools/files"
+    },
+    "P": {
+      "tag": "forge:plates/iron"
+    },
+    "S": {
+      "tag": "forge:tools/screwdrivers"
+    }
+  },
+  "pattern": [
+    "FAS",
+    "PAP",
+    "PPP"
+  ],
+  "result": {
+    "item": "create:whisk"
+  },
+  "show_notification": true
+}

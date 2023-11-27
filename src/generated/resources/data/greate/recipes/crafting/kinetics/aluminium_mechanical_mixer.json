@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "gtceu:mv_machine_hull"
+    },
+    "C": {
+      "tag": "greate:cogwheels/aluminium"
+    },
+    "I": {
+      "tag": "forge:circuits/mv"
+    },
+    "W": {
+      "item": "greate:aluminium_whisk"
+    }
+  },
+  "pattern": [
+    " C ",
+    "IAI",
+    " W "
+  ],
+  "result": {
+    "item": "greate:aluminium_mechanical_mixer"
+  },
+  "show_notification": true
+}

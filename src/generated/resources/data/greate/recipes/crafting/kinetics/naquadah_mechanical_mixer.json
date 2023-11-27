@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "gtceu:zpm_machine_hull"
+    },
+    "C": {
+      "tag": "greate:cogwheels/naquadah"
+    },
+    "I": {
+      "tag": "forge:circuits/zpm"
+    },
+    "W": {
+      "item": "greate:naquadah_whisk"
+    }
+  },
+  "pattern": [
+    " C ",
+    "IAI",
+    " W "
+  ],
+  "result": {
+    "item": "greate:naquadah_mechanical_mixer"
+  },
+  "show_notification": true
+}

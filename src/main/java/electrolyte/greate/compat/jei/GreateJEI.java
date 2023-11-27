@@ -10,6 +10,7 @@ import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.compat.jei.DoubleItemIcon;
 import com.simibubi.create.compat.jei.EmptyBackground;
 import com.simibubi.create.compat.jei.ItemIcon;
+import com.simibubi.create.content.fluids.potion.PotionMixingRecipes;
 import com.simibubi.create.foundation.config.ConfigBase.ConfigBool;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import com.simibubi.create.foundation.utility.Lang;
@@ -17,19 +18,16 @@ import com.simibubi.create.infrastructure.config.AllConfigs;
 import com.simibubi.create.infrastructure.config.CRecipes;
 import electrolyte.greate.Greate;
 import electrolyte.greate.GreateEnums.TIER;
-import electrolyte.greate.compat.jei.category.GreateRecipeCategory;
+import electrolyte.greate.compat.jei.category.*;
 import electrolyte.greate.compat.jei.category.GreateRecipeCategory.Info;
-import electrolyte.greate.compat.jei.category.TieredCrushingCategory;
-import electrolyte.greate.compat.jei.category.TieredMillingCategory;
-import electrolyte.greate.compat.jei.category.TieredPressingCategory;
 import electrolyte.greate.content.kinetics.crusher.TieredAbstractCrushingRecipe;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingRecipe;
 import electrolyte.greate.content.kinetics.millstone.TieredMillingRecipe;
+import electrolyte.greate.content.kinetics.mixer.TieredCompactingRecipe;
+import electrolyte.greate.content.kinetics.mixer.TieredMixingRecipe;
 import electrolyte.greate.content.kinetics.press.TieredPressingRecipe;
-import electrolyte.greate.registry.CrushingWheels;
-import electrolyte.greate.registry.MechanicalPresses;
-import electrolyte.greate.registry.Millstones;
-import electrolyte.greate.registry.ModRecipeTypes;
+import electrolyte.greate.content.processing.basin.TieredBasinRecipe;
+import electrolyte.greate.registry.*;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
@@ -47,6 +45,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Blocks;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -107,7 +106,7 @@ public class GreateJEI implements IModPlugin {
                         .build("crushing", TieredCrushingCategory::new),
 
                 pressing = builder(TieredPressingRecipe.class)
-                        .addTypedRecipesGT(GTRecipeTypes.BENDER_RECIPES, (r) -> TieredPressingRecipe.convertGT(r, TIER.ULTRA_LOW))
+                        .addTypedRecipesGT(GTRecipeTypes.BENDER_RECIPES, r -> TieredPressingRecipe.convertGT(r, TIER.ULTRA_LOW))
                         .addTypedRecipes(ModRecipeTypes.PRESSING::getType)
                         .addTypedRecipesExcludingGT(AllRecipeTypes.PRESSING::getType, GTRecipeTypes.BENDER_RECIPES, TieredPressingRecipe::convertNormalPressing)
                         .catalyst(MechanicalPresses.ANDESITE_MECHANICAL_PRESS::get)
@@ -122,7 +121,65 @@ public class GreateJEI implements IModPlugin {
                         .catalyst(MechanicalPresses.NEUTRONIUM_MECHANICAL_PRESS::get)
                         .doubleIconItem(MechanicalPresses.NEUTRONIUM_MECHANICAL_PRESS.get(), AllItems.IRON_SHEET.get())
                         .emptyBackground(177, 85)
-                        .build("pressing", TieredPressingCategory::new);
+                        .build("pressing", TieredPressingCategory::new),
+
+                mixing = builder(TieredBasinRecipe.class)
+                        .addTypedRecipesGT(GTRecipeTypes.MIXER_RECIPES, r -> TieredMixingRecipe.convertGTMixing(r, TIER.ULTRA_LOW))
+                        .addTypedRecipes(ModRecipeTypes.MIXING::getType)
+                        .addTypedRecipesExcludingGT(AllRecipeTypes.MIXING::getType, GTRecipeTypes.MIXER_RECIPES, TieredMixingRecipe::convertUntieredRecipe)
+                        .catalyst(MechanicalMixers.ANDESITE_MECHANICAL_MIXER::get)
+                        .catalyst(MechanicalMixers.STEEL_MECHANICAL_MIXER::get)
+                        .catalyst(MechanicalMixers.ALUMINIUM_MECHANICAL_MIXER::get)
+                        .catalyst(MechanicalMixers.STAINLESS_STEEL_MECHANICAL_MIXER::get)
+                        .catalyst(MechanicalMixers.TITANIUM_MECHANICAL_MIXER::get)
+                        .catalyst(MechanicalMixers.TUNGSTENSTEEL_MECHANICAL_MIXER::get)
+                        .catalyst(MechanicalMixers.PALLADIUM_MECHANICAL_MIXER::get)
+                        .catalyst(MechanicalMixers.NAQUADAH_MECHANICAL_MIXER::get)
+                        .catalyst(MechanicalMixers.DARMSTADTIUM_MECHANICAL_MIXER::get)
+                        .catalyst(MechanicalMixers.NEUTRONIUM_MECHANICAL_MIXER::get)
+                        .doubleIconItem(MechanicalMixers.NEUTRONIUM_MECHANICAL_MIXER.get(), AllBlocks.BASIN.get())
+                        .emptyBackground(177, 118)
+                        .build("mixing", TieredMixingCategory::standard),
+
+                brewing = builder(TieredBasinRecipe.class)
+                        .enableWhen(c -> c.allowBrewingInMixer)
+                        .addRecipes(() -> {
+                            ArrayList<TieredMixingRecipe> brewingRecipes = new ArrayList<>();
+                            PotionMixingRecipes.ALL.forEach(potionRecipe -> brewingRecipes.add(TieredMixingRecipe.convertUntieredRecipe(potionRecipe)));
+                            return brewingRecipes;
+                        })
+                        .catalyst(MechanicalMixers.ANDESITE_MECHANICAL_MIXER::get)
+                        .catalyst(MechanicalMixers.STEEL_MECHANICAL_MIXER::get)
+                        .catalyst(MechanicalMixers.ALUMINIUM_MECHANICAL_MIXER::get)
+                        .catalyst(MechanicalMixers.STAINLESS_STEEL_MECHANICAL_MIXER::get)
+                        .catalyst(MechanicalMixers.TITANIUM_MECHANICAL_MIXER::get)
+                        .catalyst(MechanicalMixers.TUNGSTENSTEEL_MECHANICAL_MIXER::get)
+                        .catalyst(MechanicalMixers.PALLADIUM_MECHANICAL_MIXER::get)
+                        .catalyst(MechanicalMixers.NAQUADAH_MECHANICAL_MIXER::get)
+                        .catalyst(MechanicalMixers.DARMSTADTIUM_MECHANICAL_MIXER::get)
+                        .catalyst(MechanicalMixers.NEUTRONIUM_MECHANICAL_MIXER::get)
+                        .catalyst(AllBlocks.BASIN::get)
+                        .doubleIconItem(MechanicalMixers.NEUTRONIUM_MECHANICAL_MIXER.get(), Blocks.BREWING_STAND)
+                        .emptyBackground(177, 118)
+                        .build("automatic_brewing", TieredMixingCategory::autoBrewing),
+
+                packing = builder(TieredBasinRecipe.class)
+                        .addTypedRecipes(AllRecipeTypes.COMPACTING::getType, TieredCompactingRecipe::convertNormalBasin)
+                        .addTypedRecipes(ModRecipeTypes.COMPACTING::getType)
+                        .catalyst(MechanicalPresses.ANDESITE_MECHANICAL_PRESS::get)
+                        .catalyst(MechanicalPresses.STEEL_MECHANICAL_PRESS::get)
+                        .catalyst(MechanicalPresses.ALUMINIUM_MECHANICAL_PRESS::get)
+                        .catalyst(MechanicalPresses.STAINLESS_STEEL_MECHANICAL_PRESS::get)
+                        .catalyst(MechanicalPresses.TITANIUM_MECHANICAL_PRESS::get)
+                        .catalyst(MechanicalPresses.TUNGSTENSTEEL_MECHANICAL_PRESS::get)
+                        .catalyst(MechanicalPresses.PALLADIUM_MECHANICAL_PRESS::get)
+                        .catalyst(MechanicalPresses.NAQUADAH_MECHANICAL_PRESS::get)
+                        .catalyst(MechanicalPresses.DARMSTADTIUM_MECHANICAL_PRESS::get)
+                        .catalyst(MechanicalPresses.NEUTRONIUM_MECHANICAL_PRESS::get)
+                        .catalyst(AllBlocks.BASIN::get)
+                        .doubleIconItem(MechanicalPresses.NEUTRONIUM_MECHANICAL_PRESS.get(), AllBlocks.BASIN.get())
+                        .emptyBackground(177, 118)
+                        .build("automatic_packing", TieredPackingCategory::standard);
     }
 
     @Override
@@ -144,7 +201,9 @@ public class GreateJEI implements IModPlugin {
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
         ingredientManager = registration.getIngredientManager();
-        ingredientManager.removeIngredientsAtRuntime(VanillaTypes.ITEM_STACK, List.of(AllBlocks.MILLSTONE.asStack(), AllBlocks.CRUSHING_WHEEL.asStack(), AllBlocks.MECHANICAL_PRESS.asStack()));
+        ingredientManager.removeIngredientsAtRuntime(VanillaTypes.ITEM_STACK, List.of(
+                AllBlocks.MILLSTONE.asStack(), AllBlocks.CRUSHING_WHEEL.asStack(),
+                AllBlocks.MECHANICAL_PRESS.asStack(), AllBlocks.MECHANICAL_MIXER.asStack()));
         allCategories.forEach(c -> c.registerRecipes(registration));
     }
 
@@ -353,7 +412,7 @@ public class GreateJEI implements IModPlugin {
 
     public static boolean doInputsMatchGT(Recipe<?> recipe1, Recipe<?> recipe2) {
         GTRecipe gtRecipe = (GTRecipe) recipe2;
-        if(recipe1.getIngredients().isEmpty() || ((Ingredient) gtRecipe.getInputContents(ItemRecipeCapability.CAP).get(0).getContent()).isEmpty()) return false;
+        if(recipe1.getIngredients().isEmpty() || gtRecipe.getInputContents(ItemRecipeCapability.CAP).isEmpty() || ((Ingredient) gtRecipe.getInputContents(ItemRecipeCapability.CAP).get(0).getContent()).isEmpty()) return false;
         ItemStack[] matchingStacks = recipe1.getIngredients().get(0).getItems();
         if(matchingStacks.length == 0) return false;
         Ingredient ing = (Ingredient) gtRecipe.getInputContents(ItemRecipeCapability.CAP).get(0).getContent();

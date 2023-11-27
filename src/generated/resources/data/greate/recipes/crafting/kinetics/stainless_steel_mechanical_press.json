@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "B": {
-      "item": "minecraft:iron_block"
+      "tag": "forge:storage_blocks/stainless_steel"
     },
     "C": {
       "tag": "forge:circuits/hv"

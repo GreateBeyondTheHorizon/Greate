@@ -4,9 +4,6 @@ import com.gregtechceu.gtceu.api.capability.recipe.EURecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.content.Content;
-import com.gregtechceu.gtceu.api.recipe.ingredient.forge.SizedIngredientImpl;
-import com.gregtechceu.gtceu.common.data.GTItems;
-import com.gregtechceu.gtceu.common.item.IntCircuitBehaviour;
 import com.simibubi.create.compat.jei.category.sequencedAssembly.SequencedAssemblySubCategory;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.sequenced.IAssemblyRecipe;
@@ -19,7 +16,6 @@ import electrolyte.greate.registry.MechanicalPresses;
 import electrolyte.greate.registry.ModRecipeTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
@@ -72,20 +68,21 @@ public class TieredPressingRecipe extends TieredProcessingRecipe<RecipeWrapper> 
     }
 
     public static TieredPressingRecipe convertNormalPressing(Recipe<?> recipe) {
-        return new TieredProcessingRecipeBuilder<>(TieredPressingRecipe::new, recipe.getId()).withItemIngredients(recipe.getIngredients()).output(recipe.getResultItem(Minecraft.getInstance().level.registryAccess())).withItemOutputs(((ProcessingRecipe<?>) recipe).getRollableResults()).recipeTier(TIER.ULTRA_LOW).noCircuit().build();
+        return new TieredProcessingRecipeBuilder<>(TieredPressingRecipe::new, recipe.getId())
+                .withItemIngredients(recipe.getIngredients()).output(recipe.getResultItem(Minecraft.getInstance().level.registryAccess()))
+                .withItemOutputs(((ProcessingRecipe<?>) recipe).getRollableResults())
+                .recipeTier(TIER.ULTRA_LOW).noCircuit().build();
     }
 
     public static TieredPressingRecipe convertGT(GTRecipe recipe, TIER machineTier) {
         List<Content> inputContents = recipe.getInputContents(ItemRecipeCapability.CAP);
-        int circuitNumber = -1;
-        for(Content c : inputContents) {
-            if(((SizedIngredientImpl) c.getContent()).getItems()[0].is(GTItems.INTEGRATED_CIRCUIT.asItem())) {
-                ItemStack circuit = ((SizedIngredientImpl) c.getContent()).getItems()[0];
-                circuitNumber = IntCircuitBehaviour.getCircuitConfiguration(circuit);
-                break;
-            }
-        }
         TIER recipeTier = TIER.convertGTEUToTier(recipe.getTickInputContents(EURecipeCapability.CAP));
-        return new TieredProcessingRecipeBuilder<>(TieredPressingRecipe::new, recipe.getId()).withItemIngredientsGT(inputContents).output(recipe.getResultItem(Minecraft.getInstance().level.registryAccess())).withItemOutputsGT(recipe.getOutputContents(ItemRecipeCapability.CAP), recipeTier, machineTier).recipeTier(recipeTier).recipeCircuit(circuitNumber).build();
+        return new TieredProcessingRecipeBuilder<>(TieredPressingRecipe::new, recipe.getId())
+                .withItemIngredientsGT(inputContents)
+                .output(recipe.getResultItem(Minecraft.getInstance().level.registryAccess()))
+                .withItemOutputsGT(recipe.getOutputContents(ItemRecipeCapability.CAP), recipeTier, machineTier)
+                .recipeTier(recipeTier)
+                .recipeCircuit(getCircuitFromGTRecipe(inputContents))
+                .build();
     }
 }

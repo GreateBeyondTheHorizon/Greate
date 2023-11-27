@@ -94,7 +94,18 @@ public class GreatePartialModels {
     PALLADIUM_MECHANICAL_PRESS_HEAD = block("palladium_mechanical_press_head"),
     NAQUADAH_MECHANICAL_PRESS_HEAD = block("naquadah_mechanical_press_head"),
     DARMSTADTIUM_MECHANICAL_PRESS_HEAD = block("darmstadtium_mechanical_press_head"),
-    NEUTRONIUM_MECHANICAL_PRESS_HEAD = block("neutronium_mechanical_press_head");
+    NEUTRONIUM_MECHANICAL_PRESS_HEAD = block("neutronium_mechanical_press_head"),
+
+    ANDESITE_MECHANICAL_MIXER_HEAD = block("andesite_mechanical_mixer_head"),
+    STEEL_MECHANICAL_MIXER_HEAD = block("steel_mechanical_mixer_head"),
+    ALUMINIUM_MECHANICAL_MIXER_HEAD = block("aluminium_mechanical_mixer_head"),
+    STAINLESS_STEEL_MECHANICAL_MIXER_HEAD = block("stainless_steel_mechanical_mixer_head"),
+    TITANIUM_MECHANICAL_MIXER_HEAD = block("titanium_mechanical_mixer_head"),
+    TUNGSTENSTEEL_MECHANICAL_MIXER_HEAD = block("tungstensteel_mechanical_mixer_head"),
+    PALLADIUM_MECHANICAL_MIXER_HEAD = block("palladium_mechanical_mixer_head"),
+    NAQUADAH_MECHANICAL_MIXER_HEAD = block("naquadah_mechanical_mixer_head"),
+    DARMSTADTIUM_MECHANICAL_MIXER_HEAD = block("darmstadtium_mechanical_mixer_head"),
+    NEUTRONIUM_MECHANICAL_MIXER_HEAD = block("neutronium_mechanical_mixer_head");
 
 
     private static PartialModel block(String path) {

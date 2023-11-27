@@ -1,0 +1,7 @@
+{
+  "parent": "create:block/mechanical_mixer/block",
+  "textures": {
+    "4": "greate:block/mechanical_mixer_base_side",
+    "particle": "greate:block/mechanical_mixer_base_side"
+  }
+}

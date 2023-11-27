@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "greate:titanium_alloy"
+    },
+    "F": {
+      "tag": "forge:tools/files"
+    },
+    "P": {
+      "tag": "forge:plates/titanium"
+    },
+    "S": {
+      "tag": "forge:tools/screwdrivers"
+    }
+  },
+  "pattern": [
+    "FAS",
+    "PAP",
+    "PPP"
+  ],
+  "result": {
+    "item": "greate:titanium_whisk"
+  },
+  "show_notification": true
+}

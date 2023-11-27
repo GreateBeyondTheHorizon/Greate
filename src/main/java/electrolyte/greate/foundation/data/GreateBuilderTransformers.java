@@ -20,6 +20,7 @@ import electrolyte.greate.content.kinetics.crusher.TieredCrushingWheelBlock;
 import electrolyte.greate.content.kinetics.gearbox.TieredGearboxBlock;
 import electrolyte.greate.content.kinetics.gearbox.TieredVerticalGearboxItem;
 import electrolyte.greate.content.kinetics.millstone.TieredMillstoneBlock;
+import electrolyte.greate.content.kinetics.mixer.TieredMechanicalMixerBlock;
 import electrolyte.greate.content.kinetics.press.TieredMechanicalPressBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredCogwheelBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
@@ -182,5 +183,18 @@ public class GreateBuilderTransformers {
                             .texture("8", p.modLoc("block/mechanical_press_side"))
                             .texture("particle", p.modLoc("block/mechanical_press_side"));
                 }).build();
+    }
+
+    public static <B extends TieredMechanicalMixerBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> tieredMechanicalMixer() {
+        return b -> b.blockstate(tieredMechanicalMixerProvider())
+                    .item(AssemblyOperatorBlockItem::new)
+                    .model((c, p) -> {
+                        String material = c.getName().substring(0, c.getName().length() - 17);
+                        p.withExistingParent(c.getName(), Create.asResource("block/mechanical_mixer/item"))
+                                .texture("6", p.modLoc("block/" + material + "/mixer_head"))
+                                .texture("4", p.modLoc("block/mechanical_mixer_base_side"))
+                                .texture("particle", p.modLoc("block/mechanical_mixer_base_side"))
+                                .texture("1_2", p.modLoc("block/" + material + "/cogwheel"));
+                    }).build();
     }
 }

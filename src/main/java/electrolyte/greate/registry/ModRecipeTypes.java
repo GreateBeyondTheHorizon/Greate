@@ -9,7 +9,10 @@ import electrolyte.greate.Greate;
 import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingRecipe;
 import electrolyte.greate.content.kinetics.millstone.TieredMillingRecipe;
+import electrolyte.greate.content.kinetics.mixer.TieredCompactingRecipe;
+import electrolyte.greate.content.kinetics.mixer.TieredMixingRecipe;
 import electrolyte.greate.content.kinetics.press.TieredPressingRecipe;
+import electrolyte.greate.content.processing.basin.TieredBasinRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeFactory;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeSerializer;
@@ -35,7 +38,10 @@ public enum ModRecipeTypes implements IRecipeTypeInfo {
 
 	MILLING(TieredMillingRecipe::new),
 	CRUSHING(TieredCrushingRecipe::new),
-	PRESSING(TieredPressingRecipe::new);
+	PRESSING(TieredPressingRecipe::new),
+	BASIN(TieredBasinRecipe::new),
+	MIXING(TieredMixingRecipe::new),
+	COMPACTING(TieredCompactingRecipe::new);
 
 	private final ResourceLocation id;
 	private final RegistryObject<RecipeSerializer<?>> serializerObject;

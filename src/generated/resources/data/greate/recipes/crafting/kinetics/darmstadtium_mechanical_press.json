@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "B": {
-      "item": "minecraft:iron_block"
+      "tag": "forge:storage_blocks/darmstadtium"
     },
     "C": {
       "tag": "forge:circuits/uv"

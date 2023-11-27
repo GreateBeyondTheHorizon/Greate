@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "gtceu:ev_machine_hull"
+    },
+    "C": {
+      "tag": "greate:cogwheels/titanium"
+    },
+    "I": {
+      "tag": "forge:circuits/ev"
+    },
+    "W": {
+      "item": "greate:titanium_whisk"
+    }
+  },
+  "pattern": [
+    " C ",
+    "IAI",
+    " W "
+  ],
+  "result": {
+    "item": "greate:titanium_mechanical_mixer"
+  },
+  "show_notification": true
+}

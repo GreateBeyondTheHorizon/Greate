@@ -17,9 +17,9 @@ import java.util.Locale;
 
 public interface TieredProcessingRecipeSchema extends ProcessingRecipeSchema {
 
-    RecipeKey<String> RECIPE_TIER = new StringComponent("Invalid Recipe Tier!", s -> {
+    RecipeKey<String> RECIPE_TIER = new StringComponent("Invalid Recipe Tier! This recipe's tier will be set to 'ultra_low' (default) instead until this is changed.", s -> {
         for(TIER tier : TIER.values()) {
-            if(tier.name().equalsIgnoreCase(s)) return true;
+            if(tier.name().equalsIgnoreCase(s) || tier.getName().equalsIgnoreCase(s)) return true;
         }
         return false;
     }).key("recipeTier").optional("ultra_low");

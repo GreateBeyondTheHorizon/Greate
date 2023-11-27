@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "gtceu:uhv_machine_hull"
+    },
+    "C": {
+      "tag": "greate:cogwheels/neutronium"
+    },
+    "I": {
+      "tag": "forge:circuits/uhv"
+    },
+    "W": {
+      "item": "greate:neutronium_whisk"
+    }
+  },
+  "pattern": [
+    " C ",
+    "IAI",
+    " W "
+  ],
+  "result": {
+    "item": "greate:neutronium_mechanical_mixer"
+  },
+  "show_notification": true
+}

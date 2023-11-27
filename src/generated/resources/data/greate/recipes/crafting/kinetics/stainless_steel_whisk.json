@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "greate:stainless_steel_alloy"
+    },
+    "F": {
+      "tag": "forge:tools/files"
+    },
+    "P": {
+      "tag": "forge:plates/stainless_steel"
+    },
+    "S": {
+      "tag": "forge:tools/screwdrivers"
+    }
+  },
+  "pattern": [
+    "FAS",
+    "PAP",
+    "PPP"
+  ],
+  "result": {
+    "item": "greate:stainless_steel_whisk"
+  },
+  "show_notification": true
+}

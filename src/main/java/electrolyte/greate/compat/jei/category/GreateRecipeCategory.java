@@ -1,5 +1,7 @@
 package electrolyte.greate.compat.jei.category;
 
+import com.gregtechceu.gtceu.common.data.GTItems;
+import com.gregtechceu.gtceu.common.item.IntCircuitBehaviour;
 import com.simibubi.create.AllFluids;
 import com.simibubi.create.content.fluids.potion.PotionFluidHandler;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
@@ -96,6 +98,13 @@ public abstract class GreateRecipeCategory<T extends Recipe<?>> implements IReci
             return BASIC_SLOT;
         }
         return CHANCE_SLOT;
+    }
+
+    public static ItemStack getCircuitStack(TieredProcessingRecipe<?> recipe) {
+        if(recipe.getCircuitNumber() == -1) return ItemStack.EMPTY;
+        ItemStack circuitStack = new ItemStack(GTItems.INTEGRATED_CIRCUIT);
+        IntCircuitBehaviour.setCircuitConfiguration(circuitStack, recipe.getCircuitNumber());
+        return circuitStack;
     }
 
     public static IRecipeSlotTooltipCallback addStochasticTooltip(ProcessingOutput output) {

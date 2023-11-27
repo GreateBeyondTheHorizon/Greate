@@ -159,4 +159,15 @@ public class GreateBlockStateGen {
                     .build();
         });
     }
+
+    public static <T extends Block> NonNullBiConsumer<DataGenContext<Block, T>, RegistrateBlockstateProvider> tieredMechanicalMixerProvider() {
+        return (c, p) -> p.getVariantBuilder(c.getEntry()).forAllStates(state -> ConfiguredModel.builder()
+                .modelFile(p.models().withExistingParent(c.getName() + "_head", Create.asResource("block/mechanical_mixer/head"))
+                        .texture("6", p.modLoc("block/" + c.getName().substring(0, c.getName().length() - 17) + "/mixer_head")))
+                .modelFile(p.models().withExistingParent(c.getName() + "_pole", Create.asResource("block/mechanical_mixer/pole")))
+                .modelFile(p.models().withExistingParent(c.getName() + "_block", Create.asResource("block/mechanical_mixer/block"))
+                        .texture("4", p.modLoc("block/mechanical_mixer_base_side"))
+                        .texture("particle", p.modLoc("block/mechanical_mixer_base_side")))
+                .build());
+    }
 }

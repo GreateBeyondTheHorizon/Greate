@@ -9,33 +9,38 @@ import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.gregtechceu.gtceu.common.item.IntCircuitBehaviour;
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
+import com.simibubi.create.content.kinetics.crafter.MechanicalCraftingRecipe;
 import com.simibubi.create.content.kinetics.press.MechanicalPressBlockEntity;
-import com.simibubi.create.content.kinetics.press.PressingBehaviour;
-import com.simibubi.create.content.kinetics.press.PressingBehaviour.Mode;
 import com.simibubi.create.content.kinetics.press.PressingRecipe;
 import com.simibubi.create.content.processing.basin.BasinBlockEntity;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipe;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
 import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour;
-import com.simibubi.create.foundation.item.SmartInventory;
+import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.recipe.RecipeApplier;
 import com.simibubi.create.foundation.recipe.RecipeFinder;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.VecHelper;
+import com.simibubi.create.infrastructure.config.AllConfigs;
 import electrolyte.greate.Greate;
 import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.content.kinetics.base.ICircuitHolder;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredProcessingRecipeHolder;
+import electrolyte.greate.content.processing.basin.TieredBasinRecipe;
 import electrolyte.greate.infrastructure.config.GConfigUtility;
 import electrolyte.greate.registry.ModRecipeTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -48,15 +53,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity implements ITieredKineticBlockEntity, ITieredProcessingRecipeHolder {
+public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity implements ITieredKineticBlockEntity, ITieredProcessingRecipeHolder, ICircuitHolder {
 
     private TIER tier;
     private double networkMaxCapacity;
-    private static final int DEFAULT_CIRCUIT = 0;
-    public ScrollValueBehaviour targetCircuit;
-    private static final Object recipeCacheKey = new Object();
-    public Recipe<?> currentPressingRecipe;
-    public TieredPressingBehaviour pressingBehaviour;
+    private ScrollValueBehaviour targetCircuit;
+    private static final Object PRESSING_RECIPE_CACHE_KEY = new Object();
     private int remainingTime;
 
     public TieredMechanicalPressBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -67,18 +69,13 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         super.addBehaviours(behaviours);
+        behaviours.remove(pressingBehaviour);
         pressingBehaviour = new TieredPressingBehaviour(this);
         behaviours.add(pressingBehaviour);
         targetCircuit = new ScrollValueBehaviour(Lang.builder(Greate.MOD_ID).translate("tooltip.circuit_number").component(),
                 this, new CircuitValueBoxTransform());
         targetCircuit.between(0, 32);
-        targetCircuit.value = DEFAULT_CIRCUIT;
         behaviours.add(targetCircuit);
-    }
-
-    @Override
-    public TieredPressingBehaviour getPressingBehaviour() {
-        return pressingBehaviour;
     }
 
     @Override
@@ -115,24 +112,6 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
         return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, tier, capacity);
-    }
-
-    @Override
-    public boolean tryProcessInBasin(boolean simulate) {
-        applyBasinRecipe();
-
-        Optional<BasinBlockEntity> basin = getBasin();
-        if (basin.isPresent()) {
-            SmartInventory inputs = basin.get().getInputInventory();
-            for (int slot = 0; slot < inputs.getSlots(); slot++) {
-                ItemStack stackInSlot = inputs.getItem(slot);
-                if (stackInSlot.isEmpty())
-                    continue;
-                pressingBehaviour.particleItems.add(stackInSlot);
-            }
-        }
-
-        return true;
     }
 
     @Override
@@ -190,14 +169,6 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
     }
 
     @Override
-    public void onPressingCompleted() {
-        if (pressingBehaviour.onBasin() && matchBasinRecipe(currentRecipe) && getBasin().filter(BasinBlockEntity::canContinueProcessing).isPresent()) {
-            startProcessingBasin();
-        }
-        else basinChecker.scheduleUpdate();
-    }
-
-    @Override
     public void tick() {
         super.tick();
         if(remainingTime > 0) {
@@ -206,10 +177,10 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
     }
 
     public Optional<TieredPressingRecipe> getValidRecipe(ItemStack item) {
-        currentPressingRecipe = null;
+        currentRecipe = null;
         List<Recipe<?>> list = new ArrayList<>();
         if(remainingTime == 0) {
-            list = RecipeFinder.get(recipeCacheKey, level, p ->
+            list = RecipeFinder.get(PRESSING_RECIPE_CACHE_KEY, level, p ->
                     p.getType() == GTRecipeTypes.BENDER_RECIPES ||
                             p.getType() == ModRecipeTypes.PRESSING.getType() ||
                             p.getType() == AllRecipeTypes.PRESSING.getType()).stream().filter(r -> {
@@ -245,7 +216,7 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
                                 int circuit = IntCircuitBehaviour.getCircuitConfiguration(((Ingredient) c.getContent()).getItems()[0]);
                                 if(circuit == targetCircuit.getValue()) {
                                     TieredPressingRecipe convertedRecipe = TieredPressingRecipe.convertGT((GTRecipe) recipe, this.tier);
-                                    currentPressingRecipe = convertedRecipe;
+                                    currentRecipe = convertedRecipe;
                                     return Optional.of(convertedRecipe);
                                 }
                             }
@@ -253,13 +224,13 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
                     }
                 } else if(recipe.getType() == AllRecipeTypes.PRESSING.getType()) {
                     TieredPressingRecipe tpr = TieredPressingRecipe.convertNormalPressing(recipe);
-                    currentPressingRecipe = tpr;
+                    currentRecipe = tpr;
                     return Optional.of(tpr);
                 } else {
                     TieredPressingRecipe tpr = (TieredPressingRecipe) recipe;
                     if(tpr.getRecipeTier().compareTo(this.tier) <= 0) {
                         if(tpr.getCircuitNumber() == this.targetCircuit.getValue()) {
-                            currentPressingRecipe = tpr;
+                            currentRecipe = tpr;
                             return Optional.of(tpr);
                         }
                     }
@@ -269,34 +240,59 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
         return Optional.empty();
     }
 
-    @Override
-    public void startProcessingBasin() {
-        if(pressingBehaviour.running && pressingBehaviour.runningTicks <= PressingBehaviour.CYCLE / 2) return;
-        super.startProcessingBasin();
-        pressingBehaviour.start(Mode.BASIN);
+    public static <C extends Container> boolean canCompress(Recipe<C> recipe) {
+        if(!(recipe instanceof CraftingRecipe) || !AllConfigs.server().recipes.allowShapedSquareInPress.get()) return false;
+        NonNullList<Ingredient> ingredients = recipe.getIngredients();
+        return (ingredients.size() == 4 || ingredients.size() == 9) && ItemHelper.matchAllIngredients(ingredients);
     }
 
     @Override
-    protected void onBasinRemoved() {
-        pressingBehaviour.particleItems.clear();
-        pressingBehaviour.running = false;
-        pressingBehaviour.runningTicks = 0;
-        sendData();
-    }
-
-    @Override
-    protected boolean isRunning() {
-        return pressingBehaviour.running;
+    protected <C extends Container> boolean matchStaticFilters(Recipe<C> recipe) {
+        return (recipe instanceof CraftingRecipe && !(recipe instanceof MechanicalCraftingRecipe) && canCompress(recipe)
+                && !AllRecipeTypes.shouldIgnoreInAutomation(recipe))
+                || recipe.getType() == AllRecipeTypes.COMPACTING.getType()
+                || recipe.getType() == ModRecipeTypes.COMPACTING.getType();
     }
 
     @Override
     public Recipe<?> getRecipe() {
-        return this.currentPressingRecipe;
+        return this.currentRecipe;
     }
 
     @Override
     public void setRecipe(Recipe<?> recipe) {
-        this.currentPressingRecipe = recipe;
+        this.currentRecipe = recipe;
+    }
+
+    @Override
+    public int getCircuitNumber() {
+        return targetCircuit.getValue();
+    }
+
+    @Override
+    protected void applyBasinRecipe() {
+        if (currentRecipe == null) return;
+        Optional<BasinBlockEntity> optionalBasin = getBasin();
+        if (!optionalBasin.isPresent()) return;
+        BasinBlockEntity basin = optionalBasin.get();
+        boolean wasEmpty = basin.canContinueProcessing();
+        if(!TieredBasinRecipe.apply(basin, currentRecipe)) return;
+        getProcessedRecipeTrigger().ifPresent(this::award);
+        basin.inputTank.sendDataImmediately();
+
+        if (wasEmpty && matchBasinRecipe(currentRecipe)) {
+            continueWithPreviousRecipe();
+            sendData();
+        }
+
+        basin.notifyChangeOfContents();
+    }
+
+    @Override
+    protected <C extends Container> boolean matchBasinRecipe(Recipe<C> recipe) {
+        if(recipe == null) return false;
+        Optional<BasinBlockEntity> basin = getBasin();
+        return basin.filter(basinBlockEntity -> TieredBasinRecipe.match(basinBlockEntity, recipe, this.tier)).isPresent();
     }
 
     private class CircuitValueBoxTransform extends ValueBoxTransform.Sided {

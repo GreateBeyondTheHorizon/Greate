@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "gtceu:hv_machine_hull"
+    },
+    "C": {
+      "tag": "greate:cogwheels/stainless_steel"
+    },
+    "I": {
+      "tag": "forge:circuits/hv"
+    },
+    "W": {
+      "item": "greate:stainless_steel_whisk"
+    }
+  },
+  "pattern": [
+    " C ",
+    "IAI",
+    " W "
+  ],
+  "result": {
+    "item": "greate:stainless_steel_mechanical_mixer"
+  },
+  "show_notification": true
+}

@@ -154,6 +154,16 @@
     "greate:palladium_millstone",
     "greate:naquadah_millstone",
     "greate:darmstadtium_millstone",
-    "greate:neutronium_millstone"
+    "greate:neutronium_millstone",
+    "greate:andesite_mechanical_mixer",
+    "greate:steel_mechanical_mixer",
+    "greate:aluminium_mechanical_mixer",
+    "greate:stainless_steel_mechanical_mixer",
+    "greate:titanium_mechanical_mixer",
+    "greate:tungstensteel_mechanical_mixer",
+    "greate:palladium_mechanical_mixer",
+    "greate:naquadah_mechanical_mixer",
+    "greate:darmstadtium_mechanical_mixer",
+    "greate:neutronium_mechanical_mixer"
   ]
 }
