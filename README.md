@@ -28,7 +28,7 @@ We welcome contributions! Whether you have suggestions, improvements, or you've 
 
 ## Contact 📬
 
-Got a question or just want to chat? You can reach us on [our Discord](https://discord.gg/BVf6RbsR).
+Got a question or just want to chat? You can reach us on [our Discord](https://discord.gg/FpwgKtavyG).
 
 ---
 
