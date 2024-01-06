@@ -25,4 +25,19 @@ public class GConfigUtility {
         if(type == BELT_TYPE.POLYTETRAFLUOROETHYLENE) return GreateConfigs.server().kinetics.beltValues.polytetrafluoroethyleneMaxBeltLength.get();
         return GreateConfigs.server().kinetics.beltValues.polybenzimidazoleMaxBeltLength.get();
     }
+
+    public static double getPumpPressureFromTier(TIER tier) {
+		return switch (tier) {
+            case ULTRA_LOW -> GreateConfigs.server().kinetics.pumpValues.andesitePressure.get();
+            case LOW -> GreateConfigs.server().kinetics.pumpValues.steelPressure.get();
+            case MEDIUM -> GreateConfigs.server().kinetics.pumpValues.aluminiumPressure.get();
+            case HIGH -> GreateConfigs.server().kinetics.pumpValues.stainlessSteelPressure.get();
+            case EXTREME -> GreateConfigs.server().kinetics.pumpValues.titaniumPressure.get();
+            case INSANE -> GreateConfigs.server().kinetics.pumpValues.tungstensteelPressure.get();
+            case LUDICRIOUS -> GreateConfigs.server().kinetics.pumpValues.palladiumPressure.get();
+            case ZPM -> GreateConfigs.server().kinetics.pumpValues.naquadahPressure.get();
+            case ULTIMATE -> GreateConfigs.server().kinetics.pumpValues.darmstadtiumPressure.get();
+            case ULTIMATE_HIGH -> GreateConfigs.server().kinetics.pumpValues.neutroniumPressure.get();
+        };
+    }
 }

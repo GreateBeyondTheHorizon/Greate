@@ -164,6 +164,16 @@
     "greate:palladium_mechanical_mixer",
     "greate:naquadah_mechanical_mixer",
     "greate:darmstadtium_mechanical_mixer",
-    "greate:neutronium_mechanical_mixer"
+    "greate:neutronium_mechanical_mixer",
+    "greate:andesite_mechanical_pump",
+    "greate:steel_mechanical_pump",
+    "greate:aluminium_mechanical_pump",
+    "greate:stainless_steel_mechanical_pump",
+    "greate:titanium_mechanical_pump",
+    "greate:tungstensteel_mechanical_pump",
+    "greate:palladium_mechanical_pump",
+    "greate:naquadah_mechanical_pump",
+    "greate:darmstadtium_mechanical_pump",
+    "greate:neutronium_mechanical_pump"
   ]
 }

@@ -170,4 +170,24 @@ public class GreateBlockStateGen {
                         .texture("particle", p.modLoc("block/mechanical_mixer_base_side")))
                 .build());
     }
+
+    public static <T extends Block> NonNullBiConsumer<DataGenContext<Block, T>, RegistrateBlockstateProvider> tieredMechanicalPumpProvider() {
+        return (c, p) -> p.getVariantBuilder(c.getEntry()).forAllStatesExcept(state -> {
+            Direction dir = state.getValue(BlockStateProperties.FACING);
+            String material = c.getName().substring(0, c.getName().length() - 16);
+            return ConfiguredModel.builder()
+                    .modelFile(p.models().withExistingParent(c.getName() + "_cog", Create.asResource("block/mechanical_pump/cog"))
+                            .texture("5", p.modLoc("block/" + material + "/millstone")))
+                    .modelFile(p.models().withExistingParent(c.getName(), Create.asResource("block/mechanical_pump/block"))
+                            .texture("2", p.modLoc("block/" + material + "/pipes"))
+                            .texture("4", p.modLoc("block/" + material + "/pump"))
+                            .texture("particle", p.modLoc("block/" + material + "/pump")))
+                    .rotationX(dir == Direction.DOWN ? 180
+                            : dir.getAxis()
+                            .isHorizontal() ? 90 : 0)
+                    .rotationY(dir.getAxis()
+                            .isVertical() ? 0 : (((int) dir.toYRot()) + 180) % 360)
+                    .build();
+        }, BlockStateProperties.WATERLOGGED);
+    }
 }

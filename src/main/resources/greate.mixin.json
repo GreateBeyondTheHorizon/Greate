@@ -16,7 +16,10 @@
     "MixinKineticNetwork",
     "MixinRecipeManager",
     "MixinSteamEngineBlock",
-    "MixinSteamEngineBlock$PlacementHelper"
+    "MixinSteamEngineBlock$PlacementHelper",
+    "MixinFluidPropagator",
+    "MixinBlockEntityBehaviour",
+    "MixinPumpFluidTransferBehaviour"
   ],
   "injectors": {
     "defaultRequire": 1

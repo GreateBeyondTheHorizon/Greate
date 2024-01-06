@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "greate:block/steel_mechanical_pump",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "greate:block/steel_mechanical_pump",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "greate:block/steel_mechanical_pump",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "greate:block/steel_mechanical_pump",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "greate:block/steel_mechanical_pump"
+    },
+    "facing=west": {
+      "model": "greate:block/steel_mechanical_pump",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/mechanical_pump/item",
+  "textures": {
+    "2": "greate:block/naquadah/pipes",
+    "4": "greate:block/naquadah/pump",
+    "5": "greate:block/naquadah/millstone",
+    "particle": "greate:block/naquadah/pump"
+  }
+}

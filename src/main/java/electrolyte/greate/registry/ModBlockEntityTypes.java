@@ -23,6 +23,9 @@ import electrolyte.greate.content.kinetics.mixer.TieredMechanicalMixerRenderer;
 import electrolyte.greate.content.kinetics.press.TieredMechanicalPressBlockEntity;
 import electrolyte.greate.content.kinetics.press.TieredMechanicalPressInstance;
 import electrolyte.greate.content.kinetics.press.TieredMechanicalPressRenderer;
+import electrolyte.greate.content.kinetics.pump.TieredPumpBlockEntity;
+import electrolyte.greate.content.kinetics.pump.TieredPumpRenderer;
+import electrolyte.greate.content.kinetics.pump.TieredPumpCogInstance;
 import electrolyte.greate.content.kinetics.simpleRelays.*;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedCogInstance;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedCogRenderer;
@@ -148,6 +151,15 @@ public class ModBlockEntityTypes {
                     MechanicalMixers.TITANIUM_MECHANICAL_MIXER, MechanicalMixers.TUNGSTENSTEEL_MECHANICAL_MIXER, MechanicalMixers.PALLADIUM_MECHANICAL_MIXER, MechanicalMixers.NAQUADAH_MECHANICAL_MIXER,
                     MechanicalMixers.DARMSTADTIUM_MECHANICAL_MIXER, MechanicalMixers.NEUTRONIUM_MECHANICAL_MIXER)
             .renderer(() -> TieredMechanicalMixerRenderer::new)
+            .register();
+
+    public static final BlockEntityEntry<TieredPumpBlockEntity> TIERED_PUMP = REGISTRATE
+            .blockEntity("tiered_mechanical_pump", TieredPumpBlockEntity::new)
+            .instance(() -> TieredPumpCogInstance::new, false)
+            .validBlocks(Pumps.ANDESITE_MECHANICAL_PUMP, Pumps.STEEL_MECHANICAL_PUMP, Pumps.ALUMINIUM_MECHANICAL_PUMP, Pumps.STAINLESS_STEEL_MECHANICAL_PUMP,
+                    Pumps.TITANIUM_MECHANICAL_PUMP, Pumps.TUNGSTENSTEEL_MECHANICAL_PUMP, Pumps.PALLADIUM_MECHANICAL_PUMP, Pumps.NAQUADAH_MECHANICAL_PUMP,
+                    Pumps.DARMSTADTIUM_MECHANICAL_PUMP, Pumps.NEUTRONIUM_MECHANICAL_PUMP)
+            .renderer(() -> TieredPumpRenderer::new)
             .register();
 
     public static void register() {}

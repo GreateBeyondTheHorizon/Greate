@@ -1,5 +1,6 @@
 package electrolyte.greate.foundation.data;
 
+import com.mojang.datafixers.util.Pair;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.decoration.encasing.EncasedCTBehaviour;
 import com.simibubi.create.content.kinetics.BlockStressDefaults;
@@ -16,12 +17,14 @@ import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import electrolyte.greate.Greate;
+import electrolyte.greate.GreateEnums;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingWheelBlock;
 import electrolyte.greate.content.kinetics.gearbox.TieredGearboxBlock;
 import electrolyte.greate.content.kinetics.gearbox.TieredVerticalGearboxItem;
 import electrolyte.greate.content.kinetics.millstone.TieredMillstoneBlock;
 import electrolyte.greate.content.kinetics.mixer.TieredMechanicalMixerBlock;
 import electrolyte.greate.content.kinetics.press.TieredMechanicalPressBlock;
+import electrolyte.greate.content.kinetics.pump.TieredPumpBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredCogwheelBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedCogwheelBlock;
@@ -31,6 +34,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.client.model.generators.loaders.ObjModelBuilder;
 
@@ -196,5 +200,18 @@ public class GreateBuilderTransformers {
                                 .texture("particle", p.modLoc("block/mechanical_mixer_base_side"))
                                 .texture("1_2", p.modLoc("block/" + material + "/cogwheel"));
                     }).build();
+    }
+
+    public static <B extends TieredPumpBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> tieredMechanicalPump() {
+        return b -> b.blockstate(tieredMechanicalPumpProvider())
+                .item()
+                .model((c, p) -> {
+                    String material = c.getName().substring(0, c.getName().length() - 16);
+                    p.withExistingParent(c.getName(), Create.asResource("block/mechanical_pump/item"))
+                            .texture("2", p.modLoc("block/" + material + "/pipes"))
+                            .texture("4", p.modLoc("block/" + material + "/pump"))
+                            .texture("5", p.modLoc("block/" + material + "/millstone"))
+                            .texture("particle", p.modLoc("block/" + material + "/pump"));
+                }).build();
     }
 }

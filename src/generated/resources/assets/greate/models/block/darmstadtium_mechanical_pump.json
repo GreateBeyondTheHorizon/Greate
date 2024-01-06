@@ -1,0 +1,8 @@
+{
+  "parent": "create:block/mechanical_pump/block",
+  "textures": {
+    "2": "greate:block/darmstadtium/pipes",
+    "4": "greate:block/darmstadtium/pump",
+    "particle": "greate:block/darmstadtium/pump"
+  }
+}

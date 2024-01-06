@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/mechanical_pump/item",
+  "textures": {
+    "2": "greate:block/darmstadtium/pipes",
+    "4": "greate:block/darmstadtium/pump",
+    "5": "greate:block/darmstadtium/millstone",
+    "particle": "greate:block/darmstadtium/pump"
+  }
+}

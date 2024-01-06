@@ -105,8 +105,18 @@ public class GreatePartialModels {
     PALLADIUM_MECHANICAL_MIXER_HEAD = block("palladium_mechanical_mixer_head"),
     NAQUADAH_MECHANICAL_MIXER_HEAD = block("naquadah_mechanical_mixer_head"),
     DARMSTADTIUM_MECHANICAL_MIXER_HEAD = block("darmstadtium_mechanical_mixer_head"),
-    NEUTRONIUM_MECHANICAL_MIXER_HEAD = block("neutronium_mechanical_mixer_head");
+    NEUTRONIUM_MECHANICAL_MIXER_HEAD = block("neutronium_mechanical_mixer_head"),
 
+    ANDESITE_PUMP_COG = block("andesite_mechanical_pump_cog"),
+    STEEL_PUMP_COG = block("steel_mechanical_pump_cog"),
+    ALUMINIUM_PUMP_COG = block("aluminium_mechanical_pump_cog"),
+    STAINLESS_STEEL_PUMP_COG = block("stainless_steel_mechanical_pump_cog"),
+    TITANIUM_PUMP_COG = block("titanium_mechanical_pump_cog"),
+    TUNGSTENSTEEL_PUMP_COG = block("tungstensteel_mechanical_pump_cog"),
+    PALLADIUM_PUMP_COG = block("palladium_mechanical_pump_cog"),
+    NAQUADAH_PUMP_COG = block("naquadah_mechanical_pump_cog"),
+    DARMSTADTIUM_PUMP_COG = block("darmstadtium_mechanical_pump_cog"),
+    NEUTRONIUM_PUMP_COG = block("neutronium_mechanical_pump_cog");
 
     private static PartialModel block(String path) {
         PartialModel partialModel = new PartialModel(new ResourceLocation(Greate.MOD_ID, "block/" + path));

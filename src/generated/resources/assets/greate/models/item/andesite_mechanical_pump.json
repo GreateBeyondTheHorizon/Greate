@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/mechanical_pump/item",
+  "textures": {
+    "2": "greate:block/andesite/pipes",
+    "4": "greate:block/andesite/pump",
+    "5": "greate:block/andesite/millstone",
+    "particle": "greate:block/andesite/pump"
+  }
+}
