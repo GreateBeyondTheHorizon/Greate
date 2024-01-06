@@ -224,7 +224,32 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
             PALLADIUM_MECHANICAL_MIXER = createMaterialMechanicalMixerRecipe(MechanicalMixers.PALLADIUM_MECHANICAL_MIXER, "luv"),
             NAQUADAH_MECHANICAL_MIXER = createMaterialMechanicalMixerRecipe(MechanicalMixers.NAQUADAH_MECHANICAL_MIXER, "zpm"),
             DARMSTADTIUM_MECHANICAL_MIXER = createMaterialMechanicalMixerRecipe(MechanicalMixers.DARMSTADTIUM_MECHANICAL_MIXER, "uv"),
-            NEUTRONIUM_MECHANICAL_MIXER = createMaterialMechanicalMixerRecipe(MechanicalMixers.NEUTRONIUM_MECHANICAL_MIXER, "uhv");
+            NEUTRONIUM_MECHANICAL_MIXER = createMaterialMechanicalMixerRecipe(MechanicalMixers.NEUTRONIUM_MECHANICAL_MIXER, "uhv"),
+
+
+            ANDESITE_MECHANICAL_PUMP = create(Pumps.ANDESITE_MECHANICAL_PUMP).unlockedByTag(GreateTags.greateItemTag("cogwheels/andesite"))
+                .viaShaped(b -> b.define('N', GreateTags.forgeItemTag("nuggets/iron"))
+                        .define('A', AllItems.ANDESITE_ALLOY)
+                        .define('I', Ingredient.of(
+                                ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu", "rubber_ring")),
+                                ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu", "silicone_rubber_ring")),
+                                ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu", "styrene_butadiene_ring"))))
+                        .define('C', GreateTags.forgeItemTag("tools/screwdrivers"))
+                        .define('O', GreateTags.greateItemTag("cogwheels/andesite"))
+                        .define('W', GreateTags.forgeItemTag("tools/wrenches"))
+                        .define('P', AllBlocks.FLUID_PIPE)
+                        .pattern("NAI")
+                        .pattern("COW")
+                        .pattern("IP ")),
+            STEEL_MECHANICAL_PUMP = createMaterialMechanicalPumpRecipe(Pumps.STEEL_MECHANICAL_PUMP),
+            ALUMINIUM_MECHANICAL_PUMP = createMaterialMechanicalPumpRecipe(Pumps.ALUMINIUM_MECHANICAL_PUMP),
+            STAINLESS_STEEL_MECHANICAL_PUMP = createMaterialMechanicalPumpRecipe(Pumps.STAINLESS_STEEL_MECHANICAL_PUMP),
+            TITANIUM_MECHANICAL_PUMP = createMaterialMechanicalPumpRecipe(Pumps.TITANIUM_MECHANICAL_PUMP),
+            TUNGSTENSTEEL_MECHANICAL_PUMP = createMaterialMechanicalPumpRecipe(Pumps.TUNGSTENSTEEL_MECHANICAL_PUMP),
+            PALLADIUM_MECHANICAL_PUMP = createMaterialMechanicalPumpRecipe(Pumps.PALLADIUM_MECHANICAL_PUMP),
+            NAQUADAH_MECHANICAL_PUMP = createMaterialMechanicalPumpRecipe(Pumps.NAQUADAH_MECHANICAL_PUMP),
+            DARMSTADTIUM_MECHANICAL_PUMP = createMaterialMechanicalPumpRecipe(Pumps.DARMSTADTIUM_MECHANICAL_PUMP),
+            NEUTRONIUM_MECHANICAL_PUMP = createMaterialMechanicalPumpRecipe(Pumps.NEUTRONIUM_MECHANICAL_PUMP);
 
     private GeneratedRecipe createMaterialAlloyRecipe(ItemProviderEntry<? extends ItemLike> alloy) {
         String material = alloy.getId().getPath().substring(0, alloy.getId().getPath().length() - 6);
@@ -341,6 +366,24 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
                         .pattern(" C ")
                         .pattern("IAI")
                         .pattern(" W "));
+    }
+
+    private GeneratedRecipe createMaterialMechanicalPumpRecipe(ItemProviderEntry<? extends ItemLike> pump) {
+        String material = pump.getId().getPath().substring(0, pump.getId().getPath().length() - 16);
+        return create(pump).unlockedByTag(GreateTags.greateItemTag("cogwheels/" + material))
+                .viaShaped(b -> b.define('N', GreateTags.forgeItemTag("nuggets/" + material))
+                        .define('A', ForgeRegistries.ITEMS.getValue(new ResourceLocation(Greate.MOD_ID, material + "_alloy")))
+                        .define('I', Ingredient.of(
+                                ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu", "rubber_ring")),
+                                ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu", "silicone_rubber_ring")),
+                                ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu", "styrene_butadiene_ring"))))
+                        .define('C', GreateTags.forgeItemTag("tools/screwdrivers"))
+                        .define('O', GreateTags.greateItemTag("cogwheels/" + material))
+                        .define('W', GreateTags.forgeItemTag("tools/wrenches"))
+                        .define('P', AllBlocks.FLUID_PIPE)
+                        .pattern("NAI")
+                        .pattern("COW")
+                        .pattern("IP "));
     }
 
     String currentFolder = "";

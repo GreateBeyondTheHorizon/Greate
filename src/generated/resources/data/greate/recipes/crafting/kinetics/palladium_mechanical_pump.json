@@ -1,0 +1,41 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "greate:palladium_alloy"
+    },
+    "C": {
+      "tag": "forge:tools/screwdrivers"
+    },
+    "I": [
+      {
+        "item": "gtceu:rubber_ring"
+      },
+      {
+        "item": "gtceu:silicone_rubber_ring"
+      }
+    ],
+    "N": {
+      "tag": "forge:nuggets/palladium"
+    },
+    "O": {
+      "tag": "greate:cogwheels/palladium"
+    },
+    "P": {
+      "item": "create:fluid_pipe"
+    },
+    "W": {
+      "tag": "forge:tools/wrenches"
+    }
+  },
+  "pattern": [
+    "NAI",
+    "COW",
+    "IP "
+  ],
+  "result": {
+    "item": "greate:palladium_mechanical_pump"
+  },
+  "show_notification": true
+}
