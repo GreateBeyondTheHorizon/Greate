@@ -14,7 +14,12 @@ public class GreateLang {
         REGISTRATE.addRawLang("greate.recipe.crushing", "Crushing");
         REGISTRATE.addRawLang("greate.recipe.pressing", "Pressing");
         REGISTRATE.addRawLang("greate.recipe.mixing", "Mixing");
-        REGISTRATE.addRawLang("greate.recipe.automatic_packing", "Automated Shapeless Crafting");
+        REGISTRATE.addRawLang("greate.recipe.sawing", "Sawing");
+        REGISTRATE.addRawLang("greate.recipe.packing", "Packing");
+        REGISTRATE.addRawLang("greate.recipe.block_cutting", "Block Cutting");
+        REGISTRATE.addRawLang("greate.recipe.wood_cutting", "Wood Cutting");
+        REGISTRATE.addRawLang("greate.recipe.automatic_shapeless", "Automated Shapeless Crafting");
+        REGISTRATE.addRawLang("greate.recipe.automatic_packing", "Automated Shaped Crafting");
         REGISTRATE.addRawLang("greate.recipe.automatic_brewing", "Automated Brewing");
         REGISTRATE.addRawLang("greate.jei.recipe_tier", "Recipe Tier: ");
         REGISTRATE.addRawLang("greate.recipe.processing.extra_chance", "% extra chance per tier");
@@ -32,6 +37,7 @@ public class GreateLang {
         REGISTRATE.addRawLang("config.greate.option.CAPACITY", "Tier Capacity");
         REGISTRATE.addRawLang("config.greate.option.MILLSTONE_IMPACT", "Millstone Impact");
         REGISTRATE.addRawLang("config.greate.option.CRUSHING_WHEEL_IMPACT", "Crushing Wheel Impact");
+        REGISTRATE.addRawLang("gui.goggles.saw_contents", "Saw Contents");
     }
 
     public static void register() {}

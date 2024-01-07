@@ -1,6 +1,5 @@
 package electrolyte.greate.foundation.data;
 
-import com.mojang.datafixers.util.Pair;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.decoration.encasing.EncasedCTBehaviour;
 import com.simibubi.create.content.kinetics.BlockStressDefaults;
@@ -14,10 +13,11 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.builders.ItemBuilder;
+import com.tterrag.registrate.providers.DataGenContext;
+import com.tterrag.registrate.providers.RegistrateItemModelProvider;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import electrolyte.greate.Greate;
-import electrolyte.greate.GreateEnums;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingWheelBlock;
 import electrolyte.greate.content.kinetics.gearbox.TieredGearboxBlock;
 import electrolyte.greate.content.kinetics.gearbox.TieredVerticalGearboxItem;
@@ -32,9 +32,10 @@ import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedSha
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.client.model.generators.loaders.ObjModelBuilder;
 
@@ -213,5 +214,10 @@ public class GreateBuilderTransformers {
                             .texture("5", p.modLoc("block/" + material + "/millstone"))
                             .texture("particle", p.modLoc("block/" + material + "/pump"));
                 }).build();
+    }
+
+    public static void tieredSaw(DataGenContext<Item, BlockItem> ctx, RegistrateItemModelProvider prov) {
+        prov.withExistingParent(ctx.getName(), Create.asResource("block/mechanical_saw/item"))
+                .texture("stonecutter_saw", prov.modLoc("block/" + ctx.getName().substring(0, ctx.getName().length() - 15) + "/saw"));
     }
 }

@@ -9,17 +9,18 @@
     "MixinBeltBlock",
     "MixinBeltFunnelBlock",
     "MixinBeltTunnelBlock",
+    "MixinBlockEntityBehaviour",
     "MixinBlockStressDefaults",
+    "MixinFluidPropagator",
     "MixinGirderBlock",
     "MixinGirderEncasedShaftBlock",
     "MixinKineticBlockEntity",
     "MixinKineticNetwork",
+    "MixinPumpFluidTransferBehaviour",
     "MixinRecipeManager",
+    "MixinSawBlockEntity",
     "MixinSteamEngineBlock",
-    "MixinSteamEngineBlock$PlacementHelper",
-    "MixinFluidPropagator",
-    "MixinBlockEntityBehaviour",
-    "MixinPumpFluidTransferBehaviour"
+    "MixinSteamEngineBlock$PlacementHelper"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "greate:titanium_mechanical_saw"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "greate:blocks/titanium_mechanical_saw"
+}

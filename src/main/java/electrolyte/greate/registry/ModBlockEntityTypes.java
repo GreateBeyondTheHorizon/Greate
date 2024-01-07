@@ -24,8 +24,11 @@ import electrolyte.greate.content.kinetics.press.TieredMechanicalPressBlockEntit
 import electrolyte.greate.content.kinetics.press.TieredMechanicalPressInstance;
 import electrolyte.greate.content.kinetics.press.TieredMechanicalPressRenderer;
 import electrolyte.greate.content.kinetics.pump.TieredPumpBlockEntity;
-import electrolyte.greate.content.kinetics.pump.TieredPumpRenderer;
 import electrolyte.greate.content.kinetics.pump.TieredPumpCogInstance;
+import electrolyte.greate.content.kinetics.pump.TieredPumpRenderer;
+import electrolyte.greate.content.kinetics.saw.TieredSawBlockEntity;
+import electrolyte.greate.content.kinetics.saw.TieredSawInstance;
+import electrolyte.greate.content.kinetics.saw.TieredSawRenderer;
 import electrolyte.greate.content.kinetics.simpleRelays.*;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedCogInstance;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedCogRenderer;
@@ -160,6 +163,15 @@ public class ModBlockEntityTypes {
                     Pumps.TITANIUM_MECHANICAL_PUMP, Pumps.TUNGSTENSTEEL_MECHANICAL_PUMP, Pumps.PALLADIUM_MECHANICAL_PUMP, Pumps.NAQUADAH_MECHANICAL_PUMP,
                     Pumps.DARMSTADTIUM_MECHANICAL_PUMP, Pumps.NEUTRONIUM_MECHANICAL_PUMP)
             .renderer(() -> TieredPumpRenderer::new)
+            .register();
+
+    public static final BlockEntityEntry<TieredSawBlockEntity> TIERED_SAW = REGISTRATE
+            .blockEntity("tiered_saw", TieredSawBlockEntity::new)
+            .instance(() -> TieredSawInstance::new)
+            .validBlocks(Saws.ANDESITE_SAW, Saws.STEEL_SAW, Saws.ALUMINIUM_SAW, Saws.STAINLESS_STEEL_SAW,
+                    Saws.TITANIUM_SAW, Saws.TUNGSTENSTEEL_SAW, Saws.PALLADIUM_SAW, Saws.NAQUADAH_SAW,
+                    Saws.DARMSTADTIUM_SAW, Saws.NEUTRONIUM_SAW)
+            .renderer(() -> TieredSawRenderer::new)
             .register();
 
     public static void register() {}

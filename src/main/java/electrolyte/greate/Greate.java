@@ -62,6 +62,7 @@ public class Greate {
         Girders.register();
         MechanicalPresses.register();
         Millstones.register();
+        Saws.register();
         Shafts.register();
         ModBlockEntityTypes.register();
         ModItems.register();

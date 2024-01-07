@@ -1,11 +1,11 @@
--Increase Basin fluid tank size to 16 buckets
+-Add Tiered Pumps
 
--Allow tier name to be used in recipeTier field (`ultra_low` or `uls` can now be used to specify an ultra low tier recipe for example)
+-Add Tiered Saws
 
 -Add Tiered Mechanical Mixers
 
--Add Tiered Brewing Recipes to Tiered Mixers
+-Add missing auto square pressing and auto shapeless mixing recipes to JEI
 
--Add Tiered Compacting Recipes to Tiered Presses
+-Properly hide certain Create JEI categories
 
 -Modify recipe for Tiered Mechanical Presses

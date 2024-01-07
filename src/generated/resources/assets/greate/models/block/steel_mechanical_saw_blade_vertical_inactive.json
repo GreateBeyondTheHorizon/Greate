@@ -1,0 +1,7 @@
+{
+  "parent": "create:block/mechanical_saw/blade_vertical_inactive",
+  "textures": {
+    "stonecutter_saw": "greate:block/steel/static_saw",
+    "stonecutter_saw_reversed": "greate:block/steel/static_saw"
+  }
+}
