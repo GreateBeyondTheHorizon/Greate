@@ -8,4 +8,4 @@
 
 -Properly hide certain Create JEI categories
 
--Modify recipe for Tiered Mechanical Presses
+-Move certain recipe conditions (circuit # & tier) to their own class

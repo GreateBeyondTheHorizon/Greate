@@ -1,12 +1,9 @@
 package electrolyte.greate.content.kinetics.press;
 
-import com.gregtechceu.gtceu.api.capability.recipe.EURecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.content.Content;
-import com.gregtechceu.gtceu.common.data.GTItems;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
-import com.gregtechceu.gtceu.common.item.IntCircuitBehaviour;
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
 import com.simibubi.create.content.kinetics.crafter.MechanicalCraftingRecipe;
@@ -17,24 +14,22 @@ import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipe;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
 import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour;
-import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.recipe.RecipeApplier;
 import com.simibubi.create.foundation.recipe.RecipeFinder;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.VecHelper;
-import com.simibubi.create.infrastructure.config.AllConfigs;
 import electrolyte.greate.Greate;
 import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.content.kinetics.base.ICircuitHolder;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredProcessingRecipeHolder;
 import electrolyte.greate.content.processing.basin.TieredBasinRecipe;
+import electrolyte.greate.foundation.data.recipe.TieredRecipeConditions;
 import electrolyte.greate.infrastructure.config.GConfigUtility;
 import electrolyte.greate.registry.ModRecipeTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
@@ -51,7 +46,6 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity implements ITieredKineticBlockEntity, ITieredProcessingRecipeHolder, ICircuitHolder {
 
@@ -183,7 +177,8 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
             list = RecipeFinder.get(PRESSING_RECIPE_CACHE_KEY, level, p ->
                     p.getType() == GTRecipeTypes.BENDER_RECIPES ||
                             p.getType() == ModRecipeTypes.PRESSING.getType() ||
-                            p.getType() == AllRecipeTypes.PRESSING.getType()).stream().filter(r -> {
+                            p.getType() == AllRecipeTypes.PRESSING.getType()).stream()
+                    .filter(r -> {
                 if(r.getType() == GTRecipeTypes.BENDER_RECIPES) {
                     GTRecipe recipe = (GTRecipe) r;
                     for(Content c : recipe.getInputContents(ItemRecipeCapability.CAP)) {
@@ -203,47 +198,30 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
                     }
                 }
                 return false;
-            }).collect(Collectors.toList());
+            }).filter(TieredRecipeConditions.circuitMatches(this.targetCircuit.getValue()))
+              .filter(TieredRecipeConditions.isEqualOrAboveTier(this.tier))
+              .toList();
         }
         if(list.isEmpty()) {
             remainingTime = 10;
         } else if(Minecraft.getInstance().level != null) {
             for(Recipe<?> recipe : list) {
                 if(recipe.getType() == GTRecipeTypes.BENDER_RECIPES) {
-                    for(Content c : ((GTRecipe) recipe).getInputContents(ItemRecipeCapability.CAP)) {
-                        if(TIER.convertGTEUToTier(((GTRecipe) recipe).getTickInputContents(EURecipeCapability.CAP)).compareTo(this.tier) <= 0) {
-                            if(((Ingredient) c.getContent()).getItems()[0].is(GTItems.INTEGRATED_CIRCUIT.get())) {
-                                int circuit = IntCircuitBehaviour.getCircuitConfiguration(((Ingredient) c.getContent()).getItems()[0]);
-                                if(circuit == targetCircuit.getValue()) {
-                                    TieredPressingRecipe convertedRecipe = TieredPressingRecipe.convertGT((GTRecipe) recipe, this.tier);
-                                    currentRecipe = convertedRecipe;
-                                    return Optional.of(convertedRecipe);
-                                }
-                            }
-                        }
-                    }
+                    TieredPressingRecipe convertedRecipe = TieredPressingRecipe.convertGT((GTRecipe) recipe, this.tier);
+                    currentRecipe = convertedRecipe;
+                    return Optional.of(convertedRecipe);
                 } else if(recipe.getType() == AllRecipeTypes.PRESSING.getType()) {
                     TieredPressingRecipe tpr = TieredPressingRecipe.convertNormalPressing(recipe);
                     currentRecipe = tpr;
                     return Optional.of(tpr);
                 } else {
                     TieredPressingRecipe tpr = (TieredPressingRecipe) recipe;
-                    if(tpr.getRecipeTier().compareTo(this.tier) <= 0) {
-                        if(tpr.getCircuitNumber() == this.targetCircuit.getValue()) {
-                            currentRecipe = tpr;
-                            return Optional.of(tpr);
-                        }
-                    }
+                    currentRecipe = tpr;
+                    return Optional.of(tpr);
                 }
             }
         }
         return Optional.empty();
-    }
-
-    public static <C extends Container> boolean canCompress(Recipe<C> recipe) {
-        if(!(recipe instanceof CraftingRecipe) || !AllConfigs.server().recipes.allowShapedSquareInPress.get()) return false;
-        NonNullList<Ingredient> ingredients = recipe.getIngredients();
-        return (ingredients.size() == 4 || ingredients.size() == 9) && ItemHelper.matchAllIngredients(ingredients);
     }
 
     @Override
