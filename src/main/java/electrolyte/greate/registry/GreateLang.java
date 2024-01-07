@@ -37,7 +37,7 @@ public class GreateLang {
         REGISTRATE.addRawLang("config.greate.option.CAPACITY", "Tier Capacity");
         REGISTRATE.addRawLang("config.greate.option.MILLSTONE_IMPACT", "Millstone Impact");
         REGISTRATE.addRawLang("config.greate.option.CRUSHING_WHEEL_IMPACT", "Crushing Wheel Impact");
-        REGISTRATE.addRawLang("gui.goggles.saw_contents", "Saw Contents");
+        REGISTRATE.addRawLang("greate.gui.goggles.saw_contents", "Saw Contents");
     }
 
     public static void register() {}

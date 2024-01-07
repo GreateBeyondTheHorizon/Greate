@@ -6,7 +6,7 @@
         "items": [
           {
             "items": [
-              "gtceu:ulv_machine_casing"
+              "create:mechanical_saw"
             ]
           }
         ]
@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "greate:crafting/kinetics/andesite_mechanical_press"
+        "recipe": "greate:crafting/conversion/andesite_mechanical_saw_from_conversion"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "greate:crafting/kinetics/andesite_mechanical_press"
+      "greate:crafting/conversion/andesite_mechanical_saw_from_conversion"
     ]
   },
   "sends_telemetry_event": false

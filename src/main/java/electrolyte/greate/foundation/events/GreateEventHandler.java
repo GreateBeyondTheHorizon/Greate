@@ -23,7 +23,8 @@ public class GreateEventHandler {
                     event.getItemStack().getItem() == AllBlocks.CRUSHING_WHEEL.get().asItem() ||
                     event.getItemStack().getItem() == AllItems.BELT_CONNECTOR.get().asItem() ||
                     event.getItemStack().getItem() == AllBlocks.MECHANICAL_PRESS.get().asItem() ||
-                    event.getItemStack().getItem() == AllBlocks.MECHANICAL_MIXER.get().asItem()) {
+                    event.getItemStack().getItem() == AllBlocks.MECHANICAL_MIXER.get().asItem() ||
+                    event.getItemStack().getItem() == AllBlocks.MECHANICAL_SAW.get().asItem()) {
                 event.getToolTip().add(Lang.builder(Greate.MOD_ID).translate("old_create_items_warning").component().withStyle(ChatFormatting.RED));
             }
         }

@@ -2,26 +2,24 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "item": "minecraft:iron_block"
+    "A": {
+      "item": "gtceu:ulv_machine_hull"
     },
-    "C": {
+    "C": [],
+    "I": {
       "tag": "forge:circuits/ulv"
     },
-    "M": {
-      "item": "gtceu:ulv_machine_casing"
-    },
+    "M": [],
     "S": {
       "tag": "greate:shafts/andesite"
     }
   },
   "pattern": [
-    " S ",
-    "CMC",
-    " B "
+    "CAM",
+    "ISI"
   ],
   "result": {
-    "item": "greate:andesite_mechanical_press"
+    "item": "greate:andesite_mechanical_saw"
   },
   "show_notification": true
 }

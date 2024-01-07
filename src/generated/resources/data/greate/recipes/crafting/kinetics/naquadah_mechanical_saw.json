@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "gtceu:zpm_machine_hull"
+    },
+    "C": {
+      "item": "gtceu:zpm_conveyor_module"
+    },
+    "I": {
+      "tag": "forge:circuits/zpm"
+    },
+    "M": {
+      "item": "gtceu:zpm_electric_motor"
+    },
+    "S": {
+      "tag": "greate:shafts/naquadah"
+    }
+  },
+  "pattern": [
+    "CAM",
+    "ISI"
+  ],
+  "result": {
+    "item": "greate:naquadah_mechanical_saw"
+  },
+  "show_notification": true
+}

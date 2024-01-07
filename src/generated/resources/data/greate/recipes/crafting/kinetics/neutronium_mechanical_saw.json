@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "gtceu:uhv_machine_hull"
+    },
+    "C": {
+      "item": "gtceu:uhv_conveyor_module"
+    },
+    "I": {
+      "tag": "forge:circuits/uhv"
+    },
+    "M": [],
+    "S": {
+      "tag": "greate:shafts/neutronium"
+    }
+  },
+  "pattern": [
+    "CAM",
+    "ISI"
+  ],
+  "result": {
+    "item": "greate:neutronium_mechanical_saw"
+  },
+  "show_notification": true
+}

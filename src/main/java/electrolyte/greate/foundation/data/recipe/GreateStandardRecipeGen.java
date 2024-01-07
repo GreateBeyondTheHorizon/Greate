@@ -56,7 +56,8 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
             CRUSHING_WHEEL_CYCLE = conversionCycle(ImmutableList.of(AllBlocks.CRUSHING_WHEEL, CrushingWheels.ANDESITE_CRUSHING_WHEEL)),
             BELT_CYCLE = conversionCycle(ImmutableList.of(AllItems.BELT_CONNECTOR, Belts.RUBBER_BELT_CONNECTOR)),
             MECHANICAL_PRESS_CYCLE = conversionCycle(ImmutableList.of(AllBlocks.MECHANICAL_PRESS, MechanicalPresses.ANDESITE_MECHANICAL_PRESS)),
-            MECHANICAL_MIXER_CYCLE = conversionCycle(ImmutableList.of(AllBlocks.MECHANICAL_MIXER, MechanicalMixers.ANDESITE_MECHANICAL_MIXER));
+            MECHANICAL_MIXER_CYCLE = conversionCycle(ImmutableList.of(AllBlocks.MECHANICAL_MIXER, MechanicalMixers.ANDESITE_MECHANICAL_MIXER)),
+            MECHANICAL_SAW_CYCLE = conversionCycle(ImmutableList.of(AllBlocks.MECHANICAL_SAW, Saws.ANDESITE_SAW));
 
     private Marker MATERIALS = enterFolder("materials");
 
@@ -177,7 +178,14 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
             POLYTETRAFLUOROETHYLENE_BELT_CONNECTOR = createBeltConnectorRecipe(Belts.POLYTETRAFLUOROETHYLENE_BELT_CONNECTOR),
             POLYBENZIMIDAZOLE_BELT_CONNECTOR = createBeltConnectorRecipe(Belts.POLYBENZIMIDAZOLE_BELT_CONNECTOR),
 
-            ANDESITE_MECHANICAL_PRESS = createMaterialMechanicalPressRecipe(MechanicalPresses.ANDESITE_MECHANICAL_PRESS, "ulv"),
+            ANDESITE_MECHANICAL_PRESS = create(MechanicalPresses.ANDESITE_MECHANICAL_PRESS).unlockedBy(GTBlocks.MACHINE_CASING_ULV::asItem)
+                .viaShaped(b -> b.define('M', GTBlocks.MACHINE_CASING_ULV)
+                .define('C', GreateTags.forgeItemTag("circuits/ulv"))
+                .define('S', GreateTags.greateItemTag("shafts/andesite"))
+                .define('B', Blocks.IRON_BLOCK)
+                .pattern(" S ")
+                .pattern("CMC")
+                .pattern(" B ")),
             STEEL_MECHANICAL_PRESS = createMaterialMechanicalPressRecipe(MechanicalPresses.STEEL_MECHANICAL_PRESS, "lv"),
             ALUMINIUM_MECHANICAL_PRESS = createMaterialMechanicalPressRecipe(MechanicalPresses.ALUMINIUM_MECHANICAL_PRESS, "mv"),
             STAINLESS_STEEL_MECHANICAL_PRESS = createMaterialMechanicalPressRecipe(MechanicalPresses.STAINLESS_STEEL_MECHANICAL_PRESS, "hv"),
@@ -249,7 +257,18 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
             PALLADIUM_MECHANICAL_PUMP = createMaterialMechanicalPumpRecipe(Pumps.PALLADIUM_MECHANICAL_PUMP),
             NAQUADAH_MECHANICAL_PUMP = createMaterialMechanicalPumpRecipe(Pumps.NAQUADAH_MECHANICAL_PUMP),
             DARMSTADTIUM_MECHANICAL_PUMP = createMaterialMechanicalPumpRecipe(Pumps.DARMSTADTIUM_MECHANICAL_PUMP),
-            NEUTRONIUM_MECHANICAL_PUMP = createMaterialMechanicalPumpRecipe(Pumps.NEUTRONIUM_MECHANICAL_PUMP);
+            NEUTRONIUM_MECHANICAL_PUMP = createMaterialMechanicalPumpRecipe(Pumps.NEUTRONIUM_MECHANICAL_PUMP),
+
+            ANDESITE_MECHANICAL_SAW = createMaterialMechanicalSawRecipe(Saws.ANDESITE_SAW, "ulv"),
+            STEEL_MECHANICAL_SAW = createMaterialMechanicalSawRecipe(Saws.STEEL_SAW, "lv"),
+            ALUMINIUM_MECHANICAL_SAW = createMaterialMechanicalSawRecipe(Saws.ALUMINIUM_SAW, "mv"),
+            STAINLESS_STEEL_MECHANICAL_SAW = createMaterialMechanicalSawRecipe(Saws.STAINLESS_STEEL_SAW, "hv"),
+            TITANIUM_MECHANICAL_SAW = createMaterialMechanicalSawRecipe(Saws.TITANIUM_SAW, "ev"),
+            TUNGSTENSTEEL_MECHANICAL_SAW = createMaterialMechanicalSawRecipe(Saws.TUNGSTENSTEEL_SAW, "iv"),
+            PALLADIUM_MECHANICAL_SAW = createMaterialMechanicalSawRecipe(Saws.PALLADIUM_SAW, "luv"),
+            NAQUADAH_MECHANICAL_SAW = createMaterialMechanicalSawRecipe(Saws.NAQUADAH_SAW, "zpm"),
+            DARMSTADTIUM_MECHANICAL_SAW = createMaterialMechanicalSawRecipe(Saws.DARMSTADTIUM_SAW, "uv"),
+            NEUTRONIUM_MECHANICAL_SAW = createMaterialMechanicalSawRecipe(Saws.NEUTRONIUM_SAW, "uhv");
 
     private GeneratedRecipe createMaterialAlloyRecipe(ItemProviderEntry<? extends ItemLike> alloy) {
         String material = alloy.getId().getPath().substring(0, alloy.getId().getPath().length() - 6);
@@ -384,6 +403,18 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
                         .pattern("NAI")
                         .pattern("COW")
                         .pattern("IP "));
+    }
+
+    private GeneratedRecipe createMaterialMechanicalSawRecipe(ItemProviderEntry<? extends ItemLike> saw, String tier) {
+        String material = saw.getId().getPath().substring(0, saw.getId().getPath().length() - 15);
+        return create(saw).unlockedBy(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("gtceu", tier + "_machine_hull"))::asItem)
+                .viaShaped(b -> b.define('C', ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu", tier + "_conveyor_module")))
+                        .define('A', ForgeRegistries.BLOCKS.getValue(new ResourceLocation("gtceu", tier + "_machine_hull")))
+                        .define('M', ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu", tier + "_electric_motor")))
+                        .define('I', GreateTags.forgeItemTag("circuits/" + tier))
+                        .define('S', GreateTags.greateItemTag("shafts/" + material))
+                        .pattern("CAM")
+                        .pattern("ISI"));
     }
 
     String currentFolder = "";

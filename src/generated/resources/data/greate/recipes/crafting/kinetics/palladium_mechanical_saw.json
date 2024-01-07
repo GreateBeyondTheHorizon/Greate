@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "gtceu:luv_machine_hull"
+    },
+    "C": {
+      "item": "gtceu:luv_conveyor_module"
+    },
+    "I": {
+      "tag": "forge:circuits/luv"
+    },
+    "M": {
+      "item": "gtceu:luv_electric_motor"
+    },
+    "S": {
+      "tag": "greate:shafts/palladium"
+    }
+  },
+  "pattern": [
+    "CAM",
+    "ISI"
+  ],
+  "result": {
+    "item": "greate:palladium_mechanical_saw"
+  },
+  "show_notification": true
+}

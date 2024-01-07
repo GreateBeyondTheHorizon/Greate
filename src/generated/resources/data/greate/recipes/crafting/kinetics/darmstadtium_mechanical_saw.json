@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "gtceu:uv_machine_hull"
+    },
+    "C": {
+      "item": "gtceu:uv_conveyor_module"
+    },
+    "I": {
+      "tag": "forge:circuits/uv"
+    },
+    "M": {
+      "item": "gtceu:uv_electric_motor"
+    },
+    "S": {
+      "tag": "greate:shafts/darmstadtium"
+    }
+  },
+  "pattern": [
+    "CAM",
+    "ISI"
+  ],
+  "result": {
+    "item": "greate:darmstadtium_mechanical_saw"
+  },
+  "show_notification": true
+}

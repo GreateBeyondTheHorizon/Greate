@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "gtceu:iv_machine_hull"
+    },
+    "C": {
+      "item": "gtceu:iv_conveyor_module"
+    },
+    "I": {
+      "tag": "forge:circuits/iv"
+    },
+    "M": {
+      "item": "gtceu:iv_electric_motor"
+    },
+    "S": {
+      "tag": "greate:shafts/tungstensteel"
+    }
+  },
+  "pattern": [
+    "CAM",
+    "ISI"
+  ],
+  "result": {
+    "item": "greate:tungstensteel_mechanical_saw"
+  },
+  "show_notification": true
+}

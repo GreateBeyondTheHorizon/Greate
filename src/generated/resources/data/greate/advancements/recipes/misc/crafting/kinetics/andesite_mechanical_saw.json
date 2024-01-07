@@ -6,7 +6,7 @@
         "items": [
           {
             "items": [
-              "gtceu:ulv_machine_casing"
+              "gtceu:ulv_machine_hull"
             ]
           }
         ]
@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "greate:crafting/kinetics/andesite_mechanical_press"
+        "recipe": "greate:crafting/kinetics/andesite_mechanical_saw"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "greate:crafting/kinetics/andesite_mechanical_press"
+      "greate:crafting/kinetics/andesite_mechanical_saw"
     ]
   },
   "sends_telemetry_event": false

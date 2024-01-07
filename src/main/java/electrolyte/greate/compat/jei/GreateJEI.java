@@ -320,7 +320,8 @@ public class GreateJEI implements IModPlugin {
         ingredientManager = registration.getIngredientManager();
         ingredientManager.removeIngredientsAtRuntime(VanillaTypes.ITEM_STACK, List.of(
                 AllBlocks.MILLSTONE.asStack(), AllBlocks.CRUSHING_WHEEL.asStack(),
-                AllBlocks.MECHANICAL_PRESS.asStack(), AllBlocks.MECHANICAL_MIXER.asStack()));
+                AllBlocks.MECHANICAL_PRESS.asStack(), AllBlocks.MECHANICAL_MIXER.asStack(),
+                AllBlocks.MECHANICAL_SAW.asStack()));
         allCategories.forEach(c -> c.registerRecipes(registration));
     }
 

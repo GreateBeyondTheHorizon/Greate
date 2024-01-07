@@ -24,6 +24,7 @@ public class GreateRecipeRemoval {
         recipe.accept(Create.asResource("crafting/kinetics/mechanical_mixer"));
         recipe.accept(Create.asResource("crafting/kinetics/mechanical_press"));
         recipe.accept(Create.asResource("crafting/kinetics/mechanical_pump"));
+        recipe.accept(Create.asResource("crafting/kinetics/mechanical_saw"));
         recipe.accept(Create.asResource("crafting/kinetics/millstone"));
         recipe.accept(Create.asResource("crafting/kinetics/shaft"));
         recipe.accept(Create.asResource("crafting/kinetics/vertical_gearboxfrom_conversion"));

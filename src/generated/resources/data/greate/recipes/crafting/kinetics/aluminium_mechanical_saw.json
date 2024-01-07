@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "gtceu:mv_machine_hull"
+    },
+    "C": {
+      "item": "gtceu:mv_conveyor_module"
+    },
+    "I": {
+      "tag": "forge:circuits/mv"
+    },
+    "M": {
+      "item": "gtceu:mv_electric_motor"
+    },
+    "S": {
+      "tag": "greate:shafts/aluminium"
+    }
+  },
+  "pattern": [
+    "CAM",
+    "ISI"
+  ],
+  "result": {
+    "item": "greate:aluminium_mechanical_saw"
+  },
+  "show_notification": true
+}
