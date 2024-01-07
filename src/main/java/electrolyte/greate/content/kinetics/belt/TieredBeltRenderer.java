@@ -23,6 +23,7 @@ import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
 import electrolyte.greate.Greate;
+import electrolyte.greate.GreateEnums.BELT_TYPE;
 import electrolyte.greate.registry.GreatePartialModels;
 import electrolyte.greate.registry.GreateSpriteShifts;
 import net.minecraft.client.Minecraft;
@@ -141,16 +142,7 @@ public class TieredBeltRenderer extends SafeBlockEntityRenderer<TieredBeltBlockE
                     return stack;
                 };
 
-                String beltMaterial = ForgeRegistries.BLOCKS.getKey(blockState.getBlock()).toString().substring(Greate.MOD_ID.length() + 1);
-                String shaftMaterial;
-                if(((TieredBeltBlock) blockState.getBlock()).getShaftType() != null) {
-                    shaftMaterial = ((TieredBeltBlock) blockState.getBlock()).getShaftType().toString().substring(2, ((TieredBeltBlock) blockState.getBlock()).getShaftType().toString().length() - 5);
-                } else {
-                    shaftMaterial = be.getShaftType().toString().substring(2, be.getShaftType().toString().length() - 5);
-                }
-                PartialModel model = GreatePartialModels.PARTIAL_MODELS.stream().filter(p -> p.getLocation().equals(new ResourceLocation(Greate.MOD_ID, "block/" + beltMaterial + "_" + shaftMaterial + "pulley"))).findFirst().orElse(AllPartialModels.BELT_PULLEY);
-                if(model == AllPartialModels.BELT_PULLEY) Greate.LOGGER.error("Unable to find {} pulley model for {}, using default instead.", shaftMaterial, beltMaterial);
-                SuperByteBuffer superBuffer = CachedBufferer.partialDirectional(model, blockState, dir, matrixStackSupplier);
+                SuperByteBuffer superBuffer = CachedBufferer.partialDirectional(getBeltPulleyModel(blockState, be), blockState, dir, matrixStackSupplier);
                 KineticBlockEntityRenderer.standardKineticRotationTransform(superBuffer, be, light).renderInto(ms, vb);
             }
         }
@@ -172,19 +164,19 @@ public class TieredBeltRenderer extends SafeBlockEntityRenderer<TieredBeltBlockE
     }
 
     public static PartialModel getBeltPartial(TieredBeltBlock block, boolean diagonal, boolean start, boolean end, boolean bottom) {
-        String beltMaterial = ForgeRegistries.BLOCKS.getKey(block).toString().substring(Greate.MOD_ID.length() + 1);
+        BELT_TYPE beltType = block.getBeltType();
         if (diagonal) {
-            if (start) return findModel(beltMaterial + "_diagonal_start", AllPartialModels.BELT_DIAGONAL_START);
-            if (end) return findModel(beltMaterial + "_diagonal_end", AllPartialModels.BELT_DIAGONAL_END);
-            return findModel(beltMaterial + "_diagonal_middle", AllPartialModels.BELT_DIAGONAL_MIDDLE);
+            if(start) return GreatePartialModels.NEW_BELT_MODELS.get(beltType).get(8);
+            if(end) return GreatePartialModels.NEW_BELT_MODELS.get(beltType).get(10);
+            return GreatePartialModels.NEW_BELT_MODELS.get(beltType).get(9);
         } else if (bottom) {
-            if (start) return findModel(beltMaterial + "_start_bottom", AllPartialModels.BELT_START_BOTTOM);
-            if (end) return findModel(beltMaterial + "_end_bottom", AllPartialModels.BELT_END_BOTTOM);
-            return findModel(beltMaterial + "_middle_bottom", AllPartialModels.BELT_MIDDLE_BOTTOM);
+            if(start) return GreatePartialModels.NEW_BELT_MODELS.get(beltType).get(5);
+            if(end) return GreatePartialModels.NEW_BELT_MODELS.get(beltType).get(7);
+            return GreatePartialModels.NEW_BELT_MODELS.get(beltType).get(6);
         } else {
-            if (start) return findModel(beltMaterial + "_start", AllPartialModels.BELT_START);
-            if (end) return findModel(beltMaterial + "_end", AllPartialModels.BELT_END);
-            return findModel(beltMaterial + "_middle", AllPartialModels.BELT_MIDDLE);
+            if(start) return GreatePartialModels.NEW_BELT_MODELS.get(beltType).get(2);
+            if(end) return GreatePartialModels.NEW_BELT_MODELS.get(beltType).get(4);
+            return GreatePartialModels.NEW_BELT_MODELS.get(beltType).get(3);
         }
     }
 
@@ -204,8 +196,16 @@ public class TieredBeltRenderer extends SafeBlockEntityRenderer<TieredBeltBlockE
         }
     }
 
-    private static PartialModel findModel(String path, PartialModel defaultModel) {
-        return GreatePartialModels.PARTIAL_MODELS.stream().filter(p -> p.getLocation().equals(new ResourceLocation(Greate.MOD_ID, "block/" + path))).findFirst().orElse(defaultModel);
+    public static PartialModel getBeltPulleyModel(BlockState blockState, TieredBeltBlockEntity blockEntity) {
+        BELT_TYPE beltType = ((TieredBeltBlock) blockState.getBlock()).getBeltType();
+        String beltMaterial = ForgeRegistries.BLOCKS.getKey(blockState.getBlock()).toString().substring(Greate.MOD_ID.length() + 1);
+        String shaftMaterial;
+        if(((TieredBeltBlock) blockState.getBlock()).getShaftType() != null) {
+            shaftMaterial = ((TieredBeltBlock) blockState.getBlock()).getShaftType().toString().substring(2, ((TieredBeltBlock) blockState.getBlock()).getShaftType().toString().length() - 6);
+        } else {
+            shaftMaterial = blockEntity.getShaftType().toString().substring(2, blockEntity.getShaftType().toString().length() - 6);
+        }
+        return GreatePartialModels.NEW_BELT_MODELS.get(beltType).stream().filter(p -> p.getLocation().equals(new ResourceLocation(Greate.MOD_ID, "block/" + beltMaterial + "_" + shaftMaterial + "_pulley"))).findFirst().orElse(AllPartialModels.BELT_PULLEY);
     }
 
     protected void renderItems(TieredBeltBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {

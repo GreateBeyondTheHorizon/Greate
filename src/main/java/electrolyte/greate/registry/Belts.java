@@ -59,7 +59,7 @@ public class Belts {
                 .transform(TagGen.axeOrPickaxe())
                 .transform(BlockStressDefaults.setImpact(0))
                 .transform(TieredBlockMaterials.setBeltTypeForBlock(beltType))
-                .blockstate(new TieredBeltGenerator()::generate)
+                .blockstate(new TieredBeltGenerator()::generateModel)
                 .onRegisterAfter(ForgeRegistries.ITEMS.getRegistryKey(), c -> c.validShafts(validShafts))
                 .onRegister(TieredBeltBlock::setupBeltModel)
                 .onRegister(assignDataBehaviour(new ItemNameDisplaySource(), "combine_item_names"))

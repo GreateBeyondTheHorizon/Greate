@@ -2,7 +2,7 @@
 
 -Add Tiered Saws
 
--Add Tiered Mechanical Mixers
+-Fix FPS drop when looking at belts
 
 -Add missing auto square pressing and auto shapeless mixing recipes to JEI
 

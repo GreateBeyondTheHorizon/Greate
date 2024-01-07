@@ -6,7 +6,6 @@ import com.jozufozu.flywheel.api.MaterialManager;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.kinetics.base.flwdata.BeltData;
 import com.simibubi.create.content.kinetics.base.flwdata.RotatingData;
 import com.simibubi.create.content.kinetics.belt.BeltBlock;
@@ -15,17 +14,13 @@ import com.simibubi.create.content.kinetics.belt.BeltSlope;
 import com.simibubi.create.foundation.block.render.SpriteShiftEntry;
 import com.simibubi.create.foundation.render.AllMaterialSpecs;
 import com.simibubi.create.foundation.utility.Iterate;
-import electrolyte.greate.Greate;
 import electrolyte.greate.content.kinetics.base.TieredKineticBlockEntityInstance;
-import electrolyte.greate.registry.GreatePartialModels;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.Direction.AxisDirection;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.LightLayer;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.joml.Quaternionf;
 
 import java.util.ArrayList;
@@ -144,16 +139,7 @@ public class TieredBeltInstance extends TieredKineticBlockEntityInstance<TieredB
             return modelTransform;
         };
 
-        String beltMaterial = ForgeRegistries.BLOCKS.getKey(blockState.getBlock()).toString().substring(Greate.MOD_ID.length() + 1);
-        String shaftMaterial;
-        if(((TieredBeltBlock) blockState.getBlock()).getShaftType() != null) {
-            shaftMaterial = ((TieredBeltBlock) blockState.getBlock()).getShaftType().toString().substring(2, ((TieredBeltBlock) blockState.getBlock()).getShaftType().toString().length() - 5);
-        } else {
-            shaftMaterial = blockEntity.getShaftType().toString().substring(2, blockEntity.getShaftType().toString().length() - 5);
-        }
-        PartialModel model = GreatePartialModels.PARTIAL_MODELS.stream().filter(p -> p.getLocation().equals(new ResourceLocation(Greate.MOD_ID, "block/" + beltMaterial + "_" + shaftMaterial + "pulley"))).findFirst().orElse(AllPartialModels.BELT_PULLEY);
-        if(model == AllPartialModels.BELT_PULLEY) Greate.LOGGER.error("Unable to find {} pulley model for {}, using default instead.", shaftMaterial, beltMaterial);
-        return getRotatingMaterial().getModel(model, blockState, dir, ms);
+        return getRotatingMaterial().getModel(TieredBeltRenderer.getBeltPulleyModel(blockState, blockEntity), blockState, dir, ms);
     }
 
     private Direction getOrientation() {
