@@ -1,0 +1,21 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "greate:block/small_pipe/pipes",
+		"particle": "greate:block/small_pipe/pipes"
+	},
+	"elements": [
+		{
+			"from": [4, 4, 4],
+			"to": [12, 12, 12],
+			"faces": {
+				"north": {"uv": [1.5, 11.5, 5.5, 15.5], "texture": "#0"},
+				"east": {"uv": [1.5, 11.5, 5.5, 15.5], "texture": "#0"},
+				"south": {"uv": [1.5, 11.5, 5.5, 15.5], "texture": "#0"},
+				"west": {"uv": [1.5, 11.5, 5.5, 15.5], "texture": "#0"},
+				"up": {"uv": [1.5, 11.5, 5.5, 15.5], "texture": "#0"},
+				"down": {"uv": [1.5, 11.5, 5.5, 15.5], "texture": "#0"}
+			}
+		}
+	]
+}

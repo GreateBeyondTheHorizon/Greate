@@ -1,0 +1,53 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"textures": {
+		"0": "greate:block/tiny_pipe/glass_fluid_pipe",
+		"particle": "greate:block/pipe_plating"
+	},
+	"elements": [
+		{
+			"name": "Outer",
+			"from": [6, 0, 6],
+			"to": [10, 16, 10],
+			"faces": {
+				"north": {"uv": [0, 14, 16, 10], "rotation": 90, "texture": "#0"},
+				"east": {"uv": [0, 14, 16, 10], "rotation": 90, "texture": "#0"},
+				"south": {"uv": [0, 10, 16, 14], "rotation": 90, "texture": "#0"},
+				"west": {"uv": [0, 10, 16, 14], "rotation": 90, "texture": "#0"}
+			}
+		},
+		{
+			"name": "Inner",
+			"from": [6, 0, 9.9],
+			"to": [10, 16, 9.9],
+			"faces": {
+				"north": {"uv": [0, 10, 16, 14], "rotation": 90, "texture": "#0"}
+			}
+		},
+		{
+			"name": "Inner",
+			"from": [6.1, 0, 6],
+			"to": [6.1, 16, 10],
+			"faces": {
+				"east": {"uv": [0, 10, 16, 14], "rotation": 90, "texture": "#0"}
+			}
+		},
+		{
+			"name": "Inner",
+			"from": [6, 0, 6.1],
+			"to": [10, 16, 6.1],
+			"faces": {
+				"south": {"uv": [0, 10, 16, 14], "rotation": 90, "texture": "#0"}
+			}
+		},
+		{
+			"name": "Inner",
+			"from": [9.9, 0, 6],
+			"to": [9.9, 16, 10],
+			"faces": {
+				"west": {"uv": [0, 10, 16, 14], "rotation": 90, "texture": "#0"}
+			}
+		}
+	]
+}
