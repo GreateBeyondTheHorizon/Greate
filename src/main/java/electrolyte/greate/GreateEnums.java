@@ -14,7 +14,7 @@ public class GreateEnums {
         MEDIUM("MS", ChatFormatting.AQUA),
         HIGH("HS", ChatFormatting.GOLD),
         EXTREME("ES", ChatFormatting.DARK_PURPLE),
-        INSANE("IS", ChatFormatting.DARK_BLUE),
+        INSANE("IS", ChatFormatting.BLUE),
         LUDICRIOUS("LuS", ChatFormatting.LIGHT_PURPLE),
         ZPM("ZPMS", ChatFormatting.RED),
         ULTIMATE("US", ChatFormatting.DARK_AQUA),

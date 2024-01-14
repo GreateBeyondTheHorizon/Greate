@@ -1,6 +1,5 @@
 package electrolyte.greate.mixin;
 
-import com.jozufozu.flywheel.backend.instancing.InstancedRenderDispatcher;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.equipment.goggles.IHaveHoveringInformation;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
@@ -16,8 +15,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -76,10 +73,6 @@ public abstract class MixinKineticBlockEntity extends SmartBlockEntity implement
 
         if(clientPacket && overCapacityBefore != greate_OverCapacity && speed != 0) {
             effects.triggerOverStressedEffect();
-        }
-
-        if(clientPacket) {
-            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> InstancedRenderDispatcher.enqueueUpdate((KineticBlockEntity) (Object)this));
         }
     }
 
