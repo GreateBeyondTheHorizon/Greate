@@ -1,4 +1,4 @@
-package electrolyte.greate.content.kinetics.pump;
+package electrolyte.greate.content.fluids.pump;
 
 import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.content.fluids.pump.PumpBlock;
@@ -7,9 +7,7 @@ import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredPartialModel;
 import electrolyte.greate.registry.Pumps;
 import electrolyte.greate.registry.ModBlockEntityTypes;
-import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockState;
 
 public class TieredPumpBlock extends PumpBlock implements ITieredBlock, ITieredPartialModel {
 

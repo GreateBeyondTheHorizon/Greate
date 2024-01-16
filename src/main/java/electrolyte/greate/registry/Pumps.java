@@ -1,10 +1,7 @@
 package electrolyte.greate.registry;
 
 import com.jozufozu.flywheel.core.PartialModel;
-import com.simibubi.create.content.fluids.PipeAttachmentModel;
 import com.simibubi.create.content.kinetics.BlockStressDefaults;
-import com.simibubi.create.foundation.data.BlockStateGen;
-import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -12,7 +9,7 @@ import electrolyte.greate.Greate;
 import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.GreateEnums.MATERIAL_TYPE;
 import electrolyte.greate.content.kinetics.TieredBlockMaterials;
-import electrolyte.greate.content.kinetics.pump.TieredPumpBlock;
+import electrolyte.greate.content.fluids.pump.TieredPumpBlock;
 import electrolyte.greate.foundation.data.GreateBuilderTransformers;
 import net.minecraft.world.level.material.MapColor;
 

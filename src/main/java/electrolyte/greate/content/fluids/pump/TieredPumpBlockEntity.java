@@ -1,4 +1,4 @@
-package electrolyte.greate.content.kinetics.pump;
+package electrolyte.greate.content.fluids.pump;
 
 import com.simibubi.create.content.fluids.FluidPropagator;
 import com.simibubi.create.content.fluids.FluidTransportBehaviour;
@@ -9,7 +9,6 @@ import com.simibubi.create.foundation.utility.Pair;
 import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import electrolyte.greate.infrastructure.config.GConfigUtility;
-import electrolyte.greate.infrastructure.config.GreateConfigs;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
