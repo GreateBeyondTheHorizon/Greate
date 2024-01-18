@@ -4,7 +4,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.gregtechceu.gtceu.api.recipe.content.Content;
 import com.gregtechceu.gtceu.api.recipe.ingredient.SizedIngredient;
-import com.gregtechceu.gtceu.api.recipe.ingredient.forge.SizedIngredientImpl;
 import com.gregtechceu.gtceu.common.data.GTItems;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
@@ -104,7 +103,7 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
     public TieredProcessingRecipeBuilder<T> withItemOutputsGT(List<Content> list, TIER recipeTier, TIER machineTier) {
         NonNullList<ProcessingOutput> nonNullList = NonNullList.create();
         for(Content c : list) {
-            ItemStack[] items = ((SizedIngredientImpl) c.content).getItems();
+            ItemStack[] items = ((SizedIngredient) c.content).getItems();
             for (ItemStack item : items) {
                 nonNullList.add(new TieredProcessingOutput(item, c.chance, getExtraPercent(c.tierChanceBoost, recipeTier, machineTier, true)));
             }
