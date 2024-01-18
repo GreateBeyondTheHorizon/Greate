@@ -1,9 +1,8 @@
-package electrolyte.greate.content.kinetics.pump;
+package electrolyte.greate.content.fluids.pump;
 
 import com.jozufozu.flywheel.api.Instancer;
 import com.jozufozu.flywheel.api.MaterialManager;
 import com.jozufozu.flywheel.api.instance.DynamicInstance;
-import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.kinetics.base.flwdata.RotatingData;
 import electrolyte.greate.content.kinetics.base.TieredSingleRotatingInstance;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredPartialModel;
