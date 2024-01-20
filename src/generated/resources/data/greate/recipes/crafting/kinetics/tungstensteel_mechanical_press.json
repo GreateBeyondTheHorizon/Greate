@@ -6,7 +6,7 @@
       "tag": "forge:storage_blocks/tungstensteel"
     },
     "C": {
-      "tag": "forge:circuits/iv"
+      "tag": "gtceu:circuits/iv"
     },
     "M": {
       "item": "gtceu:iv_machine_hull"

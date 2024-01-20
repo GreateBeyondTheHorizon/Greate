@@ -9,7 +9,7 @@
       "item": "gtceu:hv_conveyor_module"
     },
     "I": {
-      "tag": "forge:circuits/hv"
+      "tag": "gtceu:circuits/hv"
     },
     "M": {
       "item": "gtceu:hv_electric_motor"

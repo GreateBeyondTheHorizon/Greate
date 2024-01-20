@@ -9,9 +9,11 @@
       "item": "gtceu:uhv_conveyor_module"
     },
     "I": {
-      "tag": "forge:circuits/uhv"
+      "tag": "gtceu:circuits/uhv"
     },
-    "M": [],
+    "M": {
+      "item": "gtceu:uhv_electric_motor"
+    },
     "S": {
       "tag": "greate:shafts/neutronium"
     }

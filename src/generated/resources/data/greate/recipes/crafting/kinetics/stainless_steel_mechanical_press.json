@@ -6,7 +6,7 @@
       "tag": "forge:storage_blocks/stainless_steel"
     },
     "C": {
-      "tag": "forge:circuits/hv"
+      "tag": "gtceu:circuits/hv"
     },
     "M": {
       "item": "gtceu:hv_machine_hull"

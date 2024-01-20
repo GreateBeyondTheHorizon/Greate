@@ -9,7 +9,7 @@
       "item": "gtceu:zpm_conveyor_module"
     },
     "I": {
-      "tag": "forge:circuits/zpm"
+      "tag": "gtceu:circuits/zpm"
     },
     "M": {
       "item": "gtceu:zpm_electric_motor"

@@ -6,7 +6,7 @@
       "tag": "forge:storage_blocks/darmstadtium"
     },
     "C": {
-      "tag": "forge:circuits/uv"
+      "tag": "gtceu:circuits/uv"
     },
     "M": {
       "item": "gtceu:uv_machine_hull"

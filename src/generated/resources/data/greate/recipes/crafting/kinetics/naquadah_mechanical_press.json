@@ -6,7 +6,7 @@
       "tag": "forge:storage_blocks/naquadah"
     },
     "C": {
-      "tag": "forge:circuits/zpm"
+      "tag": "gtceu:circuits/zpm"
     },
     "M": {
       "item": "gtceu:zpm_machine_hull"
