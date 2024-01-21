@@ -1,0 +1,17 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "greate:block/large_pipe/pipes_connected",
+		"particle": "greate:block/large_pipe/pipes_connected"
+	},
+	"elements": [
+		{
+			"from": [3, 3, 3],
+			"to": [13, 13, 13],
+			"faces": {
+				"north": {"uv": [12.75, 8.75, 15.25, 11.25], "rotation": 180, "texture": "#0"},
+				"south": {"uv": [12.75, 8.75, 15.25, 11.25], "rotation": 180, "texture": "#0"}
+			}
+		}
+	]
+}
