@@ -108,6 +108,7 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
 
     @Override
     protected void read(CompoundTag compound, boolean clientPacket) {
+        int prevBeltLength = beltLength;
         if(compound.contains("Network")) {
             CompoundTag networkTag = compound.getCompound("Network");
             this.networkMaxCapacity = networkTag.getDouble("MaxCapacity");
@@ -117,6 +118,16 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
         ((TieredBeltBlock) this.getBlockState().getBlock()).setShaftType(shaftType);
         this.tier = NBTHelper.readEnum(compound, "Tier", TIER.class);
         ((TieredBeltBlock) this.getBlockState().getBlock()).setTier(tier);
+        beltLength = compound.getInt("Length");
+        if(!wasMoved) {
+            if(prevBeltLength != beltLength) {
+                DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+                    if(lighter != null) {
+                        lighter.initializeLight();
+                    }
+                });
+            }
+        }
         super.read(compound, clientPacket);
     }
 
