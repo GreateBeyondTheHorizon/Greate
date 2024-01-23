@@ -4,6 +4,7 @@
   "minVersion": "0.8",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
+    "MixinAllArmInteractionPointTypes$BeltType",
     "MixinBasinBlockEntity",
     "MixinBasinRenderer",
     "MixinBeltBlock",
