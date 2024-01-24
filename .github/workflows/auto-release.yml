@@ -7,7 +7,7 @@ permissions:
   contents: write
 
 env:
-  RELEASE_VERSION: 0.0.12
+  RELEASE_VERSION: 0.0.13
 
 jobs:
   build:
