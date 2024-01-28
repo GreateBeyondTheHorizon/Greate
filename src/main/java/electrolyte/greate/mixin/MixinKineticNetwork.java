@@ -24,6 +24,11 @@ public abstract class MixinKineticNetwork {
     @Shadow public abstract float calculateCapacity();
     @Unique private double greate_currentMaxCapacity;
 
+    @Inject(method = "initFromTE", at = @At("RETURN"), remap = false)
+    private void greate_initFromTE(float maxStress, float currentStress, int members, CallbackInfo ci) {
+        greate_updateMaxCapacity();
+    }
+
     @Inject(method = "updateNetwork", at = @At(value = "HEAD"), remap = false)
     private void greate_updateNetwork(CallbackInfo ci) {
         float newStress = calculateStress();
@@ -38,7 +43,7 @@ public abstract class MixinKineticNetwork {
     }
 
     @Inject(method = "updateFromNetwork", at = @At(value = "RETURN"), remap = false)
-    private void greateUpdateFromNetwork(KineticBlockEntity be, CallbackInfo ci) {
+    private void greate_updateFromNetwork(KineticBlockEntity be, CallbackInfo ci) {
         if(be instanceof ITieredKineticBlockEntity itkbe) {
             itkbe.updateFromNetwork(currentCapacity, currentStress, getSize(), greate_currentMaxCapacity);
         }
@@ -58,13 +63,18 @@ public abstract class MixinKineticNetwork {
         greate_updateMaxCapacity();
     }
 
+    @Inject(method = "updateStressFor", at = @At("RETURN"), remap = false)
+    private void greate_updateStressFor(KineticBlockEntity be, float stress, CallbackInfo ci) {
+        greate_updateMaxCapacity();
+    }
+
     @Unique
     private double greate_calculateMaxCapacity() {
         double presentMaxCapacity = Integer.MAX_VALUE;
         for (KineticBlockEntity be : members.keySet()) {
             if (be instanceof ITieredKineticBlockEntity itkbe) {
-                if (presentMaxCapacity > itkbe.getMaxCapacity()) {
-                    presentMaxCapacity = itkbe.getMaxCapacity();
+                if (presentMaxCapacity > itkbe.getMaxCapacityFromBlock(be.getBlockState().getBlock())) {
+                    presentMaxCapacity = itkbe.getMaxCapacityFromBlock(be.getBlockState().getBlock());
                 }
             }
         }
