@@ -180,7 +180,7 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
 
             ANDESITE_MECHANICAL_PRESS = create(MechanicalPresses.ANDESITE_MECHANICAL_PRESS).unlockedBy(GTBlocks.MACHINE_CASING_ULV::asItem)
                 .viaShaped(b -> b.define('M', GTBlocks.MACHINE_CASING_ULV)
-                .define('C', GreateTags.forgeItemTag("circuits/ulv"))
+                .define('C', GreateTags.gtceuItemTag("circuits/ulv"))
                 .define('S', GreateTags.greateItemTag("shafts/andesite"))
                 .define('B', Blocks.IRON_BLOCK)
                 .pattern(" S ")
@@ -217,7 +217,7 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
 
             ANDESITE_MIXER = create(MechanicalMixers.ANDESITE_MECHANICAL_MIXER).unlockedBy(GTBlocks.MACHINE_CASING_ULV::asItem)
                     .viaShaped(b -> b.define('C', Cogwheels.ANDESITE_COGWHEEL)
-                            .define('I', GreateTags.forgeItemTag("circuits/ulv"))
+                            .define('I', GreateTags.gtceuItemTag("circuits/ulv"))
                             .define('A', GTBlocks.MACHINE_CASING_ULV)
                             .define('W', AllItems.WHISK)
                             .pattern(" C ")
@@ -324,7 +324,7 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
                 .viaShaped(b -> b.define('W', GreateTags.greateItemTag("cogwheels/" + material))
                         .define('S', GreateTags.mcItemTag("wooden_slabs"))
                         .define('M', ForgeRegistries.BLOCKS.getValue(new ResourceLocation("gtceu", tier + "_machine_hull")))
-                        .define('C', GreateTags.forgeItemTag("circuits/" + tier))
+                        .define('C', GreateTags.gtceuItemTag("circuits/" + tier))
                         .define('A', GreateTags.greateItemTag("shafts/" + material))
                         .pattern(" W ")
                         .pattern("SMS")
@@ -355,7 +355,7 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
         String material = mechanicalPress.getId().getPath().substring(0, mechanicalPress.getId().getPath().length() - 17);
         return create(mechanicalPress).unlockedBy(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("gtceu", tier + "_machine_hull"))::asItem)
                 .viaShaped(b -> b.define('M', ForgeRegistries.BLOCKS.getValue(new ResourceLocation("gtceu", tier + "_machine_hull")))
-                        .define('C', GreateTags.forgeItemTag("circuits/" + tier))
+                        .define('C', GreateTags.gtceuItemTag("circuits/" + tier))
                         .define('S', GreateTags.greateItemTag("shafts/" + material))
                         .define('B', GreateTags.forgeItemTag("storage_blocks/" + material))
                         .pattern(" S ")
@@ -379,7 +379,7 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
         String material = mixer.getId().getPath().substring(0, mixer.getId().getPath().length() - 17);
         return create(mixer).unlockedBy(ForgeRegistries.BLOCKS.getValue(new ResourceLocation("gtceu", tier + "_machine_hull"))::asItem)
                 .viaShaped(b -> b.define('C', GreateTags.greateItemTag("cogwheels/" + material))
-                        .define('I', GreateTags.forgeItemTag("circuits/" + tier))
+                        .define('I', GreateTags.gtceuItemTag("circuits/" + tier))
                         .define('A', ForgeRegistries.BLOCKS.getValue(new ResourceLocation("gtceu", tier + "_machine_hull"))::asItem)
                         .define('W', ForgeRegistries.ITEMS.getValue(new ResourceLocation(Greate.MOD_ID, material + "_whisk")))
                         .pattern(" C ")
@@ -411,7 +411,7 @@ public class GreateStandardRecipeGen extends GreateRecipeProvider {
                 .viaShaped(b -> b.define('C', ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu", tier + "_conveyor_module")))
                         .define('A', ForgeRegistries.BLOCKS.getValue(new ResourceLocation("gtceu", tier + "_machine_hull")))
                         .define('M', ForgeRegistries.ITEMS.getValue(new ResourceLocation("gtceu", tier + "_electric_motor")))
-                        .define('I', GreateTags.forgeItemTag("circuits/" + tier))
+                        .define('I', GreateTags.gtceuItemTag("circuits/" + tier))
                         .define('S', GreateTags.greateItemTag("shafts/" + material))
                         .pattern("CAM")
                         .pattern("ISI"));

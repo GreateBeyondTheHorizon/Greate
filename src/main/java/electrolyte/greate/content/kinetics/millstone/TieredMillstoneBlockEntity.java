@@ -11,10 +11,8 @@ import electrolyte.greate.GreateEnums;
 import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
-import electrolyte.greate.infrastructure.config.GConfigUtility;
 import electrolyte.greate.registry.ModRecipeTypes;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -34,7 +32,6 @@ public class TieredMillstoneBlockEntity extends MillstoneBlockEntity implements 
     private ProcessingRecipe<RecipeWrapper> lastRecipe;
     private TIER tier;
     private int maxItemsPerRecipe;
-    private double networkMaxCapacity;
 
     public TieredMillstoneBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
         super(typeIn, pos, state);
@@ -43,36 +40,6 @@ public class TieredMillstoneBlockEntity extends MillstoneBlockEntity implements 
         capability = LazyOptional.of(TieredMillstoneInventoryHandler::new);
         tier = ((TieredMillstoneBlock) state.getBlock()).getTier();
         maxItemsPerRecipe = GreateEnums.TIER.getTierMultiplier(tier, 2);
-    }
-
-    @Override
-    public double getMaxCapacity() {
-        return GConfigUtility.getMaxCapacityFromTier(tier);
-    }
-
-    @Override
-    protected void read(CompoundTag compound, boolean clientPacket) {
-        if(compound.contains("Network")) {
-            CompoundTag networkTag = compound.getCompound("Network");
-            this.networkMaxCapacity = networkTag.getDouble("MaxCapacity");
-        }
-        super.read(compound, clientPacket);
-    }
-
-    @Override
-    public void write(CompoundTag compound, boolean clientPacket) {
-        super.write(compound, clientPacket);
-        if(hasNetwork()) {
-            CompoundTag networkTag = compound.getCompound("Network");
-            networkTag.putDouble("MaxCapacity", this.networkMaxCapacity);
-        }
-    }
-
-    @Override
-    public void updateFromNetwork(float maxStress, float currentStress, int networkSize, double networkMaxCapacity) {
-        super.updateFromNetwork(maxStress, currentStress, networkSize);
-        this.networkMaxCapacity = networkMaxCapacity;
-        sendData();
     }
 
     @Override

@@ -6,7 +6,7 @@
       "item": "minecraft:iron_block"
     },
     "C": {
-      "tag": "forge:circuits/ulv"
+      "tag": "gtceu:circuits/ulv"
     },
     "M": {
       "item": "gtceu:ulv_machine_casing"

@@ -9,7 +9,7 @@
       "item": "gtceu:mv_conveyor_module"
     },
     "I": {
-      "tag": "forge:circuits/mv"
+      "tag": "gtceu:circuits/mv"
     },
     "M": {
       "item": "gtceu:mv_electric_motor"

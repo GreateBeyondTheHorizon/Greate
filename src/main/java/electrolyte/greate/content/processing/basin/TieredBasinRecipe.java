@@ -280,7 +280,6 @@ public class TieredBasinRecipe extends TieredProcessingRecipe<SmartInventory> {
                 recipeOutputItems.addAll(basinRecipe.rollResults());
                 recipeOutputFluids.addAll(basinRecipe.getFluidResults());
                 recipeOutputItems.addAll(basinRecipe.getRemainingItems(basin.getInputInventory()));
-                System.out.println();
             }
             if (!basin.acceptOutputs(recipeOutputItems, recipeOutputFluids, simulate)) return false;
         }

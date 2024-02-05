@@ -1,6 +1,5 @@
 package electrolyte.greate.mixin;
 
-import com.jozufozu.flywheel.backend.instancing.InstancedRenderDispatcher;
 import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.equipment.goggles.IHaveHoveringInformation;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
@@ -16,8 +15,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -47,14 +44,9 @@ public abstract class MixinKineticBlockEntity extends SmartBlockEntity implement
         super(type, pos, state);
     }
 
-    @Override
-    public double getMaxCapacity() {
-        return Integer.MAX_VALUE;
-    }
-
     @Inject(method = "write", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/blockEntity/SmartBlockEntity;write(Lnet/minecraft/nbt/CompoundTag;Z)V"), remap = false)
     private void greate_Write(CompoundTag compound, boolean clientPacket, CallbackInfo ci) {
-        compound.putDouble("MaxCapacity", getMaxCapacity());
+        compound.putDouble("MaxCapacity", getMaxCapacityFromBlock(this.getBlockState().getBlock()));
         if(hasNetwork()) {
             CompoundTag networkTag = compound.getCompound("Network");
             networkTag.putDouble("MaxCapacity", greate_networkMaxCapacity);
@@ -76,10 +68,6 @@ public abstract class MixinKineticBlockEntity extends SmartBlockEntity implement
 
         if(clientPacket && overCapacityBefore != greate_OverCapacity && speed != 0) {
             effects.triggerOverStressedEffect();
-        }
-
-        if(clientPacket) {
-            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> InstancedRenderDispatcher.enqueueUpdate((KineticBlockEntity) (Object)this));
         }
     }
 
@@ -104,7 +92,7 @@ public abstract class MixinKineticBlockEntity extends SmartBlockEntity implement
         greate_OverCapacity = false;
     }
 
-    @Inject(method = "getSpeed", at = @At("HEAD"), remap = false, cancellable = true)
+    @Inject(method = "getSpeed", at = @At("RETURN"), remap = false, cancellable = true)
     private void greate_getSpeed(CallbackInfoReturnable<Float> cir) {
         if(greate_OverCapacity) cir.setReturnValue(0.0F);
     }

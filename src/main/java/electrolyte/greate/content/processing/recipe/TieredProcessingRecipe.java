@@ -1,7 +1,7 @@
 package electrolyte.greate.content.processing.recipe;
 
 import com.gregtechceu.gtceu.api.recipe.content.Content;
-import com.gregtechceu.gtceu.api.recipe.ingredient.forge.SizedIngredientImpl;
+import com.gregtechceu.gtceu.api.recipe.ingredient.SizedIngredient;
 import com.gregtechceu.gtceu.common.data.GTItems;
 import com.gregtechceu.gtceu.common.item.IntCircuitBehaviour;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
@@ -92,8 +92,8 @@ public abstract class TieredProcessingRecipe<T extends Container> extends Proces
     public static int getCircuitFromGTRecipe(List<Content> inputContents) {
         int circuitNumber = -1;
         for(Content c : inputContents) {
-            if(((SizedIngredientImpl) c.getContent()).getItems()[0].is(GTItems.INTEGRATED_CIRCUIT.asItem())) {
-                ItemStack circuit = ((SizedIngredientImpl) c.getContent()).getItems()[0];
+            if(((SizedIngredient) c.getContent()).getItems()[0].is(GTItems.INTEGRATED_CIRCUIT.asItem())) {
+                ItemStack circuit = ((SizedIngredient) c.getContent()).getItems()[0];
                 circuitNumber = IntCircuitBehaviour.getCircuitConfiguration(circuit);
                 break;
             }

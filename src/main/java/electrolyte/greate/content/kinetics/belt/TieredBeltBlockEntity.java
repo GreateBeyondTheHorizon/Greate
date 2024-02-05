@@ -9,7 +9,6 @@ import com.simibubi.create.content.kinetics.belt.transport.BeltMovementHandler;
 import com.simibubi.create.foundation.utility.NBTHelper;
 import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
-import electrolyte.greate.infrastructure.config.GConfigUtility;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
@@ -35,7 +34,6 @@ import java.util.Optional;
 
 public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKineticBlockEntity {
 
-    private double networkMaxCapacity;
     private TIER tier;
     private ItemStack shaftType;
 
@@ -100,23 +98,26 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
         NBTHelper.writeEnum(compound, "Tier", this.tier);
 
         super.write(compound, clientPacket);
-        if(hasNetwork()) {
-            CompoundTag networkTag = compound.getCompound("Network");
-            networkTag.putDouble("MaxCapacity", this.networkMaxCapacity);
-        }
     }
 
     @Override
     protected void read(CompoundTag compound, boolean clientPacket) {
-        if(compound.contains("Network")) {
-            CompoundTag networkTag = compound.getCompound("Network");
-            this.networkMaxCapacity = networkTag.getDouble("MaxCapacity");
-        }
+        int prevBeltLength = beltLength;
 
         shaftType = ItemStack.of(compound.getCompound("ShaftType"));
         ((TieredBeltBlock) this.getBlockState().getBlock()).setShaftType(shaftType);
         this.tier = NBTHelper.readEnum(compound, "Tier", TIER.class);
         ((TieredBeltBlock) this.getBlockState().getBlock()).setTier(tier);
+        beltLength = compound.getInt("Length");
+        if(!wasMoved) {
+            if(prevBeltLength != beltLength) {
+                DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+                    if(lighter != null) {
+                        lighter.initializeLight();
+                    }
+                });
+            }
+        }
         super.read(compound, clientPacket);
     }
 
@@ -224,18 +225,6 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
                 pos.move(vec.getX(), verticality, vec.getZ());
             }
         }
-    }
-
-    @Override
-    public double getMaxCapacity() {
-        return GConfigUtility.getMaxCapacityFromTier(tier);
-    }
-
-    @Override
-    public void updateFromNetwork(float maxStress, float currentStress, int networkSize, double networkMaxCapacity) {
-        super.updateFromNetwork(maxStress, currentStress, networkSize);
-        this.networkMaxCapacity = networkMaxCapacity;
-        sendData();
     }
 
     public ItemStack getShaftType() {

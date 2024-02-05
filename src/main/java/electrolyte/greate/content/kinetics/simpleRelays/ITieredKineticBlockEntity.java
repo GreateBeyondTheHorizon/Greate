@@ -6,14 +6,25 @@ import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.infrastructure.config.GConfigUtility;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.block.Block;
 
 import java.util.List;
 
 public interface ITieredKineticBlockEntity {
 
-    double getMaxCapacity();
+    default double getMaxCapacityFromBlock(Block block) {
+        boolean tieredMachine = block instanceof ITieredBlock;
+        TIER tier = null;
+        if(tieredMachine) {
+            tier = ((ITieredBlock) block).getTier();
+        }
+        if(tier != null) {
+            return GConfigUtility.getMaxCapacityFromTier(tier);
+        }
+        return Integer.MAX_VALUE;
+    }
 
-    void updateFromNetwork(float maxStress, float currentStress, int networkSize, double networkMaxCapacity);
+    default void updateFromNetwork(float maxStress, float currentStress, int networkSize, double networkMaxCapacity) {};
 
     default boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking, TIER tier, double capacity) {
         if(tier != null) {

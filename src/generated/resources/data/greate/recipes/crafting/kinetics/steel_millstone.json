@@ -6,7 +6,7 @@
       "tag": "greate:shafts/steel"
     },
     "C": {
-      "tag": "forge:circuits/lv"
+      "tag": "gtceu:circuits/lv"
     },
     "M": {
       "item": "gtceu:lv_machine_hull"

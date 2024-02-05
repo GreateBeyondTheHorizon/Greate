@@ -1,5 +1,6 @@
 package electrolyte.greate.registry;
 
+import com.gregtechceu.gtceu.GTCEu;
 import electrolyte.greate.Greate;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
@@ -53,6 +54,18 @@ public class GreateTags {
 
     public static TagKey<Fluid> greateFluidTag(String location) {
         return modTag(ForgeRegistries.FLUIDS, new ResourceLocation(Greate.MOD_ID, location));
+    }
+
+    public static TagKey<Block> gtceuBlockTag(String location) {
+        return modTag(ForgeRegistries.BLOCKS, new ResourceLocation(GTCEu.MOD_ID, location));
+    }
+
+    public static TagKey<Item> gtceuItemTag(String location) {
+        return modTag(ForgeRegistries.ITEMS, new ResourceLocation(GTCEu.MOD_ID, location));
+    }
+
+    public static TagKey<Fluid> gtceuFluidTag(String location) {
+        return modTag(ForgeRegistries.FLUIDS, new ResourceLocation(GTCEu.MOD_ID, location));
     }
 
     public enum GreateItemTags {

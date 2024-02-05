@@ -6,7 +6,7 @@
       "tag": "forge:storage_blocks/aluminium"
     },
     "C": {
-      "tag": "forge:circuits/mv"
+      "tag": "gtceu:circuits/mv"
     },
     "M": {
       "item": "gtceu:mv_machine_hull"

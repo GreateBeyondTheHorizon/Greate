@@ -16,11 +16,9 @@ import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.content.kinetics.base.ICircuitHolder;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import electrolyte.greate.content.processing.basin.TieredBasinRecipe;
-import electrolyte.greate.infrastructure.config.GConfigUtility;
 import electrolyte.greate.registry.ModRecipeTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.crafting.CraftingRecipe;
@@ -36,7 +34,6 @@ import java.util.Optional;
 public class TieredMechanicalMixerBlockEntity extends MechanicalMixerBlockEntity implements ITieredKineticBlockEntity, ICircuitHolder {
 
     private TIER tier;
-    private double networkMaxCapacity;
     private ScrollValueBehaviour targetCircuit;
     private static final Object SHAPELESS_OR_MIXING_RECIPES_KEY = new Object();
 
@@ -55,39 +52,9 @@ public class TieredMechanicalMixerBlockEntity extends MechanicalMixerBlockEntity
     }
 
     @Override
-    public double getMaxCapacity() {
-        return GConfigUtility.getMaxCapacityFromTier(tier);
-    }
-
-    @Override
-    public void updateFromNetwork(float maxStress, float currentStress, int networkSize, double networkMaxCapacity) {
-        super.updateFromNetwork(maxStress, currentStress, networkSize);
-        this.networkMaxCapacity = networkMaxCapacity;
-        sendData();
-    }
-
-    @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
         return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, tier, capacity);
-    }
-
-    @Override
-    protected void read(CompoundTag compound, boolean clientPacket) {
-        if(compound.contains("Network")) {
-            CompoundTag networkTag = compound.getCompound("Network");
-            this.networkMaxCapacity = networkTag.getDouble("MaxCapacity");
-        }
-        super.read(compound, clientPacket);
-    }
-
-    @Override
-    public void write(CompoundTag compound, boolean clientPacket) {
-        super.write(compound, clientPacket);
-        if(hasNetwork()) {
-            CompoundTag networkTag = compound.getCompound("Network");
-            networkTag.putDouble("MaxCapacity", this.networkMaxCapacity);
-        }
     }
 
     @Override

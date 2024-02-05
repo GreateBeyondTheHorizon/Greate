@@ -10,11 +10,9 @@ import electrolyte.greate.Greate;
 import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
-import electrolyte.greate.infrastructure.config.GConfigUtility;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -31,7 +29,6 @@ import java.util.List;
 
 public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKineticBlockEntity {
 
-    private double networkMaxCapacity;
     private TIER tier;
     private SmartFluidTankBehaviour inputTank;
     private LazyOptional<IFluidHandler> fluidCapability;
@@ -53,36 +50,6 @@ public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKinet
                 return new CombinedTankWrapper(inputCap.orElse(null));
             });
         }
-    }
-
-    @Override
-    public double getMaxCapacity() {
-        return GConfigUtility.getMaxCapacityFromTier(tier);
-    }
-
-    @Override
-    protected void read(CompoundTag compound, boolean clientPacket) {
-        if(compound.contains("Network")) {
-            CompoundTag networkTag = compound.getCompound("Network");
-            this.networkMaxCapacity = networkTag.getDouble("MaxCapacity");
-        }
-        super.read(compound, clientPacket);
-    }
-
-    @Override
-    public void write(CompoundTag compound, boolean clientPacket) {
-        super.write(compound, clientPacket);
-        if(hasNetwork()) {
-            CompoundTag networkTag = compound.getCompound("Network");
-            networkTag.putDouble("MaxCapacity", this.networkMaxCapacity);
-        }
-    }
-
-    @Override
-    public void updateFromNetwork(float maxStress, float currentStress, int networkSize, double networkMaxCapacity) {
-        super.updateFromNetwork(maxStress, currentStress, networkSize);
-        this.networkMaxCapacity = networkMaxCapacity;
-        sendData();
     }
 
     @Override

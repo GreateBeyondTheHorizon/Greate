@@ -1,4 +1,4 @@
-package electrolyte.greate.content.kinetics.pump;
+package electrolyte.greate.content.fluids.pump;
 
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.simibubi.create.foundation.render.CachedBufferer;
