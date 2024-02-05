@@ -3,7 +3,6 @@ package electrolyte.greate.content.processing.basin;
 import com.gregtechceu.gtceu.api.capability.recipe.FluidRecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
-import com.gregtechceu.gtceu.api.recipe.ingredient.SizedIngredient;
 import com.simibubi.create.content.processing.basin.BasinBlockEntity;
 import com.simibubi.create.content.processing.basin.BasinRecipe;
 import com.simibubi.create.content.processing.burner.BlazeBurnerBlock.HeatLevel;
@@ -61,7 +60,7 @@ public class TieredBasinRecipe extends TieredProcessingRecipe<SmartInventory> {
                 filterTest = filter.test(basinRecipe.getFluidResults().get(0));
         } else if(recipe instanceof GTRecipe basinRecipe) {
             if(!basinRecipe.getOutputContents(ItemRecipeCapability.CAP).isEmpty()) {
-                SizedIngredient ing = (SizedIngredient) basinRecipe.getOutputContents(ItemRecipeCapability.CAP).get(0).getContent();
+                Ingredient ing = (Ingredient) basinRecipe.getOutputContents(ItemRecipeCapability.CAP).get(0).getContent();
                 filterTest = filter.test(ing.getItems()[0]);
         }
             if(basinRecipe.getOutputContents(ItemRecipeCapability.CAP).isEmpty()

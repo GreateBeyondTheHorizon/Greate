@@ -55,13 +55,13 @@ public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKinet
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
-        Lang.builder(Greate.MOD_ID).translate("gui.goggles.saw_contents").forGoggles(tooltip);
-
+        ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, tier, capacity);
         if(canProcess()) {
             IFluidHandler fluid = fluidCapability.orElse(new FluidTank(0));
             LangBuilder mb = Lang.translate("generic.unit.millibuckets");
             FluidStack fluidStack = fluid.getFluidInTank(0);
-            if(!fluidStack.isEmpty()) {
+            if(! fluidStack.isEmpty()) {
+                Lang.builder(Greate.MOD_ID).translate("gui.goggles.saw_contents").forGoggles(tooltip);
                 Lang.text("")
                         .add(Lang.fluidName(fluidStack)
                                 .add(Lang.text(" ")).style(ChatFormatting.GRAY)
@@ -71,8 +71,7 @@ public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKinet
                 tooltip.remove(0);
             }
         }
-
-        return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, tier, capacity);
+        return true;
     }
 
     @Override

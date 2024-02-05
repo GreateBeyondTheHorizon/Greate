@@ -1,1 +1,5 @@
--Fix broken crushing wheel recipes
+-Bump min GT version
+
+-Fix broken JEI recipes
+
+-Reorder saw tooltips

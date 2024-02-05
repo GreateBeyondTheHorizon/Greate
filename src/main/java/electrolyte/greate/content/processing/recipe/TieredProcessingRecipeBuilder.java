@@ -3,7 +3,6 @@ package electrolyte.greate.content.processing.recipe;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.gregtechceu.gtceu.api.recipe.content.Content;
-import com.gregtechceu.gtceu.api.recipe.ingredient.SizedIngredient;
 import com.gregtechceu.gtceu.common.data.GTItems;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
@@ -61,7 +60,7 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
     public TieredProcessingRecipeBuilder<T> withItemIngredientsGT(List<Content> ingredients) {
         NonNullList<Ingredient> nonNullList = NonNullList.create();
         for(Content c : ingredients) {
-            SizedIngredient ingredient = (SizedIngredient) c.getContent();
+            Ingredient ingredient = (Ingredient) c.getContent();
             if(!ingredient.getItems()[0].is(GTItems.INTEGRATED_CIRCUIT.asItem())) {
                 nonNullList.add(ingredient);
             }
@@ -103,7 +102,7 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
     public TieredProcessingRecipeBuilder<T> withItemOutputsGT(List<Content> list, TIER recipeTier, TIER machineTier) {
         NonNullList<ProcessingOutput> nonNullList = NonNullList.create();
         for(Content c : list) {
-            ItemStack[] items = ((SizedIngredient) c.content).getItems();
+            ItemStack[] items = ((Ingredient) c.content).getItems();
             for (ItemStack item : items) {
                 nonNullList.add(new TieredProcessingOutput(item, c.chance, getExtraPercent(c.tierChanceBoost, recipeTier, machineTier, true)));
             }
