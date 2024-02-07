@@ -8,7 +8,7 @@ import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import electrolyte.greate.Greate;
-import electrolyte.greate.GreateEnums.BELT_TYPE;
+import electrolyte.greate.GreateValues.BELT_TYPE;
 import electrolyte.greate.content.kinetics.TieredBlockMaterials;
 import electrolyte.greate.content.kinetics.belt.TieredBeltBlock;
 import electrolyte.greate.content.kinetics.belt.TieredBeltGenerator;

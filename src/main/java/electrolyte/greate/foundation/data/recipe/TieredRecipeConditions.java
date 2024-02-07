@@ -10,7 +10,7 @@ import com.gregtechceu.gtceu.common.data.GTItems;
 import com.gregtechceu.gtceu.common.item.IntCircuitBehaviour;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour;
-import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.GreateValues.TIER;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;

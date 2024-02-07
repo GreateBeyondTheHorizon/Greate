@@ -8,7 +8,7 @@ import com.simibubi.create.foundation.placement.IPlacementHelper;
 import com.simibubi.create.foundation.placement.PlacementHelpers;
 import com.simibubi.create.foundation.placement.PlacementOffset;
 import com.simibubi.create.foundation.placement.PoleHelper;
-import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.GreateValues.TIER;
 import electrolyte.greate.content.decoration.encasing.IGirderEncasableBlock;
 import electrolyte.greate.content.kinetics.steamEngine.TieredPoweredShaftBlock;
 import electrolyte.greate.registry.ModBlockEntityTypes;

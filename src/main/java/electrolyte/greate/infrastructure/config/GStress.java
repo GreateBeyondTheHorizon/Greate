@@ -5,8 +5,8 @@ import com.simibubi.create.content.kinetics.BlockStressValues.IStressValueProvid
 import com.simibubi.create.foundation.config.ConfigBase;
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.RegisteredObjects;
-import electrolyte.greate.GreateEnums.BELT_TYPE;
-import electrolyte.greate.GreateEnums.MATERIAL_TYPE;
+import electrolyte.greate.GreateValues.BELT_TYPE;
+import electrolyte.greate.GreateValues.MATERIAL_TYPE;
 import electrolyte.greate.content.kinetics.TieredBlockMaterials;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;

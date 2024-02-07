@@ -15,7 +15,7 @@ import com.simibubi.create.foundation.item.SmartInventory;
 import com.simibubi.create.foundation.recipe.DummyCraftingContainer;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import com.simibubi.create.foundation.utility.Iterate;
-import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.GreateValues.TIER;
 import electrolyte.greate.content.kinetics.base.ICircuitHolder;
 import electrolyte.greate.content.kinetics.mixer.TieredMixingRecipe;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;

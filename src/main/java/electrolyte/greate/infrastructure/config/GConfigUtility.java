@@ -1,7 +1,7 @@
 package electrolyte.greate.infrastructure.config;
 
-import electrolyte.greate.GreateEnums.BELT_TYPE;
-import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.GreateValues.BELT_TYPE;
+import electrolyte.greate.GreateValues.TIER;
 
 public class GConfigUtility {
 

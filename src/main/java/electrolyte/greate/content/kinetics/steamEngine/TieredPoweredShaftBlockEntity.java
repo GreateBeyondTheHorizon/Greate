@@ -1,7 +1,7 @@
 package electrolyte.greate.content.kinetics.steamEngine;
 
 import com.simibubi.create.content.kinetics.steamEngine.PoweredShaftBlockEntity;
-import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.GreateValues.TIER;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import net.minecraft.core.BlockPos;

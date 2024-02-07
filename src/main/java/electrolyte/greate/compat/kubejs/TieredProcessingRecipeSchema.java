@@ -9,7 +9,7 @@ import dev.latvian.mods.kubejs.recipe.RecipeKey;
 import dev.latvian.mods.kubejs.recipe.component.NumberComponent.IntRange;
 import dev.latvian.mods.kubejs.recipe.component.StringComponent;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
-import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.GreateValues.TIER;
 import electrolyte.greate.compat.kubejs.item.TieredOutputItem;
 import electrolyte.greate.content.processing.recipe.TieredProcessingOutput;
 

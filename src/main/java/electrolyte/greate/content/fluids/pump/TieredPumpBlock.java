@@ -2,7 +2,7 @@ package electrolyte.greate.content.fluids.pump;
 
 import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.content.fluids.pump.PumpBlock;
-import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.GreateValues.TIER;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredPartialModel;
 import electrolyte.greate.registry.Pumps;

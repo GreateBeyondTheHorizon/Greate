@@ -4,7 +4,7 @@ import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import com.simibubi.create.foundation.ponder.ui.LayoutHelper;
-import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.GreateValues.TIER;
 import electrolyte.greate.compat.jei.category.animations.TieredAnimatedCrushingWheels;
 import electrolyte.greate.content.kinetics.crusher.TieredAbstractCrushingRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingOutput;

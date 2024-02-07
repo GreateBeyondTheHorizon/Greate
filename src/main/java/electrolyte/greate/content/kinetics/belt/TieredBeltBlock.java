@@ -19,8 +19,8 @@ import com.simibubi.create.content.schematics.requirement.ItemRequirement.ItemUs
 import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.tterrag.registrate.util.entry.BlockEntry;
-import electrolyte.greate.GreateEnums.BELT_TYPE;
-import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.GreateValues.BELT_TYPE;
+import electrolyte.greate.GreateValues.TIER;
 import electrolyte.greate.content.kinetics.belt.item.TieredBeltConnectorItem;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingWheelControllerBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;

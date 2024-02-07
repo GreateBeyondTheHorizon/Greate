@@ -4,7 +4,7 @@ import com.simibubi.create.content.kinetics.crusher.CrushingWheelBlock;
 import com.simibubi.create.content.kinetics.crusher.CrushingWheelBlockEntity;
 import com.simibubi.create.content.kinetics.crusher.CrushingWheelControllerBlock;
 import com.simibubi.create.foundation.utility.Iterate;
-import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.GreateValues.TIER;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.registry.CrushingWheels;
 import electrolyte.greate.registry.ModBlockEntityTypes;

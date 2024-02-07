@@ -2,7 +2,7 @@ package electrolyte.greate.content.kinetics.simpleRelays;
 
 import com.simibubi.create.foundation.utility.Lang;
 import electrolyte.greate.Greate;
-import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.GreateValues.TIER;
 import electrolyte.greate.infrastructure.config.GConfigUtility;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;

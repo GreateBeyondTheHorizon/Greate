@@ -2,7 +2,7 @@ package electrolyte.greate.compat.jei.category;
 
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
-import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.GreateValues.TIER;
 import electrolyte.greate.compat.jei.category.animations.TieredAnimatedMechanicalPress;
 import electrolyte.greate.content.kinetics.press.TieredPressingRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingOutput;

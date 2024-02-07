@@ -3,8 +3,8 @@ package electrolyte.greate.content.kinetics;
 import com.mojang.datafixers.util.Pair;
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
-import electrolyte.greate.GreateEnums.BELT_TYPE;
-import electrolyte.greate.GreateEnums.MATERIAL_TYPE;
+import electrolyte.greate.GreateValues.BELT_TYPE;
+import electrolyte.greate.GreateValues.MATERIAL_TYPE;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 

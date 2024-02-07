@@ -6,7 +6,7 @@ import net.minecraft.ChatFormatting;
 import java.util.Arrays;
 import java.util.List;
 
-public class GreateEnums {
+public class GreateValues {
 
     public enum TIER implements Comparable<TIER> {
         ULTRA_LOW("ULS", ChatFormatting.WHITE),

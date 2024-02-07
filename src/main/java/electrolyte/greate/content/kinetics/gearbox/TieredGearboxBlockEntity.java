@@ -1,7 +1,7 @@
 package electrolyte.greate.content.kinetics.gearbox;
 
 import com.simibubi.create.content.kinetics.gearbox.GearboxBlockEntity;
-import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.GreateValues.TIER;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;

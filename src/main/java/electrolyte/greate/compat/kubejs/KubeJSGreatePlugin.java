@@ -36,6 +36,7 @@ public class KubeJSGreatePlugin extends KubeJSPlugin {
     @Override
     public void registerBindings(BindingsEvent event) {
         event.add("TieredOutputItem", TieredOutputItem.class);
+//        event.add("GreateValues" );
     }
 
     @Override

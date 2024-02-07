@@ -1,6 +1,6 @@
 package electrolyte.greate.content.kinetics.belt;
 
-import electrolyte.greate.GreateEnums.BELT_TYPE;
+import electrolyte.greate.GreateValues.BELT_TYPE;
 
 public interface ITieredBelt {
 

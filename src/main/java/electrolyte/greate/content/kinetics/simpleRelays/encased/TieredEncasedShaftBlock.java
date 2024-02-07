@@ -3,7 +3,7 @@ package electrolyte.greate.content.kinetics.simpleRelays.encased;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.simpleRelays.encased.EncasedShaftBlock;
 import com.simibubi.create.content.schematics.requirement.ItemRequirement;
-import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.GreateValues.TIER;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredShaftBlock;
 import electrolyte.greate.registry.ModBlockEntityTypes;

@@ -2,7 +2,7 @@ package electrolyte.greate.registry;
 
 import com.jozufozu.flywheel.core.PartialModel;
 import electrolyte.greate.Greate;
-import electrolyte.greate.GreateEnums.BELT_TYPE;
+import electrolyte.greate.GreateValues.BELT_TYPE;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;

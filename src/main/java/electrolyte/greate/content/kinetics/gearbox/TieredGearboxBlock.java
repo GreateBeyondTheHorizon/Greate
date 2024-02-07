@@ -3,7 +3,7 @@ package electrolyte.greate.content.kinetics.gearbox;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.content.kinetics.gearbox.GearboxBlock;
 import com.simibubi.create.content.kinetics.gearbox.GearboxBlockEntity;
-import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.GreateValues.TIER;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredPartialModel;
 import electrolyte.greate.registry.ModBlockEntityTypes;

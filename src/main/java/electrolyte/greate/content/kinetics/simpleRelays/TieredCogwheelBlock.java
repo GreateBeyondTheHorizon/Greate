@@ -3,7 +3,7 @@ package electrolyte.greate.content.kinetics.simpleRelays;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.simpleRelays.CogWheelBlock;
-import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.GreateValues.TIER;
 import electrolyte.greate.registry.ModBlockEntityTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;

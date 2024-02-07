@@ -3,7 +3,7 @@ package electrolyte.greate.content.kinetics.millstone;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.content.kinetics.millstone.MillstoneBlock;
 import com.simibubi.create.content.kinetics.millstone.MillstoneBlockEntity;
-import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.GreateValues.TIER;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredPartialModel;
 import electrolyte.greate.registry.Millstones;

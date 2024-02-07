@@ -7,7 +7,7 @@ import com.jozufozu.flywheel.util.box.ImmutableBox;
 import com.simibubi.create.content.kinetics.belt.*;
 import com.simibubi.create.content.kinetics.belt.transport.BeltMovementHandler;
 import com.simibubi.create.foundation.utility.NBTHelper;
-import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.GreateValues.TIER;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.core.BlockPos;

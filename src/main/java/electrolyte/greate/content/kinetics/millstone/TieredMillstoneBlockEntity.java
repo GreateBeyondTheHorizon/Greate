@@ -7,8 +7,8 @@ import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.kinetics.millstone.MillstoneBlockEntity;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
-import electrolyte.greate.GreateEnums;
-import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.GreateValues;
+import electrolyte.greate.GreateValues.TIER;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import electrolyte.greate.registry.ModRecipeTypes;
@@ -39,7 +39,7 @@ public class TieredMillstoneBlockEntity extends MillstoneBlockEntity implements 
         outputInv = new ItemStackHandler(1);
         capability = LazyOptional.of(TieredMillstoneInventoryHandler::new);
         tier = ((TieredMillstoneBlock) state.getBlock()).getTier();
-        maxItemsPerRecipe = GreateEnums.TIER.getTierMultiplier(tier, 2);
+        maxItemsPerRecipe = GreateValues.TIER.getTierMultiplier(tier, 2);
     }
 
     @Override

@@ -6,7 +6,7 @@ import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.kinetics.crusher.CrushingWheelControllerBlockEntity;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
-import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.GreateValues.TIER;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import electrolyte.greate.registry.ModRecipeTypes;
 import net.minecraft.core.BlockPos;

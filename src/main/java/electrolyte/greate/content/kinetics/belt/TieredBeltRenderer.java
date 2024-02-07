@@ -23,7 +23,7 @@ import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
 import electrolyte.greate.Greate;
-import electrolyte.greate.GreateEnums.BELT_TYPE;
+import electrolyte.greate.GreateValues.BELT_TYPE;
 import electrolyte.greate.registry.GreatePartialModels;
 import electrolyte.greate.registry.GreateSpriteShifts;
 import net.minecraft.client.Minecraft;

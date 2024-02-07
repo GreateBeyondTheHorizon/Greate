@@ -3,7 +3,7 @@ package electrolyte.greate.compat.jei.category;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
-import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.GreateValues.TIER;
 import electrolyte.greate.compat.jei.category.animations.TieredAnimatedSaw;
 import electrolyte.greate.content.kinetics.saw.TieredCuttingRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingOutput;

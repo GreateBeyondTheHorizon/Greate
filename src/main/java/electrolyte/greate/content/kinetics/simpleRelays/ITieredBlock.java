@@ -1,6 +1,6 @@
 package electrolyte.greate.content.kinetics.simpleRelays;
 
-import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.GreateValues.TIER;
 import electrolyte.greate.infrastructure.config.GConfigUtility;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;

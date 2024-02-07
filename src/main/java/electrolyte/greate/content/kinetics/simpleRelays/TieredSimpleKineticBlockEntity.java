@@ -1,7 +1,7 @@
 package electrolyte.greate.content.kinetics.simpleRelays;
 
 import com.simibubi.create.content.kinetics.simpleRelays.SimpleKineticBlockEntity;
-import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.GreateValues.TIER;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.entity.BlockEntityType;

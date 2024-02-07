@@ -3,7 +3,7 @@ package electrolyte.greate.content.kinetics.mixer;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.content.kinetics.mixer.MechanicalMixerBlock;
 import com.simibubi.create.content.kinetics.mixer.MechanicalMixerBlockEntity;
-import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.GreateValues.TIER;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredEncasedCogwheel;
 import electrolyte.greate.registry.MechanicalMixers;

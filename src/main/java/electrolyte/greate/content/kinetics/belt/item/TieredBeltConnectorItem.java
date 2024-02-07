@@ -9,8 +9,8 @@ import com.simibubi.create.content.kinetics.simpleRelays.AbstractSimpleShaftBloc
 import com.simibubi.create.foundation.advancement.AllAdvancements;
 import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
 import com.simibubi.create.foundation.utility.VecHelper;
-import electrolyte.greate.GreateEnums.BELT_TYPE;
-import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.GreateValues.BELT_TYPE;
+import electrolyte.greate.GreateValues.TIER;
 import electrolyte.greate.content.kinetics.belt.ITieredBelt;
 import electrolyte.greate.content.kinetics.belt.TieredBeltBlock;
 import electrolyte.greate.content.kinetics.belt.TieredBeltBlockEntity;
