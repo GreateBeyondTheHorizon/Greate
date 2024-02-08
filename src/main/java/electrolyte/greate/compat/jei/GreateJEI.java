@@ -26,7 +26,7 @@ import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.infrastructure.config.AllConfigs;
 import com.simibubi.create.infrastructure.config.CRecipes;
 import electrolyte.greate.Greate;
-import electrolyte.greate.GreateValues.TIER;
+
 import electrolyte.greate.compat.jei.category.*;
 import electrolyte.greate.compat.jei.category.GreateRecipeCategory.Info;
 import electrolyte.greate.compat.jei.category.TieredBlockCuttingCategory.TieredCondensedBlockCuttingRecipe;
@@ -72,6 +72,8 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
+import static com.gregtechceu.gtceu.api.GTValues.ULV;
+
 @JeiPlugin
 @ParametersAreNonnullByDefault
 public class GreateJEI implements IModPlugin {
@@ -88,7 +90,7 @@ public class GreateJEI implements IModPlugin {
                 milling = builder(TieredAbstractCrushingRecipe.class)
                     .addTypedRecipes(ModRecipeTypes.MILLING)
                     .addTypedRecipes(AllRecipeTypes.MILLING::getType, TieredMillingRecipe::convertNormalMilling)
-                    .addTypedRecipesGT(GTRecipeTypes.MACERATOR_RECIPES, (r) -> TieredMillingRecipe.convertGT(r, TIER.ULTRA_LOW))
+                    .addTypedRecipesGT(GTRecipeTypes.MACERATOR_RECIPES, (r) -> TieredMillingRecipe.convertGT(r, ULV))
                     .catalyst(Millstones.ANDESITE_MILLSTONE::get)
                     .catalyst(Millstones.STEEL_MILLSTONE::get)
                     .catalyst(Millstones.ALUMINIUM_MILLSTONE::get)
@@ -104,10 +106,10 @@ public class GreateJEI implements IModPlugin {
                     .build("milling", TieredMillingCategory::new),
 
                 crushing = builder(TieredAbstractCrushingRecipe.class)
-                        .addTypedRecipesGT(GTRecipeTypes.MACERATOR_RECIPES, r -> TieredCrushingRecipe.convertGT(r, TIER.ULTRA_LOW))
+                        .addTypedRecipesGT(GTRecipeTypes.MACERATOR_RECIPES, r -> TieredCrushingRecipe.convertGT(r, ULV))
                         .addTypedRecipes(ModRecipeTypes.CRUSHING::getType)
-                        .addTypedRecipesExcludingGT(AllRecipeTypes.CRUSHING::getType, GTRecipeTypes.MACERATOR_RECIPES, r -> TieredCrushingRecipe.convertNormalCrushing(r, TIER.ULTRA_LOW))
-                        .addTypedRecipesExcluding(AllRecipeTypes.MILLING::getType, AllRecipeTypes.CRUSHING::getType, r -> TieredCrushingRecipe.convertNormalCrushing(r, TIER.ULTRA_LOW))
+                        .addTypedRecipesExcludingGT(AllRecipeTypes.CRUSHING::getType, GTRecipeTypes.MACERATOR_RECIPES, r -> TieredCrushingRecipe.convertNormalCrushing(r, ULV))
+                        .addTypedRecipesExcluding(AllRecipeTypes.MILLING::getType, AllRecipeTypes.CRUSHING::getType, r -> TieredCrushingRecipe.convertNormalCrushing(r, ULV))
                         .catalyst(CrushingWheels.ANDESITE_CRUSHING_WHEEL::get)
                         .catalyst(CrushingWheels.STEEL_CRUSHING_WHEEL::get)
                         .catalyst(CrushingWheels.ALUMINIUM_CRUSHING_WHEEL::get)
@@ -123,7 +125,7 @@ public class GreateJEI implements IModPlugin {
                         .build("crushing", TieredCrushingCategory::new),
 
                 pressing = builder(TieredPressingRecipe.class)
-                        .addTypedRecipesGT(GTRecipeTypes.BENDER_RECIPES, r -> TieredPressingRecipe.convertGT(r, TIER.ULTRA_LOW))
+                        .addTypedRecipesGT(GTRecipeTypes.BENDER_RECIPES, r -> TieredPressingRecipe.convertGT(r, ULV))
                         .addTypedRecipes(ModRecipeTypes.PRESSING::getType)
                         .addTypedRecipesExcludingGT(AllRecipeTypes.PRESSING::getType, GTRecipeTypes.BENDER_RECIPES, TieredPressingRecipe::convertNormalPressing)
                         .catalyst(MechanicalPresses.ANDESITE_MECHANICAL_PRESS::get)
@@ -141,7 +143,7 @@ public class GreateJEI implements IModPlugin {
                         .build("pressing", TieredPressingCategory::new),
 
                 mixing = builder(TieredBasinRecipe.class)
-                        .addTypedRecipesGT(GTRecipeTypes.MIXER_RECIPES, r -> TieredMixingRecipe.convertGTMixing(r, TIER.ULTRA_LOW))
+                        .addTypedRecipesGT(GTRecipeTypes.MIXER_RECIPES, r -> TieredMixingRecipe.convertGTMixing(r, ULV))
                         .addTypedRecipes(ModRecipeTypes.MIXING::getType)
                         .addTypedRecipesExcludingGT(AllRecipeTypes.MIXING::getType, GTRecipeTypes.MIXER_RECIPES, TieredMixingRecipe::convertUntieredRecipe)
                         .catalyst(MechanicalMixers.ANDESITE_MECHANICAL_MIXER::get)
@@ -246,7 +248,7 @@ public class GreateJEI implements IModPlugin {
                         .build("automatic_packing", TieredPackingCategory::autoSquare),
 
                 sawing = builder(TieredCuttingRecipe.class)
-                        .addTypedRecipesGT(GTRecipeTypes.CUTTER_RECIPES, r -> TieredCuttingRecipe.convertGTCutter(r, TIER.ULTRA_LOW))
+                        .addTypedRecipesGT(GTRecipeTypes.CUTTER_RECIPES, r -> TieredCuttingRecipe.convertGTCutter(r, ULV))
                         .addTypedRecipes(ModRecipeTypes.CUTTING::getType)
                         .addTypedRecipesExcludingGT(AllRecipeTypes.CUTTING::getType, GTRecipeTypes.CUTTER_RECIPES, TieredCuttingRecipe::convertNormalSawing)
                         .catalyst(Saws.ANDESITE_SAW::get)

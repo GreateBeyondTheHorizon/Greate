@@ -5,8 +5,7 @@ import com.simibubi.create.content.kinetics.BlockStressValues.IStressValueProvid
 import com.simibubi.create.foundation.config.ConfigBase;
 import com.simibubi.create.foundation.utility.Couple;
 import com.simibubi.create.foundation.utility.RegisteredObjects;
-import electrolyte.greate.GreateValues.BELT_TYPE;
-import electrolyte.greate.GreateValues.MATERIAL_TYPE;
+import electrolyte.greate.GreateValues;
 import electrolyte.greate.content.kinetics.TieredBlockMaterials;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -28,11 +27,11 @@ public class GStress extends ConfigBase implements IStressValueProvider {
         builder.comment("." + Comments.su + Comments.impact).push("impact");
         TieredBlockMaterials.MATERIAL_FOR_BLOCK.forEach(pair -> {
             ResourceLocation r = pair.getFirst();
-            MATERIAL_TYPE blockMaterialType = pair.getSecond();
-            for(MATERIAL_TYPE materialType : MATERIAL_TYPE.values()) {
-                if(materialType == blockMaterialType && BlockStressDefaults.DEFAULT_IMPACTS.containsKey(r)) {
+            String blockMaterialType = pair.getSecond();
+            for(String materialType : GreateValues.TM) {
+                if(materialType.equals(blockMaterialType) && BlockStressDefaults.DEFAULT_IMPACTS.containsKey(r)) {
                     double impact = BlockStressDefaults.DEFAULT_IMPACTS.get(r);
-                    builder.push(materialType.toString().charAt(0) + materialType.toString().substring(1).toLowerCase());
+                    builder.push(materialType.charAt(0) + materialType.substring(1).toLowerCase());
                     getImpacts().put(r, builder.define(r.getPath(), impact));
                     builder.pop();
                 }
@@ -40,9 +39,9 @@ public class GStress extends ConfigBase implements IStressValueProvider {
         });
         TieredBlockMaterials.BELT_TYPE_FOR_BLOCK.forEach(pair -> {
             ResourceLocation r = pair.getFirst();
-            BELT_TYPE blockBeltType = pair.getSecond();
-            for(BELT_TYPE beltType : BELT_TYPE.values()) {
-                if(beltType == blockBeltType && BlockStressDefaults.DEFAULT_IMPACTS.containsKey(r)) {
+            String blockBeltType = pair.getSecond();
+            for(String beltType : GreateValues.BM) {
+                if(beltType.equals(blockBeltType) && BlockStressDefaults.DEFAULT_IMPACTS.containsKey(r)) {
                     double impact = BlockStressDefaults.DEFAULT_IMPACTS.get(r);
                     builder.push(beltType.toString().charAt(0) + beltType.toString().substring(1).toLowerCase());
                     getImpacts().put(r, builder.define(r.getPath(), impact));
@@ -54,11 +53,11 @@ public class GStress extends ConfigBase implements IStressValueProvider {
         builder.comment("." + Comments.su + Comments.capacity).push("capacity");
         TieredBlockMaterials.MATERIAL_FOR_BLOCK.forEach(pair -> {
             ResourceLocation r = pair.getFirst();
-            MATERIAL_TYPE blockMaterialType = pair.getSecond();
-            for(MATERIAL_TYPE materialType : MATERIAL_TYPE.values()) {
-                if(materialType == blockMaterialType && BlockStressDefaults.DEFAULT_CAPACITIES.containsKey(r)) {
+            String blockMaterialType = pair.getSecond();
+            for(String materialType : GreateValues.TM) {
+                if(materialType.equals(blockMaterialType) && BlockStressDefaults.DEFAULT_CAPACITIES.containsKey(r)) {
                     double capacity = BlockStressDefaults.DEFAULT_CAPACITIES.get(r);
-                    builder.push(materialType.toString().charAt(0) + materialType.toString().substring(1).toLowerCase());
+                    builder.push(materialType.charAt(0) + materialType.substring(1).toLowerCase());
                     getCapacities().put(r, builder.define(r.getPath(), capacity));
                     builder.pop();
                 }

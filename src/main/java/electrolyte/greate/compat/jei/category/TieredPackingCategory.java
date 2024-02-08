@@ -3,7 +3,7 @@ package electrolyte.greate.compat.jei.category;
 import com.simibubi.create.compat.jei.category.animations.AnimatedBlazeBurner;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
-import electrolyte.greate.GreateValues.TIER;
+
 import electrolyte.greate.compat.jei.category.animations.TieredAnimatedMechanicalPress;
 import electrolyte.greate.content.processing.basin.TieredBasinRecipe;
 import electrolyte.greate.registry.MechanicalPresses;
@@ -78,6 +78,6 @@ public class TieredPackingCategory extends TieredBasinCategory {
         if(requiredHeat != HeatCondition.NONE) {
             heater.withHeat(requiredHeat.visualizeAsBlazeBurner()).draw(graphics, getBackground().getWidth() / 2 + 3, 55);
         }
-        new TieredAnimatedMechanicalPress(MechanicalPresses.MECHANICAL_PRESSES.get(TIER.indexOfTier(recipe.getRecipeTier())), true).draw(graphics, getBackground().getWidth() / 2 + 3, 34);
+        new TieredAnimatedMechanicalPress(MechanicalPresses.MECHANICAL_PRESSES.get(recipe.getRecipeTier()), true).draw(graphics, getBackground().getWidth() / 2 + 3, 34);
     }
 }

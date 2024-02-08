@@ -14,7 +14,6 @@ import com.simibubi.create.foundation.fluid.FluidIngredient;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import com.simibubi.create.foundation.utility.Pair;
 import com.tterrag.registrate.util.DataIngredient;
-import electrolyte.greate.GreateValues.TIER;
 import net.minecraft.core.NonNullList;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
@@ -34,6 +33,8 @@ import net.minecraftforge.fluids.FluidStack;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+
+import static com.gregtechceu.gtceu.api.GTValues.ULV;
 
 public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> {
 
@@ -87,7 +88,7 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
         return withItemOutputs(list);
     }
 
-    public TieredProcessingRecipeBuilder<T> withItemOutputs(List<ProcessingOutput> outputs, TIER recipeTier, TIER machineTier) {
+    public TieredProcessingRecipeBuilder<T> withItemOutputs(List<ProcessingOutput> outputs, int recipeTier, int machineTier) {
         NonNullList<ProcessingOutput> list = NonNullList.create();
         for(ProcessingOutput output : outputs) {
             if(output instanceof TieredProcessingOutput tieredOutput) {
@@ -99,7 +100,7 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
         return withItemOutputs(list);
     }
 
-    public TieredProcessingRecipeBuilder<T> withItemOutputsGT(List<Content> list, TIER recipeTier, TIER machineTier) {
+    public TieredProcessingRecipeBuilder<T> withItemOutputsGT(List<Content> list, int recipeTier, int machineTier) {
         NonNullList<ProcessingOutput> nonNullList = NonNullList.create();
         for(Content c : list) {
             ItemStack[] items = ((Ingredient) c.content).getItems();
@@ -110,9 +111,9 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
         return withItemOutputs(nonNullList);
     }
 
-    private float getExtraPercent(float baseExtraPercent, TIER recipeTier, TIER machineTier, boolean addJEIOffset) {
+    private float getExtraPercent(float baseExtraPercent, int recipeTier, int machineTier, boolean addJEIOffset) {
         int jeiOffset = addJEIOffset ? 1 : 0;
-        return baseExtraPercent * jeiOffset + (TIER.indexOfTier(machineTier) - TIER.indexOfTier(recipeTier));
+        return baseExtraPercent * jeiOffset + (machineTier - recipeTier);
     }
 
     public TieredProcessingRecipeBuilder<T> withFluidIngredients(FluidIngredient... ingredients) {
@@ -167,7 +168,7 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
         return this;
     }
 
-    public TieredProcessingRecipeBuilder<T> recipeTier(TIER condition) {
+    public TieredProcessingRecipeBuilder<T> recipeTier(int condition) {
         params.recipeTier = condition;
         return this;
     }
@@ -305,7 +306,7 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
         protected NonNullList<FluidStack> fluidResults;
         protected int processingDuration;
         protected HeatCondition requiredHeat;
-        protected TIER recipeTier;
+        protected int recipeTier;
         protected int circuitNumber;
         public boolean keepHeldItem;
 
@@ -318,7 +319,7 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
             fluidResults = NonNullList.create();
             processingDuration = 0;
             requiredHeat = HeatCondition.NONE;
-            recipeTier = TIER.ULTRA_LOW;
+            recipeTier = ULV;
             circuitNumber = -1;
             keepHeldItem = false;
         }

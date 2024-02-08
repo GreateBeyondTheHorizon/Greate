@@ -3,7 +3,7 @@ package electrolyte.greate.content.kinetics.simpleRelays.encased;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.simpleRelays.encased.EncasedShaftBlock;
 import com.simibubi.create.content.schematics.requirement.ItemRequirement;
-import electrolyte.greate.GreateValues.TIER;
+
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredShaftBlock;
 import electrolyte.greate.registry.ModBlockEntityTypes;
@@ -25,7 +25,7 @@ import java.util.function.Supplier;
 public class TieredEncasedShaftBlock extends EncasedShaftBlock implements ITieredBlock, ITieredShaftBlock {
 
     private final Supplier<Block> shaft;
-    private TIER tier;
+    private int tier;
 
     public TieredEncasedShaftBlock(Properties properties, Supplier<Block> casing, Supplier<Block> shaft) {
         super(properties, casing);
@@ -64,12 +64,12 @@ public class TieredEncasedShaftBlock extends EncasedShaftBlock implements ITiere
     }
 
     @Override
-    public TIER getTier() {
+    public int getTier() {
         return this.tier;
     }
 
     @Override
-    public void setTier(TIER tier) {
+    public void setTier(int tier) {
         this.tier = tier;
     }
 }

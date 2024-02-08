@@ -1,7 +1,7 @@
 package electrolyte.greate.content.kinetics.gearbox;
 
 import com.simibubi.create.content.kinetics.gearbox.GearboxBlockEntity;
-import electrolyte.greate.GreateValues.TIER;
+
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class TieredGearboxBlockEntity extends GearboxBlockEntity implements ITieredKineticBlockEntity {
 
-    private TIER tier;
+    private int tier;
 
     public TieredGearboxBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);

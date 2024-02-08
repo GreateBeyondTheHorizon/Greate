@@ -9,7 +9,8 @@ import dev.latvian.mods.kubejs.recipe.RecipeKey;
 import dev.latvian.mods.kubejs.recipe.component.NumberComponent.IntRange;
 import dev.latvian.mods.kubejs.recipe.component.StringComponent;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
-import electrolyte.greate.GreateValues.TIER;
+
+import electrolyte.greate.GreateValues;
 import electrolyte.greate.compat.kubejs.item.TieredOutputItem;
 import electrolyte.greate.content.processing.recipe.TieredProcessingOutput;
 
@@ -18,8 +19,8 @@ import java.util.Locale;
 public interface TieredProcessingRecipeSchema extends ProcessingRecipeSchema {
 
     RecipeKey<String> RECIPE_TIER = new StringComponent("Invalid Recipe Tier! This recipe's tier will be set to 'ultra_low' (default) instead until this is changed.", s -> {
-        for(TIER tier : TIER.values()) {
-            if(tier.name().equalsIgnoreCase(s) || tier.getName().equalsIgnoreCase(s)) return true;
+        for(String tier : GreateValues.SN) {
+            if(tier.equalsIgnoreCase(s)) return true;
         }
         return false;
     }).key("recipeTier").optional("ultra_low");

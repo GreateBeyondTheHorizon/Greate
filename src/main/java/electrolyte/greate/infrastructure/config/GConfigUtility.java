@@ -1,47 +1,56 @@
 package electrolyte.greate.infrastructure.config;
 
-import electrolyte.greate.GreateValues.BELT_TYPE;
-import electrolyte.greate.GreateValues.TIER;
+import static com.gregtechceu.gtceu.api.GTValues.*;
+import static com.gregtechceu.gtceu.api.GTValues.UHV;
+import static electrolyte.greate.GreateValues.BM;
+
 
 public class GConfigUtility {
 
-    public static int getMaxCapacityFromTier(TIER tier) {
+    public static int getMaxCapacityFromTier(int tier) {
         return switch (tier) {
-            case ULTRA_LOW -> GreateConfigs.server().kinetics.tierValues.andesiteMaxCapacity.get();
-            case LOW -> GreateConfigs.server().kinetics.tierValues.steelMaxCapacity.get();
-            case MEDIUM -> GreateConfigs.server().kinetics.tierValues.aluminiumMaxCapacity.get();
-            case HIGH -> GreateConfigs.server().kinetics.tierValues.stainlessSteelMaxCapacity.get();
-            case EXTREME -> GreateConfigs.server().kinetics.tierValues.titaniumMaxCapacity.get();
-            case INSANE -> GreateConfigs.server().kinetics.tierValues.tungstensteelMaxCapacity.get();
-            case LUDICRIOUS -> GreateConfigs.server().kinetics.tierValues.palladiumMaxCapacity.get();
+            case ULV -> GreateConfigs.server().kinetics.tierValues.andesiteMaxCapacity.get();
+            case LV -> GreateConfigs.server().kinetics.tierValues.steelMaxCapacity.get();
+            case MV -> GreateConfigs.server().kinetics.tierValues.aluminiumMaxCapacity.get();
+            case HV -> GreateConfigs.server().kinetics.tierValues.stainlessSteelMaxCapacity.get();
+            case EV -> GreateConfigs.server().kinetics.tierValues.titaniumMaxCapacity.get();
+            case IV -> GreateConfigs.server().kinetics.tierValues.tungstensteelMaxCapacity.get();
+            case LuV -> GreateConfigs.server().kinetics.tierValues.palladiumMaxCapacity.get();
             case ZPM -> GreateConfigs.server().kinetics.tierValues.naquadahMaxCapacity.get();
-            case ULTIMATE -> GreateConfigs.server().kinetics.tierValues.darmstadtiumMaxCapacity.get();
-            case ULTIMATE_HIGH -> GreateConfigs.server().kinetics.tierValues.neutroniumMaxCapacity.get();
+            case UV -> GreateConfigs.server().kinetics.tierValues.darmstadtiumMaxCapacity.get();
+            case UHV -> GreateConfigs.server().kinetics.tierValues.neutroniumMaxCapacity.get();
+            default -> throw new IllegalStateException("Unexpected value: " + tier);
         };
     }
 
-    public static int getBeltLengthFromType(BELT_TYPE type) {
-        return switch (type) {
-            case RUBBER -> GreateConfigs.server().kinetics.beltValues.rubberMaxBeltLength.get();
-            case SILICONE_RUBBER -> GreateConfigs.server().kinetics.beltValues.siliconeMaxBeltLength.get();
-            case POLYETHYLENE -> GreateConfigs.server().kinetics.beltValues.polyethyleneMaxBeltLength.get();
-            case POLYTETRAFLUOROETHYLENE -> GreateConfigs.server().kinetics.beltValues.polytetrafluoroethyleneMaxBeltLength.get();
-            case POLYBENZIMIDAZOLE -> GreateConfigs.server().kinetics.beltValues.polybenzimidazoleMaxBeltLength.get();
-        };
+    public static int getBeltLengthFromType(String type) {
+        if (type.equals(BM[0])) {
+            return GreateConfigs.server().kinetics.beltValues.rubberMaxBeltLength.get();
+        } else if (type.equals(BM[1])) {
+            return GreateConfigs.server().kinetics.beltValues.siliconeMaxBeltLength.get();
+        } else if (type.equals(BM[2])) {
+            return GreateConfigs.server().kinetics.beltValues.polyethyleneMaxBeltLength.get();
+        } else if (type.equals(BM[3])) {
+            return GreateConfigs.server().kinetics.beltValues.polytetrafluoroethyleneMaxBeltLength.get();
+        } else if (type.equals(BM[4])) {
+            return GreateConfigs.server().kinetics.beltValues.polybenzimidazoleMaxBeltLength.get();
+        }
+        throw new IllegalStateException("Unexpected value: " + type);
     }
 
-    public static double getPumpPressureFromTier(TIER tier) {
-		return switch (tier) {
-            case ULTRA_LOW -> GreateConfigs.server().kinetics.pumpValues.andesitePressure.get();
-            case LOW -> GreateConfigs.server().kinetics.pumpValues.steelPressure.get();
-            case MEDIUM -> GreateConfigs.server().kinetics.pumpValues.aluminiumPressure.get();
-            case HIGH -> GreateConfigs.server().kinetics.pumpValues.stainlessSteelPressure.get();
-            case EXTREME -> GreateConfigs.server().kinetics.pumpValues.titaniumPressure.get();
-            case INSANE -> GreateConfigs.server().kinetics.pumpValues.tungstensteelPressure.get();
-            case LUDICRIOUS -> GreateConfigs.server().kinetics.pumpValues.palladiumPressure.get();
+    public static double getPumpPressureFromTier(int tier) {
+        return switch (tier) {
+            case ULV -> GreateConfigs.server().kinetics.pumpValues.andesitePressure.get();
+            case LV -> GreateConfigs.server().kinetics.pumpValues.steelPressure.get();
+            case MV -> GreateConfigs.server().kinetics.pumpValues.aluminiumPressure.get();
+            case HV -> GreateConfigs.server().kinetics.pumpValues.stainlessSteelPressure.get();
+            case EV -> GreateConfigs.server().kinetics.pumpValues.titaniumPressure.get();
+            case IV -> GreateConfigs.server().kinetics.pumpValues.tungstensteelPressure.get();
+            case LuV -> GreateConfigs.server().kinetics.pumpValues.palladiumPressure.get();
             case ZPM -> GreateConfigs.server().kinetics.pumpValues.naquadahPressure.get();
-            case ULTIMATE -> GreateConfigs.server().kinetics.pumpValues.darmstadtiumPressure.get();
-            case ULTIMATE_HIGH -> GreateConfigs.server().kinetics.pumpValues.neutroniumPressure.get();
+            case UV -> GreateConfigs.server().kinetics.pumpValues.darmstadtiumPressure.get();
+            case UHV -> GreateConfigs.server().kinetics.pumpValues.neutroniumPressure.get();
+            default -> throw new IllegalStateException("Unexpected value: " + tier);
         };
     }
 }

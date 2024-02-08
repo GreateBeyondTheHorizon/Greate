@@ -4,7 +4,8 @@ import com.gregtechceu.gtceu.api.capability.recipe.EURecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
-import electrolyte.greate.GreateValues.TIER;
+import electrolyte.greate.GreateValues;
+
 import electrolyte.greate.content.kinetics.crusher.TieredAbstractCrushingRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeParams;
@@ -15,6 +16,8 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
+import static com.gregtechceu.gtceu.api.GTValues.ULV;
 
 @ParametersAreNonnullByDefault
 public class TieredMillingRecipe extends TieredAbstractCrushingRecipe {
@@ -35,11 +38,11 @@ public class TieredMillingRecipe extends TieredAbstractCrushingRecipe {
     }
 
     public static TieredMillingRecipe convertNormalMilling(Recipe<?> recipe) {
-        return new TieredProcessingRecipeBuilder<>(TieredMillingRecipe::new, recipe.getId()).withItemIngredients(recipe.getIngredients()).output(recipe.getResultItem(Minecraft.getInstance().getConnection().registryAccess())).withItemOutputs(((ProcessingRecipe<?>) recipe).getRollableResults()).recipeTier(TIER.ULTRA_LOW).build();
+        return new TieredProcessingRecipeBuilder<>(TieredMillingRecipe::new, recipe.getId()).withItemIngredients(recipe.getIngredients()).output(recipe.getResultItem(Minecraft.getInstance().getConnection().registryAccess())).withItemOutputs(((ProcessingRecipe<?>) recipe).getRollableResults()).recipeTier(ULV).build();
     }
 
-    public static TieredMillingRecipe convertGT(GTRecipe recipe, TIER machineTier) {
-        TIER recipeTier = TIER.convertGTEUToTier(recipe.getTickInputContents(EURecipeCapability.CAP));
+    public static TieredMillingRecipe convertGT(GTRecipe recipe, int machineTier) {
+        int recipeTier = GreateValues.convertGTEUToTier(recipe.getTickInputContents(EURecipeCapability.CAP));
         return new TieredProcessingRecipeBuilder<>(TieredMillingRecipe::new, recipe.getId()).duration(recipe.duration).withItemIngredientsGT(recipe.getInputContents(ItemRecipeCapability.CAP)).output(recipe.getResultItem(Minecraft.getInstance().getConnection().registryAccess())).withItemOutputsGT(recipe.getOutputContents(ItemRecipeCapability.CAP), recipeTier, machineTier).recipeTier(recipeTier).build();
     }
 }

@@ -2,7 +2,7 @@ package electrolyte.greate.content.kinetics.simpleRelays;
 
 import com.simibubi.create.foundation.utility.Lang;
 import electrolyte.greate.Greate;
-import electrolyte.greate.GreateValues.TIER;
+
 import electrolyte.greate.infrastructure.config.GConfigUtility;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -14,20 +14,19 @@ public interface ITieredKineticBlockEntity {
 
     default double getMaxCapacityFromBlock(Block block) {
         boolean tieredMachine = block instanceof ITieredBlock;
-        TIER tier = null;
         if(tieredMachine) {
-            tier = ((ITieredBlock) block).getTier();
-        }
-        if(tier != null) {
-            return GConfigUtility.getMaxCapacityFromTier(tier);
+            int tier = ((ITieredBlock) block).getTier();
+            if(tier != -1) {
+                return GConfigUtility.getMaxCapacityFromTier(tier);
+            }
         }
         return Integer.MAX_VALUE;
     }
 
     default void updateFromNetwork(float maxStress, float currentStress, int networkSize, double networkMaxCapacity) {};
 
-    default boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking, TIER tier, double capacity) {
-        if(tier != null) {
+    default boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking, int tier, double capacity) {
+        if(tier != -1) {
             if(!tooltip.isEmpty()) {
                 Lang.builder().space();
             } else {

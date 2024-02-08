@@ -15,7 +15,7 @@ import com.simibubi.create.foundation.item.SmartInventory;
 import com.simibubi.create.foundation.recipe.DummyCraftingContainer;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import com.simibubi.create.foundation.utility.Iterate;
-import electrolyte.greate.GreateValues.TIER;
+
 import electrolyte.greate.content.kinetics.base.ICircuitHolder;
 import electrolyte.greate.content.kinetics.mixer.TieredMixingRecipe;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
@@ -49,7 +49,7 @@ public class TieredBasinRecipe extends TieredProcessingRecipe<SmartInventory> {
         super(typeInfo, params);
     }
 
-    public static boolean match(BasinBlockEntity basin, Recipe<?> recipe, TIER machineTier) {
+    public static boolean match(BasinBlockEntity basin, Recipe<?> recipe, int machineTier) {
         FilteringBehaviour filter = basin.getFilter();
         if (filter == null) return false;
 
@@ -80,7 +80,7 @@ public class TieredBasinRecipe extends TieredProcessingRecipe<SmartInventory> {
         return apply(basin, recipe, false);
     }
 
-    public static boolean applyGT(BasinBlockEntity basin, Recipe<?> recipe, TIER machineTier) {
+    public static boolean applyGT(BasinBlockEntity basin, Recipe<?> recipe, int machineTier) {
         if(!(recipe instanceof GTRecipe gtRecipe)) return false;
         return apply(basin, gtRecipe, false, machineTier);
     }
@@ -100,7 +100,7 @@ public class TieredBasinRecipe extends TieredProcessingRecipe<SmartInventory> {
         }
 
         if(isTieredBasinRecipe && basin.getLevel().getBlockState(basin.getBlockPos().above(2)).getBlock() instanceof ITieredBlock tieredBlock) {
-            if(tieredBlock.getTier().compareTo(((TieredBasinRecipe) recipe).getRecipeTier()) < 0) {
+            if(tieredBlock.getTier() < ((TieredBasinRecipe) recipe).getRecipeTier()) {
                 return false;
             }
         }
@@ -189,7 +189,7 @@ public class TieredBasinRecipe extends TieredProcessingRecipe<SmartInventory> {
         return true;
     }
 
-    private static boolean apply(BasinBlockEntity basin, GTRecipe recipe, boolean test, TIER machineTier) {
+    private static boolean apply(BasinBlockEntity basin, GTRecipe recipe, boolean test, int machineTier) {
         TieredBasinRecipe basinRecipe;
         if(Minecraft.getInstance().level != null) {
             basinRecipe = TieredMixingRecipe.convertGTMixing(recipe, machineTier);
@@ -205,7 +205,7 @@ public class TieredBasinRecipe extends TieredProcessingRecipe<SmartInventory> {
         if (!(basinRecipe.getRequiredHeat().testBlazeBurner(heat))) return false;
 
         if(basin.getLevel().getBlockState(basin.getBlockPos().above(2)).getBlock() instanceof ITieredBlock tieredBlock) {
-            if(tieredBlock.getTier().compareTo(basinRecipe.getRecipeTier()) < 0) {
+            if(tieredBlock.getTier() < basinRecipe.getRecipeTier()) {
                 return false;
             }
         }

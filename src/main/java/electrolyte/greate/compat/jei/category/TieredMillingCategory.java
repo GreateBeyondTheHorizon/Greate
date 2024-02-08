@@ -2,7 +2,7 @@ package electrolyte.greate.compat.jei.category;
 
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
-import electrolyte.greate.GreateValues.TIER;
+
 import electrolyte.greate.compat.jei.category.animations.TieredAnimatedMillstone;
 import electrolyte.greate.content.kinetics.crusher.TieredAbstractCrushingRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingOutput;
@@ -53,6 +53,6 @@ public class TieredMillingCategory extends GreateRecipeCategory<TieredAbstractCr
         super.draw(recipe, recipeSlotsView, graphics, 1, 57);
         AllGuiTextures.JEI_ARROW.render(graphics, 85, 32);
         AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 43, 4);
-        new TieredAnimatedMillstone(Millstones.MILLSTONES.get(TIER.indexOfTier(recipe.getRecipeTier()))).draw(graphics, 48, 27);
+        new TieredAnimatedMillstone(Millstones.MILLSTONES.get(recipe.getRecipeTier())).draw(graphics, 48, 27);
     }
 }

@@ -4,7 +4,7 @@ import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import com.simibubi.create.foundation.ponder.ui.LayoutHelper;
-import electrolyte.greate.GreateValues.TIER;
+
 import electrolyte.greate.compat.jei.category.animations.TieredAnimatedCrushingWheels;
 import electrolyte.greate.content.kinetics.crusher.TieredAbstractCrushingRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingOutput;
@@ -67,6 +67,6 @@ public class TieredCrushingCategory extends GreateRecipeCategory<TieredAbstractC
     public void draw(TieredAbstractCrushingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double x, double y) {
         super.draw(recipe, recipeSlotsView, graphics, 1, 103);
         AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 72, 7);
-        new TieredAnimatedCrushingWheels(CrushingWheels.CRUSHING_WHEELS.get(TIER.indexOfTier(recipe.getRecipeTier()))).draw(graphics, 62, 59);
+        new TieredAnimatedCrushingWheels(CrushingWheels.CRUSHING_WHEELS.get(recipe.getRecipeTier())).draw(graphics, 62, 59);
     }
 }

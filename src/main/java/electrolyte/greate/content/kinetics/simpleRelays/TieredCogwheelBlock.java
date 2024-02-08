@@ -3,7 +3,7 @@ package electrolyte.greate.content.kinetics.simpleRelays;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.simpleRelays.CogWheelBlock;
-import electrolyte.greate.GreateValues.TIER;
+
 import electrolyte.greate.registry.ModBlockEntityTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -15,7 +15,7 @@ import java.util.List;
 
 public class TieredCogwheelBlock extends CogWheelBlock implements ITieredBlock {
 
-    private TIER tier;
+    private int tier;
     private PartialModel shaftlessLargeCogwheel, cogwheelShaft;
 
     protected TieredCogwheelBlock(boolean large, Properties properties, PartialModel shaftlessLargeCogwheel, PartialModel cogwheelShaft) {
@@ -33,12 +33,12 @@ public class TieredCogwheelBlock extends CogWheelBlock implements ITieredBlock {
     }
 
     @Override
-    public TIER getTier() {
+    public int getTier() {
         return tier;
     }
 
     @Override
-    public void setTier(TIER tier) {
+    public void setTier(int tier) {
         this.tier = tier;
     }
 

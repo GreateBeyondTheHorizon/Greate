@@ -3,7 +3,7 @@ package electrolyte.greate.content.kinetics.millstone;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.content.kinetics.millstone.MillstoneBlock;
 import com.simibubi.create.content.kinetics.millstone.MillstoneBlockEntity;
-import electrolyte.greate.GreateValues.TIER;
+
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredPartialModel;
 import electrolyte.greate.registry.Millstones;
@@ -18,7 +18,7 @@ import java.util.List;
 
 public class TieredMillstoneBlock extends MillstoneBlock implements ITieredBlock, ITieredPartialModel {
 
-    private TIER tier;
+    private int tier;
     private PartialModel model;
 
     public TieredMillstoneBlock(Properties properties, PartialModel model) {
@@ -38,12 +38,12 @@ public class TieredMillstoneBlock extends MillstoneBlock implements ITieredBlock
     }
 
     @Override
-    public TIER getTier() {
+    public int getTier() {
         return tier;
     }
 
     @Override
-    public void setTier(TIER tier) {
+    public void setTier(int tier) {
         this.tier = tier;
     }
 

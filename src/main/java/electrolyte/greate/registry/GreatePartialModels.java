@@ -2,7 +2,6 @@ package electrolyte.greate.registry;
 
 import com.jozufozu.flywheel.core.PartialModel;
 import electrolyte.greate.Greate;
-import electrolyte.greate.GreateValues.BELT_TYPE;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
@@ -10,9 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static electrolyte.greate.GreateValues.BM;
+
 public class GreatePartialModels {
 
-    public static final Map<BELT_TYPE, List<PartialModel>> NEW_BELT_MODELS = new HashMap<>();
+    public static final Map<String, List<PartialModel>> NEW_BELT_MODELS = new HashMap<>();
 
     public static final PartialModel
 
@@ -47,45 +48,45 @@ public class GreatePartialModels {
     DARMSTADTIUM_MILLSTONE_INNER = block("darmstadtium_millstone_inner"),
     NEUTRONIUM_MILLSTONE_INNER = block("neutronium_millstone_inner"),
 
-    RUBBER_BELT_ANDESITE_PULLEY = belt(BELT_TYPE.RUBBER,"rubber_belt_andesite_pulley"),
-    RUBBER_BELT_STEEL_PULLEY = belt(BELT_TYPE.RUBBER,"rubber_belt_steel_pulley"),
-    RUBBER_BELT_START = belt(BELT_TYPE.RUBBER,"rubber_belt_start"), RUBBER_BELT_MIDDLE = belt(BELT_TYPE.RUBBER,"rubber_belt_middle"),
-    RUBBER_BELT_END = belt(BELT_TYPE.RUBBER,"rubber_belt_end"), RUBBER_BELT_START_BOTTOM = belt(BELT_TYPE.RUBBER,"rubber_belt_start_bottom"),
-    RUBBER_BELT_MIDDLE_BOTTOM = belt(BELT_TYPE.RUBBER,"rubber_belt_middle_bottom"), RUBBER_BELT_END_BOTTOM = belt(BELT_TYPE.RUBBER,"rubber_belt_end_bottom"),
-    RUBBER_BELT_DIAGONAL_START = belt(BELT_TYPE.RUBBER,"rubber_belt_diagonal_start"), RUBBER_BELT_DIAGONAL_MIDDLE = belt(BELT_TYPE.RUBBER,"rubber_belt_diagonal_middle"),
-    RUBBER_BELT_DIAGONAL_END = belt(BELT_TYPE.RUBBER,"rubber_belt_diagonal_end"),
+    RUBBER_BELT_ANDESITE_PULLEY = belt(BM[0],"rubber_belt_andesite_pulley"),
+    RUBBER_BELT_STEEL_PULLEY = belt(BM[0],"rubber_belt_steel_pulley"),
+    RUBBER_BELT_START = belt(BM[0],"rubber_belt_start"), RUBBER_BELT_MIDDLE = belt(BM[0],"rubber_belt_middle"),
+    RUBBER_BELT_END = belt(BM[0],"rubber_belt_end"), RUBBER_BELT_START_BOTTOM = belt(BM[0],"rubber_belt_start_bottom"),
+    RUBBER_BELT_MIDDLE_BOTTOM = belt(BM[0],"rubber_belt_middle_bottom"), RUBBER_BELT_END_BOTTOM = belt(BM[0],"rubber_belt_end_bottom"),
+    RUBBER_BELT_DIAGONAL_START = belt(BM[0],"rubber_belt_diagonal_start"), RUBBER_BELT_DIAGONAL_MIDDLE = belt(BM[0],"rubber_belt_diagonal_middle"),
+    RUBBER_BELT_DIAGONAL_END = belt(BM[0],"rubber_belt_diagonal_end"),
 
-    SILICONE_RUBBER_BELT_ALUMINIUM_PULLEY = belt(BELT_TYPE.SILICONE_RUBBER,"silicone_rubber_belt_aluminium_pulley"),
-    SILICONE_RUBBER_BELT_STAINLESS_STEEL_PULLEY = belt(BELT_TYPE.SILICONE_RUBBER,"silicone_rubber_belt_stainless_steel_pulley"),
-    SILICONE_RUBBER_BELT_START = belt(BELT_TYPE.SILICONE_RUBBER,"silicone_rubber_belt_start"), SILICONE_RUBBER_BELT_MIDDLE = belt(BELT_TYPE.SILICONE_RUBBER,"silicone_rubber_belt_middle"),
-    SILICONE_RUBBER_BELT_END = belt(BELT_TYPE.SILICONE_RUBBER,"silicone_rubber_belt_end"), SILICONE_RUBBER_BELT_START_BOTTOM = belt(BELT_TYPE.SILICONE_RUBBER,"silicone_rubber_belt_start_bottom"),
-    SILICONE_RUBBER_BELT_MIDDLE_BOTTOM = belt(BELT_TYPE.SILICONE_RUBBER,"silicone_rubber_belt_middle_bottom"), SILICONE_RUBBER_BELT_END_BOTTOM = belt(BELT_TYPE.SILICONE_RUBBER,"silicone_rubber_belt_end_bottom"),
-    SILICONE_RUBBER_BELT_DIAGONAL_START = belt(BELT_TYPE.SILICONE_RUBBER,"silicone_rubber_belt_diagonal_start"), SILICONE_RUBBER_BELT_DIAGONAL_MIDDLE = belt(BELT_TYPE.SILICONE_RUBBER,"silicone_rubber_belt_diagonal_middle"),
-    SILICONE_RUBBER_BELT_DIAGONAL_END = belt(BELT_TYPE.SILICONE_RUBBER,"silicone_rubber_belt_diagonal_end"),
+    SILICONE_RUBBER_BELT_ALUMINIUM_PULLEY = belt(BM[1],"silicone_rubber_belt_aluminium_pulley"),
+    SILICONE_RUBBER_BELT_STAINLESS_STEEL_PULLEY = belt(BM[1],"silicone_rubber_belt_stainless_steel_pulley"),
+    SILICONE_RUBBER_BELT_START = belt(BM[1],"silicone_rubber_belt_start"), SILICONE_RUBBER_BELT_MIDDLE = belt(BM[1],"silicone_rubber_belt_middle"),
+    SILICONE_RUBBER_BELT_END = belt(BM[1],"silicone_rubber_belt_end"), SILICONE_RUBBER_BELT_START_BOTTOM = belt(BM[1],"silicone_rubber_belt_start_bottom"),
+    SILICONE_RUBBER_BELT_MIDDLE_BOTTOM = belt(BM[1],"silicone_rubber_belt_middle_bottom"), SILICONE_RUBBER_BELT_END_BOTTOM = belt(BM[1],"silicone_rubber_belt_end_bottom"),
+    SILICONE_RUBBER_BELT_DIAGONAL_START = belt(BM[1],"silicone_rubber_belt_diagonal_start"), SILICONE_RUBBER_BELT_DIAGONAL_MIDDLE = belt(BM[1],"silicone_rubber_belt_diagonal_middle"),
+    SILICONE_RUBBER_BELT_DIAGONAL_END = belt(BM[1],"silicone_rubber_belt_diagonal_end"),
 
-    POLYETHYLENE_BELT_TITANIUM_PULLEY = belt(BELT_TYPE.POLYETHYLENE,"polyethylene_belt_titanium_pulley"),
-    POLYETHYLENE_BELT_TUNGSTENSTEEL_PULLEY = belt(BELT_TYPE.POLYETHYLENE,"polyethylene_belt_tungstensteel_pulley"),
-    POLYETHYLENE_BELT_START = belt(BELT_TYPE.POLYETHYLENE,"polyethylene_belt_start"), POLYETHYLENE_BELT_MIDDLE = belt(BELT_TYPE.POLYETHYLENE,"polyethylene_belt_middle"),
-    POLYETHYLENE_BELT_END = belt(BELT_TYPE.POLYETHYLENE,"polyethylene_belt_end"), POLYETHYLENE_BELT_START_BOTTOM = belt(BELT_TYPE.POLYETHYLENE,"polyethylene_belt_start_bottom"),
-    POLYETHYLENE_BELT_MIDDLE_BOTTOM = belt(BELT_TYPE.POLYETHYLENE,"polyethylene_belt_middle_bottom"), POLYETHYLENE_BELT_END_BOTTOM = belt(BELT_TYPE.POLYETHYLENE,"polyethylene_belt_end_bottom"),
-    POLYETHYLENE_BELT_DIAGONAL_START = belt(BELT_TYPE.POLYETHYLENE,"polyethylene_belt_diagonal_start"), POLYETHYLENE_BELT_DIAGONAL_MIDDLE = belt(BELT_TYPE.POLYETHYLENE,"polyethylene_belt_diagonal_middle"),
-    POLYETHYLENE_BELT_DIAGONAL_END = belt(BELT_TYPE.POLYETHYLENE,"polyethylene_belt_diagonal_end"),
+    POLYETHYLENE_BELT_TITANIUM_PULLEY = belt(BM[2],"polyethylene_belt_titanium_pulley"),
+    POLYETHYLENE_BELT_TUNGSTENSTEEL_PULLEY = belt(BM[2],"polyethylene_belt_tungstensteel_pulley"),
+    POLYETHYLENE_BELT_START = belt(BM[2],"polyethylene_belt_start"), POLYETHYLENE_BELT_MIDDLE = belt(BM[2],"polyethylene_belt_middle"),
+    POLYETHYLENE_BELT_END = belt(BM[2],"polyethylene_belt_end"), POLYETHYLENE_BELT_START_BOTTOM = belt(BM[2],"polyethylene_belt_start_bottom"),
+    POLYETHYLENE_BELT_MIDDLE_BOTTOM = belt(BM[2],"polyethylene_belt_middle_bottom"), POLYETHYLENE_BELT_END_BOTTOM = belt(BM[2],"polyethylene_belt_end_bottom"),
+    POLYETHYLENE_BELT_DIAGONAL_START = belt(BM[2],"polyethylene_belt_diagonal_start"), POLYETHYLENE_BELT_DIAGONAL_MIDDLE = belt(BM[2],"polyethylene_belt_diagonal_middle"),
+    POLYETHYLENE_BELT_DIAGONAL_END = belt(BM[2],"polyethylene_belt_diagonal_end"),
 
-    POLYTETRAFLUOROETHYLENE_BELT_PALLADIUM_PULLEY = belt(BELT_TYPE.POLYTETRAFLUOROETHYLENE,"polytetrafluoroethylene_belt_palladium_pulley"),
-    POLYTETRAFLUOROETHYLENE_BELT_NAQUADAH_PULLEY = belt(BELT_TYPE.POLYTETRAFLUOROETHYLENE,"polytetrafluoroethylene_belt_naquadah_pulley"),
-    POLYTETRAFLUOROETHYLENE_BELT_START = belt(BELT_TYPE.POLYTETRAFLUOROETHYLENE,"polytetrafluoroethylene_belt_start"), POLYTETRAFLUOROETHYLENE_BELT_MIDDLE = belt(BELT_TYPE.POLYTETRAFLUOROETHYLENE,"polytetrafluoroethylene_belt_middle"),
-    POLYTETRAFLUOROETHYLENE_BELT_END = belt(BELT_TYPE.POLYTETRAFLUOROETHYLENE,"polytetrafluoroethylene_belt_end"), POLYTETRAFLUOROETHYLENE_BELT_START_BOTTOM = belt(BELT_TYPE.POLYTETRAFLUOROETHYLENE,"polytetrafluoroethylene_belt_start_bottom"),
-    POLYTETRAFLUOROETHYLENE_BELT_MIDDLE_BOTTOM = belt(BELT_TYPE.POLYTETRAFLUOROETHYLENE,"polytetrafluoroethylene_belt_middle_bottom"), POLYTETRAFLUOROETHYLENE_BELT_END_BOTTOM = belt(BELT_TYPE.POLYTETRAFLUOROETHYLENE,"polytetrafluoroethylene_belt_end_bottom"),
-    POLYTETRAFLUOROETHYLENE_BELT_DIAGONAL_START = belt(BELT_TYPE.POLYTETRAFLUOROETHYLENE,"polytetrafluoroethylene_belt_diagonal_start"), POLYTETRAFLUOROETHYLENE_BELT_DIAGONAL_MIDDLE = belt(BELT_TYPE.POLYTETRAFLUOROETHYLENE,"polytetrafluoroethylene_belt_diagonal_middle"),
-    POLYTETRAFLUOROETHYLENE_BELT_DIAGONAL_END = belt(BELT_TYPE.POLYTETRAFLUOROETHYLENE,"polytetrafluoroethylene_belt_diagonal_end"),
+    POLYTETRAFLUOROETHYLENE_BELT_PALLADIUM_PULLEY = belt(BM[3],"polytetrafluoroethylene_belt_palladium_pulley"),
+    POLYTETRAFLUOROETHYLENE_BELT_NAQUADAH_PULLEY = belt(BM[3],"polytetrafluoroethylene_belt_naquadah_pulley"),
+    POLYTETRAFLUOROETHYLENE_BELT_START = belt(BM[3],"polytetrafluoroethylene_belt_start"), POLYTETRAFLUOROETHYLENE_BELT_MIDDLE = belt(BM[3],"polytetrafluoroethylene_belt_middle"),
+    POLYTETRAFLUOROETHYLENE_BELT_END = belt(BM[3],"polytetrafluoroethylene_belt_end"), POLYTETRAFLUOROETHYLENE_BELT_START_BOTTOM = belt(BM[3],"polytetrafluoroethylene_belt_start_bottom"),
+    POLYTETRAFLUOROETHYLENE_BELT_MIDDLE_BOTTOM = belt(BM[3],"polytetrafluoroethylene_belt_middle_bottom"), POLYTETRAFLUOROETHYLENE_BELT_END_BOTTOM = belt(BM[3],"polytetrafluoroethylene_belt_end_bottom"),
+    POLYTETRAFLUOROETHYLENE_BELT_DIAGONAL_START = belt(BM[3],"polytetrafluoroethylene_belt_diagonal_start"), POLYTETRAFLUOROETHYLENE_BELT_DIAGONAL_MIDDLE = belt(BM[3],"polytetrafluoroethylene_belt_diagonal_middle"),
+    POLYTETRAFLUOROETHYLENE_BELT_DIAGONAL_END = belt(BM[3],"polytetrafluoroethylene_belt_diagonal_end"),
 
-    POLYBENZIMIDAZOLE_BELT_DARMSTADTIUM_PULLEY = belt(BELT_TYPE.POLYBENZIMIDAZOLE,"polybenzimidazole_belt_darmstadtium_pulley"),
-    POLYBENZIMIDAZOLE_BELT_NEUTRONIUM_PULLEY = belt(BELT_TYPE.POLYBENZIMIDAZOLE,"polybenzimidazole_belt_neutronium_pulley"),
-    POLYBENZIMIDAZOLE_BELT_START = belt(BELT_TYPE.POLYBENZIMIDAZOLE,"polybenzimidazole_belt_start"), POLYBENZIMIDAZOLE_BELT_MIDDLE = belt(BELT_TYPE.POLYBENZIMIDAZOLE,"polybenzimidazole_belt_middle"),
-    POLYBENZIMIDAZOLE_BELT_END = belt(BELT_TYPE.POLYBENZIMIDAZOLE,"polybenzimidazole_belt_end"), POLYBENZIMIDAZOLE_BELT_START_BOTTOM = belt(BELT_TYPE.POLYBENZIMIDAZOLE,"polybenzimidazole_belt_start_bottom"),
-    POLYBENZIMIDAZOLE_BELT_MIDDLE_BOTTOM = belt(BELT_TYPE.POLYBENZIMIDAZOLE,"polybenzimidazole_belt_middle_bottom"), POLYBENZIMIDAZOLE_BELT_END_BOTTOM = belt(BELT_TYPE.POLYBENZIMIDAZOLE,"polybenzimidazole_belt_end_bottom"),
-    POLYBENZIMIDAZOLE_BELT_DIAGONAL_START = belt(BELT_TYPE.POLYBENZIMIDAZOLE,"polybenzimidazole_belt_diagonal_start"), POLYBENZIMIDAZOLE_BELT_DIAGONAL_MIDDLE = belt(BELT_TYPE.POLYBENZIMIDAZOLE,"polybenzimidazole_belt_diagonal_middle"),
-    POLYBENZIMIDAZOLE_BELT_DIAGONAL_END = belt(BELT_TYPE.POLYBENZIMIDAZOLE,"polybenzimidazole_belt_diagonal_end"),
+    POLYBENZIMIDAZOLE_BELT_DARMSTADTIUM_PULLEY = belt(BM[4],"polybenzimidazole_belt_darmstadtium_pulley"),
+    POLYBENZIMIDAZOLE_BELT_NEUTRONIUM_PULLEY = belt(BM[4],"polybenzimidazole_belt_neutronium_pulley"),
+    POLYBENZIMIDAZOLE_BELT_START = belt(BM[4],"polybenzimidazole_belt_start"), POLYBENZIMIDAZOLE_BELT_MIDDLE = belt(BM[4],"polybenzimidazole_belt_middle"),
+    POLYBENZIMIDAZOLE_BELT_END = belt(BM[4],"polybenzimidazole_belt_end"), POLYBENZIMIDAZOLE_BELT_START_BOTTOM = belt(BM[4],"polybenzimidazole_belt_start_bottom"),
+    POLYBENZIMIDAZOLE_BELT_MIDDLE_BOTTOM = belt(BM[4],"polybenzimidazole_belt_middle_bottom"), POLYBENZIMIDAZOLE_BELT_END_BOTTOM = belt(BM[4],"polybenzimidazole_belt_end_bottom"),
+    POLYBENZIMIDAZOLE_BELT_DIAGONAL_START = belt(BM[4],"polybenzimidazole_belt_diagonal_start"), POLYBENZIMIDAZOLE_BELT_DIAGONAL_MIDDLE = belt(BM[4],"polybenzimidazole_belt_diagonal_middle"),
+    POLYBENZIMIDAZOLE_BELT_DIAGONAL_END = belt(BM[4],"polybenzimidazole_belt_diagonal_end"),
     BELT_OVERLAY_DIAGONAL_START = block("belt_overlay_diagonal_start"), BELT_OVERLAY_DIAGONAL_END = block("belt_overlay_diagonal_end"), BELT_OVERLAY_DIAGONAL_MIDDLE = block("belt_overlay_diagonal_middle"),
     BELT_OVERLAY_START_BOTTOM = block("belt_overlay_start_bottom"), BELT_OVERLAY_END_BOTTOM = block("belt_overlay_end_bottom"), BELT_OVERLAY_MIDDLE_BOTTOM = block("belt_overlay_middle_bottom"),
     BELT_OVERLAY_START = block("belt_overlay_start"), BELT_OVERLAY_END = block("belt_overlay_end"), BELT_OVERLAY_MIDDLE = block("belt_overlay_middle"),
@@ -147,7 +148,7 @@ public class GreatePartialModels {
         return new PartialModel(new ResourceLocation(Greate.MOD_ID, "block/" + path));
     }
 
-    private static PartialModel belt(BELT_TYPE belt, String path) {
+    private static PartialModel belt(String belt, String path) {
         PartialModel partialModel = new PartialModel(new ResourceLocation(Greate.MOD_ID, "block/" + path));
         List<PartialModel> partialModels = NEW_BELT_MODELS.getOrDefault(belt, new ArrayList<>());
         partialModels.add(partialModel);

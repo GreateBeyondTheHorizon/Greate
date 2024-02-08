@@ -19,7 +19,7 @@ import com.simibubi.create.foundation.recipe.RecipeFinder;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.VecHelper;
 import electrolyte.greate.Greate;
-import electrolyte.greate.GreateValues.TIER;
+
 import electrolyte.greate.content.kinetics.base.ICircuitHolder;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredProcessingRecipeHolder;
@@ -47,7 +47,7 @@ import java.util.Optional;
 
 public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity implements ITieredKineticBlockEntity, ITieredProcessingRecipeHolder, ICircuitHolder {
 
-    private TIER tier;
+    private int tier;
     private ScrollValueBehaviour targetCircuit;
     private static final Object PRESSING_RECIPE_CACHE_KEY = new Object();
     private int remainingTime;

@@ -9,7 +9,7 @@ import com.simibubi.create.compat.jei.category.sequencedAssembly.SequencedAssemb
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.sequenced.IAssemblyRecipe;
 import com.simibubi.create.foundation.utility.Lang;
-import electrolyte.greate.GreateValues.TIER;
+import electrolyte.greate.GreateValues;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeParams;
@@ -29,6 +29,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
+
+import static com.gregtechceu.gtceu.api.GTValues.ULV;
 
 @ParametersAreNonnullByDefault
 public class TieredCuttingRecipe extends TieredProcessingRecipe<RecipeWrapper> implements IAssemblyRecipe {
@@ -87,14 +89,14 @@ public class TieredCuttingRecipe extends TieredProcessingRecipe<RecipeWrapper> i
                 .withItemIngredients(recipe.getIngredients())
                 .output(recipe.getResultItem(Minecraft.getInstance().level.registryAccess()))
                 .withItemOutputs(((ProcessingRecipe<?>) recipe).getRollableResults())
-                .recipeTier(TIER.ULTRA_LOW)
+                .recipeTier(ULV)
                 .build();
     }
 
-    public static TieredCuttingRecipe convertGTCutter(GTRecipe recipe, TIER machineTier) {
+    public static TieredCuttingRecipe convertGTCutter(GTRecipe recipe, int machineTier) {
         List<Content> inputContents = recipe.getInputContents(ItemRecipeCapability.CAP);
         List<Content> fluidContents = recipe.getInputContents(FluidRecipeCapability.CAP);
-        TIER recipeTier = TIER.convertGTEUToTier(recipe.getTickInputContents(EURecipeCapability.CAP));
+        int recipeTier = GreateValues.convertGTEUToTier(recipe.getTickInputContents(EURecipeCapability.CAP));
         return new TieredProcessingRecipeBuilder<>(TieredCuttingRecipe::new, recipe.getId())
                 .withItemIngredientsGT(inputContents)
                 .withFluidIngredientsGT(fluidContents)

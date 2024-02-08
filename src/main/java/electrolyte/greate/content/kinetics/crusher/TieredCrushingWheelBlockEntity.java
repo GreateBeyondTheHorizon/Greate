@@ -1,7 +1,7 @@
 package electrolyte.greate.content.kinetics.crusher;
 
 import com.simibubi.create.content.kinetics.crusher.CrushingWheelBlockEntity;
-import electrolyte.greate.GreateValues.TIER;
+
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class TieredCrushingWheelBlockEntity extends CrushingWheelBlockEntity implements ITieredKineticBlockEntity {
 
-    private TIER tier;
+    private int tier;
 
     public TieredCrushingWheelBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
         super(typeIn, pos, state);
