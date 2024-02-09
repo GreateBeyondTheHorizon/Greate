@@ -28,7 +28,7 @@ public class GStress extends ConfigBase implements IStressValueProvider {
         TieredBlockMaterials.MATERIAL_FOR_BLOCK.forEach(pair -> {
             ResourceLocation r = pair.getFirst();
             String blockMaterialType = pair.getSecond();
-            for(String materialType : GreateValues.TM) {
+            for(String materialType : GreateValues.TMS) {
                 if(materialType.equals(blockMaterialType) && BlockStressDefaults.DEFAULT_IMPACTS.containsKey(r)) {
                     double impact = BlockStressDefaults.DEFAULT_IMPACTS.get(r);
                     builder.push(materialType.charAt(0) + materialType.substring(1).toLowerCase());
@@ -40,7 +40,7 @@ public class GStress extends ConfigBase implements IStressValueProvider {
         TieredBlockMaterials.BELT_TYPE_FOR_BLOCK.forEach(pair -> {
             ResourceLocation r = pair.getFirst();
             String blockBeltType = pair.getSecond();
-            for(String beltType : GreateValues.BM) {
+            for(String beltType : GreateValues.BMS) {
                 if(beltType.equals(blockBeltType) && BlockStressDefaults.DEFAULT_IMPACTS.containsKey(r)) {
                     double impact = BlockStressDefaults.DEFAULT_IMPACTS.get(r);
                     builder.push(beltType.toString().charAt(0) + beltType.toString().substring(1).toLowerCase());
@@ -54,7 +54,7 @@ public class GStress extends ConfigBase implements IStressValueProvider {
         TieredBlockMaterials.MATERIAL_FOR_BLOCK.forEach(pair -> {
             ResourceLocation r = pair.getFirst();
             String blockMaterialType = pair.getSecond();
-            for(String materialType : GreateValues.TM) {
+            for(String materialType : GreateValues.TMS) {
                 if(materialType.equals(blockMaterialType) && BlockStressDefaults.DEFAULT_CAPACITIES.containsKey(r)) {
                     double capacity = BlockStressDefaults.DEFAULT_CAPACITIES.get(r);
                     builder.push(materialType.charAt(0) + materialType.substring(1).toLowerCase());

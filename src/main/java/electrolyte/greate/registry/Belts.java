@@ -28,7 +28,7 @@ import java.util.Map;
 
 import static com.simibubi.create.content.redstone.displayLink.AllDisplayBehaviours.assignDataBehaviour;
 import static electrolyte.greate.Greate.REGISTRATE;
-import static electrolyte.greate.GreateValues.BM;
+import static electrolyte.greate.GreateValues.BMS;
 
 public class Belts {
 
@@ -38,15 +38,15 @@ public class Belts {
         REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
     }
 
-    public static final BlockEntry<TieredBeltBlock> RUBBER_BELT = belt("rubber_belt", BM[0], List.of(Shafts.ANDESITE_SHAFT, Shafts.STEEL_SHAFT));
+    public static final BlockEntry<TieredBeltBlock> RUBBER_BELT = belt("rubber_belt", BMS[0], List.of(Shafts.ANDESITE_SHAFT, Shafts.STEEL_SHAFT));
     public static final ItemEntry<TieredBeltConnectorItem> RUBBER_BELT_CONNECTOR = beltConnector("rubber_belt_connector", RUBBER_BELT);
-    public static final BlockEntry<TieredBeltBlock> SILICONE_RUBBER_BELT = belt("silicone_rubber_belt", BM[1], List.of(Shafts.ALUMINIUM_SHAFT, Shafts.STAINLESS_STEEL_SHAFT));
+    public static final BlockEntry<TieredBeltBlock> SILICONE_RUBBER_BELT = belt("silicone_rubber_belt", BMS[1], List.of(Shafts.ALUMINIUM_SHAFT, Shafts.STAINLESS_STEEL_SHAFT));
     public static final ItemEntry<TieredBeltConnectorItem> SILICONE_RUBBER_BELT_CONNECTOR = beltConnector("silicone_rubber_belt_connector", SILICONE_RUBBER_BELT);
-    public static final BlockEntry<TieredBeltBlock> POLYETHYLENE_BELT = belt("polyethylene_belt", BM[2], List.of(Shafts.TITANIUM_SHAFT, Shafts.TUNGSTENSTEEL_SHAFT));
+    public static final BlockEntry<TieredBeltBlock> POLYETHYLENE_BELT = belt("polyethylene_belt", BMS[2], List.of(Shafts.TITANIUM_SHAFT, Shafts.TUNGSTENSTEEL_SHAFT));
     public static final ItemEntry<TieredBeltConnectorItem> POLYETHYLENE_BELT_CONNECTOR = beltConnector("polyethylene_belt_connector", POLYETHYLENE_BELT);
-    public static final BlockEntry<TieredBeltBlock> POLYTETRAFLUOROETHYLENE_BELT = belt("polytetrafluoroethylene_belt", BM[3], List.of(Shafts.PALLADIUM_SHAFT, Shafts.NAQUADAH_SHAFT));
+    public static final BlockEntry<TieredBeltBlock> POLYTETRAFLUOROETHYLENE_BELT = belt("polytetrafluoroethylene_belt", BMS[3], List.of(Shafts.PALLADIUM_SHAFT, Shafts.NAQUADAH_SHAFT));
     public static final ItemEntry<TieredBeltConnectorItem> POLYTETRAFLUOROETHYLENE_BELT_CONNECTOR = beltConnector("polytetrafluoroethylene_belt_connector", POLYTETRAFLUOROETHYLENE_BELT);
-    public static final BlockEntry<TieredBeltBlock> POLYBENZIMIDAZOLE_BELT = belt("polybenzimidazole_belt", BM[4], List.of(Shafts.DARMSTADTIUM_SHAFT, Shafts.NEUTRONIUM_SHAFT));
+    public static final BlockEntry<TieredBeltBlock> POLYBENZIMIDAZOLE_BELT = belt("polybenzimidazole_belt", BMS[4], List.of(Shafts.DARMSTADTIUM_SHAFT, Shafts.NEUTRONIUM_SHAFT));
     public static final ItemEntry<TieredBeltConnectorItem> POLYBENZIMIDAZOLE_BELT_CONNECTOR = beltConnector("polybenzimidazole_belt_connector", POLYBENZIMIDAZOLE_BELT);
 
     public static BlockEntry<TieredBeltBlock> belt(String name, String beltType, List<BlockEntry<TieredShaftBlock>> validShafts) {

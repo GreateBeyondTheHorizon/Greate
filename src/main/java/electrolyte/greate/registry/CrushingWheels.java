@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
 import static electrolyte.greate.Greate.REGISTRATE;
-import static electrolyte.greate.GreateValues.TM;
+import static electrolyte.greate.GreateValues.TMS;
 
 public class CrushingWheels {
 
@@ -30,25 +30,25 @@ public class CrushingWheels {
 
     public static ArrayList<TieredCrushingWheelBlock> CRUSHING_WHEELS = new ArrayList<>();
 
-    public static final BlockEntry<TieredCrushingWheelBlock> ANDESITE_CRUSHING_WHEEL = crushingWheel("andesite_crushing_wheel", ULV, TM[0], 0.5);
+    public static final BlockEntry<TieredCrushingWheelBlock> ANDESITE_CRUSHING_WHEEL = crushingWheel("andesite_crushing_wheel", ULV, TMS[0], 0.5);
     public static final BlockEntry<TieredCrushingWheelControllerBlock> ANDESITE_CRUSHING_WHEEL_CONTROLLER = crushingWheelController("andesite_crushing_wheel_controller", ULV, ANDESITE_CRUSHING_WHEEL);
-    public static final BlockEntry<TieredCrushingWheelBlock> STEEL_CRUSHING_WHEEL = crushingWheel("steel_crushing_wheel", LV, TM[1], 1.0);
+    public static final BlockEntry<TieredCrushingWheelBlock> STEEL_CRUSHING_WHEEL = crushingWheel("steel_crushing_wheel", LV, TMS[1], 1.0);
     public static final BlockEntry<TieredCrushingWheelControllerBlock> STEEL_CRUSHING_WHEEL_CONTROLLER = crushingWheelController("steel_crushing_wheel_controller", LV, STEEL_CRUSHING_WHEEL);
-    public static final BlockEntry<TieredCrushingWheelBlock> ALUMINIUM_CRUSHING_WHEEL = crushingWheel("aluminium_crushing_wheel", MV, TM[2], 1.5);
+    public static final BlockEntry<TieredCrushingWheelBlock> ALUMINIUM_CRUSHING_WHEEL = crushingWheel("aluminium_crushing_wheel", MV, TMS[2], 1.5);
     public static final BlockEntry<TieredCrushingWheelControllerBlock> ALUMINIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController("aluminium_crushing_wheel_controller", MV, ALUMINIUM_CRUSHING_WHEEL);
-    public static final BlockEntry<TieredCrushingWheelBlock> STAINLESS_STEEL_CRUSHING_WHEEL = crushingWheel("stainless_steel_crushing_wheel", HV, TM[3], 2.0);
+    public static final BlockEntry<TieredCrushingWheelBlock> STAINLESS_STEEL_CRUSHING_WHEEL = crushingWheel("stainless_steel_crushing_wheel", HV, TMS[3], 2.0);
     public static final BlockEntry<TieredCrushingWheelControllerBlock> STAINLESS_STEEL_CRUSHING_WHEEL_CONTROLLER = crushingWheelController("stainless_steel_crushing_wheel_controller", HV, STAINLESS_STEEL_CRUSHING_WHEEL);
-    public static final BlockEntry<TieredCrushingWheelBlock> TITANIUM_CRUSHING_WHEEL = crushingWheel("titanium_crushing_wheel", EV, TM[4], 2.5);
+    public static final BlockEntry<TieredCrushingWheelBlock> TITANIUM_CRUSHING_WHEEL = crushingWheel("titanium_crushing_wheel", EV, TMS[4], 2.5);
     public static final BlockEntry<TieredCrushingWheelControllerBlock> TITANIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController("titanium_crushing_wheel_controller", EV, TITANIUM_CRUSHING_WHEEL);
-    public static final BlockEntry<TieredCrushingWheelBlock> TUNGSTENSTEEL_CRUSHING_WHEEL = crushingWheel("tungstensteel_crushing_wheel", IV, TM[5], 3.0);
+    public static final BlockEntry<TieredCrushingWheelBlock> TUNGSTENSTEEL_CRUSHING_WHEEL = crushingWheel("tungstensteel_crushing_wheel", IV, TMS[5], 3.0);
     public static final BlockEntry<TieredCrushingWheelControllerBlock> TUNGSTENSTEEL_CRUSHING_WHEEL_CONTROLLER = crushingWheelController("tungstensteel_crushing_wheel_controller", IV, TUNGSTENSTEEL_CRUSHING_WHEEL);
-    public static final BlockEntry<TieredCrushingWheelBlock> PALLADIUM_CRUSHING_WHEEL = crushingWheel("palladium_crushing_wheel", LuV, TM[6], 3.5);
+    public static final BlockEntry<TieredCrushingWheelBlock> PALLADIUM_CRUSHING_WHEEL = crushingWheel("palladium_crushing_wheel", LuV, TMS[6], 3.5);
     public static final BlockEntry<TieredCrushingWheelControllerBlock> PALLADIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController("palladium_crushing_wheel_controller", LuV, PALLADIUM_CRUSHING_WHEEL);
-    public static final BlockEntry<TieredCrushingWheelBlock> NAQUADAH_CRUSHING_WHEEL = crushingWheel("naquadah_crushing_wheel", ZPM, TM[7], 4.0);
+    public static final BlockEntry<TieredCrushingWheelBlock> NAQUADAH_CRUSHING_WHEEL = crushingWheel("naquadah_crushing_wheel", ZPM, TMS[7], 4.0);
     public static final BlockEntry<TieredCrushingWheelControllerBlock> NAQUADAH_CRUSHING_WHEEL_CONTROLLER = crushingWheelController("naquadah_crushing_wheel_controller", ZPM, NAQUADAH_CRUSHING_WHEEL);
-    public static final BlockEntry<TieredCrushingWheelBlock> DARMSTADTIUM_CRUSHING_WHEEL = crushingWheel("darmstadtium_crushing_wheel", UV, TM[8], 4.5);
+    public static final BlockEntry<TieredCrushingWheelBlock> DARMSTADTIUM_CRUSHING_WHEEL = crushingWheel("darmstadtium_crushing_wheel", UV, TMS[8], 4.5);
     public static final BlockEntry<TieredCrushingWheelControllerBlock> DARMSTADTIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController("darmstadtium_crushing_wheel_controller", UV, DARMSTADTIUM_CRUSHING_WHEEL);
-    public static final BlockEntry<TieredCrushingWheelBlock> NEUTRONIUM_CRUSHING_WHEEL = crushingWheel("neutronium_crushing_wheel", UHV, TM[9], 5.0);
+    public static final BlockEntry<TieredCrushingWheelBlock> NEUTRONIUM_CRUSHING_WHEEL = crushingWheel("neutronium_crushing_wheel", UHV, TMS[9], 5.0);
     public static final BlockEntry<TieredCrushingWheelControllerBlock> NEUTRONIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController("neutronium_crushing_wheel_controller", UHV, NEUTRONIUM_CRUSHING_WHEEL);
 
     public static BlockEntry<TieredCrushingWheelBlock> crushingWheel(String name, int tier, String materialType, double stressImpact) {

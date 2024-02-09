@@ -22,7 +22,7 @@ import net.minecraft.world.level.material.PushReaction;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
 import static electrolyte.greate.Greate.REGISTRATE;
-import static electrolyte.greate.GreateValues.TM;
+import static electrolyte.greate.GreateValues.TMS;
 
 public class Gearboxes {
 
@@ -30,25 +30,25 @@ public class Gearboxes {
         REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
     }
 
-    public static final BlockEntry<TieredGearboxBlock> ANDESITE_GEARBOX = gearbox("andesite_gearbox", ULV, TM[0], GreatePartialModels.ANDESITE_SHAFT_HALF);
+    public static final BlockEntry<TieredGearboxBlock> ANDESITE_GEARBOX = gearbox("andesite_gearbox", ULV, TMS[0], GreatePartialModels.ANDESITE_SHAFT_HALF);
     public static final ItemEntry<TieredVerticalGearboxItem> ANDESITE_VERTICAL_GEARBOX = verticalGearbox("andesite_vertical_gearbox", ANDESITE_GEARBOX);
-    public static final BlockEntry<TieredGearboxBlock> STEEL_GEARBOX = gearbox("steel_gearbox", LV, TM[1], GreatePartialModels.STEEL_SHAFT_HALF);
+    public static final BlockEntry<TieredGearboxBlock> STEEL_GEARBOX = gearbox("steel_gearbox", LV, TMS[1], GreatePartialModels.STEEL_SHAFT_HALF);
     public static final ItemEntry<TieredVerticalGearboxItem> STEEL_VERTICAL_GEARBOX = verticalGearbox("steel_vertical_gearbox", STEEL_GEARBOX);
-    public static final BlockEntry<TieredGearboxBlock> ALUMINIUM_GEARBOX = gearbox("aluminium_gearbox", MV, TM[2], GreatePartialModels.ALUMINIUM_SHAFT_HALF);
+    public static final BlockEntry<TieredGearboxBlock> ALUMINIUM_GEARBOX = gearbox("aluminium_gearbox", MV, TMS[2], GreatePartialModels.ALUMINIUM_SHAFT_HALF);
     public static final ItemEntry<TieredVerticalGearboxItem> ALUMINIUM_VERTICAL_GEARBOX = verticalGearbox("aluminium_vertical_gearbox", ALUMINIUM_GEARBOX);
-    public static final BlockEntry<TieredGearboxBlock> STAINLESS_STEEL_GEARBOX = gearbox("stainless_steel_gearbox", HV, TM[3], GreatePartialModels.STAINLESS_STEEL_SHAFT_HALF);
+    public static final BlockEntry<TieredGearboxBlock> STAINLESS_STEEL_GEARBOX = gearbox("stainless_steel_gearbox", HV, TMS[3], GreatePartialModels.STAINLESS_STEEL_SHAFT_HALF);
     public static final ItemEntry<TieredVerticalGearboxItem> STAINLESS_STEEL_VERTICAL_GEARBOX = verticalGearbox("stainless_steel_vertical_gearbox", STAINLESS_STEEL_GEARBOX);
-    public static final BlockEntry<TieredGearboxBlock> TITANIUM_GEARBOX = gearbox("titanium_gearbox", EV, TM[4], GreatePartialModels.TITANIUM_SHAFT_HALF);
+    public static final BlockEntry<TieredGearboxBlock> TITANIUM_GEARBOX = gearbox("titanium_gearbox", EV, TMS[4], GreatePartialModels.TITANIUM_SHAFT_HALF);
     public static final ItemEntry<TieredVerticalGearboxItem> TITANIUM_VERTICAL_GEARBOX = verticalGearbox("titanium_vertical_gearbox", TITANIUM_GEARBOX);
-    public static final BlockEntry<TieredGearboxBlock> TUNGSTENSTEEL_GEARBOX = gearbox("tungstensteel_gearbox", IV, TM[5], GreatePartialModels.TUNGSTENSTEEL_SHAFT_HALF);
+    public static final BlockEntry<TieredGearboxBlock> TUNGSTENSTEEL_GEARBOX = gearbox("tungstensteel_gearbox", IV, TMS[5], GreatePartialModels.TUNGSTENSTEEL_SHAFT_HALF);
     public static final ItemEntry<TieredVerticalGearboxItem> TUNGSTENSTEEL_VERTICAL_GEARBOX = verticalGearbox("tungstensteel_vertical_gearbox", TUNGSTENSTEEL_GEARBOX);
-    public static final BlockEntry<TieredGearboxBlock> PALLADIUM_GEARBOX = gearbox("palladium_gearbox", LuV, TM[6], GreatePartialModels.PALLADIUM_SHAFT_HALF);
+    public static final BlockEntry<TieredGearboxBlock> PALLADIUM_GEARBOX = gearbox("palladium_gearbox", LuV, TMS[6], GreatePartialModels.PALLADIUM_SHAFT_HALF);
     public static final ItemEntry<TieredVerticalGearboxItem> PALLADIUM_VERTICAL_GEARBOX = verticalGearbox("palladium_vertical_gearbox", PALLADIUM_GEARBOX);
-    public static final BlockEntry<TieredGearboxBlock> NAQUADAH_GEARBOX = gearbox("naquadah_gearbox", ZPM, TM[7], GreatePartialModels.NAQUADAH_SHAFT_HALF);
+    public static final BlockEntry<TieredGearboxBlock> NAQUADAH_GEARBOX = gearbox("naquadah_gearbox", ZPM, TMS[7], GreatePartialModels.NAQUADAH_SHAFT_HALF);
     public static final ItemEntry<TieredVerticalGearboxItem> NAQUADAH_VERTICAL_GEARBOX = verticalGearbox("naquadah_vertical_gearbox", NAQUADAH_GEARBOX);
-    public static final BlockEntry<TieredGearboxBlock> DARMSTADTIUM_GEARBOX = gearbox("darmstadtium_gearbox", UV, TM[8], GreatePartialModels.DARMSTADTIUM_SHAFT_HALF);
+    public static final BlockEntry<TieredGearboxBlock> DARMSTADTIUM_GEARBOX = gearbox("darmstadtium_gearbox", UV, TMS[8], GreatePartialModels.DARMSTADTIUM_SHAFT_HALF);
     public static final ItemEntry<TieredVerticalGearboxItem> DARMSTADTIUM_VERTICAL_GEARBOX = verticalGearbox("darmstadtium_vertical_gearbox", DARMSTADTIUM_GEARBOX);
-    public static final BlockEntry<TieredGearboxBlock> NEUTRONIUM_GEARBOX = gearbox("neutronium_gearbox", UHV, TM[9], GreatePartialModels.NEUTRONIUM_SHAFT_HALF);
+    public static final BlockEntry<TieredGearboxBlock> NEUTRONIUM_GEARBOX = gearbox("neutronium_gearbox", UHV, TMS[9], GreatePartialModels.NEUTRONIUM_SHAFT_HALF);
     public static final ItemEntry<TieredVerticalGearboxItem> NEUTRONIUM_VERTICAL_GEARBOX = verticalGearbox("neutronium_vertical_gearbox", NEUTRONIUM_GEARBOX);
 
     public static BlockEntry<TieredGearboxBlock> gearbox(String name, int tier, String materialType, PartialModel halfShaftModel) {

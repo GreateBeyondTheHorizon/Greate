@@ -24,7 +24,7 @@ import net.minecraft.world.level.material.MapColor;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
 import static electrolyte.greate.Greate.REGISTRATE;
-import static electrolyte.greate.GreateValues.TM;
+import static electrolyte.greate.GreateValues.TMS;
 
 public class Shafts {
 
@@ -32,46 +32,46 @@ public class Shafts {
         REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
     }
 
-    public static final BlockEntry<TieredShaftBlock> ANDESITE_SHAFT = shaft("andesite_shaft", ULV, TM[0], GreateItemTags.SHAFTS_ANDESITE.itemTag);
-    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_ANDESITE_SHAFT = poweredShaft("powered_andesite_shaft", ULV, TM[0], Shafts.ANDESITE_SHAFT);
-    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_ANDESITE_SHAFT = andesiteEncasedShaft("andesite_encased_andesite_shaft", ULV, TM[0], Shafts.ANDESITE_SHAFT);
-    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_ANDESITE_SHAFT = brassEncasedShaft("brass_encased_andesite_shaft", ULV, TM[0], Shafts.ANDESITE_SHAFT);
-    public static final BlockEntry<TieredShaftBlock> STEEL_SHAFT = shaft("steel_shaft", LV, TM[1], GreateItemTags.SHAFTS_STEEL.itemTag);
-    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_STEEL_SHAFT = poweredShaft("powered_steel_shaft", LV, TM[1], Shafts.STEEL_SHAFT);
-    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_STEEL_SHAFT = andesiteEncasedShaft("andesite_encased_steel_shaft", LV, TM[1], Shafts.STEEL_SHAFT);
-    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_STEEL_SHAFT = brassEncasedShaft("brass_encased_steel_shaft", LV, TM[1], Shafts.STEEL_SHAFT);
-    public static final BlockEntry<TieredShaftBlock> ALUMINIUM_SHAFT = shaft("aluminium_shaft", MV, TM[2], GreateItemTags.SHAFTS_ALUMINIUM.itemTag);
-    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_ALUMINIUM_SHAFT = poweredShaft("powered_aluminium_shaft", MV, TM[2], Shafts.ALUMINIUM_SHAFT);
-    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_ALUMINIUM_SHAFT = andesiteEncasedShaft("andesite_encased_aluminium_shaft", MV, TM[2], Shafts.ALUMINIUM_SHAFT);
-    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_ALUMINIUM_SHAFT = brassEncasedShaft("brass_encased_aluminium_shaft", MV, TM[2], Shafts.ALUMINIUM_SHAFT);
-    public static final BlockEntry<TieredShaftBlock> STAINLESS_STEEL_SHAFT = shaft("stainless_steel_shaft", HV, TM[3], GreateItemTags.SHAFTS_STAINLESS_STEEL.itemTag);
-    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_STAINLESS_STEEL_SHAFT = poweredShaft("powered_stainless_steel_shaft", HV, TM[3], Shafts.STAINLESS_STEEL_SHAFT);
-    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_STAINLESS_STEEL_SHAFT = andesiteEncasedShaft("andesite_encased_stainless_steel_shaft", HV, TM[3], Shafts.STAINLESS_STEEL_SHAFT);
-    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_STAINLESS_STEEL_SHAFT = brassEncasedShaft("brass_encased_stainless_steel_shaft", HV, TM[3], Shafts.STAINLESS_STEEL_SHAFT);
-    public static final BlockEntry<TieredShaftBlock> TITANIUM_SHAFT = shaft("titanium_shaft", EV, TM[4], GreateItemTags.SHAFTS_TITANIUM.itemTag);
-    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_TITANIUM_SHAFT = poweredShaft("powered_titanium_shaft", EV, TM[4], Shafts.TITANIUM_SHAFT);
-    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_TITANIUM_SHAFT = andesiteEncasedShaft("andesite_encased_titanium_shaft", EV, TM[4], Shafts.TITANIUM_SHAFT);
-    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_TITANIUM_SHAFT = brassEncasedShaft("brass_encased_titanium_shaft", EV, TM[4], Shafts.TITANIUM_SHAFT);
-    public static final BlockEntry<TieredShaftBlock> TUNGSTENSTEEL_SHAFT = shaft("tungstensteel_shaft", IV, TM[5], GreateItemTags.SHAFTS_TUNGSTENSTEEL.itemTag);
-    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_TUNGSTENSTEEL_SHAFT = poweredShaft("powered_tungstensteel_shaft", IV, TM[5], Shafts.TUNGSTENSTEEL_SHAFT);
-    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_TUNGSTENSTEEL_SHAFT = andesiteEncasedShaft("andesite_encased_tungstensteel_shaft", IV, TM[5], Shafts.TUNGSTENSTEEL_SHAFT);
-    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_TUNGSTENSTEEL_SHAFT = brassEncasedShaft("brass_encased_tungstensteel_shaft", IV, TM[5], Shafts.TUNGSTENSTEEL_SHAFT);
-    public static final BlockEntry<TieredShaftBlock> PALLADIUM_SHAFT = shaft("palladium_shaft", LuV, TM[6], GreateItemTags.SHAFTS_PALLADIUM.itemTag);
-    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_PALLADIUM_SHAFT = poweredShaft("powered_palladium_shaft", LuV, TM[6], Shafts.PALLADIUM_SHAFT);
-    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_PALLADIUM_SHAFT = andesiteEncasedShaft("andesite_encased_palladium_shaft", LuV, TM[6], Shafts.PALLADIUM_SHAFT);
-    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_PALLADIUM_SHAFT = brassEncasedShaft("brass_encased_palladium_shaft", LuV, TM[6], Shafts.PALLADIUM_SHAFT);
-    public static final BlockEntry<TieredShaftBlock> NAQUADAH_SHAFT = shaft("naquadah_shaft", ZPM, TM[7], GreateItemTags.SHAFTS_NAQUADAH.itemTag);
-    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_NAQUADAH_SHAFT = poweredShaft("powered_naquadah_shaft", ZPM, TM[7], Shafts.NAQUADAH_SHAFT);
-    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_NAQUADAH_SHAFT = andesiteEncasedShaft("andesite_encased_naquadah_shaft", ZPM, TM[7], Shafts.NAQUADAH_SHAFT);
-    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_NAQUADAH_SHAFT = brassEncasedShaft("brass_encased_naquadah_shaft", ZPM, TM[7], Shafts.NAQUADAH_SHAFT);
-    public static final BlockEntry<TieredShaftBlock> DARMSTADTIUM_SHAFT = shaft("darmstadtium_shaft", UV, TM[8], GreateItemTags.SHAFTS_DARMSTADTIUM.itemTag);
-    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_DARMSTADTIUM_SHAFT = poweredShaft("powered_darmstadtium_shaft", UV, TM[8], Shafts.DARMSTADTIUM_SHAFT);
-    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_DARMSTADTIUM_SHAFT = andesiteEncasedShaft("andesite_encased_darmstadtium_shaft", UV, TM[8], Shafts.DARMSTADTIUM_SHAFT);
-    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_DARMSTADTIUM_SHAFT = brassEncasedShaft("brass_encased_darmstadtium_shaft", UV, TM[8], Shafts.DARMSTADTIUM_SHAFT);
-    public static final BlockEntry<TieredShaftBlock> NEUTRONIUM_SHAFT = shaft("neutronium_shaft", UHV, TM[9], GreateItemTags.SHAFTS_NEUTRONIUM.itemTag);
-    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_NEUTRONIUM_SHAFT = poweredShaft("powered_neutronium_shaft", UHV, TM[9], Shafts.NEUTRONIUM_SHAFT);
-    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_NEUTRONIUM_SHAFT = andesiteEncasedShaft("andesite_encased_neutronium_shaft", UHV, TM[9], Shafts.NEUTRONIUM_SHAFT);
-    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_NEUTRONIUM_SHAFT = brassEncasedShaft("brass_encased_neutronium_shaft", UHV, TM[9], Shafts.NEUTRONIUM_SHAFT);
+    public static final BlockEntry<TieredShaftBlock> ANDESITE_SHAFT = shaft("andesite_shaft", ULV, TMS[0], GreateItemTags.SHAFTS_ANDESITE.itemTag);
+    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_ANDESITE_SHAFT = poweredShaft("powered_andesite_shaft", ULV, TMS[0], Shafts.ANDESITE_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_ANDESITE_SHAFT = andesiteEncasedShaft("andesite_encased_andesite_shaft", ULV, TMS[0], Shafts.ANDESITE_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_ANDESITE_SHAFT = brassEncasedShaft("brass_encased_andesite_shaft", ULV, TMS[0], Shafts.ANDESITE_SHAFT);
+    public static final BlockEntry<TieredShaftBlock> STEEL_SHAFT = shaft("steel_shaft", LV, TMS[1], GreateItemTags.SHAFTS_STEEL.itemTag);
+    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_STEEL_SHAFT = poweredShaft("powered_steel_shaft", LV, TMS[1], Shafts.STEEL_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_STEEL_SHAFT = andesiteEncasedShaft("andesite_encased_steel_shaft", LV, TMS[1], Shafts.STEEL_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_STEEL_SHAFT = brassEncasedShaft("brass_encased_steel_shaft", LV, TMS[1], Shafts.STEEL_SHAFT);
+    public static final BlockEntry<TieredShaftBlock> ALUMINIUM_SHAFT = shaft("aluminium_shaft", MV, TMS[2], GreateItemTags.SHAFTS_ALUMINIUM.itemTag);
+    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_ALUMINIUM_SHAFT = poweredShaft("powered_aluminium_shaft", MV, TMS[2], Shafts.ALUMINIUM_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_ALUMINIUM_SHAFT = andesiteEncasedShaft("andesite_encased_aluminium_shaft", MV, TMS[2], Shafts.ALUMINIUM_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_ALUMINIUM_SHAFT = brassEncasedShaft("brass_encased_aluminium_shaft", MV, TMS[2], Shafts.ALUMINIUM_SHAFT);
+    public static final BlockEntry<TieredShaftBlock> STAINLESS_STEEL_SHAFT = shaft("stainless_steel_shaft", HV, TMS[3], GreateItemTags.SHAFTS_STAINLESS_STEEL.itemTag);
+    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_STAINLESS_STEEL_SHAFT = poweredShaft("powered_stainless_steel_shaft", HV, TMS[3], Shafts.STAINLESS_STEEL_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_STAINLESS_STEEL_SHAFT = andesiteEncasedShaft("andesite_encased_stainless_steel_shaft", HV, TMS[3], Shafts.STAINLESS_STEEL_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_STAINLESS_STEEL_SHAFT = brassEncasedShaft("brass_encased_stainless_steel_shaft", HV, TMS[3], Shafts.STAINLESS_STEEL_SHAFT);
+    public static final BlockEntry<TieredShaftBlock> TITANIUM_SHAFT = shaft("titanium_shaft", EV, TMS[4], GreateItemTags.SHAFTS_TITANIUM.itemTag);
+    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_TITANIUM_SHAFT = poweredShaft("powered_titanium_shaft", EV, TMS[4], Shafts.TITANIUM_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_TITANIUM_SHAFT = andesiteEncasedShaft("andesite_encased_titanium_shaft", EV, TMS[4], Shafts.TITANIUM_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_TITANIUM_SHAFT = brassEncasedShaft("brass_encased_titanium_shaft", EV, TMS[4], Shafts.TITANIUM_SHAFT);
+    public static final BlockEntry<TieredShaftBlock> TUNGSTENSTEEL_SHAFT = shaft("tungstensteel_shaft", IV, TMS[5], GreateItemTags.SHAFTS_TUNGSTENSTEEL.itemTag);
+    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_TUNGSTENSTEEL_SHAFT = poweredShaft("powered_tungstensteel_shaft", IV, TMS[5], Shafts.TUNGSTENSTEEL_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_TUNGSTENSTEEL_SHAFT = andesiteEncasedShaft("andesite_encased_tungstensteel_shaft", IV, TMS[5], Shafts.TUNGSTENSTEEL_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_TUNGSTENSTEEL_SHAFT = brassEncasedShaft("brass_encased_tungstensteel_shaft", IV, TMS[5], Shafts.TUNGSTENSTEEL_SHAFT);
+    public static final BlockEntry<TieredShaftBlock> PALLADIUM_SHAFT = shaft("palladium_shaft", LuV, TMS[6], GreateItemTags.SHAFTS_PALLADIUM.itemTag);
+    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_PALLADIUM_SHAFT = poweredShaft("powered_palladium_shaft", LuV, TMS[6], Shafts.PALLADIUM_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_PALLADIUM_SHAFT = andesiteEncasedShaft("andesite_encased_palladium_shaft", LuV, TMS[6], Shafts.PALLADIUM_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_PALLADIUM_SHAFT = brassEncasedShaft("brass_encased_palladium_shaft", LuV, TMS[6], Shafts.PALLADIUM_SHAFT);
+    public static final BlockEntry<TieredShaftBlock> NAQUADAH_SHAFT = shaft("naquadah_shaft", ZPM, TMS[7], GreateItemTags.SHAFTS_NAQUADAH.itemTag);
+    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_NAQUADAH_SHAFT = poweredShaft("powered_naquadah_shaft", ZPM, TMS[7], Shafts.NAQUADAH_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_NAQUADAH_SHAFT = andesiteEncasedShaft("andesite_encased_naquadah_shaft", ZPM, TMS[7], Shafts.NAQUADAH_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_NAQUADAH_SHAFT = brassEncasedShaft("brass_encased_naquadah_shaft", ZPM, TMS[7], Shafts.NAQUADAH_SHAFT);
+    public static final BlockEntry<TieredShaftBlock> DARMSTADTIUM_SHAFT = shaft("darmstadtium_shaft", UV, TMS[8], GreateItemTags.SHAFTS_DARMSTADTIUM.itemTag);
+    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_DARMSTADTIUM_SHAFT = poweredShaft("powered_darmstadtium_shaft", UV, TMS[8], Shafts.DARMSTADTIUM_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_DARMSTADTIUM_SHAFT = andesiteEncasedShaft("andesite_encased_darmstadtium_shaft", UV, TMS[8], Shafts.DARMSTADTIUM_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_DARMSTADTIUM_SHAFT = brassEncasedShaft("brass_encased_darmstadtium_shaft", UV, TMS[8], Shafts.DARMSTADTIUM_SHAFT);
+    public static final BlockEntry<TieredShaftBlock> NEUTRONIUM_SHAFT = shaft("neutronium_shaft", UHV, TMS[9], GreateItemTags.SHAFTS_NEUTRONIUM.itemTag);
+    public static final BlockEntry<TieredPoweredShaftBlock> POWERED_NEUTRONIUM_SHAFT = poweredShaft("powered_neutronium_shaft", UHV, TMS[9], Shafts.NEUTRONIUM_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> ANDESITE_ENCASED_NEUTRONIUM_SHAFT = andesiteEncasedShaft("andesite_encased_neutronium_shaft", UHV, TMS[9], Shafts.NEUTRONIUM_SHAFT);
+    public static final BlockEntry<TieredEncasedShaftBlock> BRASS_ENCASED_NEUTRONIUM_SHAFT = brassEncasedShaft("brass_encased_neutronium_shaft", UHV, TMS[9], Shafts.NEUTRONIUM_SHAFT);
 
     public static BlockEntry<TieredShaftBlock> shaft(String name, int tier, String materialType, TagKey<Item> shaftTag) {
         return REGISTRATE
