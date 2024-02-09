@@ -26,5 +26,5 @@
   "injectors": {
     "defaultRequire": 1
   },
-  "refmap": "greate.mixin-refmap.json"
+  "refmap": "greate-refmap.json"
 }
