@@ -7,7 +7,7 @@ import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.foundation.fluid.FluidHelper;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
-import electrolyte.greate.GreateEnums.TIER;
+
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeFactory;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.NonNullList;
@@ -50,8 +50,8 @@ public class TieredProcessingRecipeSerializer<T extends TieredProcessingRecipe<?
         HeatCondition requiredHeat = recipe.getRequiredHeat();
         if (requiredHeat != HeatCondition.NONE)
             json.addProperty("heatRequirement", requiredHeat.serialize());
-        TIER recipeTier = recipe.getRecipeTier();
-        json.addProperty("recipeTier", recipeTier.getName());
+        int recipeTier = recipe.getRecipeTier();
+        json.addProperty("recipeTier", recipeTier);
         recipe.writeAdditional(json);
     }
 
@@ -87,7 +87,7 @@ public class TieredProcessingRecipeSerializer<T extends TieredProcessingRecipe<?
         if (GsonHelper.isValidNode(json, "heatRequirement"))
             builder.requiresHeat(HeatCondition.deserialize(GsonHelper.getAsString(json, "heatRequirement")));
         if (GsonHelper.isValidNode(json, "recipeTier"))
-            builder.recipeTier(TIER.deserialize(GsonHelper.getAsString(json, "recipeTier")));
+            builder.recipeTier(GsonHelper.getAsInt(json, "recipeTier"));
         if (GsonHelper.isValidNode(json, "circuitNumber"))
             builder.recipeCircuit(GsonHelper.getAsInt(json, "circuitNumber"));
         T recipe = builder.build();
@@ -114,7 +114,7 @@ public class TieredProcessingRecipeSerializer<T extends TieredProcessingRecipe<?
         buffer.writeVarInt(recipe.getProcessingDuration());
         buffer.writeVarInt(recipe.getRequiredHeat()
                 .ordinal());
-        buffer.writeEnum(recipe.getRecipeTier());
+        buffer.writeVarInt(recipe.getRecipeTier());
 
         recipe.writeAdditional(buffer);
     }
@@ -147,7 +147,7 @@ public class TieredProcessingRecipeSerializer<T extends TieredProcessingRecipe<?
                 .withFluidOutputs(fluidResults)
                 .duration(buffer.readVarInt())
                 .requiresHeat(HeatCondition.values()[buffer.readVarInt()])
-                .recipeTier(TIER.values()[buffer.readEnum(TIER.class).ordinal()])
+                .recipeTier(buffer.readVarInt())
                 .build();
         recipe.readAdditional(buffer);
         return recipe;

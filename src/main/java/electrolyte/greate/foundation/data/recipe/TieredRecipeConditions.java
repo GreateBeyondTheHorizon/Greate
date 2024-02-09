@@ -10,7 +10,8 @@ import com.gregtechceu.gtceu.common.data.GTItems;
 import com.gregtechceu.gtceu.common.item.IntCircuitBehaviour;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour;
-import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.GreateValues;
+
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -71,12 +72,12 @@ public class TieredRecipeConditions {
         };
     }
 
-    public static Predicate<Recipe<?>> isEqualOrAboveTier(TIER machineTier) {
+    public static Predicate<Recipe<?>> isEqualOrAboveTier(int machineTier) {
         return r -> {
             if(r instanceof TieredProcessingRecipe<?> pr) {
-                return pr.getRecipeTier().compareTo(machineTier) <= 0;
+                return pr.getRecipeTier() <= machineTier;
             } else if(r instanceof GTRecipe gtr) {
-                return TIER.convertGTEUToTier(gtr.getTickInputContents(EURecipeCapability.CAP)).compareTo(machineTier) <= 0;
+                return GreateValues.convertGTEUToTier(gtr.getTickInputContents(EURecipeCapability.CAP)) <= machineTier;
             }
             return true; //todo: check default create recipes
         };

@@ -1,10 +1,8 @@
 package electrolyte.greate.content.kinetics.belt;
 
-import electrolyte.greate.GreateEnums.BELT_TYPE;
-
 public interface ITieredBelt {
 
-    BELT_TYPE getBeltType();
+    String getBeltType();
 
-    void setBeltType(BELT_TYPE beltType);
+    void setBeltType(String beltType);
 }

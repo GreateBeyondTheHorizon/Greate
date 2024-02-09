@@ -9,8 +9,6 @@ import com.simibubi.create.content.kinetics.simpleRelays.AbstractSimpleShaftBloc
 import com.simibubi.create.foundation.advancement.AllAdvancements;
 import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
 import com.simibubi.create.foundation.utility.VecHelper;
-import electrolyte.greate.GreateEnums.BELT_TYPE;
-import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.content.kinetics.belt.ITieredBelt;
 import electrolyte.greate.content.kinetics.belt.TieredBeltBlock;
 import electrolyte.greate.content.kinetics.belt.TieredBeltBlockEntity;
@@ -42,7 +40,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class TieredBeltConnectorItem extends BlockItem implements ITieredBelt {
-    private BELT_TYPE beltType;
+    private String beltType;
 
     public TieredBeltConnectorItem(Block pBlock, Properties pProperties) {
         super(pBlock, pProperties);
@@ -111,7 +109,7 @@ public class TieredBeltConnectorItem extends BlockItem implements ITieredBelt {
         List<BlockPos> beltsToCreate = getBeltChainBetween(start, end, slope, facing);
         BlockState state = Block.byItem(this).defaultBlockState();
         boolean failed = false;
-        TIER tier = null;
+        int tier = -1;
         ItemStack shaftType = null;
         for(BlockPos pos : beltsToCreate) {
             BlockState existingState = level.getBlockState(pos);
@@ -233,12 +231,12 @@ public class TieredBeltConnectorItem extends BlockItem implements ITieredBelt {
     }
 
     @Override
-    public BELT_TYPE getBeltType() {
+    public String getBeltType() {
         return beltType;
     }
 
     @Override
-    public void setBeltType(BELT_TYPE beltType) {
+    public void setBeltType(String beltType) {
         this.beltType = beltType;
     }
 }

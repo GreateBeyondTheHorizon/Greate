@@ -19,8 +19,7 @@ import com.simibubi.create.content.schematics.requirement.ItemRequirement.ItemUs
 import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.tterrag.registrate.util.entry.BlockEntry;
-import electrolyte.greate.GreateEnums.BELT_TYPE;
-import electrolyte.greate.GreateEnums.TIER;
+
 import electrolyte.greate.content.kinetics.belt.item.TieredBeltConnectorItem;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingWheelControllerBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
@@ -72,8 +71,8 @@ import static net.minecraft.world.level.block.state.properties.BlockStatePropert
 public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredBelt {
 
     private ItemStack shaftType;
-    private TIER tier;
-    private BELT_TYPE beltType;
+    private int tier;
+    private String beltType;
 
     public TieredBeltBlock(Properties properties) {
         super(properties);
@@ -402,12 +401,12 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
     }
 
     @Override
-    public TIER getTier() {
+    public int getTier() {
         return tier;
     }
 
     @Override
-    public void setTier(TIER tier) {
+    public void setTier(int tier) {
         this.tier = tier;
     }
 
@@ -430,12 +429,12 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
     }
 
     @Override
-    public BELT_TYPE getBeltType() {
+    public String getBeltType() {
         return beltType;
     }
 
     @Override
-    public void setBeltType(BELT_TYPE beltType) {
+    public void setBeltType(String beltType) {
         this.beltType = beltType;
     }
 }

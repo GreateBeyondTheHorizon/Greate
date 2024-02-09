@@ -1,7 +1,7 @@
 package electrolyte.greate.content.kinetics.steamEngine;
 
 import com.simibubi.create.content.kinetics.steamEngine.PoweredShaftBlockEntity;
-import electrolyte.greate.GreateEnums.TIER;
+
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -13,7 +13,7 @@ import java.util.List;
 
 public class TieredPoweredShaftBlockEntity extends PoweredShaftBlockEntity implements ITieredKineticBlockEntity {
 
-    private TIER tier;
+    private int tier;
 
     public TieredPoweredShaftBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
         super(typeIn, pos, state);

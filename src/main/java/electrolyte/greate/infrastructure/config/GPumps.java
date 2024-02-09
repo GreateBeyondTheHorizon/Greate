@@ -1,17 +1,6 @@
 package electrolyte.greate.infrastructure.config;
 
-import com.simibubi.create.content.kinetics.BlockStressDefaults;
 import com.simibubi.create.foundation.config.ConfigBase;
-import electrolyte.greate.GreateEnums.MATERIAL_TYPE;
-import electrolyte.greate.GreateEnums.TIER;
-import electrolyte.greate.content.kinetics.TieredBlockMaterials;
-import electrolyte.greate.registry.Pumps;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
-import net.minecraftforge.common.ForgeConfigSpec.Builder;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class GPumps extends ConfigBase {
 

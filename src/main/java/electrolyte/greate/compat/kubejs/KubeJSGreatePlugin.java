@@ -6,6 +6,7 @@ import dev.latvian.mods.kubejs.recipe.schema.RegisterRecipeSchemasEvent;
 import dev.latvian.mods.kubejs.script.BindingsEvent;
 import dev.latvian.mods.kubejs.script.ScriptType;
 import dev.latvian.mods.rhino.util.wrap.TypeWrappers;
+import electrolyte.greate.GreateValues;
 import electrolyte.greate.compat.kubejs.item.TieredOutputItem;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeSerializer;
 import electrolyte.greate.registry.ModRecipeTypes;
@@ -36,6 +37,7 @@ public class KubeJSGreatePlugin extends KubeJSPlugin {
     @Override
     public void registerBindings(BindingsEvent event) {
         event.add("TieredOutputItem", TieredOutputItem.class);
+        event.add("GreateValues", GreateValues.class);
     }
 
     @Override

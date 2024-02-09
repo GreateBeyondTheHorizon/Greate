@@ -7,7 +7,7 @@ import com.jozufozu.flywheel.util.box.ImmutableBox;
 import com.simibubi.create.content.kinetics.belt.*;
 import com.simibubi.create.content.kinetics.belt.transport.BeltMovementHandler;
 import com.simibubi.create.foundation.utility.NBTHelper;
-import electrolyte.greate.GreateEnums.TIER;
+
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.core.BlockPos;
@@ -34,7 +34,7 @@ import java.util.Optional;
 
 public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKineticBlockEntity {
 
-    private TIER tier;
+    private int tier;
     private ItemStack shaftType;
 
     @OnlyIn(Dist.CLIENT)
@@ -91,11 +91,11 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
         if(((TieredBeltBlock) this.getBlockState().getBlock()).getShaftType() != null) {
             shaftType = ((TieredBeltBlock) this.getBlockState().getBlock()).getShaftType();
         }
-        if(((TieredBeltBlock) this.getBlockState().getBlock()).getTier() != null) {
+        if(((TieredBeltBlock) this.getBlockState().getBlock()).getTier() != -1) {
             tier = ((TieredBeltBlock) this.getBlockState().getBlock()).getTier();
         }
         compound.put("ShaftType", shaftType.serializeNBT());
-        NBTHelper.writeEnum(compound, "Tier", this.tier);
+        compound.putInt("Tier", this.tier);
 
         super.write(compound, clientPacket);
     }
@@ -106,7 +106,7 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
 
         shaftType = ItemStack.of(compound.getCompound("ShaftType"));
         ((TieredBeltBlock) this.getBlockState().getBlock()).setShaftType(shaftType);
-        this.tier = NBTHelper.readEnum(compound, "Tier", TIER.class);
+        this.tier = compound.getInt("Tier");
         ((TieredBeltBlock) this.getBlockState().getBlock()).setTier(tier);
         beltLength = compound.getInt("Length");
         if(!wasMoved) {
@@ -235,11 +235,11 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
         this.shaftType = shaftType;
     }
 
-    public TIER getTier() {
+    public int getTier() {
         return tier;
     }
 
-    public void setTier(TIER tier) {
+    public void setTier(int tier) {
         this.tier = tier;
     }
 

@@ -2,7 +2,7 @@ package electrolyte.greate.compat.jei.category;
 
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
-import electrolyte.greate.GreateEnums.TIER;
+
 import electrolyte.greate.compat.jei.category.animations.TieredAnimatedMechanicalPress;
 import electrolyte.greate.content.kinetics.press.TieredPressingRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingOutput;
@@ -58,6 +58,6 @@ public class TieredPressingCategory extends GreateRecipeCategory<TieredPressingR
         super.draw(recipe, recipeSlotsView, graphics, 1, 75);
         AllGuiTextures.JEI_SHADOW.render(graphics, 61, 41);
         AllGuiTextures.JEI_LONG_ARROW.render(graphics, 52, 54);
-        new TieredAnimatedMechanicalPress(MechanicalPresses.MECHANICAL_PRESSES.get(TIER.indexOfTier(recipe.getRecipeTier())), false).draw(graphics, getBackground().getWidth() / 2 - 17, 22);
+        new TieredAnimatedMechanicalPress(MechanicalPresses.MECHANICAL_PRESSES.get(recipe.getRecipeTier()), false).draw(graphics, getBackground().getWidth() / 2 - 17, 22);
     }
 }

@@ -5,7 +5,7 @@ import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.simpleRelays.SimpleKineticBlockEntity;
 import com.simibubi.create.content.kinetics.simpleRelays.encased.EncasedCogwheelBlock;
 import com.simibubi.create.content.schematics.requirement.ItemRequirement;
-import electrolyte.greate.GreateEnums.TIER;
+
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredEncasedCogwheel;
 import electrolyte.greate.registry.ModBlockEntityTypes;
@@ -26,7 +26,7 @@ import java.util.function.Supplier;
 
 public class TieredEncasedCogwheelBlock extends EncasedCogwheelBlock implements ITieredBlock, ITieredEncasedCogwheel {
 
-    private TIER tier;
+    private int tier;
     private final Supplier<Block> cogwheel;
     private final PartialModel partialModel, cogwheelShaftlessModel;
 
@@ -78,12 +78,12 @@ public class TieredEncasedCogwheelBlock extends EncasedCogwheelBlock implements 
     }
 
     @Override
-    public TIER getTier() {
+    public int getTier() {
         return this.tier;
     }
 
     @Override
-    public void setTier(TIER tier) {
+    public void setTier(int tier) {
         this.tier = tier;
     }
 

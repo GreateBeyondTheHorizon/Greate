@@ -23,7 +23,6 @@ import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
 import electrolyte.greate.Greate;
-import electrolyte.greate.GreateEnums.BELT_TYPE;
 import electrolyte.greate.registry.GreatePartialModels;
 import electrolyte.greate.registry.GreateSpriteShifts;
 import net.minecraft.client.Minecraft;
@@ -164,7 +163,7 @@ public class TieredBeltRenderer extends SafeBlockEntityRenderer<TieredBeltBlockE
     }
 
     public static PartialModel getBeltPartial(TieredBeltBlock block, boolean diagonal, boolean start, boolean end, boolean bottom) {
-        BELT_TYPE beltType = block.getBeltType();
+        String beltType = block.getBeltType();
         if (diagonal) {
             if(start) return GreatePartialModels.NEW_BELT_MODELS.get(beltType).get(8);
             if(end) return GreatePartialModels.NEW_BELT_MODELS.get(beltType).get(10);
@@ -197,7 +196,7 @@ public class TieredBeltRenderer extends SafeBlockEntityRenderer<TieredBeltBlockE
     }
 
     public static PartialModel getBeltPulleyModel(BlockState blockState, TieredBeltBlockEntity blockEntity) {
-        BELT_TYPE beltType = ((TieredBeltBlock) blockState.getBlock()).getBeltType();
+        String beltType = ((TieredBeltBlock) blockState.getBlock()).getBeltType();
         String beltMaterial = ForgeRegistries.BLOCKS.getKey(blockState.getBlock()).toString().substring(Greate.MOD_ID.length() + 1);
         String shaftMaterial;
         if(((TieredBeltBlock) blockState.getBlock()).getShaftType() != null) {

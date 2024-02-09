@@ -8,7 +8,8 @@ import com.simibubi.create.compat.jei.category.sequencedAssembly.SequencedAssemb
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.sequenced.IAssemblyRecipe;
 import com.simibubi.create.foundation.utility.Lang;
-import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.GreateValues;
+
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeParams;
@@ -26,6 +27,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
+
+import static com.gregtechceu.gtceu.api.GTValues.ULV;
 
 @ParametersAreNonnullByDefault
 public class TieredPressingRecipe extends TieredProcessingRecipe<RecipeWrapper> implements IAssemblyRecipe {
@@ -71,12 +74,12 @@ public class TieredPressingRecipe extends TieredProcessingRecipe<RecipeWrapper> 
         return new TieredProcessingRecipeBuilder<>(TieredPressingRecipe::new, recipe.getId())
                 .withItemIngredients(recipe.getIngredients()).output(recipe.getResultItem(Minecraft.getInstance().level.registryAccess()))
                 .withItemOutputs(((ProcessingRecipe<?>) recipe).getRollableResults())
-                .recipeTier(TIER.ULTRA_LOW).noCircuit().build();
+                .recipeTier(ULV).noCircuit().build();
     }
 
-    public static TieredPressingRecipe convertGT(GTRecipe recipe, TIER machineTier) {
+    public static TieredPressingRecipe convertGT(GTRecipe recipe, int machineTier) {
         List<Content> inputContents = recipe.getInputContents(ItemRecipeCapability.CAP);
-        TIER recipeTier = TIER.convertGTEUToTier(recipe.getTickInputContents(EURecipeCapability.CAP));
+        int recipeTier = GreateValues.convertGTEUToTier(recipe.getTickInputContents(EURecipeCapability.CAP));
         return new TieredProcessingRecipeBuilder<>(TieredPressingRecipe::new, recipe.getId())
                 .withItemIngredientsGT(inputContents)
                 .output(recipe.getResultItem(Minecraft.getInstance().level.registryAccess()))

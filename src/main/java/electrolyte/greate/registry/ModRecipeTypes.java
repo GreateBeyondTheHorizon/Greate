@@ -6,7 +6,7 @@ import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.RegisteredObjects;
 import electrolyte.greate.Greate;
-import electrolyte.greate.GreateEnums.TIER;
+
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingRecipe;
 import electrolyte.greate.content.kinetics.millstone.TieredMillingRecipe;
 import electrolyte.greate.content.kinetics.mixer.TieredCompactingRecipe;
@@ -99,11 +99,11 @@ public enum ModRecipeTypes implements IRecipeTypeInfo {
 		return (T) type.get();
 	}
 
-	public <C extends Container, T extends Recipe<C>> Optional<T> find(C inv, Level world, TIER tier) {
+	public <C extends Container, T extends Recipe<C>> Optional<T> find(C inv, Level world, int tier) {
 		Optional<T> recipe = world.getRecipeManager().getRecipeFor(getType(), inv, world);
 		if(recipe.isPresent()) {
 			if(recipe.get() instanceof TieredProcessingRecipe<?> tieredRecipe) {
-				if(tieredRecipe.getRecipeTier().compareTo(tier) <= 0) {
+				if(tieredRecipe.getRecipeTier() <= tier) {
 					return recipe;
 				}
 			}

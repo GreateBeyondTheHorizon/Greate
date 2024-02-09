@@ -1,7 +1,7 @@
 package electrolyte.greate.content.kinetics.simpleRelays;
 
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
-import electrolyte.greate.GreateEnums.TIER;
+
 import electrolyte.greate.content.kinetics.base.TieredKineticEffectHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public class TieredKineticBlockEntity extends KineticBlockEntity implements ITieredKineticBlockEntity {
 
-    protected TIER tier;
+    protected int tier;
     public TieredKineticEffectHandler effects;
 
     public TieredKineticBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
@@ -21,7 +21,7 @@ public class TieredKineticBlockEntity extends KineticBlockEntity implements ITie
         effects = new TieredKineticEffectHandler(this);
     }
 
-    public TIER getTier() {
+    public int getTier() {
         return tier;
     }
 

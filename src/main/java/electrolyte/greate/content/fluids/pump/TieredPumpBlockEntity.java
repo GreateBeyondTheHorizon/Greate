@@ -6,7 +6,7 @@ import com.simibubi.create.content.fluids.pump.PumpBlock;
 import com.simibubi.create.content.fluids.pump.PumpBlockEntity;
 import com.simibubi.create.foundation.utility.BlockFace;
 import com.simibubi.create.foundation.utility.Pair;
-import electrolyte.greate.GreateEnums.TIER;
+
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import electrolyte.greate.infrastructure.config.GConfigUtility;
 import net.minecraft.core.BlockPos;
@@ -23,7 +23,7 @@ import java.util.*;
 
 public class TieredPumpBlockEntity extends PumpBlockEntity implements ITieredKineticBlockEntity {
 
-	private final TIER tier;
+	private final int tier;
 	private final static Class<?> pumpFluidTransferBehaviourClass = PumpBlockEntity.class.getDeclaredClasses()[0];
 
 	public TieredPumpBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
@@ -31,7 +31,7 @@ public class TieredPumpBlockEntity extends PumpBlockEntity implements ITieredKin
 		tier = ((TieredPumpBlock) state.getBlock()).getTier();
 	}
 
-	public TIER getTier() {
+	public int getTier() {
 		return tier;
 	}
 

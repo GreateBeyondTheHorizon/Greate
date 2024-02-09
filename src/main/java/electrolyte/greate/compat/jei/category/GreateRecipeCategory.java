@@ -9,6 +9,7 @@ import com.simibubi.create.foundation.gui.AllGuiTextures;
 import com.simibubi.create.foundation.utility.Components;
 import com.simibubi.create.foundation.utility.Lang;
 import electrolyte.greate.Greate;
+import electrolyte.greate.GreateValues;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -201,6 +202,6 @@ public abstract class GreateRecipeCategory<T extends Recipe<?>> implements IReci
     @Override
     public void draw(T recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double x, double y) {
         IRecipeCategory.super.draw(recipe, recipeSlotsView, graphics, x, y);
-        graphics.drawString(Minecraft.getInstance().font, Lang.builder(Greate.MOD_ID).translate("jei.recipe_tier").component().getString() + ((TieredProcessingRecipe<?>) recipe).getRecipeTier().getName(), (float) x, (float) y, 0x3f3f3f, false);
+        graphics.drawString(Minecraft.getInstance().font, Lang.builder(Greate.MOD_ID).translate("jei.recipe_tier").component().getString() + GreateValues.TM[((TieredProcessingRecipe<?>) recipe).getRecipeTier()], (float) x, (float) y, 0x3f3f3f, false);
     }
 }

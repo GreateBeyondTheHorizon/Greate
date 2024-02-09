@@ -9,7 +9,7 @@ import com.simibubi.create.foundation.fluid.FluidHelper;
 import com.simibubi.create.foundation.placement.IPlacementHelper;
 import com.simibubi.create.foundation.placement.PlacementHelpers;
 import com.simibubi.create.foundation.placement.PlacementOffset;
-import electrolyte.greate.GreateEnums.TIER;
+
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredPartialModel;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredShaftBlock;
@@ -41,7 +41,7 @@ import java.util.function.Predicate;
 
 public class TieredSawBlock extends SawBlock implements ITieredBlock, ITieredShaftBlock, ITieredPartialModel {
 
-    private TIER tier;
+    private int tier;
     private Block shaft;
     private PartialModel halfShaftModel;
     private PartialModel[] sawModels;
@@ -67,12 +67,12 @@ public class TieredSawBlock extends SawBlock implements ITieredBlock, ITieredSha
     }
 
     @Override
-    public TIER getTier() {
+    public int getTier() {
         return tier;
     }
 
     @Override
-    public void setTier(TIER tier) {
+    public void setTier(int tier) {
         this.tier = tier;
     }
 

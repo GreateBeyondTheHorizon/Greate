@@ -4,7 +4,6 @@ import com.simibubi.create.content.kinetics.crusher.CrushingWheelBlock;
 import com.simibubi.create.content.kinetics.crusher.CrushingWheelBlockEntity;
 import com.simibubi.create.content.kinetics.crusher.CrushingWheelControllerBlock;
 import com.simibubi.create.foundation.utility.Iterate;
-import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.registry.CrushingWheels;
 import electrolyte.greate.registry.ModBlockEntityTypes;
@@ -28,7 +27,7 @@ import static com.simibubi.create.content.kinetics.crusher.CrushingWheelControll
 
 public class TieredCrushingWheelBlock extends CrushingWheelBlock implements ITieredBlock {
 
-    private TIER tier;
+    private int tier;
 
     public TieredCrushingWheelBlock(Properties properties) {
         super(properties);
@@ -113,12 +112,12 @@ public class TieredCrushingWheelBlock extends CrushingWheelBlock implements ITie
     }
 
     @Override
-    public TIER getTier() {
+    public int getTier() {
         return tier;
     }
 
     @Override
-    public void setTier(TIER tier) {
+    public void setTier(int tier) {
         this.tier = tier;
     }
 

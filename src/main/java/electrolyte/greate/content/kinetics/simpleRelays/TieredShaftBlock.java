@@ -8,7 +8,7 @@ import com.simibubi.create.foundation.placement.IPlacementHelper;
 import com.simibubi.create.foundation.placement.PlacementHelpers;
 import com.simibubi.create.foundation.placement.PlacementOffset;
 import com.simibubi.create.foundation.placement.PoleHelper;
-import electrolyte.greate.GreateEnums.TIER;
+
 import electrolyte.greate.content.decoration.encasing.IGirderEncasableBlock;
 import electrolyte.greate.content.kinetics.steamEngine.TieredPoweredShaftBlock;
 import electrolyte.greate.registry.ModBlockEntityTypes;
@@ -35,7 +35,7 @@ import java.util.function.Predicate;
 public class TieredShaftBlock extends ShaftBlock implements ITieredBlock, ITieredShaftBlock, IGirderEncasableBlock {
 
     public static final int placementHelperId = PlacementHelpers.register(new PlacementHelper());
-    private TIER tier;
+    private int tier;
 
     public TieredShaftBlock(Properties properties) {
         super(properties);
@@ -47,12 +47,12 @@ public class TieredShaftBlock extends ShaftBlock implements ITieredBlock, ITiere
     }
 
     @Override
-    public TIER getTier() {
+    public int getTier() {
         return this.tier;
     }
 
     @Override
-    public void setTier(TIER tier) {
+    public void setTier(int tier) {
         this.tier = tier;
     }
 

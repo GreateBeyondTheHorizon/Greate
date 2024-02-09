@@ -5,7 +5,6 @@ import com.simibubi.create.content.kinetics.crusher.CrushingWheelControllerBlock
 import com.simibubi.create.content.kinetics.crusher.CrushingWheelControllerBlockEntity;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
 import com.simibubi.create.foundation.utility.Iterate;
-import electrolyte.greate.GreateEnums.TIER;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.registry.ModBlockEntityTypes;
 import net.minecraft.core.BlockPos;
@@ -22,7 +21,7 @@ import java.util.Map;
 
 public class TieredCrushingWheelControllerBlock extends CrushingWheelControllerBlock implements ITieredBlock {
 
-    private TIER tier;
+    private int tier;
     private final Block crushingWheel;
     public static Map<Block, Block> MAP = new HashMap<>();
 
@@ -66,12 +65,12 @@ public class TieredCrushingWheelControllerBlock extends CrushingWheelControllerB
     }
 
     @Override
-    public TIER getTier() {
+    public int getTier() {
         return tier;
     }
 
     @Override
-    public void setTier(TIER tier) {
+    public void setTier(int tier) {
         this.tier = tier;
     }
 }

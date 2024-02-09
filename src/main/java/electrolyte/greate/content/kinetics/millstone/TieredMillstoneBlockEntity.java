@@ -7,8 +7,8 @@ import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.kinetics.millstone.MillstoneBlockEntity;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
-import electrolyte.greate.GreateEnums;
-import electrolyte.greate.GreateEnums.TIER;
+import electrolyte.greate.GreateValues;
+
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import electrolyte.greate.registry.ModRecipeTypes;
@@ -30,7 +30,7 @@ import java.util.Optional;
 public class TieredMillstoneBlockEntity extends MillstoneBlockEntity implements ITieredKineticBlockEntity {
 
     private ProcessingRecipe<RecipeWrapper> lastRecipe;
-    private TIER tier;
+    private int tier;
     private int maxItemsPerRecipe;
 
     public TieredMillstoneBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
@@ -39,7 +39,7 @@ public class TieredMillstoneBlockEntity extends MillstoneBlockEntity implements 
         outputInv = new ItemStackHandler(1);
         capability = LazyOptional.of(TieredMillstoneInventoryHandler::new);
         tier = ((TieredMillstoneBlock) state.getBlock()).getTier();
-        maxItemsPerRecipe = GreateEnums.TIER.getTierMultiplier(tier, 2);
+        maxItemsPerRecipe = tier * 2;
     }
 
     @Override
@@ -105,7 +105,7 @@ public class TieredMillstoneBlockEntity extends MillstoneBlockEntity implements 
                     ((Ingredient) r.getInputContents(ItemRecipeCapability.CAP).get(0).getContent()).test(wrapper.getItem(0))).findFirst();
             if(test.isPresent()) {
                 TieredProcessingRecipe<RecipeWrapper> convertedRecipe = TieredMillingRecipe.convertGT(test.get(), tier);
-                if(convertedRecipe.getRecipeTier().compareTo(tier) <= 0) {
+                if(convertedRecipe.getRecipeTier() <= tier) {
                     return Optional.of(convertedRecipe);
                 }
             }

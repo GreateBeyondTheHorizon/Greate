@@ -1,13 +1,15 @@
 package electrolyte.greate.content.kinetics.mixer;
 
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
-import electrolyte.greate.GreateEnums.TIER;
+
 import electrolyte.greate.content.processing.basin.TieredBasinRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeParams;
 import electrolyte.greate.registry.ModRecipeTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.crafting.Recipe;
+
+import static com.gregtechceu.gtceu.api.GTValues.ULV;
 
 public class TieredCompactingRecipe extends TieredBasinRecipe {
     public TieredCompactingRecipe(TieredProcessingRecipeParams params) {
@@ -22,7 +24,7 @@ public class TieredCompactingRecipe extends TieredBasinRecipe {
                 .withItemOutputs(((ProcessingRecipe<?>) recipe).getRollableResults())
                 .withFluidOutputs(((ProcessingRecipe<?>) recipe).getFluidResults())
                 .requiresHeat(((ProcessingRecipe<?>) recipe).getRequiredHeat())
-                .recipeTier(TIER.ULTRA_LOW)
+                .recipeTier(ULV)
                 .noCircuit()
                 .build();
     }

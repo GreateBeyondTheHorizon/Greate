@@ -4,7 +4,7 @@ import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.decoration.girder.GirderEncasedShaftBlock;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.schematics.requirement.ItemRequirement;
-import electrolyte.greate.GreateEnums.TIER;
+
 import electrolyte.greate.content.decoration.encasing.IGirderEncasedBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredShaftBlock;
@@ -31,7 +31,7 @@ import static net.minecraft.world.level.block.state.properties.BlockStatePropert
 public class TieredGirderEncasedShaftBlock extends GirderEncasedShaftBlock implements ITieredBlock, ITieredShaftBlock, IGirderEncasedBlock {
 
     private final Supplier<Block> shaft;
-    private TIER tier;
+    private int tier;
 
     public TieredGirderEncasedShaftBlock(Properties properties, Supplier<Block> shaft) {
         super(properties);
@@ -58,12 +58,12 @@ public class TieredGirderEncasedShaftBlock extends GirderEncasedShaftBlock imple
     }
 
     @Override
-    public TIER getTier() {
+    public int getTier() {
         return tier;
     }
 
     @Override
-    public void setTier(TIER tier) {
+    public void setTier(int tier) {
         this.tier = tier;
     }
 

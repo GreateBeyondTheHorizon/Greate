@@ -3,7 +3,7 @@ package electrolyte.greate.content.kinetics.mixer;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.content.kinetics.mixer.MechanicalMixerBlock;
 import com.simibubi.create.content.kinetics.mixer.MechanicalMixerBlockEntity;
-import electrolyte.greate.GreateEnums.TIER;
+
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredEncasedCogwheel;
 import electrolyte.greate.registry.MechanicalMixers;
@@ -19,7 +19,7 @@ import java.util.List;
 public class TieredMechanicalMixerBlock extends MechanicalMixerBlock implements ITieredBlock, ITieredEncasedCogwheel {
 
     private PartialModel mixerHeadModel, cogwheelModel;
-    private TIER tier;
+    private int tier;
 
     public TieredMechanicalMixerBlock(Properties properties, PartialModel mixerHeadModel, PartialModel cogwheelModel) {
         super(properties);
@@ -29,12 +29,12 @@ public class TieredMechanicalMixerBlock extends MechanicalMixerBlock implements 
     }
 
     @Override
-    public TIER getTier() {
+    public int getTier() {
         return tier;
     }
 
     @Override
-    public void setTier(TIER tier) {
+    public void setTier(int tier) {
         this.tier = tier;
     }
 

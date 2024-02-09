@@ -12,7 +12,7 @@ import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.infrastructure.config.AllConfigs;
 import electrolyte.greate.Greate;
-import electrolyte.greate.GreateEnums.TIER;
+
 import electrolyte.greate.content.kinetics.base.ICircuitHolder;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import electrolyte.greate.content.processing.basin.TieredBasinRecipe;
@@ -33,7 +33,7 @@ import java.util.Optional;
 
 public class TieredMechanicalMixerBlockEntity extends MechanicalMixerBlockEntity implements ITieredKineticBlockEntity, ICircuitHolder {
 
-    private TIER tier;
+    private int tier;
     private ScrollValueBehaviour targetCircuit;
     private static final Object SHAPELESS_OR_MIXING_RECIPES_KEY = new Object();
 
