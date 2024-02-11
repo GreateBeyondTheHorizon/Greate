@@ -8,6 +8,7 @@ import static com.gregtechceu.gtceu.api.GTValues.*;
 import static com.simibubi.create.AllItems.ANDESITE_ALLOY;
 import static com.simibubi.create.AllItems.WHISK;
 import static electrolyte.greate.Greate.REGISTRATE;
+import static electrolyte.greate.GreateValues.TM;
 
 public class ModItems {
 
@@ -42,27 +43,31 @@ public class ModItems {
 
         // Alloy
         ALLOYS[ULV] = ANDESITE_ALLOY;
-        ALLOYS[LV] = STEEL_ALLOY = alloy("steel");
-        ALLOYS[MV] = ALUMINIUM_ALLOY = alloy("aluminium");
-        ALLOYS[HV] = STAINLESS_STEEL_ALLOY = alloy("stainless_steel");
-        ALLOYS[EV] = TITANIUM_ALLOY = alloy("titanium");
-        ALLOYS[IV] = TUNGSTENSTEEL_ALLOY = alloy("tungstensteel");
-        ALLOYS[LuV] = PALLADIUM_ALLOY = alloy("palladium");
-        ALLOYS[ZPM] = NAQUADAH_ALLOY = alloy("naquadah");
-        ALLOYS[UV] = DARMSTADTIUM_ALLOY = alloy("darmstadtium");
-        ALLOYS[UHV] = NEUTRONIUM_ALLOY = alloy("neutronium");
+        ALLOYS[LV] = STEEL_ALLOY = alloy(LV);
+        ALLOYS[MV] = ALUMINIUM_ALLOY = alloy(MV);
+        ALLOYS[HV] = STAINLESS_STEEL_ALLOY = alloy(HV);
+        ALLOYS[EV] = TITANIUM_ALLOY = alloy(EV);
+        ALLOYS[IV] = TUNGSTENSTEEL_ALLOY = alloy(IV);
+        ALLOYS[LuV] = PALLADIUM_ALLOY = alloy(LuV);
+        ALLOYS[ZPM] = NAQUADAH_ALLOY = alloy(ZPM);
+        ALLOYS[UV] = DARMSTADTIUM_ALLOY = alloy(UV);
+        ALLOYS[UHV] = NEUTRONIUM_ALLOY = alloy(UHV);
 
         // Whisk
         WHISKS[ULV] = WHISK;
-        WHISKS[LV] = STEEL_WHISK = whisk("steel");
-        WHISKS[MV] = ALUMINIUM_WHISK = whisk("aluminium");
-        WHISKS[HV] = STAINLESS_STEEL_WHISK = whisk("stainless_steel");
-        WHISKS[EV] = TITANIUM_WHISK = whisk("titanium");
-        WHISKS[IV] = TUNGSTENSTEEL_WHISK = whisk("tungstensteel");
-        WHISKS[LuV] = PALLADIUM_WHISK = whisk("palladium");
-        WHISKS[ZPM] = NAQUADAH_WHISK = whisk("naquadah");
-        WHISKS[UV] = DARMSTADTIUM_WHISK = whisk("darmstadtium");
-        WHISKS[UHV] = NEUTRONIUM_WHISK = whisk("neutronium");
+        WHISKS[LV] = STEEL_WHISK = whisk(LV);
+        WHISKS[MV] = ALUMINIUM_WHISK = whisk(MV);
+        WHISKS[HV] = STAINLESS_STEEL_WHISK = whisk(HV);
+        WHISKS[EV] = TITANIUM_WHISK = whisk(EV);
+        WHISKS[IV] = TUNGSTENSTEEL_WHISK = whisk(IV);
+        WHISKS[LuV] = PALLADIUM_WHISK = whisk(LuV);
+        WHISKS[ZPM] = NAQUADAH_WHISK = whisk(ZPM);
+        WHISKS[UV] = DARMSTADTIUM_WHISK = whisk(UV);
+        WHISKS[UHV] = NEUTRONIUM_WHISK = whisk(UHV);
+    }
+
+    private static ItemEntry<Item> alloy(int tier) {
+        return alloy(TM[tier].getName());
     }
 
     public static ItemEntry<Item> alloy(String name) {
@@ -71,6 +76,10 @@ public class ModItems {
                 .model((c, p) -> p.withExistingParent(c.getName(), "item/generated")
                         .texture("layer0", p.modLoc("item/" + c.getName().substring(0, c.getName().length() - 6) + "/alloy")))
                 .register();
+    }
+
+    private static ItemEntry<Item> whisk(int tier) {
+        return whisk(TM[tier].getName());
     }
 
     public static ItemEntry<Item> whisk(String name) {

@@ -1,6 +1,0 @@
-{
-  "parent": "create:block/mechanical_press/head",
-  "textures": {
-    "mechanical_press_head": "greate:block/andesite/mechanical_press_head"
-  }
-}
