@@ -38,4 +38,9 @@ public class GreateAddon implements IGTAddon {
 	public String addonModId() {
 		return Greate.MOD_ID;
 	}
+
+	@Override
+	public void addRecipes(Consumer<FinishedRecipe> provider) {
+		GreateRecipes.init(provider);
+	}
 }

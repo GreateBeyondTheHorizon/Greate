@@ -2,7 +2,9 @@
   "type": "create:mechanical_crafting",
   "acceptMirrored": true,
   "key": {
-    "A": [],
+    "A": {
+      "item": "greate:naquadah_alloy_alloy"
+    },
     "C": {
       "tag": "gtceu:circuits/zpm"
     },

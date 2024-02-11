@@ -2,7 +2,9 @@
   "type": "create:mechanical_crafting",
   "acceptMirrored": true,
   "key": {
-    "A": [],
+    "A": {
+      "item": "greate:rhodium_plated_palladium_alloy"
+    },
     "C": {
       "tag": "gtceu:circuits/luv"
     },

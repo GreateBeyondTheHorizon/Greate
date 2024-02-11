@@ -10,7 +10,6 @@ import electrolyte.greate.foundation.advancement.GreateAdvancements;
 import electrolyte.greate.foundation.data.GreateTagGen;
 import electrolyte.greate.foundation.data.GreateTagGen.GreateBlockTagGen;
 import electrolyte.greate.foundation.data.recipe.GreateMechanicalCraftingRecipeGen;
-import electrolyte.greate.foundation.data.recipe.GreateStandardRecipeGen;
 import electrolyte.greate.infrastructure.config.GreateConfigs;
 import electrolyte.greate.registry.*;
 import it.unimi.dsi.fastutil.objects.ReferenceArrayList;
@@ -80,7 +79,6 @@ public class Greate {
         if(event.includeServer()) {
             REGISTRATE.addDataGenerator(ProviderType.LANG, p -> GreateAdvancements.provideLang(p::add));
             event.getGenerator().addProvider(true, new GreateAdvancements(event.getGenerator().getPackOutput()));
-            event.getGenerator().addProvider(true, new GreateStandardRecipeGen(event.getGenerator().getPackOutput()));
             event.getGenerator().addProvider(true, new GreateMechanicalCraftingRecipeGen(event.getGenerator().getPackOutput()));
             GreateBlockTagGen blockTags = new GreateBlockTagGen(event.getGenerator().getPackOutput(), event.getLookupProvider(), Greate.MOD_ID, event.getExistingFileHelper());
             event.getGenerator().addProvider(true, blockTags);

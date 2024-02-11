@@ -7,6 +7,7 @@ import com.gregtechceu.gtceu.api.recipe.content.Content;
 import java.util.List;
 
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
+import static electrolyte.greate.registry.GreateMaterials.AndesiteAlloy;
 import static net.minecraft.ChatFormatting.*;
 
 public class GreateValues {
@@ -87,7 +88,7 @@ public class GreateValues {
 
     public static void init() {
         TM = new Material[]{
-                Andesite,
+                AndesiteAlloy,
                 Steel,
                 Aluminium,
                 StainlessSteel,

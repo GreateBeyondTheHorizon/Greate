@@ -35,6 +35,7 @@ public class Belts {
 
     public static final Map<Block, List<Block>> VALID_SHAFTS = new HashMap<>();
 
+    public static final BlockEntry<TieredBeltBlock>[] BELTS = new BlockEntry[5];
     public static BlockEntry<TieredBeltBlock>
             RUBBER_BELT,
             SILICONE_RUBBER_BELT,
@@ -42,6 +43,7 @@ public class Belts {
             POLYTETRAFLUOROETHYLENE_BELT,
             POLYBENZIMIDAZOLE_BELT;
 
+    public static final ItemEntry<TieredBeltConnectorItem>[] BELT_CONNECTORS = new ItemEntry[5];
     public static ItemEntry<TieredBeltConnectorItem>
             RUBBER_BELT_CONNECTOR,
             SILICONE_RUBBER_BELT_CONNECTOR,
@@ -52,17 +54,17 @@ public class Belts {
     public static void register() {
         REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
 
-        RUBBER_BELT = belt(Rubber, List.of(Shafts.ANDESITE_SHAFT, Shafts.STEEL_SHAFT));
-        SILICONE_RUBBER_BELT = belt(SiliconeRubber, List.of(Shafts.ALUMINIUM_SHAFT, Shafts.STAINLESS_STEEL_SHAFT));
-        POLYETHYLENE_BELT = belt(Polyethylene, List.of(Shafts.TITANIUM_SHAFT, Shafts.TUNGSTENSTEEL_SHAFT));
-        POLYTETRAFLUOROETHYLENE_BELT = belt(Polytetrafluoroethylene, List.of(Shafts.PALLADIUM_SHAFT, Shafts.NAQUADAH_SHAFT));
-        POLYBENZIMIDAZOLE_BELT = belt(Polybenzimidazole, List.of(Shafts.DARMSTADTIUM_SHAFT, Shafts.NEUTRONIUM_SHAFT));
+        BELTS[0] = RUBBER_BELT = belt(Rubber, List.of(Shafts.ANDESITE_SHAFT, Shafts.STEEL_SHAFT));
+        BELTS[1] = SILICONE_RUBBER_BELT = belt(SiliconeRubber, List.of(Shafts.ALUMINIUM_SHAFT, Shafts.STAINLESS_STEEL_SHAFT));
+        BELTS[2] = POLYETHYLENE_BELT = belt(Polyethylene, List.of(Shafts.TITANIUM_SHAFT, Shafts.TUNGSTENSTEEL_SHAFT));
+        BELTS[3] = POLYTETRAFLUOROETHYLENE_BELT = belt(Polytetrafluoroethylene, List.of(Shafts.PALLADIUM_SHAFT, Shafts.NAQUADAH_SHAFT));
+        BELTS[4] = POLYBENZIMIDAZOLE_BELT = belt(Polybenzimidazole, List.of(Shafts.DARMSTADTIUM_SHAFT, Shafts.NEUTRONIUM_SHAFT));
 
-        RUBBER_BELT_CONNECTOR = beltConnector("rubber_belt_connector", RUBBER_BELT);
-        SILICONE_RUBBER_BELT_CONNECTOR = beltConnector("silicone_rubber_belt_connector", SILICONE_RUBBER_BELT);
-        POLYETHYLENE_BELT_CONNECTOR = beltConnector("polyethylene_belt_connector", POLYETHYLENE_BELT);
-        POLYTETRAFLUOROETHYLENE_BELT_CONNECTOR = beltConnector("polytetrafluoroethylene_belt_connector", POLYTETRAFLUOROETHYLENE_BELT);
-        POLYBENZIMIDAZOLE_BELT_CONNECTOR = beltConnector("polybenzimidazole_belt_connector", POLYBENZIMIDAZOLE_BELT);
+        BELT_CONNECTORS[0] = RUBBER_BELT_CONNECTOR = beltConnector("rubber_belt_connector", RUBBER_BELT);
+        BELT_CONNECTORS[1] = SILICONE_RUBBER_BELT_CONNECTOR = beltConnector("silicone_rubber_belt_connector", SILICONE_RUBBER_BELT);
+        BELT_CONNECTORS[2] = POLYETHYLENE_BELT_CONNECTOR = beltConnector("polyethylene_belt_connector", POLYETHYLENE_BELT);
+        BELT_CONNECTORS[3] = POLYTETRAFLUOROETHYLENE_BELT_CONNECTOR = beltConnector("polytetrafluoroethylene_belt_connector", POLYTETRAFLUOROETHYLENE_BELT);
+        BELT_CONNECTORS[4] = POLYBENZIMIDAZOLE_BELT_CONNECTOR = beltConnector("polybenzimidazole_belt_connector", POLYBENZIMIDAZOLE_BELT);
     }
 
     public static BlockEntry<TieredBeltBlock> belt(Material material, List<BlockEntry<TieredShaftBlock>> validShafts) {

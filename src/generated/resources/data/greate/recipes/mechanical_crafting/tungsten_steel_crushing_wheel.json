@@ -2,7 +2,9 @@
   "type": "create:mechanical_crafting",
   "acceptMirrored": true,
   "key": {
-    "A": [],
+    "A": {
+      "item": "greate:tungsten_steel_alloy"
+    },
     "C": {
       "tag": "gtceu:circuits/iv"
     },
