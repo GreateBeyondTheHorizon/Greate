@@ -1,0 +1,7 @@
+{
+  "parent": "create:block/belt_pulley",
+  "textures": {
+    "0": "greate:block/rhodium_plated_palladium/axis",
+    "1": "greate:block/rhodium_plated_palladium/axis_top"
+  }
+}

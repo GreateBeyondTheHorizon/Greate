@@ -1,0 +1,39 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": [],
+    "C": {
+      "tag": "forge:tools/screwdrivers"
+    },
+    "I": [
+      {
+        "item": "gtceu:rubber_ring"
+      },
+      {
+        "item": "gtceu:silicone_rubber_ring"
+      }
+    ],
+    "N": {
+      "tag": "forge:nuggets/rhodium_plated_palladium"
+    },
+    "O": {
+      "tag": "greate:cogwheels/rhodium_plated_palladium"
+    },
+    "P": {
+      "item": "create:fluid_pipe"
+    },
+    "W": {
+      "tag": "forge:tools/wrenches"
+    }
+  },
+  "pattern": [
+    "NAI",
+    "COW",
+    "IP "
+  ],
+  "result": {
+    "item": "greate:rhodium_plated_palladium_mechanical_pump"
+  },
+  "show_notification": true
+}

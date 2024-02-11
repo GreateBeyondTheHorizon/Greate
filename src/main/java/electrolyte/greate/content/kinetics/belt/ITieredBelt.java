@@ -1,8 +1,10 @@
 package electrolyte.greate.content.kinetics.belt;
 
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
+
 public interface ITieredBelt {
 
-    String getBeltType();
+    Material getBeltMaterial();
 
-    void setBeltType(String beltType);
+    void setBeltMaterial(Material material);
 }

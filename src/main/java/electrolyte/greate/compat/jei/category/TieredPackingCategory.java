@@ -78,6 +78,6 @@ public class TieredPackingCategory extends TieredBasinCategory {
         if(requiredHeat != HeatCondition.NONE) {
             heater.withHeat(requiredHeat.visualizeAsBlazeBurner()).draw(graphics, getBackground().getWidth() / 2 + 3, 55);
         }
-        new TieredAnimatedMechanicalPress(MechanicalPresses.MECHANICAL_PRESSES.get(recipe.getRecipeTier()), true).draw(graphics, getBackground().getWidth() / 2 + 3, 34);
+        new TieredAnimatedMechanicalPress(MechanicalPresses.MECHANICAL_PRESSES[recipe.getRecipeTier()].get(), true).draw(graphics, getBackground().getWidth() / 2 + 3, 34);
     }
 }

@@ -1,0 +1,8 @@
+{
+  "parent": "create:block/gearbox/item",
+  "textures": {
+    "1_0": "greate:block/naquadah_alloy/axis",
+    "1_1": "greate:block/naquadah_alloy/axis_top",
+    "particle": "greate:block/naquadah_alloy/axis"
+  }
+}

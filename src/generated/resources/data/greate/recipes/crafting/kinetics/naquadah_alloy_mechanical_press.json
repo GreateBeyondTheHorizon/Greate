@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "tag": "forge:storage_blocks/naquadah_alloy"
+    },
+    "C": {
+      "tag": "gtceu:circuits/zpm"
+    },
+    "M": {
+      "item": "gtceu:zpm_machine_hull"
+    },
+    "S": {
+      "tag": "greate:shafts/naquadah_alloy"
+    }
+  },
+  "pattern": [
+    " S ",
+    "CMC",
+    " B "
+  ],
+  "result": {
+    "item": "greate:naquadah_alloy_mechanical_press"
+  },
+  "show_notification": true
+}

@@ -1,5 +1,6 @@
 package electrolyte.greate.content.kinetics.belt;
 
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.equipment.armor.DivingBootsItem;
@@ -72,7 +73,7 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
 
     private ItemStack shaftType;
     private int tier;
-    private String beltType;
+    private Material beltMaterial;
 
     public TieredBeltBlock(Properties properties) {
         super(properties);
@@ -175,7 +176,7 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
             return onBlockEntityUse(pLevel, pPos, be -> be.applyColor(DyeColor.getColor(heldItem)) ? InteractionResult.SUCCESS : InteractionResult.PASS);
         }
         if(isConnector) {
-            if(((TieredBeltConnectorItem) heldItem.getItem()).getBeltType() == ((TieredBeltBlock) pLevel.getBlockState(pPos).getBlock()).getBeltType()) {
+            if(((TieredBeltConnectorItem) heldItem.getItem()).getBeltMaterial() == ((TieredBeltBlock) pLevel.getBlockState(pPos).getBlock()).getBeltMaterial()) {
                 return BeltSlicer.useConnector(pState, pLevel, pPos, pPlayer, pHand, pHit, new Feedback());
             }
         }
@@ -429,12 +430,12 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
     }
 
     @Override
-    public String getBeltType() {
-        return beltType;
+    public Material getBeltMaterial() {
+        return beltMaterial;
     }
 
     @Override
-    public void setBeltType(String beltType) {
-        this.beltType = beltType;
+    public void setBeltMaterial(Material material) {
+        this.beltMaterial = material;
     }
 }

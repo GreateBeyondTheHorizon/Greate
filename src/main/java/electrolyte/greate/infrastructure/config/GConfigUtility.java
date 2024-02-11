@@ -5,7 +5,6 @@ import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import static com.gregtechceu.gtceu.api.GTValues.*;
 import static com.gregtechceu.gtceu.api.GTValues.UHV;
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
-import static electrolyte.greate.GreateValues.BMS;
 
 
 public class GConfigUtility {
@@ -24,21 +23,6 @@ public class GConfigUtility {
             case UHV -> GreateConfigs.server().kinetics.tierValues.neutroniumMaxCapacity.get();
             default -> throw new IllegalStateException("Unexpected value: " + tier);
         };
-    }
-
-    public static int getBeltLengthFromType(String type) {
-        if (type.equals(BMS[0])) {
-            return GreateConfigs.server().kinetics.beltValues.rubberMaxBeltLength.get();
-        } else if (type.equals(BMS[1])) {
-            return GreateConfigs.server().kinetics.beltValues.siliconeMaxBeltLength.get();
-        } else if (type.equals(BMS[2])) {
-            return GreateConfigs.server().kinetics.beltValues.polyethyleneMaxBeltLength.get();
-        } else if (type.equals(BMS[3])) {
-            return GreateConfigs.server().kinetics.beltValues.polytetrafluoroethyleneMaxBeltLength.get();
-        } else if (type.equals(BMS[4])) {
-            return GreateConfigs.server().kinetics.beltValues.polybenzimidazoleMaxBeltLength.get();
-        }
-        throw new IllegalStateException("Unexpected value: " + type);
     }
 
     public static int getBeltLengthFromMaterial(Material beltMaterial) {

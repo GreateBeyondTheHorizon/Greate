@@ -62,6 +62,6 @@ public class TieredSawingCategory extends GreateRecipeCategory<TieredCuttingReci
         super.draw(recipe, recipeSlotsView, graphics, 1, 75);
         AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 70, 6);
         AllGuiTextures.JEI_SHADOW.render(graphics, 72 - 17, 42 + 13);
-        new TieredAnimatedSaw(Saws.SAWS.get(recipe.getRecipeTier())).draw(graphics, 72, 42);
+        new TieredAnimatedSaw(Saws.SAWS[recipe.getRecipeTier()].get()).draw(graphics, 72, 42);
     }
 }

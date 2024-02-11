@@ -28,7 +28,6 @@ public class TieredMechanicalPressBlock extends MechanicalPressBlock implements 
         super(properties);
         this.headModel = headModel;
         this.shaft = shaft;
-        MechanicalPresses.MECHANICAL_PRESSES.add(this);
     }
 
     @Override

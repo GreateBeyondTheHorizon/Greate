@@ -50,7 +50,7 @@ public class TieredBlockCuttingCategory extends GreateRecipeCategory<TieredConde
     public void draw(TieredCondensedBlockCuttingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double x, double y) {
         AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 31, 6);
         AllGuiTextures.JEI_SHADOW.render(graphics, 33 - 17, 37 + 13);
-        new TieredAnimatedSaw(Saws.SAWS.get(0)).draw(graphics, 33, 37);
+        new TieredAnimatedSaw(Saws.SAWS[0].get()).draw(graphics, 33, 37);
     }
 
     public static class TieredCondensedBlockCuttingRecipe extends StonecutterRecipe {

@@ -79,30 +79,11 @@ public class GreateValues {
      * Based on GTMaterials.VOLTAGE_COMMON_MATERIALS, but uses Andesite instead of WroughtIron in the first tier.
      */
     public static Material[] TM;
-    public static final String[] TMS = new String[]{
-            "andesite",
-            "steel",
-            "aluminium",
-            "stainless_steel",
-            "titanium",
-            "tungstensteel",
-            "palladium",
-            "naquadah",
-            "darmstadtium",
-            "neutronium",
-    };
 
     /**
      * Belt materials
      */
     public static Material[] BM;
-    public static final String[] BMS = new String[]{
-            "rubber",
-            "silicone",
-            "polyethylene",
-            "polytetrafluoroethylene",
-            "polybenzimidazole",
-    };
 
     public static void init() {
         TM = new Material[]{

@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/cogwheel",
+  "textures": {
+    "0": "greate:block/rhodium_plated_palladium/cogwheel_axis",
+    "1_2": "greate:block/rhodium_plated_palladium/cogwheel",
+    "3": "greate:block/rhodium_plated_palladium/axis_top",
+    "particle": "greate:block/rhodium_plated_palladium/cogwheel"
+  }
+}

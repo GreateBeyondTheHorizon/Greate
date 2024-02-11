@@ -1,0 +1,17 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "greate:block/powered_naquadah_alloy_shaft",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "greate:block/powered_naquadah_alloy_shaft"
+    },
+    "axis=z": {
+      "model": "greate:block/powered_naquadah_alloy_shaft",
+      "x": 90,
+      "y": 180
+    }
+  }
+}

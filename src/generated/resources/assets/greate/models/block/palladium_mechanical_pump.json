@@ -1,8 +1,0 @@
-{
-  "parent": "create:block/mechanical_pump/block",
-  "textures": {
-    "2": "greate:block/palladium/pipes",
-    "4": "greate:block/palladium/pump",
-    "particle": "greate:block/palladium/pump"
-  }
-}

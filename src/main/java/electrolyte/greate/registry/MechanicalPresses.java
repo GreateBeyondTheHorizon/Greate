@@ -1,5 +1,6 @@
 package electrolyte.greate.registry;
 
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.content.kinetics.BlockStressDefaults;
 import com.simibubi.create.foundation.data.SharedProperties;
@@ -13,42 +14,54 @@ import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
 import electrolyte.greate.foundation.data.GreateBuilderTransformers;
 import net.minecraft.world.level.material.MapColor;
 
-import java.util.ArrayList;
-
 import static com.gregtechceu.gtceu.api.GTValues.*;
 import static electrolyte.greate.Greate.REGISTRATE;
-import static electrolyte.greate.GreateValues.TMS;
+import static electrolyte.greate.GreateValues.TM;
+import static electrolyte.greate.registry.Shafts.SHAFTS;
 
 public class MechanicalPresses {
 
-    static {
+    public static BlockEntry<TieredMechanicalPressBlock>[] MECHANICAL_PRESSES = new BlockEntry[10];
+    public static BlockEntry<TieredMechanicalPressBlock>
+            ANDESITE_MECHANICAL_PRESS,
+            STEEL_MECHANICAL_PRESS,
+            ALUMINIUM_MECHANICAL_PRESS,
+            STAINLESS_STEEL_MECHANICAL_PRESS,
+            TITANIUM_MECHANICAL_PRESS,
+            TUNGSTENSTEEL_MECHANICAL_PRESS,
+            PALLADIUM_MECHANICAL_PRESS,
+            NAQUADAH_MECHANICAL_PRESS,
+            DARMSTADTIUM_MECHANICAL_PRESS,
+            NEUTRONIUM_MECHANICAL_PRESS;
+
+    public static void register() {
         REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
+
+        MECHANICAL_PRESSES[ULV] = ANDESITE_MECHANICAL_PRESS = mechanicalPress(ULV, GreatePartialModels.ANDESITE_MECHANICAL_PRESS_HEAD, 1.0);
+        MECHANICAL_PRESSES[LV] = STEEL_MECHANICAL_PRESS = mechanicalPress(LV, GreatePartialModels.STEEL_MECHANICAL_PRESS_HEAD, 2.0);
+        MECHANICAL_PRESSES[MV] = ALUMINIUM_MECHANICAL_PRESS = mechanicalPress(MV, GreatePartialModels.ALUMINIUM_MECHANICAL_PRESS_HEAD, 3.0);
+        MECHANICAL_PRESSES[HV] = STAINLESS_STEEL_MECHANICAL_PRESS = mechanicalPress(HV, GreatePartialModels.STAINLESS_STEEL_MECHANICAL_PRESS_HEAD, 4.0);
+        MECHANICAL_PRESSES[EV] = TITANIUM_MECHANICAL_PRESS = mechanicalPress(EV, GreatePartialModels.TITANIUM_MECHANICAL_PRESS_HEAD, 5.0);
+        MECHANICAL_PRESSES[IV] = TUNGSTENSTEEL_MECHANICAL_PRESS = mechanicalPress(IV, GreatePartialModels.TUNGSTENSTEEL_MECHANICAL_PRESS_HEAD, 6.0);
+        MECHANICAL_PRESSES[LuV] = PALLADIUM_MECHANICAL_PRESS = mechanicalPress(LuV, GreatePartialModels.PALLADIUM_MECHANICAL_PRESS_HEAD, 7.0);
+        MECHANICAL_PRESSES[ZPM] = NAQUADAH_MECHANICAL_PRESS = mechanicalPress(ZPM, GreatePartialModels.NAQUADAH_MECHANICAL_PRESS_HEAD, 8.0);
+        MECHANICAL_PRESSES[UV] = DARMSTADTIUM_MECHANICAL_PRESS = mechanicalPress(UV, GreatePartialModels.DARMSTADTIUM_MECHANICAL_PRESS_HEAD, 9.0);
+        MECHANICAL_PRESSES[UHV] = NEUTRONIUM_MECHANICAL_PRESS = mechanicalPress(UHV, GreatePartialModels.NEUTRONIUM_MECHANICAL_PRESS_HEAD, 10.0);
     }
 
-    public static ArrayList<TieredMechanicalPressBlock> MECHANICAL_PRESSES = new ArrayList<>();
+    private static BlockEntry<TieredMechanicalPressBlock> mechanicalPress(int tier, PartialModel headModel, double stressImpact) {
+        return mechanicalPress(tier, TM[tier], headModel, SHAFTS[tier], stressImpact);
+    }
 
-    public static final BlockEntry<TieredMechanicalPressBlock> ANDESITE_MECHANICAL_PRESS = mechanicalPress("andesite_mechanical_press", ULV, TMS[0], GreatePartialModels.ANDESITE_MECHANICAL_PRESS_HEAD, Shafts.ANDESITE_SHAFT, 1.0);
-    public static final BlockEntry<TieredMechanicalPressBlock> STEEL_MECHANICAL_PRESS = mechanicalPress("steel_mechanical_press", LV, TMS[1], GreatePartialModels.STEEL_MECHANICAL_PRESS_HEAD, Shafts.STEEL_SHAFT, 2.0);
-    public static final BlockEntry<TieredMechanicalPressBlock> ALUMINIUM_MECHANICAL_PRESS = mechanicalPress("aluminium_mechanical_press", MV, TMS[2], GreatePartialModels.ALUMINIUM_MECHANICAL_PRESS_HEAD, Shafts.ALUMINIUM_SHAFT, 3.0);
-    public static final BlockEntry<TieredMechanicalPressBlock> STAINLESS_STEEL_MECHANICAL_PRESS = mechanicalPress("stainless_steel_mechanical_press", HV, TMS[3], GreatePartialModels.STAINLESS_STEEL_MECHANICAL_PRESS_HEAD, Shafts.STAINLESS_STEEL_SHAFT, 4.0);
-    public static final BlockEntry<TieredMechanicalPressBlock> TITANIUM_MECHANICAL_PRESS = mechanicalPress("titanium_mechanical_press", EV, TMS[4], GreatePartialModels.TITANIUM_MECHANICAL_PRESS_HEAD, Shafts.TITANIUM_SHAFT, 5.0);
-    public static final BlockEntry<TieredMechanicalPressBlock> TUNGSTENSTEEL_MECHANICAL_PRESS = mechanicalPress("tungstensteel_mechanical_press", IV, TMS[5], GreatePartialModels.TUNGSTENSTEEL_MECHANICAL_PRESS_HEAD, Shafts.TUNGSTENSTEEL_SHAFT, 6.0);
-    public static final BlockEntry<TieredMechanicalPressBlock> PALLADIUM_MECHANICAL_PRESS = mechanicalPress("palladium_mechanical_press", LuV, TMS[6], GreatePartialModels.PALLADIUM_MECHANICAL_PRESS_HEAD, Shafts.PALLADIUM_SHAFT, 7.0);
-    public static final BlockEntry<TieredMechanicalPressBlock> NAQUADAH_MECHANICAL_PRESS = mechanicalPress("naquadah_mechanical_press", ZPM, TMS[7], GreatePartialModels.NAQUADAH_MECHANICAL_PRESS_HEAD, Shafts.NAQUADAH_SHAFT, 8.0);
-    public static final BlockEntry<TieredMechanicalPressBlock> DARMSTADTIUM_MECHANICAL_PRESS = mechanicalPress("darmstadtium_mechanical_press", UV, TMS[8], GreatePartialModels.DARMSTADTIUM_MECHANICAL_PRESS_HEAD, Shafts.DARMSTADTIUM_SHAFT, 9.0);
-    public static final BlockEntry<TieredMechanicalPressBlock> NEUTRONIUM_MECHANICAL_PRESS = mechanicalPress("neutronium_mechanical_press", UHV, TMS[9], GreatePartialModels.NEUTRONIUM_MECHANICAL_PRESS_HEAD, Shafts.NEUTRONIUM_SHAFT, 10.0);
-
-    public static BlockEntry<TieredMechanicalPressBlock> mechanicalPress(String name, int tier, String materialType, PartialModel headModel, BlockEntry<TieredShaftBlock> tieredShaft, double stressImpact) {
-        return REGISTRATE.block(name, p -> new TieredMechanicalPressBlock(p, headModel, tieredShaft.get()))
+    public static BlockEntry<TieredMechanicalPressBlock> mechanicalPress(int tier, Material material, PartialModel headModel, BlockEntry<TieredShaftBlock> tieredShaft, double stressImpact) {
+        return REGISTRATE.block(material.getName() + "_mechanical_press", p -> new TieredMechanicalPressBlock(p, headModel, tieredShaft.get()))
                 .initialProperties(SharedProperties::stone)
                 .properties(p -> p.noOcclusion().mapColor(MapColor.PODZOL))
                 .transform(TagGen.axeOrPickaxe())
                 .transform(BlockStressDefaults.setImpact(stressImpact))
                 .transform(GreateBuilderTransformers.tieredMechanicalPress())
-                .transform(TieredBlockMaterials.setMaterialTypeForBlock(materialType))
+                .transform(TieredBlockMaterials.setMaterialForBlock(material))
                 .onRegister(c -> c.setTier(tier))
                 .register();
     }
-
-    public static void register() {}
 }

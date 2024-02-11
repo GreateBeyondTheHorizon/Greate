@@ -67,6 +67,6 @@ public class TieredCrushingCategory extends GreateRecipeCategory<TieredAbstractC
     public void draw(TieredAbstractCrushingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double x, double y) {
         super.draw(recipe, recipeSlotsView, graphics, 1, 103);
         AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 72, 7);
-        new TieredAnimatedCrushingWheels(CrushingWheels.CRUSHING_WHEELS.get(recipe.getRecipeTier())).draw(graphics, 62, 59);
+        new TieredAnimatedCrushingWheels(CrushingWheels.CRUSHING_WHEELS[recipe.getRecipeTier()].get()).draw(graphics, 62, 59);
     }
 }

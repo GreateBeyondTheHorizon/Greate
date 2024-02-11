@@ -1,8 +1,0 @@
-{
-  "parent": "create:block/shaft_half",
-  "textures": {
-    "0": "greate:block/palladium/axis",
-    "1": "greate:block/palladium/axis_top",
-    "particle": "greate:block/palladium/axis"
-  }
-}

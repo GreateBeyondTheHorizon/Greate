@@ -4,33 +4,66 @@ import com.tterrag.registrate.util.entry.ItemEntry;
 import electrolyte.greate.Greate;
 import net.minecraft.world.item.Item;
 
+import static com.gregtechceu.gtceu.api.GTValues.*;
+import static com.simibubi.create.AllItems.ANDESITE_ALLOY;
+import static com.simibubi.create.AllItems.WHISK;
 import static electrolyte.greate.Greate.REGISTRATE;
 
 public class ModItems {
 
-    static {
+    // Alloy
+    public static final ItemEntry<Item>[] ALLOYS = new ItemEntry[10];
+    public static ItemEntry<Item>
+            STEEL_ALLOY,
+            ALUMINIUM_ALLOY,
+            STAINLESS_STEEL_ALLOY,
+            TITANIUM_ALLOY,
+            TUNGSTENSTEEL_ALLOY,
+            PALLADIUM_ALLOY,
+            NAQUADAH_ALLOY,
+            DARMSTADTIUM_ALLOY,
+            NEUTRONIUM_ALLOY;
+
+    // Whisk
+    public static final ItemEntry<Item>[] WHISKS = new ItemEntry[10];
+    public static ItemEntry<Item>
+            STEEL_WHISK,
+            ALUMINIUM_WHISK,
+            STAINLESS_STEEL_WHISK,
+            TITANIUM_WHISK,
+            TUNGSTENSTEEL_WHISK,
+            PALLADIUM_WHISK,
+            NAQUADAH_WHISK,
+            DARMSTADTIUM_WHISK,
+            NEUTRONIUM_WHISK;
+
+    public static void register() {
         REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
+
+        // Alloy
+        ALLOYS[ULV] = ANDESITE_ALLOY;
+        ALLOYS[LV] = STEEL_ALLOY = alloy("steel");
+        ALLOYS[MV] = ALUMINIUM_ALLOY = alloy("aluminium");
+        ALLOYS[HV] = STAINLESS_STEEL_ALLOY = alloy("stainless_steel");
+        ALLOYS[EV] = TITANIUM_ALLOY = alloy("titanium");
+        ALLOYS[IV] = TUNGSTENSTEEL_ALLOY = alloy("tungstensteel");
+        ALLOYS[LuV] = PALLADIUM_ALLOY = alloy("palladium");
+        ALLOYS[ZPM] = NAQUADAH_ALLOY = alloy("naquadah");
+        ALLOYS[UV] = DARMSTADTIUM_ALLOY = alloy("darmstadtium");
+        ALLOYS[UHV] = NEUTRONIUM_ALLOY = alloy("neutronium");
+
+        // Whisk
+        WHISKS[ULV] = WHISK;
+        WHISKS[LV] = STEEL_WHISK = whisk("steel");
+        WHISKS[MV] = ALUMINIUM_WHISK = whisk("aluminium");
+        WHISKS[HV] = STAINLESS_STEEL_WHISK = whisk("stainless_steel");
+        WHISKS[EV] = TITANIUM_WHISK = whisk("titanium");
+        WHISKS[IV] = TUNGSTENSTEEL_WHISK = whisk("tungstensteel");
+        WHISKS[LuV] = PALLADIUM_WHISK = whisk("palladium");
+        WHISKS[ZPM] = NAQUADAH_WHISK = whisk("naquadah");
+        WHISKS[UV] = DARMSTADTIUM_WHISK = whisk("darmstadtium");
+        WHISKS[UHV] = NEUTRONIUM_WHISK = whisk("neutronium");
     }
-
-    public static final ItemEntry<Item> STEEL_ALLOY = alloy("steel");
-    public static final ItemEntry<Item> ALUMINIUM_ALLOY = alloy("aluminium");
-    public static final ItemEntry<Item> STAINLESS_STEEL_ALLOY = alloy("stainless_steel");
-    public static final ItemEntry<Item> TITANIUM_ALLOY = alloy("titanium");
-    public static final ItemEntry<Item> TUNGSTENSTEEL_ALLOY = alloy("tungstensteel");
-    public static final ItemEntry<Item> PALLADIUM_ALLOY = alloy("palladium");
-    public static final ItemEntry<Item> NAQUADAH_ALLOY = alloy("naquadah");
-    public static final ItemEntry<Item> DARMSTADTIUM_ALLOY = alloy("darmstadtium");
-    public static final ItemEntry<Item> NEUTRONIUM_ALLOY = alloy("neutronium");
-
-    public static final ItemEntry<Item> STEEL_WHISK = whisk("steel");
-    public static final ItemEntry<Item> ALUMINIUM_WHISK = whisk("aluminium");
-    public static final ItemEntry<Item> STAINLESS_STEEL_WHISK = whisk("stainless_steel");
-    public static final ItemEntry<Item> TITANIUM_WHISK = whisk("titanium");
-    public static final ItemEntry<Item> TUNGSTENSTEEL_WHISK = whisk("tungstensteel");
-    public static final ItemEntry<Item> PALLADIUM_WHISK = whisk("palladium");
-    public static final ItemEntry<Item> NAQUADAH_WHISK = whisk("naquadah");
-    public static final ItemEntry<Item> DARMSTADTIUM_WHISK = whisk("darmstadtium");
-    public static final ItemEntry<Item> NEUTRONIUM_WHISK = whisk("neutronium");
 
     public static ItemEntry<Item> alloy(String name) {
         return REGISTRATE
@@ -47,8 +80,4 @@ public class ModItems {
                         .texture("layer0", p.modLoc("item/" + c.getName().substring(0, c.getName().length() - 6) + "/whisk")))
                 .register();
     }
-
-
-
-    public static void register() {}
 }

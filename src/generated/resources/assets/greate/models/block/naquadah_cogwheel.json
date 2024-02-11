@@ -1,9 +1,0 @@
-{
-  "parent": "create:block/cogwheel",
-  "textures": {
-    "0": "greate:block/naquadah/cogwheel_axis",
-    "1_2": "greate:block/naquadah/cogwheel",
-    "3": "greate:block/naquadah/axis_top",
-    "particle": "greate:block/naquadah/cogwheel"
-  }
-}

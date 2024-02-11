@@ -1,5 +1,6 @@
 package electrolyte.greate.content.kinetics.belt.item;
 
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.belt.BeltBlock;
 import com.simibubi.create.content.kinetics.belt.BeltPart;
@@ -40,7 +41,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class TieredBeltConnectorItem extends BlockItem implements ITieredBelt {
-    private String beltType;
+    private Material beltMaterial;
 
     public TieredBeltConnectorItem(Block pBlock, Properties pProperties) {
         super(pBlock, pProperties);
@@ -68,7 +69,7 @@ public class TieredBeltConnectorItem extends BlockItem implements ITieredBelt {
         if(tag.contains("FirstPulley")) {
             firstPulley = NbtUtils.readBlockPos(tag.getCompound("FirstPulley"));
             if(!validateAxis(level, firstPulley) || !firstPulley.closerThan(pos,
-                    GConfigUtility.getBeltLengthFromType(((TieredBeltConnectorItem) pContext.getItemInHand().getItem()).getBeltType()) * 2)) {
+                    GConfigUtility.getBeltLengthFromMaterial(((TieredBeltConnectorItem) pContext.getItemInHand().getItem()).getBeltMaterial()) * 2)) {
                 tag.remove("FirstPulley");
                 pContext.getItemInHand().setTag(tag);
             }
@@ -189,7 +190,7 @@ public class TieredBeltConnectorItem extends BlockItem implements ITieredBelt {
     public static boolean canConnect(Level level, BlockPos first, BlockPos second, ItemStack heldStack) {
         if(!level.isLoaded(first) || !level.isLoaded(second)) return false;
         if(!(heldStack.getItem() instanceof TieredBeltConnectorItem tbci)) return false;
-        if(!second.closerThan(first, GConfigUtility.getBeltLengthFromType(tbci.getBeltType()))) return false;
+        if(!second.closerThan(first, GConfigUtility.getBeltLengthFromMaterial(tbci.getBeltMaterial()))) return false;
         BlockPos diff = second.subtract(first);
         Axis shaftAxis = level.getBlockState(first).getValue(BlockStateProperties.AXIS);
         int x = diff.getX();
@@ -231,12 +232,12 @@ public class TieredBeltConnectorItem extends BlockItem implements ITieredBelt {
     }
 
     @Override
-    public String getBeltType() {
-        return beltType;
+    public Material getBeltMaterial() {
+        return beltMaterial;
     }
 
     @Override
-    public void setBeltType(String beltType) {
-        this.beltType = beltType;
+    public void setBeltMaterial(Material material) {
+        this.beltMaterial = material;
     }
 }

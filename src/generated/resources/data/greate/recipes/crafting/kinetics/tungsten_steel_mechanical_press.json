@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "tag": "forge:storage_blocks/tungsten_steel"
+    },
+    "C": {
+      "tag": "gtceu:circuits/iv"
+    },
+    "M": {
+      "item": "gtceu:iv_machine_hull"
+    },
+    "S": {
+      "tag": "greate:shafts/tungsten_steel"
+    }
+  },
+  "pattern": [
+    " S ",
+    "CMC",
+    " B "
+  ],
+  "result": {
+    "item": "greate:tungsten_steel_mechanical_press"
+  },
+  "show_notification": true
+}

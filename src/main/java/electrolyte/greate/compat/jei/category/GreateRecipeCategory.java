@@ -202,6 +202,6 @@ public abstract class GreateRecipeCategory<T extends Recipe<?>> implements IReci
     @Override
     public void draw(T recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double x, double y) {
         IRecipeCategory.super.draw(recipe, recipeSlotsView, graphics, x, y);
-        graphics.drawString(Minecraft.getInstance().font, Lang.builder(Greate.MOD_ID).translate("jei.recipe_tier").component().getString() + GreateValues.TMS[((TieredProcessingRecipe<?>) recipe).getRecipeTier()], (float) x, (float) y, 0x3f3f3f, false);
+        graphics.drawString(Minecraft.getInstance().font, Lang.builder(Greate.MOD_ID).translate("jei.recipe_tier").component().getString() + GreateValues.TM[((TieredProcessingRecipe<?>) recipe).getRecipeTier()].getName(), (float) x, (float) y, 0x3f3f3f, false);
     }
 }

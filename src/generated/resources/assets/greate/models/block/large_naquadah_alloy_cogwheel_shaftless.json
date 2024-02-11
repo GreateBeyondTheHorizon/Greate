@@ -1,0 +1,7 @@
+{
+  "parent": "create:block/large_cogwheel_shaftless",
+  "textures": {
+    "4": "greate:block/naquadah_alloy/large_cogwheel",
+    "particle": "greate:block/naquadah_alloy/large_cogwheel"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": {
+      "tag": "forge:tools/files"
+    },
+    "P": {
+      "tag": "forge:plates/tungstensteel"
+    },
+    "S": {
+      "item": "greate:rhodium_plated_palladium_shaft"
+    }
+  },
+  "pattern": [
+    "SP",
+    "PF"
+  ],
+  "result": {
+    "item": "greate:large_rhodium_plated_palladium_cogwheel"
+  },
+  "show_notification": true
+}

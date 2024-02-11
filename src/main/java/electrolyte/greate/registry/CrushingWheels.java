@@ -1,5 +1,6 @@
 package electrolyte.greate.registry;
 
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.simibubi.create.content.kinetics.BlockStressDefaults;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
@@ -20,40 +21,68 @@ import java.util.ArrayList;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
 import static electrolyte.greate.Greate.REGISTRATE;
-import static electrolyte.greate.GreateValues.TMS;
+import static electrolyte.greate.GreateValues.TM;
 
 public class CrushingWheels {
 
-    static {
+    public static BlockEntry<TieredCrushingWheelBlock>[] CRUSHING_WHEELS = new BlockEntry[10];
+    public static BlockEntry<TieredCrushingWheelBlock>
+            ANDESITE_CRUSHING_WHEEL,
+            STEEL_CRUSHING_WHEEL,
+            ALUMINIUM_CRUSHING_WHEEL,
+            STAINLESS_STEEL_CRUSHING_WHEEL,
+            TITANIUM_CRUSHING_WHEEL,
+            TUNGSTENSTEEL_CRUSHING_WHEEL,
+            PALLADIUM_CRUSHING_WHEEL,
+            NAQUADAH_CRUSHING_WHEEL,
+            DARMSTADTIUM_CRUSHING_WHEEL,
+            NEUTRONIUM_CRUSHING_WHEEL;
+
+    public static BlockEntry<TieredCrushingWheelControllerBlock>
+            ANDESITE_CRUSHING_WHEEL_CONTROLLER,
+            STEEL_CRUSHING_WHEEL_CONTROLLER,
+            ALUMINIUM_CRUSHING_WHEEL_CONTROLLER,
+            STAINLESS_STEEL_CRUSHING_WHEEL_CONTROLLER,
+            TITANIUM_CRUSHING_WHEEL_CONTROLLER,
+            TUNGSTENSTEEL_CRUSHING_WHEEL_CONTROLLER,
+            PALLADIUM_CRUSHING_WHEEL_CONTROLLER,
+            NAQUADAH_CRUSHING_WHEEL_CONTROLLER,
+            DARMSTADTIUM_CRUSHING_WHEEL_CONTROLLER,
+            NEUTRONIUM_CRUSHING_WHEEL_CONTROLLER;
+
+    public static void register() {
         REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
+
+        CRUSHING_WHEELS[ULV] = ANDESITE_CRUSHING_WHEEL = crushingWheel(ULV, 0.5);
+        CRUSHING_WHEELS[LV] = STEEL_CRUSHING_WHEEL = crushingWheel(LV, 1.0);
+        CRUSHING_WHEELS[MV] = ALUMINIUM_CRUSHING_WHEEL = crushingWheel( MV, 1.5);
+        CRUSHING_WHEELS[HV] = STAINLESS_STEEL_CRUSHING_WHEEL = crushingWheel(HV, 2.0);
+        CRUSHING_WHEELS[EV] = TITANIUM_CRUSHING_WHEEL = crushingWheel(EV, 2.5);
+        CRUSHING_WHEELS[IV] = TUNGSTENSTEEL_CRUSHING_WHEEL = crushingWheel(IV, 3.0);
+        CRUSHING_WHEELS[LuV] = PALLADIUM_CRUSHING_WHEEL = crushingWheel(LuV, 3.5);
+        CRUSHING_WHEELS[ZPM] = NAQUADAH_CRUSHING_WHEEL = crushingWheel(ZPM, 4.0);
+        CRUSHING_WHEELS[UV] = DARMSTADTIUM_CRUSHING_WHEEL = crushingWheel(UV, 4.5);
+        CRUSHING_WHEELS[UHV] = NEUTRONIUM_CRUSHING_WHEEL = crushingWheel(UHV, 5.0);
+
+        ANDESITE_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(ULV);
+        STEEL_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(LV);
+        ALUMINIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(MV);
+        STAINLESS_STEEL_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(HV);
+        TITANIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(EV);
+        TUNGSTENSTEEL_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(IV);
+        PALLADIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(LuV);
+        NAQUADAH_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(ZPM);
+        DARMSTADTIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(UV);
+        NEUTRONIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(UHV);
     }
 
-    public static ArrayList<TieredCrushingWheelBlock> CRUSHING_WHEELS = new ArrayList<>();
+    private static BlockEntry<TieredCrushingWheelBlock> crushingWheel(int tier, double stressImpact) {
+        return crushingWheel(tier, TM[tier], stressImpact);
+    }
 
-    public static final BlockEntry<TieredCrushingWheelBlock> ANDESITE_CRUSHING_WHEEL = crushingWheel("andesite_crushing_wheel", ULV, TMS[0], 0.5);
-    public static final BlockEntry<TieredCrushingWheelControllerBlock> ANDESITE_CRUSHING_WHEEL_CONTROLLER = crushingWheelController("andesite_crushing_wheel_controller", ULV, ANDESITE_CRUSHING_WHEEL);
-    public static final BlockEntry<TieredCrushingWheelBlock> STEEL_CRUSHING_WHEEL = crushingWheel("steel_crushing_wheel", LV, TMS[1], 1.0);
-    public static final BlockEntry<TieredCrushingWheelControllerBlock> STEEL_CRUSHING_WHEEL_CONTROLLER = crushingWheelController("steel_crushing_wheel_controller", LV, STEEL_CRUSHING_WHEEL);
-    public static final BlockEntry<TieredCrushingWheelBlock> ALUMINIUM_CRUSHING_WHEEL = crushingWheel("aluminium_crushing_wheel", MV, TMS[2], 1.5);
-    public static final BlockEntry<TieredCrushingWheelControllerBlock> ALUMINIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController("aluminium_crushing_wheel_controller", MV, ALUMINIUM_CRUSHING_WHEEL);
-    public static final BlockEntry<TieredCrushingWheelBlock> STAINLESS_STEEL_CRUSHING_WHEEL = crushingWheel("stainless_steel_crushing_wheel", HV, TMS[3], 2.0);
-    public static final BlockEntry<TieredCrushingWheelControllerBlock> STAINLESS_STEEL_CRUSHING_WHEEL_CONTROLLER = crushingWheelController("stainless_steel_crushing_wheel_controller", HV, STAINLESS_STEEL_CRUSHING_WHEEL);
-    public static final BlockEntry<TieredCrushingWheelBlock> TITANIUM_CRUSHING_WHEEL = crushingWheel("titanium_crushing_wheel", EV, TMS[4], 2.5);
-    public static final BlockEntry<TieredCrushingWheelControllerBlock> TITANIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController("titanium_crushing_wheel_controller", EV, TITANIUM_CRUSHING_WHEEL);
-    public static final BlockEntry<TieredCrushingWheelBlock> TUNGSTENSTEEL_CRUSHING_WHEEL = crushingWheel("tungstensteel_crushing_wheel", IV, TMS[5], 3.0);
-    public static final BlockEntry<TieredCrushingWheelControllerBlock> TUNGSTENSTEEL_CRUSHING_WHEEL_CONTROLLER = crushingWheelController("tungstensteel_crushing_wheel_controller", IV, TUNGSTENSTEEL_CRUSHING_WHEEL);
-    public static final BlockEntry<TieredCrushingWheelBlock> PALLADIUM_CRUSHING_WHEEL = crushingWheel("palladium_crushing_wheel", LuV, TMS[6], 3.5);
-    public static final BlockEntry<TieredCrushingWheelControllerBlock> PALLADIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController("palladium_crushing_wheel_controller", LuV, PALLADIUM_CRUSHING_WHEEL);
-    public static final BlockEntry<TieredCrushingWheelBlock> NAQUADAH_CRUSHING_WHEEL = crushingWheel("naquadah_crushing_wheel", ZPM, TMS[7], 4.0);
-    public static final BlockEntry<TieredCrushingWheelControllerBlock> NAQUADAH_CRUSHING_WHEEL_CONTROLLER = crushingWheelController("naquadah_crushing_wheel_controller", ZPM, NAQUADAH_CRUSHING_WHEEL);
-    public static final BlockEntry<TieredCrushingWheelBlock> DARMSTADTIUM_CRUSHING_WHEEL = crushingWheel("darmstadtium_crushing_wheel", UV, TMS[8], 4.5);
-    public static final BlockEntry<TieredCrushingWheelControllerBlock> DARMSTADTIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController("darmstadtium_crushing_wheel_controller", UV, DARMSTADTIUM_CRUSHING_WHEEL);
-    public static final BlockEntry<TieredCrushingWheelBlock> NEUTRONIUM_CRUSHING_WHEEL = crushingWheel("neutronium_crushing_wheel", UHV, TMS[9], 5.0);
-    public static final BlockEntry<TieredCrushingWheelControllerBlock> NEUTRONIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController("neutronium_crushing_wheel_controller", UHV, NEUTRONIUM_CRUSHING_WHEEL);
-
-    public static BlockEntry<TieredCrushingWheelBlock> crushingWheel(String name, int tier, String materialType, double stressImpact) {
+    public static BlockEntry<TieredCrushingWheelBlock> crushingWheel(int tier, Material material, double stressImpact) {
         return REGISTRATE
-                .block(name, TieredCrushingWheelBlock::new)
+                .block(material.getName() + "_crushing_wheel", TieredCrushingWheelBlock::new)
                 .properties(p -> p.mapColor(MapColor.METAL))
                 .initialProperties(SharedProperties::stone)
                 .properties(BlockBehaviour.Properties::noOcclusion)
@@ -61,14 +90,18 @@ public class CrushingWheels {
                 .addLayer(() -> RenderType::cutoutMipped)
                 .transform(GreateBuilderTransformers.tieredCrushingWheel())
                 .transform(BlockStressDefaults.setImpact(stressImpact))
-                .transform(TieredBlockMaterials.setMaterialTypeForBlock(materialType))
+                .transform(TieredBlockMaterials.setMaterialForBlock(material))
                 .onRegister(c -> c.setTier(tier))
                 .register();
     }
 
-    public static BlockEntry<TieredCrushingWheelControllerBlock> crushingWheelController(String name, int tier, BlockEntry<TieredCrushingWheelBlock> crushingWheel) {
+    private static BlockEntry<TieredCrushingWheelControllerBlock> crushingWheelController(int tier) {
+        return crushingWheelController(tier, TM[tier], CRUSHING_WHEELS[tier]);
+    }
+
+    public static BlockEntry<TieredCrushingWheelControllerBlock> crushingWheelController(int tier, Material material, BlockEntry<TieredCrushingWheelBlock> crushingWheel) {
         return REGISTRATE
-                .block(name, p -> new TieredCrushingWheelControllerBlock(p, crushingWheel.get()))
+                .block(material.getName() + "_crushing_wheel_controller", p -> new TieredCrushingWheelControllerBlock(p, crushingWheel.get()))
                 .properties(p -> p.mapColor(MapColor.STONE))
                 .properties(p -> p.noOcclusion()
                         .noLootTable()
@@ -79,6 +112,4 @@ public class CrushingWheels {
                 .onRegister(c -> c.setTier(tier))
                 .register();
     }
-
-    public static void register() {}
 }

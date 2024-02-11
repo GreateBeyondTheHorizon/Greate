@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/mechanical_pump/item",
+  "textures": {
+    "2": "greate:block/rhodium_plated_palladium/pipes",
+    "4": "greate:block/rhodium_plated_palladium/pump",
+    "5": "greate:block/rhodium_plated_palladium/millstone",
+    "particle": "greate:block/rhodium_plated_palladium/pump"
+  }
+}

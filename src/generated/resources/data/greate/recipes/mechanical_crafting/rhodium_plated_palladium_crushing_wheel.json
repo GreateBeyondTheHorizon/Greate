@@ -1,0 +1,24 @@
+{
+  "type": "create:mechanical_crafting",
+  "acceptMirrored": true,
+  "key": {
+    "A": [],
+    "C": {
+      "tag": "gtceu:circuits/luv"
+    },
+    "S": {
+      "tag": "greate:shafts/rhodium_plated_palladium"
+    }
+  },
+  "pattern": [
+    " AAA ",
+    "AACAA",
+    "ACSCA",
+    "AACAA",
+    " AAA "
+  ],
+  "result": {
+    "count": 2,
+    "item": "greate:rhodium_plated_palladium_crushing_wheel"
+  }
+}

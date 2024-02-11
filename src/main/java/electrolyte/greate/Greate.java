@@ -57,17 +57,6 @@ public class Greate {
         REGISTRATE.registerEventListeners(eventBus);
         GreateLang.register();
         GreateTags.init();
-        Belts.register();
-        Cogwheels.register();
-        CrushingWheels.register();
-        Gearboxes.register();
-        Girders.register();
-        MechanicalPresses.register();
-        Millstones.register();
-        Saws.register();
-        Shafts.register();
-        ModBlockEntityTypes.register();
-        ModItems.register();
         ModRecipeTypes.register(eventBus);
         GreateConfigs.register(ModLoadingContext.get());
     }

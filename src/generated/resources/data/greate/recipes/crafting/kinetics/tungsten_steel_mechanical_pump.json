@@ -1,0 +1,39 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": [],
+    "C": {
+      "tag": "forge:tools/screwdrivers"
+    },
+    "I": [
+      {
+        "item": "gtceu:rubber_ring"
+      },
+      {
+        "item": "gtceu:silicone_rubber_ring"
+      }
+    ],
+    "N": {
+      "tag": "forge:nuggets/tungsten_steel"
+    },
+    "O": {
+      "tag": "greate:cogwheels/tungsten_steel"
+    },
+    "P": {
+      "item": "create:fluid_pipe"
+    },
+    "W": {
+      "tag": "forge:tools/wrenches"
+    }
+  },
+  "pattern": [
+    "NAI",
+    "COW",
+    "IP "
+  ],
+  "result": {
+    "item": "greate:tungsten_steel_mechanical_pump"
+  },
+  "show_notification": true
+}

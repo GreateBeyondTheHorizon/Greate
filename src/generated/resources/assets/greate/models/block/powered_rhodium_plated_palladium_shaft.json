@@ -1,0 +1,8 @@
+{
+  "parent": "create:block/powered_shaft",
+  "textures": {
+    "2": "greate:block/rhodium_plated_palladium/axis_top",
+    "3": "greate:block/rhodium_plated_palladium/axis",
+    "particle": "greate:block/rhodium_plated_palladium/axis"
+  }
+}
