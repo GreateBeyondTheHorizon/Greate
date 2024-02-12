@@ -77,7 +77,7 @@ public class GreateValues {
 
     /**
      * Tier materials
-     * Based on GTMaterials.VOLTAGE_COMMON_MATERIALS, but uses Andesite instead of WroughtIron in the first tier.
+     * Based on GTMaterials.VOLTAGE_COMMON_MATERIALS, but uses AndesiteAlloy instead of WroughtIron in the first tier.
      */
     public static Material[] TM;
 
