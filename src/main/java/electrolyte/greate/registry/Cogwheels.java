@@ -59,6 +59,10 @@ public class Cogwheels {
             LARGE_DARMSTADTIUM_COGWHEEL,
             LARGE_NEUTRONIUM_COGWHEEL;
 
+    public static final BlockEntry<TieredEncasedCogwheelBlock>[] ANDESITE_ENCASED_COGWHEELS = new BlockEntry[10];
+    public static final BlockEntry<TieredEncasedCogwheelBlock>[] ANDESITE_ENCASED_LARGE_COGWHEELS = new BlockEntry[10];
+    public static final BlockEntry<TieredEncasedCogwheelBlock>[] BRASS_ENCASED_COGWHEELS = new BlockEntry[10];
+    public static final BlockEntry<TieredEncasedCogwheelBlock>[] BRASS_ENCASED_LARGE_COGWHEELS = new BlockEntry[10];
     public static BlockEntry<TieredEncasedCogwheelBlock>
             ANDESITE_ENCASED_ANDESITE_COGWHEEL,
             ANDESITE_ENCASED_LARGE_ANDESITE_COGWHEEL,
@@ -128,47 +132,53 @@ public class Cogwheels {
         LARGE_COGWHEELS[UV] = LARGE_DARMSTADTIUM_COGWHEEL = registerLargeCogwheel(UV, GreateItemTags.LARGE_COGWHEELS_DARMSTADTIUM.itemTag);
         LARGE_COGWHEELS[UHV] = LARGE_NEUTRONIUM_COGWHEEL = registerLargeCogwheel(UHV, GreateItemTags.LARGE_COGWHEELS_NEUTRONIUM.itemTag);
 
-        // Encased cogwheels
-        ANDESITE_ENCASED_ANDESITE_COGWHEEL = registerAndesiteEncasedCogwheel(ULV);
-        ANDESITE_ENCASED_LARGE_ANDESITE_COGWHEEL = registerAndesiteEncasedLargeCogwheel(ULV);
-        BRASS_ENCASED_ANDESITE_COGWHEEL = registerBrassEncasedCogwheel(ULV);
-        BRASS_ENCASED_LARGE_ANDESITE_COGWHEEL = registerBrassEncasedLargeCogwheel(ULV);
-        ANDESITE_ENCASED_STEEL_COGWHEEL = registerAndesiteEncasedCogwheel(LV);
-        ANDESITE_ENCASED_LARGE_STEEL_COGWHEEL = registerAndesiteEncasedLargeCogwheel(LV);
-        BRASS_ENCASED_STEEL_COGWHEEL = registerBrassEncasedCogwheel(LV);
-        BRASS_ENCASED_LARGE_STEEL_COGWHEEL = registerBrassEncasedLargeCogwheel(LV);
-        ANDESITE_ENCASED_ALUMINIUM_COGWHEEL = registerAndesiteEncasedCogwheel(MV);
-        ANDESITE_ENCASED_LARGE_ALUMINIUM_COGWHEEL = registerAndesiteEncasedLargeCogwheel(MV);
-        BRASS_ENCASED_ALUMINIUM_COGWHEEL = registerBrassEncasedCogwheel(MV);
-        BRASS_ENCASED_LARGE_ALUMINIUM_COGWHEEL = registerBrassEncasedLargeCogwheel(MV);
-        ANDESITE_ENCASED_STAINLESS_STEEL_COGWHEEL = registerAndesiteEncasedCogwheel(HV);
-        ANDESITE_ENCASED_LARGE_STAINLESS_STEEL_COGWHEEL = registerAndesiteEncasedLargeCogwheel(HV);
-        BRASS_ENCASED_STAINLESS_STEEL_COGWHEEL = registerBrassEncasedCogwheel(HV);
-        BRASS_ENCASED_LARGE_STAINLESS_STEEL_COGWHEEL = registerBrassEncasedLargeCogwheel(HV);
-        ANDESITE_ENCASED_TITANIUM_COGWHEEL = registerAndesiteEncasedCogwheel(EV);
-        ANDESITE_ENCASED_LARGE_TITANIUM_COGWHEEL = registerAndesiteEncasedLargeCogwheel(EV);
-        BRASS_ENCASED_TITANIUM_COGWHEEL = registerBrassEncasedCogwheel(EV);
-        BRASS_ENCASED_LARGE_TITANIUM_COGWHEEL = registerBrassEncasedLargeCogwheel(EV);
-        ANDESITE_ENCASED_TUNGSTENSTEEL_COGWHEEL = registerAndesiteEncasedCogwheel(IV);
-        ANDESITE_ENCASED_LARGE_TUNGSTENSTEEL_COGWHEEL = registerAndesiteEncasedLargeCogwheel(IV);
-        BRASS_ENCASED_TUNGSTENSTEEL_COGWHEEL = registerBrassEncasedCogwheel(IV);
-        BRASS_ENCASED_LARGE_TUNGSTENSTEEL_COGWHEEL = registerBrassEncasedLargeCogwheel(IV);
-        ANDESITE_ENCASED_PALLADIUM_COGWHEEL = registerAndesiteEncasedCogwheel(LuV);
-        ANDESITE_ENCASED_LARGE_PALLADIUM_COGWHEEL = registerAndesiteEncasedLargeCogwheel(LuV);
-        BRASS_ENCASED_PALLADIUM_COGWHEEL = registerBrassEncasedCogwheel(LuV);
-        BRASS_ENCASED_LARGE_PALLADIUM_COGWHEEL = registerBrassEncasedLargeCogwheel(LuV);
-        ANDESITE_ENCASED_NAQUADAH_COGWHEEL = registerAndesiteEncasedCogwheel(ZPM);
-        ANDESITE_ENCASED_LARGE_NAQUADAH_COGWHEEL = registerAndesiteEncasedLargeCogwheel(ZPM);
-        BRASS_ENCASED_NAQUADAH_COGWHEEL = registerBrassEncasedCogwheel(ZPM);
-        BRASS_ENCASED_LARGE_NAQUADAH_COGWHEEL = registerBrassEncasedLargeCogwheel(ZPM);
-        ANDESITE_ENCASED_DARMSTADTIUM_COGWHEEL = registerAndesiteEncasedCogwheel(UV);
-        ANDESITE_ENCASED_LARGE_DARMSTADTIUM_COGWHEEL = registerAndesiteEncasedLargeCogwheel(UV);
-        BRASS_ENCASED_DARMSTADTIUM_COGWHEEL = registerBrassEncasedCogwheel(UV);
-        BRASS_ENCASED_LARGE_DARMSTADTIUM_COGWHEEL = registerBrassEncasedLargeCogwheel(UV);
-        ANDESITE_ENCASED_NEUTRONIUM_COGWHEEL = registerAndesiteEncasedCogwheel(UHV);
-        ANDESITE_ENCASED_LARGE_NEUTRONIUM_COGWHEEL = registerAndesiteEncasedLargeCogwheel(UHV);
-        BRASS_ENCASED_NEUTRONIUM_COGWHEEL = registerBrassEncasedCogwheel(UHV);
-        BRASS_ENCASED_LARGE_NEUTRONIUM_COGWHEEL = registerBrassEncasedLargeCogwheel(UHV);
+        // Andesite encased cogwheels
+        ANDESITE_ENCASED_COGWHEELS[ULV] = ANDESITE_ENCASED_ANDESITE_COGWHEEL = registerAndesiteEncasedCogwheel(ULV);
+        ANDESITE_ENCASED_COGWHEELS[LV] = ANDESITE_ENCASED_STEEL_COGWHEEL = registerAndesiteEncasedCogwheel(LV);
+        ANDESITE_ENCASED_COGWHEELS[MV] = ANDESITE_ENCASED_ALUMINIUM_COGWHEEL = registerAndesiteEncasedCogwheel(MV);
+        ANDESITE_ENCASED_COGWHEELS[HV] = ANDESITE_ENCASED_STAINLESS_STEEL_COGWHEEL = registerAndesiteEncasedCogwheel(HV);
+        ANDESITE_ENCASED_COGWHEELS[EV] = ANDESITE_ENCASED_TITANIUM_COGWHEEL = registerAndesiteEncasedCogwheel(EV);
+        ANDESITE_ENCASED_COGWHEELS[IV] = ANDESITE_ENCASED_TUNGSTENSTEEL_COGWHEEL = registerAndesiteEncasedCogwheel(IV);
+        ANDESITE_ENCASED_COGWHEELS[LuV] = ANDESITE_ENCASED_PALLADIUM_COGWHEEL = registerAndesiteEncasedCogwheel(LuV);
+        ANDESITE_ENCASED_COGWHEELS[ZPM] = ANDESITE_ENCASED_NAQUADAH_COGWHEEL = registerAndesiteEncasedCogwheel(ZPM);
+        ANDESITE_ENCASED_COGWHEELS[UV] = ANDESITE_ENCASED_DARMSTADTIUM_COGWHEEL = registerAndesiteEncasedCogwheel(UV);
+        ANDESITE_ENCASED_COGWHEELS[UHV] = ANDESITE_ENCASED_NEUTRONIUM_COGWHEEL = registerAndesiteEncasedCogwheel(UHV);
+
+        // Andesite encased large cogwheels
+        ANDESITE_ENCASED_LARGE_COGWHEELS[ULV] = ANDESITE_ENCASED_LARGE_ANDESITE_COGWHEEL = registerAndesiteEncasedLargeCogwheel(ULV);
+        ANDESITE_ENCASED_LARGE_COGWHEELS[LV] = ANDESITE_ENCASED_LARGE_STEEL_COGWHEEL = registerAndesiteEncasedLargeCogwheel(LV);
+        ANDESITE_ENCASED_LARGE_COGWHEELS[MV] = ANDESITE_ENCASED_LARGE_ALUMINIUM_COGWHEEL = registerAndesiteEncasedLargeCogwheel(MV);
+        ANDESITE_ENCASED_LARGE_COGWHEELS[HV] = ANDESITE_ENCASED_LARGE_STAINLESS_STEEL_COGWHEEL = registerAndesiteEncasedLargeCogwheel(HV);
+        ANDESITE_ENCASED_LARGE_COGWHEELS[EV] = ANDESITE_ENCASED_LARGE_TITANIUM_COGWHEEL = registerAndesiteEncasedLargeCogwheel(EV);
+        ANDESITE_ENCASED_LARGE_COGWHEELS[IV] = ANDESITE_ENCASED_LARGE_TUNGSTENSTEEL_COGWHEEL = registerAndesiteEncasedLargeCogwheel(IV);
+        ANDESITE_ENCASED_LARGE_COGWHEELS[LuV] = ANDESITE_ENCASED_LARGE_PALLADIUM_COGWHEEL = registerAndesiteEncasedLargeCogwheel(LuV);
+        ANDESITE_ENCASED_LARGE_COGWHEELS[ZPM] = ANDESITE_ENCASED_LARGE_NAQUADAH_COGWHEEL = registerAndesiteEncasedLargeCogwheel(ZPM);
+        ANDESITE_ENCASED_LARGE_COGWHEELS[UV] = ANDESITE_ENCASED_LARGE_DARMSTADTIUM_COGWHEEL = registerAndesiteEncasedLargeCogwheel(UV);
+        ANDESITE_ENCASED_LARGE_COGWHEELS[UHV] = ANDESITE_ENCASED_LARGE_NEUTRONIUM_COGWHEEL = registerAndesiteEncasedLargeCogwheel(UHV);
+
+        // Brass encased cogwheels
+        BRASS_ENCASED_COGWHEELS[ULV] = BRASS_ENCASED_ANDESITE_COGWHEEL = registerBrassEncasedCogwheel(ULV);
+        BRASS_ENCASED_COGWHEELS[LV] = BRASS_ENCASED_STEEL_COGWHEEL = registerBrassEncasedCogwheel(LV);
+        BRASS_ENCASED_COGWHEELS[MV] = BRASS_ENCASED_ALUMINIUM_COGWHEEL = registerBrassEncasedCogwheel(MV);
+        BRASS_ENCASED_COGWHEELS[HV] = BRASS_ENCASED_STAINLESS_STEEL_COGWHEEL = registerBrassEncasedCogwheel(HV);
+        BRASS_ENCASED_COGWHEELS[EV] = BRASS_ENCASED_TITANIUM_COGWHEEL = registerBrassEncasedCogwheel(EV);
+        BRASS_ENCASED_COGWHEELS[IV] = BRASS_ENCASED_TUNGSTENSTEEL_COGWHEEL = registerBrassEncasedCogwheel(IV);
+        BRASS_ENCASED_COGWHEELS[LuV] = BRASS_ENCASED_PALLADIUM_COGWHEEL = registerBrassEncasedCogwheel(LuV);
+        BRASS_ENCASED_COGWHEELS[ZPM] = BRASS_ENCASED_NAQUADAH_COGWHEEL = registerBrassEncasedCogwheel(ZPM);
+        BRASS_ENCASED_COGWHEELS[UV] = BRASS_ENCASED_DARMSTADTIUM_COGWHEEL = registerBrassEncasedCogwheel(UV);
+        BRASS_ENCASED_COGWHEELS[UHV] = BRASS_ENCASED_NEUTRONIUM_COGWHEEL = registerBrassEncasedCogwheel(UHV);
+
+        // Brass encased large cogwheels
+        BRASS_ENCASED_LARGE_COGWHEELS[ULV] = BRASS_ENCASED_LARGE_ANDESITE_COGWHEEL = registerBrassEncasedLargeCogwheel(ULV);
+        BRASS_ENCASED_LARGE_COGWHEELS[LV] = BRASS_ENCASED_LARGE_STEEL_COGWHEEL = registerBrassEncasedLargeCogwheel(LV);
+        BRASS_ENCASED_LARGE_COGWHEELS[MV] = BRASS_ENCASED_LARGE_ALUMINIUM_COGWHEEL = registerBrassEncasedLargeCogwheel(MV);
+        BRASS_ENCASED_LARGE_COGWHEELS[HV] = BRASS_ENCASED_LARGE_STAINLESS_STEEL_COGWHEEL = registerBrassEncasedLargeCogwheel(HV);
+        BRASS_ENCASED_LARGE_COGWHEELS[EV] = BRASS_ENCASED_LARGE_TITANIUM_COGWHEEL = registerBrassEncasedLargeCogwheel(EV);
+        BRASS_ENCASED_LARGE_COGWHEELS[IV] = BRASS_ENCASED_LARGE_TUNGSTENSTEEL_COGWHEEL = registerBrassEncasedLargeCogwheel(IV);
+        BRASS_ENCASED_LARGE_COGWHEELS[LuV] = BRASS_ENCASED_LARGE_PALLADIUM_COGWHEEL = registerBrassEncasedLargeCogwheel(LuV);
+        BRASS_ENCASED_LARGE_COGWHEELS[ZPM] = BRASS_ENCASED_LARGE_NAQUADAH_COGWHEEL = registerBrassEncasedLargeCogwheel(ZPM);
+        BRASS_ENCASED_LARGE_COGWHEELS[UV] = BRASS_ENCASED_LARGE_DARMSTADTIUM_COGWHEEL = registerBrassEncasedLargeCogwheel(UV);
+        BRASS_ENCASED_LARGE_COGWHEELS[UHV] = BRASS_ENCASED_LARGE_NEUTRONIUM_COGWHEEL = registerBrassEncasedLargeCogwheel(UHV);
     }
 
     public static BlockEntry<TieredCogwheelBlock> registerCogwheel(int tier, TagKey<Item> smallCogwheelTag) {

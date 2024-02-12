@@ -38,6 +38,7 @@ public class CrushingWheels {
             DARMSTADTIUM_CRUSHING_WHEEL,
             NEUTRONIUM_CRUSHING_WHEEL;
 
+    public static BlockEntry<TieredCrushingWheelControllerBlock>[] CRUSHING_WHEEL_CONTROLLERS = new BlockEntry[10];
     public static BlockEntry<TieredCrushingWheelControllerBlock>
             ANDESITE_CRUSHING_WHEEL_CONTROLLER,
             STEEL_CRUSHING_WHEEL_CONTROLLER,
@@ -64,16 +65,16 @@ public class CrushingWheels {
         CRUSHING_WHEELS[UV] = DARMSTADTIUM_CRUSHING_WHEEL = crushingWheel(UV, 4.5);
         CRUSHING_WHEELS[UHV] = NEUTRONIUM_CRUSHING_WHEEL = crushingWheel(UHV, 5.0);
 
-        ANDESITE_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(ULV);
-        STEEL_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(LV);
-        ALUMINIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(MV);
-        STAINLESS_STEEL_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(HV);
-        TITANIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(EV);
-        TUNGSTENSTEEL_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(IV);
-        PALLADIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(LuV);
-        NAQUADAH_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(ZPM);
-        DARMSTADTIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(UV);
-        NEUTRONIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(UHV);
+        CRUSHING_WHEEL_CONTROLLERS[ULV] = ANDESITE_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(ULV);
+        CRUSHING_WHEEL_CONTROLLERS[LV] = STEEL_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(LV);
+        CRUSHING_WHEEL_CONTROLLERS[MV] = ALUMINIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(MV);
+        CRUSHING_WHEEL_CONTROLLERS[HV] = STAINLESS_STEEL_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(HV);
+        CRUSHING_WHEEL_CONTROLLERS[EV] = TITANIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(EV);
+        CRUSHING_WHEEL_CONTROLLERS[IV] = TUNGSTENSTEEL_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(IV);
+        CRUSHING_WHEEL_CONTROLLERS[LuV] = PALLADIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(LuV);
+        CRUSHING_WHEEL_CONTROLLERS[ZPM] = NAQUADAH_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(ZPM);
+        CRUSHING_WHEEL_CONTROLLERS[UV] = DARMSTADTIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(UV);
+        CRUSHING_WHEEL_CONTROLLERS[UHV] = NEUTRONIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(UHV);
     }
 
     private static BlockEntry<TieredCrushingWheelBlock> crushingWheel(int tier, double stressImpact) {

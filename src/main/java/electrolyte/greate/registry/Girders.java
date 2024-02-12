@@ -27,6 +27,7 @@ import static electrolyte.greate.registry.Shafts.SHAFTS;
 
 public class Girders {
 
+    public static final BlockEntry<TieredGirderEncasedShaftBlock>[] METAL_GIRDER_ENCASED_SHAFTS = new BlockEntry[10];
     public static BlockEntry<TieredGirderEncasedShaftBlock>
             METAL_GIRDER_ENCASED_ANDESITE_SHAFT,
             METAL_GIRDER_ENCASED_STEEL_SHAFT,
@@ -42,16 +43,16 @@ public class Girders {
     public static void register() {
         REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
 
-        METAL_GIRDER_ENCASED_ANDESITE_SHAFT = metalGirderEncasedShaft(ULV);
-        METAL_GIRDER_ENCASED_STEEL_SHAFT = metalGirderEncasedShaft(LV);
-        METAL_GIRDER_ENCASED_ALUMINIUM_SHAFT = metalGirderEncasedShaft(MV);
-        METAL_GIRDER_ENCASED_STAINLESS_STEEL_SHAFT = metalGirderEncasedShaft(HV);
-        METAL_GIRDER_ENCASED_TITANIUM_SHAFT = metalGirderEncasedShaft(EV);
-        METAL_GIRDER_ENCASED_TUNGSTENSTEEL_SHAFT = metalGirderEncasedShaft(IV);
-        METAL_GIRDER_ENCASED_PALLADIUM_SHAFT = metalGirderEncasedShaft(LuV);
-        METAL_GIRDER_ENCASED_NAQUADAH_SHAFT = metalGirderEncasedShaft(ZPM);
-        METAL_GIRDER_ENCASED_DARMSTADTIUM_SHAFT = metalGirderEncasedShaft(UV);
-        METAL_GIRDER_ENCASED_NEUTRONIUM_SHAFT = metalGirderEncasedShaft(UHV);
+        METAL_GIRDER_ENCASED_SHAFTS[ULV] = METAL_GIRDER_ENCASED_ANDESITE_SHAFT = metalGirderEncasedShaft(ULV);
+        METAL_GIRDER_ENCASED_SHAFTS[LV] = METAL_GIRDER_ENCASED_STEEL_SHAFT = metalGirderEncasedShaft(LV);
+        METAL_GIRDER_ENCASED_SHAFTS[MV] = METAL_GIRDER_ENCASED_ALUMINIUM_SHAFT = metalGirderEncasedShaft(MV);
+        METAL_GIRDER_ENCASED_SHAFTS[HV] = METAL_GIRDER_ENCASED_STAINLESS_STEEL_SHAFT = metalGirderEncasedShaft(HV);
+        METAL_GIRDER_ENCASED_SHAFTS[EV] = METAL_GIRDER_ENCASED_TITANIUM_SHAFT = metalGirderEncasedShaft(EV);
+        METAL_GIRDER_ENCASED_SHAFTS[IV] = METAL_GIRDER_ENCASED_TUNGSTENSTEEL_SHAFT = metalGirderEncasedShaft(IV);
+        METAL_GIRDER_ENCASED_SHAFTS[LuV] = METAL_GIRDER_ENCASED_PALLADIUM_SHAFT = metalGirderEncasedShaft(LuV);
+        METAL_GIRDER_ENCASED_SHAFTS[ZPM] = METAL_GIRDER_ENCASED_NAQUADAH_SHAFT = metalGirderEncasedShaft(ZPM);
+        METAL_GIRDER_ENCASED_SHAFTS[UV] = METAL_GIRDER_ENCASED_DARMSTADTIUM_SHAFT = metalGirderEncasedShaft(UV);
+        METAL_GIRDER_ENCASED_SHAFTS[UHV] = METAL_GIRDER_ENCASED_NEUTRONIUM_SHAFT = metalGirderEncasedShaft(UHV);
     }
 
     private static BlockEntry<TieredGirderEncasedShaftBlock> metalGirderEncasedShaft(int tier) {
