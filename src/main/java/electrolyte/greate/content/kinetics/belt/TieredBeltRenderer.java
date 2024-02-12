@@ -41,7 +41,6 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Random;
 import java.util.function.Supplier;
@@ -199,13 +198,18 @@ public class TieredBeltRenderer extends SafeBlockEntityRenderer<TieredBeltBlockE
     public static PartialModel getBeltPulleyModel(BlockState blockState, TieredBeltBlockEntity blockEntity) {
         TieredBeltBlock tieredBeltBlock = (TieredBeltBlock) blockState.getBlock();
         Material beltMaterial = tieredBeltBlock.getBeltMaterial();
-        String shaftMaterial;
-        if(tieredBeltBlock.getShaftType() != null) {
+        String shaftMaterial = "";
+        try {
+        if(!tieredBeltBlock.getShaftType().isEmpty()) {
             shaftMaterial = tieredBeltBlock.getShaftType().toString().substring(2, tieredBeltBlock.getShaftType().toString().length() - 6);
         } else {
             shaftMaterial = blockEntity.getShaftType().toString().substring(2, blockEntity.getShaftType().toString().length() - 6);
         }
-        return GreatePartialModels.NEW_BELT_MODELS.get(beltMaterial).stream().filter(p -> p.getLocation().equals(new ResourceLocation(Greate.MOD_ID, "block/" + beltMaterial + "_" + shaftMaterial + "_pulley"))).findFirst().orElse(AllPartialModels.BELT_PULLEY);
+        } catch(IndexOutOfBoundsException e) {
+            Greate.LOGGER.error("Unable to get shaft material for belt {}, the default create shaft will be used until this is fixed!", beltMaterial.getName());
+        }
+        ResourceLocation resourceLocation = new ResourceLocation(Greate.MOD_ID, "block/" + beltMaterial.getName() + "_belt_" + shaftMaterial + "_pulley");
+        return GreatePartialModels.NEW_BELT_MODELS.get(beltMaterial).stream().filter(p -> p.getLocation().equals(resourceLocation)).findFirst().orElse(AllPartialModels.BELT_PULLEY);
     }
 
     protected void renderItems(TieredBeltBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {

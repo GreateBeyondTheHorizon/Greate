@@ -3,7 +3,6 @@ package electrolyte.greate.infrastructure.config;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
-import static com.gregtechceu.gtceu.api.GTValues.UHV;
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
 
 
@@ -28,7 +27,7 @@ public class GConfigUtility {
     public static int getBeltLengthFromMaterial(Material beltMaterial) {
         if (beltMaterial == Rubber) {
             return GreateConfigs.server().kinetics.beltValues.rubberMaxBeltLength.get();
-        } else if (beltMaterial == Silicon) {
+        } else if (beltMaterial == SiliconeRubber) {
             return GreateConfigs.server().kinetics.beltValues.siliconeMaxBeltLength.get();
         } else if (beltMaterial == Polyethylene) {
             return GreateConfigs.server().kinetics.beltValues.polyethyleneMaxBeltLength.get();
