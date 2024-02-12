@@ -24,6 +24,7 @@ import net.minecraft.world.level.material.PushReaction;
 import static com.gregtechceu.gtceu.api.GTValues.*;
 import static electrolyte.greate.Greate.REGISTRATE;
 import static electrolyte.greate.GreateValues.TM;
+import static electrolyte.greate.registry.GreatePartialModels.SHAFT_HALF_MODELS;
 
 public class Gearboxes {
 
@@ -59,16 +60,16 @@ public class Gearboxes {
         REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
 
         // Gearbox
-        GEARBOXES[ULV] = ANDESITE_GEARBOX = gearbox(ULV, GreatePartialModels.ANDESITE_SHAFT_HALF);
-        GEARBOXES[LV] = STEEL_GEARBOX = gearbox(LV, GreatePartialModels.STEEL_SHAFT_HALF);
-        GEARBOXES[MV] = ALUMINIUM_GEARBOX = gearbox( MV, GreatePartialModels.ALUMINIUM_SHAFT_HALF);
-        GEARBOXES[HV] = STAINLESS_STEEL_GEARBOX = gearbox(HV, GreatePartialModels.STAINLESS_STEEL_SHAFT_HALF);
-        GEARBOXES[EV] = TITANIUM_GEARBOX = gearbox(EV, GreatePartialModels.TITANIUM_SHAFT_HALF);
-        GEARBOXES[IV] = TUNGSTENSTEEL_GEARBOX = gearbox(IV, GreatePartialModels.TUNGSTENSTEEL_SHAFT_HALF);
-        GEARBOXES[LuV] = PALLADIUM_GEARBOX = gearbox(LuV, GreatePartialModels.PALLADIUM_SHAFT_HALF);
-        GEARBOXES[ZPM] = NAQUADAH_GEARBOX = gearbox(ZPM, GreatePartialModels.NAQUADAH_SHAFT_HALF);
-        GEARBOXES[UV] = DARMSTADTIUM_GEARBOX = gearbox(UV, GreatePartialModels.DARMSTADTIUM_SHAFT_HALF);
-        GEARBOXES[UHV] = NEUTRONIUM_GEARBOX = gearbox(UHV, GreatePartialModels.NEUTRONIUM_SHAFT_HALF);
+        GEARBOXES[ULV] = ANDESITE_GEARBOX = gearbox(ULV);
+        GEARBOXES[LV] = STEEL_GEARBOX = gearbox(LV);
+        GEARBOXES[MV] = ALUMINIUM_GEARBOX = gearbox( MV);
+        GEARBOXES[HV] = STAINLESS_STEEL_GEARBOX = gearbox(HV);
+        GEARBOXES[EV] = TITANIUM_GEARBOX = gearbox(EV);
+        GEARBOXES[IV] = TUNGSTENSTEEL_GEARBOX = gearbox(IV);
+        GEARBOXES[LuV] = PALLADIUM_GEARBOX = gearbox(LuV);
+        GEARBOXES[ZPM] = NAQUADAH_GEARBOX = gearbox(ZPM);
+        GEARBOXES[UV] = DARMSTADTIUM_GEARBOX = gearbox(UV);
+        GEARBOXES[UHV] = NEUTRONIUM_GEARBOX = gearbox(UHV);
 
         // Vertical gearbox
         VERTICAL_GEARBOXES[ULV] = ANDESITE_VERTICAL_GEARBOX = verticalGearbox(ULV);
@@ -83,8 +84,8 @@ public class Gearboxes {
         VERTICAL_GEARBOXES[UHV] = NEUTRONIUM_VERTICAL_GEARBOX = verticalGearbox(UHV);
     }
 
-    private static BlockEntry<TieredGearboxBlock> gearbox(int tier, PartialModel halfShaftModel) {
-        return gearbox(tier, TM[tier], halfShaftModel);
+    private static BlockEntry<TieredGearboxBlock> gearbox(int tier) {
+        return gearbox(tier, TM[tier], SHAFT_HALF_MODELS[tier]);
     }
 
     public static BlockEntry<TieredGearboxBlock> gearbox(int tier, Material material, PartialModel halfShaftModel) {

@@ -17,6 +17,7 @@ import net.minecraft.world.level.material.MapColor;
 import static com.gregtechceu.gtceu.api.GTValues.*;
 import static electrolyte.greate.Greate.REGISTRATE;
 import static electrolyte.greate.GreateValues.TM;
+import static electrolyte.greate.registry.GreatePartialModels.MECHANICAL_PRESS_HEAD_MODELS;
 import static electrolyte.greate.registry.Shafts.SHAFTS;
 
 public class MechanicalPresses {
@@ -37,20 +38,20 @@ public class MechanicalPresses {
     public static void register() {
         REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
 
-        MECHANICAL_PRESSES[ULV] = ANDESITE_MECHANICAL_PRESS = mechanicalPress(ULV, GreatePartialModels.ANDESITE_MECHANICAL_PRESS_HEAD, 1.0);
-        MECHANICAL_PRESSES[LV] = STEEL_MECHANICAL_PRESS = mechanicalPress(LV, GreatePartialModels.STEEL_MECHANICAL_PRESS_HEAD, 2.0);
-        MECHANICAL_PRESSES[MV] = ALUMINIUM_MECHANICAL_PRESS = mechanicalPress(MV, GreatePartialModels.ALUMINIUM_MECHANICAL_PRESS_HEAD, 3.0);
-        MECHANICAL_PRESSES[HV] = STAINLESS_STEEL_MECHANICAL_PRESS = mechanicalPress(HV, GreatePartialModels.STAINLESS_STEEL_MECHANICAL_PRESS_HEAD, 4.0);
-        MECHANICAL_PRESSES[EV] = TITANIUM_MECHANICAL_PRESS = mechanicalPress(EV, GreatePartialModels.TITANIUM_MECHANICAL_PRESS_HEAD, 5.0);
-        MECHANICAL_PRESSES[IV] = TUNGSTENSTEEL_MECHANICAL_PRESS = mechanicalPress(IV, GreatePartialModels.TUNGSTENSTEEL_MECHANICAL_PRESS_HEAD, 6.0);
-        MECHANICAL_PRESSES[LuV] = PALLADIUM_MECHANICAL_PRESS = mechanicalPress(LuV, GreatePartialModels.PALLADIUM_MECHANICAL_PRESS_HEAD, 7.0);
-        MECHANICAL_PRESSES[ZPM] = NAQUADAH_MECHANICAL_PRESS = mechanicalPress(ZPM, GreatePartialModels.NAQUADAH_MECHANICAL_PRESS_HEAD, 8.0);
-        MECHANICAL_PRESSES[UV] = DARMSTADTIUM_MECHANICAL_PRESS = mechanicalPress(UV, GreatePartialModels.DARMSTADTIUM_MECHANICAL_PRESS_HEAD, 9.0);
-        MECHANICAL_PRESSES[UHV] = NEUTRONIUM_MECHANICAL_PRESS = mechanicalPress(UHV, GreatePartialModels.NEUTRONIUM_MECHANICAL_PRESS_HEAD, 10.0);
+        MECHANICAL_PRESSES[ULV] = ANDESITE_MECHANICAL_PRESS = mechanicalPress(ULV, 1.0);
+        MECHANICAL_PRESSES[LV] = STEEL_MECHANICAL_PRESS = mechanicalPress(LV, 2.0);
+        MECHANICAL_PRESSES[MV] = ALUMINIUM_MECHANICAL_PRESS = mechanicalPress(MV, 3.0);
+        MECHANICAL_PRESSES[HV] = STAINLESS_STEEL_MECHANICAL_PRESS = mechanicalPress(HV, 4.0);
+        MECHANICAL_PRESSES[EV] = TITANIUM_MECHANICAL_PRESS = mechanicalPress(EV, 5.0);
+        MECHANICAL_PRESSES[IV] = TUNGSTENSTEEL_MECHANICAL_PRESS = mechanicalPress(IV, 6.0);
+        MECHANICAL_PRESSES[LuV] = PALLADIUM_MECHANICAL_PRESS = mechanicalPress(LuV, 7.0);
+        MECHANICAL_PRESSES[ZPM] = NAQUADAH_MECHANICAL_PRESS = mechanicalPress(ZPM, 8.0);
+        MECHANICAL_PRESSES[UV] = DARMSTADTIUM_MECHANICAL_PRESS = mechanicalPress(UV, 9.0);
+        MECHANICAL_PRESSES[UHV] = NEUTRONIUM_MECHANICAL_PRESS = mechanicalPress(UHV, 10.0);
     }
 
-    private static BlockEntry<TieredMechanicalPressBlock> mechanicalPress(int tier, PartialModel headModel, double stressImpact) {
-        return mechanicalPress(tier, TM[tier], headModel, SHAFTS[tier], stressImpact);
+    private static BlockEntry<TieredMechanicalPressBlock> mechanicalPress(int tier, double stressImpact) {
+        return mechanicalPress(tier, TM[tier], MECHANICAL_PRESS_HEAD_MODELS[tier], SHAFTS[tier], stressImpact);
     }
 
     public static BlockEntry<TieredMechanicalPressBlock> mechanicalPress(int tier, Material material, PartialModel headModel, BlockEntry<TieredShaftBlock> tieredShaft, double stressImpact) {

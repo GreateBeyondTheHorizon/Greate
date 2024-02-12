@@ -105,74 +105,74 @@ public class Cogwheels {
         REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
 
         // Cogwheels
-        COGWHEELS[ULV] = ANDESITE_COGWHEEL = registerCogwheel(ULV, LARGE_ANDESITE_COGWHEEL_SHAFTLESS, ANDESITE_COGWHEEL_SHAFT, GreateItemTags.COGWHEELS_ANDESITE.itemTag);
-        COGWHEELS[LV] = STEEL_COGWHEEL = registerCogwheel(LV, LARGE_STEEL_COGWHEEL_SHAFTLESS, STEEL_COGWHEEL_SHAFT, GreateItemTags.COGWHEELS_STEEL.itemTag);
-        COGWHEELS[MV] = ALUMINIUM_COGWHEEL = registerCogwheel(MV, LARGE_ALUMINIUM_COGWHEEL_SHAFTLESS, ALUMINIUM_COGWHEEL_SHAFT, GreateItemTags.COGWHEELS_ALUMINIUM.itemTag);
-        COGWHEELS[HV] = STAINLESS_STEEL_COGWHEEL = registerCogwheel(HV, LARGE_STAINLESS_STEEL_COGWHEEL_SHAFTLESS, STAINLESS_STEEL_COGWHEEL_SHAFT, GreateItemTags.COGWHEELS_STAINLESS_STEEL.itemTag);
-        COGWHEELS[EV] = TITANIUM_COGWHEEL = registerCogwheel(EV, LARGE_TITANIUM_COGWHEEL_SHAFTLESS, TITANIUM_COGWHEEL_SHAFT, GreateItemTags.COGWHEELS_TITANIUM.itemTag);
-        COGWHEELS[IV] = TUNGSTENSTEEL_COGWHEEL = registerCogwheel(IV, LARGE_TUNGSTENSTEEL_COGWHEEL_SHAFTLESS, TUNGSTENSTEEL_COGWHEEL_SHAFT, GreateItemTags.COGWHEELS_TUNGSTENSTEEL.itemTag);
-        COGWHEELS[LuV] = PALLADIUM_COGWHEEL = registerCogwheel(LuV, LARGE_PALLADIUM_COGWHEEL_SHAFTLESS, PALLADIUM_COGWHEEL_SHAFT, GreateItemTags.COGWHEELS_PALLADIUM.itemTag);
-        COGWHEELS[ZPM] = NAQUADAH_COGWHEEL = registerCogwheel(ZPM, LARGE_NAQUADAH_COGWHEEL_SHAFTLESS, NAQUADAH_COGWHEEL_SHAFT, GreateItemTags.COGWHEELS_NAQUADAH.itemTag);
-        COGWHEELS[UV] = DARMSTADTIUM_COGWHEEL = registerCogwheel(UV, LARGE_DARMSTADTIUM_COGWHEEL_SHAFTLESS, DARMSTADTIUM_COGWHEEL_SHAFT, GreateItemTags.COGWHEELS_DARMSTADTIUM.itemTag);
-        COGWHEELS[UHV] = NEUTRONIUM_COGWHEEL = registerCogwheel(UHV, LARGE_NEUTRONIUM_COGWHEEL_SHAFTLESS, NEUTRONIUM_COGWHEEL_SHAFT, GreateItemTags.COGWHEELS_NEUTRONIUM.itemTag);
+        COGWHEELS[ULV] = ANDESITE_COGWHEEL = registerCogwheel(ULV, GreateItemTags.COGWHEELS_ANDESITE.itemTag);
+        COGWHEELS[LV] = STEEL_COGWHEEL = registerCogwheel(LV, GreateItemTags.COGWHEELS_STEEL.itemTag);
+        COGWHEELS[MV] = ALUMINIUM_COGWHEEL = registerCogwheel(MV, GreateItemTags.COGWHEELS_ALUMINIUM.itemTag);
+        COGWHEELS[HV] = STAINLESS_STEEL_COGWHEEL = registerCogwheel(HV, GreateItemTags.COGWHEELS_STAINLESS_STEEL.itemTag);
+        COGWHEELS[EV] = TITANIUM_COGWHEEL = registerCogwheel(EV, GreateItemTags.COGWHEELS_TITANIUM.itemTag);
+        COGWHEELS[IV] = TUNGSTENSTEEL_COGWHEEL = registerCogwheel(IV, GreateItemTags.COGWHEELS_TUNGSTENSTEEL.itemTag);
+        COGWHEELS[LuV] = PALLADIUM_COGWHEEL = registerCogwheel(LuV, GreateItemTags.COGWHEELS_PALLADIUM.itemTag);
+        COGWHEELS[ZPM] = NAQUADAH_COGWHEEL = registerCogwheel(ZPM, GreateItemTags.COGWHEELS_NAQUADAH.itemTag);
+        COGWHEELS[UV] = DARMSTADTIUM_COGWHEEL = registerCogwheel(UV, GreateItemTags.COGWHEELS_DARMSTADTIUM.itemTag);
+        COGWHEELS[UHV] = NEUTRONIUM_COGWHEEL = registerCogwheel(UHV, GreateItemTags.COGWHEELS_NEUTRONIUM.itemTag);
 
         // Large cogwheels
-        LARGE_COGWHEELS[ULV] = LARGE_ANDESITE_COGWHEEL = registerLargeCogwheel(ULV, LARGE_ANDESITE_COGWHEEL_SHAFTLESS, ANDESITE_COGWHEEL_SHAFT, GreateItemTags.LARGE_COGWHEELS_ANDESITE.itemTag);
-        LARGE_COGWHEELS[LV] = LARGE_STEEL_COGWHEEL = registerLargeCogwheel(LV, LARGE_STEEL_COGWHEEL_SHAFTLESS, STEEL_COGWHEEL_SHAFT, GreateItemTags.LARGE_COGWHEELS_STEEL.itemTag);
-        LARGE_COGWHEELS[MV] = LARGE_ALUMINIUM_COGWHEEL = registerLargeCogwheel(MV, LARGE_ALUMINIUM_COGWHEEL_SHAFTLESS, ALUMINIUM_COGWHEEL_SHAFT, GreateItemTags.LARGE_COGWHEELS_ALUMINIUM.itemTag);
-        LARGE_COGWHEELS[HV] = LARGE_STAINLESS_STEEL_COGWHEEL = registerLargeCogwheel(HV, LARGE_STAINLESS_STEEL_COGWHEEL_SHAFTLESS, STAINLESS_STEEL_COGWHEEL_SHAFT, GreateItemTags.LARGE_COGWHEELS_STAINLESS_STEEL.itemTag);
-        LARGE_COGWHEELS[EV] = LARGE_TITANIUM_COGWHEEL = registerLargeCogwheel(EV, LARGE_TITANIUM_COGWHEEL_SHAFTLESS, TITANIUM_COGWHEEL_SHAFT, GreateItemTags.LARGE_COGWHEELS_TITANIUM.itemTag);
-        LARGE_COGWHEELS[IV] = LARGE_TUNGSTENSTEEL_COGWHEEL = registerLargeCogwheel(IV, LARGE_TUNGSTENSTEEL_COGWHEEL_SHAFTLESS, TUNGSTENSTEEL_COGWHEEL_SHAFT, GreateItemTags.LARGE_COGWHEELS_TUNGSTENSTEEL.itemTag);
-        LARGE_COGWHEELS[LuV] = LARGE_PALLADIUM_COGWHEEL = registerLargeCogwheel(LuV, LARGE_PALLADIUM_COGWHEEL_SHAFTLESS, PALLADIUM_COGWHEEL_SHAFT, GreateItemTags.LARGE_COGWHEELS_PALLADIUM.itemTag);
-        LARGE_COGWHEELS[ZPM] = LARGE_NAQUADAH_COGWHEEL = registerLargeCogwheel(ZPM, LARGE_NAQUADAH_COGWHEEL_SHAFTLESS, NAQUADAH_COGWHEEL_SHAFT, GreateItemTags.LARGE_COGWHEELS_NAQUADAH.itemTag);
-        LARGE_COGWHEELS[UV] = LARGE_DARMSTADTIUM_COGWHEEL = registerLargeCogwheel(UV, LARGE_DARMSTADTIUM_COGWHEEL_SHAFTLESS, DARMSTADTIUM_COGWHEEL_SHAFT, GreateItemTags.LARGE_COGWHEELS_DARMSTADTIUM.itemTag);
-        LARGE_COGWHEELS[UHV] = LARGE_NEUTRONIUM_COGWHEEL = registerLargeCogwheel(UHV, LARGE_NEUTRONIUM_COGWHEEL_SHAFTLESS, NEUTRONIUM_COGWHEEL_SHAFT, GreateItemTags.LARGE_COGWHEELS_NEUTRONIUM.itemTag);
+        LARGE_COGWHEELS[ULV] = LARGE_ANDESITE_COGWHEEL = registerLargeCogwheel(ULV, GreateItemTags.LARGE_COGWHEELS_ANDESITE.itemTag);
+        LARGE_COGWHEELS[LV] = LARGE_STEEL_COGWHEEL = registerLargeCogwheel(LV, GreateItemTags.LARGE_COGWHEELS_STEEL.itemTag);
+        LARGE_COGWHEELS[MV] = LARGE_ALUMINIUM_COGWHEEL = registerLargeCogwheel(MV, GreateItemTags.LARGE_COGWHEELS_ALUMINIUM.itemTag);
+        LARGE_COGWHEELS[HV] = LARGE_STAINLESS_STEEL_COGWHEEL = registerLargeCogwheel(HV, GreateItemTags.LARGE_COGWHEELS_STAINLESS_STEEL.itemTag);
+        LARGE_COGWHEELS[EV] = LARGE_TITANIUM_COGWHEEL = registerLargeCogwheel(EV, GreateItemTags.LARGE_COGWHEELS_TITANIUM.itemTag);
+        LARGE_COGWHEELS[IV] = LARGE_TUNGSTENSTEEL_COGWHEEL = registerLargeCogwheel(IV, GreateItemTags.LARGE_COGWHEELS_TUNGSTENSTEEL.itemTag);
+        LARGE_COGWHEELS[LuV] = LARGE_PALLADIUM_COGWHEEL = registerLargeCogwheel(LuV, GreateItemTags.LARGE_COGWHEELS_PALLADIUM.itemTag);
+        LARGE_COGWHEELS[ZPM] = LARGE_NAQUADAH_COGWHEEL = registerLargeCogwheel(ZPM, GreateItemTags.LARGE_COGWHEELS_NAQUADAH.itemTag);
+        LARGE_COGWHEELS[UV] = LARGE_DARMSTADTIUM_COGWHEEL = registerLargeCogwheel(UV, GreateItemTags.LARGE_COGWHEELS_DARMSTADTIUM.itemTag);
+        LARGE_COGWHEELS[UHV] = LARGE_NEUTRONIUM_COGWHEEL = registerLargeCogwheel(UHV, GreateItemTags.LARGE_COGWHEELS_NEUTRONIUM.itemTag);
 
         // Encased cogwheels
-        ANDESITE_ENCASED_ANDESITE_COGWHEEL = registerAndesiteEncasedCogwheel(ULV, ANDESITE_SHAFT_HALF, ANDESITE_COGWHEEL_SHAFTLESS);
-        ANDESITE_ENCASED_LARGE_ANDESITE_COGWHEEL = registerAndesiteEncasedLargeCogwheel(ULV, ANDESITE_SHAFT_HALF, LARGE_ANDESITE_COGWHEEL_SHAFTLESS);
-        BRASS_ENCASED_ANDESITE_COGWHEEL = registerBrassEncasedCogwheel(ULV, ANDESITE_SHAFT_HALF, ANDESITE_COGWHEEL_SHAFTLESS);
-        BRASS_ENCASED_LARGE_ANDESITE_COGWHEEL = registerBrassEncasedLargeCogwheel(ULV, ANDESITE_SHAFT_HALF, LARGE_ANDESITE_COGWHEEL_SHAFTLESS);
-        ANDESITE_ENCASED_STEEL_COGWHEEL = registerAndesiteEncasedCogwheel(LV, STEEL_SHAFT_HALF, STEEL_COGWHEEL_SHAFTLESS);
-        ANDESITE_ENCASED_LARGE_STEEL_COGWHEEL = registerAndesiteEncasedLargeCogwheel(LV, STEEL_SHAFT_HALF, LARGE_STEEL_COGWHEEL_SHAFTLESS);
-        BRASS_ENCASED_STEEL_COGWHEEL = registerBrassEncasedCogwheel(LV, STEEL_SHAFT_HALF, STEEL_COGWHEEL_SHAFTLESS);
-        BRASS_ENCASED_LARGE_STEEL_COGWHEEL = registerBrassEncasedLargeCogwheel(LV, STEEL_SHAFT_HALF, LARGE_STEEL_COGWHEEL_SHAFTLESS);
-        ANDESITE_ENCASED_ALUMINIUM_COGWHEEL = registerAndesiteEncasedCogwheel(MV, ALUMINIUM_SHAFT_HALF, ALUMINIUM_COGWHEEL_SHAFTLESS);
-        ANDESITE_ENCASED_LARGE_ALUMINIUM_COGWHEEL = registerAndesiteEncasedLargeCogwheel(MV, ALUMINIUM_SHAFT_HALF, LARGE_ALUMINIUM_COGWHEEL_SHAFTLESS);
-        BRASS_ENCASED_ALUMINIUM_COGWHEEL = registerBrassEncasedCogwheel(MV, ALUMINIUM_SHAFT_HALF, ALUMINIUM_COGWHEEL_SHAFTLESS);
-        BRASS_ENCASED_LARGE_ALUMINIUM_COGWHEEL = registerBrassEncasedLargeCogwheel(MV, ALUMINIUM_SHAFT_HALF, LARGE_ALUMINIUM_COGWHEEL_SHAFTLESS);
-        ANDESITE_ENCASED_STAINLESS_STEEL_COGWHEEL = registerAndesiteEncasedCogwheel(HV, STAINLESS_STEEL_SHAFT_HALF, STAINLESS_STEEL_COGWHEEL_SHAFTLESS);
-        ANDESITE_ENCASED_LARGE_STAINLESS_STEEL_COGWHEEL = registerAndesiteEncasedLargeCogwheel(HV, STAINLESS_STEEL_SHAFT_HALF, LARGE_STAINLESS_STEEL_COGWHEEL_SHAFTLESS);
-        BRASS_ENCASED_STAINLESS_STEEL_COGWHEEL = registerBrassEncasedCogwheel(HV, STAINLESS_STEEL_SHAFT_HALF, STAINLESS_STEEL_COGWHEEL_SHAFTLESS);
-        BRASS_ENCASED_LARGE_STAINLESS_STEEL_COGWHEEL = registerBrassEncasedLargeCogwheel(HV, STAINLESS_STEEL_SHAFT_HALF, LARGE_STAINLESS_STEEL_COGWHEEL_SHAFTLESS);
-        ANDESITE_ENCASED_TITANIUM_COGWHEEL = registerAndesiteEncasedCogwheel(EV, TITANIUM_SHAFT_HALF, TITANIUM_COGWHEEL_SHAFTLESS);
-        ANDESITE_ENCASED_LARGE_TITANIUM_COGWHEEL = registerAndesiteEncasedLargeCogwheel(EV, TITANIUM_SHAFT_HALF, LARGE_TITANIUM_COGWHEEL_SHAFTLESS);
-        BRASS_ENCASED_TITANIUM_COGWHEEL = registerBrassEncasedCogwheel(EV, TITANIUM_SHAFT_HALF, TITANIUM_COGWHEEL_SHAFTLESS);
-        BRASS_ENCASED_LARGE_TITANIUM_COGWHEEL = registerBrassEncasedLargeCogwheel(EV, TITANIUM_SHAFT_HALF, LARGE_TITANIUM_COGWHEEL_SHAFTLESS);
-        ANDESITE_ENCASED_TUNGSTENSTEEL_COGWHEEL = registerAndesiteEncasedCogwheel(IV, TUNGSTENSTEEL_SHAFT_HALF, TUNGSTENSTEEL_COGWHEEL_SHAFTLESS);
-        ANDESITE_ENCASED_LARGE_TUNGSTENSTEEL_COGWHEEL = registerAndesiteEncasedLargeCogwheel(IV, TUNGSTENSTEEL_SHAFT_HALF, LARGE_TUNGSTENSTEEL_COGWHEEL_SHAFTLESS);
-        BRASS_ENCASED_TUNGSTENSTEEL_COGWHEEL = registerBrassEncasedCogwheel(IV, TUNGSTENSTEEL_SHAFT_HALF, TUNGSTENSTEEL_COGWHEEL_SHAFTLESS);
-        BRASS_ENCASED_LARGE_TUNGSTENSTEEL_COGWHEEL = registerBrassEncasedLargeCogwheel(IV, TUNGSTENSTEEL_SHAFT_HALF, LARGE_TUNGSTENSTEEL_COGWHEEL_SHAFTLESS);
-        ANDESITE_ENCASED_PALLADIUM_COGWHEEL = registerAndesiteEncasedCogwheel(LuV, PALLADIUM_SHAFT_HALF, PALLADIUM_COGWHEEL_SHAFTLESS);
-        ANDESITE_ENCASED_LARGE_PALLADIUM_COGWHEEL = registerAndesiteEncasedLargeCogwheel(LuV, PALLADIUM_SHAFT_HALF, LARGE_PALLADIUM_COGWHEEL_SHAFTLESS);
-        BRASS_ENCASED_PALLADIUM_COGWHEEL = registerBrassEncasedCogwheel(LuV, PALLADIUM_SHAFT_HALF, PALLADIUM_COGWHEEL_SHAFTLESS);
-        BRASS_ENCASED_LARGE_PALLADIUM_COGWHEEL = registerBrassEncasedLargeCogwheel(LuV, PALLADIUM_SHAFT_HALF, LARGE_PALLADIUM_COGWHEEL_SHAFTLESS);
-        ANDESITE_ENCASED_NAQUADAH_COGWHEEL = registerAndesiteEncasedCogwheel(ZPM, NAQUADAH_SHAFT_HALF, NAQUADAH_COGWHEEL_SHAFTLESS);
-        ANDESITE_ENCASED_LARGE_NAQUADAH_COGWHEEL = registerAndesiteEncasedLargeCogwheel(ZPM, NAQUADAH_SHAFT_HALF, LARGE_NAQUADAH_COGWHEEL_SHAFTLESS);
-        BRASS_ENCASED_NAQUADAH_COGWHEEL = registerBrassEncasedCogwheel(ZPM, NAQUADAH_SHAFT_HALF, NAQUADAH_COGWHEEL_SHAFTLESS);
-        BRASS_ENCASED_LARGE_NAQUADAH_COGWHEEL = registerBrassEncasedLargeCogwheel(ZPM, NAQUADAH_SHAFT_HALF, LARGE_NAQUADAH_COGWHEEL_SHAFTLESS);
-        ANDESITE_ENCASED_DARMSTADTIUM_COGWHEEL = registerAndesiteEncasedCogwheel(UV, DARMSTADTIUM_SHAFT_HALF, DARMSTADTIUM_COGWHEEL_SHAFTLESS);
-        ANDESITE_ENCASED_LARGE_DARMSTADTIUM_COGWHEEL = registerAndesiteEncasedLargeCogwheel(UV, DARMSTADTIUM_SHAFT_HALF, LARGE_DARMSTADTIUM_COGWHEEL_SHAFTLESS);
-        BRASS_ENCASED_DARMSTADTIUM_COGWHEEL = registerBrassEncasedCogwheel(UV, DARMSTADTIUM_SHAFT_HALF, DARMSTADTIUM_COGWHEEL_SHAFTLESS);
-        BRASS_ENCASED_LARGE_DARMSTADTIUM_COGWHEEL = registerBrassEncasedLargeCogwheel(UV, DARMSTADTIUM_SHAFT_HALF, LARGE_DARMSTADTIUM_COGWHEEL_SHAFTLESS);
-        ANDESITE_ENCASED_NEUTRONIUM_COGWHEEL = registerAndesiteEncasedCogwheel(UHV, NEUTRONIUM_SHAFT_HALF, NEUTRONIUM_COGWHEEL_SHAFTLESS);
-        ANDESITE_ENCASED_LARGE_NEUTRONIUM_COGWHEEL = registerAndesiteEncasedLargeCogwheel(UHV, NEUTRONIUM_SHAFT_HALF, LARGE_NEUTRONIUM_COGWHEEL_SHAFTLESS);
-        BRASS_ENCASED_NEUTRONIUM_COGWHEEL = registerBrassEncasedCogwheel(UHV, NEUTRONIUM_SHAFT_HALF, NEUTRONIUM_COGWHEEL_SHAFTLESS);
-        BRASS_ENCASED_LARGE_NEUTRONIUM_COGWHEEL = registerBrassEncasedLargeCogwheel(UHV, NEUTRONIUM_SHAFT_HALF, LARGE_NEUTRONIUM_COGWHEEL_SHAFTLESS);
+        ANDESITE_ENCASED_ANDESITE_COGWHEEL = registerAndesiteEncasedCogwheel(ULV);
+        ANDESITE_ENCASED_LARGE_ANDESITE_COGWHEEL = registerAndesiteEncasedLargeCogwheel(ULV);
+        BRASS_ENCASED_ANDESITE_COGWHEEL = registerBrassEncasedCogwheel(ULV);
+        BRASS_ENCASED_LARGE_ANDESITE_COGWHEEL = registerBrassEncasedLargeCogwheel(ULV);
+        ANDESITE_ENCASED_STEEL_COGWHEEL = registerAndesiteEncasedCogwheel(LV);
+        ANDESITE_ENCASED_LARGE_STEEL_COGWHEEL = registerAndesiteEncasedLargeCogwheel(LV);
+        BRASS_ENCASED_STEEL_COGWHEEL = registerBrassEncasedCogwheel(LV);
+        BRASS_ENCASED_LARGE_STEEL_COGWHEEL = registerBrassEncasedLargeCogwheel(LV);
+        ANDESITE_ENCASED_ALUMINIUM_COGWHEEL = registerAndesiteEncasedCogwheel(MV);
+        ANDESITE_ENCASED_LARGE_ALUMINIUM_COGWHEEL = registerAndesiteEncasedLargeCogwheel(MV);
+        BRASS_ENCASED_ALUMINIUM_COGWHEEL = registerBrassEncasedCogwheel(MV);
+        BRASS_ENCASED_LARGE_ALUMINIUM_COGWHEEL = registerBrassEncasedLargeCogwheel(MV);
+        ANDESITE_ENCASED_STAINLESS_STEEL_COGWHEEL = registerAndesiteEncasedCogwheel(HV);
+        ANDESITE_ENCASED_LARGE_STAINLESS_STEEL_COGWHEEL = registerAndesiteEncasedLargeCogwheel(HV);
+        BRASS_ENCASED_STAINLESS_STEEL_COGWHEEL = registerBrassEncasedCogwheel(HV);
+        BRASS_ENCASED_LARGE_STAINLESS_STEEL_COGWHEEL = registerBrassEncasedLargeCogwheel(HV);
+        ANDESITE_ENCASED_TITANIUM_COGWHEEL = registerAndesiteEncasedCogwheel(EV);
+        ANDESITE_ENCASED_LARGE_TITANIUM_COGWHEEL = registerAndesiteEncasedLargeCogwheel(EV);
+        BRASS_ENCASED_TITANIUM_COGWHEEL = registerBrassEncasedCogwheel(EV);
+        BRASS_ENCASED_LARGE_TITANIUM_COGWHEEL = registerBrassEncasedLargeCogwheel(EV);
+        ANDESITE_ENCASED_TUNGSTENSTEEL_COGWHEEL = registerAndesiteEncasedCogwheel(IV);
+        ANDESITE_ENCASED_LARGE_TUNGSTENSTEEL_COGWHEEL = registerAndesiteEncasedLargeCogwheel(IV);
+        BRASS_ENCASED_TUNGSTENSTEEL_COGWHEEL = registerBrassEncasedCogwheel(IV);
+        BRASS_ENCASED_LARGE_TUNGSTENSTEEL_COGWHEEL = registerBrassEncasedLargeCogwheel(IV);
+        ANDESITE_ENCASED_PALLADIUM_COGWHEEL = registerAndesiteEncasedCogwheel(LuV);
+        ANDESITE_ENCASED_LARGE_PALLADIUM_COGWHEEL = registerAndesiteEncasedLargeCogwheel(LuV);
+        BRASS_ENCASED_PALLADIUM_COGWHEEL = registerBrassEncasedCogwheel(LuV);
+        BRASS_ENCASED_LARGE_PALLADIUM_COGWHEEL = registerBrassEncasedLargeCogwheel(LuV);
+        ANDESITE_ENCASED_NAQUADAH_COGWHEEL = registerAndesiteEncasedCogwheel(ZPM);
+        ANDESITE_ENCASED_LARGE_NAQUADAH_COGWHEEL = registerAndesiteEncasedLargeCogwheel(ZPM);
+        BRASS_ENCASED_NAQUADAH_COGWHEEL = registerBrassEncasedCogwheel(ZPM);
+        BRASS_ENCASED_LARGE_NAQUADAH_COGWHEEL = registerBrassEncasedLargeCogwheel(ZPM);
+        ANDESITE_ENCASED_DARMSTADTIUM_COGWHEEL = registerAndesiteEncasedCogwheel(UV);
+        ANDESITE_ENCASED_LARGE_DARMSTADTIUM_COGWHEEL = registerAndesiteEncasedLargeCogwheel(UV);
+        BRASS_ENCASED_DARMSTADTIUM_COGWHEEL = registerBrassEncasedCogwheel(UV);
+        BRASS_ENCASED_LARGE_DARMSTADTIUM_COGWHEEL = registerBrassEncasedLargeCogwheel(UV);
+        ANDESITE_ENCASED_NEUTRONIUM_COGWHEEL = registerAndesiteEncasedCogwheel(UHV);
+        ANDESITE_ENCASED_LARGE_NEUTRONIUM_COGWHEEL = registerAndesiteEncasedLargeCogwheel(UHV);
+        BRASS_ENCASED_NEUTRONIUM_COGWHEEL = registerBrassEncasedCogwheel(UHV);
+        BRASS_ENCASED_LARGE_NEUTRONIUM_COGWHEEL = registerBrassEncasedLargeCogwheel(UHV);
     }
 
-    public static BlockEntry<TieredCogwheelBlock> registerCogwheel(int tier, PartialModel largeCogwheelShaftless, PartialModel cogwheelShaft, TagKey<Item> smallCogwheelTag) {
-        return registerCogwheel(tier, TM[tier], largeCogwheelShaftless, cogwheelShaft, smallCogwheelTag);
+    public static BlockEntry<TieredCogwheelBlock> registerCogwheel(int tier, TagKey<Item> smallCogwheelTag) {
+        return registerCogwheel(tier, TM[tier], COGWHEEL_SHAFTLESS_MODELS[tier], COGWHEEL_SHAFT_MODELS[tier], smallCogwheelTag);
     }
     
     public static BlockEntry<TieredCogwheelBlock> registerCogwheel(int tier, Material material, PartialModel largeCogwheelShaftless, PartialModel cogwheelShaft, TagKey<Item> smallCogwheelTag) {
@@ -193,8 +193,8 @@ public class Cogwheels {
                 .register();
     }
 
-    public static BlockEntry<TieredCogwheelBlock> registerLargeCogwheel(int tier, PartialModel largeCogwheelShaftless, PartialModel cogwheelShaft, TagKey<Item> largeCogwheelTag) {
-        return registerLargeCogwheel(tier, TM[tier], largeCogwheelShaftless, cogwheelShaft, largeCogwheelTag);
+    public static BlockEntry<TieredCogwheelBlock> registerLargeCogwheel(int tier, TagKey<Item> largeCogwheelTag) {
+        return registerLargeCogwheel(tier, TM[tier], LARGE_COGWHEEL_SHAFTLESS_MODELS[tier], COGWHEEL_SHAFT_MODELS[tier], largeCogwheelTag);
     }
     
     public static BlockEntry<TieredCogwheelBlock> registerLargeCogwheel(int tier, Material material, PartialModel largeCogwheelShaftless, PartialModel cogwheelShaft, TagKey<Item> largeCogwheelTag) {
@@ -215,8 +215,8 @@ public class Cogwheels {
                 .register();
     }
 
-    private static BlockEntry<TieredEncasedCogwheelBlock> registerAndesiteEncasedCogwheel(int tier, PartialModel halfShaftModel, PartialModel cogwheelShaftlessModel) {
-        return registerAndesiteEncasedCogwheel(tier, TM[tier], COGWHEELS[tier], halfShaftModel, cogwheelShaftlessModel);
+    private static BlockEntry<TieredEncasedCogwheelBlock> registerAndesiteEncasedCogwheel(int tier) {
+        return registerAndesiteEncasedCogwheel(tier, TM[tier], COGWHEELS[tier], SHAFT_HALF_MODELS[tier], COGWHEEL_SHAFTLESS_MODELS[tier]);
     }
     
     public static BlockEntry<TieredEncasedCogwheelBlock> registerAndesiteEncasedCogwheel(int tier, Material material, BlockEntry<TieredCogwheelBlock> cogwheel, PartialModel halfShaftModel, PartialModel cogwheelShaftlessModel) {
@@ -233,8 +233,8 @@ public class Cogwheels {
                 .register();
     }
 
-    private static BlockEntry<TieredEncasedCogwheelBlock> registerAndesiteEncasedLargeCogwheel(int tier, PartialModel halfShaftModel, PartialModel cogwheelShaftlessModel) {
-        return registerAndesiteEncasedLargeCogwheel(tier, TM[tier], COGWHEELS[tier], LARGE_COGWHEELS[tier], halfShaftModel, cogwheelShaftlessModel);
+    private static BlockEntry<TieredEncasedCogwheelBlock> registerAndesiteEncasedLargeCogwheel(int tier) {
+        return registerAndesiteEncasedLargeCogwheel(tier, TM[tier], COGWHEELS[tier], LARGE_COGWHEELS[tier], SHAFT_HALF_MODELS[tier], COGWHEEL_SHAFTLESS_MODELS[tier]);
     }
 
     public static BlockEntry<TieredEncasedCogwheelBlock> registerAndesiteEncasedLargeCogwheel(int tier, Material material, BlockEntry<TieredCogwheelBlock> cogwheel, BlockEntry<TieredCogwheelBlock> largeCogwheel, PartialModel halfShaftModel, PartialModel cogwheelShaftlessModel) {
@@ -249,8 +249,8 @@ public class Cogwheels {
                 .register();
     }
 
-    private static BlockEntry<TieredEncasedCogwheelBlock> registerBrassEncasedCogwheel(int tier, PartialModel halfShaftModel, PartialModel cogwheelShaftlessModel) {
-        return registerBrassEncasedCogwheel(tier, TM[tier], COGWHEELS[tier], halfShaftModel, cogwheelShaftlessModel);
+    private static BlockEntry<TieredEncasedCogwheelBlock> registerBrassEncasedCogwheel(int tier) {
+        return registerBrassEncasedCogwheel(tier, TM[tier], COGWHEELS[tier], SHAFT_HALF_MODELS[tier], COGWHEEL_SHAFTLESS_MODELS[tier]);
     }
 
     public static BlockEntry<TieredEncasedCogwheelBlock> registerBrassEncasedCogwheel(int tier, Material material, BlockEntry<TieredCogwheelBlock> cogwheel, PartialModel halfShaftModel, PartialModel cogwheelShaftlessModel) {
@@ -267,8 +267,8 @@ public class Cogwheels {
                 .register();
     }
 
-    private static BlockEntry<TieredEncasedCogwheelBlock> registerBrassEncasedLargeCogwheel(int tier, PartialModel halfShaftModel, PartialModel cogwheelShaftlessModel) {
-        return registerBrassEncasedLargeCogwheel(tier, TM[tier], COGWHEELS[tier], LARGE_COGWHEELS[tier], halfShaftModel, cogwheelShaftlessModel);
+    private static BlockEntry<TieredEncasedCogwheelBlock> registerBrassEncasedLargeCogwheel(int tier) {
+        return registerBrassEncasedLargeCogwheel(tier, TM[tier], COGWHEELS[tier], LARGE_COGWHEELS[tier], SHAFT_HALF_MODELS[tier], COGWHEEL_SHAFTLESS_MODELS[tier]);
     }
 
     public static BlockEntry<TieredEncasedCogwheelBlock> registerBrassEncasedLargeCogwheel(int tier, Material material, BlockEntry<TieredCogwheelBlock> cogwheel, BlockEntry<TieredCogwheelBlock> largeCogwheel, PartialModel halfShaftModel, PartialModel cogwheelShaftlessModel) {

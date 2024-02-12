@@ -16,6 +16,7 @@ import net.minecraft.world.level.material.MapColor;
 import static com.gregtechceu.gtceu.api.GTValues.*;
 import static electrolyte.greate.Greate.REGISTRATE;
 import static electrolyte.greate.GreateValues.TM;
+import static electrolyte.greate.registry.GreatePartialModels.MILLSTONE_INNER_MODELS;
 
 public class Millstones {
 
@@ -35,20 +36,20 @@ public class Millstones {
     public static void register() {
         REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
 
-        MILLSTONES[ULV] = ANDESITE_MILLSTONE = millstone(ULV, GreatePartialModels.ANDESITE_MILLSTONE_INNER, 0.5);
-        MILLSTONES[LV] = STEEL_MILLSTONE = millstone(LV, GreatePartialModels.STEEL_MILLSTONE_INNER, 1.0);
-        MILLSTONES[MV] = ALUMINIUM_MILLSTONE = millstone(MV, GreatePartialModels.ALUMINIUM_MILLSTONE_INNER, 1.5);
-        MILLSTONES[HV] = STAINLESS_STEEL_MILLSTONE = millstone(HV, GreatePartialModels.STAINLESS_STEEL_MILLSTONE_INNER, 2.0);
-        MILLSTONES[EV] = TITANIUM_MILLSTONE = millstone(EV, GreatePartialModels.TITANIUM_MILLSTONE_INNER, 2.5);
-        MILLSTONES[IV] = TUNGSTENSTEEL_MILLSTONE = millstone(IV, GreatePartialModels.TUNGSTENSTEEL_MILLSTONE_INNER, 3.0);
-        MILLSTONES[LuV] = PALLADIUM_MILLSTONE = millstone(LuV, GreatePartialModels.PALLADIUM_MILLSTONE_INNER, 3.5);
-        MILLSTONES[ZPM] = NAQUADAH_MILLSTONE = millstone(ZPM, GreatePartialModels.NAQUADAH_MILLSTONE_INNER, 4.0);
-        MILLSTONES[UV] = DARMSTADTIUM_MILLSTONE = millstone(UV, GreatePartialModels.DARMSTADTIUM_MILLSTONE_INNER, 4.5);
-        MILLSTONES[UHV] = NEUTRONIUM_MILLSTONE = millstone(UHV, GreatePartialModels.NEUTRONIUM_MILLSTONE_INNER, 5.0);
+        MILLSTONES[ULV] = ANDESITE_MILLSTONE = millstone(ULV, 0.5);
+        MILLSTONES[LV] = STEEL_MILLSTONE = millstone(LV, 1.0);
+        MILLSTONES[MV] = ALUMINIUM_MILLSTONE = millstone(MV, 1.5);
+        MILLSTONES[HV] = STAINLESS_STEEL_MILLSTONE = millstone(HV, 2.0);
+        MILLSTONES[EV] = TITANIUM_MILLSTONE = millstone(EV, 2.5);
+        MILLSTONES[IV] = TUNGSTENSTEEL_MILLSTONE = millstone(IV, 3.0);
+        MILLSTONES[LuV] = PALLADIUM_MILLSTONE = millstone(LuV, 3.5);
+        MILLSTONES[ZPM] = NAQUADAH_MILLSTONE = millstone(ZPM, 4.0);
+        MILLSTONES[UV] = DARMSTADTIUM_MILLSTONE = millstone(UV, 4.5);
+        MILLSTONES[UHV] = NEUTRONIUM_MILLSTONE = millstone(UHV, 5.0);
     }
 
-    private static BlockEntry<TieredMillstoneBlock> millstone(int tier, PartialModel millstoneInnerModel, double millstoneImpact) {
-        return millstone(tier, TM[tier], millstoneInnerModel, millstoneImpact);
+    private static BlockEntry<TieredMillstoneBlock> millstone(int tier, double millstoneImpact) {
+        return millstone(tier, TM[tier], MILLSTONE_INNER_MODELS[tier], millstoneImpact);
     }
 
     public static BlockEntry<TieredMillstoneBlock> millstone(int tier, Material material, PartialModel millstoneInnerModel, double millstoneImpact) {
