@@ -1,0 +1,10 @@
+{
+  "parent": "create:block/encased_shaft/item",
+  "textures": {
+    "0": "create:block/brass_casing",
+    "1": "create:block/brass_gearbox",
+    "1_0": "greate:block/steel/axis",
+    "1_1": "greate:block/steel/axis_top",
+    "particle": "create:block/brass_casing"
+  }
+}

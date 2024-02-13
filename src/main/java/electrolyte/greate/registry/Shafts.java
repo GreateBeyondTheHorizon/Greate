@@ -11,9 +11,10 @@ import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
+import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.util.entry.BlockEntry;
+import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import electrolyte.greate.Greate;
-
 import electrolyte.greate.content.kinetics.TieredBlockMaterials;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedShaftBlock;
@@ -192,10 +193,15 @@ public class Shafts {
     }
 
     public static BlockEntry<TieredEncasedShaftBlock> encasedShaft(int tier, Material material, BlockEntry<TieredShaftBlock> shaft, BlockEntry<CasingBlock> casing, CTSpriteShiftEntry casingSpriteShiftEntry) {
+        boolean andesiteCasing = casing == AllBlocks.ANDESITE_CASING;
+        String casingName = andesiteCasing ? "andesite" : "brass";
+        NonNullUnaryOperator<BlockBuilder<TieredEncasedShaftBlock, CreateRegistrate>> encasingTransformer = andesiteCasing ?
+                GreateBuilderTransformers.tieredAndesiteEncasedShaft(shaft, () -> casingSpriteShiftEntry) :
+                GreateBuilderTransformers.tieredBrassEncasedShaft(shaft, () -> casingSpriteShiftEntry);
         return REGISTRATE
-                .block("andesite_encased_" + material.getName() + "_shaft", p -> new TieredEncasedShaftBlock(p, casing::get, shaft::get))
+                .block( casingName + "_encased_" + material.getName() + "_shaft", p -> new TieredEncasedShaftBlock(p, casing::get, shaft::get))
                 .properties(p -> p.mapColor(MapColor.PODZOL))
-                .transform(GreateBuilderTransformers.tieredAndesiteEncasedShaft(shaft, () -> casingSpriteShiftEntry))
+                .transform(encasingTransformer)
                 .transform(EncasingRegistry.addVariantTo(shaft))
                 .transform(TagGen.axeOrPickaxe())
                 .transform(TieredBlockMaterials.setMaterialForBlock(material))
