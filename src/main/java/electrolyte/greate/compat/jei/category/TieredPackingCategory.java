@@ -3,7 +3,6 @@ package electrolyte.greate.compat.jei.category;
 import com.simibubi.create.compat.jei.category.animations.AnimatedBlazeBurner;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
-
 import electrolyte.greate.compat.jei.category.animations.TieredAnimatedMechanicalPress;
 import electrolyte.greate.content.processing.basin.TieredBasinRecipe;
 import electrolyte.greate.registry.MechanicalPresses;
@@ -68,8 +67,10 @@ public class TieredPackingCategory extends TieredBasinCategory {
 
     @Override
     public void draw(TieredBasinRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double x, double y) {
-        super.draw(recipe, recipeSlotsView, graphics, x, y);
-        if(packingType != PackingType.COMPACTING) {
+        boolean type = packingType == PackingType.AUTO_SQUARE;
+        double yOffset = type ? 90 : 108;
+        super.draw(recipe, recipeSlotsView, graphics, x, yOffset);
+        if(this.packingType != PackingType.COMPACTING) {
             AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 136, 32);
             AllGuiTextures.JEI_SHADOW.render(graphics, 81, 68);
         }

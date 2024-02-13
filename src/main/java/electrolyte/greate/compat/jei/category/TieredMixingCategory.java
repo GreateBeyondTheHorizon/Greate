@@ -2,7 +2,6 @@ package electrolyte.greate.compat.jei.category;
 
 import com.simibubi.create.compat.jei.category.animations.AnimatedBlazeBurner;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
-
 import electrolyte.greate.compat.jei.category.animations.TieredAnimatedMixer;
 import electrolyte.greate.content.processing.basin.TieredBasinRecipe;
 import electrolyte.greate.registry.MechanicalMixers;
@@ -40,7 +39,9 @@ public class TieredMixingCategory extends TieredBasinCategory {
 
     @Override
     public void draw(TieredBasinRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double x, double y) {
-        super.draw(recipe, recipeSlotsView, graphics, 1, 57);
+        boolean mixingType = type == MixingType.AUTO_SHAPELESS;
+        double yOffset = mixingType ? 90 : 107;
+        super.draw(recipe, recipeSlotsView, graphics, 1, yOffset);
         HeatCondition requiredHeat = recipe.getRequiredHeat();
         if(requiredHeat != HeatCondition.NONE) {
             heater.withHeat(requiredHeat.visualizeAsBlazeBurner()).draw(graphics, getBackground().getWidth() / 2 + 3, 55);
