@@ -26,7 +26,6 @@ import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.infrastructure.config.AllConfigs;
 import com.simibubi.create.infrastructure.config.CRecipes;
 import electrolyte.greate.Greate;
-
 import electrolyte.greate.compat.jei.category.*;
 import electrolyte.greate.compat.jei.category.GreateRecipeCategory.Info;
 import electrolyte.greate.compat.jei.category.TieredBlockCuttingCategory.TieredCondensedBlockCuttingRecipe;
@@ -147,7 +146,7 @@ public class GreateJEI implements IModPlugin {
                                 .collect(Collectors.toList()))
                         .catalyst(AllBlocks.BASIN::get)
                         .doubleIconItem(MechanicalMixers.NEUTRONIUM_MECHANICAL_MIXER, Items.CRAFTING_TABLE)
-                        .emptyBackground(177, 85)
+                        .emptyBackground(177, 100)
                         .build("automatic_shapeless", TieredMixingCategory::autoShapeless),
 
                 brewing = builder(TieredBasinRecipe.class)
@@ -189,7 +188,7 @@ public class GreateJEI implements IModPlugin {
                                 .collect(Collectors.toList()))
                         .catalyst(AllBlocks.BASIN::get)
                         .doubleIconItem(MechanicalPresses.NEUTRONIUM_MECHANICAL_PRESS, Blocks.CRAFTING_TABLE)
-                        .emptyBackground(177, 85)
+                        .emptyBackground(177, 100)
                         .build("automatic_packing", TieredPackingCategory::autoSquare),
 
                 sawing = builder(TieredCuttingRecipe.class)

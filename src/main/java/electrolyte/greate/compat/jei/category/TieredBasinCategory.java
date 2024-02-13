@@ -108,7 +108,9 @@ public class TieredBasinCategory extends GreateRecipeCategory<TieredBasinRecipe>
 
     @Override
     public void draw(TieredBasinRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double x, double y) {
-        super.draw(recipe, recipeSlotsView, graphics, 1, 108);
+        boolean recipeType = recipe.getId().toString().contains("shapeless") || recipe.getId().toString().contains("shaped");
+        double yOffset = recipeType ? 90 : 108;
+        super.draw(recipe, recipeSlotsView, graphics, 1, yOffset);
         HeatCondition requiredHeat = recipe.getRequiredHeat();
         boolean noHeat = requiredHeat == HeatCondition.NONE;
         int vRows = (1 + recipe.getFluidResults().size() + recipe.getRollableResults().size()) / 2;
