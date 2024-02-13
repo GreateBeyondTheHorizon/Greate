@@ -25,7 +25,6 @@ public class TieredMechanicalMixerBlock extends MechanicalMixerBlock implements 
         super(properties);
         this.mixerHeadModel = mixerHeadModel;
         this.cogwheelModel = cogwheelModel;
-        MechanicalMixers.MECHANICAL_MIXERS.add(this);
     }
 
     @Override

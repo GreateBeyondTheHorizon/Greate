@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/millstone/inner",
+  "textures": {
+    "1_0": "greate:block/naquadah_alloy/axis",
+    "1_1": "greate:block/naquadah_alloy/axis_top",
+    "5": "greate:block/naquadah_alloy/millstone",
+    "particle": "greate:block/naquadah_alloy/axis"
+  }
+}

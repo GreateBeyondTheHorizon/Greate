@@ -1,5 +1,6 @@
 package electrolyte.greate;
 
+import com.gregtechceu.gtceu.utils.FormattingUtil;
 import com.mojang.logging.LogUtils;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.providers.ProviderType;
@@ -9,7 +10,6 @@ import electrolyte.greate.foundation.advancement.GreateAdvancements;
 import electrolyte.greate.foundation.data.GreateTagGen;
 import electrolyte.greate.foundation.data.GreateTagGen.GreateBlockTagGen;
 import electrolyte.greate.foundation.data.recipe.GreateMechanicalCraftingRecipeGen;
-import electrolyte.greate.foundation.data.recipe.GreateStandardRecipeGen;
 import electrolyte.greate.infrastructure.config.GreateConfigs;
 import electrolyte.greate.registry.*;
 import it.unimi.dsi.fastutil.objects.ReferenceArrayList;
@@ -17,6 +17,7 @@ import it.unimi.dsi.fastutil.objects.ReferenceLinkedOpenHashSet;
 import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.CreativeModeTab.DisplayItemsGenerator;
 import net.minecraft.world.item.CreativeModeTab.ItemDisplayParameters;
@@ -55,19 +56,12 @@ public class Greate {
         REGISTRATE.registerEventListeners(eventBus);
         GreateLang.register();
         GreateTags.init();
-        Belts.register();
-        Cogwheels.register();
-        CrushingWheels.register();
-        Gearboxes.register();
-        Girders.register();
-        MechanicalPresses.register();
-        Millstones.register();
-        Saws.register();
-        Shafts.register();
-        ModBlockEntityTypes.register();
-        ModItems.register();
         ModRecipeTypes.register(eventBus);
         GreateConfigs.register(ModLoadingContext.get());
+    }
+
+    public static ResourceLocation id(String path) {
+        return new ResourceLocation(MOD_ID, FormattingUtil.toLowerCaseUnder(path));
     }
 
     public static final RegistryObject<CreativeModeTab> GREATE_TAB = CREATIVE_TABS.register("greate",
@@ -85,7 +79,6 @@ public class Greate {
         if(event.includeServer()) {
             REGISTRATE.addDataGenerator(ProviderType.LANG, p -> GreateAdvancements.provideLang(p::add));
             event.getGenerator().addProvider(true, new GreateAdvancements(event.getGenerator().getPackOutput()));
-            event.getGenerator().addProvider(true, new GreateStandardRecipeGen(event.getGenerator().getPackOutput()));
             event.getGenerator().addProvider(true, new GreateMechanicalCraftingRecipeGen(event.getGenerator().getPackOutput()));
             GreateBlockTagGen blockTags = new GreateBlockTagGen(event.getGenerator().getPackOutput(), event.getLookupProvider(), Greate.MOD_ID, event.getExistingFileHelper());
             event.getGenerator().addProvider(true, blockTags);

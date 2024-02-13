@@ -46,11 +46,7 @@ public class GreateAdvancements implements DataProvider {
             .icon(Belts.SILICONE_RUBBER_BELT)
             .title("Tasty!")
             .description("Consume every type of belt")
-            .whenItemConsumed(Belts.RUBBER_BELT_CONNECTOR)
-            .whenItemConsumed(Belts.SILICONE_RUBBER_BELT_CONNECTOR)
-            .whenItemConsumed(Belts.POLYETHYLENE_BELT_CONNECTOR)
-            .whenItemConsumed(Belts.POLYTETRAFLUOROETHYLENE_BELT_CONNECTOR)
-            .whenItemConsumed(Belts.POLYBENZIMIDAZOLE_BELT_CONNECTOR)
+            .whenItemsConsumed(Belts.BELT_CONNECTORS)
             .after(ROOT)
             .special(SECRET_NOISY)),
 

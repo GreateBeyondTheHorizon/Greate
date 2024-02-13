@@ -1,0 +1,32 @@
+{
+  "parent": "greate:block/andesite_alloy_crushing_wheel_textures",
+  "display": {
+    "fixed": {
+      "rotation": [
+        90,
+        0,
+        0
+      ],
+      "scale": [
+        0.45,
+        0.45,
+        0.45
+      ]
+    },
+    "gui": {
+      "rotation": [
+        30,
+        225,
+        0
+      ],
+      "scale": [
+        0.45,
+        0.45,
+        0.45
+      ]
+    }
+  },
+  "flip_v": true,
+  "loader": "forge:obj",
+  "model": "create:models/block/crushing_wheel/crushing_wheel.obj"
+}

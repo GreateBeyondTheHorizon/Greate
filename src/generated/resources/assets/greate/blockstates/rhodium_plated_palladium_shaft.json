@@ -1,0 +1,17 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "greate:block/rhodium_plated_palladium_shaft",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "greate:block/rhodium_plated_palladium_shaft"
+    },
+    "axis=z": {
+      "model": "greate:block/rhodium_plated_palladium_shaft",
+      "x": 90,
+      "y": 180
+    }
+  }
+}

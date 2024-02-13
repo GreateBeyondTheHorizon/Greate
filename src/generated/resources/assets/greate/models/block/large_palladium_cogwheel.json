@@ -1,9 +1,0 @@
-{
-  "parent": "create:block/large_cogwheel",
-  "textures": {
-    "0": "greate:block/palladium/cogwheel_axis",
-    "3": "greate:block/palladium/axis_top",
-    "4": "greate:block/palladium/large_cogwheel",
-    "particle": "greate:block/palladium/large_cogwheel"
-  }
-}

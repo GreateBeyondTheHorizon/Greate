@@ -1,0 +1,17 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "greate:block/tungsten_steel_crushing_wheel",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "greate:block/tungsten_steel_crushing_wheel"
+    },
+    "axis=z": {
+      "model": "greate:block/tungsten_steel_crushing_wheel",
+      "x": 90,
+      "y": 180
+    }
+  }
+}

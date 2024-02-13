@@ -1,0 +1,7 @@
+{
+  "parent": "create:block/crushing_wheel/textures",
+  "textures": {
+    "axis": "greate:block/naquadah_alloy/axis",
+    "axis_top": "greate:block/naquadah_alloy/axis_top"
+  }
+}

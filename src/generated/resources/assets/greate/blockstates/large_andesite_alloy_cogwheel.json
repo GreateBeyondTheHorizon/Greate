@@ -1,0 +1,17 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "greate:block/large_andesite_alloy_cogwheel",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "greate:block/large_andesite_alloy_cogwheel"
+    },
+    "axis=z": {
+      "model": "greate:block/large_andesite_alloy_cogwheel",
+      "x": 90,
+      "y": 180
+    }
+  }
+}

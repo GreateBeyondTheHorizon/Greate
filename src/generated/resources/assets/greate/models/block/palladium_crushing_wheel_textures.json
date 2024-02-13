@@ -1,7 +1,0 @@
-{
-  "parent": "create:block/crushing_wheel/textures",
-  "textures": {
-    "axis": "greate:block/palladium/axis",
-    "axis_top": "greate:block/palladium/axis_top"
-  }
-}

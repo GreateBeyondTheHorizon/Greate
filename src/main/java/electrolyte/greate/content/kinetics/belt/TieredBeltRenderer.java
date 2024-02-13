@@ -1,5 +1,6 @@
 package electrolyte.greate.content.kinetics.belt;
 
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.jozufozu.flywheel.backend.Backend;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.jozufozu.flywheel.util.transform.TransformStack;
@@ -40,7 +41,6 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Random;
 import java.util.function.Supplier;
@@ -163,19 +163,19 @@ public class TieredBeltRenderer extends SafeBlockEntityRenderer<TieredBeltBlockE
     }
 
     public static PartialModel getBeltPartial(TieredBeltBlock block, boolean diagonal, boolean start, boolean end, boolean bottom) {
-        String beltType = block.getBeltType();
+        Material beltMaterial = block.getBeltMaterial();
         if (diagonal) {
-            if(start) return GreatePartialModels.NEW_BELT_MODELS.get(beltType).get(8);
-            if(end) return GreatePartialModels.NEW_BELT_MODELS.get(beltType).get(10);
-            return GreatePartialModels.NEW_BELT_MODELS.get(beltType).get(9);
+            if(start) return GreatePartialModels.NEW_BELT_MODELS.get(beltMaterial).get(8);
+            if(end) return GreatePartialModels.NEW_BELT_MODELS.get(beltMaterial).get(10);
+            return GreatePartialModels.NEW_BELT_MODELS.get(beltMaterial).get(9);
         } else if (bottom) {
-            if(start) return GreatePartialModels.NEW_BELT_MODELS.get(beltType).get(5);
-            if(end) return GreatePartialModels.NEW_BELT_MODELS.get(beltType).get(7);
-            return GreatePartialModels.NEW_BELT_MODELS.get(beltType).get(6);
+            if(start) return GreatePartialModels.NEW_BELT_MODELS.get(beltMaterial).get(5);
+            if(end) return GreatePartialModels.NEW_BELT_MODELS.get(beltMaterial).get(7);
+            return GreatePartialModels.NEW_BELT_MODELS.get(beltMaterial).get(6);
         } else {
-            if(start) return GreatePartialModels.NEW_BELT_MODELS.get(beltType).get(2);
-            if(end) return GreatePartialModels.NEW_BELT_MODELS.get(beltType).get(4);
-            return GreatePartialModels.NEW_BELT_MODELS.get(beltType).get(3);
+            if(start) return GreatePartialModels.NEW_BELT_MODELS.get(beltMaterial).get(2);
+            if(end) return GreatePartialModels.NEW_BELT_MODELS.get(beltMaterial).get(4);
+            return GreatePartialModels.NEW_BELT_MODELS.get(beltMaterial).get(3);
         }
     }
 
@@ -196,15 +196,20 @@ public class TieredBeltRenderer extends SafeBlockEntityRenderer<TieredBeltBlockE
     }
 
     public static PartialModel getBeltPulleyModel(BlockState blockState, TieredBeltBlockEntity blockEntity) {
-        String beltType = ((TieredBeltBlock) blockState.getBlock()).getBeltType();
-        String beltMaterial = ForgeRegistries.BLOCKS.getKey(blockState.getBlock()).toString().substring(Greate.MOD_ID.length() + 1);
-        String shaftMaterial;
-        if(((TieredBeltBlock) blockState.getBlock()).getShaftType() != null) {
-            shaftMaterial = ((TieredBeltBlock) blockState.getBlock()).getShaftType().toString().substring(2, ((TieredBeltBlock) blockState.getBlock()).getShaftType().toString().length() - 6);
+        TieredBeltBlock tieredBeltBlock = (TieredBeltBlock) blockState.getBlock();
+        Material beltMaterial = tieredBeltBlock.getBeltMaterial();
+        String shaftMaterial = "";
+        try {
+        if(!tieredBeltBlock.getShaftType().isEmpty()) {
+            shaftMaterial = tieredBeltBlock.getShaftType().toString().substring(2, tieredBeltBlock.getShaftType().toString().length() - 6);
         } else {
             shaftMaterial = blockEntity.getShaftType().toString().substring(2, blockEntity.getShaftType().toString().length() - 6);
         }
-        return GreatePartialModels.NEW_BELT_MODELS.get(beltType).stream().filter(p -> p.getLocation().equals(new ResourceLocation(Greate.MOD_ID, "block/" + beltMaterial + "_" + shaftMaterial + "_pulley"))).findFirst().orElse(AllPartialModels.BELT_PULLEY);
+        } catch(IndexOutOfBoundsException e) {
+            Greate.LOGGER.error("Unable to get shaft material for belt {}, the default create shaft will be used until this is fixed!", beltMaterial.getName());
+        }
+        ResourceLocation resourceLocation = new ResourceLocation(Greate.MOD_ID, "block/" + beltMaterial.getName() + "_belt_" + shaftMaterial + "_pulley");
+        return GreatePartialModels.NEW_BELT_MODELS.get(beltMaterial).stream().filter(p -> p.getLocation().equals(resourceLocation)).findFirst().orElse(AllPartialModels.BELT_PULLEY);
     }
 
     protected void renderItems(TieredBeltBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {

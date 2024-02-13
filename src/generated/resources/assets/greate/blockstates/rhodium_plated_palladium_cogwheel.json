@@ -1,0 +1,17 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "greate:block/rhodium_plated_palladium_cogwheel",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "greate:block/rhodium_plated_palladium_cogwheel"
+    },
+    "axis=z": {
+      "model": "greate:block/rhodium_plated_palladium_cogwheel",
+      "x": 90,
+      "y": 180
+    }
+  }
+}

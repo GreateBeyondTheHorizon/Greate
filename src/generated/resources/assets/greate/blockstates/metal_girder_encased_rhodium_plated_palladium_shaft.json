@@ -1,0 +1,37 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "greate:block/metal_girder_encased_rhodium_plated_palladium_shaft",
+        "y": 90
+      },
+      "when": {
+        "axis": "x"
+      }
+    },
+    {
+      "apply": {
+        "model": "greate:block/metal_girder_encased_rhodium_plated_palladium_shaft"
+      },
+      "when": {
+        "axis": "z"
+      }
+    },
+    {
+      "apply": {
+        "model": "greate:block/metal_girder_encased_rhodium_plated_palladium_shaft_top"
+      },
+      "when": {
+        "top": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "greate:block/metal_girder_encased_rhodium_plated_palladium_shaft_bottom"
+      },
+      "when": {
+        "bottom": "true"
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/millstone/inner",
+  "textures": {
+    "1_0": "greate:block/tungsten_steel/axis",
+    "1_1": "greate:block/tungsten_steel/axis_top",
+    "5": "greate:block/tungsten_steel/millstone",
+    "particle": "greate:block/tungsten_steel/axis"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "create:block/belt_pulley",
+  "textures": {
+    "0": "greate:block/naquadah_alloy/axis",
+    "1": "greate:block/naquadah_alloy/axis_top"
+  }
+}

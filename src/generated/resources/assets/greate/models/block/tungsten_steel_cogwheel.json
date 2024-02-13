@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/cogwheel",
+  "textures": {
+    "0": "greate:block/tungsten_steel/cogwheel_axis",
+    "1_2": "greate:block/tungsten_steel/cogwheel",
+    "3": "greate:block/tungsten_steel/axis_top",
+    "particle": "greate:block/tungsten_steel/cogwheel"
+  }
+}

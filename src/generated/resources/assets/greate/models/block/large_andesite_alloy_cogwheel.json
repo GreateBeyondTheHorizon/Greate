@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/large_cogwheel",
+  "textures": {
+    "0": "greate:block/andesite_alloy/cogwheel_axis",
+    "3": "greate:block/andesite_alloy/axis_top",
+    "4": "greate:block/andesite_alloy/large_cogwheel",
+    "particle": "greate:block/andesite_alloy/large_cogwheel"
+  }
+}

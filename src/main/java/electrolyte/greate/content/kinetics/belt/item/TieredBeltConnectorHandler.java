@@ -60,7 +60,7 @@ public class TieredBeltConnectorHandler {
             if(!(level.getBlockState(selected).getBlock() instanceof TieredShaftBlock)) {
                 selected = selected.relative(((BlockHitResult) hitResult).getDirection());
             }
-            if(!selected.closerThan(first, GConfigUtility.getBeltLengthFromType(tbci.getBeltType()))) return;
+            if(!selected.closerThan(first, GConfigUtility.getBeltLengthFromMaterial(tbci.getBeltMaterial()))) return;
 
             boolean canConnect = TieredBeltConnectorItem.validateAxis(level, selected) && TieredBeltConnectorItem.canConnect(level, first, selected, heldStack);
             Vec3 start = Vec3.atLowerCornerOf(first);

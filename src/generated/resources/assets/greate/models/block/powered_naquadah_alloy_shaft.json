@@ -1,0 +1,8 @@
+{
+  "parent": "create:block/powered_shaft",
+  "textures": {
+    "2": "greate:block/naquadah_alloy/axis_top",
+    "3": "greate:block/naquadah_alloy/axis",
+    "particle": "greate:block/naquadah_alloy/axis"
+  }
+}

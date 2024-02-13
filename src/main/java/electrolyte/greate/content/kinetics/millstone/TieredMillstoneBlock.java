@@ -24,7 +24,6 @@ public class TieredMillstoneBlock extends MillstoneBlock implements ITieredBlock
     public TieredMillstoneBlock(Properties properties, PartialModel model) {
         super(properties);
         this.model = model;
-        Millstones.MILLSTONES.add(this);
     }
 
     @Override

@@ -3,11 +3,11 @@ package electrolyte.greate;
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.recipe.content.Content;
-import com.gregtechceu.gtceu.common.data.GTMaterials;
 
 import java.util.List;
 
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
+import static electrolyte.greate.registry.GreateMaterials.AndesiteAlloy;
 import static net.minecraft.ChatFormatting.*;
 
 public class GreateValues {
@@ -66,31 +66,46 @@ public class GreateValues {
         return GTValues.MAX;
     }
 
+    public static int getTierFromTierMaterial(Material tierMaterial) {
+        for (int i = 0; i < TM.length; i++) {
+            if (TM[i] == tierMaterial) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     /**
      * Tier materials
-     * Can eventually be replaced with GTMaterials.VOLTAGE_COMMON_MATERIALS
+     * Based on GTMaterials.VOLTAGE_COMMON_MATERIALS, but uses AndesiteAlloy instead of WroughtIron in the first tier.
      */
-    public static final String[] TM = new String[]{
-            "andesite",
-            "steel",
-            "aluminium",
-            "stainless_steel",
-            "titanium",
-            "tungstensteel",
-            "palladium",
-            "naquadah",
-            "darmstadtium",
-            "neutronium",
-    };;
+    public static Material[] TM;
 
     /**
      * Belt materials
      */
-    public static final String[] BM = new String[]{
-            "rubber",
-            "silicone",
-            "polyethylene",
-            "polytetrafluoroethylene",
-            "polybenzimidazole",
-    };
+    public static Material[] BM;
+
+    public static void init() {
+        TM = new Material[]{
+                AndesiteAlloy,
+                Steel,
+                Aluminium,
+                StainlessSteel,
+                Titanium,
+                TungstenSteel,
+                RhodiumPlatedPalladium,
+                NaquadahAlloy,
+                Darmstadtium,
+                Neutronium,
+        };
+
+        BM = new Material[]{
+                Rubber,
+                SiliconeRubber,
+                Polyethylene,
+                Polytetrafluoroethylene,
+                Polybenzimidazole,
+        };
+    }
 }
