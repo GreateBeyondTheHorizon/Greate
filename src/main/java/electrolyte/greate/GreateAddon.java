@@ -4,8 +4,10 @@ import com.gregtechceu.gtceu.api.addon.GTAddon;
 import com.gregtechceu.gtceu.api.addon.IGTAddon;
 import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
 import electrolyte.greate.foundation.data.recipe.GreateRecipes;
+import electrolyte.greate.infrastructure.config.GreateConfigs;
 import electrolyte.greate.registry.*;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraftforge.fml.ModLoadingContext;
 
 import java.util.function.Consumer;
 
@@ -31,6 +33,7 @@ public class GreateAddon implements IGTAddon {
 		Pumps.register();
 		ModBlockEntityTypes.register();
 		ModItems.register();
+		GreateConfigs.register(ModLoadingContext.get());
 		Greate.LOGGER.info("Greate GT addon initialised!");
 	}
 
