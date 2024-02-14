@@ -1,7 +1,6 @@
 package electrolyte.greate.content.kinetics.simpleRelays;
 
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
-
 import electrolyte.greate.content.kinetics.base.TieredKineticEffectHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -34,6 +33,6 @@ public class TieredKineticBlockEntity extends KineticBlockEntity implements ITie
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
-        return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, tier, capacity);
+        return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, tier, capacity, stress);
     }
 }

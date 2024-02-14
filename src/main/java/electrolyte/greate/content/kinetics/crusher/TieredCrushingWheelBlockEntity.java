@@ -1,7 +1,6 @@
 package electrolyte.greate.content.kinetics.crusher;
 
 import com.simibubi.create.content.kinetics.crusher.CrushingWheelBlockEntity;
-
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -22,6 +21,6 @@ public class TieredCrushingWheelBlockEntity extends CrushingWheelBlockEntity imp
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
-        return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, tier, capacity);
+        return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, tier, capacity, stress);
     }
 }

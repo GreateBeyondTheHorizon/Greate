@@ -26,6 +26,7 @@ public interface ITieredKineticBlockEntity {
     default void updateFromNetwork(float maxStress, float currentStress, int networkSize, double networkMaxCapacity) {};
 
     default boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking, int tier, double capacity) {
+    default boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking, int tier, double capacity, double stress) {
         if(tier != -1) {
             if(!tooltip.isEmpty()) {
                 Lang.builder().space();
@@ -33,7 +34,9 @@ public interface ITieredKineticBlockEntity {
                 Lang.translate("gui.goggles.kinetic_stats").forGoggles(tooltip);
             }
             Lang.builder(Greate.MOD_ID).translate("tooltip.capacity").style(ChatFormatting.GRAY).forGoggles(tooltip);
-            Lang.number(capacity).style(ChatFormatting.AQUA).add(Lang.text("su")).space().add(Lang.text("/").space().add(Lang.number(GConfigUtility.getMaxCapacityFromTier(tier))).add(Lang.text("su").space().add(Lang.text("at current shaft tier").style(ChatFormatting.DARK_GRAY)))).forGoggles(tooltip, 1);
+            Lang.builder(Greate.MOD_ID).add(Lang.number(GConfigUtility.getMaxCapacityFromTier(tier)).style(ChatFormatting.AQUA).space().add(Lang.text("su")).space().add(Lang.text("at current shaft tier").style(ChatFormatting.DARK_GRAY))).forGoggles(tooltip, 1);
+            Lang.builder(Greate.MOD_ID).translate("tooltip.networkStatistics").style(ChatFormatting.GRAY).forGoggles(tooltip);
+            Lang.number(stress).style(ChatFormatting.AQUA).add(Lang.text("su")).space().add(Lang.text("consumed").style(ChatFormatting.DARK_GRAY)).space().add(Lang.text("/").style(ChatFormatting.AQUA)).space().add(Lang.number(capacity).style(ChatFormatting.AQUA)).add(Lang.text("su").space().add(Lang.text("generated").style(ChatFormatting.DARK_GRAY))).forGoggles(tooltip, 1);
             return true;
         }
         return false;
