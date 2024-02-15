@@ -5,11 +5,11 @@ import com.jozufozu.flywheel.core.PartialModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.content.kinetics.base.IRotate;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
+import com.simibubi.create.content.kinetics.simpleRelays.BracketedKineticBlockEntityRenderer;
 import com.simibubi.create.content.kinetics.simpleRelays.encased.EncasedCogwheelBlock;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.render.SuperByteBuffer;
 import com.simibubi.create.foundation.utility.Iterate;
-import electrolyte.greate.content.kinetics.simpleRelays.TieredBracketedKineticBlockEntityRenderer;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredSimpleKineticBlockEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -50,7 +50,7 @@ public class TieredEncasedCogRenderer extends KineticBlockEntityRenderer<TieredS
 
         Axis axis = getRotationAxisOf(be);
         BlockPos pos = be.getBlockPos();
-        float angle = large ? TieredBracketedKineticBlockEntityRenderer.getAngleForLargeCogShaft(be, axis) : getAngleForTe(be, pos, axis);
+        float angle = large ? BracketedKineticBlockEntityRenderer.getAngleForLargeCogShaft(be, axis) : getAngleForTe(be, pos, axis);
 
         for (Direction d : Iterate.directionsInAxis(getRotationAxisOf(be))) {
             if (!rotate.hasShaftTowards(be.getLevel(), be.getBlockPos(), blockState, d))

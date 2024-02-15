@@ -2,7 +2,6 @@ package electrolyte.greate.content.kinetics.simpleRelays;
 
 import com.simibubi.create.foundation.utility.Lang;
 import electrolyte.greate.Greate;
-
 import electrolyte.greate.infrastructure.config.GConfigUtility;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -25,7 +24,6 @@ public interface ITieredKineticBlockEntity {
 
     default void updateFromNetwork(float maxStress, float currentStress, int networkSize, double networkMaxCapacity) {};
 
-    default boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking, int tier, double capacity) {
     default boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking, int tier, double capacity, double stress) {
         if(tier != -1) {
             if(!tooltip.isEmpty()) {

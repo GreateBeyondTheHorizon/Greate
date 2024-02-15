@@ -2,9 +2,12 @@ package electrolyte.greate.registry;
 
 import com.simibubi.create.content.kinetics.base.CutoutRotatingInstance;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
-import com.simibubi.create.content.kinetics.base.ShaftRenderer;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
+import electrolyte.greate.content.fluids.pump.TieredPumpBlockEntity;
+import electrolyte.greate.content.fluids.pump.TieredPumpCogInstance;
+import electrolyte.greate.content.fluids.pump.TieredPumpRenderer;
 import electrolyte.greate.content.kinetics.base.TieredShaftInstance;
+import electrolyte.greate.content.kinetics.base.TieredShaftRenderer;
 import electrolyte.greate.content.kinetics.base.TieredSingleRotatingInstance;
 import electrolyte.greate.content.kinetics.belt.TieredBeltBlockEntity;
 import electrolyte.greate.content.kinetics.belt.TieredBeltInstance;
@@ -23,9 +26,6 @@ import electrolyte.greate.content.kinetics.mixer.TieredMechanicalMixerRenderer;
 import electrolyte.greate.content.kinetics.press.TieredMechanicalPressBlockEntity;
 import electrolyte.greate.content.kinetics.press.TieredMechanicalPressInstance;
 import electrolyte.greate.content.kinetics.press.TieredMechanicalPressRenderer;
-import electrolyte.greate.content.fluids.pump.TieredPumpBlockEntity;
-import electrolyte.greate.content.fluids.pump.TieredPumpCogInstance;
-import electrolyte.greate.content.fluids.pump.TieredPumpRenderer;
 import electrolyte.greate.content.kinetics.saw.TieredSawBlockEntity;
 import electrolyte.greate.content.kinetics.saw.TieredSawInstance;
 import electrolyte.greate.content.kinetics.saw.TieredSawRenderer;
@@ -52,7 +52,7 @@ public class ModBlockEntityTypes {
             .validBlocks(Shafts.ANDESITE_ENCASED_SHAFTS)
             .validBlocks(Shafts.BRASS_ENCASED_SHAFTS)
             .validBlocks(Girders.METAL_GIRDER_ENCASED_SHAFTS)
-            .renderer(() -> ShaftRenderer::new)
+            .renderer(() -> TieredShaftRenderer::new)
             .register();
 
     public static final BlockEntityEntry<TieredSimpleKineticBlockEntity> TIERED_ENCASED_COGWHEEL = REGISTRATE

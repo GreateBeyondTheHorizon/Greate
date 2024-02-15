@@ -15,7 +15,6 @@ import com.simibubi.create.foundation.data.TagGen;
 import com.simibubi.create.foundation.utility.Couple;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import electrolyte.greate.Greate;
-
 import electrolyte.greate.content.kinetics.TieredBlockMaterials;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredCogwheelBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedCogwheelBlock;
@@ -244,7 +243,7 @@ public class Cogwheels {
     }
 
     private static BlockEntry<TieredEncasedCogwheelBlock> registerAndesiteEncasedLargeCogwheel(int tier) {
-        return registerAndesiteEncasedLargeCogwheel(tier, TM[tier], COGWHEELS[tier], LARGE_COGWHEELS[tier], SHAFT_HALF_MODELS[tier], COGWHEEL_SHAFTLESS_MODELS[tier]);
+        return registerAndesiteEncasedLargeCogwheel(tier, TM[tier], COGWHEELS[tier], LARGE_COGWHEELS[tier], SHAFT_HALF_MODELS[tier], LARGE_COGWHEEL_SHAFTLESS_MODELS[tier]);
     }
 
     public static BlockEntry<TieredEncasedCogwheelBlock> registerAndesiteEncasedLargeCogwheel(int tier, Material material, BlockEntry<TieredCogwheelBlock> cogwheel, BlockEntry<TieredCogwheelBlock> largeCogwheel, PartialModel halfShaftModel, PartialModel cogwheelShaftlessModel) {
@@ -278,7 +277,7 @@ public class Cogwheels {
     }
 
     private static BlockEntry<TieredEncasedCogwheelBlock> registerBrassEncasedLargeCogwheel(int tier) {
-        return registerBrassEncasedLargeCogwheel(tier, TM[tier], COGWHEELS[tier], LARGE_COGWHEELS[tier], SHAFT_HALF_MODELS[tier], COGWHEEL_SHAFTLESS_MODELS[tier]);
+        return registerBrassEncasedLargeCogwheel(tier, TM[tier], COGWHEELS[tier], LARGE_COGWHEELS[tier], SHAFT_HALF_MODELS[tier], LARGE_COGWHEEL_SHAFTLESS_MODELS[tier]);
     }
 
     public static BlockEntry<TieredEncasedCogwheelBlock> registerBrassEncasedLargeCogwheel(int tier, Material material, BlockEntry<TieredCogwheelBlock> cogwheel, BlockEntry<TieredCogwheelBlock> largeCogwheel, PartialModel halfShaftModel, PartialModel cogwheelShaftlessModel) {
