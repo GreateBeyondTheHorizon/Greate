@@ -67,7 +67,7 @@ public class TieredCuttingRecipe extends TieredProcessingRecipe<RecipeWrapper> i
 
     @Override
     public void addRequiredMachines(Set<ItemLike> list) {
-        list.addAll(Saws.SAWS);
+        list.addAll(List.of(Saws.SAWS));
     }
 
     @Override

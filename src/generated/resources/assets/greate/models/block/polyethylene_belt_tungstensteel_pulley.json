@@ -1,7 +1,0 @@
-{
-  "parent": "create:block/belt_pulley",
-  "textures": {
-    "0": "greate:block/tungstensteel/axis",
-    "1": "greate:block/tungstensteel/axis_top"
-  }
-}

@@ -1,0 +1,10 @@
+{
+  "parent": "create:block/encased_shaft/item",
+  "textures": {
+    "0": "create:block/andesite_casing",
+    "1": "create:block/gearbox",
+    "1_0": "greate:block/tungsten_steel/axis",
+    "1_1": "greate:block/tungsten_steel/axis_top",
+    "particle": "create:block/andesite_casing"
+  }
+}

@@ -1,7 +1,0 @@
-{
-  "parent": "create:block/crushing_wheel/textures",
-  "textures": {
-    "axis": "greate:block/andesite/axis",
-    "axis_top": "greate:block/andesite/axis_top"
-  }
-}

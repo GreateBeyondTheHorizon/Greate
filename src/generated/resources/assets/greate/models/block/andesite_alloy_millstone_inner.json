@@ -1,0 +1,9 @@
+{
+  "parent": "create:block/millstone/inner",
+  "textures": {
+    "1_0": "greate:block/andesite_alloy/axis",
+    "1_1": "greate:block/andesite_alloy/axis_top",
+    "5": "greate:block/andesite_alloy/millstone",
+    "particle": "greate:block/andesite_alloy/axis"
+  }
+}

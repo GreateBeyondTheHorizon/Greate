@@ -1,5 +1,6 @@
 package electrolyte.greate.registry;
 
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.content.kinetics.BlockStressDefaults;
 import com.simibubi.create.foundation.data.SharedProperties;
@@ -12,43 +13,55 @@ import electrolyte.greate.content.kinetics.millstone.TieredMillstoneBlock;
 import electrolyte.greate.foundation.data.GreateBuilderTransformers;
 import net.minecraft.world.level.material.MapColor;
 
-import java.util.ArrayList;
-
 import static com.gregtechceu.gtceu.api.GTValues.*;
 import static electrolyte.greate.Greate.REGISTRATE;
 import static electrolyte.greate.GreateValues.TM;
+import static electrolyte.greate.registry.GreatePartialModels.MILLSTONE_INNER_MODELS;
 
 public class Millstones {
 
-    static {
+    public static final BlockEntry<TieredMillstoneBlock>[] MILLSTONES = new BlockEntry[10];
+    public static BlockEntry<TieredMillstoneBlock>
+            ANDESITE_MILLSTONE,
+            STEEL_MILLSTONE,
+            ALUMINIUM_MILLSTONE,
+            STAINLESS_STEEL_MILLSTONE,
+            TITANIUM_MILLSTONE,
+            TUNGSTENSTEEL_MILLSTONE,
+            PALLADIUM_MILLSTONE,
+            NAQUADAH_MILLSTONE,
+            DARMSTADTIUM_MILLSTONE,
+            NEUTRONIUM_MILLSTONE;
+
+    public static void register() {
         REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
+
+        MILLSTONES[ULV] = ANDESITE_MILLSTONE = millstone(ULV, 0.5);
+        MILLSTONES[LV] = STEEL_MILLSTONE = millstone(LV, 1.0);
+        MILLSTONES[MV] = ALUMINIUM_MILLSTONE = millstone(MV, 1.5);
+        MILLSTONES[HV] = STAINLESS_STEEL_MILLSTONE = millstone(HV, 2.0);
+        MILLSTONES[EV] = TITANIUM_MILLSTONE = millstone(EV, 2.5);
+        MILLSTONES[IV] = TUNGSTENSTEEL_MILLSTONE = millstone(IV, 3.0);
+        MILLSTONES[LuV] = PALLADIUM_MILLSTONE = millstone(LuV, 3.5);
+        MILLSTONES[ZPM] = NAQUADAH_MILLSTONE = millstone(ZPM, 4.0);
+        MILLSTONES[UV] = DARMSTADTIUM_MILLSTONE = millstone(UV, 4.5);
+        MILLSTONES[UHV] = NEUTRONIUM_MILLSTONE = millstone(UHV, 5.0);
     }
 
-    public static ArrayList<TieredMillstoneBlock> MILLSTONES = new ArrayList<>();
+    private static BlockEntry<TieredMillstoneBlock> millstone(int tier, double millstoneImpact) {
+        return millstone(tier, TM[tier], MILLSTONE_INNER_MODELS[tier], millstoneImpact);
+    }
 
-    public static final BlockEntry<TieredMillstoneBlock> ANDESITE_MILLSTONE = millstone("andesite_millstone", ULV, TM[0], GreatePartialModels.ANDESITE_MILLSTONE_INNER, 0.5);
-    public static final BlockEntry<TieredMillstoneBlock> STEEL_MILLSTONE = millstone("steel_millstone", LV, TM[1], GreatePartialModels.STEEL_MILLSTONE_INNER, 1.0);
-    public static final BlockEntry<TieredMillstoneBlock> ALUMINIUM_MILLSTONE = millstone("aluminium_millstone", MV, TM[2], GreatePartialModels.ALUMINIUM_MILLSTONE_INNER, 1.5);
-    public static final BlockEntry<TieredMillstoneBlock> STAINLESS_STEEL_MILLSTONE = millstone("stainless_steel_millstone", HV, TM[3], GreatePartialModels.STAINLESS_STEEL_MILLSTONE_INNER, 2.0);
-    public static final BlockEntry<TieredMillstoneBlock> TITANIUM_MILLSTONE = millstone("titanium_millstone", EV, TM[4], GreatePartialModels.TITANIUM_MILLSTONE_INNER, 2.5);
-    public static final BlockEntry<TieredMillstoneBlock> TUNGSTENSTEEL_MILLSTONE = millstone("tungstensteel_millstone", IV, TM[5], GreatePartialModels.TUNGSTENSTEEL_MILLSTONE_INNER, 3.0);
-    public static final BlockEntry<TieredMillstoneBlock> PALLADIUM_MILLSTONE = millstone("palladium_millstone", LuV, TM[6], GreatePartialModels.PALLADIUM_MILLSTONE_INNER, 3.5);
-    public static final BlockEntry<TieredMillstoneBlock> NAQUADAH_MILLSTONE = millstone("naquadah_millstone", ZPM, TM[7], GreatePartialModels.NAQUADAH_MILLSTONE_INNER, 4.0);
-    public static final BlockEntry<TieredMillstoneBlock> DARMSTADTIUM_MILLSTONE = millstone("darmstadtium_millstone", UV, TM[8], GreatePartialModels.DARMSTADTIUM_MILLSTONE_INNER, 4.5);
-    public static final BlockEntry<TieredMillstoneBlock> NEUTRONIUM_MILLSTONE = millstone("neutronium_millstone", UHV, TM[9], GreatePartialModels.NEUTRONIUM_MILLSTONE_INNER, 5.0);
-
-    public static BlockEntry<TieredMillstoneBlock> millstone(String name, int tier, String materialType, PartialModel millstoneInnerModel, double millstoneImpact) {
+    public static BlockEntry<TieredMillstoneBlock> millstone(int tier, Material material, PartialModel millstoneInnerModel, double millstoneImpact) {
         return REGISTRATE
-                .block(name, p -> new TieredMillstoneBlock(p, millstoneInnerModel))
+                .block(material.getName() + "_millstone", p -> new TieredMillstoneBlock(p, millstoneInnerModel))
                 .initialProperties(SharedProperties::stone)
                 .properties(p -> p.mapColor(MapColor.METAL))
                 .transform(TagGen.pickaxeOnly())
                 .transform(GreateBuilderTransformers.tieredMillstone())
                 .transform(BlockStressDefaults.setImpact(millstoneImpact))
-                .transform(TieredBlockMaterials.setMaterialTypeForBlock(materialType))
+                .transform(TieredBlockMaterials.setMaterialForBlock(material))
                 .onRegister(c -> c.setTier(tier))
                 .register();
     }
-
-    public static void register() {}
 }

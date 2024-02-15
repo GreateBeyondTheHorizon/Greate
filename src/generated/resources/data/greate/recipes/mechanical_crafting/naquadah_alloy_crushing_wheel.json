@@ -1,0 +1,26 @@
+{
+  "type": "create:mechanical_crafting",
+  "acceptMirrored": true,
+  "key": {
+    "A": {
+      "item": "greate:naquadah_alloy_alloy"
+    },
+    "C": {
+      "tag": "gtceu:circuits/zpm"
+    },
+    "S": {
+      "tag": "greate:shafts/naquadah_alloy"
+    }
+  },
+  "pattern": [
+    " AAA ",
+    "AACAA",
+    "ACSCA",
+    "AACAA",
+    " AAA "
+  ],
+  "result": {
+    "count": 2,
+    "item": "greate:naquadah_alloy_crushing_wheel"
+  }
+}

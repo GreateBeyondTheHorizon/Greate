@@ -1,5 +1,6 @@
 package electrolyte.greate.registry;
 
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.decoration.girder.ConnectedGirderModel;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -22,27 +23,45 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import static com.gregtechceu.gtceu.api.GTValues.*;
 import static electrolyte.greate.Greate.REGISTRATE;
 import static electrolyte.greate.GreateValues.TM;
+import static electrolyte.greate.registry.Shafts.SHAFTS;
 
 public class Girders {
 
-    static {
+    public static final BlockEntry<TieredGirderEncasedShaftBlock>[] METAL_GIRDER_ENCASED_SHAFTS = new BlockEntry[10];
+    public static BlockEntry<TieredGirderEncasedShaftBlock>
+            METAL_GIRDER_ENCASED_ANDESITE_SHAFT,
+            METAL_GIRDER_ENCASED_STEEL_SHAFT,
+            METAL_GIRDER_ENCASED_ALUMINIUM_SHAFT,
+            METAL_GIRDER_ENCASED_STAINLESS_STEEL_SHAFT,
+            METAL_GIRDER_ENCASED_TITANIUM_SHAFT,
+            METAL_GIRDER_ENCASED_TUNGSTENSTEEL_SHAFT,
+            METAL_GIRDER_ENCASED_PALLADIUM_SHAFT,
+            METAL_GIRDER_ENCASED_NAQUADAH_SHAFT,
+            METAL_GIRDER_ENCASED_DARMSTADTIUM_SHAFT,
+            METAL_GIRDER_ENCASED_NEUTRONIUM_SHAFT;
+
+    public static void register() {
         REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
+
+        METAL_GIRDER_ENCASED_SHAFTS[ULV] = METAL_GIRDER_ENCASED_ANDESITE_SHAFT = metalGirderEncasedShaft(ULV);
+        METAL_GIRDER_ENCASED_SHAFTS[LV] = METAL_GIRDER_ENCASED_STEEL_SHAFT = metalGirderEncasedShaft(LV);
+        METAL_GIRDER_ENCASED_SHAFTS[MV] = METAL_GIRDER_ENCASED_ALUMINIUM_SHAFT = metalGirderEncasedShaft(MV);
+        METAL_GIRDER_ENCASED_SHAFTS[HV] = METAL_GIRDER_ENCASED_STAINLESS_STEEL_SHAFT = metalGirderEncasedShaft(HV);
+        METAL_GIRDER_ENCASED_SHAFTS[EV] = METAL_GIRDER_ENCASED_TITANIUM_SHAFT = metalGirderEncasedShaft(EV);
+        METAL_GIRDER_ENCASED_SHAFTS[IV] = METAL_GIRDER_ENCASED_TUNGSTENSTEEL_SHAFT = metalGirderEncasedShaft(IV);
+        METAL_GIRDER_ENCASED_SHAFTS[LuV] = METAL_GIRDER_ENCASED_PALLADIUM_SHAFT = metalGirderEncasedShaft(LuV);
+        METAL_GIRDER_ENCASED_SHAFTS[ZPM] = METAL_GIRDER_ENCASED_NAQUADAH_SHAFT = metalGirderEncasedShaft(ZPM);
+        METAL_GIRDER_ENCASED_SHAFTS[UV] = METAL_GIRDER_ENCASED_DARMSTADTIUM_SHAFT = metalGirderEncasedShaft(UV);
+        METAL_GIRDER_ENCASED_SHAFTS[UHV] = METAL_GIRDER_ENCASED_NEUTRONIUM_SHAFT = metalGirderEncasedShaft(UHV);
     }
 
-    public static final BlockEntry<TieredGirderEncasedShaftBlock> METAL_GIRDER_ENCASED_ANDESITE_SHAFT = metalGirderEncasedShaft("metal_girder_encased_andesite_shaft", ULV, TM[0], Shafts.ANDESITE_SHAFT);
-    public static final BlockEntry<TieredGirderEncasedShaftBlock> METAL_GIRDER_ENCASED_STEEL_SHAFT = metalGirderEncasedShaft("metal_girder_encased_steel_shaft", LV, TM[1], Shafts.STEEL_SHAFT);
-    public static final BlockEntry<TieredGirderEncasedShaftBlock> METAL_GIRDER_ENCASED_ALUMINIUM_SHAFT = metalGirderEncasedShaft("metal_girder_encased_aluminium_shaft", MV, TM[2], Shafts.ALUMINIUM_SHAFT);
-    public static final BlockEntry<TieredGirderEncasedShaftBlock> METAL_GIRDER_ENCASED_STAINLESS_STEEL_SHAFT = metalGirderEncasedShaft("metal_girder_encased_stainless_steel_shaft", HV, TM[3], Shafts.STAINLESS_STEEL_SHAFT);
-    public static final BlockEntry<TieredGirderEncasedShaftBlock> METAL_GIRDER_ENCASED_TITANIUM_SHAFT = metalGirderEncasedShaft("metal_girder_encased_titanium_shaft", EV, TM[4], Shafts.TITANIUM_SHAFT);
-    public static final BlockEntry<TieredGirderEncasedShaftBlock> METAL_GIRDER_ENCASED_TUNGSTENSTEEL_SHAFT = metalGirderEncasedShaft("metal_girder_encased_tungstensteel_shaft", IV, TM[5], Shafts.TUNGSTENSTEEL_SHAFT);
-    public static final BlockEntry<TieredGirderEncasedShaftBlock> METAL_GIRDER_ENCASED_PALLADIUM_SHAFT = metalGirderEncasedShaft("metal_girder_encased_palladium_shaft", LuV, TM[6], Shafts.PALLADIUM_SHAFT);
-    public static final BlockEntry<TieredGirderEncasedShaftBlock> METAL_GIRDER_ENCASED_NAQUADAH_SHAFT = metalGirderEncasedShaft("metal_girder_encased_naquadah_shaft", ZPM, TM[7], Shafts.NAQUADAH_SHAFT);
-    public static final BlockEntry<TieredGirderEncasedShaftBlock> METAL_GIRDER_ENCASED_DARMSTADTIUM_SHAFT = metalGirderEncasedShaft("metal_girder_encased_darmstadtium_shaft", UV, TM[8], Shafts.DARMSTADTIUM_SHAFT);
-    public static final BlockEntry<TieredGirderEncasedShaftBlock> METAL_GIRDER_ENCASED_NEUTRONIUM_SHAFT = metalGirderEncasedShaft("metal_girder_encased_neutronium_shaft", UHV, TM[9], Shafts.NEUTRONIUM_SHAFT);
+    private static BlockEntry<TieredGirderEncasedShaftBlock> metalGirderEncasedShaft(int tier) {
+        return metalGirderEncasedShaft(tier, TM[tier], SHAFTS[tier]);
+    }
 
-    public static BlockEntry<TieredGirderEncasedShaftBlock> metalGirderEncasedShaft(String name, int tier, String materialType, BlockEntry<TieredShaftBlock> shaft) {
+    public static BlockEntry<TieredGirderEncasedShaftBlock> metalGirderEncasedShaft(int tier, Material material, BlockEntry<TieredShaftBlock> shaft) {
         return REGISTRATE
-                .block(name, p -> new TieredGirderEncasedShaftBlock(p, shaft::get))
+                .block("metal_girder_encased_" + material.getName() + "_shaft", p -> new TieredGirderEncasedShaftBlock(p, shaft::get))
                 .initialProperties(SharedProperties::softMetal)
                 .blockstate(GreateGirderBlockStateGenerator::blockStateWithShaft)
                 .properties(p -> p.mapColor(MapColor.COLOR_GRAY))
@@ -55,9 +74,7 @@ public class Girders {
                 .onRegister(CreateRegistrate.blockModel(() -> ConnectedGirderModel::new))
                 .onRegister(c -> c.setTier(tier))
                 .transform(GirderEncasingRegistry.addVariantTo(shaft))
-                .transform(TieredBlockMaterials.setMaterialTypeForBlock(materialType))
+                .transform(TieredBlockMaterials.setMaterialForBlock(material))
                 .register();
     }
-
-    public static void register() {}
 }

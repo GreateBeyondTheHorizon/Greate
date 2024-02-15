@@ -1,0 +1,7 @@
+{
+  "parent": "create:block/cogwheel_shaftless",
+  "textures": {
+    "1_2": "greate:block/rhodium_plated_palladium/cogwheel",
+    "particle": "greate:block/rhodium_plated_palladium/cogwheel"
+  }
+}

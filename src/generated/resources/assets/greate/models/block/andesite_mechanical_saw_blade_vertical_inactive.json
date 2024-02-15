@@ -1,7 +1,0 @@
-{
-  "parent": "create:block/mechanical_saw/blade_vertical_inactive",
-  "textures": {
-    "stonecutter_saw": "greate:block/andesite/static_saw",
-    "stonecutter_saw_reversed": "greate:block/andesite/static_saw"
-  }
-}

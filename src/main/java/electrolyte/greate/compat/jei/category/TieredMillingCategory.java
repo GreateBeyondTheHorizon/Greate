@@ -53,6 +53,6 @@ public class TieredMillingCategory extends GreateRecipeCategory<TieredAbstractCr
         super.draw(recipe, recipeSlotsView, graphics, 1, 57);
         AllGuiTextures.JEI_ARROW.render(graphics, 85, 32);
         AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 43, 4);
-        new TieredAnimatedMillstone(Millstones.MILLSTONES.get(recipe.getRecipeTier())).draw(graphics, 48, 27);
+        new TieredAnimatedMillstone(Millstones.MILLSTONES[recipe.getRecipeTier()].get()).draw(graphics, 48, 27);
     }
 }

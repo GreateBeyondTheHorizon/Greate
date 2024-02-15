@@ -18,7 +18,6 @@ public class TieredPumpBlock extends PumpBlock implements ITieredBlock, ITieredP
 	public TieredPumpBlock(Properties properties, PartialModel model) {
 		super(properties);
 		this.model = model;
-		Pumps.PUMPS.add(this);
 	}
 
 	@Override

@@ -26,7 +26,6 @@ import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.infrastructure.config.AllConfigs;
 import com.simibubi.create.infrastructure.config.CRecipes;
 import electrolyte.greate.Greate;
-
 import electrolyte.greate.compat.jei.category.*;
 import electrolyte.greate.compat.jei.category.GreateRecipeCategory.Info;
 import electrolyte.greate.compat.jei.category.TieredBlockCuttingCategory.TieredCondensedBlockCuttingRecipe;
@@ -71,6 +70,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import static com.gregtechceu.gtceu.api.GTValues.ULV;
 
@@ -91,16 +91,9 @@ public class GreateJEI implements IModPlugin {
                     .addTypedRecipes(ModRecipeTypes.MILLING)
                     .addTypedRecipes(AllRecipeTypes.MILLING::getType, TieredMillingRecipe::convertNormalMilling)
                     .addTypedRecipesGT(GTRecipeTypes.MACERATOR_RECIPES, (r) -> TieredMillingRecipe.convertGT(r, ULV))
-                    .catalyst(Millstones.ANDESITE_MILLSTONE::get)
-                    .catalyst(Millstones.STEEL_MILLSTONE::get)
-                    .catalyst(Millstones.ALUMINIUM_MILLSTONE::get)
-                    .catalyst(Millstones.STAINLESS_STEEL_MILLSTONE::get)
-                    .catalyst(Millstones.TITANIUM_MILLSTONE::get)
-                    .catalyst(Millstones.TUNGSTENSTEEL_MILLSTONE::get)
-                    .catalyst(Millstones.PALLADIUM_MILLSTONE::get)
-                    .catalyst(Millstones.NAQUADAH_MILLSTONE::get)
-                    .catalyst(Millstones.DARMSTADTIUM_MILLSTONE::get)
-                    .catalyst(Millstones.NEUTRONIUM_MILLSTONE::get)
+                    .catalysts(Arrays.stream(Millstones.MILLSTONES)
+                            .<Supplier<ItemLike>>map(o -> o::get)
+                            .collect(Collectors.toList()))
                     .doubleIconItem(Millstones.NEUTRONIUM_MILLSTONE.get(), AllItems.WHEAT_FLOUR.get())
                     .emptyBackground(177, 68)
                     .build("milling", TieredMillingCategory::new),
@@ -110,16 +103,9 @@ public class GreateJEI implements IModPlugin {
                         .addTypedRecipes(ModRecipeTypes.CRUSHING::getType)
                         .addTypedRecipesExcludingGT(AllRecipeTypes.CRUSHING::getType, GTRecipeTypes.MACERATOR_RECIPES, r -> TieredCrushingRecipe.convertNormalCrushing(r, ULV))
                         .addTypedRecipesExcluding(AllRecipeTypes.MILLING::getType, AllRecipeTypes.CRUSHING::getType, r -> TieredCrushingRecipe.convertNormalCrushing(r, ULV))
-                        .catalyst(CrushingWheels.ANDESITE_CRUSHING_WHEEL::get)
-                        .catalyst(CrushingWheels.STEEL_CRUSHING_WHEEL::get)
-                        .catalyst(CrushingWheels.ALUMINIUM_CRUSHING_WHEEL::get)
-                        .catalyst(CrushingWheels.STAINLESS_STEEL_CRUSHING_WHEEL::get)
-                        .catalyst(CrushingWheels.TITANIUM_CRUSHING_WHEEL::get)
-                        .catalyst(CrushingWheels.TUNGSTENSTEEL_CRUSHING_WHEEL::get)
-                        .catalyst(CrushingWheels.PALLADIUM_CRUSHING_WHEEL::get)
-                        .catalyst(CrushingWheels.NAQUADAH_CRUSHING_WHEEL::get)
-                        .catalyst(CrushingWheels.DARMSTADTIUM_CRUSHING_WHEEL::get)
-                        .catalyst(CrushingWheels.NEUTRONIUM_CRUSHING_WHEEL::get)
+                        .catalysts(Arrays.stream(CrushingWheels.CRUSHING_WHEELS)
+                                .<Supplier<ItemLike>>map(o -> o::get)
+                                .collect(Collectors.toList()))
                         .doubleIconItem(CrushingWheels.NEUTRONIUM_CRUSHING_WHEEL.get(), AllItems.CRUSHED_GOLD.get())
                         .emptyBackground(177, 115)
                         .build("crushing", TieredCrushingCategory::new),
@@ -128,16 +114,9 @@ public class GreateJEI implements IModPlugin {
                         .addTypedRecipesGT(GTRecipeTypes.BENDER_RECIPES, r -> TieredPressingRecipe.convertGT(r, ULV))
                         .addTypedRecipes(ModRecipeTypes.PRESSING::getType)
                         .addTypedRecipesExcludingGT(AllRecipeTypes.PRESSING::getType, GTRecipeTypes.BENDER_RECIPES, TieredPressingRecipe::convertNormalPressing)
-                        .catalyst(MechanicalPresses.ANDESITE_MECHANICAL_PRESS::get)
-                        .catalyst(MechanicalPresses.STEEL_MECHANICAL_PRESS::get)
-                        .catalyst(MechanicalPresses.ALUMINIUM_MECHANICAL_PRESS::get)
-                        .catalyst(MechanicalPresses.STAINLESS_STEEL_MECHANICAL_PRESS::get)
-                        .catalyst(MechanicalPresses.TITANIUM_MECHANICAL_PRESS::get)
-                        .catalyst(MechanicalPresses.TUNGSTENSTEEL_MECHANICAL_PRESS::get)
-                        .catalyst(MechanicalPresses.PALLADIUM_MECHANICAL_PRESS::get)
-                        .catalyst(MechanicalPresses.NAQUADAH_MECHANICAL_PRESS::get)
-                        .catalyst(MechanicalPresses.DARMSTADTIUM_MECHANICAL_PRESS::get)
-                        .catalyst(MechanicalPresses.NEUTRONIUM_MECHANICAL_PRESS::get)
+                        .catalysts(Arrays.stream(MechanicalPresses.MECHANICAL_PRESSES)
+                                .<Supplier<ItemLike>>map(o -> o::get)
+                                .collect(Collectors.toList()))
                         .doubleIconItem(MechanicalPresses.NEUTRONIUM_MECHANICAL_PRESS.get(), AllItems.IRON_SHEET.get())
                         .emptyBackground(177, 85)
                         .build("pressing", TieredPressingCategory::new),
@@ -146,16 +125,9 @@ public class GreateJEI implements IModPlugin {
                         .addTypedRecipesGT(GTRecipeTypes.MIXER_RECIPES, r -> TieredMixingRecipe.convertGTMixing(r, ULV))
                         .addTypedRecipes(ModRecipeTypes.MIXING::getType)
                         .addTypedRecipesExcludingGT(AllRecipeTypes.MIXING::getType, GTRecipeTypes.MIXER_RECIPES, TieredMixingRecipe::convertUntieredRecipe)
-                        .catalyst(MechanicalMixers.ANDESITE_MECHANICAL_MIXER::get)
-                        .catalyst(MechanicalMixers.STEEL_MECHANICAL_MIXER::get)
-                        .catalyst(MechanicalMixers.ALUMINIUM_MECHANICAL_MIXER::get)
-                        .catalyst(MechanicalMixers.STAINLESS_STEEL_MECHANICAL_MIXER::get)
-                        .catalyst(MechanicalMixers.TITANIUM_MECHANICAL_MIXER::get)
-                        .catalyst(MechanicalMixers.TUNGSTENSTEEL_MECHANICAL_MIXER::get)
-                        .catalyst(MechanicalMixers.PALLADIUM_MECHANICAL_MIXER::get)
-                        .catalyst(MechanicalMixers.NAQUADAH_MECHANICAL_MIXER::get)
-                        .catalyst(MechanicalMixers.DARMSTADTIUM_MECHANICAL_MIXER::get)
-                        .catalyst(MechanicalMixers.NEUTRONIUM_MECHANICAL_MIXER::get)
+                        .catalysts(Arrays.stream(MechanicalMixers.MECHANICAL_MIXERS)
+                                .<Supplier<ItemLike>>map(o -> o::get)
+                                .collect(Collectors.toList()))
                         .doubleIconItem(MechanicalMixers.NEUTRONIUM_MECHANICAL_MIXER.get(), AllBlocks.BASIN.get())
                         .emptyBackground(177, 118)
                         .build("mixing", TieredMixingCategory::standard),
@@ -169,19 +141,12 @@ public class GreateJEI implements IModPlugin {
                                 !AllRecipeTypes.shouldIgnoreInAutomation(r) &&
                                 !ModRecipeTypes.shouldIgnoreInAutomation(r),
                                 TieredBasinRecipe::convertShapeless)
-                        .catalyst(MechanicalMixers.ANDESITE_MECHANICAL_MIXER::get)
-                        .catalyst(MechanicalMixers.STEEL_MECHANICAL_MIXER::get)
-                        .catalyst(MechanicalMixers.ALUMINIUM_MECHANICAL_MIXER::get)
-                        .catalyst(MechanicalMixers.STAINLESS_STEEL_MECHANICAL_MIXER::get)
-                        .catalyst(MechanicalMixers.TITANIUM_MECHANICAL_MIXER::get)
-                        .catalyst(MechanicalMixers.TUNGSTENSTEEL_MECHANICAL_MIXER::get)
-                        .catalyst(MechanicalMixers.PALLADIUM_MECHANICAL_MIXER::get)
-                        .catalyst(MechanicalMixers.NAQUADAH_MECHANICAL_MIXER::get)
-                        .catalyst(MechanicalMixers.DARMSTADTIUM_MECHANICAL_MIXER::get)
-                        .catalyst(MechanicalMixers.NEUTRONIUM_MECHANICAL_MIXER::get)
+                        .catalysts(Arrays.stream(MechanicalMixers.MECHANICAL_MIXERS)
+                                .<Supplier<ItemLike>>map(o -> o::get)
+                                .collect(Collectors.toList()))
                         .catalyst(AllBlocks.BASIN::get)
                         .doubleIconItem(MechanicalMixers.NEUTRONIUM_MECHANICAL_MIXER, Items.CRAFTING_TABLE)
-                        .emptyBackground(177, 85)
+                        .emptyBackground(177, 100)
                         .build("automatic_shapeless", TieredMixingCategory::autoShapeless),
 
                 brewing = builder(TieredBasinRecipe.class)
@@ -191,16 +156,9 @@ public class GreateJEI implements IModPlugin {
                             PotionMixingRecipes.ALL.forEach(potionRecipe -> brewingRecipes.add(TieredMixingRecipe.convertUntieredRecipe(potionRecipe)));
                             return brewingRecipes;
                         })
-                        .catalyst(MechanicalMixers.ANDESITE_MECHANICAL_MIXER::get)
-                        .catalyst(MechanicalMixers.STEEL_MECHANICAL_MIXER::get)
-                        .catalyst(MechanicalMixers.ALUMINIUM_MECHANICAL_MIXER::get)
-                        .catalyst(MechanicalMixers.STAINLESS_STEEL_MECHANICAL_MIXER::get)
-                        .catalyst(MechanicalMixers.TITANIUM_MECHANICAL_MIXER::get)
-                        .catalyst(MechanicalMixers.TUNGSTENSTEEL_MECHANICAL_MIXER::get)
-                        .catalyst(MechanicalMixers.PALLADIUM_MECHANICAL_MIXER::get)
-                        .catalyst(MechanicalMixers.NAQUADAH_MECHANICAL_MIXER::get)
-                        .catalyst(MechanicalMixers.DARMSTADTIUM_MECHANICAL_MIXER::get)
-                        .catalyst(MechanicalMixers.NEUTRONIUM_MECHANICAL_MIXER::get)
+                        .catalysts(Arrays.stream(MechanicalMixers.MECHANICAL_MIXERS)
+                                .<Supplier<ItemLike>>map(o -> o::get)
+                                .collect(Collectors.toList()))
                         .catalyst(AllBlocks.BASIN::get)
                         .doubleIconItem(MechanicalMixers.NEUTRONIUM_MECHANICAL_MIXER.get(), Blocks.BREWING_STAND)
                         .emptyBackground(177, 118)
@@ -209,16 +167,9 @@ public class GreateJEI implements IModPlugin {
                 packing = builder(TieredBasinRecipe.class)
                         .addTypedRecipes(AllRecipeTypes.COMPACTING::getType, TieredCompactingRecipe::convertNormalBasin)
                         .addTypedRecipes(ModRecipeTypes.COMPACTING::getType)
-                        .catalyst(MechanicalPresses.ANDESITE_MECHANICAL_PRESS::get)
-                        .catalyst(MechanicalPresses.STEEL_MECHANICAL_PRESS::get)
-                        .catalyst(MechanicalPresses.ALUMINIUM_MECHANICAL_PRESS::get)
-                        .catalyst(MechanicalPresses.STAINLESS_STEEL_MECHANICAL_PRESS::get)
-                        .catalyst(MechanicalPresses.TITANIUM_MECHANICAL_PRESS::get)
-                        .catalyst(MechanicalPresses.TUNGSTENSTEEL_MECHANICAL_PRESS::get)
-                        .catalyst(MechanicalPresses.PALLADIUM_MECHANICAL_PRESS::get)
-                        .catalyst(MechanicalPresses.NAQUADAH_MECHANICAL_PRESS::get)
-                        .catalyst(MechanicalPresses.DARMSTADTIUM_MECHANICAL_PRESS::get)
-                        .catalyst(MechanicalPresses.NEUTRONIUM_MECHANICAL_PRESS::get)
+                        .catalysts(Arrays.stream(MechanicalPresses.MECHANICAL_PRESSES)
+                                .<Supplier<ItemLike>>map(o -> o::get)
+                                .collect(Collectors.toList()))
                         .catalyst(AllBlocks.BASIN::get)
                         .doubleIconItem(MechanicalPresses.NEUTRONIUM_MECHANICAL_PRESS.get(), AllBlocks.BASIN.get())
                         .emptyBackground(177, 118)
@@ -232,35 +183,21 @@ public class GreateJEI implements IModPlugin {
                                 !AllRecipeTypes.shouldIgnoreInAutomation(r) &&
                                 !ModRecipeTypes.shouldIgnoreInAutomation(r),
                                 TieredBasinRecipe::convertShapeless)
-                        .catalyst(MechanicalPresses.ANDESITE_MECHANICAL_PRESS::get)
-                        .catalyst(MechanicalPresses.STEEL_MECHANICAL_PRESS::get)
-                        .catalyst(MechanicalPresses.ALUMINIUM_MECHANICAL_PRESS::get)
-                        .catalyst(MechanicalPresses.STAINLESS_STEEL_MECHANICAL_PRESS::get)
-                        .catalyst(MechanicalPresses.TITANIUM_MECHANICAL_PRESS::get)
-                        .catalyst(MechanicalPresses.TUNGSTENSTEEL_MECHANICAL_PRESS::get)
-                        .catalyst(MechanicalPresses.PALLADIUM_MECHANICAL_PRESS::get)
-                        .catalyst(MechanicalPresses.NAQUADAH_MECHANICAL_PRESS::get)
-                        .catalyst(MechanicalPresses.DARMSTADTIUM_MECHANICAL_PRESS::get)
-                        .catalyst(MechanicalPresses.NEUTRONIUM_MECHANICAL_PRESS::get)
+                        .catalysts(Arrays.stream(MechanicalPresses.MECHANICAL_PRESSES)
+                                .<Supplier<ItemLike>>map(o -> o::get)
+                                .collect(Collectors.toList()))
                         .catalyst(AllBlocks.BASIN::get)
                         .doubleIconItem(MechanicalPresses.NEUTRONIUM_MECHANICAL_PRESS, Blocks.CRAFTING_TABLE)
-                        .emptyBackground(177, 85)
+                        .emptyBackground(177, 100)
                         .build("automatic_packing", TieredPackingCategory::autoSquare),
 
                 sawing = builder(TieredCuttingRecipe.class)
                         .addTypedRecipesGT(GTRecipeTypes.CUTTER_RECIPES, r -> TieredCuttingRecipe.convertGTCutter(r, ULV))
                         .addTypedRecipes(ModRecipeTypes.CUTTING::getType)
                         .addTypedRecipesExcludingGT(AllRecipeTypes.CUTTING::getType, GTRecipeTypes.CUTTER_RECIPES, TieredCuttingRecipe::convertNormalSawing)
-                        .catalyst(Saws.ANDESITE_SAW::get)
-                        .catalyst(Saws.STEEL_SAW::get)
-                        .catalyst(Saws.ALUMINIUM_SAW::get)
-                        .catalyst(Saws.STAINLESS_STEEL_SAW::get)
-                        .catalyst(Saws.TITANIUM_SAW::get)
-                        .catalyst(Saws.TUNGSTENSTEEL_SAW::get)
-                        .catalyst(Saws.PALLADIUM_SAW::get)
-                        .catalyst(Saws.NAQUADAH_SAW::get)
-                        .catalyst(Saws.DARMSTADTIUM_SAW::get)
-                        .catalyst(Saws.NEUTRONIUM_SAW::get)
+                        .catalysts(Arrays.stream(Saws.SAWS)
+                                .<Supplier<ItemLike>>map(o -> o::get)
+                                .collect(Collectors.toList()))
                         .doubleIconItem(Saws.NEUTRONIUM_SAW, Items.OAK_LOG)
                         .emptyBackground(177, 85)
                         .build("sawing", TieredSawingCategory::new),
@@ -268,16 +205,9 @@ public class GreateJEI implements IModPlugin {
                 blockCutting = builder(TieredCondensedBlockCuttingRecipe.class)
                         .enableWhen(c -> c.allowStonecuttingOnSaw)
                         .addRecipes(() -> TieredBlockCuttingCategory.condenseRecipes(getTypedRecipesExcluding(RecipeType.STONECUTTING, Predicates.or(AllRecipeTypes::shouldIgnoreInAutomation, ModRecipeTypes::shouldIgnoreInAutomation))))
-                        .catalyst(Saws.ANDESITE_SAW::get)
-                        .catalyst(Saws.STEEL_SAW::get)
-                        .catalyst(Saws.ALUMINIUM_SAW::get)
-                        .catalyst(Saws.STAINLESS_STEEL_SAW::get)
-                        .catalyst(Saws.TITANIUM_SAW::get)
-                        .catalyst(Saws.TUNGSTENSTEEL_SAW::get)
-                        .catalyst(Saws.PALLADIUM_SAW::get)
-                        .catalyst(Saws.NAQUADAH_SAW::get)
-                        .catalyst(Saws.DARMSTADTIUM_SAW::get)
-                        .catalyst(Saws.NEUTRONIUM_SAW::get)
+                        .catalysts(Arrays.stream(Saws.SAWS)
+                                .<Supplier<ItemLike>>map(o -> o::get)
+                                .collect(Collectors.toList()))
                         .doubleIconItem(Saws.NEUTRONIUM_SAW.get(), Items.STONE_BRICK_STAIRS)
                         .emptyBackground(177, 70)
                         .build("block_cutting", TieredBlockCuttingCategory::new),
@@ -286,17 +216,10 @@ public class GreateJEI implements IModPlugin {
                         .enableIf(c -> c.allowWoodcuttingOnSaw.get() &&
                                 ModList.get().isLoaded("druidcraft"))
                         .addRecipes(() -> TieredBlockCuttingCategory.condenseRecipes(getTypedRecipesExcluding(TieredSawBlockEntity.woodcuttingRecipeType.get(), Predicates.or(AllRecipeTypes::shouldIgnoreInAutomation, ModRecipeTypes::shouldIgnoreInAutomation))))
-                                .catalyst(Saws.ANDESITE_SAW::get)
-                                .catalyst(Saws.STEEL_SAW::get)
-                                .catalyst(Saws.ALUMINIUM_SAW::get)
-                                .catalyst(Saws.STAINLESS_STEEL_SAW::get)
-                                .catalyst(Saws.TITANIUM_SAW::get)
-                                .catalyst(Saws.TUNGSTENSTEEL_SAW::get)
-                                .catalyst(Saws.PALLADIUM_SAW::get)
-                                .catalyst(Saws.NAQUADAH_SAW::get)
-                                .catalyst(Saws.DARMSTADTIUM_SAW::get)
-                                .catalyst(Saws.NEUTRONIUM_SAW::get)
-                                .doubleIconItem(Saws.NEUTRONIUM_SAW.get(), Items.OAK_STAIRS)
+                        .catalysts(Arrays.stream(Saws.SAWS)
+                                .<Supplier<ItemLike>>map(o -> o::get)
+                                .collect(Collectors.toList()))
+                        .doubleIconItem(Saws.NEUTRONIUM_SAW.get(), Items.OAK_STAIRS)
                         .emptyBackground(177, 70)
                         .build("wood_cutting", TieredBlockCuttingCategory::new);
     }
@@ -463,8 +386,32 @@ public class GreateJEI implements IModPlugin {
             return this;
         }
 
+        public final CategoryBuilder<T> catalystStacks(Collection<Supplier<ItemStack>> suppliers) {
+            catalysts.addAll(suppliers);
+            return this;
+        }
+
+        @SafeVarargs
+        public final CategoryBuilder<T> catalystStacks(Supplier<ItemStack>... suppliers) {
+            catalysts.addAll(List.of(suppliers));
+            return this;
+        }
+
         public CategoryBuilder<T> catalyst(Supplier<ItemLike> supplier) {
             return catalystStack(() -> new ItemStack(supplier.get().asItem()));
+        }
+
+        public CategoryBuilder<T> catalysts(Collection<Supplier<ItemLike>> suppliers) {
+            return catalystStacks(suppliers.stream()
+                    .map(supplier -> (Supplier<ItemStack>) () -> new ItemStack(supplier.get().asItem()))
+                    .collect(Collectors.toList()));
+        }
+
+        @SafeVarargs
+        public final CategoryBuilder<T> catalysts(Supplier<ItemLike>... suppliers) {
+            return catalystStacks(Arrays.stream(suppliers)
+                    .map(supplier -> (Supplier<ItemStack>) () -> new ItemStack(supplier.get().asItem()))
+                    .collect(Collectors.toList()));
         }
 
         public CategoryBuilder<T> icon(IDrawable icon) {

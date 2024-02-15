@@ -31,7 +31,6 @@ public class TieredCrushingWheelBlock extends CrushingWheelBlock implements ITie
 
     public TieredCrushingWheelBlock(Properties properties) {
         super(properties);
-        CrushingWheels.CRUSHING_WHEELS.add(this);
     }
 
     @Override

@@ -7,7 +7,6 @@ import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.LangBuilder;
 import electrolyte.greate.Greate;
-
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import net.minecraft.ChatFormatting;
@@ -55,7 +54,7 @@ public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKinet
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
-        ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, tier, capacity);
+        ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, tier, capacity, stress);
         if(canProcess()) {
             IFluidHandler fluid = fluidCapability.orElse(new FluidTank(0));
             LangBuilder mb = Lang.translate("generic.unit.millibuckets");

@@ -53,7 +53,6 @@ public class TieredSawBlock extends SawBlock implements ITieredBlock, ITieredSha
         this.shaft = shaft;
         this.halfShaftModel = halfShaftModel;
         this.sawModels = sawModels;
-        Saws.SAWS.add(this);
     }
 
     @Override

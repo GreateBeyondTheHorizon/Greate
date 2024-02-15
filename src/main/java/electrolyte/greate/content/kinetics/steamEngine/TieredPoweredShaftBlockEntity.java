@@ -1,7 +1,6 @@
 package electrolyte.greate.content.kinetics.steamEngine;
 
 import com.simibubi.create.content.kinetics.steamEngine.PoweredShaftBlockEntity;
-
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -23,6 +22,6 @@ public class TieredPoweredShaftBlockEntity extends PoweredShaftBlockEntity imple
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
-        return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, tier, capacity);
+        return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, tier, capacity, stress);
     }
 }

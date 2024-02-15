@@ -136,6 +136,14 @@ public class GreateAdvancement {
             return externalTrigger(InventoryChangeTrigger.TriggerInstance.hasItems(new ItemLike[] {}));
         }
 
+        Builder whenItemsConsumed(ItemLike... items) {
+            Builder builder = externalTrigger(ConsumeItemTrigger.TriggerInstance.usedItem(items[0]));
+            for (int i = 1; i < items.length; i++) {
+                builder = externalTrigger(ConsumeItemTrigger.TriggerInstance.usedItem(items[i]));
+            }
+            return builder;
+        }
+
         Builder whenItemConsumed(ItemLike item) {
             return externalTrigger(ConsumeItemTrigger.TriggerInstance.usedItem(item));
         }

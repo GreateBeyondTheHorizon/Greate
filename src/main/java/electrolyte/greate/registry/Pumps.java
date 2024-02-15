@@ -1,5 +1,6 @@
 package electrolyte.greate.registry;
 
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.content.kinetics.BlockStressDefaults;
 import com.simibubi.create.foundation.data.SharedProperties;
@@ -13,42 +14,54 @@ import electrolyte.greate.content.fluids.pump.TieredPumpBlock;
 import electrolyte.greate.foundation.data.GreateBuilderTransformers;
 import net.minecraft.world.level.material.MapColor;
 
-import java.util.ArrayList;
-
 import static electrolyte.greate.Greate.REGISTRATE;
 import static electrolyte.greate.GreateValues.TM;
+import static electrolyte.greate.registry.GreatePartialModels.MECHANICAL_PUMP_COG_MODELS;
 
 public class Pumps {
 
-	static {
+	public static BlockEntry<TieredPumpBlock>[] MECHANICAL_PUMPS = new BlockEntry[10];
+	public static BlockEntry<TieredPumpBlock>
+			ANDESITE_MECHANICAL_PUMP,
+			STEEL_MECHANICAL_PUMP,
+			ALUMINIUM_MECHANICAL_PUMP,
+			STAINLESS_STEEL_MECHANICAL_PUMP,
+			TITANIUM_MECHANICAL_PUMP,
+			TUNGSTENSTEEL_MECHANICAL_PUMP,
+			PALLADIUM_MECHANICAL_PUMP,
+			NAQUADAH_MECHANICAL_PUMP,
+			DARMSTADTIUM_MECHANICAL_PUMP,
+			NEUTRONIUM_MECHANICAL_PUMP;
+
+	public static void register() {
 		REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
+
+		MECHANICAL_PUMPS[ULV] = ANDESITE_MECHANICAL_PUMP = pump(ULV, 0.5);
+		MECHANICAL_PUMPS[LV] = STEEL_MECHANICAL_PUMP = pump(LV, 1.0);
+		MECHANICAL_PUMPS[MV] = ALUMINIUM_MECHANICAL_PUMP = pump(MV, 1.5);
+		MECHANICAL_PUMPS[HV] = STAINLESS_STEEL_MECHANICAL_PUMP = pump(HV, 2.0);
+		MECHANICAL_PUMPS[EV] = TITANIUM_MECHANICAL_PUMP = pump(EV, 2.5);
+		MECHANICAL_PUMPS[IV] = TUNGSTENSTEEL_MECHANICAL_PUMP = pump(IV, 3.0);
+		MECHANICAL_PUMPS[LuV] = PALLADIUM_MECHANICAL_PUMP = pump(LuV, 3.5);
+		MECHANICAL_PUMPS[ZPM] = NAQUADAH_MECHANICAL_PUMP = pump(ZPM, 4.0);
+		MECHANICAL_PUMPS[UV] = DARMSTADTIUM_MECHANICAL_PUMP = pump(UV, 4.5);
+		MECHANICAL_PUMPS[UHV] = NEUTRONIUM_MECHANICAL_PUMP = pump(UHV, 5.0);
 	}
 
-	public static ArrayList<TieredPumpBlock> PUMPS = new ArrayList<>();
+	private static BlockEntry<TieredPumpBlock> pump(int tier, double pumpImpact) {
+		return pump(tier, TM[tier], MECHANICAL_PUMP_COG_MODELS[tier], pumpImpact);
+	}
 
-	public static final BlockEntry<TieredPumpBlock> ANDESITE_MECHANICAL_PUMP = pump("andesite_mechanical_pump", ULV, TM[0], GreatePartialModels.ANDESITE_PUMP_COG, 0.5);
-	public static final BlockEntry<TieredPumpBlock> STEEL_MECHANICAL_PUMP = pump("steel_mechanical_pump", LV, TM[1], GreatePartialModels.STEEL_PUMP_COG, 1.0);
-	public static final BlockEntry<TieredPumpBlock> ALUMINIUM_MECHANICAL_PUMP = pump("aluminium_mechanical_pump", MV, TM[2], GreatePartialModels.ALUMINIUM_PUMP_COG, 1.5);
-	public static final BlockEntry<TieredPumpBlock> STAINLESS_STEEL_MECHANICAL_PUMP = pump("stainless_steel_mechanical_pump", HV, TM[3], GreatePartialModels.STAINLESS_STEEL_PUMP_COG, 2.0);
-	public static final BlockEntry<TieredPumpBlock> TITANIUM_MECHANICAL_PUMP = pump("titanium_mechanical_pump", EV, TM[4], GreatePartialModels.TITANIUM_PUMP_COG, 2.5);
-	public static final BlockEntry<TieredPumpBlock> TUNGSTENSTEEL_MECHANICAL_PUMP = pump("tungstensteel_mechanical_pump", IV, TM[5], GreatePartialModels.TUNGSTENSTEEL_PUMP_COG, 3.0);
-	public static final BlockEntry<TieredPumpBlock> PALLADIUM_MECHANICAL_PUMP = pump("palladium_mechanical_pump", LuV, TM[6], GreatePartialModels.PALLADIUM_PUMP_COG, 3.5);
-	public static final BlockEntry<TieredPumpBlock> NAQUADAH_MECHANICAL_PUMP = pump("naquadah_mechanical_pump", ZPM, TM[7], GreatePartialModels.NAQUADAH_PUMP_COG, 4.0);
-	public static final BlockEntry<TieredPumpBlock> DARMSTADTIUM_MECHANICAL_PUMP = pump("darmstadtium_mechanical_pump", UV, TM[8], GreatePartialModels.DARMSTADTIUM_PUMP_COG, 4.5);
-	public static final BlockEntry<TieredPumpBlock> NEUTRONIUM_MECHANICAL_PUMP = pump("neutronium_mechanical_pump", UHV, TM[9], GreatePartialModels.NEUTRONIUM_PUMP_COG, 5.0);
-
-	public static BlockEntry<TieredPumpBlock> pump(String name, int tier, String materialType, PartialModel mechanicalPumpCogModel, double pumpImpact) {
+	public static BlockEntry<TieredPumpBlock> pump(int tier, Material material, PartialModel mechanicalPumpCogModel, double pumpImpact) {
 		return REGISTRATE
-				.block(name, p -> new TieredPumpBlock(p, mechanicalPumpCogModel))
+				.block(material.getName() + "_mechanical_pump", p -> new TieredPumpBlock(p, mechanicalPumpCogModel))
 				.initialProperties(SharedProperties::copperMetal)
 				.properties(p -> p.mapColor(MapColor.STONE))
 				.transform(pickaxeOnly())
 				.transform(GreateBuilderTransformers.tieredMechanicalPump())
 				.transform(BlockStressDefaults.setImpact(pumpImpact))
-				.transform(TieredBlockMaterials.setMaterialTypeForBlock(materialType))
+				.transform(TieredBlockMaterials.setMaterialForBlock(material))
 				.onRegister(c -> c.setTier(tier))
 				.register();
 	}
-
-	public static void register() {}
 }

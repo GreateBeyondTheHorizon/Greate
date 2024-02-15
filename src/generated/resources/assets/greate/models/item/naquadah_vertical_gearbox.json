@@ -1,8 +1,0 @@
-{
-  "parent": "create:block/gearbox/item_vertical",
-  "textures": {
-    "0": "greate:block/naquadah/axis",
-    "1": "greate:block/naquadah/axis_top",
-    "particle": "greate:block/naquadah/axis"
-  }
-}

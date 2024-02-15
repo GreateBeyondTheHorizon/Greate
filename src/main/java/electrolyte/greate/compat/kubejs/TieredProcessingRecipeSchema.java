@@ -7,23 +7,13 @@ import dev.latvian.mods.kubejs.item.OutputItem;
 import dev.latvian.mods.kubejs.recipe.RecipeJS;
 import dev.latvian.mods.kubejs.recipe.RecipeKey;
 import dev.latvian.mods.kubejs.recipe.component.NumberComponent.IntRange;
-import dev.latvian.mods.kubejs.recipe.component.StringComponent;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
-
-import electrolyte.greate.GreateValues;
 import electrolyte.greate.compat.kubejs.item.TieredOutputItem;
 import electrolyte.greate.content.processing.recipe.TieredProcessingOutput;
 
-import java.util.Locale;
-
 public interface TieredProcessingRecipeSchema extends ProcessingRecipeSchema {
 
-    RecipeKey<String> RECIPE_TIER = new StringComponent("Invalid Recipe Tier! This recipe's tier will be set to 'ultra_low' (default) instead until this is changed.", s -> {
-        for(String tier : GreateValues.SN) {
-            if(tier.equalsIgnoreCase(s)) return true;
-        }
-        return false;
-    }).key("recipeTier").optional("ultra_low");
+    RecipeKey<Integer> RECIPE_TIER = new IntRange(0, 10).key("recipeTier").optional(0);
 
     RecipeKey<Integer> RECIPE_CIRCUIT = new IntRange(0, 32).key("circuitNumber").optional(-1);
 
@@ -65,7 +55,7 @@ public interface TieredProcessingRecipeSchema extends ProcessingRecipeSchema {
         }
 
         public RecipeJS recipeTier(Object from) {
-            return setValue(RECIPE_TIER, ((String) from).toLowerCase(Locale.ROOT));
+            return setValue(RECIPE_TIER, (int) (double) from);
         }
 
         public RecipeJS circuitNumber(Object from) {

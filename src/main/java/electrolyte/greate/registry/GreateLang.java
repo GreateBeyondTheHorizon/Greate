@@ -9,6 +9,8 @@ public class GreateLang {
         REGISTRATE.addRawLang("greate.tooltip.overcapacity", "Overcapacity");
         REGISTRATE.addRawLang("greate.tooltip.overcapacity.description", "It appears that a shaft on this network has reached §fovercapacity.§7 Reduce the amount of su to an amount that the shaft can support.");
         REGISTRATE.addRawLang("greate.tooltip.capacity", "Kinetic Capacity: ");
+        REGISTRATE.addRawLang("greate.tooltip.capacity", "Max Kinetic Capacity: ");
+        REGISTRATE.addRawLang("greate.tooltip.networkStatistics", "Network Stats: ");
         REGISTRATE.addRawLang("greate.tooltip.circuit_number", "Circuit Number");
         REGISTRATE.addRawLang("greate.recipe.milling", "Milling");
         REGISTRATE.addRawLang("greate.recipe.crushing", "Crushing");
