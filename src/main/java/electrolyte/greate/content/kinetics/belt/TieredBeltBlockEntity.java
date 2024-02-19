@@ -88,12 +88,8 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
     //reading/writing shaft type & tier could probably be done in a less jank way, but hey it 'works' so *shrug*
     @Override
     public void write(CompoundTag compound, boolean clientPacket) {
-        if(((TieredBeltBlock) this.getBlockState().getBlock()).getShaftType() != null) {
-            shaftType = ((TieredBeltBlock) this.getBlockState().getBlock()).getShaftType();
-        }
-        if(((TieredBeltBlock) this.getBlockState().getBlock()).getTier() != -1) {
-            tier = ((TieredBeltBlock) this.getBlockState().getBlock()).getTier();
-        }
+        ((TieredBeltBlock) this.getBlockState().getBlock()).setShaftType(shaftType);
+        ((TieredBeltBlock) this.getBlockState().getBlock()).setTier(tier);
         compound.put("ShaftType", shaftType.serializeNBT());
         compound.putInt("Tier", this.tier);
 
@@ -105,9 +101,7 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
         int prevBeltLength = beltLength;
 
         shaftType = ItemStack.of(compound.getCompound("ShaftType"));
-        ((TieredBeltBlock) this.getBlockState().getBlock()).setShaftType(shaftType);
         this.tier = compound.getInt("Tier");
-        ((TieredBeltBlock) this.getBlockState().getBlock()).setTier(tier);
         beltLength = compound.getInt("Length");
         if(!wasMoved) {
             if(prevBeltLength != beltLength) {

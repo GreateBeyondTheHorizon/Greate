@@ -200,11 +200,7 @@ public class TieredBeltRenderer extends SafeBlockEntityRenderer<TieredBeltBlockE
         Material beltMaterial = tieredBeltBlock.getBeltMaterial();
         String shaftMaterial = "";
         try {
-        if(!tieredBeltBlock.getShaftType().isEmpty()) {
-            shaftMaterial = tieredBeltBlock.getShaftType().toString().substring(2, tieredBeltBlock.getShaftType().toString().length() - 6);
-        } else {
             shaftMaterial = blockEntity.getShaftType().toString().substring(2, blockEntity.getShaftType().toString().length() - 6);
-        }
         } catch(IndexOutOfBoundsException e) {
             Greate.LOGGER.error("Unable to get shaft material for belt {}, the default create shaft will be used until this is fixed!", beltMaterial.getName());
         }
