@@ -9,6 +9,7 @@
     "MixinBasinRenderer",
     "MixinBeltBlock",
     "MixinBeltFunnelBlock",
+    "MixinBeltSlicer",
     "MixinBeltTunnelBlock",
     "MixinBlockEntityBehaviour",
     "MixinBlockStressDefaults",

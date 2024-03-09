@@ -7,7 +7,6 @@ import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.simibubi.create.content.kinetics.belt.BeltBlock;
 import com.simibubi.create.content.kinetics.belt.BeltHelper;
@@ -23,7 +22,6 @@ import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
-import electrolyte.greate.Greate;
 import electrolyte.greate.registry.GreatePartialModels;
 import electrolyte.greate.registry.GreateSpriteShifts;
 import net.minecraft.client.Minecraft;
@@ -34,7 +32,6 @@ import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.core.Vec3i;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.DyeColor;
@@ -45,7 +42,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.Random;
 import java.util.function.Supplier;
 
-public class TieredBeltRenderer extends SafeBlockEntityRenderer<TieredBeltBlockEntity> {
+public class TieredBeltRenderer extends SafeBlockEntityRenderer<TieredBeltBlockEntity> implements IBeltRenderHelper {
 
     public TieredBeltRenderer(Context context) {}
 
@@ -193,19 +190,6 @@ public class TieredBeltRenderer extends SafeBlockEntityRenderer<TieredBeltBlockE
             if(end) return GreatePartialModels.BELT_OVERLAY_END;
             return GreatePartialModels.BELT_OVERLAY_MIDDLE;
         }
-    }
-
-    public static PartialModel getBeltPulleyModel(BlockState blockState, TieredBeltBlockEntity blockEntity) {
-        TieredBeltBlock tieredBeltBlock = (TieredBeltBlock) blockState.getBlock();
-        Material beltMaterial = tieredBeltBlock.getBeltMaterial();
-        String shaftMaterial = "";
-        try {
-            shaftMaterial = blockEntity.getShaftType().toString().substring(2, blockEntity.getShaftType().toString().length() - 6);
-        } catch(IndexOutOfBoundsException e) {
-            Greate.LOGGER.error("Unable to get shaft material for belt {}, the default create shaft will be used until this is fixed!", beltMaterial.getName());
-        }
-        ResourceLocation resourceLocation = new ResourceLocation(Greate.MOD_ID, "block/" + beltMaterial.getName() + "_belt_" + shaftMaterial + "_pulley");
-        return GreatePartialModels.NEW_BELT_MODELS.get(beltMaterial).stream().filter(p -> p.getLocation().equals(resourceLocation)).findFirst().orElse(AllPartialModels.BELT_PULLEY);
     }
 
     protected void renderItems(TieredBeltBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {

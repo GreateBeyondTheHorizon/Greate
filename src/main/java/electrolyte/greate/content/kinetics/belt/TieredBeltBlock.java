@@ -20,7 +20,6 @@ import com.simibubi.create.content.schematics.requirement.ItemRequirement.ItemUs
 import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.tterrag.registrate.util.entry.BlockEntry;
-
 import electrolyte.greate.content.kinetics.belt.item.TieredBeltConnectorItem;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingWheelControllerBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
@@ -90,7 +89,7 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
         BlockEntity be = pBuilder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
         if(be instanceof TieredBeltBlockEntity tbe && tbe.hasPulley()) {
             drops.removeIf(s -> s.is(AllBlocks.SHAFT.asItem()));
-            drops.addAll(Block.byItem(this.getShaftType().getItem()).getDrops(pState, pBuilder));
+            drops.addAll(Block.byItem(tbe.getShaftType().getItem()).getDrops(pState, pBuilder));
         }
         return drops;
     }
@@ -203,7 +202,7 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
                 pLevel.playSound(null, pPos, SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.2F, 1F + new Random().nextFloat());
             }
         }
-        if(isShaft && heldItem.is(((TieredBeltBlockEntity) beltBE).getShaftType().getItem())) {
+        if(isShaft && heldItem.is(((TieredBeltBlockEntity)beltBE).getShaftType().getItem())) {
             if(pState.getValue(PART) != BeltPart.MIDDLE) return InteractionResult.PASS;
             if(pLevel.isClientSide) return InteractionResult.SUCCESS;
             if(!pPlayer.isCreative()) heldItem.shrink(1);
@@ -241,7 +240,8 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
                 return InteractionResult.SUCCESS;
             KineticBlockEntity.switchToBlockState(level, pos, state.setValue(PART, BeltPart.MIDDLE));
             if(player != null && ! player.isCreative()) {
-                player.getInventory().placeItemBackInInventory(getShaftType());
+                TieredBeltBlockEntity beltBE = (TieredBeltBlockEntity) level.getBlockEntity(pos);
+                player.getInventory().placeItemBackInInventory(beltBE.getShaftType());
             }
             return InteractionResult.SUCCESS;
         }

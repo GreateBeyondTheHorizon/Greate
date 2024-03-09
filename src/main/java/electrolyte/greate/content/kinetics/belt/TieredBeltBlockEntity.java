@@ -6,8 +6,6 @@ import com.jozufozu.flywheel.util.box.GridAlignedBB;
 import com.jozufozu.flywheel.util.box.ImmutableBox;
 import com.simibubi.create.content.kinetics.belt.*;
 import com.simibubi.create.content.kinetics.belt.transport.BeltMovementHandler;
-import com.simibubi.create.foundation.utility.NBTHelper;
-
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.core.BlockPos;
@@ -46,6 +44,7 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
         itemHandler = LazyOptional.empty();
         casing = CasingType.NONE;
         color = Optional.empty();
+        shaftType = ((TieredBeltBlock) state.getBlock()).getShaftType();
     }
 
     @Override

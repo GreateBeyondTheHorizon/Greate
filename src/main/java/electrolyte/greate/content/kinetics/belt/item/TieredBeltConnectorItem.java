@@ -3,6 +3,7 @@ package electrolyte.greate.content.kinetics.belt.item;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.belt.BeltBlock;
+import com.simibubi.create.content.kinetics.belt.BeltHelper;
 import com.simibubi.create.content.kinetics.belt.BeltPart;
 import com.simibubi.create.content.kinetics.belt.BeltSlope;
 import com.simibubi.create.content.kinetics.simpleRelays.AbstractShaftBlock;
@@ -135,7 +136,7 @@ public class TieredBeltConnectorItem extends BlockItem implements ITieredBelt {
                     .setValue(BeltBlock.SLOPE, slope)
                     .setValue(BeltBlock.PART, part)
                     .setValue(BeltBlock.HORIZONTAL_FACING, facing), pos));
-            if(level.getBlockEntity(pos) instanceof TieredBeltBlockEntity be) {
+            if(BeltHelper.getSegmentBE(level, pos) instanceof TieredBeltBlockEntity be) {
                 be.setShaftType(shaftType);
                 be.setTier(tier);
             }

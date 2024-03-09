@@ -26,7 +26,7 @@ import org.joml.Quaternionf;
 import java.util.ArrayList;
 import java.util.function.Supplier;
 
-public class TieredBeltInstance extends TieredKineticBlockEntityInstance<TieredBeltBlockEntity> {
+public class TieredBeltInstance extends TieredKineticBlockEntityInstance<TieredBeltBlockEntity> implements IBeltRenderHelper {
 
     boolean upward;
     boolean diagonal;
@@ -139,7 +139,7 @@ public class TieredBeltInstance extends TieredKineticBlockEntityInstance<TieredB
             return modelTransform;
         };
 
-        return getRotatingMaterial().getModel(TieredBeltRenderer.getBeltPulleyModel(blockState, blockEntity), blockState, dir, ms);
+        return getRotatingMaterial().getModel(getBeltPulleyModel(blockState, blockEntity), blockState, dir, ms);
     }
 
     private Direction getOrientation() {
