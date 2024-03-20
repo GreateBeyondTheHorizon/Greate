@@ -38,6 +38,9 @@ public class ModItems {
             DARMSTADTIUM_WHISK,
             NEUTRONIUM_WHISK;
 
+    public static ItemEntry<Item> ULV_CONVEYOR_MODULE;
+    public static ItemEntry<Item> ULV_ELECTRIC_MOTOR;
+
     public static void register() {
         REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
 
@@ -64,6 +67,9 @@ public class ModItems {
         WHISKS[ZPM] = NAQUADAH_WHISK = whisk(ZPM);
         WHISKS[UV] = DARMSTADTIUM_WHISK = whisk(UV);
         WHISKS[UHV] = NEUTRONIUM_WHISK = whisk(UHV);
+
+        ULV_CONVEYOR_MODULE = REGISTRATE.item("ulv_conveyor_module", Item::new).lang("ULV Conveyor Module").register();
+        ULV_ELECTRIC_MOTOR = REGISTRATE.item("ulv_electric_motor", Item::new).lang("ULV Electric Motor").register();
     }
 
     private static ItemEntry<Item> alloy(int tier) {

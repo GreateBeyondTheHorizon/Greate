@@ -3,40 +3,31 @@ package electrolyte.greate.foundation.data.recipe;
 import com.google.common.collect.ImmutableList;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.chemical.material.stack.UnificationEntry;
-import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
-import com.gregtechceu.gtceu.common.data.GTItems;
-import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.gregtechceu.gtceu.data.recipe.VanillaRecipeHelper;
-import com.gregtechceu.gtceu.data.recipe.builder.ShapedRecipeBuilder;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
-import com.simibubi.create.Create;
-import com.simibubi.create.foundation.data.recipe.CreateRecipeProvider;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import electrolyte.greate.Greate;
-import electrolyte.greate.GreateValues;
 import electrolyte.greate.registry.*;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 
-import javax.annotation.Nonnull;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
+import static com.gregtechceu.gtceu.api.GTValues.*;
 import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.*;
-import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.rod;
-import static com.gregtechceu.gtceu.common.data.GTItems.ELECTRIC_MOTOR_LV;
 import static com.gregtechceu.gtceu.common.data.GTMachines.HULL;
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
-import static com.gregtechceu.gtceu.common.data.GTMaterials.SteelMagnetic;
+import static com.gregtechceu.gtceu.common.data.GTRecipeTypes.ASSEMBLER_RECIPES;
 import static com.gregtechceu.gtceu.data.recipe.CraftingComponent.*;
 import static electrolyte.greate.GreateValues.BM;
 import static electrolyte.greate.GreateValues.TM;
@@ -48,8 +39,7 @@ import static electrolyte.greate.registry.Gearboxes.VERTICAL_GEARBOXES;
 import static electrolyte.greate.registry.MechanicalMixers.MECHANICAL_MIXERS;
 import static electrolyte.greate.registry.MechanicalPresses.MECHANICAL_PRESSES;
 import static electrolyte.greate.registry.Millstones.MILLSTONES;
-import static electrolyte.greate.registry.ModItems.ALLOYS;
-import static electrolyte.greate.registry.ModItems.WHISKS;
+import static electrolyte.greate.registry.ModItems.*;
 import static electrolyte.greate.registry.Pumps.MECHANICAL_PUMPS;
 import static electrolyte.greate.registry.Saws.SAWS;
 import static electrolyte.greate.registry.Shafts.ANDESITE_SHAFT;
@@ -88,13 +78,48 @@ public class GreateRecipes {
             VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(materialName + "_mechanical_mixer"), MECHANICAL_MIXERS[tier].asStack(), " S ", "CMC", " W ", 'S', SHAFTS[tier].asStack(), 'C', CIRCUIT.getIngredient(tier), 'M', CASING.getIngredient(tier), 'W', WHISKS[tier].asStack());
             // Millstones
             VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(materialName + "_millstone"), MILLSTONES[tier].asStack(), " A ", "WHW", "CSC", 'A', COGWHEELS[tier].asStack(), 'W', GreateTags.mcItemTag("wooden_slabs"), 'H', HULL[tier].asStack(), 'C', CIRCUIT.getIngredient(tier), 'S', SHAFTS[tier].asStack());
-            // Saws
-            VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(materialName + "_mechanical_saw"), SAWS[tier].asStack(), "MHE", "CSC", 'M', CONVEYOR.getIngredient(tier), 'H', HULL[tier].asStack(), 'E', MOTOR.getIngredient(tier), 'C', CIRCUIT.getIngredient(tier), 'S', SHAFTS[tier].asStack());
+            // Saws (special case since they use conveyors and motors)
+            if(tier != 0) {
+                VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(materialName + "_mechanical_saw"), SAWS[tier].asStack(), "MHE", "CSC", 'M', CONVEYOR.getIngredient(tier), 'H', HULL[tier].asStack(), 'E', MOTOR.getIngredient(tier), 'C', CIRCUIT.getIngredient(tier), 'S', SHAFTS[tier].asStack());
+            }
             // Pumps
             VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(materialName + "_mechanical_pump"), MECHANICAL_PUMPS[tier].asStack(), " R ", "wPC", " R ", 'R', new UnificationEntry(ring, Rubber), 'P', AllBlocks.FLUID_PIPE, 'C', COGWHEELS[tier].asStack());
             // Whisks
             VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(materialName + "_whisk"), WHISKS[tier].asStack(), "fId", "PIP", "PPP", 'I', new UnificationEntry(ingot, tierMaterial), 'P', new UnificationEntry(plate, tierMaterial));
         }
+
+        // Andesite Saw (special case since they use conveyors and motors)
+        VanillaRecipeHelper.addShapedRecipe(provider, Greate.id("andesite_mechanical_saw"), Saws.ANDESITE_SAW.asStack(), "MHE", "CSC", 'M', ULV_CONVEYOR_MODULE, 'H', HULL[ULV].asStack(), 'E', ULV_ELECTRIC_MOTOR, 'C', GreateTags.gtceuItemTag("circuits/ulv"), 'S', ANDESITE_SHAFT.asStack());
+
+        //ULV Conveyor + Motor
+        final Map<String, Material> rubberMaterials = new Object2ObjectOpenHashMap<>();
+        rubberMaterials.put("rubber", Rubber);
+        rubberMaterials.put("silicone_rubber", SiliconeRubber);
+        rubberMaterials.put("styrene_butadiene_rubber", StyreneButadieneRubber);
+
+        for(Map.Entry<String, Material> materialEntry : rubberMaterials.entrySet()) {
+            Material material = materialEntry.getValue();
+            String name = materialEntry.getKey();
+
+            VanillaRecipeHelper.addShapedRecipe(provider, material.equals(Rubber), Greate.id(String.format("conveyor_module_ulv_%s", name)), ULV_CONVEYOR_MODULE.asStack(), "RRR", "MCM", "RRR", 'R', new UnificationEntry(plate, material), 'C', new UnificationEntry(cableGtSingle, RedAlloy), 'M', ULV_ELECTRIC_MOTOR.asStack());
+
+            ASSEMBLER_RECIPES.recipeBuilder("conveyor_module_ulv_" + name)
+                    .inputItems(cableGtSingle, RedAlloy)
+                    .inputItems(ULV_ELECTRIC_MOTOR, 2)
+                    .inputFluids(materialEntry.getValue().getFluid(L * 6))
+                    .circuitMeta(1)
+                    .outputItems(ULV_CONVEYOR_MODULE)
+                    .duration(100).EUt(VA[ULV]).save(provider);
+        }
+        VanillaRecipeHelper.addShapedRecipe(provider, true, Greate.id("electric_motor_ulv"), ULV_ELECTRIC_MOTOR.asStack(), "CWR", "WMW", "RWC", 'C', new UnificationEntry(cableGtSingle, RedAlloy), 'W', new UnificationEntry(wireGtSingle, Tin), 'R', new UnificationEntry(rod, Copper), 'M', new UnificationEntry(rod, IronMagnetic));
+
+        ASSEMBLER_RECIPES.recipeBuilder("electric_motor_ulv")
+                .inputItems(cableGtSingle, RedAlloy, 2)
+                .inputItems(rod, Copper, 2)
+                .inputItems(rod, IronMagnetic)
+                .inputItems(wireGtSingle, Tin, 4)
+                .outputItems(ULV_ELECTRIC_MOTOR)
+                .duration(100).EUt(VA[ULV]).save(provider);
 
         // Belts
         for (int beltTier = 0; beltTier < BM.length; beltTier++) {

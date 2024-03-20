@@ -226,8 +226,9 @@
   "greate.recipe.processing.extra_chance": "ɹǝıʇ ɹǝd ǝɔuɐɥɔ ɐɹʇxǝ %",
   "greate.recipe.sawing": "buıʍɐS",
   "greate.recipe.wood_cutting": "buıʇʇnƆ pooM",
-  "greate.tooltip.capacity": " :ʎʇıɔɐdɐƆ ɔıʇǝuıʞ xɐW",
+  "greate.tooltip.capacity": " :ʎʇıɔɐdɐƆ ɔıʇǝuıʞ",
   "greate.tooltip.circuit_number": "ɹǝqɯnN ʇınɔɹıƆ",
+  "greate.tooltip.max_capacity": " :ʎʇıɔɐdɐƆ ɔıʇǝuıʞ xɐW",
   "greate.tooltip.networkStatistics": " :sʇɐʇS ʞɹoʍʇǝN",
   "greate.tooltip.overcapacity": "ʎʇıɔɐdɐɔɹǝʌO",
   "greate.tooltip.overcapacity.description": "˙ʇɹoddns uɐɔ ʇɟɐɥs ǝɥʇ ʇɐɥʇ ʇunoɯɐ uɐ oʇ ns ɟo ʇunoɯɐ ǝɥʇ ǝɔnpǝᴚ ㄥ§˙ʎʇıɔɐdɐɔɹǝʌoɟ§ pǝɥɔɐǝɹ sɐɥ ʞɹoʍʇǝu sıɥʇ uo ʇɟɐɥs ɐ ʇɐɥʇ sɹɐǝddɐ ʇI",
@@ -264,5 +265,7 @@
   "item.greate.tungsten_steel_alloy": "ʎoןןⱯ ןǝǝʇS uǝʇsbun⟘",
   "item.greate.tungsten_steel_vertical_gearbox": "xoqɹɐǝ⅁ ןɐɔıʇɹǝΛ ןǝǝʇS uǝʇsbun⟘",
   "item.greate.tungsten_steel_whisk": "ʞsıɥM ןǝǝʇS uǝʇsbun⟘",
+  "item.greate.ulv_conveyor_module": "ǝןnpoW ɹoʎǝʌuoƆ ΛꞀ∩",
+  "item.greate.ulv_electric_motor": "ɹoʇoW ɔıɹʇɔǝןƎ ΛꞀ∩",
   "itemGroup.greate": "ǝʇɐǝɹ⅁"
 }

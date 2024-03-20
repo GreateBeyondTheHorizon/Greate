@@ -226,8 +226,9 @@
   "greate.recipe.processing.extra_chance": "% extra chance per tier",
   "greate.recipe.sawing": "Sawing",
   "greate.recipe.wood_cutting": "Wood Cutting",
-  "greate.tooltip.capacity": "Max Kinetic Capacity: ",
+  "greate.tooltip.capacity": "Kinetic Capacity: ",
   "greate.tooltip.circuit_number": "Circuit Number",
+  "greate.tooltip.max_capacity": "Max Kinetic Capacity: ",
   "greate.tooltip.networkStatistics": "Network Stats: ",
   "greate.tooltip.overcapacity": "Overcapacity",
   "greate.tooltip.overcapacity.description": "It appears that a shaft on this network has reached §fovercapacity.§7 Reduce the amount of su to an amount that the shaft can support.",
@@ -264,5 +265,7 @@
   "item.greate.tungsten_steel_alloy": "Tungsten Steel Alloy",
   "item.greate.tungsten_steel_vertical_gearbox": "Tungsten Steel Vertical Gearbox",
   "item.greate.tungsten_steel_whisk": "Tungsten Steel Whisk",
+  "item.greate.ulv_conveyor_module": "ULV Conveyor Module",
+  "item.greate.ulv_electric_motor": "ULV Electric Motor",
   "itemGroup.greate": "Greate"
 }
