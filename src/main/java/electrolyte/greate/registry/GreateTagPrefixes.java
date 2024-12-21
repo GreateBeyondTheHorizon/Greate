@@ -3,8 +3,8 @@ package electrolyte.greate.registry;
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
-import electrolyte.greate.content.gtceu.material.MaterialIconTypes;
-import electrolyte.greate.content.gtceu.material.PropertyKeys;
+import electrolyte.greate.compat.gtceu.material.MaterialIconTypes;
+import electrolyte.greate.compat.gtceu.material.PropertyKeys;
 
 import java.util.function.Predicate;
 

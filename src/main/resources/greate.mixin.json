@@ -28,7 +28,8 @@
     "MixinSequencedAssemblyCategory",
     "MixinSequencedAssemblyRecipe",
     "MixinSteamEngineBlock",
-    "MixinSteamEngineBlock$PlacementHelper"
+    "MixinSteamEngineBlock$PlacementHelper",
+    "MixinWorkableCasingMachineRendererAccessor"
   ],
   "client": [
     "MixinDeployerApplicationRecipe"

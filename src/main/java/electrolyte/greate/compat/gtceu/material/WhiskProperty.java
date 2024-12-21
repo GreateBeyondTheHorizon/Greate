@@ -1,4 +1,4 @@
-package electrolyte.greate.content.gtceu.material;
+package electrolyte.greate.compat.gtceu.material;
 
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.IMaterialProperty;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.MaterialProperties;

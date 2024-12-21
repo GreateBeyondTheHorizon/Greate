@@ -1,4 +1,4 @@
-package electrolyte.greate.content.gtceu.machines;
+package electrolyte.greate.compat.gtceu.machine;
 
 import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.data.RotationState;
@@ -15,7 +15,7 @@ import static com.gregtechceu.gtceu.api.pattern.Predicates.*;
 import static com.gregtechceu.gtceu.common.data.GCYMBlocks.CASING_WATERTIGHT;
 import static com.gregtechceu.gtceu.common.data.GTBlocks.*;
 import static electrolyte.greate.GreateRegistries.REGISTRATE;
-import static electrolyte.greate.content.gtceu.machines.GreateRecipeTypes.WIRE_COATING_RECIPES;
+import static electrolyte.greate.compat.gtceu.api.capability.recipe.GreateRecipeTypes.WIRE_COATING_RECIPES;
 
 public class GreateMultiblockMachines {
 

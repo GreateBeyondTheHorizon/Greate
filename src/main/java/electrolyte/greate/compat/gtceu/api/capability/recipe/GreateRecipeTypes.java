@@ -1,4 +1,4 @@
-package electrolyte.greate.content.gtceu.machines;
+package electrolyte.greate.compat.gtceu.api.capability.recipe;
 
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.gui.GuiTextures;
@@ -6,6 +6,8 @@ import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.gregtechceu.gtceu.common.data.GTSoundEntries;
 import com.lowdragmc.lowdraglib.gui.texture.ProgressTexture.FillDirection;
+import electrolyte.greate.compat.gtceu.api.capability.recipe.RPMRecipeCapability;
+import electrolyte.greate.compat.gtceu.api.capability.recipe.StressRecipeCapability;
 
 import static com.gregtechceu.gtceu.common.data.GTRecipeTypes.ELECTRIC;
 
@@ -14,6 +16,11 @@ public class GreateRecipeTypes {
     public static void register() {}
 
     public static final GTRecipeType WIRE_COATING_RECIPES = GTRecipeTypes.register("wire_coating", ELECTRIC)
+            .setMaxSize(IO.IN, StressRecipeCapability.STRESS_CAPABILITY, 1)
+            .setMaxSize(IO.OUT, StressRecipeCapability.STRESS_CAPABILITY, 1)
+            .setMaxSize(IO.IN, RPMRecipeCapability.RPM_CAPABILITY, 1)
+            .setMaxSize(IO.OUT, RPMRecipeCapability.RPM_CAPABILITY, 1)
+
             .setMaxIOSize(3, 1, 1, 0)
             .setEUIO(IO.IN)
             .setSlotOverlay(false, false, GuiTextures.WIREMILL_OVERLAY)

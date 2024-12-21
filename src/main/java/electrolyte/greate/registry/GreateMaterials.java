@@ -6,8 +6,8 @@ import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.ToolProperty;
 import com.simibubi.create.AllItems;
 import electrolyte.greate.Greate;
-import electrolyte.greate.content.gtceu.material.PropertyKeys;
-import electrolyte.greate.content.gtceu.material.WhiskProperty;
+import electrolyte.greate.compat.gtceu.material.PropertyKeys;
+import electrolyte.greate.compat.gtceu.material.WhiskProperty;
 
 import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags.*;
 import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialIconSet.*;

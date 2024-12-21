@@ -27,7 +27,7 @@ import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.*;
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
 import static com.gregtechceu.gtceu.data.recipe.CraftingComponent.PLATE;
 import static electrolyte.greate.GreateValues.TM;
-import static electrolyte.greate.content.gtceu.machines.GreateRecipeTypes.WIRE_COATING_RECIPES;
+import static electrolyte.greate.compat.gtceu.api.capability.recipe.GreateRecipeTypes.WIRE_COATING_RECIPES;
 import static electrolyte.greate.foundation.data.recipe.GreateRecipes.createIngFromTag;
 import static electrolyte.greate.foundation.data.recipe.GreateRecipes.createIngFromUnificationEntry;
 import static electrolyte.greate.registry.Cogwheels.COGWHEELS;

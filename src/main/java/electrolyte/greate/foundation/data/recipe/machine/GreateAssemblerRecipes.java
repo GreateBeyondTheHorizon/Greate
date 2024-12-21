@@ -6,8 +6,11 @@ import com.gregtechceu.gtceu.common.data.GTMachines;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import electrolyte.greate.Greate;
+import electrolyte.greate.compat.gtceu.api.capability.recipe.RPMRecipeCapability;
+import electrolyte.greate.compat.gtceu.api.capability.recipe.StressRecipeCapability;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 
 import java.util.function.Consumer;
@@ -17,6 +20,7 @@ import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.screw;
 import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.wireGtSingle;
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
 import static com.gregtechceu.gtceu.common.data.GTRecipeTypes.ASSEMBLER_RECIPES;
+import static electrolyte.greate.compat.gtceu.api.capability.recipe.GreateRecipeTypes.SPOUTING_RECIPES;
 
 public class GreateAssemblerRecipes {
 
@@ -57,6 +61,17 @@ public class GreateAssemblerRecipes {
                 .outputItems(AllBlocks.FLUID_TANK, 2)
                 .duration(100)
                 .EUt(VA[ULV])
+                .save(provider);
+
+        SPOUTING_RECIPES
+                .recipeBuilder(Greate.id("test"))
+                .input(StressRecipeCapability.STRESS_CAPABILITY, 1.0F)
+                .input(RPMRecipeCapability.RPM_CAPABILITY, 1.0F)
+                .output(StressRecipeCapability.STRESS_CAPABILITY, 4.0F)
+                .output(RPMRecipeCapability.RPM_CAPABILITY, 4.0F)
+                .inputItems(Items.SPRUCE_LOG)
+                .outputItems(Items.DIAMOND_ORE)
+                .duration(20)
                 .save(provider);
     }
 }
