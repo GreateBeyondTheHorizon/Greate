@@ -6,8 +6,6 @@ import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.gregtechceu.gtceu.common.data.GTSoundEntries;
 import com.lowdragmc.lowdraglib.gui.texture.ProgressTexture.FillDirection;
-import electrolyte.greate.compat.gtceu.api.capability.recipe.RPMRecipeCapability;
-import electrolyte.greate.compat.gtceu.api.capability.recipe.StressRecipeCapability;
 
 import static com.gregtechceu.gtceu.common.data.GTRecipeTypes.ELECTRIC;
 

@@ -20,7 +20,7 @@ import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.screw;
 import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.wireGtSingle;
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
 import static com.gregtechceu.gtceu.common.data.GTRecipeTypes.ASSEMBLER_RECIPES;
-import static electrolyte.greate.compat.gtceu.api.capability.recipe.GreateRecipeTypes.SPOUTING_RECIPES;
+import static electrolyte.greate.compat.gtceu.api.capability.recipe.GreateRecipeTypes.WIRE_COATING_RECIPES;
 
 public class GreateAssemblerRecipes {
 
@@ -63,7 +63,7 @@ public class GreateAssemblerRecipes {
                 .EUt(VA[ULV])
                 .save(provider);
 
-        SPOUTING_RECIPES
+        WIRE_COATING_RECIPES
                 .recipeBuilder(Greate.id("test"))
                 .input(StressRecipeCapability.STRESS_CAPABILITY, 1.0F)
                 .input(RPMRecipeCapability.RPM_CAPABILITY, 1.0F)

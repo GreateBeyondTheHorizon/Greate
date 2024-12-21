@@ -36,7 +36,7 @@ import static com.gregtechceu.gtceu.data.recipe.CraftingComponent.*;
 import static com.gregtechceu.gtceu.data.recipe.CustomTags.IV_CIRCUITS;
 import static electrolyte.greate.GreateValues.BM;
 import static electrolyte.greate.GreateValues.TM;
-import static electrolyte.greate.content.gtceu.machines.GreateMultiblockMachines.WIRE_COATING_FACTORY;
+import static electrolyte.greate.compat.gtceu.machine.GreateMultiblockMachines.WIRE_COATING_FACTORY;
 import static electrolyte.greate.foundation.data.recipe.GreateRecipes.conversionCycle;
 import static electrolyte.greate.registry.Belts.BELT_CONNECTORS;
 import static electrolyte.greate.registry.Cogwheels.COGWHEELS;

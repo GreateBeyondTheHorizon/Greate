@@ -33,7 +33,7 @@ import java.util.function.BiFunction;
 
 import static com.gregtechceu.gtceu.api.GTValues.VLVH;
 import static com.gregtechceu.gtceu.api.GTValues.VLVT;
-import static com.gregtechceu.gtceu.common.data.GTMachines.ELECTRIC_TIERS;
+import static com.gregtechceu.gtceu.common.data.machines.GTMachineUtils.ELECTRIC_TIERS;
 import static com.gregtechceu.gtceu.utils.FormattingUtil.toEnglishName;
 
 public class GreateMachines {
