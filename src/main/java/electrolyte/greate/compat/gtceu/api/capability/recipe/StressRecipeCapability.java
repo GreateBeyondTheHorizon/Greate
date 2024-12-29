@@ -18,7 +18,7 @@ public class StressRecipeCapability extends RecipeCapability<Float> {
     public static final StressRecipeCapability STRESS_CAPABILITY = new StressRecipeCapability();
 
     protected StressRecipeCapability() {
-        super("stress", 0xAABBCC00, false, 3, SerializerFloat.INSTANCE);
+        super("stress", 0xAABBCC00, false, 4, SerializerFloat.INSTANCE);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class StressRecipeCapability extends RecipeCapability<Float> {
 
     @Override
     public Float copyWithModifier(Float content, ContentModifier modifier) {
-        return (Float) modifier.apply(content);
+        return modifier.apply(content);
     }
 
     @Override
@@ -38,10 +38,10 @@ public class StressRecipeCapability extends RecipeCapability<Float> {
 
     @Override
     public void addXEIInfo(WidgetGroup group, int xOffset, GTRecipe recipe, List<Content> contents, boolean perTick, boolean isInput, MutableInt yOffset) {
-        if(perTick) {
-            float stress = (float) contents.stream().map(Content::getContent).mapToDouble(StressRecipeCapability.STRESS_CAPABILITY::of).sum();
-            group.addWidget(new LabelWidget(3 - xOffset, yOffset.addAndGet(10),
-                    LocalizationUtils.format("greate.recipe.stress_per_tick", stress)));
-        }
+        String key = isInput ? "input" : "output";
+        float rpm = isInput ? (float) recipe.getTickInputContents(RPMRecipeCapability.RPM_CAPABILITY).get(0).getContent() :
+                (float) recipe.getTickOutputContents(RPMRecipeCapability.RPM_CAPABILITY).get(0).getContent();
+        float stress = (float) contents.stream().map(Content::getContent).mapToDouble(StressRecipeCapability.STRESS_CAPABILITY::of).sum();
+        group.addWidget(new LabelWidget(3 - xOffset, yOffset.addAndGet(10), LocalizationUtils.format("greate.recipe.stress_" + key, stress, rpm)));
     }
 }

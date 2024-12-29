@@ -1,5 +1,6 @@
 package electrolyte.greate;
 
+import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.utils.FormattingUtil;
@@ -49,6 +50,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
+import static electrolyte.greate.registry.Millstones.MILLSTONES;
+
 @Mod(Greate.MOD_ID)
 public class Greate {
 
@@ -85,7 +88,7 @@ public class Greate {
     public static final RegistryObject<CreativeModeTab> GREATE_TAB = CREATIVE_TABS.register("greate",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.greate"))
-                    .icon(() -> new ItemStack(Items.GOLDEN_APPLE))
+                    .icon(() -> new ItemStack(MILLSTONES[GTValues.UHV]))
                     .displayItems(new GreateRegistrateDisplayItemsGenerator())
                     .build());
 

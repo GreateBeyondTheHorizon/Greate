@@ -14,11 +14,6 @@ public class GreateRecipeTypes {
     public static void register() {}
 
     public static final GTRecipeType WIRE_COATING_RECIPES = GTRecipeTypes.register("wire_coating", ELECTRIC)
-            .setMaxSize(IO.IN, StressRecipeCapability.STRESS_CAPABILITY, 1)
-            .setMaxSize(IO.OUT, StressRecipeCapability.STRESS_CAPABILITY, 1)
-            .setMaxSize(IO.IN, RPMRecipeCapability.RPM_CAPABILITY, 1)
-            .setMaxSize(IO.OUT, RPMRecipeCapability.RPM_CAPABILITY, 1)
-
             .setMaxIOSize(3, 1, 1, 0)
             .setEUIO(IO.IN)
             .setSlotOverlay(false, false, GuiTextures.WIREMILL_OVERLAY)

@@ -2,8 +2,12 @@ package electrolyte.greate;
 
 import com.gregtechceu.gtceu.api.addon.GTAddon;
 import com.gregtechceu.gtceu.api.addon.IGTAddon;
+import com.gregtechceu.gtceu.api.addon.events.KJSRecipeKeyEvent;
 import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
+import com.mojang.datafixers.util.Pair;
 import electrolyte.greate.compat.gtceu.api.capability.recipe.GreateRecipeTypes;
+import electrolyte.greate.compat.gtceu.common.data.GreateRecipeCapabilities;
+import electrolyte.greate.compat.kubejs.GreateRecipeComponents;
 import electrolyte.greate.foundation.data.recipe.GreateCraftingComponent;
 import electrolyte.greate.foundation.data.recipe.GreateRecipes;
 import electrolyte.greate.infrastructure.config.GreateConfigs;
@@ -59,8 +63,13 @@ public class GreateAddon implements IGTAddon {
 	}
 
 	@Override
+	public void registerRecipeKeys(KJSRecipeKeyEvent event) {
+		event.registerKey(GreateRecipeCapabilities.STRESS, Pair.of(GreateRecipeComponents.STRESS_IN, GreateRecipeComponents.STRESS_OUT));
+		event.registerKey(GreateRecipeCapabilities.RPM, Pair.of(GreateRecipeComponents.RPM_IN, GreateRecipeComponents.RPM_OUT));
+	}
+
+	@Override
 	public void registerRecipeCapabilities() {
-		//GTRegistries.RECIPE_CAPABILITIES.register(StressRecipeCapability.STRESS_CAPABILITY.name, StressRecipeCapability.STRESS_CAPABILITY);
-		//GTRegistries.RECIPE_CAPABILITIES.register(RPMRecipeCapability.RPM_CAPABILITY.name, RPMRecipeCapability.RPM_CAPABILITY);
+		GreateRecipeCapabilities.register();
 	}
 }

@@ -57,6 +57,8 @@ public class GreateLang {
         //Greate GT-Addon
         REGISTRATE.addRawLang("block.greate.wire_coating_factory", "Wire Coating Factory");
         REGISTRATE.addRawLang("gtceu.wire_coating", "Wire Coating Factory");
+        REGISTRATE.addRawLang("greate.recipe.stress_input", "Requires %s su/tick @ %s RPM");
+        REGISTRATE.addRawLang("greate.recipe.stress_output", "Outputs %s su/tick @ %s RPM");
     }
 
     public static void register() {}

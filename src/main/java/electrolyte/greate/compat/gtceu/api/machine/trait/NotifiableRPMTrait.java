@@ -61,21 +61,20 @@ public class NotifiableRPMTrait extends NotifiableRecipeHandlerTrait<Float> impl
 
     @Override
     public List<Float> handleRecipeInner(IO io, GTRecipe gtRecipe, List<Float> list, @Nullable String slotName, boolean simulate) {
-        //TODO: check
         if(machine instanceof IKineticMachine km) {
-            float sum = list.stream().reduce(0f, Float::sum);
+            float requiredRPM = list.stream().reduce(0f, Float::sum);
             var kineticDef = km.getKineticDefinition();
             if(io == IO.IN && !kineticDef.isSource()) {
-                float rpm = Mth.abs(km.getKineticHolder().getSpeed());
-                if(rpm > 0) sum =- rpm;
+                float currentRPM = Mth.abs(km.getKineticHolder().getSpeed());
+                if(currentRPM > 0) requiredRPM = requiredRPM - currentRPM;
             } else if(io == IO.OUT && kineticDef.isSource()) {
-                if(simulate) {
-                    kineticDef.setTorque(sum);
-                    available = km.getKineticHolder().scheduleWorking(sum, true);
+                if(!simulate) {
+                    kineticDef.setTorque((float) gtRecipe.getTickOutputContents(RPMRecipeCapability.RPM_CAPABILITY).get(0).getContent());
+                    available = km.getKineticHolder().scheduleWorkingRPM((float) gtRecipe.getTickOutputContents(RPMRecipeCapability.RPM_CAPABILITY).get(0).getContent(), false);
                 }
-                sum -= available;
+                requiredRPM -= available;
             }
-            return sum <= 0 ? null : Collections.singletonList(sum);
+            return requiredRPM <= 0 ? null : Collections.singletonList(requiredRPM);
         }
         return list;
     }
@@ -110,7 +109,7 @@ public class NotifiableRPMTrait extends NotifiableRecipeHandlerTrait<Float> impl
         if(machine instanceof IKineticMachine km) {
             var kineticDef = km.getKineticDefinition();
             if(available > 0 && kineticDef.isSource() && io == IO.OUT) {
-                km.getKineticHolder().scheduleWorking(available, false);
+                km.getKineticHolder().scheduleWorkingStress(available, false);
             }
         }
     }

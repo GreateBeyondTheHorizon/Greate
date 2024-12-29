@@ -12,7 +12,6 @@ import electrolyte.greate.compat.gtceu.api.capability.recipe.StressRecipeCapabil
 import electrolyte.greate.compat.gtceu.common.machine.kinetic.IKineticMachine;
 import lombok.Getter;
 import lombok.Setter;
-import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
@@ -62,18 +61,21 @@ public class NotifiableStressTrait extends NotifiableRecipeHandlerTrait<Float> i
     @Override
     public List<Float> handleRecipeInner(IO io, GTRecipe gtRecipe, List<Float> list, @Nullable String slotName, boolean simulate) {
         if(machine instanceof IKineticMachine km) {
-            float sum = list.stream().reduce(0f, Float::sum);
+            float requiredSU = list.stream().reduce(0f, Float::sum);
             var kineticDef = km.getKineticDefinition();
             if(io == IO.IN && !kineticDef.isSource()) {
-                float cap = Mth.abs(km.getKineticHolder().getSpeed()) * kineticDef.torque;
-                if(cap > 0) sum =- cap;
+                float generatedSU = km.getKineticHolder().getNetworkCapacity();
+                if(generatedSU > 0) {
+                    if(!simulate) km.getKineticHolder().setStressApplied(requiredSU);
+                    requiredSU -= generatedSU;
+                }
             } else if(io == IO.OUT && kineticDef.isSource()) {
                 if(simulate) {
-                    available = km.getKineticHolder().scheduleWorking(sum, true);
+                    available = km.getKineticHolder().scheduleWorkingStress((float) gtRecipe.getTickOutputContents(StressRecipeCapability.STRESS_CAPABILITY).get(0).getContent(), true);
                 }
-                sum -= available;
+                requiredSU -= available;
             }
-            return sum <= 0 ? null : Collections.singletonList(sum);
+            return requiredSU <= 0 ? null : Collections.singletonList(requiredSU);
         }
         return list;
     }
@@ -108,7 +110,7 @@ public class NotifiableStressTrait extends NotifiableRecipeHandlerTrait<Float> i
         if(machine instanceof IKineticMachine km) {
             var kineticDef = km.getKineticDefinition();
             if(available > 0 && kineticDef.isSource() && io == IO.OUT) {
-                km.getKineticHolder().scheduleWorking(available, false);
+                km.getKineticHolder().scheduleWorkingStress(available, false);
             }
         }
     }

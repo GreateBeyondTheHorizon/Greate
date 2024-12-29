@@ -5,9 +5,7 @@ import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.content.Content;
 import com.gregtechceu.gtceu.api.recipe.content.ContentModifier;
 import com.gregtechceu.gtceu.api.recipe.content.SerializerFloat;
-import com.lowdragmc.lowdraglib.gui.widget.LabelWidget;
 import com.lowdragmc.lowdraglib.gui.widget.WidgetGroup;
-import com.lowdragmc.lowdraglib.utils.LocalizationUtils;
 import org.apache.commons.lang3.mutable.MutableInt;
 
 import java.util.Collection;
@@ -38,10 +36,6 @@ public class RPMRecipeCapability extends RecipeCapability<Float> {
 
     @Override
     public void addXEIInfo(WidgetGroup group, int xOffset, GTRecipe recipe, List<Content> contents, boolean perTick, boolean isInput, MutableInt yOffset) {
-        if(perTick) {
-            float stress = (float) contents.stream().map(Content::getContent).mapToDouble(RPMRecipeCapability.RPM_CAPABILITY::of).sum();
-            group.addWidget(new LabelWidget(3 - xOffset, yOffset.addAndGet(20),
-                    LocalizationUtils.format("greate.recipe.rpm_per_tick", stress)));
-        }
+        //Handled in StressRecipeCapability#addXEIInfo
     }
 }

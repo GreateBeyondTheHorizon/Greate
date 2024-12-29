@@ -46,7 +46,7 @@ public class TieredKineticMachineBlockEntity extends TieredKineticBlockEntity im
 
     public final MetaMachine metaMachine;
     private final long offset = GTValues.RNG.nextInt(20);
-    public float workingSpeed;
+    public float workingSpeed, workingStress, impact;
     public boolean reActivateSource;
 
     @DescSynced
@@ -141,20 +141,32 @@ public class TieredKineticMachineBlockEntity extends TieredKineticBlockEntity im
         return effects;
     }
 
-    public float scheduleWorking(float su, boolean simulate) {
+    public float scheduleWorkingStress(float su, boolean simulate) {
         if(getDefinition().isSource()) {
-            float speed = Math.min(256f, su / getDefinition().getTorque());
-            if(!simulate) {
-                workingSpeed = speed;
-                updateGeneratedRotation();
-            }
-            return speed * getDefinition().getTorque();
+            float stressGenerated = Math.min(su, Float.MAX_VALUE) / this.getTheoreticalSpeed();
+            workingStress = stressGenerated;
+            updateGeneratedRotation();
+            return stressGenerated;
         }
         return 0;
     }
 
-    public void scheduleWorking(float su) {
-        scheduleWorking(su, false);
+    public void scheduleWorkingStress(float su) {
+        scheduleWorkingStress(su, false);
+    }
+
+    public float scheduleWorkingRPM(float rpmIn, boolean simulate) {
+        if(getDefinition().isSource()) {
+            float rpm = Math.min(rpmIn, 256f);
+            workingSpeed = rpm;
+            updateGeneratedRotation();
+            return rpm;
+        }
+        return 0;
+    }
+
+    public void scheduleWorkingRPM(float rpmIn) {
+        scheduleWorkingRPM(rpmIn, false);
     }
 
     public void stopWorking() {
@@ -229,11 +241,31 @@ public class TieredKineticMachineBlockEntity extends TieredKineticBlockEntity im
         }
     }
 
+    @Override
+    public float calculateAddedStressCapacity() {
+        this.lastCapacityProvided = capacity;
+        return workingSpeed * workingStress;
+    }
+
+    @Override
+    public float calculateStressApplied() {
+        this.lastStressApplied = impact;
+        return impact;
+    }
+
+    public void setStressApplied(float impact) {
+        this.impact = impact / this.getTheoreticalSpeed();
+    }
+
+    public float getNetworkCapacity() {
+        return capacity;
+    }
+
     public void applyNewSpeed(float prevSpeed, float speed) {
         if(speed == 0.0F) {
             if(this.hasSource()) {
                 this.notifyStressCapacityChange(0.0F);
-                this.getOrCreateNetwork().updateStressFor(this, this.calculateStressApplied());
+                this.getOrCreateNetwork().updateStressFor(this, this.calculateAddedStressCapacity());
             } else {
                 this.detachKinetics();
                 this.setSpeed(0.0F);
@@ -270,11 +302,13 @@ public class TieredKineticMachineBlockEntity extends TieredKineticBlockEntity im
     protected void write(CompoundTag compound, boolean clientPacket) {
         super.write(compound, clientPacket);
         compound.putFloat("workingSpeed", workingSpeed);
+        compound.putFloat("workingStress", workingStress);
     }
 
     @Override
     protected void read(CompoundTag compound, boolean clientPacket) {
         super.read(compound, clientPacket);
         workingSpeed = compound.contains("workingSpeed") ? compound.getFloat("workingSpeed") : 0;
+        workingStress = compound.contains("workingStress") ? compound.getFloat("workingStress") : 0;
     }
 }
