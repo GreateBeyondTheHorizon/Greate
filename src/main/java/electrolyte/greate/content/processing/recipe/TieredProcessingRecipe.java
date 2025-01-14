@@ -46,14 +46,6 @@ public abstract class TieredProcessingRecipe<T extends Container> extends Proces
         String messageHeader = "Your custom " + recipeTypeId + " recipe (" + id.toString() + ")";
         Logger logger = Greate.LOGGER;
         int ingredientCount = ingredients.size();
-        boolean circuit;
-        for(Ingredient ingredient : ingredients) {
-            circuit = ingredient.getItems()[0].is(GTItems.PROGRAMMED_CIRCUIT.asItem());
-            if(circuit) {
-                ingredientCount--;
-                break;
-            }
-        }
         int outputCount = results.size();
 
         if (ingredientCount > getMaxInputCount()) {
