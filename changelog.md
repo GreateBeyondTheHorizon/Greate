@@ -1,1 +1,2 @@
-- Fix broken lang
+- Remove overcapacity in favor of limiting the network capacity to the lowest tier block on the network instead.
+- Remove check for circuits in recipes breaking during validation check.
