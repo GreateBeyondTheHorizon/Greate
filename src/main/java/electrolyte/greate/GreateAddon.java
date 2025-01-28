@@ -29,6 +29,7 @@ public class GreateAddon implements IGTAddon {
 		EncasedFans.register();
 		Gearboxes.register();
 		Girders.register();
+		MechanicalCrafters.register();
 		MechanicalPresses.register();
 		MechanicalMixers.register();
 		Millstones.register();

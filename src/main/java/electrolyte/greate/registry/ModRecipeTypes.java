@@ -6,6 +6,7 @@ import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.RegisteredObjects;
 import electrolyte.greate.Greate;
+import electrolyte.greate.content.kinetics.crafter.TieredMechanicalCrafterRecipe;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingRecipe;
 import electrolyte.greate.content.kinetics.fan.processing.TieredHauntingRecipe;
 import electrolyte.greate.content.kinetics.fan.processing.TieredSplashingRecipe;
@@ -46,7 +47,8 @@ public enum ModRecipeTypes implements IRecipeTypeInfo {
 	COMPACTING(TieredCompactingRecipe::new),
 	CUTTING(TieredCuttingRecipe::new),
 	SPLASHING(TieredSplashingRecipe::new),
-	HAUNTING(TieredHauntingRecipe::new);
+	HAUNTING(TieredHauntingRecipe::new),
+	MECHANICAL_CRAFTING(TieredMechanicalCrafterRecipe.Serializer::new);
 
 	private final ResourceLocation id;
 	private final RegistryObject<RecipeSerializer<?>> serializerObject;

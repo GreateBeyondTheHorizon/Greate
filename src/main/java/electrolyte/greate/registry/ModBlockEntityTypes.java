@@ -2,6 +2,7 @@ package electrolyte.greate.registry;
 
 import com.simibubi.create.content.kinetics.base.CutoutRotatingInstance;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
+import com.simibubi.create.content.kinetics.crafter.MechanicalCrafterRenderer;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import electrolyte.greate.content.fluids.pump.TieredPumpBlockEntity;
 import electrolyte.greate.content.fluids.pump.TieredPumpCogInstance;
@@ -12,6 +13,8 @@ import electrolyte.greate.content.kinetics.base.TieredSingleRotatingInstance;
 import electrolyte.greate.content.kinetics.belt.TieredBeltBlockEntity;
 import electrolyte.greate.content.kinetics.belt.TieredBeltInstance;
 import electrolyte.greate.content.kinetics.belt.TieredBeltRenderer;
+import electrolyte.greate.content.kinetics.crafter.TieredMechanicalCrafterBlockEntity;
+import electrolyte.greate.content.kinetics.crafter.TieredShaftlessCogwheelInstance;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingWheelBlockEntity;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingWheelControllerBlockEntity;
 import electrolyte.greate.content.kinetics.fan.TieredEncasedFanBlockEntity;
@@ -147,6 +150,13 @@ public class ModBlockEntityTypes {
             .instance(() -> TieredEncasedFanInstance::new, false)
             .validBlocks(EncasedFans.FANS)
             .renderer(() -> TieredEncasedFanBlockRenderer::new)
+            .register();
+
+    public static final BlockEntityEntry<TieredMechanicalCrafterBlockEntity> TIERED_CRAFTER = REGISTRATE
+            .blockEntity("tiered_mechanical_crafter", TieredMechanicalCrafterBlockEntity::new)
+            .instance(() -> TieredShaftlessCogwheelInstance::new)
+            .validBlocks(MechanicalCrafters.MECHANICAL_CRAFTERS)
+            .renderer(() -> MechanicalCrafterRenderer::new)
             .register();
 
     public static void register() {}
