@@ -5,7 +5,7 @@ import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
 import com.simibubi.create.content.kinetics.steamEngine.PoweredShaftBlock;
 import com.simibubi.create.foundation.placement.IPlacementHelper;
 import com.simibubi.create.foundation.placement.PlacementHelpers;
-
+import com.tterrag.registrate.util.entry.BlockEntry;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredShaftBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
@@ -67,8 +67,8 @@ public class TieredPoweredShaftBlock extends PoweredShaftBlock implements ITiere
         }
     }
 
-    public static BlockState getEquivalent(BlockState stateForPlacement) {
-        return stateForPlacement.getBlock().defaultBlockState()
+    public static BlockState getEquivalent(BlockEntry<TieredPoweredShaftBlock> poweredShaftBlock, BlockState stateForPlacement) {
+        return poweredShaftBlock.get().defaultBlockState()
                 .setValue(PoweredShaftBlock.AXIS, stateForPlacement.getValue(ShaftBlock.AXIS))
                 .setValue(WATERLOGGED, stateForPlacement.getValue(WATERLOGGED));
     }
