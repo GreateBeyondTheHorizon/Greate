@@ -58,7 +58,7 @@ repositories {
     maven { url = 'https://maven.tterrag.com/'
         content {
             includeGroup "com.simibubi.create"
-            includeGroup "com.jozufozu.flywheel"
+            includeGroup "dev.engine_room.flywheel"
             includeGroup "com.tterrag.registrate"
         }
     }
@@ -105,7 +105,8 @@ dependencies {
     annotationProcessor "org.spongepowered:mixin:0.8.7:processor"
 
     implementation fg.deobf("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
-    implementation fg.deobf("com.jozufozu.flywheel:flywheel-forge-${minecraft_version}:${flywheel_version}")
+    compileOnly fg.deobf("dev.engine_room.flywheel:flywheel-forge-api-${minecraft_version}:${flywheel_version}")
+    runtimeOnly fg.deobf("dev.engine_room.flywheel:flywheel-forge-${minecraft_version}:${flywheel_version}")
     implementation fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
 
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}") { transitive = false }
@@ -115,7 +116,7 @@ dependencies {
     implementation fg.deobf("dev.architectury:architectury-forge:${architectury_version}")
     implementation fg.deobf("dev.latvian.mods:rhino-forge:${rhino_version}")
     implementation fg.deobf("dev.latvian.mods:kubejs-forge:${kubejs_version}")
-    implementation fg.deobf("dev.latvian.mods:kubejs-create-forge:${kubejs_create_version}")
+    implementation fg.deobf("dev.latvian.mods:kubejs-create-forge:${kubejs_create_version}") { transitive = false }
 
     implementation fg.deobf("com.lowdragmc.ldlib:ldlib-forge-${minecraft_version}:${ldlib_version}") { transitive = false }
     implementation fg.deobf("com.gregtechceu.gtceu:gtceu-${minecraft_version}:${gregtech_version}:slim") { transitive = false }

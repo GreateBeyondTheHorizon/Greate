@@ -1,12 +1,12 @@
 package electrolyte.greate.content.kinetics.gearbox;
 
-import com.jozufozu.flywheel.backend.Backend;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.render.SuperByteBuffer;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.Iterate;
+import dev.engine_room.flywheel.api.visualization.VisualizationManager;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider.Context;
@@ -24,7 +24,7 @@ public class TieredGearboxRenderer extends KineticBlockEntityRenderer<TieredGear
 
     @Override
     protected void renderSafe(TieredGearboxBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
-        if (Backend.canUseInstancing(be.getLevel())) return;
+        if(VisualizationManager.supportsVisualization(be.getLevel())) return;
 
         final Axis boxAxis = be.getBlockState().getValue(BlockStateProperties.AXIS);
         final BlockPos pos = be.getBlockPos();

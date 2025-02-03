@@ -1,21 +1,24 @@
 package electrolyte.greate.content.kinetics.belt;
 
-import com.jozufozu.flywheel.api.InstanceData;
-import com.jozufozu.flywheel.api.Instancer;
-import com.jozufozu.flywheel.api.MaterialManager;
-import com.jozufozu.flywheel.core.PartialModel;
-import com.jozufozu.flywheel.util.transform.TransformStack;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.simibubi.create.content.kinetics.base.flwdata.BeltData;
-import com.simibubi.create.content.kinetics.base.flwdata.RotatingData;
+import com.simibubi.create.content.kinetics.base.RotatingInstance;
 import com.simibubi.create.content.kinetics.belt.BeltBlock;
+import com.simibubi.create.content.kinetics.belt.BeltInstance;
 import com.simibubi.create.content.kinetics.belt.BeltPart;
 import com.simibubi.create.content.kinetics.belt.BeltSlope;
 import com.simibubi.create.foundation.block.render.SpriteShiftEntry;
-import com.simibubi.create.foundation.render.AllMaterialSpecs;
+import com.simibubi.create.foundation.render.AllInstanceTypes;
 import com.simibubi.create.foundation.utility.Iterate;
-import electrolyte.greate.content.kinetics.base.TieredKineticBlockEntityInstance;
-import net.minecraft.client.renderer.RenderType;
+import dev.engine_room.flywheel.api.instance.Instance;
+import dev.engine_room.flywheel.api.instance.Instancer;
+import dev.engine_room.flywheel.api.model.Model;
+import dev.engine_room.flywheel.api.visualization.VisualizationContext;
+import dev.engine_room.flywheel.lib.instance.AbstractInstance;
+import dev.engine_room.flywheel.lib.instance.FlatLit;
+import dev.engine_room.flywheel.lib.model.Models;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import dev.engine_room.flywheel.lib.transform.PoseTransformStack;
+import dev.engine_room.flywheel.lib.transform.TransformStack;
+import electrolyte.greate.content.kinetics.base.TieredKineticBlockEntityVisual;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.Direction.AxisDirection;
@@ -25,9 +28,9 @@ import net.minecraft.world.level.LightLayer;
 import org.joml.Quaternionf;
 
 import java.util.ArrayList;
-import java.util.function.Supplier;
+import java.util.function.Consumer;
 
-public class TieredBeltInstance extends TieredKineticBlockEntityInstance<TieredBeltBlockEntity> implements IBeltRenderHelper {
+public class TieredBeltVisual extends TieredKineticBlockEntityVisual<TieredBeltBlockEntity> implements IBeltRenderHelper {
 
     boolean upward;
     boolean diagonal;
@@ -37,12 +40,12 @@ public class TieredBeltInstance extends TieredKineticBlockEntityInstance<TieredB
     boolean alongZ;
     BeltSlope beltSlope;
     Direction facing;
-    protected ArrayList<BeltData> keys;
-    protected ArrayList<BeltData> overlayKeys;
-    protected RotatingData pulleyKey;
+    protected ArrayList<BeltInstance> keys;
+    protected ArrayList<BeltInstance> overlayKeys;
+    protected RotatingInstance pulleyKey;
 
-    public TieredBeltInstance(MaterialManager materialManager, TieredBeltBlockEntity blockEntity) {
-        super(materialManager, blockEntity);
+    public TieredBeltVisual(VisualizationContext context, TieredBeltBlockEntity blockEntity, float partialTick) {
+        super(context, blockEntity, partialTick);
 
         if(!(blockState.getBlock() instanceof TieredBeltBlock)) return;
 
@@ -66,49 +69,49 @@ public class TieredBeltInstance extends TieredKineticBlockEntityInstance<TieredB
             PartialModel overlayPartial = TieredBeltRenderer.getOverlayPartial(diagonal, start, end, bottom);
             SpriteShiftEntry spriteShift = TieredBeltRenderer.getSpriteShiftEntry((TieredBeltBlock) blockState.getBlock(), diagonal, bottom);
             SpriteShiftEntry overlayShift = TieredBeltRenderer.getDyeOverlayEntry((TieredBeltBlock) blockState.getBlock(), color, diagonal);
-            Instancer<BeltData> beltModel = materialManager.defaultCutout().material(AllMaterialSpecs.BELTS).getModel(beltPartial, blockState);
-            Instancer<BeltData> overlayModel = materialManager.cutout(RenderType.cutoutMipped()).material(AllMaterialSpecs.BELTS).getModel(overlayPartial, blockState);
+            Instancer<BeltInstance> beltModel = instancerProvider().instancer(AllInstanceTypes.BELT, Models.partial(beltPartial)); //todo:render types
+            Instancer<BeltInstance> overlayModel = instancerProvider().instancer(AllInstanceTypes.BELT, Models.partial(overlayPartial));
             keys.add(setup(beltModel.createInstance(), bottom, spriteShift));
             overlayKeys.add(setup(overlayModel.createInstance(), bottom, overlayShift));
             if(diagonal) break;
         }
 
         if(blockEntity.hasPulley()) {
-            Instancer<RotatingData> pulleyModel = getPulleyModel();
+            Instancer<RotatingInstance> pulleyModel = getPulleyModel();
             pulleyKey = setup(pulleyModel.createInstance());
         }
     }
 
     @Override
-    public void update() {
+    public void update(float partialTick) {
         DyeColor color = blockEntity.color.orElse(null);
         boolean bottom = true;
-        for(BeltData key : keys) {
+        for(BeltInstance key : keys) {
             SpriteShiftEntry spriteShiftEntry = TieredBeltRenderer.getSpriteShiftEntry((TieredBeltBlock) blockState.getBlock(), diagonal, bottom);
-            key.setScrollTexture(spriteShiftEntry).setColor(blockEntity).setRotationalSpeed(getScrollSpeed());
+            key.setScrollTexture(spriteShiftEntry).setColor(blockEntity).setRotationalSpeed(getScrollSpeed()).setChanged();
             bottom = false;
         }
 
-        for(BeltData key : overlayKeys) {
+        for(BeltInstance key : overlayKeys) {
             SpriteShiftEntry overlayEntry = TieredBeltRenderer.getDyeOverlayEntry((TieredBeltBlock) blockState.getBlock(), color, diagonal);
-            key.setScrollTexture(overlayEntry).setColor(blockEntity).setRotationalSpeed(getScrollSpeed());
+            key.setScrollTexture(overlayEntry).setColor(blockEntity).setRotationalSpeed(getScrollSpeed()).setChanged();
         }
 
         if(pulleyKey != null) updateRotation(pulleyKey);
     }
 
     @Override
-    public void updateLight() {
-        relight(pos, keys.stream());
-        relight(pos, overlayKeys.stream());
-        if(pulleyKey != null) relight(pos, pulleyKey);
+    public void updateLight(float partialTick) {
+        relight(keys.toArray(FlatLit[]::new));
+        relight(overlayKeys.toArray(FlatLit[]::new));
+        if(pulleyKey != null) relight(pulleyKey);
     }
 
     @Override
-    protected void remove() {
-        keys.forEach(InstanceData::delete);
+    protected void _delete() {
+        keys.forEach(AbstractInstance::delete);
         keys.clear();
-        overlayKeys.forEach(InstanceData::delete);
+        overlayKeys.forEach(AbstractInstance::delete);
         overlayKeys.clear();
         if(pulleyKey != null) pulleyKey.delete();
         pulleyKey = null;
@@ -126,21 +129,19 @@ public class TieredBeltInstance extends TieredKineticBlockEntityInstance<TieredB
         return speed;
     }
 
-    private Instancer<RotatingData> getPulleyModel() {
+    private Instancer<RotatingInstance> getPulleyModel() {
         Direction dir = getOrientation();
-        Axis axis = dir.getAxis();
-        Supplier<PoseStack> ms = () -> {
-            PoseStack modelTransform = new PoseStack();
-            TransformStack msr = TransformStack.cast(modelTransform);
-            msr.centre();
-            if(axis == Axis.X) msr.rotateY(90);
-            if(axis == Axis.Y) msr.rotateX(90);
-            msr.rotateX(90);
-            msr.unCentre();
-            return modelTransform;
-        };
 
-        return getRotatingMaterial().getModel(getBeltPulleyModel(blockState), blockState, dir, ms);
+        Model model = Models.partial(getBeltPulleyModel(blockState), dir.getAxis(), (axis, poseStack) -> {
+            TransformStack<PoseTransformStack> msr = TransformStack.of(poseStack);
+            msr.center();
+            if(axis == Axis.Y) msr.rotateYDegrees(90);
+            if(axis == Axis.Y) msr.rotateXDegrees(90);
+            msr.rotateXDegrees(90);
+            msr.uncenter();
+        });
+
+        return instancerProvider().instancer(AllInstanceTypes.ROTATING, model);
     }
 
     private Direction getOrientation() {
@@ -149,7 +150,7 @@ public class TieredBeltInstance extends TieredKineticBlockEntityInstance<TieredB
         return dir;
     }
 
-    private BeltData setup(BeltData key, boolean bottom, SpriteShiftEntry spriteShift) {
+    private BeltInstance setup(BeltInstance key, boolean bottom, SpriteShiftEntry spriteShift) {
         boolean downward = beltSlope == BeltSlope.DOWNWARD;
         float rotX = (!diagonal && beltSlope != BeltSlope.HORIZONTAL ? 90 : 0) + (downward ? 180 : 0) + (sideways ? 90 : 0) + (vertical && alongZ ? 180 : 0);
         float rotY = facing.toYRot() + ((diagonal ^ alongX) && !downward ? 180 : 0) + (sideways && alongZ ? 180 : 0) + (vertical && alongX ? 90 : 0);
@@ -161,9 +162,18 @@ public class TieredBeltInstance extends TieredKineticBlockEntityInstance<TieredB
                 .setRotationalSpeed(getScrollSpeed())
                 .setRotationOffset(bottom ? 0.5f : 0f)
                 .setColor(blockEntity)
-                .setPosition(getInstancePosition())
-                .setBlockLight(world.getBrightness(LightLayer.BLOCK, pos))
-                .setSkyLight(world.getBrightness(LightLayer.SKY, pos));
+                .setPosition(getVisualPosition())
+                .light(level.getBrightness(LightLayer.BLOCK, pos), level.getBrightness(LightLayer.SKY, pos))
+                .setChanged();
         return key;
+    }
+
+    @Override
+    public void collectCrumblingInstances(Consumer<Instance> consumer) {
+        if(pulleyKey != null) {
+            consumer.accept(pulleyKey);
+        }
+        keys.forEach(consumer);
+        overlayKeys.forEach(consumer);
     }
 }

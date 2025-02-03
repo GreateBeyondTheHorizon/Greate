@@ -1,7 +1,7 @@
 package electrolyte.greate.registry;
 
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
-import com.jozufozu.flywheel.core.PartialModel;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import electrolyte.greate.Greate;
 
 import java.util.ArrayList;
@@ -152,7 +152,7 @@ public class GreatePartialModels {
     }
 
     private static PartialModel block(String path) {
-        return new PartialModel(Greate.id("block/" + path));
+        return PartialModel.of(Greate.id("block/" + path));
     }
 
     public static void register() {}

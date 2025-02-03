@@ -1,11 +1,11 @@
 package electrolyte.greate.content.kinetics.press;
 
-import com.jozufozu.flywheel.backend.Backend;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.simibubi.create.content.kinetics.press.PressingBehaviour;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.render.SuperByteBuffer;
+import dev.engine_room.flywheel.api.visualization.VisualizationManager;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider.Context;
@@ -28,7 +28,7 @@ public class TieredMechanicalPressRenderer extends KineticBlockEntityRenderer<Ti
     @Override
     protected void renderSafe(TieredMechanicalPressBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
         super.renderSafe(be, partialTicks, ms, buffer, light, overlay);
-        if(Backend.canUseInstancing(be.getLevel())) return;
+        if(VisualizationManager.supportsVisualization(be.getLevel())) return;
         BlockState blockState = be.getBlockState();
         PressingBehaviour pressingBehaviour = be.getPressingBehaviour();
         float headOffset = pressingBehaviour.getRenderedHeadOffset(partialTicks) * pressingBehaviour.mode.headOffset;

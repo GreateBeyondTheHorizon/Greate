@@ -1,9 +1,6 @@
 package electrolyte.greate.content.kinetics.belt;
 
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
-import com.jozufozu.flywheel.backend.Backend;
-import com.jozufozu.flywheel.core.PartialModel;
-import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
@@ -22,14 +19,20 @@ import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.worldWrappers.WrappedWorld;
+import dev.engine_room.flywheel.api.visualization.VisualizationManager;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import dev.engine_room.flywheel.lib.transform.PoseTransformStack;
+import dev.engine_room.flywheel.lib.transform.TransformStack;
 import electrolyte.greate.registry.GreatePartialModels;
 import electrolyte.greate.registry.GreateSpriteShifts;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.core.Vec3i;
@@ -54,7 +57,7 @@ public class TieredBeltRenderer extends SafeBlockEntityRenderer<TieredBeltBlockE
 
     @Override
     protected void renderSafe(TieredBeltBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
-        if (!Backend.canUseInstancing(be.getLevel())) {
+        if (! VisualizationManager.supportsVisualization(be.getLevel())) {
 
             BlockState blockState = be.getBlockState();
             if (!(blockState.getBlock() instanceof TieredBeltBlock)) return;
@@ -73,15 +76,15 @@ public class TieredBeltRenderer extends SafeBlockEntityRenderer<TieredBeltBlockE
             boolean alongX = facing.getAxis() == Direction.Axis.X;
 
             PoseStack localTransforms = new PoseStack();
-            TransformStack msr = TransformStack.cast(localTransforms);
+            TransformStack<PoseTransformStack> msr = TransformStack.of(localTransforms);
             VertexConsumer vb = buffer.getBuffer(RenderType.cutout());
             float renderTick = AnimationTickHolder.getRenderTime(be.getLevel());
 
-            msr.centre()
+            msr.center()
                     .rotateY(AngleHelper.horizontalAngle(facing) + (upward ? 180 : 0) + (sideways ? 270 : 0))
                     .rotateZ(sideways ? 90 : 0)
                     .rotateX(!diagonal && beltSlope != BeltSlope.HORIZONTAL ? 90 : 0)
-                    .unCentre();
+                    .uncenter();
 
             if (downward || beltSlope == BeltSlope.VERTICAL && axisDirection == AxisDirection.POSITIVE) {
                 boolean b = start;
@@ -130,12 +133,12 @@ public class TieredBeltRenderer extends SafeBlockEntityRenderer<TieredBeltBlockE
 
                 Supplier<PoseStack> matrixStackSupplier = () -> {
                     PoseStack stack = new PoseStack();
-                    TransformStack stacker = TransformStack.cast(stack);
-                    stacker.centre();
-                    if (dir.getAxis() == Direction.Axis.X) stacker.rotateY(90);
-                    if (dir.getAxis() == Direction.Axis.Y) stacker.rotateX(90);
-                    stacker.rotateX(90);
-                    stacker.unCentre();
+                    TransformStack<PoseTransformStack> stacker = TransformStack.of(stack);
+                    stacker.center();
+                    if (dir.getAxis() == Direction.Axis.X) stacker.rotateYDegrees(90);
+                    if (dir.getAxis() == Direction.Axis.Y) stacker.rotateXDegrees(90);
+                    stacker.rotateXDegrees(90);
+                    stacker.uncenter();
                     return stack;
                 };
 
@@ -206,6 +209,7 @@ public class TieredBeltRenderer extends SafeBlockEntityRenderer<TieredBeltBlockE
         BeltSlope slope = be.getBlockState().getValue(BeltBlock.SLOPE);
         int verticality = slope == BeltSlope.DOWNWARD ? -1 : slope == BeltSlope.UPWARD ? 1 : 0;
         boolean slopeAlongX = beltFacing.getAxis() == Direction.Axis.X;
+        MutableBlockPos mutableBlockPos = new MutableBlockPos();
 
         Minecraft mc = Minecraft.getInstance();
         ItemRenderer itemRenderer = mc.getItemRenderer();
@@ -239,14 +243,21 @@ public class TieredBeltRenderer extends SafeBlockEntityRenderer<TieredBeltBlockE
             if(this.shouldCullItem(itemPos, be.getLevel())) continue;
 
             ms.pushPose();
-            TransformStack.cast(ms).nudge(transported.angle);
+            TransformStack.of(ms).nudge(transported.angle);
             ms.translate(offsetVec.x, offsetVec.y, offsetVec.z);
 
             boolean alongX = beltFacing.getClockWise().getAxis() == Direction.Axis.X;
             if (!alongX) sideOffset *= -1;
             ms.translate(alongX ? sideOffset : 0, 0, alongX ? 0 : sideOffset);
 
-            int stackLight = onContraption ? light : getPackedLight(be, offset);
+            int stackLight;
+            if(onContraption) {
+                stackLight = light;
+            } else {
+                int segment = (int) Math.floor(offset);
+                mutableBlockPos.set(be.getBlockPos()).move(directionVec.getX() * segment, verticality * segment, directionVec.getZ() * segment);
+                stackLight = LevelRenderer.getLightColor(be.getLevel(), mutableBlockPos);
+            }
             boolean renderUpright = BeltHelper.isItemUpright(transported.stack);
             BakedModel bakedModel = itemRenderer.getModel(transported.stack, be.getLevel(), null, 0);
             boolean blockItem = bakedModel.isGui3d();
@@ -311,13 +322,5 @@ public class TieredBeltRenderer extends SafeBlockEntityRenderer<TieredBeltBlockE
             ms.popPose();
         }
         ms.popPose();
-    }
-
-    protected int getPackedLight(TieredBeltBlockEntity controller, float beltPos) {
-        int segment = (int) Math.floor(beltPos);
-        if (controller.lighter == null || segment >= controller.lighter.lightSegments() || segment < 0)
-            return 0;
-
-        return controller.lighter.getPackedLight(segment);
     }
 }

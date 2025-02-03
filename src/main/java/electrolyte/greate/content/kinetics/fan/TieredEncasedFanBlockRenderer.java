@@ -1,6 +1,5 @@
 package electrolyte.greate.content.kinetics.fan;
 
-import com.jozufozu.flywheel.backend.Backend;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
@@ -8,6 +7,7 @@ import com.simibubi.create.content.kinetics.fan.EncasedFanBlock;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.render.SuperByteBuffer;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
+import dev.engine_room.flywheel.api.visualization.VisualizationManager;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -25,7 +25,7 @@ public class TieredEncasedFanBlockRenderer extends KineticBlockEntityRenderer<Ti
 
     @Override
     protected void renderSafe(TieredEncasedFanBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
-        if(Backend.canUseInstancing(be.getLevel())) return;
+        if(VisualizationManager.supportsVisualization(be.getLevel())) return;
         int tier = ((TieredEncasedFanBlock) be.getBlockState().getBlock()).getTier();
         Direction dir = be.getBlockState().getValue(EncasedFanBlock.FACING);
         VertexConsumer vb = buffer.getBuffer(RenderType.cutoutMipped());

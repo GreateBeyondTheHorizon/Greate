@@ -1,6 +1,5 @@
 package electrolyte.greate.compat.jei.category;
 
-import com.jozufozu.flywheel.core.PartialModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.simibubi.create.AllBlocks;
@@ -10,6 +9,7 @@ import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import com.simibubi.create.foundation.utility.Lang;
 import com.tterrag.registrate.util.entry.BlockEntry;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import electrolyte.greate.content.kinetics.fan.TieredEncasedFanBlock;
 import electrolyte.greate.content.processing.recipe.TieredProcessingOutput;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;

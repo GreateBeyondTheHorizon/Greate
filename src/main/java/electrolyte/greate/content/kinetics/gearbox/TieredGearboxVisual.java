@@ -1,49 +1,52 @@
 package electrolyte.greate.content.kinetics.gearbox;
 
-import com.jozufozu.flywheel.api.InstanceData;
-import com.jozufozu.flywheel.api.Instancer;
-import com.jozufozu.flywheel.api.Material;
-import com.jozufozu.flywheel.api.MaterialManager;
-import com.simibubi.create.content.kinetics.base.flwdata.RotatingData;
+import com.simibubi.create.content.kinetics.base.RotatingInstance;
+import com.simibubi.create.foundation.render.AllInstanceTypes;
 import com.simibubi.create.foundation.utility.Iterate;
-import electrolyte.greate.content.kinetics.base.TieredKineticBlockEntityInstance;
+import dev.engine_room.flywheel.api.instance.Instance;
+import dev.engine_room.flywheel.api.visualization.VisualizationContext;
+import dev.engine_room.flywheel.lib.instance.AbstractInstance;
+import dev.engine_room.flywheel.lib.instance.FlatLit;
+import dev.engine_room.flywheel.lib.model.Models;
+import electrolyte.greate.content.kinetics.base.TieredKineticBlockEntityVisual;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import static electrolyte.greate.registry.GreatePartialModels.SHAFT_HALF_MODELS;
 
-public class TieredGearboxInstance extends TieredKineticBlockEntityInstance<TieredGearboxBlockEntity> {
+public class TieredGearboxVisual extends TieredKineticBlockEntityVisual<TieredGearboxBlockEntity> {
 
-    protected final EnumMap<Direction, RotatingData> keys;
+    protected final EnumMap<Direction, RotatingInstance> keys;
     protected Direction sourceFacing;
 
-    public TieredGearboxInstance(MaterialManager materialManager, TieredGearboxBlockEntity blockEntity) {
-        super(materialManager, blockEntity);
+    public TieredGearboxVisual(VisualizationContext context, TieredGearboxBlockEntity blockEntity, float partialTick) {
+        super(context, blockEntity, partialTick);
         int tier = ((TieredGearboxBlock) blockState.getBlock()).getTier();
         keys = new EnumMap<>(Direction.class);
         final Axis boxAxis = blockState.getValue(BlockStateProperties.AXIS);
-        int blockLight = world.getBrightness(LightLayer.BLOCK, pos);
-        int skyLight = world.getBrightness(LightLayer.SKY, pos);
+        int blockLight = level.getBrightness(LightLayer.BLOCK, pos);
+        int skyLight = level.getBrightness(LightLayer.SKY, pos);
         updateSourceFacing();
-        Material<RotatingData> rotatingMaterial = getRotatingMaterial();
+
         for(Direction direction : Iterate.directions) {
             final Axis axis = direction.getAxis();
             if(boxAxis == axis) continue;
-            Instancer<RotatingData> shaft = rotatingMaterial.getModel(SHAFT_HALF_MODELS[tier], blockState, direction);
-            RotatingData key = shaft.createInstance();
+            RotatingInstance key = instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.partial(SHAFT_HALF_MODELS[tier], direction)).createInstance();
             key.setRotationAxis(Direction.get(AxisDirection.POSITIVE, axis).step())
                     .setRotationalSpeed(getSpeed(direction))
                     .setRotationOffset(getRotationOffset(axis)).setColor(blockEntity)
-                    .setPosition(getInstancePosition())
-                    .setBlockLight(blockLight)
-                    .setSkyLight(skyLight);
+                    .setPosition(getVisualPosition())
+                    .light(blockLight, skyLight)
+                    .setChanged();
 
             keys.put(direction, key);
         }
@@ -71,9 +74,9 @@ public class TieredGearboxInstance extends TieredKineticBlockEntityInstance<Tier
     }
 
     @Override
-    public void update() {
+    public void update(float partialTick) {
         updateSourceFacing();
-        for(Map.Entry<Direction, RotatingData> key : keys.entrySet()) {
+        for(Map.Entry<Direction, RotatingInstance> key : keys.entrySet()) {
             Direction direction = key.getKey();
             Axis axis = direction.getAxis();
             updateRotation(key.getValue(), axis, getSpeed(direction));
@@ -81,13 +84,18 @@ public class TieredGearboxInstance extends TieredKineticBlockEntityInstance<Tier
     }
 
     @Override
-    public void updateLight() {
-        relight(pos, keys.values().stream());
+    public void updateLight(float partialTick) {
+        relight(keys.values().toArray(FlatLit[]::new));
     }
 
     @Override
-    protected void remove() {
-        keys.values().forEach(InstanceData::delete);
+    protected void _delete() {
+        keys.values().forEach(AbstractInstance::delete);
         keys.clear();
+    }
+
+    @Override
+    public void collectCrumblingInstances(Consumer<@Nullable Instance> consumer) {
+        keys.values().forEach(consumer);
     }
 }

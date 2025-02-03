@@ -1,12 +1,8 @@
 package electrolyte.greate.content.kinetics.saw;
 
-import com.jozufozu.flywheel.backend.Backend;
-import com.jozufozu.flywheel.core.PartialModel;
-import com.jozufozu.flywheel.core.virtual.VirtualRenderWorld;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.content.contraptions.behaviour.MovementContext;
 import com.simibubi.create.content.contraptions.render.ContraptionMatrices;
-import com.simibubi.create.content.contraptions.render.ContraptionRenderDispatcher;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.simibubi.create.content.kinetics.saw.SawBlock;
@@ -20,6 +16,10 @@ import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.render.SuperByteBuffer;
 import com.simibubi.create.foundation.utility.AngleHelper;
 import com.simibubi.create.foundation.utility.VecHelper;
+import com.simibubi.create.foundation.virtualWorld.VirtualRenderWorld;
+import dev.engine_room.flywheel.api.visualization.VisualizationManager;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider.Context;
@@ -53,7 +53,7 @@ public class TieredSawRenderer extends SawRenderer {
         }
         FilteringRenderer.renderOnBlockEntity(be, partialTicks, ms, bufferSource, light, overlay);
 
-        if(Backend.canUseInstancing(be.getLevel())) return;
+        if(VisualizationManager.supportsVisualization(be.getLevel())) return;
         renderShaft(be, ms, bufferSource, light, overlay);
     }
 
@@ -85,7 +85,7 @@ public class TieredSawRenderer extends SawRenderer {
 
         SuperByteBuffer superByteBuffer = CachedBufferer.partialFacing(sawModel, state);
         if(rotate) {
-            superByteBuffer.rotateCentered(Direction.UP, AngleHelper.rad(90));
+            superByteBuffer.rotateCentered(AngleHelper.rad(90), Direction.UP);
         }
         superByteBuffer.light(light).renderInto(poseStack, bufferSource.getBuffer(RenderType.cutoutMipped()));
     }
@@ -130,13 +130,18 @@ public class TieredSawRenderer extends SawRenderer {
                 superBuffer = CachedBufferer.partial(MECHANICAL_SAW_BLADE_VERTICAL_INACTIVE_MODELS[tier], state);
         }
 
-        superBuffer.transform(matrices.getModel()).centre().rotateY(AngleHelper.horizontalAngle(facing)).rotateX(AngleHelper.verticalAngle(facing));
+        superBuffer.transform(matrices.getModel())
+                .center()
+                .rotateYDegrees(AngleHelper.horizontalAngle(facing))
+                .rotateXDegrees(AngleHelper.verticalAngle(facing));
 
         if (!SawBlock.isHorizontal(state)) {
-            superBuffer.rotateZ(state.getValue(SawBlock.AXIS_ALONG_FIRST_COORDINATE) ? 90 : 0);
+            superBuffer.rotateZDegrees(state.getValue(SawBlock.AXIS_ALONG_FIRST_COORDINATE) ? 90 : 0);
         }
 
-        superBuffer.unCentre().light(matrices.getWorld(), ContraptionRenderDispatcher.getContraptionWorldLight(context, renderWorld)).renderInto(matrices.getViewProjection(), bufferSource.getBuffer(RenderType.cutoutMipped()));
+        superBuffer.center()
+                .light(LevelRenderer.getLightColor(renderWorld, context.localPos))
+                .renderInto(matrices.getViewProjection(), bufferSource.getBuffer(RenderType.cutoutMipped()));
     }
 
     private void renderFluid(TieredSawBlockEntity be, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int light) {
