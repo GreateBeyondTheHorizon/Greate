@@ -1,2 +1,3 @@
-- Remove overcapacity in favor of limiting the network capacity to the lowest tier block on the network instead.
-- Remove check for circuits in recipes breaking during validation check.
+- Fix tiered powered shafts not reverting to proper regular shafts when broken
+- Fix tiered shafts turning into regular powered shafts
+- Fix millstones < HV not outputting primary results
