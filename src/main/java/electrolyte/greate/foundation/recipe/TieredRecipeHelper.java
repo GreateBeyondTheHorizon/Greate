@@ -65,7 +65,7 @@ public class TieredRecipeHelper {
             for(Content c : outputs) {
                 if(gtr.getType() == GTRecipeTypes.MACERATOR_RECIPES) {
                     if(machineTier < HV) {
-                        if(c.chance == 1) {
+                        if(c.chance / 10000 == 1) {
                             ItemStack[] items = ((Ingredient) c.content).getItems();
                             for(ItemStack item : items) {
                                 newResults.add(new TieredProcessingOutput(item, c.chance, getExtraPercent(c.tierChanceBoost, recipeTier, machineTier)));
