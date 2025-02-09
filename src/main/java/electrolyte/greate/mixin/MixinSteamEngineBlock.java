@@ -59,7 +59,7 @@ public abstract class MixinSteamEngineBlock extends FaceAttachedHorizontalDirect
         }
     }
 
-    @Inject(method = "onPlace", at = @At("HEAD"), remap = false, cancellable = true)
+    @Inject(method = "onPlace", at = @At("HEAD"), cancellable = true)
     private void greate_onPlace(BlockState pState, Level pLevel, BlockPos pPos, BlockState pOldState, boolean pIsMoving, CallbackInfo ci) {
         FluidTankBlock.updateBoilerState(pState, pLevel, pPos.relative(getFacing(pState).getOpposite()));
         BlockPos shaftPos = getShaftPos(pState, pPos);
@@ -75,7 +75,7 @@ public abstract class MixinSteamEngineBlock extends FaceAttachedHorizontalDirect
         }
     }
 
-    @Inject(method = "onRemove", at = @At("TAIL"), remap = false)
+    @Inject(method = "onRemove", at = @At("TAIL"))
     private void greate_onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving, CallbackInfo ci) {
         BlockPos shaftPos = getShaftPos(pState, pPos);
         BlockState shaftState = pLevel.getBlockState(shaftPos);
