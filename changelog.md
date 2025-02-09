@@ -1,3 +1,1 @@
-- Fix tiered powered shafts not reverting to proper regular shafts when broken
-- Fix tiered shafts turning into regular powered shafts
-- Fix millstones < HV not outputting primary results
+- Fix mixin crash
