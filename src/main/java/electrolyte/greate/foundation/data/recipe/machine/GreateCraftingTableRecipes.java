@@ -63,7 +63,7 @@ public class GreateCraftingTableRecipes {
                     "NA", "AN", "fh",
                     'N', new UnificationEntry(plate, tierMaterial),
                     'A', new ItemStack(Blocks.ANDESITE));
-            VanillaRecipeHelper.addShapedRecipe(provider, SHAFTS[tier].getId(), SHAFTS[tier].asStack(4),
+            VanillaRecipeHelper.addShapedRecipe(provider, SHAFTS[tier].getId(), SHAFTS[tier].asStack(2),
                     "s ", " A",
                     'A', new UnificationEntry(plate, tierMaterial));
 
