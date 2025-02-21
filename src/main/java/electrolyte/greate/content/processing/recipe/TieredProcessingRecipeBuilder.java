@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.gregtechceu.gtceu.api.recipe.content.Content;
 import com.gregtechceu.gtceu.api.recipe.ingredient.IntCircuitIngredient;
+import com.gregtechceu.gtceu.api.recipe.ingredient.SizedIngredient;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder.ProcessingRecipeParams;
@@ -61,10 +62,13 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
     public TieredProcessingRecipeBuilder<T> withItemIngredientsGT(List<Content> ingredients) {
         NonNullList<Ingredient> nonNullList = NonNullList.create();
         for(Content c : ingredients) {
-            Ingredient ingredient = (Ingredient) c.getContent();
-            if(!(ingredient instanceof IntCircuitIngredient)) {
-                nonNullList.add(ingredient);
+            if((Ingredient) c.getContent() instanceof SizedIngredient sizedIng) {
+                if(sizedIng.getInner() instanceof IntCircuitIngredient) {
+                    continue;
+                }
             }
+            if(c.getContent() instanceof IntCircuitIngredient) continue;
+            nonNullList.add((Ingredient) c.getContent());
         }
         return withItemIngredients(nonNullList);
     }
