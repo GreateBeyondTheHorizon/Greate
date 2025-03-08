@@ -117,14 +117,16 @@ public class TieredSawRenderer extends SawRenderer {
         boolean shouldAnimate = (context.contraption.stalled && horizontal) || (!context.contraption.stalled && !backwards && moving);
         int tier = ((TieredSawBlock) state.getBlock()).getTier();
 
-        SuperByteBuffer buffer = CachedBuffers.partial(SHAFT_HALF_MODELS[tier], state);
+        SuperByteBuffer buffer;
         SuperByteBuffer superBuffer;
         if (SawBlock.isHorizontal(state)) {
+            buffer = CachedBuffers.partial(SHAFT_HALF_MODELS[tier], state);
             if (shouldAnimate)
                 superBuffer = CachedBuffers.partial(MECHANICAL_SAW_BLADE_HORIZONTAL_ACTIVE_MODELS[tier], state);
             else
                 superBuffer = CachedBuffers.partial(MECHANICAL_SAW_BLADE_HORIZONTAL_INACTIVE_MODELS[tier], state);
         } else {
+            buffer = CachedBuffers.partial(SHAFT_MODELS[tier], state);
             if (shouldAnimate)
                 superBuffer = CachedBuffers.partial(MECHANICAL_SAW_BLADE_VERTICAL_ACTIVE_MODELS[tier], state);
             else
