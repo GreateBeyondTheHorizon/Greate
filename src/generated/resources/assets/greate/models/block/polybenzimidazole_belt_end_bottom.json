@@ -1,5 +1,6 @@
 {
   "parent": "create:block/belt/end_bottom",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "1": "greate:block/polybenzimidazole/belt_offset"
   }

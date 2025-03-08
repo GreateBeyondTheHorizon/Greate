@@ -1,6 +1,5 @@
 package electrolyte.greate.registry;
 
-import com.simibubi.create.content.kinetics.BlockStressDefaults;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -54,7 +53,7 @@ public class EncasedFans {
                 .addLayer(() -> RenderType::cutoutMipped)
                 .transform(GreateBuilderTransformers.tieredEncasedFan())
                 .transform(TagGen.axeOrPickaxe())
-                .transform(BlockStressDefaults.setImpact(stressImpact))
+                //.transform(CStress.setImpact(stressImpact))
                 .transform(TieredBlockMaterials.setMaterialForBlock(TM[tier]))
                 .onRegister(c -> c.setTier(tier))
                 .register();

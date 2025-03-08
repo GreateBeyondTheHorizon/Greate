@@ -7,7 +7,7 @@ import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.compat.jei.category.animations.AnimatedKinetics;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
-import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.foundation.utility.CreateLang;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import electrolyte.greate.content.kinetics.fan.TieredEncasedFanBlock;
@@ -41,7 +41,7 @@ public abstract class TieredProcessingViaFanCategory<T extends Recipe<?>> extend
     }
 
     public static Supplier<ItemStack> getFan(BlockEntry<TieredEncasedFanBlock> fan, String name) {
-        return () -> fan.asStack().setHoverName(Lang.translateDirect("recipe." + name + ".fan").withStyle(s -> s.withItalic(false)));
+        return () -> fan.asStack().setHoverName(CreateLang.translateDirect("recipe." + name + ".fan").withStyle(s -> s.withItalic(false)));
     }
 
     @Override

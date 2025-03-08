@@ -4,9 +4,8 @@ import com.simibubi.create.content.processing.basin.BasinBlockEntity;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
-import com.simibubi.create.foundation.utility.Components;
-import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.foundation.utility.LangBuilder;
+import com.simibubi.create.foundation.utility.CreateLang;
+import net.createmod.catnip.lang.LangBuilder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -56,7 +55,7 @@ public abstract class MixinBasinBlockEntity extends SmartBlockEntity {
 
     @Inject(method = "addToGoggleTooltip", at = @At("HEAD"), remap = false, cancellable = true)
     private void greate_addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking, CallbackInfoReturnable<Boolean> cir) {
-        Lang.translate("gui.goggles.basin_contents").forGoggles(tooltip);
+        CreateLang.translate("gui.goggles.basin_contents").forGoggles(tooltip);
         IItemHandlerModifiable items = itemCapability.orElse(new ItemStackHandler());
         IFluidHandler fluids = fluidCapability.orElse(new FluidTank(0));
         boolean isEmpty = true;
@@ -64,21 +63,21 @@ public abstract class MixinBasinBlockEntity extends SmartBlockEntity {
         for(int i = 0; i < items.getSlots(); i++) {
             ItemStack stackInSlot = items.getStackInSlot(i);
             if(stackInSlot.isEmpty()) continue;
-            Lang.text("")
-                    .add(Components.translatable(stackInSlot.getHoverName().getString()).withStyle(ChatFormatting.GRAY))
-                    .add(Lang.text(" x" + stackInSlot.getCount()).style(ChatFormatting.GREEN))
+            CreateLang.text("")
+                    .add(Component.translatable(stackInSlot.getHoverName().getString()).withStyle(ChatFormatting.GRAY))
+                    .add(CreateLang.text(" x" + stackInSlot.getCount()).style(ChatFormatting.GREEN))
                     .forGoggles(tooltip, 1);
             isEmpty = false;
         }
 
-        LangBuilder mb = Lang.translate("generic.unit.millibuckets");
+        LangBuilder mb = CreateLang.translate("generic.unit.millibuckets");
         for(int i = 0; i < fluids.getTanks(); i++) {
             FluidStack fluidStack = fluids.getFluidInTank(i);
             if(fluidStack.isEmpty()) continue;
-            Lang.text("")
-                    .add(Lang.fluidName(fluidStack)
-                            .add(Lang.text(" ")).style(ChatFormatting.GRAY)
-                            .add(Lang.number(fluidStack.getAmount()).add(mb).style(ChatFormatting.BLUE)))
+            CreateLang.text("")
+                    .add(CreateLang.fluidName(fluidStack)
+                            .add(CreateLang.text(" ")).style(ChatFormatting.GRAY)
+                            .add(CreateLang.number(fluidStack.getAmount()).add(mb).style(ChatFormatting.BLUE)))
                     .forGoggles(tooltip, 1);
             isEmpty = false;
         }

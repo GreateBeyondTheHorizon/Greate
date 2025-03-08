@@ -6,10 +6,9 @@ import com.simibubi.create.content.kinetics.fan.AirCurrent;
 import com.simibubi.create.content.kinetics.fan.AirCurrentSound;
 import com.simibubi.create.content.kinetics.fan.EncasedFanBlockEntity;
 import com.simibubi.create.content.kinetics.fan.IAirCurrentSource;
-import com.simibubi.create.content.kinetics.fan.processing.AllFanProcessingTypes;
 import com.simibubi.create.content.kinetics.fan.processing.FanProcessingType;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
-import com.simibubi.create.foundation.utility.VecHelper;
+import net.createmod.catnip.math.VecHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Vec3i;
 import net.minecraft.server.level.ServerPlayer;
@@ -30,6 +29,7 @@ import java.util.Iterator;
 public class TieredAirCurrent extends AirCurrent {
 
     int machineTier;
+
     public TieredAirCurrent(IAirCurrentSource source, int tier) {
         super(source);
         this.machineTier = tier;
@@ -37,18 +37,18 @@ public class TieredAirCurrent extends AirCurrent {
 
     @Override
     public void tickAffectedHandlers() {
-        for (Pair<TransportedItemStackHandlerBehaviour, FanProcessingType> pair : affectedItemHandlers) {
+        for(Pair<TransportedItemStackHandlerBehaviour, FanProcessingType> pair : affectedItemHandlers) {
             TransportedItemStackHandlerBehaviour handler = pair.getKey();
             Level level = handler.getWorld();
             FanProcessingType processingType = pair.getRight();
 
             handler.handleProcessingOnAllItems(transported -> {
-                if (level.isClientSide) {
+                if(level.isClientSide) {
                     processingType.spawnProcessingParticles(level, handler.getWorldPositionOf(transported));
                     return TransportedResult.doNothing();
                 }
                 TransportedResult applyProcessing = TieredFanProcessing.applyProcessing(source.getSpeed(), transported, level, processingType, machineTier);
-                if (!applyProcessing.doesNothing() && source instanceof EncasedFanBlockEntity fan)
+                if(! applyProcessing.doesNothing() && source instanceof EncasedFanBlockEntity fan)
                     fan.award(AllAdvancements.FAN_PROCESSING);
                 return applyProcessing;
             });
@@ -57,9 +57,9 @@ public class TieredAirCurrent extends AirCurrent {
 
     @Override
     protected void tickAffectedEntities(Level level) {
-        for (Iterator<Entity> iterator = caughtEntities.iterator(); iterator.hasNext();) {
+        for(Iterator<Entity> iterator = caughtEntities.iterator(); iterator.hasNext(); ) {
             Entity entity = iterator.next();
-            if (!entity.isAlive() || !entity.getBoundingBox().intersects(bounds) || isPlayerCreativeFlying(entity)) {
+            if(! entity.isAlive() || ! entity.getBoundingBox().intersects(bounds) || isPlayerCreativeFlying(entity)) {
                 iterator.remove();
                 continue;
             }
@@ -73,37 +73,36 @@ public class TieredAirCurrent extends AirCurrent {
             Vec3 previousMotion = entity.getDeltaMovement();
             float maxAcceleration = 5;
 
-            double xIn = Mth.clamp(flow.getX() * acceleration - previousMotion.x, -maxAcceleration, maxAcceleration);
-            double yIn = Mth.clamp(flow.getY() * acceleration - previousMotion.y, -maxAcceleration, maxAcceleration);
-            double zIn = Mth.clamp(flow.getZ() * acceleration - previousMotion.z, -maxAcceleration, maxAcceleration);
+            double xIn = Mth.clamp(flow.getX() * acceleration - previousMotion.x, - maxAcceleration, maxAcceleration);
+            double yIn = Mth.clamp(flow.getY() * acceleration - previousMotion.y, - maxAcceleration, maxAcceleration);
+            double zIn = Mth.clamp(flow.getZ() * acceleration - previousMotion.z, - maxAcceleration, maxAcceleration);
 
             entity.setDeltaMovement(previousMotion.add(new Vec3(xIn, yIn, zIn).scale(1 / 8f)));
             entity.fallDistance = 0;
             DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
                     () -> () -> enableClientPlayerSound(entity, Mth.clamp(speed / 128f * .4f, 0.01f, .4f)));
 
-            if (entity instanceof ServerPlayer sp) {
+            if(entity instanceof ServerPlayer sp) {
                 sp.connection.aboveGroundTickCount = 0;
             }
 
             FanProcessingType processingType = getTypeAt((float) entityDistance);
 
-            if (processingType == AllFanProcessingTypes.NONE)
-                continue;
+            if(processingType == null) continue;
 
-            if (entity instanceof ItemEntity itemEntity) {
-                if (level != null && level.isClientSide) {
+            if(entity instanceof ItemEntity itemEntity) {
+                if(level != null && level.isClientSide) {
                     processingType.spawnProcessingParticles(level, entity.position());
                     continue;
                 }
-                if (TieredFanProcessing.canProcess(itemEntity, processingType, machineTier))
-                    if (TieredFanProcessing.applyProcessing(source.getSpeed(), itemEntity, processingType, machineTier)
+                if(TieredFanProcessing.canProcess(itemEntity, processingType, machineTier))
+                    if(TieredFanProcessing.applyProcessing(source.getSpeed(), itemEntity, processingType, machineTier)
                             && source instanceof EncasedFanBlockEntity fan)
                         fan.award(AllAdvancements.FAN_PROCESSING);
                 continue;
             }
 
-            if (level != null)
+            if(level != null)
                 processingType.affectEntity(entity, level);
         }
     }
@@ -114,7 +113,7 @@ public class TieredAirCurrent extends AirCurrent {
 
     @OnlyIn(Dist.CLIENT)
     private static void enableClientPlayerSound(Entity e, float maxVolume) {
-        if (e != Minecraft.getInstance()
+        if(e != Minecraft.getInstance()
                 .getCameraEntity())
             return;
 
@@ -123,7 +122,7 @@ public class TieredAirCurrent extends AirCurrent {
         float pitch = (float) Mth.clamp(e.getDeltaMovement()
                 .length() * .5f, .5f, 2f);
 
-        if (flyingSound == null || flyingSound.isStopped()) {
+        if(flyingSound == null || flyingSound.isStopped()) {
             flyingSound = new TieredAirCurrentSound(SoundEvents.ELYTRA_FLYING, pitch);
             Minecraft.getInstance()
                     .getSoundManager()
@@ -135,8 +134,8 @@ public class TieredAirCurrent extends AirCurrent {
 
     @OnlyIn(Dist.CLIENT)
     public static void tickClientPlayerSounds() {
-        if (!isClientPlayerInAirCurrent && flyingSound != null)
-            if (flyingSound.isFaded())
+        if(! isClientPlayerInAirCurrent && flyingSound != null)
+            if(flyingSound.isFaded())
                 flyingSound.stopSound();
             else
                 flyingSound.fadeOut();

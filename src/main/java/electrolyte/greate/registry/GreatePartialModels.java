@@ -15,18 +15,33 @@ import static electrolyte.greate.registry.GreateMaterials.AndesiteAlloy;
 
 public class GreatePartialModels {
 
-    // Cogwheel
+    // Cogwheel, Shaft variants
+    public static final PartialModel[] COGWHEEL_MODELS = new PartialModel[10];
     public static final PartialModel[] COGWHEEL_SHAFTLESS_MODELS = new PartialModel[10];
     public static final PartialModel[] LARGE_COGWHEEL_SHAFTLESS_MODELS = new PartialModel[10];
     public static final PartialModel[] COGWHEEL_SHAFT_MODELS = new PartialModel[10];
+    public static final PartialModel[] POWERED_SHAFT_MODELS = new PartialModel[10];
     public static final PartialModel[] SHAFT_HALF_MODELS = new PartialModel[10];
+    public static final PartialModel[] SHAFT_MODELS = new PartialModel[10];
+
     static {
         for (int tier = 0; tier < TM.length; tier++) {
             Material tierMaterial = TM[tier];
+            COGWHEEL_MODELS[tier] = materialBlock(tierMaterial, "_cogwheel");
             COGWHEEL_SHAFTLESS_MODELS[tier] = materialBlock(tierMaterial, "_cogwheel_shaftless");
             LARGE_COGWHEEL_SHAFTLESS_MODELS[tier] = materialBlock("large_", tierMaterial, "_cogwheel_shaftless");
             COGWHEEL_SHAFT_MODELS[tier] = materialBlock(tierMaterial, "_cogwheel_shaft");
+            POWERED_SHAFT_MODELS[tier] = materialBlock("powered_", tierMaterial, "_shaft");
             SHAFT_HALF_MODELS[tier] = materialBlock(tierMaterial, "_shaft_half");
+            SHAFT_MODELS[tier] = materialBlock(tierMaterial, "_shaft");
+        }
+    }
+
+    // Crushing Wheel
+    public static final PartialModel[] CRUSHING_WHEEL_MODELS = new PartialModel[10];
+    static {
+        for (int tier = 0; tier < TM.length; tier++) {
+            CRUSHING_WHEEL_MODELS[tier] = materialBlock(TM[tier], "_crushing_wheel");
         }
     }
 

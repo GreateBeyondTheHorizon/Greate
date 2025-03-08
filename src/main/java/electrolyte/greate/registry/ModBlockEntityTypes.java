@@ -1,14 +1,11 @@
 package electrolyte.greate.registry;
 
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
-import com.simibubi.create.content.kinetics.base.SingleRotatingVisual;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import electrolyte.greate.content.fluids.pump.TieredPumpBlockEntity;
-import electrolyte.greate.content.fluids.pump.TieredPumpCogVisual;
 import electrolyte.greate.content.fluids.pump.TieredPumpRenderer;
 import electrolyte.greate.content.kinetics.base.TieredShaftRenderer;
-import electrolyte.greate.content.kinetics.base.TieredShaftVisual;
-import electrolyte.greate.content.kinetics.base.TieredSingleRotatingVisual;
+import electrolyte.greate.content.kinetics.base.TieredSingleAxisRotatingVisual;
 import electrolyte.greate.content.kinetics.belt.TieredBeltBlockEntity;
 import electrolyte.greate.content.kinetics.belt.TieredBeltRenderer;
 import electrolyte.greate.content.kinetics.belt.TieredBeltVisual;
@@ -21,7 +18,6 @@ import electrolyte.greate.content.kinetics.gearbox.TieredGearboxBlockEntity;
 import electrolyte.greate.content.kinetics.gearbox.TieredGearboxRenderer;
 import electrolyte.greate.content.kinetics.gearbox.TieredGearboxVisual;
 import electrolyte.greate.content.kinetics.millstone.TieredMillstoneBlockEntity;
-import electrolyte.greate.content.kinetics.millstone.TieredMillstoneCogVisual;
 import electrolyte.greate.content.kinetics.millstone.TieredMillstoneRenderer;
 import electrolyte.greate.content.kinetics.mixer.TieredMechanicalMixerBlockEntity;
 import electrolyte.greate.content.kinetics.mixer.TieredMechanicalMixerRenderer;
@@ -43,7 +39,7 @@ public class ModBlockEntityTypes {
 
     public static final BlockEntityEntry<TieredBracketedKineticBlockEntity> TIERED_BRACKETED_KINETIC = REGISTRATE
             .blockEntity("tiered_bracketed_kinetic", TieredBracketedKineticBlockEntity::new)
-            .visual(() -> TieredBracketedKineticBlockEntityVisual::new, false)
+            .visual(() -> TieredBracketedKineticBlockEntityVisual::create, false)
             .validBlocks(Shafts.SHAFTS)
             .validBlocks(Cogwheels.COGWHEELS)
             .validBlocks(Cogwheels.LARGE_COGWHEELS)
@@ -51,7 +47,7 @@ public class ModBlockEntityTypes {
             .register();
     public static final BlockEntityEntry<TieredKineticBlockEntity> TIERED_ENCASED_SHAFT = REGISTRATE
             .blockEntity("tiered_encased_shaft", TieredKineticBlockEntity::new)
-            .visual(() -> TieredShaftVisual::new, false)
+            .visual(() -> TieredSingleAxisRotatingVisual::shaft, false)
             .validBlocks(Shafts.ANDESITE_ENCASED_SHAFTS)
             .validBlocks(Shafts.BRASS_ENCASED_SHAFTS)
             .validBlocks(Girders.METAL_GIRDER_ENCASED_SHAFTS)
@@ -83,21 +79,21 @@ public class ModBlockEntityTypes {
 
     public static final BlockEntityEntry<TieredPoweredShaftBlockEntity> TIERED_POWERED_SHAFT = REGISTRATE
             .blockEntity("tiered_powered_shaft", TieredPoweredShaftBlockEntity::new)
-            .visual(() -> TieredSingleRotatingVisual::new)
+            .visual(() -> TieredSingleAxisRotatingVisual::poweredShaft)
             .validBlocks(Shafts.POWERED_SHAFTS)
             .renderer(() -> KineticBlockEntityRenderer::new)
             .register();
 
     public static final BlockEntityEntry<TieredMillstoneBlockEntity> TIERED_MILLSTONE = REGISTRATE
             .blockEntity("tiered_millstone", TieredMillstoneBlockEntity::new)
-            .visual(() -> TieredMillstoneCogVisual::new, false)
+            .visual(() -> TieredSingleAxisRotatingVisual::millstoneCog, false)
             .validBlocks(Millstones.MILLSTONES)
             .renderer(() -> TieredMillstoneRenderer::new)
             .register();
 
     public static final BlockEntityEntry<TieredCrushingWheelBlockEntity> TIERED_CRUSHING_WHEEL = REGISTRATE
             .blockEntity("tiered_crushing_wheel", TieredCrushingWheelBlockEntity::new)
-            .visual(() -> SingleRotatingVisual::new, false)
+            .visual(() -> TieredSingleAxisRotatingVisual::crushingWheel, false)
             .validBlocks(CrushingWheels.CRUSHING_WHEELS)
             .renderer(() -> KineticBlockEntityRenderer::new)
             .register();
@@ -130,7 +126,7 @@ public class ModBlockEntityTypes {
 
     public static final BlockEntityEntry<TieredPumpBlockEntity> TIERED_PUMP = REGISTRATE
             .blockEntity("tiered_mechanical_pump", TieredPumpBlockEntity::new)
-            .visual(() -> TieredPumpCogVisual::new, false)
+            .visual(() -> TieredSingleAxisRotatingVisual::pumpCog)
             .validBlocks(Pumps.MECHANICAL_PUMPS)
             .renderer(() -> TieredPumpRenderer::new)
             .register();

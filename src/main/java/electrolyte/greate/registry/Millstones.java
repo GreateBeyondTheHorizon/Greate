@@ -1,6 +1,5 @@
 package electrolyte.greate.registry;
 
-import com.simibubi.create.content.kinetics.BlockStressDefaults;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -51,7 +50,7 @@ public class Millstones {
                 .properties(p -> p.mapColor(MapColor.METAL))
                 .transform(TagGen.pickaxeOnly())
                 .transform(GreateBuilderTransformers.tieredMillstone())
-                .transform(BlockStressDefaults.setImpact(millstoneImpact))
+                //.transform(CStress.setImpact(millstoneImpact))
                 .transform(TieredBlockMaterials.setMaterialForBlock(TM[tier]))
                 .onRegister(c -> c.setTier(tier))
                 .register();

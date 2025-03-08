@@ -1,6 +1,5 @@
 package electrolyte.greate.content.kinetics.fan;
 
-
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityVisual;
 import com.simibubi.create.content.kinetics.base.RotatingInstance;
 import com.simibubi.create.content.kinetics.fan.EncasedFanBlock;
@@ -32,8 +31,15 @@ public class TieredEncasedFanVisual extends KineticBlockEntityVisual<TieredEncas
         halfShaft = instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.partial(SHAFT_HALF_MODELS[tier], opposite)).createInstance();
         fanInner = instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.partial(FAN_INNER_MODELS[tier], opposite)).createInstance();
 
-        setup(halfShaft);
-        setup(fanInner, getFanSpeed());
+        halfShaft.setup(blockEntity)
+                .setPosition(getVisualPosition())
+                .rotateToFace(Direction.SOUTH, opposite)
+                .setChanged();
+
+        fanInner.setup(blockEntity, getFanSpeed())
+                .setPosition(getVisualPosition())
+                .rotateToFace(Direction.SOUTH, opposite)
+                .setChanged();
     }
 
     private float getFanSpeed() {
@@ -49,8 +55,8 @@ public class TieredEncasedFanVisual extends KineticBlockEntityVisual<TieredEncas
 
     @Override
     public void update(float partialTick) {
-        updateRotation(halfShaft);
-        updateRotation(fanInner, getFanSpeed());
+        halfShaft.setup(blockEntity).setChanged();
+        fanInner.setup(blockEntity).setChanged();
     }
 
     @Override

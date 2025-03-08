@@ -1,19 +1,18 @@
 package electrolyte.greate.content.kinetics.gearbox;
 
+import com.simibubi.create.content.kinetics.base.KineticBlockEntityVisual;
 import com.simibubi.create.content.kinetics.base.RotatingInstance;
 import com.simibubi.create.foundation.render.AllInstanceTypes;
-import com.simibubi.create.foundation.utility.Iterate;
 import dev.engine_room.flywheel.api.instance.Instance;
+import dev.engine_room.flywheel.api.instance.Instancer;
 import dev.engine_room.flywheel.api.visualization.VisualizationContext;
 import dev.engine_room.flywheel.lib.instance.AbstractInstance;
 import dev.engine_room.flywheel.lib.instance.FlatLit;
 import dev.engine_room.flywheel.lib.model.Models;
-import electrolyte.greate.content.kinetics.base.TieredKineticBlockEntityVisual;
+import net.createmod.catnip.data.Iterate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
-import net.minecraft.core.Direction.AxisDirection;
-import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.jetbrains.annotations.Nullable;
 
@@ -23,32 +22,29 @@ import java.util.function.Consumer;
 
 import static electrolyte.greate.registry.GreatePartialModels.SHAFT_HALF_MODELS;
 
-public class TieredGearboxVisual extends TieredKineticBlockEntityVisual<TieredGearboxBlockEntity> {
+public class TieredGearboxVisual extends KineticBlockEntityVisual<TieredGearboxBlockEntity> {
 
-    protected final EnumMap<Direction, RotatingInstance> keys;
+    protected final EnumMap<Direction, RotatingInstance> keys = new EnumMap<>(Direction.class);
     protected Direction sourceFacing;
 
     public TieredGearboxVisual(VisualizationContext context, TieredGearboxBlockEntity blockEntity, float partialTick) {
         super(context, blockEntity, partialTick);
         int tier = ((TieredGearboxBlock) blockState.getBlock()).getTier();
-        keys = new EnumMap<>(Direction.class);
         final Axis boxAxis = blockState.getValue(BlockStateProperties.AXIS);
-        int blockLight = level.getBrightness(LightLayer.BLOCK, pos);
-        int skyLight = level.getBrightness(LightLayer.SKY, pos);
         updateSourceFacing();
+
+        Instancer<RotatingInstance> instancer = instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.partial(SHAFT_HALF_MODELS[tier]));
 
         for(Direction direction : Iterate.directions) {
             final Axis axis = direction.getAxis();
             if(boxAxis == axis) continue;
-            RotatingInstance key = instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.partial(SHAFT_HALF_MODELS[tier], direction)).createInstance();
-            key.setRotationAxis(Direction.get(AxisDirection.POSITIVE, axis).step())
-                    .setRotationalSpeed(getSpeed(direction))
-                    .setRotationOffset(getRotationOffset(axis)).setColor(blockEntity)
+            RotatingInstance instance = instancer.createInstance();
+            instance.setup(blockEntity, axis, getSpeed(direction))
                     .setPosition(getVisualPosition())
-                    .light(blockLight, skyLight)
+                    .rotateToFace(Direction.SOUTH, direction)
                     .setChanged();
 
-            keys.put(direction, key);
+            keys.put(direction, instance);
         }
     }
 
@@ -79,7 +75,7 @@ public class TieredGearboxVisual extends TieredKineticBlockEntityVisual<TieredGe
         for(Map.Entry<Direction, RotatingInstance> key : keys.entrySet()) {
             Direction direction = key.getKey();
             Axis axis = direction.getAxis();
-            updateRotation(key.getValue(), axis, getSpeed(direction));
+            key.getValue().setup(blockEntity, axis, getSpeed(direction)).setChanged();
         }
     }
 

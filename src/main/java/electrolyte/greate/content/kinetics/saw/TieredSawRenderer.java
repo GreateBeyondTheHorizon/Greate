@@ -8,34 +8,33 @@ import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.simibubi.create.content.kinetics.saw.SawBlock;
 import com.simibubi.create.content.kinetics.saw.SawBlockEntity;
 import com.simibubi.create.content.kinetics.saw.SawRenderer;
-import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
 import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringRenderer;
 import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
 import com.simibubi.create.foundation.fluid.FluidRenderer;
-import com.simibubi.create.foundation.render.CachedBufferer;
-import com.simibubi.create.foundation.render.SuperByteBuffer;
-import com.simibubi.create.foundation.utility.AngleHelper;
-import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.foundation.virtualWorld.VirtualRenderWorld;
 import dev.engine_room.flywheel.api.visualization.VisualizationManager;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import net.createmod.catnip.math.AngleHelper;
+import net.createmod.catnip.math.VecHelper;
+import net.createmod.catnip.render.CachedBuffers;
+import net.createmod.catnip.render.SuperByteBuffer;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider.Context;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fluids.FluidStack;
 
 import static electrolyte.greate.registry.GreatePartialModels.*;
+import static electrolyte.greate.registry.Shafts.SHAFTS;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.FACING;
 
 public class TieredSawRenderer extends SawRenderer {
 
-    private Block shaftBlock;
     private int tier;
 
     public TieredSawRenderer(Context context) {
@@ -45,7 +44,6 @@ public class TieredSawRenderer extends SawRenderer {
     @Override
     protected void renderSafe(SawBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource bufferSource, int light, int overlay) {
         tier = ((TieredSawBlock) be.getBlockState().getBlock()).getTier();
-        shaftBlock = ((TieredSawBlock) be.getBlockState().getBlock()).getShaft();
         renderBlade(be, ms, bufferSource, light);
         renderItems(be, partialTicks, ms, bufferSource, light, overlay);
         if(be.getBlockState().getValue(SawBlock.FACING) == Direction.UP) {
@@ -83,25 +81,27 @@ public class TieredSawRenderer extends SawRenderer {
             if(state.getValue(SawBlock.AXIS_ALONG_FIRST_COORDINATE)) rotate = true;
         }
 
-        SuperByteBuffer superByteBuffer = CachedBufferer.partialFacing(sawModel, state);
+        SuperByteBuffer superByteBuffer = CachedBuffers.partialFacing(sawModel, state);
         if(rotate) {
             superByteBuffer.rotateCentered(AngleHelper.rad(90), Direction.UP);
         }
-        superByteBuffer.light(light).renderInto(poseStack, bufferSource.getBuffer(RenderType.cutoutMipped()));
+        superByteBuffer.color(0xFFFFFF)
+                .light(light)
+                .renderInto(poseStack, bufferSource.getBuffer(RenderType.cutoutMipped()));
     }
 
     @Override
     protected SuperByteBuffer getRotatedModel(KineticBlockEntity be) {
         BlockState state = be.getBlockState();
         if(state.getValue(FACING).getAxis().isHorizontal()) {
-            return CachedBufferer.partialFacing(SHAFT_HALF_MODELS[tier], state.rotate(be.getLevel(), be.getBlockPos(), Rotation.CLOCKWISE_180));
+            return CachedBuffers.partialFacing(SHAFT_HALF_MODELS[tier], state.rotate(be.getLevel(), be.getBlockPos(), Rotation.CLOCKWISE_180));
         }
-        return CachedBufferer.block(KineticBlockEntityRenderer.KINETIC_BLOCK, getRenderedBlockState(be));
+        return CachedBuffers.block(KineticBlockEntityRenderer.KINETIC_BLOCK, getRenderedBlockState(be));
     }
 
     @Override
     protected BlockState getRenderedBlockState(KineticBlockEntity be) {
-        return shaftBlock.defaultBlockState().setValue(ShaftBlock.AXIS, KineticBlockEntityRenderer.getRotationAxisOf(be));
+        return SHAFTS[tier].getDefaultState().setValue(BlockStateProperties.AXIS, KineticBlockEntityRenderer.getRotationAxisOf(be));
     }
 
     public static void renderInContraption(MovementContext context, VirtualRenderWorld renderWorld, ContraptionMatrices matrices, MultiBufferSource bufferSource) {
@@ -117,18 +117,24 @@ public class TieredSawRenderer extends SawRenderer {
         boolean shouldAnimate = (context.contraption.stalled && horizontal) || (!context.contraption.stalled && !backwards && moving);
         int tier = ((TieredSawBlock) state.getBlock()).getTier();
 
+        SuperByteBuffer buffer = CachedBuffers.partial(SHAFT_HALF_MODELS[tier], state);
         SuperByteBuffer superBuffer;
         if (SawBlock.isHorizontal(state)) {
             if (shouldAnimate)
-                superBuffer = CachedBufferer.partial(MECHANICAL_SAW_BLADE_HORIZONTAL_ACTIVE_MODELS[tier], state);
+                superBuffer = CachedBuffers.partial(MECHANICAL_SAW_BLADE_HORIZONTAL_ACTIVE_MODELS[tier], state);
             else
-                superBuffer = CachedBufferer.partial(MECHANICAL_SAW_BLADE_HORIZONTAL_INACTIVE_MODELS[tier], state);
+                superBuffer = CachedBuffers.partial(MECHANICAL_SAW_BLADE_HORIZONTAL_INACTIVE_MODELS[tier], state);
         } else {
             if (shouldAnimate)
-                superBuffer = CachedBufferer.partial(MECHANICAL_SAW_BLADE_VERTICAL_ACTIVE_MODELS[tier], state);
+                superBuffer = CachedBuffers.partial(MECHANICAL_SAW_BLADE_VERTICAL_ACTIVE_MODELS[tier], state);
             else
-                superBuffer = CachedBufferer.partial(MECHANICAL_SAW_BLADE_VERTICAL_INACTIVE_MODELS[tier], state);
+                superBuffer = CachedBuffers.partial(MECHANICAL_SAW_BLADE_VERTICAL_INACTIVE_MODELS[tier], state);
         }
+
+        buffer.transform(matrices.getModel())
+                .center()
+                .rotateYDegrees(AngleHelper.horizontalAngle(facing.getOpposite()))
+                .rotateXDegrees(AngleHelper.verticalAngle(facing.getOpposite()));
 
         superBuffer.transform(matrices.getModel())
                 .center()
@@ -136,11 +142,20 @@ public class TieredSawRenderer extends SawRenderer {
                 .rotateXDegrees(AngleHelper.verticalAngle(facing));
 
         if (!SawBlock.isHorizontal(state)) {
+            buffer.rotateZDegrees(state.getValue(SawBlock.AXIS_ALONG_FIRST_COORDINATE) ? 90 : 0);
             superBuffer.rotateZDegrees(state.getValue(SawBlock.AXIS_ALONG_FIRST_COORDINATE) ? 90 : 0);
         }
 
-        superBuffer.center()
+        if(!VisualizationManager.supportsVisualization(renderWorld)) {
+            buffer.uncenter()
+                    .light(LevelRenderer.getLightColor(renderWorld, context.localPos))
+                    .useLevelLight(context.world, matrices.getWorld())
+                    .renderInto(matrices.getViewProjection(), bufferSource.getBuffer(RenderType.solid()));
+        }
+
+        superBuffer.uncenter()
                 .light(LevelRenderer.getLightColor(renderWorld, context.localPos))
+                .useLevelLight(context.world, matrices.getWorld())
                 .renderInto(matrices.getViewProjection(), bufferSource.getBuffer(RenderType.cutoutMipped()));
     }
 
@@ -159,9 +174,9 @@ public class TieredSawRenderer extends SawRenderer {
         FluidStack renderedFluid = behaviour.getTanks()[0].getRenderedFluid();
         if(renderedFluid.isEmpty()) return;
         if(be.getBlockState().getValue(SawBlock.AXIS_ALONG_FIRST_COORDINATE)) {
-            FluidRenderer.renderFluidBox(renderedFluid, xMin, yMin, zMin, xMax, yMax, zMax, bufferSource, poseStack, light, false);
+            FluidRenderer.renderFluidBox(renderedFluid.getFluid(), renderedFluid.getAmount(), xMin, yMin, zMin, xMax, yMax, zMax, bufferSource, poseStack, light, false, false, renderedFluid.getTag());
         } else {
-            FluidRenderer.renderFluidBox(renderedFluid, zMin, yMin, xMin, zMax, yMax, xMax, bufferSource, poseStack, light, false);
+            FluidRenderer.renderFluidBox(renderedFluid.getFluid(), renderedFluid.getAmount(), zMin, yMin, xMin, zMax, yMax, xMax, bufferSource, poseStack, light, false, false, renderedFluid.getTag());
         }
     }
 }

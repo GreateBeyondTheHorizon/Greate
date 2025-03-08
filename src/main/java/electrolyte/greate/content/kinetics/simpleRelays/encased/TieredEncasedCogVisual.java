@@ -1,26 +1,21 @@
 package electrolyte.greate.content.kinetics.simpleRelays.encased;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
 import com.simibubi.create.content.kinetics.base.IRotate;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityVisual;
 import com.simibubi.create.content.kinetics.base.RotatingInstance;
 import com.simibubi.create.content.kinetics.simpleRelays.BracketedKineticBlockEntityRenderer;
 import com.simibubi.create.foundation.render.AllInstanceTypes;
-import com.simibubi.create.foundation.utility.Iterate;
 import dev.engine_room.flywheel.api.instance.Instance;
 import dev.engine_room.flywheel.api.model.Model;
 import dev.engine_room.flywheel.api.visualization.VisualizationContext;
 import dev.engine_room.flywheel.lib.model.Models;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
-import dev.engine_room.flywheel.lib.transform.TransformStack;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
+import net.createmod.catnip.data.Iterate;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
@@ -50,19 +45,24 @@ public class TieredEncasedCogVisual extends KineticBlockEntityVisual<KineticBloc
         this.large = large;
         this.tier = ((ITieredBlock) blockState.getBlock()).getTier();
 
-        var instancer = instancerProvider().instancer(AllInstanceTypes.ROTATING, getCogModel());
-        rotatingModel = setup(instancer.createInstance());
+        rotatingModel = instancerProvider().instancer(AllInstanceTypes.ROTATING, getCogModel()).createInstance();
+
+        rotatingModel.setup(blockEntity)
+                .setPosition(getVisualPosition())
+                .rotateToFace(rotationAxis())
+                .setChanged();
 
         RotatingInstance rotatingTopShaft = null;
         RotatingInstance rotatingBottomShaft = null;
 
         Block block = blockState.getBlock();
         if(block instanceof IRotate def) {
-            for(Direction d : Iterate.directionsInAxis(axis)) {
+            for(Direction d : Iterate.directionsInAxis(rotationAxis())) {
                 if(!def.hasShaftTowards(blockEntity.getLevel(), blockEntity.getBlockPos(), blockState, d)) continue;
-                RotatingInstance data = setup(instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.partial(SHAFT_HALF_MODELS[tier], d)).createInstance());
+                RotatingInstance data = instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.partial(SHAFT_HALF_MODELS[tier])).createInstance();
+                data.setup(blockEntity).setPosition(getVisualPosition()).rotateToFace(Direction.SOUTH, d).setChanged();
                 if(large) {
-                    data.setRotationOffset(BracketedKineticBlockEntityRenderer.getShaftAngleOffset(axis, pos));
+                    data.setRotationOffset(BracketedKineticBlockEntityRenderer.getShaftAngleOffset(rotationAxis(), pos));
                 }
                 if(d.getAxisDirection() == AxisDirection.POSITIVE) {
                     rotatingTopShaft = data;
@@ -78,9 +78,9 @@ public class TieredEncasedCogVisual extends KineticBlockEntityVisual<KineticBloc
 
     @Override
     public void update(float partialTick) {
-        updateRotation(rotatingModel);
-        if(rotatingTopShaft != null) updateRotation(rotatingTopShaft);
-        if(rotatingBottomShaft != null) updateRotation(rotatingBottomShaft);
+        rotatingModel.setup(blockEntity).setChanged();
+        if(rotatingTopShaft != null) rotatingTopShaft.setup(blockEntity).setChanged();
+        if(rotatingBottomShaft != null) rotatingBottomShaft.setup(blockEntity).setChanged();
     }
 
     @Override
@@ -96,18 +96,8 @@ public class TieredEncasedCogVisual extends KineticBlockEntityVisual<KineticBloc
     }
 
     protected Model getCogModel() {
-        BlockState refState = blockEntity.getBlockState();
-        Direction facing = Direction.fromAxisAndDirection(refState.getValue(BlockStateProperties.AXIS), AxisDirection.POSITIVE);
         PartialModel cogModel = large ? LARGE_COGWHEEL_SHAFTLESS_MODELS[tier] : COGWHEEL_SHAFTLESS_MODELS[tier];
-        return Models.partial(cogModel, facing, TieredEncasedCogVisual::transformCog);
-    }
-
-    private static void transformCog(Direction dir, PoseStack stack) {
-        TransformStack.of(stack)
-                .center()
-                .rotateToFace(dir)
-                .rotate(Axis.XN.rotationDegrees(90))
-                .uncenter();
+        return Models.partial(cogModel);
     }
 
     @Override

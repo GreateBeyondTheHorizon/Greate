@@ -4,9 +4,9 @@ import com.google.gson.JsonParseException;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeSerializer;
 import com.simibubi.create.content.processing.sequenced.SequencedRecipe;
-import com.simibubi.create.foundation.utility.RegisteredObjects;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeSerializer;
+import net.createmod.catnip.platform.CatnipServices;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -27,12 +27,12 @@ public abstract class MixinSequencedAssemblyRecipe<T extends ProcessingRecipe<?>
     private void greate_writeToBuffer(FriendlyByteBuf buffer, CallbackInfo ci) {
         if(wrapped.getSerializer() instanceof ProcessingRecipeSerializer<?>) {
             ProcessingRecipeSerializer<T> serializer = (ProcessingRecipeSerializer<T>) wrapped.getSerializer();
-            buffer.writeResourceLocation(RegisteredObjects.getKeyOrThrow(serializer));
+            buffer.writeResourceLocation(CatnipServices.REGISTRIES.getKeyOrThrow(serializer));
             buffer.writeResourceLocation(wrapped.getId());
             serializer.toNetwork(buffer, wrapped);
         } else if(wrapped.getSerializer() instanceof TieredProcessingRecipeSerializer<?>) {
             TieredProcessingRecipeSerializer<R> serializer = (TieredProcessingRecipeSerializer<R>) wrapped.getSerializer();
-            buffer.writeResourceLocation(RegisteredObjects.getKeyOrThrow(serializer));
+            buffer.writeResourceLocation(CatnipServices.REGISTRIES.getKeyOrThrow(serializer));
             buffer.writeResourceLocation(wrapped.getId());
             serializer.toNetwork(buffer, (R) wrapped);
         }
@@ -44,11 +44,11 @@ public abstract class MixinSequencedAssemblyRecipe<T extends ProcessingRecipe<?>
         ResourceLocation loc = buffer.readResourceLocation();
         ResourceLocation loc1 = buffer.readResourceLocation();
         RecipeSerializer<?> serializer = ForgeRegistries.RECIPE_SERIALIZERS.getValue(loc);
-        if(serializer instanceof ProcessingRecipeSerializer prs) {
-            ProcessingRecipe recipe = prs.fromNetwork(loc1, buffer);
+        if(serializer instanceof ProcessingRecipeSerializer<?> prs) {
+            ProcessingRecipe<?> recipe = prs.fromNetwork(loc1, buffer);
             cir.setReturnValue(new SequencedRecipe<>(recipe));
-        } else if(serializer instanceof TieredProcessingRecipeSerializer tprs) {
-            TieredProcessingRecipe recipe = tprs.fromNetwork(loc1, buffer);
+        } else if(serializer instanceof TieredProcessingRecipeSerializer<?> tprs) {
+            TieredProcessingRecipe<?> recipe = tprs.fromNetwork(loc1, buffer);
             cir.setReturnValue(new SequencedRecipe<>(recipe));
         } else {
             throw new JsonParseException("Not a supported recipe type");

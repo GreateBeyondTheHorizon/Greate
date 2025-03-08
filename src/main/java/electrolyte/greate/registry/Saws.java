@@ -1,7 +1,6 @@
 package electrolyte.greate.registry;
 
 import com.simibubi.create.AllTags.AllItemTags;
-import com.simibubi.create.content.kinetics.BlockStressDefaults;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -15,7 +14,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.level.material.MapColor;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
-import static com.simibubi.create.AllMovementBehaviours.movementBehaviour;
+import static com.simibubi.create.api.behaviour.movement.MovementBehaviour.movementBehaviour;
 import static electrolyte.greate.Greate.REGISTRATE;
 import static electrolyte.greate.GreateValues.TM;
 import static electrolyte.greate.registry.Shafts.SHAFTS;
@@ -58,7 +57,7 @@ public class Saws {
                 .properties(p -> p.mapColor(MapColor.PODZOL))
                 .transform(TagGen.axeOrPickaxe())
                 .blockstate(new TieredSawGenerator()::generateModel)
-                .transform(BlockStressDefaults.setImpact(stressImpact))
+                //.transform(CStress.setImpact(stressImpact))
                 .transform(TieredBlockMaterials.setMaterialForBlock(TM[tier]))
                 .onRegister(movementBehaviour(new TieredSawMovementBehaviour()))
                 .onRegister(c -> c.setTier(tier))

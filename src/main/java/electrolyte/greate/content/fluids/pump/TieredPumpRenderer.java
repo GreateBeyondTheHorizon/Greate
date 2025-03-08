@@ -1,8 +1,8 @@
 package electrolyte.greate.content.fluids.pump;
 
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
-import com.simibubi.create.foundation.render.CachedBufferer;
-import com.simibubi.create.foundation.render.SuperByteBuffer;
+import net.createmod.catnip.render.CachedBuffers;
+import net.createmod.catnip.render.SuperByteBuffer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider.Context;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -16,7 +16,6 @@ public class TieredPumpRenderer extends KineticBlockEntityRenderer<TieredPumpBlo
 
 	@Override
 	protected SuperByteBuffer getRotatedModel(TieredPumpBlockEntity be, BlockState state) {
-		int tier = ((TieredPumpBlock) state.getBlock()).getTier();
-		return CachedBufferer.partialFacing(MECHANICAL_PUMP_COG_MODELS[tier], state);
+		return CachedBuffers.partialFacing(MECHANICAL_PUMP_COG_MODELS[be.getTier()], state);
 	}
 }

@@ -1,6 +1,5 @@
 package electrolyte.greate.registry;
 
-import com.simibubi.create.content.kinetics.BlockStressDefaults;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import electrolyte.greate.Greate;
@@ -51,7 +50,7 @@ public class Pumps {
 				.properties(p -> p.mapColor(MapColor.STONE))
 				.transform(pickaxeOnly())
 				.transform(GreateBuilderTransformers.tieredMechanicalPump())
-				.transform(BlockStressDefaults.setImpact(pumpImpact))
+				//.transform(CStress.setImpact(pumpImpact))
 				.transform(TieredBlockMaterials.setMaterialForBlock(TM[tier]))
 				.onRegister(c -> c.setTier(tier))
 				.register();

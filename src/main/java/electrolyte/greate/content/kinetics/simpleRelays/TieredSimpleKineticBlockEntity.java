@@ -28,5 +28,4 @@ public class TieredSimpleKineticBlockEntity extends SimpleKineticBlockEntity imp
         super.updateFromNetwork(maxStress, currentStress, networkSize);
         notifyUpdate();
     }
-
 }

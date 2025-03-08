@@ -1,8 +1,8 @@
 package electrolyte.greate.compat.jei.category;
 
 import com.simibubi.create.compat.jei.category.animations.AnimatedKinetics;
-import com.simibubi.create.foundation.gui.element.GuiGameElement;
 import electrolyte.greate.content.kinetics.fan.processing.TieredSplashingRecipe;
+import net.createmod.catnip.gui.element.GuiGameElement;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.level.material.Fluids;
 

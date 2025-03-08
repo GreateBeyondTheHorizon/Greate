@@ -2,9 +2,9 @@ package electrolyte.greate.content.kinetics.simpleRelays;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
-import com.simibubi.create.foundation.render.CachedBufferer;
-import com.simibubi.create.foundation.render.SuperByteBuffer;
 import dev.engine_room.flywheel.api.visualization.VisualizationManager;
+import net.createmod.catnip.render.CachedBuffers;
+import net.createmod.catnip.render.SuperByteBuffer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider.Context;
@@ -34,12 +34,12 @@ public class TieredBracketedKineticBlockEntityRenderer extends KineticBlockEntit
         Axis axis = getRotationAxisOf(be);
         Direction facing = Direction.fromAxisAndDirection(axis, AxisDirection.POSITIVE);
         renderRotatingBuffer(be,
-                CachedBufferer.partialFacingVertical(LARGE_COGWHEEL_SHAFTLESS_MODELS[tier], be.getBlockState(), facing),
+                CachedBuffers.partialFacingVertical(LARGE_COGWHEEL_SHAFTLESS_MODELS[tier], be.getBlockState(), facing),
                 ms, buffer.getBuffer(RenderType.solid()), light);
 
         float angle = getAngleForLargeCogShaft(be, axis);
         SuperByteBuffer shaft =
-                CachedBufferer.partialFacingVertical(COGWHEEL_SHAFT_MODELS[tier], be.getBlockState(), facing);
+                CachedBuffers.partialFacingVertical(COGWHEEL_SHAFT_MODELS[tier], be.getBlockState(), facing);
         kineticRotationTransform(shaft, be, axis, angle, light);
         shaft.renderInto(ms, buffer.getBuffer(RenderType.solid()));
     }

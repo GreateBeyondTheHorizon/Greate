@@ -2,7 +2,6 @@ package electrolyte.greate.registry;
 
 import com.simibubi.create.AllSpriteShifts;
 import com.simibubi.create.content.decoration.encasing.EncasedCTBehaviour;
-import com.simibubi.create.content.kinetics.BlockStressDefaults;
 import com.simibubi.create.content.kinetics.gearbox.GearboxBlock;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
@@ -86,7 +85,7 @@ public class Gearboxes {
                 .initialProperties(SharedProperties::stone)
                 .properties(Properties::noOcclusion)
                 .properties(p -> p.mapColor(MapColor.PODZOL).pushReaction(PushReaction.PUSH_ONLY))
-                .transform(BlockStressDefaults.setNoImpact())
+                //.transform(CStress.setNoImpact())
                 .transform(TagGen.axeOrPickaxe())
                 .transform(GreateBuilderTransformers.tieredGearbox())
                 .transform(TieredBlockMaterials.setMaterialForBlock(TM[tier]))

@@ -4,10 +4,10 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.simibubi.create.content.kinetics.fan.EncasedFanBlock;
-import com.simibubi.create.foundation.render.CachedBufferer;
-import com.simibubi.create.foundation.render.SuperByteBuffer;
-import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import dev.engine_room.flywheel.api.visualization.VisualizationManager;
+import net.createmod.catnip.animation.AnimationTickHolder;
+import net.createmod.catnip.render.CachedBuffers;
+import net.createmod.catnip.render.SuperByteBuffer;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -31,8 +31,8 @@ public class TieredEncasedFanBlockRenderer extends KineticBlockEntityRenderer<Ti
         VertexConsumer vb = buffer.getBuffer(RenderType.cutoutMipped());
         int lightBehind = LevelRenderer.getLightColor(be.getLevel(), be.getBlockPos().relative(dir.getOpposite()));
         int lightFront = LevelRenderer.getLightColor(be.getLevel(), be.getBlockPos().relative(dir));
-        SuperByteBuffer fanInner = CachedBufferer.partialFacing(FAN_INNER_MODELS[tier], be.getBlockState(), dir.getOpposite());
-        SuperByteBuffer halfShaftModel = CachedBufferer.partialFacing(SHAFT_HALF_MODELS[tier], be.getBlockState(), dir.getOpposite());
+        SuperByteBuffer fanInner = CachedBuffers.partialFacing(FAN_INNER_MODELS[tier], be.getBlockState(), dir.getOpposite());
+        SuperByteBuffer halfShaftModel = CachedBuffers.partialFacing(SHAFT_HALF_MODELS[tier], be.getBlockState(), dir.getOpposite());
         float time = AnimationTickHolder.getRenderTime(be.getLevel());
         float speed = be.getSpeed() * 5;
         if(speed > 0) {

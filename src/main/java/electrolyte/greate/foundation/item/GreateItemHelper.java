@@ -1,7 +1,7 @@
 package electrolyte.greate.foundation.item;
 
 import com.gregtechceu.gtceu.api.recipe.ingredient.SizedIngredient;
-import com.simibubi.create.foundation.utility.Pair;
+import net.createmod.catnip.data.Pair;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;

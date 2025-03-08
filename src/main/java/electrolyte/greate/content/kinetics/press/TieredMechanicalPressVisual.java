@@ -2,8 +2,6 @@ package electrolyte.greate.content.kinetics.press;
 
 import com.mojang.math.Axis;
 import com.simibubi.create.content.kinetics.press.PressingBehaviour;
-import com.simibubi.create.foundation.utility.AngleHelper;
-import com.simibubi.create.foundation.utility.AnimationTickHolder;
 import dev.engine_room.flywheel.api.instance.Instance;
 import dev.engine_room.flywheel.api.visualization.VisualizationContext;
 import dev.engine_room.flywheel.lib.instance.InstanceTypes;
@@ -11,6 +9,8 @@ import dev.engine_room.flywheel.lib.instance.OrientedInstance;
 import dev.engine_room.flywheel.lib.model.Models;
 import dev.engine_room.flywheel.lib.visual.SimpleDynamicVisual;
 import electrolyte.greate.content.kinetics.base.TieredShaftVisual;
+import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
+import net.createmod.catnip.math.AngleHelper;
 import org.joml.Quaternionf;
 
 import java.util.function.Consumer;
@@ -24,7 +24,7 @@ public class TieredMechanicalPressVisual extends TieredShaftVisual<TieredMechani
 
     public TieredMechanicalPressVisual(VisualizationContext context, TieredMechanicalPressBlockEntity blockEntity, float partialTick) {
         super(context, blockEntity, partialTick);
-        int tier = ((TieredMechanicalPressBlock) blockEntity.getBlockState().getBlock()).getTier();
+        int tier = ((ITieredBlock) blockEntity.getBlockState().getBlock()).getTier();
         pressHead = instancerProvider().instancer(InstanceTypes.ORIENTED, Models.partial(MECHANICAL_PRESS_HEAD_MODELS[tier])).createInstance();
         Quaternionf q = Axis.YP.rotationDegrees(AngleHelper.horizontalAngle(blockState.getValue(HORIZONTAL_FACING)));
         pressHead.rotation(q);
@@ -45,7 +45,7 @@ public class TieredMechanicalPressVisual extends TieredShaftVisual<TieredMechani
 
     private float getRenderedHeadOffset(float partialTick) {
         PressingBehaviour pressingBehaviour = blockEntity.getPressingBehaviour();
-        return pressingBehaviour.getRenderedHeadOffset(AnimationTickHolder.getPartialTicks()) * pressingBehaviour.mode.headOffset;
+        return pressingBehaviour.getRenderedHeadOffset(partialTick * pressingBehaviour.mode.headOffset);
     }
 
     @Override

@@ -5,8 +5,7 @@ import com.simibubi.create.content.kinetics.deployer.DeployerApplicationRecipe;
 import com.simibubi.create.content.kinetics.deployer.ItemApplicationRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder.ProcessingRecipeParams;
 import com.simibubi.create.content.processing.sequenced.IAssemblyRecipe;
-import com.simibubi.create.foundation.utility.Components;
-import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.foundation.utility.CreateLang;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
@@ -27,8 +26,8 @@ public abstract class MixinDeployerApplicationRecipe extends ItemApplicationReci
     @Inject(method = "getDescriptionForAssembly", at = @At("HEAD"), remap = false, cancellable = true)
     private void greate_getDescriptionForAssembly(CallbackInfoReturnable<Component> cir) {
         ItemStack[] matchingStacks = ingredients.get(1).getItems();
-        if(matchingStacks.length == 0) cir.setReturnValue(Components.literal("Invalid"));
-        cir.setReturnValue(Lang.translateDirect("recipe.assembly.deploying_item",
-                Components.translatable(matchingStacks[0].getHoverName().getString())));
+        if(matchingStacks.length == 0) cir.setReturnValue(Component.literal("Invalid"));
+        cir.setReturnValue(CreateLang.translateDirect("recipe.assembly.deploying_item",
+                Component.translatable(matchingStacks[0].getHoverName().getString())));
     }
 }

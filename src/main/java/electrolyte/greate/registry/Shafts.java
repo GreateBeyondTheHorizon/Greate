@@ -4,7 +4,6 @@ import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllSpriteShifts;
 import com.simibubi.create.content.decoration.encasing.CasingBlock;
 import com.simibubi.create.content.decoration.encasing.EncasingRegistry;
-import com.simibubi.create.content.kinetics.BlockStressDefaults;
 import com.simibubi.create.content.kinetics.simpleRelays.BracketedKineticBlockModel;
 import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -138,7 +137,7 @@ public class Shafts {
                 .block(TM[tier].getName() + "_shaft", TieredShaftBlock::new)
                 .initialProperties(SharedProperties::stone)
                 .properties(p -> p.mapColor(MapColor.METAL))
-                .transform(BlockStressDefaults.setNoImpact())
+                //.transform(CStress.setNoImpact())
                 .transform(TieredBlockMaterials.setMaterialForBlock(TM[tier]))
                 .transform(TagGen.pickaxeOnly())
                 .blockstate(GreateBlockStateGen.tieredShaftProvider())

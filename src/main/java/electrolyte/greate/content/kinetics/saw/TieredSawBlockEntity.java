@@ -19,8 +19,7 @@ import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
 import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.recipe.RecipeConditions;
 import com.simibubi.create.foundation.recipe.RecipeFinder;
-import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.foundation.utility.LangBuilder;
+import com.simibubi.create.foundation.utility.CreateLang;
 import com.simibubi.create.infrastructure.config.AllConfigs;
 import electrolyte.greate.Greate;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
@@ -29,6 +28,8 @@ import electrolyte.greate.foundation.data.recipe.TieredRecipeConditions;
 import electrolyte.greate.foundation.recipe.TieredRecipeHelper;
 import electrolyte.greate.mixin.MixinSawBlockEntityAccessor;
 import electrolyte.greate.registry.ModRecipeTypes;
+import net.createmod.catnip.lang.Lang;
+import net.createmod.catnip.lang.LangBuilder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -85,14 +86,14 @@ public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKinet
         ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, tier, capacity, stress);
         if(canProcess()) {
             IFluidHandler fluid = fluidCapability.orElse(new FluidTank(0));
-            LangBuilder mb = Lang.translate("generic.unit.millibuckets");
+            LangBuilder mb = CreateLang.translate("generic.unit.millibuckets");
             FluidStack fluidStack = fluid.getFluidInTank(0);
             if(!fluidStack.isEmpty()) {
                 Lang.builder(Greate.MOD_ID).translate("gui.goggles.saw_contents").style(ChatFormatting.GRAY).forGoggles(tooltip);
-                Lang.text("")
-                        .add(Lang.fluidName(fluidStack)
-                                .add(Lang.text(" ")).style(ChatFormatting.GRAY)
-                                .add(Lang.number(fluidStack.getAmount()).add(mb).style(ChatFormatting.BLUE)))
+                CreateLang.text("")
+                        .add(CreateLang.fluidName(fluidStack)
+                                .add(CreateLang.text(" ")).style(ChatFormatting.GRAY)
+                                .add(CreateLang.number(fluidStack.getAmount()).add(mb).style(ChatFormatting.BLUE)))
                         .forGoggles(tooltip, 1);
             } else {
                 tooltip.remove(0);
@@ -125,8 +126,7 @@ public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKinet
             }
         }
         Predicate<Recipe<?>> recipeTypes = RecipeConditions.isOfType(AllRecipeTypes.CUTTING.getType(), ModRecipeTypes.CUTTING.getType(), GTRecipeTypes.CUTTER_RECIPES,
-                AllConfigs.server().recipes.allowStonecuttingOnSaw.get() ? RecipeType.STONECUTTING : null,
-                AllConfigs.server().recipes.allowWoodcuttingOnSaw.get() ? woodcuttingRecipeType.get() : null);
+                AllConfigs.server().recipes.allowStonecuttingOnSaw.get() ? RecipeType.STONECUTTING : null);
         List<Recipe<?>> startedSearch = RecipeFinder.get(cuttingRecipesKey, level, recipeTypes);
         IFluidHandler availableFluid = be.getCapability(ForgeCapabilities.FLUID_HANDLER).orElse(null);
         if(availableFluid == null) return List.of();

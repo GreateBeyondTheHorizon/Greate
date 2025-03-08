@@ -22,9 +22,7 @@ import com.simibubi.create.content.kinetics.press.MechanicalPressBlockEntity;
 import com.simibubi.create.content.kinetics.press.PressingRecipe;
 import com.simibubi.create.content.kinetics.saw.CuttingRecipe;
 import com.simibubi.create.content.processing.basin.BasinRecipe;
-import com.simibubi.create.foundation.config.ConfigBase.ConfigBool;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
-import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.infrastructure.config.AllConfigs;
 import com.simibubi.create.infrastructure.config.CRecipes;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -42,7 +40,6 @@ import electrolyte.greate.content.kinetics.mixer.TieredCompactingRecipe;
 import electrolyte.greate.content.kinetics.mixer.TieredMixingRecipe;
 import electrolyte.greate.content.kinetics.press.TieredPressingRecipe;
 import electrolyte.greate.content.kinetics.saw.TieredCuttingRecipe;
-import electrolyte.greate.content.kinetics.saw.TieredSawBlockEntity;
 import electrolyte.greate.content.processing.basin.TieredBasinRecipe;
 import electrolyte.greate.registry.*;
 import mezz.jei.api.IModPlugin;
@@ -54,6 +51,8 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.IRuntimeRegistration;
 import mezz.jei.api.runtime.IIngredientManager;
+import net.createmod.catnip.config.ConfigBase.ConfigBool;
+import net.createmod.catnip.lang.Lang;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
@@ -63,7 +62,6 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.crafting.IShapedRecipe;
-import net.minecraftforge.fml.ModList;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -234,18 +232,7 @@ public class GreateJEI implements IModPlugin {
                                 .collect(Collectors.toList()))
                         .doubleIconItem(Saws.NEUTRONIUM_SAW.get(), Items.STONE_BRICK_STAIRS)
                         .emptyBackground(177, 70)
-                        .build("block_cutting", TieredBlockCuttingCategory::new),
-
-                woodCutting = builder(TieredCondensedBlockCuttingRecipe.class)
-                        .enableIf(c -> c.allowWoodcuttingOnSaw.get() &&
-                                ModList.get().isLoaded("druidcraft"))
-                        .addRecipes(() -> TieredBlockCuttingCategory.condenseRecipes(getTypedRecipesExcluding(TieredSawBlockEntity.woodcuttingRecipeType.get(), Predicates.or(AllRecipeTypes::shouldIgnoreInAutomation, ModRecipeTypes::shouldIgnoreInAutomation))))
-                        .catalysts(Arrays.stream(Saws.SAWS)
-                                .<Supplier<ItemLike>>map(o -> o::get)
-                                .collect(Collectors.toList()))
-                        .doubleIconItem(Saws.NEUTRONIUM_SAW.get(), Items.OAK_STAIRS)
-                        .emptyBackground(177, 70)
-                        .build("wood_cutting", TieredBlockCuttingCategory::new);
+                        .build("block_cutting", TieredBlockCuttingCategory::new);
     }
 
     @Override
@@ -282,7 +269,6 @@ public class GreateJEI implements IModPlugin {
         registration.getRecipeManager().hideRecipeCategory(mezz.jei.api.recipe.RecipeType.create(Create.ID, "automatic_packing", BasinRecipe.class));
         registration.getRecipeManager().hideRecipeCategory(mezz.jei.api.recipe.RecipeType.create(Create.ID, "sawing", CuttingRecipe.class));
         registration.getRecipeManager().hideRecipeCategory(mezz.jei.api.recipe.RecipeType.create(Create.ID, "block_cutting", CondensedBlockCuttingRecipe.class));
-        registration.getRecipeManager().hideRecipeCategory(mezz.jei.api.recipe.RecipeType.create(Create.ID, "wood_cutting", CondensedBlockCuttingRecipe.class));
         registration.getRecipeManager().hideRecipeCategory(mezz.jei.api.recipe.RecipeType.create(Create.ID, "fan_haunting", HauntingRecipe.class));
         registration.getRecipeManager().hideRecipeCategory(mezz.jei.api.recipe.RecipeType.create(Create.ID, "fan_washing", SplashingRecipe.class));
     }

@@ -14,8 +14,6 @@ import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
 import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour;
 import com.simibubi.create.foundation.recipe.RecipeConditions;
-import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.foundation.utility.VecHelper;
 import electrolyte.greate.Greate;
 import electrolyte.greate.content.kinetics.base.ICircuitHolder;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
@@ -26,6 +24,8 @@ import electrolyte.greate.foundation.data.recipe.TieredRecipeConditions;
 import electrolyte.greate.foundation.recipe.TieredRecipeApplier;
 import electrolyte.greate.foundation.recipe.TieredRecipeFinder;
 import electrolyte.greate.registry.ModRecipeTypes;
+import net.createmod.catnip.lang.Lang;
+import net.createmod.catnip.math.VecHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -217,5 +217,9 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
             if(direction.getAxis().isVertical()) return false;
             return !((TieredMechanicalPressBlock) state.getBlock()).hasShaftTowards(level, getBlockPos(), state, direction);
         }
+    }
+
+    public int getTier() {
+        return tier;
     }
 }

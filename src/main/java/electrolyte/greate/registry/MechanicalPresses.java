@@ -1,6 +1,5 @@
 package electrolyte.greate.registry;
 
-import com.simibubi.create.content.kinetics.BlockStressDefaults;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -50,7 +49,7 @@ public class MechanicalPresses {
                 .initialProperties(SharedProperties::stone)
                 .properties(p -> p.noOcclusion().mapColor(MapColor.PODZOL))
                 .transform(TagGen.axeOrPickaxe())
-                .transform(BlockStressDefaults.setImpact(stressImpact))
+                //.transform(CStress.setImpact(stressImpact))
                 .transform(GreateBuilderTransformers.tieredMechanicalPress())
                 .transform(TieredBlockMaterials.setMaterialForBlock(TM[tier]))
                 .onRegister(c -> c.setTier(tier))
