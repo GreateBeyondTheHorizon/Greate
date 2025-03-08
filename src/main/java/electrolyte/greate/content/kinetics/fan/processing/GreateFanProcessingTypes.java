@@ -1,15 +1,16 @@
 package electrolyte.greate.content.kinetics.fan.processing;
 
+import com.simibubi.create.api.registry.CreateBuiltInRegistries;
 import com.simibubi.create.content.kinetics.fan.processing.AllFanProcessingTypes.HauntingType;
 import com.simibubi.create.content.kinetics.fan.processing.AllFanProcessingTypes.SplashingType;
 import com.simibubi.create.content.kinetics.fan.processing.FanProcessingType;
-import com.simibubi.create.content.kinetics.fan.processing.FanProcessingTypeRegistry;
 import electrolyte.greate.Greate;
 import electrolyte.greate.content.kinetics.fan.processing.TieredHauntingRecipe.TieredHauntingWrapper;
 import electrolyte.greate.content.kinetics.fan.processing.TieredSplashingRecipe.TieredSplashingWrapper;
 import electrolyte.greate.foundation.recipe.TieredRecipeApplier;
 import electrolyte.greate.registry.ModRecipeTypes;
 import it.unimi.dsi.fastutil.objects.Object2ReferenceOpenHashMap;
+import net.minecraft.core.Registry;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
@@ -34,8 +35,7 @@ public class GreateFanProcessingTypes {
     }
 
     private static <T extends FanProcessingType> T register(String id, T type) {
-        FanProcessingTypeRegistry.register(Greate.id(id), type);
-        return type;
+        return Registry.register(CreateBuiltInRegistries.FAN_PROCESSING_TYPE, Greate.id(id), type);
     }
 
     @Nullable

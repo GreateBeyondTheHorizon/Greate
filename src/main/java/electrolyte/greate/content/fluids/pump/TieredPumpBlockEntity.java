@@ -4,11 +4,10 @@ import com.simibubi.create.content.fluids.FluidPropagator;
 import com.simibubi.create.content.fluids.FluidTransportBehaviour;
 import com.simibubi.create.content.fluids.pump.PumpBlock;
 import com.simibubi.create.content.fluids.pump.PumpBlockEntity;
-import com.simibubi.create.foundation.utility.BlockFace;
-import com.simibubi.create.foundation.utility.Pair;
-
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import electrolyte.greate.infrastructure.config.GConfigUtility;
+import net.createmod.catnip.data.Pair;
+import net.createmod.catnip.math.BlockFace;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.LevelAccessor;

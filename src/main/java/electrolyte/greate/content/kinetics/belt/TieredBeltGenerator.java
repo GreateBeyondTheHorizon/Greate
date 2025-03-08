@@ -18,7 +18,6 @@ import net.minecraftforge.client.model.generators.ModelFile.UncheckedModelFile;
 
 import static electrolyte.greate.GreateValues.TM;
 
-
 public class TieredBeltGenerator extends BeltGenerator {
 
     @Override
@@ -72,53 +71,67 @@ public class TieredBeltGenerator extends BeltGenerator {
 
         p.models().withExistingParent(beltMaterial + "_belt_diagonal_end", Create.asResource("block/belt/diagonal_end"))
                 .texture("0", p.modLoc("block/" + beltMaterial + "/belt_diagonal"))
-                .texture("particle", p.modLoc("block/" + beltMaterial + "/belt_diagonal"));
+                .texture("particle", p.modLoc("block/" + beltMaterial + "/belt_diagonal"))
+                .renderType("minecraft:cutout_mipped");
 
         p.models().withExistingParent("belt_overlay_diagonal_end", Create.asResource("block/belt/diagonal_end"))
                 .texture("0", p.modLoc("block/belt_overlay/empty"))
-                .texture("particle", p.modLoc("block/" + beltMaterial + "/belt_diagonal"));
+                .texture("particle", p.modLoc("block/" + beltMaterial + "/belt_diagonal"))
+                .renderType("minecraft:cutout");
 
         p.models().withExistingParent(beltMaterial + "_belt_diagonal_middle", Create.asResource("block/belt/diagonal_middle"))
                 .texture("0", p.modLoc("block/" + beltMaterial + "/belt_diagonal"))
-                .texture("particle", p.modLoc("block/" + beltMaterial + "/belt_diagonal"));
+                .texture("particle", p.modLoc("block/" + beltMaterial + "/belt_diagonal"))
+                .renderType("minecraft:cutout_mipped");
 
         p.models().withExistingParent("belt_overlay_diagonal_middle", Create.asResource("block/belt/diagonal_middle"))
                 .texture("0", p.modLoc("block/belt_overlay/empty"))
-                .texture("particle", p.modLoc("block/" + beltMaterial + "/belt_diagonal"));
+                .texture("particle", p.modLoc("block/" + beltMaterial + "/belt_diagonal"))
+                .renderType("minecraft:cutout");
 
         p.models().withExistingParent(beltMaterial + "_belt_diagonal_start", Create.asResource("block/belt/diagonal_start"))
                 .texture("0", p.modLoc("block/" + beltMaterial + "/belt_diagonal"))
-                .texture("particle", p.modLoc("block/" + beltMaterial + "/belt_diagonal"));
+                .texture("particle", p.modLoc("block/" + beltMaterial + "/belt_diagonal"))
+                .renderType("minecraft:cutout_mipped");
 
         p.models().withExistingParent("belt_overlay_diagonal_start", Create.asResource("block/belt/diagonal_start"))
                 .texture("0", p.modLoc("block/belt_overlay/empty"))
-                .texture("particle", p.modLoc("block/" + beltMaterial + "/belt_diagonal"));
+                .texture("particle", p.modLoc("block/" + beltMaterial + "/belt_diagonal"))
+                .renderType("minecraft:cutout");
 
 
         p.models().withExistingParent(beltMaterial + "_belt_end", Create.asResource("block/belt/end"))
-                .texture("0", p.modLoc("block/" + beltMaterial + "/belt"));
+                .texture("0", p.modLoc("block/" + beltMaterial + "/belt"))
+                .renderType("minecraft:cutout_mipped");
 
         p.models().withExistingParent("belt_overlay_end", Create.asResource("block/belt/end"))
-                .texture("0", p.modLoc("block/belt_overlay/empty"));
+                .texture("0", p.modLoc("block/belt_overlay/empty"))
+                .renderType("minecraft:cutout");
 
         p.models().withExistingParent(beltMaterial + "_belt_end_bottom", Create.asResource("block/belt/end_bottom"))
-                .texture("1", p.modLoc("block/" + beltMaterial + "/belt_offset"));
+                .texture("1", p.modLoc("block/" + beltMaterial + "/belt_offset"))
+                .renderType("minecraft:cutout_mipped");
 
         p.models().withExistingParent("belt_overlay_end_bottom", Create.asResource("block/belt/end_bottom"))
-                .texture("1", p.modLoc("block/belt_overlay/empty"));
+                .texture("1", p.modLoc("block/belt_overlay/empty"))
+                .renderType("minecraft:cutout");
 
 
         p.models().withExistingParent(beltMaterial + "_belt_middle", Create.asResource("block/belt/middle"))
-                .texture("0", p.modLoc("block/" + beltMaterial + "/belt"));
+                .texture("0", p.modLoc("block/" + beltMaterial + "/belt"))
+                .renderType("minecraft:cutout_mipped");
 
         p.models().withExistingParent("belt_overlay_middle", Create.asResource("block/belt/middle"))
-                .texture("0", p.modLoc("block/belt_overlay/empty"));
+                .texture("0", p.modLoc("block/belt_overlay/empty"))
+                .renderType("minecraft:cutout");
 
         p.models().withExistingParent(beltMaterial + "_belt_middle_bottom", Create.asResource("block/belt/middle_bottom"))
-                .texture("1", p.modLoc("block/" + beltMaterial + "/belt_offset"));
+                .texture("1", p.modLoc("block/" + beltMaterial + "/belt_offset"))
+                .renderType("minecraft:cutout_mipped");
 
         p.models().withExistingParent("belt_overlay_middle_bottom", Create.asResource("block/belt/middle_bottom"))
-                .texture("1", p.modLoc("block/belt_overlay/empty"));
+                .texture("1", p.modLoc("block/belt_overlay/empty"))
+                .renderType("minecraft:cutout");
 
 
         p.models().withExistingParent(beltMaterial + "_belt_particle", Create.asResource("block/belt/particle"))
@@ -126,16 +139,20 @@ public class TieredBeltGenerator extends BeltGenerator {
 
 
         p.models().withExistingParent(beltMaterial + "_belt_start", Create.asResource("block/belt/start"))
-                .texture("0", p.modLoc("block/" + beltMaterial + "/belt"));
+                .texture("0", p.modLoc("block/" + beltMaterial + "/belt"))
+                .renderType("minecraft:cutout_mipped");
 
         p.models().withExistingParent("belt_overlay_start", Create.asResource("block/belt/start"))
-                .texture("0", p.modLoc("block/belt_overlay/empty"));
+                .texture("0", p.modLoc("block/belt_overlay/empty"))
+                .renderType("minecraft:cutout");
 
         p.models().withExistingParent(beltMaterial + "_belt_start_bottom", Create.asResource("block/belt/start_bottom"))
-                .texture("1", p.modLoc("block/" + beltMaterial + "/belt_offset"));
+                .texture("1", p.modLoc("block/" + beltMaterial + "/belt_offset"))
+                .renderType("minecraft:cutout_mipped");
 
         p.models().withExistingParent("belt_overlay_start_bottom", Create.asResource("block/belt/start_bottom"))
-                .texture("1", p.modLoc("block/belt_overlay/empty"));
+                .texture("1", p.modLoc("block/belt_overlay/empty"))
+                .renderType("minecraft:cutout");
 
 
         p.getVariantBuilder(c.getEntry()).forAllStates(state -> ConfiguredModel.builder()

@@ -8,14 +8,14 @@ import com.simibubi.create.content.processing.basin.BasinBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
 import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour;
-import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.foundation.utility.VecHelper;
 import com.simibubi.create.infrastructure.config.AllConfigs;
 import electrolyte.greate.Greate;
 import electrolyte.greate.content.kinetics.base.ICircuitHolder;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import electrolyte.greate.content.processing.basin.TieredBasinRecipe;
 import electrolyte.greate.registry.ModRecipeTypes;
+import net.createmod.catnip.lang.Lang;
+import net.createmod.catnip.math.VecHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -110,6 +110,10 @@ public class TieredMechanicalMixerBlockEntity extends MechanicalMixerBlockEntity
         }
 
         basin.notifyChangeOfContents();
+    }
+
+    public int getTier() {
+        return tier;
     }
 
     @Override

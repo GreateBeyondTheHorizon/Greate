@@ -1,5 +1,6 @@
 {
   "parent": "create:block/belt/middle_bottom",
+  "render_type": "minecraft:cutout",
   "textures": {
     "1": "greate:block/belt_overlay/empty"
   }

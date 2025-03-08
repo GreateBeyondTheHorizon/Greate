@@ -5,7 +5,7 @@ import com.simibubi.create.compat.jei.category.SequencedAssemblyCategory;
 import com.simibubi.create.compat.jei.category.sequencedAssembly.SequencedAssemblySubCategory;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipe;
 import com.simibubi.create.content.processing.sequenced.SequencedRecipe;
-import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.foundation.utility.CreateLang;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -35,7 +35,7 @@ public abstract class MixinSequencedAssemblyCategory extends CreateRecipeCategor
         if(!ModList.get().isLoaded("emi")) return;
         List<Component> tooltip = new ArrayList<>();
 
-        MutableComponent junk = Lang.translateDirect("recipe.assembly.junk");
+        MutableComponent junk = CreateLang.translateDirect("recipe.assembly.junk");
 
         boolean singleOutput = recipe.getOutputChance() == 1;
         boolean willRepeat = recipe.getLoops() > 1;
@@ -57,7 +57,7 @@ public abstract class MixinSequencedAssemblyCategory extends CreateRecipeCategor
         minY = 92;
         maxY = minY + 24;
         if (willRepeat && mouseX >= minX && mouseX < maxX && mouseY >= minY && mouseY < maxY) {
-            tooltip.add(Lang.translateDirect("recipe.assembly.repeat", recipe.getLoops()));
+            tooltip.add(CreateLang.translateDirect("recipe.assembly.repeat", recipe.getLoops()));
             cir.setReturnValue(tooltip);
         }
 
@@ -75,7 +75,7 @@ public abstract class MixinSequencedAssemblyCategory extends CreateRecipeCategor
                 SequencedRecipe<?> sequencedRecipe = sequence.get(i);
                 SequencedAssemblySubCategory subCategory = getSubCategory(sequencedRecipe);
                 if (relativeX >= 0 && relativeX < subCategory.getWidth()) {
-                    tooltip.add(Lang.translateDirect("recipe.assembly.step", i + 1));
+                    tooltip.add(CreateLang.translateDirect("recipe.assembly.step", i + 1));
                     tooltip.add(sequencedRecipe.getAsAssemblyRecipe()
                             .getDescriptionForAssembly()
                             .plainCopy()

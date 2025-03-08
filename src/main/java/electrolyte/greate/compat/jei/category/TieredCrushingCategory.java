@@ -3,8 +3,6 @@ package electrolyte.greate.compat.jei.category;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
-import com.simibubi.create.foundation.ponder.ui.LayoutHelper;
-
 import electrolyte.greate.compat.jei.category.animations.TieredAnimatedCrushingWheels;
 import electrolyte.greate.content.kinetics.crusher.TieredAbstractCrushingRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingOutput;
@@ -14,6 +12,7 @@ import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
+import net.createmod.catnip.layout.LayoutHelper;
 import net.minecraft.client.gui.GuiGraphics;
 
 import javax.annotation.ParametersAreNonnullByDefault;

@@ -49,8 +49,7 @@ public class MixinBasinRenderer {
 
                 float partial = Mth.clamp(units / totalUnits, 0, 1);
                 xMax += partial * 12 / 16f;
-                FluidRenderer.renderFluidBox(renderedFluid, xMin, yMin, zMin, xMax, yMax, zMax, buffer, ms, light,true);
-
+                FluidRenderer.renderFluidBox(renderedFluid.getFluid(), renderedFluid.getAmount(), xMin, yMin, zMin, xMax, yMax, zMax, buffer, ms, light,true, true, renderedFluid.getTag());
                 xMin = xMax;
             }
         }

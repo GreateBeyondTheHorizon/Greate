@@ -7,7 +7,6 @@ import com.gregtechceu.gtceu.utils.FormattingUtil;
 import com.mojang.logging.LogUtils;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.item.ItemDescription;
-import com.simibubi.create.foundation.item.TooltipHelper.Palette;
 import com.simibubi.create.foundation.item.TooltipModifier;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
@@ -18,12 +17,13 @@ import electrolyte.greate.foundation.data.GreateTagGen.GreateBlockTagGen;
 import electrolyte.greate.foundation.data.GreateTagGen.GreateItemTagGen;
 import electrolyte.greate.foundation.item.GreateKineticStats;
 import electrolyte.greate.infrastructure.config.GreateConfigs;
-import electrolyte.greate.infrastructure.ponder.GreatePonderIndex;
-import electrolyte.greate.infrastructure.ponder.GreatePonderTags;
+import electrolyte.greate.infrastructure.ponder.GreatePonderPlugin;
 import electrolyte.greate.registry.*;
 import it.unimi.dsi.fastutil.objects.ReferenceArrayList;
 import it.unimi.dsi.fastutil.objects.ReferenceLinkedOpenHashSet;
 import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet;
+import net.createmod.catnip.lang.FontHelper.Palette;
+import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -34,6 +34,7 @@ import net.minecraft.world.item.CreativeModeTab.Output;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.data.event.GatherDataEvent;
+import net.minecraftforge.data.loading.DatagenModLoader;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -42,6 +43,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegisterEvent;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 
@@ -70,7 +72,12 @@ public class Greate {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::gatherData);
-        GreateRegistries.REGISTRATE.registerRegistrate();
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onRegister);
+
+        if(!DatagenModLoader.isRunningDataGen()) { //needed due to using both create & gt registrate
+            GreateRegistries.REGISTRATE.registerRegistrate();
+        }
+
         FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(GTRecipeType.class, GreateRegistries::registerRecipeTypes);
         FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(MachineDefinition.class, GreateRegistries::registerMultiblocks);
         CREATIVE_TABS.register(eventBus);
@@ -78,7 +85,6 @@ public class Greate {
         GreateLang.register();
         REGISTRATE.addRegisterCallback(ForgeRegistries.BLOCKS.getRegistryKey(), () -> GreateConfigs.register(ModLoadingContext.get()));
         ModRecipeTypes.register(eventBus);
-        GreateFanProcessingTypes.register();
     }
 
     public static ResourceLocation id(String path) {
@@ -94,18 +100,23 @@ public class Greate {
 
     private void clientSetup(FMLClientSetupEvent event) {
         GreatePartialModels.register();
-        GreatePonderTags.register();
-        GreatePonderIndex.register();
+        PonderIndex.addPlugin(new GreatePonderPlugin());
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
         GreateMaterials.modifyMaterials();
     }
 
+    private void onRegister(RegisterEvent event) {
+        GreateFanProcessingTypes.register();
+    }
+
     private void gatherData(GatherDataEvent event) {
-        REGISTRATE.addDataGenerator(ProviderType.LANG, p -> GreateAdvancements.provideLang(p::add));
-        REGISTRATE.addDataGenerator(ProviderType.LANG, p -> GreatePonderTags.register());
-        REGISTRATE.addDataGenerator(ProviderType.LANG, p -> GreatePonderIndex.register());
+        REGISTRATE.addDataGenerator(ProviderType.LANG, p -> {
+            PonderIndex.addPlugin(new GreatePonderPlugin());
+            PonderIndex.getLangAccess().provideLang(Greate.MOD_ID, p::add);
+            GreateAdvancements.provideLang(p::add);
+        });
         if(event.includeServer()) {
             event.getGenerator().addProvider(true, new GreateAdvancements(event.getGenerator().getPackOutput()));
             GreateBlockTagGen blockTags = new GreateBlockTagGen(event.getGenerator().getPackOutput(), event.getLookupProvider(), Greate.MOD_ID, event.getExistingFileHelper());

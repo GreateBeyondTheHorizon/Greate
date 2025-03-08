@@ -3,8 +3,7 @@ package electrolyte.greate.mixin;
 import com.simibubi.create.content.kinetics.base.IRotate.StressImpact;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.deployer.DeployerBlockEntity;
-import com.simibubi.create.foundation.utility.Components;
-import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.foundation.utility.CreateLang;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -32,13 +31,13 @@ public abstract class MixinDeployerBlockEntity extends KineticBlockEntity {
     @Inject(method = "addToGoggleTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isEmpty()Z"), cancellable = true)
     private void greate_addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking, CallbackInfoReturnable<Boolean> cir) {
         if(!heldItem.isEmpty()) {
-            Lang.translate("tooltip.deployer.contains",
-                    Components.translatable(heldItem.getHoverName().getString()), heldItem.getCount()).style(ChatFormatting.GREEN).forGoggles(tooltip);
+            CreateLang.translate("tooltip.deployer.contains",
+                    Component.translatable(heldItem.getHoverName().getString()), heldItem.getCount()).style(ChatFormatting.GREEN).forGoggles(tooltip);
         }
 
         float stressAtBase = calculateStressApplied();
         if(StressImpact.isEnabled() && !Mth.equal(stressAtBase, 0)) {
-            tooltip.add(Components.immutableEmpty());
+            tooltip.add(Component.empty());
             addStressImpactStats(tooltip, stressAtBase);
         }
 

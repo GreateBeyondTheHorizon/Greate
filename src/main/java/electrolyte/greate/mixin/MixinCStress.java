@@ -1,8 +1,10 @@
 package electrolyte.greate.mixin;
 
 import com.simibubi.create.Create;
-import com.simibubi.create.content.kinetics.BlockStressDefaults;
+import com.simibubi.create.infrastructure.config.CStress;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.common.ForgeConfigSpec.Builder;
+import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -13,10 +15,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Map;
 
-@Mixin(BlockStressDefaults.class)
-public class MixinBlockStressDefaults {
+@Mixin(CStress.class)
+public class MixinCStress {
 
-    @Shadow @Final public static Map<ResourceLocation, Double> DEFAULT_CAPACITIES;
+    @Shadow @Final protected Map<ResourceLocation, ConfigValue<Double>> capacities;
     @Unique private static final Map<ResourceLocation, Double> greate_NEW_DEFAULT_CAPACITIES = Map.ofEntries(
             Map.entry(Create.asResource("hand_crank"), 0.25d),
             Map.entry(Create.asResource("copper_valve_handle"), 0.25d),
@@ -27,11 +29,8 @@ public class MixinBlockStressDefaults {
             Map.entry(Create.asResource("creative_motor"), 2097152d)
     );
 
-    @Inject(method = "setDefaultCapacity", at = @At("RETURN"), remap = false)
-    private static void greate_setDefaultCapacity(ResourceLocation blockId, double capacity, CallbackInfo ci) {
-        if(greate_NEW_DEFAULT_CAPACITIES.containsKey(blockId)) {
-            var newCapacity = greate_NEW_DEFAULT_CAPACITIES.get(blockId);
-            DEFAULT_CAPACITIES.put(blockId, newCapacity);
-        }
+    @Inject(method = "registerAll", at = @At("RETURN"), remap = false)
+    private void greate_setDefaultCapacity(Builder builder, CallbackInfo ci) {
+        greate_NEW_DEFAULT_CAPACITIES.forEach((id, value) -> this.capacities.put(id, builder.define(id.getPath(), value)));
     }
 }

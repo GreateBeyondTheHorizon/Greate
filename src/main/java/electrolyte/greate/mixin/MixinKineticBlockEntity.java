@@ -1,7 +1,7 @@
 package electrolyte.greate.mixin;
 
-import com.simibubi.create.content.equipment.goggles.IHaveGoggleInformation;
-import com.simibubi.create.content.equipment.goggles.IHaveHoveringInformation;
+import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
+import com.simibubi.create.api.equipment.goggles.IHaveHoveringInformation;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;

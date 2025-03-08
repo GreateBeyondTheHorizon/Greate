@@ -1,9 +1,9 @@
 package electrolyte.greate.content.kinetics.fan;
 
-import com.jozufozu.flywheel.core.PartialModel;
 import com.simibubi.create.content.kinetics.fan.EncasedFanBlock;
 import com.simibubi.create.content.kinetics.fan.EncasedFanBlockEntity;
 import com.simibubi.create.foundation.block.IBE;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.registry.ModBlockEntityTypes;
 import net.minecraft.world.level.block.entity.BlockEntityType;

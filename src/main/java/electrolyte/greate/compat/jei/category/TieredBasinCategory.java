@@ -7,8 +7,7 @@ import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
-import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.foundation.utility.Pair;
+import com.simibubi.create.foundation.utility.CreateLang;
 import electrolyte.greate.content.processing.basin.TieredBasinRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingOutput;
 import electrolyte.greate.foundation.item.GreateItemHelper;
@@ -18,6 +17,7 @@ import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
+import net.createmod.catnip.data.Pair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.ItemStack;
@@ -125,6 +125,6 @@ public class TieredBasinCategory extends GreateRecipeCategory<TieredBasinRecipe>
         if(!needsHeating) return;
         AllGuiTextures heatBar = noHeat ? AllGuiTextures.JEI_NO_HEAT_BAR : AllGuiTextures.JEI_HEAT_BAR;
         heatBar.render(graphics, 4, 80);
-        graphics.drawString(Minecraft.getInstance().font, Lang.translateDirect(requiredHeat.getTranslationKey()), 9, 86, requiredHeat.getColor(), false);
+        graphics.drawString(Minecraft.getInstance().font, CreateLang.translateDirect(requiredHeat.getTranslationKey()), 9, 86, requiredHeat.getColor(), false);
     }
 }

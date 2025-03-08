@@ -8,7 +8,6 @@ import com.gregtechceu.gtceu.api.recipe.content.Content;
 import com.simibubi.create.compat.jei.category.sequencedAssembly.SequencedAssemblySubCategory;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.sequenced.IAssemblyRecipe;
-import com.simibubi.create.foundation.utility.LangBuilder;
 import electrolyte.greate.Greate;
 import electrolyte.greate.GreateValues;
 import electrolyte.greate.compat.jei.category.sequencedassembly.TieredPressingSubCategory;
@@ -17,6 +16,7 @@ import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilde
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeParams;
 import electrolyte.greate.registry.MechanicalPresses;
 import electrolyte.greate.registry.ModRecipeTypes;
+import net.createmod.catnip.lang.LangBuilder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;

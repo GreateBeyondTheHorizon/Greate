@@ -2,7 +2,6 @@ package electrolyte.greate.registry;
 
 import com.simibubi.create.AllSpriteShifts;
 import com.simibubi.create.content.decoration.encasing.EncasedCTBehaviour;
-import com.simibubi.create.content.kinetics.BlockStressDefaults;
 import com.simibubi.create.content.kinetics.gearbox.GearboxBlock;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
@@ -14,6 +13,7 @@ import electrolyte.greate.content.kinetics.TieredBlockMaterials;
 import electrolyte.greate.content.kinetics.gearbox.TieredGearboxBlock;
 import electrolyte.greate.content.kinetics.gearbox.TieredVerticalGearboxItem;
 import electrolyte.greate.foundation.data.GreateBuilderTransformers;
+import electrolyte.greate.infrastructure.config.GStress;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
@@ -86,7 +86,7 @@ public class Gearboxes {
                 .initialProperties(SharedProperties::stone)
                 .properties(Properties::noOcclusion)
                 .properties(p -> p.mapColor(MapColor.PODZOL).pushReaction(PushReaction.PUSH_ONLY))
-                .transform(BlockStressDefaults.setNoImpact())
+                .transform(GStress.setNoImpact())
                 .transform(TagGen.axeOrPickaxe())
                 .transform(GreateBuilderTransformers.tieredGearbox())
                 .transform(TieredBlockMaterials.setMaterialForBlock(TM[tier]))

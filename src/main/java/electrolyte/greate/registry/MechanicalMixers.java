@@ -1,6 +1,5 @@
 package electrolyte.greate.registry;
 
-import com.simibubi.create.content.kinetics.BlockStressDefaults;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -8,6 +7,7 @@ import electrolyte.greate.Greate;
 import electrolyte.greate.content.kinetics.TieredBlockMaterials;
 import electrolyte.greate.content.kinetics.mixer.TieredMechanicalMixerBlock;
 import electrolyte.greate.foundation.data.GreateBuilderTransformers;
+import electrolyte.greate.infrastructure.config.GStress;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.level.material.MapColor;
 
@@ -50,7 +50,7 @@ public class MechanicalMixers {
                 .initialProperties(SharedProperties::stone)
                 .properties(p -> p.noOcclusion().mapColor(MapColor.STONE))
                 .transform(TagGen.axeOrPickaxe())
-                .transform(BlockStressDefaults.setImpact(stressImpact))
+                .transform(GStress.setImpact(stressImpact))
                 .transform(TieredBlockMaterials.setMaterialForBlock(TM[tier]))
                 .transform(GreateBuilderTransformers.tieredMechanicalMixer())
                 .addLayer(() -> RenderType::cutoutMipped)
