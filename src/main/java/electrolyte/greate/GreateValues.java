@@ -66,13 +66,9 @@ public class GreateValues {
         return GTValues.MAX;
     }
 
-    public static int getTierFromTierMaterial(Material tierMaterial) {
-        for (int i = 0; i < TM.length; i++) {
-            if (TM[i] == tierMaterial) {
-                return i;
-            }
-        }
-        return -1;
+    public static Material getMaterialFromTier(int tier) {
+        if(TM.length > tier) return TM[tier];
+        return null;
     }
 
     /**

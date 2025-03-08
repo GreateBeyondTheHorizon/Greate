@@ -6,6 +6,7 @@ import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.content.Content;
 import com.gregtechceu.gtceu.api.recipe.ingredient.IntCircuitIngredient;
+import com.gregtechceu.gtceu.api.recipe.ingredient.SizedIngredient;
 import com.gregtechceu.gtceu.common.item.IntCircuitBehaviour;
 import com.simibubi.create.content.processing.basin.BasinBlockEntity;
 import com.simibubi.create.content.processing.basin.BasinRecipe;
@@ -213,6 +214,11 @@ public class TieredBasinRecipe extends TieredProcessingRecipe<SmartInventory> {
                 if(((Ingredient) c.getContent()) instanceof IntCircuitIngredient ici) {
                     ing = ici;
                     break;
+                } else if (((Ingredient) c.getContent()) instanceof SizedIngredient sizedIng) {
+                    if(sizedIng.getInner() instanceof IntCircuitIngredient ici) {
+                        ing = ici;
+                        break;
+                    }
                 }
             }
             if(ing != null) {
@@ -229,9 +235,11 @@ public class TieredBasinRecipe extends TieredProcessingRecipe<SmartInventory> {
         List<Ingredient> ingredients = new ArrayList<>();
         for(Content c : recipe.getInputContents(ItemRecipeCapability.CAP)) {
             Ingredient ing = (Ingredient) c.getContent();
-            if(!(ing instanceof IntCircuitIngredient)) {
-                ingredients.add(ing);
+            if(ing instanceof IntCircuitIngredient) break;
+            if(ing instanceof SizedIngredient sizedIng) {
+                if(sizedIng.getInner() instanceof IntCircuitIngredient) break;
             }
+            ingredients.add(ing);
         }
         List<FluidIngredient> fluidIngredients = new ArrayList<>();
         for(Content c : recipe.getInputContents(FluidRecipeCapability.CAP)) {

@@ -51,6 +51,7 @@ public class GreateLang {
         REGISTRATE.addRawLang("material.greate.refined_radiance", "Refined Radiance");
         REGISTRATE.addRawLang("material.greate.shadow_steel", "Shadow Steel");
         REGISTRATE.addRawLang("tagprefix.whisk", "%s Whisk");
+        REGISTRATE.addRawLang("greate.multiblock.wire_coating_factory.warning.tooltip", "[Greate]: Wire factory cable recipes disabled. Enable `hardMiscRecipes` in the gtceu config to generate recipes for this multiblock.");
 
         //Greate GT-Addon
         REGISTRATE.addRawLang("block.greate.wire_coating_factory", "Wire Coating Factory");

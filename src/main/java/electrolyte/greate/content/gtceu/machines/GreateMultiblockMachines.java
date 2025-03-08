@@ -9,6 +9,8 @@ import com.gregtechceu.gtceu.api.pattern.Predicates;
 import com.gregtechceu.gtceu.api.recipe.OverclockingLogic;
 import com.gregtechceu.gtceu.common.data.GTRecipeModifiers;
 import com.simibubi.create.AllBlocks;
+import electrolyte.greate.infrastructure.config.GreateConfigs;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 
 import static com.gregtechceu.gtceu.api.pattern.Predicates.*;

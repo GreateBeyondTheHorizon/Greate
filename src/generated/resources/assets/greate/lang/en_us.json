@@ -332,6 +332,7 @@
   "greate.ponder.shaft.text_1": "Shafts will relay rotation in a straight line.",
   "greate.ponder.shaft_casing.header": "Encasing Shafts",
   "greate.ponder.shaft_casing.text_1": "Brass or Andesite Casing can be used to decorate Shafts",
+  "greate.multiblock.wire_coating_factory.warning.tooltip": "[Greate]: Wire factory cable recipes disabled. Enable `hardMiscRecipes` in the gtceu config to generate recipes for this multiblock.",
   "greate.recipe.assembly.cutting": "Cut with %s or higher Saw",
   "greate.recipe.assembly.pressing": "Process in %s or higher Press",
   "greate.recipe.automatic_brewing": "Automated Brewing",
