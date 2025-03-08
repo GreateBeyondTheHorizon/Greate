@@ -26,7 +26,7 @@ public class CreateRecipeRemoval {
         recipe.accept(Create.asResource("crafting/kinetics/flywheel"));
         recipe.accept(Create.asResource("crafting/kinetics/gantry_carriage"));
         recipe.accept(Create.asResource("crafting/kinetics/gearbox"));
-        recipe.accept(Create.asResource("crafting/kinetics/gearboxfrom_conversion"));
+        recipe.accept(Create.asResource("crafting/kinetics/gearbox_from_conversion"));
         recipe.accept(Create.asResource("crafting/kinetics/gearshift"));
         recipe.accept(Create.asResource("crafting/kinetics/item_vault"));
         recipe.accept(Create.asResource("crafting/kinetics/large_cogwheel"));
@@ -44,7 +44,7 @@ public class CreateRecipeRemoval {
         recipe.accept(Create.asResource("crafting/kinetics/shaft"));
         recipe.accept(Create.asResource("crafting/kinetics/spout"));
         recipe.accept(Create.asResource("crafting/kinetics/turntable"));
-        recipe.accept(Create.asResource("crafting/kinetics/vertical_gearboxfrom_conversion"));
+        recipe.accept(Create.asResource("crafting/kinetics/vertical_gearbox_from_conversion"));
         recipe.accept(Create.asResource("crafting/kinetics/water_wheel"));
         recipe.accept(Create.asResource("crafting/kinetics/weighted_ejector"));
         recipe.accept(Create.asResource("crafting/kinetics/whisk"));
@@ -57,29 +57,6 @@ public class CreateRecipeRemoval {
         recipe.accept(Create.asResource("crafting/materials/andesite_alloy"));
         recipe.accept(Create.asResource("crafting/materials/andesite_alloy_from_zinc"));
         recipe.accept(Create.asResource("crafting/materials/electron_tube"));
-
-        recipe.accept(Create.asResource("cutting/andesite_alloy"));
-        recipe.accept(Create.asResource("cutting/stripped_oak_log"));
-        recipe.accept(Create.asResource("cutting/stripped_oak_wood"));
-        recipe.accept(Create.asResource("cutting/stripped_spruce_log"));
-        recipe.accept(Create.asResource("cutting/stripped_spruce_wood"));
-        recipe.accept(Create.asResource("cutting/stripped_birch_log"));
-        recipe.accept(Create.asResource("cutting/stripped_birch_wood"));
-        recipe.accept(Create.asResource("cutting/stripped_jungle_log"));
-        recipe.accept(Create.asResource("cutting/stripped_jungle_wood"));
-        recipe.accept(Create.asResource("cutting/stripped_acacia_log"));
-        recipe.accept(Create.asResource("cutting/stripped_warped_stem"));
-        recipe.accept(Create.asResource("cutting/stripped_mangrove_log"));
-        recipe.accept(Create.asResource("cutting/stripped_crimson_hyphae"));
-        recipe.accept(Create.asResource("cutting/stripped_acacia_wood"));
-        recipe.accept(Create.asResource("cutting/stripped_dark_oak_log"));
-        recipe.accept(Create.asResource("cutting/stripped_dark_oak_wood"));
-        recipe.accept(Create.asResource("cutting/stripped_mangrove_wood"));
-        recipe.accept(Create.asResource("cutting/stripped_cherry_log"));
-        recipe.accept(Create.asResource("cutting/stripped_cherry_wood"));
-        recipe.accept(Create.asResource("cutting/stripped_crimson_stem"));
-        recipe.accept(Create.asResource("cutting/stripped_warped_hyphae"));
-        recipe.accept(Create.asResource("cutting/stripped_bamboo_block"));
 
         recipe.accept(Create.asResource("deploying/cogwheel"));
         recipe.accept(Create.asResource("deploying/large_cogwheel"));
