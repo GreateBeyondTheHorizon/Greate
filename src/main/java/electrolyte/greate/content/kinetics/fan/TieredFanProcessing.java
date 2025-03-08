@@ -78,7 +78,15 @@ public class TieredFanProcessing {
         if(transported.processedBy != type) {
             transported.processedBy = type;
             transported.processingTime = getProcessingTime(transported.stack.getCount(), speed);
-            if(!type.canProcess(transported.stack, level)) {
+            if(type instanceof TieredHauntingType tht) {
+                if(!tht.canProcess(transported.stack, level, machineTier)) {
+                    transported.processingTime = -1;
+                }
+            } else if(type instanceof TieredSplashingType tst) {
+                if(!tst.canProcess(transported.stack, level, machineTier)) {
+                    transported.processingTime = -1;
+                }
+            } else if(!type.canProcess(transported.stack, level)) {
                 transported.processingTime = -1;
             }
             return ignore;
