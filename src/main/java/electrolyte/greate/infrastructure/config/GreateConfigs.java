@@ -1,5 +1,6 @@
 package electrolyte.greate.infrastructure.config;
 
+import com.simibubi.create.api.stress.BlockStressValues;
 import electrolyte.greate.Greate;
 import net.createmod.catnip.config.ConfigBase;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -57,6 +58,9 @@ public class GreateConfigs {
             for(Entry<Type, ConfigBase> pair : CONFIGS.entrySet()) {
                 context.registerConfig(pair.getKey(), pair.getValue().specification);
             }
+            GStress stress = server().kinetics.stressValues;
+            BlockStressValues.IMPACTS.registerProvider(stress::getImpact);
+            BlockStressValues.CAPACITIES.registerProvider(stress::getCapacity);
         }
     }
 

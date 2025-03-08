@@ -291,12 +291,6 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
         return true;
     }
 
-    /*public static boolean canTransportObjects(BlockState state) {
-        if(!(state.getBlock() instanceof TieredBeltBlock)) return false;
-        BeltSlope slope = state.getValue(SLOPE);
-        return slope != BeltSlope.VERTICAL && slope != BeltSlope.SIDEWAYS;
-    }*/
-
     public static List<BlockPos> getBeltChain(Level level, BlockPos controllerPos) {
         List<BlockPos> positions = new LinkedList<>();
         BlockState state = level.getBlockState(controllerPos);

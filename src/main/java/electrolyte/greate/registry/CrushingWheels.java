@@ -9,6 +9,7 @@ import electrolyte.greate.content.kinetics.crusher.TieredCrushingWheelBlock;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingWheelControllerBlock;
 import electrolyte.greate.foundation.data.GreateBlockStateGen;
 import electrolyte.greate.foundation.data.GreateBuilderTransformers;
+import electrolyte.greate.infrastructure.config.GStress;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
@@ -81,7 +82,7 @@ public class CrushingWheels {
                 .transform(TagGen.pickaxeOnly())
                 .addLayer(() -> RenderType::cutoutMipped)
                 .transform(GreateBuilderTransformers.tieredCrushingWheel())
-                //.transform(CStress.setImpact(stressImpact))
+                .transform(GStress.setImpact(stressImpact))
                 .transform(TieredBlockMaterials.setMaterialForBlock(TM[tier]))
                 .onRegister(c -> c.setTier(tier))
                 .register();

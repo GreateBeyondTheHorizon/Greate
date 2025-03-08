@@ -15,6 +15,7 @@ import electrolyte.greate.content.kinetics.TieredBlockMaterials;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredCogwheelBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedCogwheelBlock;
 import electrolyte.greate.foundation.data.GreateBlockStateGen;
+import electrolyte.greate.infrastructure.config.GStress;
 import net.createmod.catnip.data.Couple;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.MapColor;
@@ -179,7 +180,7 @@ public class Cogwheels {
                 .initialProperties(SharedProperties::stone)
                 .properties(p -> p.sound(SoundType.WOOD))
                 .properties(p -> p.mapColor(MapColor.DIRT))
-                //.transform(CStress.setNoImpact())
+                .transform(GStress.setNoImpact())
                 .transform(TagGen.axeOrPickaxe())
                 .transform(TieredBlockMaterials.setMaterialForBlock(TM[tier]))
                 .blockstate(GreateBlockStateGen.tieredCogwheelProvider(false))
@@ -195,7 +196,7 @@ public class Cogwheels {
                 .initialProperties(SharedProperties::stone)
                 .properties(p -> p.sound(SoundType.WOOD))
                 .properties(p -> p.mapColor(MapColor.DIRT))
-                //.transform(CStress.setNoImpact())
+                .transform(GStress.setNoImpact())
                 .transform(TagGen.axeOrPickaxe())
                 .transform(TieredBlockMaterials.setMaterialForBlock(TM[tier]))
                 .blockstate(GreateBlockStateGen.tieredCogwheelProvider(true))

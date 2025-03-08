@@ -6,6 +6,7 @@ import electrolyte.greate.Greate;
 import electrolyte.greate.content.fluids.pump.TieredPumpBlock;
 import electrolyte.greate.content.kinetics.TieredBlockMaterials;
 import electrolyte.greate.foundation.data.GreateBuilderTransformers;
+import electrolyte.greate.infrastructure.config.GStress;
 import net.minecraft.world.level.material.MapColor;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
@@ -50,7 +51,7 @@ public class Pumps {
 				.properties(p -> p.mapColor(MapColor.STONE))
 				.transform(pickaxeOnly())
 				.transform(GreateBuilderTransformers.tieredMechanicalPump())
-				//.transform(CStress.setImpact(pumpImpact))
+				.transform(GStress.setImpact(pumpImpact))
 				.transform(TieredBlockMaterials.setMaterialForBlock(TM[tier]))
 				.onRegister(c -> c.setTier(tier))
 				.register();

@@ -19,6 +19,7 @@ import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedSha
 import electrolyte.greate.content.kinetics.steamEngine.TieredPoweredShaftBlock;
 import electrolyte.greate.foundation.data.GreateBlockStateGen;
 import electrolyte.greate.foundation.data.GreateBuilderTransformers;
+import electrolyte.greate.infrastructure.config.GStress;
 import net.minecraft.world.level.material.MapColor;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
@@ -137,7 +138,7 @@ public class Shafts {
                 .block(TM[tier].getName() + "_shaft", TieredShaftBlock::new)
                 .initialProperties(SharedProperties::stone)
                 .properties(p -> p.mapColor(MapColor.METAL))
-                //.transform(CStress.setNoImpact())
+                .transform(GStress.setNoImpact())
                 .transform(TieredBlockMaterials.setMaterialForBlock(TM[tier]))
                 .transform(TagGen.pickaxeOnly())
                 .blockstate(GreateBlockStateGen.tieredShaftProvider())

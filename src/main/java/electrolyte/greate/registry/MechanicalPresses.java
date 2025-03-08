@@ -7,6 +7,7 @@ import electrolyte.greate.Greate;
 import electrolyte.greate.content.kinetics.TieredBlockMaterials;
 import electrolyte.greate.content.kinetics.press.TieredMechanicalPressBlock;
 import electrolyte.greate.foundation.data.GreateBuilderTransformers;
+import electrolyte.greate.infrastructure.config.GStress;
 import net.minecraft.world.level.material.MapColor;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
@@ -49,7 +50,7 @@ public class MechanicalPresses {
                 .initialProperties(SharedProperties::stone)
                 .properties(p -> p.noOcclusion().mapColor(MapColor.PODZOL))
                 .transform(TagGen.axeOrPickaxe())
-                //.transform(CStress.setImpact(stressImpact))
+                .transform(GStress.setImpact(stressImpact))
                 .transform(GreateBuilderTransformers.tieredMechanicalPress())
                 .transform(TieredBlockMaterials.setMaterialForBlock(TM[tier]))
                 .onRegister(c -> c.setTier(tier))

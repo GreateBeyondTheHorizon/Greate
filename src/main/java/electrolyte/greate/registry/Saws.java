@@ -10,6 +10,7 @@ import electrolyte.greate.content.kinetics.saw.TieredSawBlock;
 import electrolyte.greate.content.kinetics.saw.TieredSawGenerator;
 import electrolyte.greate.content.kinetics.saw.TieredSawMovementBehaviour;
 import electrolyte.greate.foundation.data.GreateBuilderTransformers;
+import electrolyte.greate.infrastructure.config.GStress;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.level.material.MapColor;
 
@@ -57,7 +58,7 @@ public class Saws {
                 .properties(p -> p.mapColor(MapColor.PODZOL))
                 .transform(TagGen.axeOrPickaxe())
                 .blockstate(new TieredSawGenerator()::generateModel)
-                //.transform(CStress.setImpact(stressImpact))
+                .transform(GStress.setImpact(stressImpact))
                 .transform(TieredBlockMaterials.setMaterialForBlock(TM[tier]))
                 .onRegister(movementBehaviour(new TieredSawMovementBehaviour()))
                 .onRegister(c -> c.setTier(tier))

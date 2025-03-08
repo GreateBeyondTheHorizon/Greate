@@ -13,6 +13,7 @@ import electrolyte.greate.content.kinetics.belt.TieredBeltBlock;
 import electrolyte.greate.content.kinetics.belt.TieredBeltGenerator;
 import electrolyte.greate.content.kinetics.belt.item.TieredBeltConnectorItem;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
+import electrolyte.greate.infrastructure.config.GStress;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -82,7 +83,7 @@ public class Belts {
                 .properties(p -> p.strength(0.8F))
                 .properties(p -> p.mapColor(MapColor.COLOR_GRAY))
                 .transform(TagGen.axeOrPickaxe())
-                //.transform(CStress.setNoImpact())
+                .transform(GStress.setNoImpact())
                 .transform(TieredBlockMaterials.setMaterialForBeltBlock(material))
                 .transform(displaySource(AllDisplaySources.ITEM_NAMES))
                 .blockstate(new TieredBeltGenerator()::generateModel)

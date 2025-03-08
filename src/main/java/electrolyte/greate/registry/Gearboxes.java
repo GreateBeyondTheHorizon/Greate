@@ -13,6 +13,7 @@ import electrolyte.greate.content.kinetics.TieredBlockMaterials;
 import electrolyte.greate.content.kinetics.gearbox.TieredGearboxBlock;
 import electrolyte.greate.content.kinetics.gearbox.TieredVerticalGearboxItem;
 import electrolyte.greate.foundation.data.GreateBuilderTransformers;
+import electrolyte.greate.infrastructure.config.GStress;
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
@@ -85,7 +86,7 @@ public class Gearboxes {
                 .initialProperties(SharedProperties::stone)
                 .properties(Properties::noOcclusion)
                 .properties(p -> p.mapColor(MapColor.PODZOL).pushReaction(PushReaction.PUSH_ONLY))
-                //.transform(CStress.setNoImpact())
+                .transform(GStress.setNoImpact())
                 .transform(TagGen.axeOrPickaxe())
                 .transform(GreateBuilderTransformers.tieredGearbox())
                 .transform(TieredBlockMaterials.setMaterialForBlock(TM[tier]))

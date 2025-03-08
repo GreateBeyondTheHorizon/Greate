@@ -29,6 +29,7 @@ import electrolyte.greate.content.kinetics.simpleRelays.TieredCogwheelBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedCogwheelBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedShaftBlock;
+import electrolyte.greate.infrastructure.config.GStress;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -130,7 +131,7 @@ public class GreateBuilderTransformers {
     private static <B extends RotatedPillarKineticBlock, P> BlockBuilder<B, P> encasedBase(BlockBuilder<B, P> b, Supplier<ItemLike> drop) {
         return b.initialProperties(SharedProperties::stone)
                 .properties(BlockBehaviour.Properties::noOcclusion)
-                //.transform(CStress.setNoImpact())
+                .transform(GStress.setNoImpact())
                 .loot((p, loot) -> p.dropOther(loot, drop.get()));
     }
 
