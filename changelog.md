@@ -1,1 +1,3 @@
-- Fix mixin crash
+- Update to Create 6.0.2 & GT 1.6.4
+- Fix tiered saws not rendering their shafts properly on contraptions
+- Fix tiered fans not applying tiered splashing/haunting recipes on depots
