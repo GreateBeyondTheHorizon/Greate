@@ -100,6 +100,7 @@ public class GreateJEI implements IModPlugin {
                     .emptyBackground(177, 68)
                     .build("milling", TieredMillingCategory::new),
 
+                //todo: add regular crushing wheel recipes
                 crushing = builder(TieredAbstractCrushingRecipe.class)
                         .addTypedRecipesGT(GTRecipeTypes.MACERATOR_RECIPES, TieredCrushingRecipe::convertGT)
                         .addTypedRecipes(ModRecipeTypes.CRUSHING::getType)

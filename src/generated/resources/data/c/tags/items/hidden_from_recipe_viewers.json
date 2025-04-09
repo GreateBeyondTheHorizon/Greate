@@ -79,22 +79,6 @@
     "create:whisk",
     "create:propeller",
     "create:vertical_gearbox",
-    "create:shaft",
-    "create:copper_sheet",
-    "create:iron_sheet",
-    "create:golden_sheet",
-    "create:brass_sheet",
-    "create:crushed_raw_copper",
-    "create:crushed_raw_iron",
-    "create:crushed_raw_platinum",
-    "create:crushed_raw_gold",
-    "create:crushed_raw_lead",
-    "create:crushed_raw_nickel",
-    "create:crushed_raw_tin",
-    "create:crushed_raw_silver",
-    "create:crushed_raw_zinc",
-    "create:wheat_flour",
-    "gtceu:obsidian_dust",
-    "gtceu:netherrack_dust"
+    "create:shaft"
   ]
 }

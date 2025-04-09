@@ -294,9 +294,6 @@ public class GreateCraftingTableRecipes {
                 'S', new UnificationEntry(screw, Iron),
                 'P', new UnificationEntry(plate, Iron),
                 'B', GTMachines.WOODEN_CRATE.asStack());
-        VanillaRecipeHelper.addShapelessRecipe(provider, AllItems.DOUGH.getId(), AllItems.DOUGH.asStack(),
-                Items.WATER_BUCKET,
-                Ingredient.of(ChemicalHelper.get(new UnificationEntry(dust, Wheat), 1)));
 
         if(ConfigHolder.INSTANCE.recipes.hardToolArmorRecipes) {
             VanillaRecipeHelper.addShapedRecipe(provider, AllItems.COPPER_DIVING_HELMET.getId(), AllItems.COPPER_DIVING_HELMET.asStack(),

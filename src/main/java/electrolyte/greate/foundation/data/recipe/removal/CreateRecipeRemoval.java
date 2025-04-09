@@ -8,7 +8,6 @@ import java.util.function.Consumer;
 public class CreateRecipeRemoval {
 
     public static void disableCreateRecipes(Consumer<ResourceLocation> recipe) {
-        recipe.accept(Create.asResource("crafting/appliances/dough"));
 
         recipe.accept(Create.asResource("crafting/curiosities/brown_toolbox"));
 
@@ -63,33 +62,9 @@ public class CreateRecipeRemoval {
 
         recipe.accept(Create.asResource("mechanical_crafting/crushing_wheel"));
 
-        recipe.accept(Create.asResource("milling/andesite"));
-        recipe.accept(Create.asResource("milling/bone"));
-        recipe.accept(Create.asResource("milling/charcoal"));
-        recipe.accept(Create.asResource("milling/clay"));
-        recipe.accept(Create.asResource("milling/coal"));
-        recipe.accept(Create.asResource("milling/cobblestone"));
-        recipe.accept(Create.asResource("milling/granite"));
-        recipe.accept(Create.asResource("milling/gravel"));
-        recipe.accept(Create.asResource("milling/lapis_lazuli"));
-        recipe.accept(Create.asResource("milling/wool"));
-        recipe.accept(Create.asResource("milling/sugar_cane"));
-        recipe.accept(Create.asResource("milling/terracotta"));
-        recipe.accept(Create.asResource("milling/wheat"));
-
         recipe.accept(Create.asResource("mixing/andesite_alloy"));
         recipe.accept(Create.asResource("mixing/andesite_alloy_from_zinc"));
-        recipe.accept(Create.asResource("mixing/dough_by_mixing"));
-
-        recipe.accept(Create.asResource("pressing/iron_ingot"));
-        recipe.accept(Create.asResource("pressing/gold_ingot"));
-        recipe.accept(Create.asResource("pressing/copper_ingot"));
-        recipe.accept(Create.asResource("pressing/brass_ingot"));
-        recipe.accept(Create.asResource("pressing/sugar_cane"));
 
         recipe.accept(Create.asResource("sequenced_assembly/sturdy_sheet"));
-
-        recipe.accept(Create.asResource("splashing/magma_block"));
-        recipe.accept(Create.asResource("splashing/wheat_flour"));
     }
 }
