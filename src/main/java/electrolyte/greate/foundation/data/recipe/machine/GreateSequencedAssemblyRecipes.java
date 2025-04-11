@@ -7,7 +7,6 @@ import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.WireProperties;
 import com.gregtechceu.gtceu.api.data.chemical.material.stack.UnificationEntry;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
-import com.gregtechceu.gtceu.config.ConfigHolder;
 import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
 import com.gregtechceu.gtceu.utils.GTUtil;
 import com.simibubi.create.AllItems;
@@ -107,9 +106,8 @@ public class GreateSequencedAssemblyRecipes {
 
             siliconeCoatingFactoryBuilder.inputItems(foil, PolyvinylChloride, insulationAmount);
             siliconeCoatingFactoryBuilder.inputFluids(SiliconeRubber.getFluid(L * insulationAmount / 2));
-            if(ConfigHolder.INSTANCE.recipes.hardMiscRecipes) {
-                siliconeCoatingFactoryBuilder.save(provider);
-            }
+            siliconeCoatingFactoryBuilder.save(provider);
+
 
             SequencedAssemblyRecipeBuilder styreneAssemblyBuilder = new SequencedAssemblyRecipeBuilder(Greate.id(String.format("%s_cable_%d_styrene", material.getName(), cableAmount)))
                     .require(ChemicalHelper.get(wirePrefix, material).getItem())
@@ -133,9 +131,7 @@ public class GreateSequencedAssemblyRecipes {
 
             styreneCoatingFactoryBuilder.inputItems(foil, PolyvinylChloride, insulationAmount);
             styreneCoatingFactoryBuilder.inputFluids(StyreneButadieneRubber.getFluid(L * insulationAmount / 4));
-            if(ConfigHolder.INSTANCE.recipes.hardMiscRecipes) {
-                styreneCoatingFactoryBuilder.save(provider);
-            }
+            styreneCoatingFactoryBuilder.save(provider);
         }
     }
 }

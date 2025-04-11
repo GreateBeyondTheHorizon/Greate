@@ -231,7 +231,6 @@
   "config.jade.plugin_greate.recipe_duration": "Recipe Duration",
   "greate.gui.goggles.saw_contents": "Saw Contents:",
   "greate.jei.recipe_tier": "Recipe Tier: ",
-  "greate.multiblock.wire_coating_factory.warning.tooltip": "[Greate]: Wire factory cable recipes disabled. Enable `hardMiscRecipes` in the gtceu config to generate recipes for this multiblock.",
   "greate.ponder.belt_casing.header": "Encasing Belts",
   "greate.ponder.belt_casing.text_1": "Brass or Andesite Casing can be used to decorate Mechanical Belts",
   "greate.ponder.belt_casing.text_2": "A wrench can be used to remove the casing",
