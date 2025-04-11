@@ -90,9 +90,9 @@ public class GreateJEI implements IModPlugin {
         GreateRecipeCategory<?>
 
                 milling = builder(TieredAbstractCrushingRecipe.class)
+                    .addTypedRecipesGT(GTRecipeTypes.MACERATOR_RECIPES, TieredMillingRecipe::convertGT)
                     .addTypedRecipes(ModRecipeTypes.MILLING)
                     .addTypedRecipes(AllRecipeTypes.MILLING::getType, TieredMillingRecipe::convertNormal)
-                    .addTypedRecipesGT(GTRecipeTypes.MACERATOR_RECIPES, TieredMillingRecipe::convertGT)
                     .catalysts(Arrays.stream(Millstones.MILLSTONES)
                             .<Supplier<ItemLike>>map(o -> o::get)
                             .collect(Collectors.toList()))
@@ -100,12 +100,12 @@ public class GreateJEI implements IModPlugin {
                     .emptyBackground(177, 68)
                     .build("milling", TieredMillingCategory::new),
 
-                //todo: add regular crushing wheel recipes
                 crushing = builder(TieredAbstractCrushingRecipe.class)
                         .addTypedRecipesGT(GTRecipeTypes.MACERATOR_RECIPES, TieredCrushingRecipe::convertGT)
                         .addTypedRecipes(ModRecipeTypes.CRUSHING::getType)
                         .addTypedRecipes(ModRecipeTypes.MILLING::getType)
-                        .addTypedRecipes(AllRecipeTypes.MILLING::getType, TieredCrushingRecipe::convertNormalCrushing)
+                        .addTypedRecipes(AllRecipeTypes.CRUSHING::getType, TieredCrushingRecipe::convertNormalCrushing)
+                        .addTypedRecipes(AllRecipeTypes.MILLING::getType, TieredMillingRecipe::convertNormal)
                         .catalysts(Arrays.stream(CrushingWheels.CRUSHING_WHEELS)
                                 .<Supplier<ItemLike>>map(o -> o::get)
                                 .collect(Collectors.toList()))
