@@ -72,7 +72,7 @@ public class TieredPressingRecipe extends TieredProcessingRecipe<RecipeWrapper> 
     }
 
     public static TieredPressingRecipe convertNormalPressing(Recipe<?> recipe) {
-        return new TieredProcessingRecipeBuilder<>(TieredPressingRecipe::new, recipe.getId())
+        return new TieredProcessingRecipeBuilder<>(TieredPressingRecipe::new, Greate.id("integration/" + recipe.getId().toString().replace(":", "/")))
                 .withItemIngredients(recipe.getIngredients())
                 .withItemOutputs(((ProcessingRecipe<?>) recipe).getRollableResults())
                 .recipeTier(ULV).noCircuit().build();
@@ -81,7 +81,7 @@ public class TieredPressingRecipe extends TieredProcessingRecipe<RecipeWrapper> 
     public static TieredPressingRecipe convertGT(GTRecipe recipe) {
         List<Content> inputContents = recipe.getInputContents(ItemRecipeCapability.CAP);
         int recipeTier = GreateValues.convertGTEUToTier(recipe.getTickInputContents(EURecipeCapability.CAP));
-        return new TieredProcessingRecipeBuilder<>(TieredPressingRecipe::new, recipe.getId())
+        return new TieredProcessingRecipeBuilder<>(TieredPressingRecipe::new, Greate.id("integration/" + recipe.getId().toString().replace(":", "/")))
                 .withItemIngredientsGT(inputContents)
                 .withItemOutputsGT(recipe.getOutputContents(ItemRecipeCapability.CAP), recipeTier, ULV)
                 .recipeTier(recipeTier)

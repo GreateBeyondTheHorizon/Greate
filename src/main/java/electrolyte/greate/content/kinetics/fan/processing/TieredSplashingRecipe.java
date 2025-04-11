@@ -1,6 +1,7 @@
 package electrolyte.greate.content.kinetics.fan.processing;
 
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
+import electrolyte.greate.Greate;
 import electrolyte.greate.content.kinetics.fan.processing.TieredSplashingRecipe.TieredSplashingWrapper;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder;
@@ -45,6 +46,9 @@ public class TieredSplashingRecipe extends TieredProcessingRecipe<TieredSplashin
 
     public static TieredSplashingRecipe convertNormalSplashing(Recipe<?> recipe) {
         ProcessingRecipe<?> pr = (ProcessingRecipe<?>) recipe;
-        return new TieredProcessingRecipeBuilder<>(TieredSplashingRecipe::new, recipe.getId()).withItemIngredients(pr.getIngredients()).withItemOutputs(pr.getRollableResults()).recipeTier(ULV).build();
+        return new TieredProcessingRecipeBuilder<>(TieredSplashingRecipe::new, Greate.id("integration/" + recipe.getId().toString().replace(":", "/")))
+                .withItemIngredients(pr.getIngredients())
+                .withItemOutputs(pr.getRollableResults())
+                .recipeTier(ULV).build();
     }
 }

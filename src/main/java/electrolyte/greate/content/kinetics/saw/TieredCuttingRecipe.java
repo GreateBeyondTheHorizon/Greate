@@ -87,7 +87,7 @@ public class TieredCuttingRecipe extends TieredProcessingRecipe<RecipeWrapper> i
     }
 
     public static TieredCuttingRecipe convertNormalSawing(Recipe<?> recipe) {
-        return new TieredProcessingRecipeBuilder<>(TieredCuttingRecipe::new, recipe.getId())
+        return new TieredProcessingRecipeBuilder<>(TieredCuttingRecipe::new, Greate.id("integration/" + recipe.getId().toString().replace(":", "/")))
                 .withItemIngredients(recipe.getIngredients())
                 .withItemOutputs(((ProcessingRecipe<?>) recipe).getRollableResults())
                 .recipeTier(ULV)
@@ -98,7 +98,7 @@ public class TieredCuttingRecipe extends TieredProcessingRecipe<RecipeWrapper> i
         List<Content> inputContents = recipe.getInputContents(ItemRecipeCapability.CAP);
         List<Content> fluidContents = recipe.getInputContents(FluidRecipeCapability.CAP);
         int recipeTier = GreateValues.convertGTEUToTier(recipe.getTickInputContents(EURecipeCapability.CAP));
-        return new TieredProcessingRecipeBuilder<>(TieredCuttingRecipe::new, recipe.getId())
+        return new TieredProcessingRecipeBuilder<>(TieredCuttingRecipe::new, Greate.id("integration/" + recipe.getId().toString().replace(":", "/")))
                 .withItemIngredientsGT(inputContents)
                 .withFluidIngredientsGT(fluidContents)
                 .withItemOutputsGT(recipe.getOutputContents(ItemRecipeCapability.CAP), recipeTier, ULV)

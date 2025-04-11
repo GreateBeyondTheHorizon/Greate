@@ -4,6 +4,7 @@ import com.gregtechceu.gtceu.api.capability.recipe.EURecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
+import electrolyte.greate.Greate;
 import electrolyte.greate.GreateValues;
 import electrolyte.greate.content.kinetics.crusher.TieredAbstractCrushingRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder;
@@ -42,11 +43,21 @@ public class TieredMillingRecipe extends TieredAbstractCrushingRecipe {
 
     public static TieredMillingRecipe convertNormal(Recipe<?> recipe) {
         ProcessingRecipe<?> processingRecipe = (ProcessingRecipe<?>) recipe;
-        return new TieredProcessingRecipeBuilder<>(TieredMillingRecipe::new, processingRecipe.getId()).duration(processingRecipe.getProcessingDuration()).withItemIngredients(processingRecipe.getIngredients()).withItemOutputs(processingRecipe.getRollableResults()).recipeTier(ULV).build();
+        return new TieredProcessingRecipeBuilder<>(TieredMillingRecipe::new, Greate.id("integration/" + processingRecipe.getId().toString().replace(":", "/")))
+                .duration(processingRecipe.getProcessingDuration())
+                .withItemIngredients(processingRecipe.getIngredients())
+                .withItemOutputs(processingRecipe.getRollableResults())
+                .recipeTier(ULV)
+                .build();
     }
 
     public static TieredMillingRecipe convertGT(GTRecipe recipe) {
         int recipeTier = GreateValues.convertGTEUToTier(recipe.getTickInputContents(EURecipeCapability.CAP));
-        return new TieredProcessingRecipeBuilder<>(TieredMillingRecipe::new, recipe.getId()).duration(recipe.duration).withItemIngredientsGT(recipe.getInputContents(ItemRecipeCapability.CAP)).withItemOutputsGT(recipe.getOutputContents(ItemRecipeCapability.CAP), recipeTier, ULV).recipeTier(recipeTier).build();
+        return new TieredProcessingRecipeBuilder<>(TieredMillingRecipe::new, Greate.id("integration/" + recipe.getId().toString().replace(":", "/")))
+                .duration(recipe.duration)
+                .withItemIngredientsGT(recipe.getInputContents(ItemRecipeCapability.CAP))
+                .withItemOutputsGT(recipe.getOutputContents(ItemRecipeCapability.CAP), recipeTier, ULV)
+                .recipeTier(recipeTier)
+                .build();
     }
 }
