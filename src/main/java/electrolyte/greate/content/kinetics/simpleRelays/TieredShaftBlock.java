@@ -27,6 +27,8 @@ import net.minecraft.world.phys.BlockHitResult;
 
 import java.util.function.Predicate;
 
+import static electrolyte.greate.registry.Shafts.POWERED_SHAFTS;
+
 public class TieredShaftBlock extends ShaftBlock implements ITieredBlock, ITieredShaftBlock, IGirderEncasableBlock {
 
     public static final int placementHelperId = PlacementHelpers.register(new PlacementHelper());
@@ -57,9 +59,9 @@ public class TieredShaftBlock extends ShaftBlock implements ITieredBlock, ITiere
         return pickCorrectShaftType(stateForPlacement, context.getLevel(), context.getClickedPos());
     }
 
-    public static BlockState pickCorrectShaftType(BlockState stateForPlacement, Level level, BlockPos pos) {
-        return PoweredShaftBlock.stillValid(stateForPlacement, level, pos) ?
-            TieredPoweredShaftBlock.getEquivalent(stateForPlacement) : stateForPlacement;
+    public static BlockState pickCorrectShaftType(BlockState stateForPlacement, Level level, BlockPos offsetPos, ItemStack shaft) {
+        return PoweredShaftBlock.stillValid(stateForPlacement, level, offsetPos) ?
+            TieredPoweredShaftBlock.getEquivalent(POWERED_SHAFTS[((ITieredBlock) ((BlockItem) shaft.getItem()).getBlock()).getTier()], stateForPlacement) : stateForPlacement;
     }
 
     @Override
@@ -108,7 +110,7 @@ public class TieredShaftBlock extends ShaftBlock implements ITieredBlock, ITiere
             PlacementOffset offset = super.getOffset(player, world, state, pos, ray);
             if (offset.isSuccessful())
                 offset.withTransform(offset.getTransform()
-                        .andThen(s -> TieredShaftBlock.pickCorrectShaftType(s, world, offset.getBlockPos())));
+                        .andThen(s -> TieredShaftBlock.pickCorrectShaftType(s, world, offset.getBlockPos(), player.getMainHandItem())));
             return offset;
         }
 
