@@ -9,6 +9,7 @@ import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.kinetics.saw.CuttingRecipe;
 import com.simibubi.create.content.kinetics.saw.SawBlockEntity;
+import com.simibubi.create.content.logistics.box.PackageItem;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipe;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
@@ -141,6 +142,22 @@ public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKinet
     }
 
     public void applyValidRecipe() {
+        ItemStack input = inventory.getStackInSlot(0);
+        List<ItemStack> list = new ArrayList<>();
+        if(PackageItem.isPackage(input)) {
+            inventory.clear();
+            ItemStackHandler results = PackageItem.getContents(input);
+            for(int i = 0; i < results.getSlots(); i++) {
+                ItemStack stack = results.getStackInSlot(i);
+                if(!stack.isEmpty()) {
+                    ItemHelper.addToList(stack, list);
+                }
+            }
+            for(int slot = 0; slot < list.size() && slot + 1 < inventory.getSlots(); slot++) {
+                inventory.setStackInSlot(slot + 1, list.get(slot));
+            }
+            return;
+        }
         List<? extends Recipe<?>> recipes = getValidRecipes();
         int recipeIndex = ((MixinSawBlockEntityAccessor) this).getRecipeIndex();
         if(recipes.isEmpty()) return;
