@@ -22,12 +22,10 @@ import java.util.Map;
 public class TieredCrushingWheelControllerBlock extends CrushingWheelControllerBlock implements ITieredBlock {
 
     private int tier;
-    private final Block crushingWheel;
     public static Map<Block, Block> MAP = new HashMap<>();
 
     public TieredCrushingWheelControllerBlock(Properties properties, Block crushingWheel) {
         super(properties);
-        this.crushingWheel = crushingWheel;
         MAP.put(crushingWheel, this);
     }
 

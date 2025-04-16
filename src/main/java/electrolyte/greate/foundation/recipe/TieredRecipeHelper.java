@@ -1,12 +1,11 @@
 package electrolyte.greate.foundation.recipe;
 
-import com.gregtechceu.gtceu.api.capability.recipe.FluidRecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.content.Content;
-import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
+import electrolyte.greate.content.kinetics.millstone.TieredMillingRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingOutput;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import net.minecraft.world.item.ItemStack;
@@ -27,8 +26,6 @@ public class TieredRecipeHelper {
     public int findDuration(Recipe<?> recipe) {
         if(recipe instanceof ProcessingRecipe<?> pr) {
             return pr.getProcessingDuration();
-        } else if(recipe instanceof GTRecipe gtr) {
-            return gtr.duration;
         }
         return 100;
     }
@@ -53,6 +50,18 @@ public class TieredRecipeHelper {
         if(recipe instanceof ProcessingRecipe<?> pr) {
             List<ProcessingOutput> oldResults = pr.getRollableResults();
             for(ProcessingOutput oldResult : oldResults) {
+                if(pr instanceof TieredMillingRecipe) {
+                    if(machineTier < HV) {
+                        if(oldResult.getChance() == 1) {
+                            if(oldResult instanceof TieredProcessingOutput tpo) {
+                                newResults.add(new TieredProcessingOutput(tpo.getStack(), tpo.getChance(), getExtraPercent(tpo.getExtraTierChance(), recipeTier, machineTier)));
+                            } else {
+                                newResults.add(oldResult);
+                            }
+                        }
+                        continue;
+                    }
+                }
                 if(oldResult instanceof TieredProcessingOutput tpo) {
                     newResults.add(new TieredProcessingOutput(tpo.getStack(), tpo.getChance(), getExtraPercent(tpo.getExtraTierChance(), recipeTier, machineTier)));
                 } else {
@@ -60,31 +69,6 @@ public class TieredRecipeHelper {
                 }
             }
             return new ArrayList<>(pr.rollResults(newResults));
-        } else if(recipe instanceof GTRecipe gtr) {
-            List<Content> outputs = gtr.getOutputContents(ItemRecipeCapability.CAP);
-            for(Content c : outputs) {
-                if(gtr.getType() == GTRecipeTypes.MACERATOR_RECIPES) {
-                    if(machineTier < HV) {
-                        if(c.chance / 10000 == 1) {
-                            ItemStack[] items = ((Ingredient) c.content).getItems();
-                            for(ItemStack item : items) {
-                                newResults.add(new TieredProcessingOutput(item, c.chance, getExtraPercent(c.tierChanceBoost, recipeTier, machineTier)));
-                            }
-                        }
-                    } else {
-                        ItemStack[] items = ((Ingredient) c.content).getItems();
-                        for(ItemStack item : items) {
-                            newResults.add(new TieredProcessingOutput(item, c.chance, getExtraPercent(c.tierChanceBoost, recipeTier, machineTier)));
-                        }
-                    }
-                } else {
-                    ItemStack[] items = ((Ingredient) c.content).getItems();
-                    for(ItemStack item : items) {
-                        newResults.add(new TieredProcessingOutput(item, c.chance, getExtraPercent(c.tierChanceBoost, recipeTier, machineTier)));
-                    }
-                }
-            }
-            return new ArrayList<>(getItemResults(newResults));
         }
         return List.of(ItemStack.EMPTY);
     }
@@ -92,30 +76,11 @@ public class TieredRecipeHelper {
     public List<FluidStack> getFluidResults(Recipe<?> recipe) {
         if(recipe instanceof ProcessingRecipe<?> pr) {
             return pr.getFluidResults();
-        } else if(recipe instanceof GTRecipe gtr) {
-            List<Content> contents = gtr.getOutputContents(FluidRecipeCapability.CAP);
-            List<FluidStack> results = new ArrayList<>();
-            for(Content c : contents) {
-                com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient ing = (com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient) c.getContent();
-                results.add(new FluidStack(ing.getStacks()[0].getFluid(), (int) ing.getAmount()));
-            }
-            return results;
         }
         return List.of(FluidStack.EMPTY);
     }
 
     private float getExtraPercent(float baseExtraPercent, int recipeTier, int machineTier) {
         return baseExtraPercent * (machineTier - recipeTier);
-    }
-
-    private List<ItemStack> getItemResults(List<ProcessingOutput> rollableResults) {
-        List<ItemStack> results = new ArrayList<>();
-        for(ProcessingOutput output : rollableResults) {
-            ItemStack stack = output.rollOutput();
-            if(!stack.isEmpty()) {
-                results.add(stack);
-            }
-        }
-        return results;
     }
 }

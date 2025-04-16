@@ -3,6 +3,7 @@ package electrolyte.greate.content.processing.recipe;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.gregtechceu.gtceu.api.recipe.content.Content;
+import com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient.TagValue;
 import com.gregtechceu.gtceu.api.recipe.ingredient.IntCircuitIngredient;
 import com.gregtechceu.gtceu.api.recipe.ingredient.SizedIngredient;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
@@ -104,12 +105,12 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
         return withItemOutputs(list);
     }
 
-    public TieredProcessingRecipeBuilder<T> withItemOutputsGT(List<Content> list, int recipeTier, int machineTier) {
+    public TieredProcessingRecipeBuilder<T> withItemOutputsGT(List<Content> list) {
         NonNullList<ProcessingOutput> nonNullList = NonNullList.create();
         for(Content c : list) {
             ItemStack[] items = ((Ingredient) c.content).getItems();
             for (ItemStack item : items) {
-                nonNullList.add(new TieredProcessingOutput(item, (float) c.chance / 10000, getExtraPercent((float) c.tierChanceBoost / 10000, recipeTier, machineTier, true)));
+                nonNullList.add(new TieredProcessingOutput(item, (float) c.chance / 10000, (float) c.tierChanceBoost / 10000));
             }
         }
         return withItemOutputs(nonNullList);
@@ -133,7 +134,13 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
         NonNullList<FluidIngredient> nonNullList = NonNullList.create();
         for(Content c : ingredients) {
             com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient ingredient = (com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient) c.getContent();
-            nonNullList.add(FluidIngredient.fromFluid(ingredient.getStacks()[0].getFluid(), ingredient.getAmount()));
+            for(com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient.Value value : ingredient.values) {
+                if(value instanceof TagValue tag) {
+                    nonNullList.add(FluidIngredient.fromTag(tag.getTag(), ingredient.getAmount()));
+                } else {
+                    nonNullList.add(FluidIngredient.fromFluid(ingredient.getStacks()[0].getFluid(), ingredient.getAmount()));
+                }
+            }
         }
         return withFluidIngredients(nonNullList);
     }

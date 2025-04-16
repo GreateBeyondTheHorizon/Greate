@@ -23,7 +23,11 @@ import java.util.stream.Collectors;
 public class TieredRecipeFinder {
 
     private static Cache<Object, List<Pair<ItemStack, List<Recipe<?>>>>> cachedSearches = CacheBuilder.newBuilder().build();
-    public static final ResourceManagerReloadListener LISTENER = r -> cachedSearches.invalidateAll();
+    private static boolean shouldRefreshRecipe = false;
+    public static final ResourceManagerReloadListener LISTENER = r -> {
+        cachedSearches.invalidateAll();
+        shouldRefreshRecipe = true;
+    };
 
     public static Optional<Recipe<?>> findRecipe(Object cacheKey, Level level, RecipeWrapper wrapper, Predicate<Recipe<?>> typeAndIngCondition, Predicate<Recipe<?>> otherConditions) {
         if(!cachedSearches.asMap().containsKey(cacheKey)) {
@@ -57,5 +61,13 @@ public class TieredRecipeFinder {
 
     private static List<Recipe<?>> startSearch(Level level, Predicate<? super Recipe<?>> conditions) {
         return level.getRecipeManager().getRecipes().stream().filter(conditions).collect(Collectors.toList());
+    }
+
+    public static boolean shouldRefreshRecipe() {
+        if(shouldRefreshRecipe) {
+            shouldRefreshRecipe = false;
+            return true;
+        }
+        return false;
     }
 }

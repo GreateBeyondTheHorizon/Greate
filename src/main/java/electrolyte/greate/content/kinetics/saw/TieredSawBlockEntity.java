@@ -1,11 +1,6 @@
 package electrolyte.greate.content.kinetics.saw;
 
 import com.google.common.collect.ImmutableList;
-import com.gregtechceu.gtceu.api.capability.recipe.FluidRecipeCapability;
-import com.gregtechceu.gtceu.api.recipe.GTRecipe;
-import com.gregtechceu.gtceu.api.recipe.content.Content;
-import com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient;
-import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.kinetics.saw.CuttingRecipe;
 import com.simibubi.create.content.kinetics.saw.SawBlockEntity;
@@ -26,7 +21,6 @@ import electrolyte.greate.Greate;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import electrolyte.greate.foundation.data.recipe.TieredRecipeConditions;
-import electrolyte.greate.foundation.recipe.TieredRecipeHelper;
 import electrolyte.greate.mixin.MixinSawBlockEntityAccessor;
 import electrolyte.greate.registry.ModRecipeTypes;
 import net.createmod.catnip.lang.Lang;
@@ -48,6 +42,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
@@ -126,7 +121,7 @@ public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKinet
                 return ImmutableList.of(tieredAssemblyRecipe.get());
             }
         }
-        Predicate<Recipe<?>> recipeTypes = RecipeConditions.isOfType(AllRecipeTypes.CUTTING.getType(), ModRecipeTypes.CUTTING.getType(), GTRecipeTypes.CUTTER_RECIPES,
+        Predicate<Recipe<?>> recipeTypes = RecipeConditions.isOfType(AllRecipeTypes.CUTTING.getType(), ModRecipeTypes.CUTTING.getType(),
                 AllConfigs.server().recipes.allowStonecuttingOnSaw.get() ? RecipeType.STONECUTTING : null);
         List<Recipe<?>> startedSearch = RecipeFinder.get(cuttingRecipesKey, level, recipeTypes);
         IFluidHandler availableFluid = be.getCapability(ForgeCapabilities.FLUID_HANDLER).orElse(null);
@@ -168,19 +163,12 @@ public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKinet
         IFluidHandler availableFluid = this.getCapability(ForgeCapabilities.FLUID_HANDLER).orElse(null);
         if(availableFluid == null) return;
         inventory.clear();
-        List<ItemStack> list = new ArrayList<>();
         for(int roll = 0; roll < rolls; roll++) {
             List<ItemStack> results = new LinkedList<>();
             if(recipe instanceof ProcessingRecipe<?> pr) {
                 results = pr.rollResults();
                 if(!pr.getFluidIngredients().isEmpty()) {
                     availableFluid.drain(pr.getFluidIngredients().get(0).getRequiredAmount(), FluidAction.EXECUTE);
-                }
-            } else if (recipe instanceof GTRecipe gtr) {
-                results.addAll(TieredRecipeHelper.INSTANCE.getItemResults(gtr, tier));
-                if(!gtr.getInputContents(FluidRecipeCapability.CAP).isEmpty()) {
-                    Content c = gtr.getInputContents(FluidRecipeCapability.CAP).get(0);
-                    availableFluid.drain((int) ((FluidIngredient) c.getContent()).getAmount(), FluidAction.EXECUTE);
                 }
             } else if(recipe instanceof StonecutterRecipe || recipe.getType() == woodcuttingRecipeType.get()) {
                 results.add(recipe.getResultItem(level.registryAccess()).copy());
@@ -225,10 +213,6 @@ public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKinet
         Recipe<?> recipe = recipes.get(((MixinSawBlockEntityAccessor) this).getRecipeIndex());
         if(recipe instanceof ProcessingRecipe<?> pr) {
             time = pr.getProcessingDuration();
-        } else if(recipe instanceof GTRecipe gtr) {
-            time = gtr.duration;
-        } else if(recipe instanceof CuttingRecipe cr) {
-            time = cr.getProcessingDuration();
         }
 
         inventory.remainingTime = time * Math.max(1, (inserted.getCount()  / 5));

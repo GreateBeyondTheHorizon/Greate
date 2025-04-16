@@ -8,6 +8,7 @@ import electrolyte.greate.content.kinetics.crusher.TieredCrushingRecipe;
 import electrolyte.greate.content.kinetics.fan.processing.TieredHauntingRecipe;
 import electrolyte.greate.content.kinetics.fan.processing.TieredSplashingRecipe;
 import electrolyte.greate.content.kinetics.millstone.TieredMillingRecipe;
+import electrolyte.greate.content.kinetics.mixer.TieredBrewingRecipe;
 import electrolyte.greate.content.kinetics.mixer.TieredCompactingRecipe;
 import electrolyte.greate.content.kinetics.mixer.TieredMixingRecipe;
 import electrolyte.greate.content.kinetics.press.TieredPressingRecipe;
@@ -42,6 +43,7 @@ public enum ModRecipeTypes implements IRecipeTypeInfo {
 	CRUSHING(TieredCrushingRecipe::new),
 	PRESSING(TieredPressingRecipe::new),
 	BASIN(TieredBasinRecipe::new),
+	BREWING(TieredBrewingRecipe::new),
 	MIXING(TieredMixingRecipe::new),
 	COMPACTING(TieredCompactingRecipe::new),
 	CUTTING(TieredCuttingRecipe::new),

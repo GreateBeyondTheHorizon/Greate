@@ -1,13 +1,5 @@
 package electrolyte.greate.content.processing.basin;
 
-import com.gregtechceu.gtceu.api.capability.recipe.EURecipeCapability;
-import com.gregtechceu.gtceu.api.capability.recipe.FluidRecipeCapability;
-import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
-import com.gregtechceu.gtceu.api.recipe.GTRecipe;
-import com.gregtechceu.gtceu.api.recipe.content.Content;
-import com.gregtechceu.gtceu.api.recipe.ingredient.IntCircuitIngredient;
-import com.gregtechceu.gtceu.api.recipe.ingredient.SizedIngredient;
-import com.gregtechceu.gtceu.common.item.IntCircuitBehaviour;
 import com.simibubi.create.content.processing.basin.BasinBlockEntity;
 import com.simibubi.create.content.processing.basin.BasinRecipe;
 import com.simibubi.create.content.processing.burner.BlazeBurnerBlock.HeatLevel;
@@ -16,19 +8,20 @@ import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringB
 import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour.TankSegment;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
-import com.simibubi.create.foundation.item.SmartInventory;
 import com.simibubi.create.foundation.recipe.DummyCraftingContainer;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
-import electrolyte.greate.GreateValues;
+import com.simibubi.create.infrastructure.config.AllConfigs;
 import electrolyte.greate.content.kinetics.base.ICircuitHolder;
+import electrolyte.greate.content.kinetics.mixer.TieredBrewingRecipe;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeParams;
-import electrolyte.greate.foundation.recipe.TieredRecipeHelper;
 import electrolyte.greate.registry.ModRecipeTypes;
 import net.createmod.catnip.data.Iterate;
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -44,7 +37,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class TieredBasinRecipe extends TieredProcessingRecipe<SmartInventory> {
+public class TieredBasinRecipe extends TieredProcessingRecipe<Container> {
 
     public TieredBasinRecipe(TieredProcessingRecipeParams params) {
         this(ModRecipeTypes.BASIN, params);
@@ -56,28 +49,21 @@ public class TieredBasinRecipe extends TieredProcessingRecipe<SmartInventory> {
 
     public static boolean match(BasinBlockEntity basin, Recipe<?> recipe, int machineTier) {
         FilteringBehaviour filter = basin.getFilter();
+        int recipeTier = 0;
         if (filter == null) return false;
 
         boolean filterTest = filter.test(recipe.getResultItem(basin.getLevel().registryAccess()));
         if (recipe instanceof ProcessingRecipe<?> basinRecipe) {
+            if(basinRecipe instanceof TieredProcessingRecipe<?> tpr) {
+                recipeTier = tpr.getRecipeTier();
+            }
             if (basinRecipe.getRollableResults().isEmpty()
                     && !basinRecipe.getFluidResults().isEmpty())
                 filterTest = filter.test(basinRecipe.getFluidResults().get(0));
-        } else if(recipe instanceof GTRecipe basinRecipe) {
-            if(!basinRecipe.getOutputContents(ItemRecipeCapability.CAP).isEmpty()) {
-                Ingredient ing = (Ingredient) basinRecipe.getOutputContents(ItemRecipeCapability.CAP).get(0).getContent();
-                filterTest = filter.test(ing.getItems()[0]);
-        }
-            if(basinRecipe.getOutputContents(ItemRecipeCapability.CAP).isEmpty()
-                && !basinRecipe.getOutputContents(FluidRecipeCapability.CAP).isEmpty()) {
-                com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient fluidStack = (com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient) basinRecipe.getOutputContents(FluidRecipeCapability.CAP).get(0).getContent();
-                filterTest = filter.test(new FluidStack(fluidStack.getStacks()[0].getFluid(), fluidStack.getAmount()));
-            }
-            if(!filterTest) return false;
-            return apply(basin, basinRecipe, true, machineTier);
         }
 
         if (!filterTest) return false;
+        if(machineTier < recipeTier) return false;
         return apply(basin, recipe, true);
     }
 
@@ -85,22 +71,17 @@ public class TieredBasinRecipe extends TieredProcessingRecipe<SmartInventory> {
         return apply(basin, recipe, false);
     }
 
-    public static boolean applyGT(BasinBlockEntity basin, Recipe<?> recipe, int machineTier) {
-        if(!(recipe instanceof GTRecipe gtRecipe)) return false;
-        return apply(basin, gtRecipe, false, machineTier);
-    }
-
     private static boolean apply(BasinBlockEntity basin, Recipe<?> recipe, boolean test) {
-        boolean isBasinRecipe = recipe instanceof BasinRecipe;
+        if(recipe instanceof BasinRecipe) return false;
+        if(!AllConfigs.server().recipes.allowBrewingInMixer.get() && recipe instanceof TieredBrewingRecipe) return false;
         boolean isTieredBasinRecipe = recipe instanceof TieredBasinRecipe;
-        if(recipe instanceof GTRecipe) return false;
         IItemHandler availableItems = basin.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
         IFluidHandler availableFluids = basin.getCapability(ForgeCapabilities.FLUID_HANDLER).orElse(null);
 
         if (availableItems == null || availableFluids == null) return false;
 
         HeatLevel heat = BasinBlockEntity.getHeatLevelOf(basin.getLevel().getBlockState(basin.getBlockPos().below(1)));
-        if ((isBasinRecipe || isTieredBasinRecipe) && !((ProcessingRecipe<?>) recipe).getRequiredHeat().testBlazeBurner(heat)) {
+        if ((isTieredBasinRecipe) && !((ProcessingRecipe<?>) recipe).getRequiredHeat().testBlazeBurner(heat)) {
             return false;
         }
 
@@ -120,132 +101,9 @@ public class TieredBasinRecipe extends TieredProcessingRecipe<SmartInventory> {
         List<FluidStack> recipeOutputFluids = new ArrayList<>();
 
         List<Ingredient> ingredients = new LinkedList<>(recipe.getIngredients());
-        List<FluidIngredient> fluidIngredients = isBasinRecipe
+        List<FluidIngredient> fluidIngredients = isTieredBasinRecipe
                 ? ((ProcessingRecipe<?>) recipe).getFluidIngredients()
                 : Collections.emptyList();
-
-        for (boolean simulate : Iterate.trueAndFalse) {
-
-            if (!simulate && test) return true;
-
-            int[] extractedItemsFromSlot = new int[availableItems.getSlots()];
-            int[] extractedFluidsFromTank = new int[availableFluids.getTanks()];
-
-            Ingredients: for(Ingredient ingredient : ingredients) {
-                for(int slot = 0; slot < availableItems.getSlots(); slot++) {
-                    if(simulate && availableItems.getStackInSlot(slot).getCount() <= extractedItemsFromSlot[slot]) {
-                        continue;
-                    }
-                    ItemStack extracted = availableItems.extractItem(slot, 1, true);
-                    if(!ingredient.test(extracted)) continue;
-                    if(!simulate) availableItems.extractItem(slot, 1, false);
-                    extractedItemsFromSlot[slot]++;
-                    continue Ingredients;
-                }
-                return false;
-            }
-
-            boolean fluidsAffected = false;
-            FluidIngredients: for(FluidIngredient fluidIngredient : fluidIngredients) {
-                int amountRequired = fluidIngredient.getRequiredAmount();
-
-                for(int tank = 0; tank < availableFluids.getTanks(); tank++) {
-                    FluidStack fluidStack = availableFluids.getFluidInTank(tank);
-                    if(simulate && fluidStack.getAmount() <= extractedFluidsFromTank[tank]) continue;
-                    if(!fluidIngredient.test(fluidStack)) continue;
-                    int drainedAmount = Math.min(amountRequired, fluidStack.getAmount());
-                    if(!simulate) {
-                        fluidStack.shrink(drainedAmount);
-                        fluidsAffected = true;
-                    }
-                    amountRequired -= drainedAmount;
-                    if(amountRequired != 0) continue;
-                    extractedFluidsFromTank[tank] += drainedAmount;
-                    continue FluidIngredients;
-                }
-                return false;
-            }
-
-            if (fluidsAffected) {
-                basin.getBehaviour(SmartFluidTankBehaviour.INPUT).forEach(TankSegment::onFluidStackChanged);
-                basin.getBehaviour(SmartFluidTankBehaviour.OUTPUT).forEach(TankSegment::onFluidStackChanged);
-            }
-
-            if (simulate) {
-                if (recipe instanceof TieredBasinRecipe basinRecipe) {
-                    recipeOutputItems.addAll(basinRecipe.rollResults());
-                    recipeOutputFluids.addAll(basinRecipe.getFluidResults());
-                    recipeOutputItems.addAll(basinRecipe.getRemainingItems(basin.getInputInventory()));
-                } else if (recipe instanceof BasinRecipe basinRecipe) {
-                    recipeOutputItems.addAll(basinRecipe.rollResults());
-                    recipeOutputFluids.addAll(basinRecipe.getFluidResults());
-                    recipeOutputItems.addAll(basinRecipe.getRemainingItems(basin.getInputInventory()));
-                } else {
-                    recipeOutputItems.add(recipe.getResultItem(basin.getLevel().registryAccess()));
-
-                    if (recipe instanceof CraftingRecipe craftingRecipe) {
-                        recipeOutputItems.addAll(craftingRecipe.getRemainingItems(new DummyCraftingContainer(availableItems, extractedItemsFromSlot)));
-                    }
-                }
-            }
-            if (!basin.acceptOutputs(recipeOutputItems, recipeOutputFluids, simulate))
-                return false;
-        }
-        return true;
-    }
-
-    private static boolean apply(BasinBlockEntity basin, GTRecipe recipe, boolean test, int machineTier) {
-        IItemHandler availableItems = basin.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
-        IFluidHandler availableFluids = basin.getCapability(ForgeCapabilities.FLUID_HANDLER).orElse(null);
-
-        if (availableItems == null || availableFluids == null) return false;
-
-        HeatLevel heat = BasinBlockEntity.getHeatLevelOf(basin.getLevel().getBlockState(basin.getBlockPos().below(1)));
-        if (!heat.isAtLeast(HeatLevel.KINDLED)) return false;
-
-        int recipeTier = GreateValues.convertGTEUToTier(recipe.getTickInputContents(EURecipeCapability.CAP));
-        if(machineTier < recipeTier) {
-            return false;
-        }
-
-        if(basin.getLevel().getBlockEntity(basin.getBlockPos().above(2)) instanceof ICircuitHolder circuitHolder) {
-            IntCircuitIngredient ing = null;
-            for(Content c : recipe.getInputContents(ItemRecipeCapability.CAP)) {
-                if(((Ingredient) c.getContent()) instanceof IntCircuitIngredient ici) {
-                    ing = ici;
-                    break;
-                } else if (((Ingredient) c.getContent()) instanceof SizedIngredient sizedIng) {
-                    if(sizedIng.getInner() instanceof IntCircuitIngredient ici) {
-                        ing = ici;
-                        break;
-                    }
-                }
-            }
-            if(ing != null) {
-                int circuit = IntCircuitBehaviour.getCircuitConfiguration(ing.getItems()[0]);
-                if(circuit != - 1 && circuitHolder.getCircuitNumber() != circuit) {
-                    return false;
-                }
-            }
-        }
-
-        List<ItemStack> recipeOutputItems = new ArrayList<>();
-        List<FluidStack> recipeOutputFluids = new ArrayList<>();
-
-        List<Ingredient> ingredients = new ArrayList<>();
-        for(Content c : recipe.getInputContents(ItemRecipeCapability.CAP)) {
-            Ingredient ing = (Ingredient) c.getContent();
-            if(ing instanceof IntCircuitIngredient) break;
-            if(ing instanceof SizedIngredient sizedIng) {
-                if(sizedIng.getInner() instanceof IntCircuitIngredient) break;
-            }
-            ingredients.add(ing);
-        }
-        List<FluidIngredient> fluidIngredients = new ArrayList<>();
-        for(Content c : recipe.getInputContents(FluidRecipeCapability.CAP)) {
-            com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient ing = (com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient) c.getContent();
-            fluidIngredients.add(FluidIngredient.fromFluid(ing.getStacks()[0].getFluid(), (int) ing.getAmount()));
-        }
 
         for (boolean simulate : Iterate.trueAndFalse) {
 
@@ -263,9 +121,7 @@ public class TieredBasinRecipe extends TieredProcessingRecipe<SmartInventory> {
                     ItemStack extracted = availableItems.extractItem(slot, amountRequired, true);
                     if(!ingredient.test(extracted)) continue;
                     int removedAmount = Math.min(amountRequired, availableItems.getStackInSlot(slot).getCount());
-                    if(!simulate) {
-                        availableItems.extractItem(slot, amountRequired, false);
-                    }
+                    if(!simulate) availableItems.extractItem(slot, amountRequired, false);
                     amountRequired -= removedAmount;
                     if(amountRequired != 0) continue;
                     extractedItemsFromSlot[slot]++;
@@ -301,11 +157,47 @@ public class TieredBasinRecipe extends TieredProcessingRecipe<SmartInventory> {
             }
 
             if (simulate) {
-                recipeOutputItems.addAll(TieredRecipeHelper.INSTANCE.getItemResults(recipe, machineTier));
-                recipeOutputFluids.addAll(TieredRecipeHelper.INSTANCE.getFluidResults(recipe));
-                recipeOutputItems.addAll(recipe.getRemainingItems(basin.getInputInventory()));
+                CraftingContainer remainderContainer = new DummyCraftingContainer(availableItems, extractedItemsFromSlot);
+                if(recipe instanceof TieredBasinRecipe basinRecipe) {
+                    recipeOutputItems.addAll(basinRecipe.rollResults());
+
+                    for(FluidStack stack : basinRecipe.getFluidResults()) {
+                        if(!stack.isEmpty()) {
+                            recipeOutputFluids.add(stack);
+                        }
+                    }
+                    for(ItemStack stack : basinRecipe.getRemainingItems(remainderContainer)) {
+                        if(!stack.isEmpty()) {
+                            recipeOutputItems.add(stack);
+                        }
+                    }
+                } else if(recipe instanceof BasinRecipe basinRecipe) {
+                    recipeOutputItems.addAll(basinRecipe.rollResults());
+
+                    for(FluidStack stack : basinRecipe.getFluidResults()) {
+                        if(!stack.isEmpty()) {
+                            recipeOutputFluids.add(stack);
+                        }
+                    }
+                    for(ItemStack stack : basinRecipe.getRemainingItems(remainderContainer)) {
+                        if(!stack.isEmpty()) {
+                            recipeOutputItems.add(stack);
+                        }
+                    }
+                } else {
+                    recipeOutputItems.add(recipe.getResultItem(basin.getLevel().registryAccess()));
+
+                    if (recipe instanceof CraftingRecipe craftingRecipe) {
+                        for(ItemStack stack : craftingRecipe.getRemainingItems(remainderContainer)) {
+                            if(!stack.isEmpty()) {
+                                recipeOutputItems.add(stack);
+                            }
+                        }
+                    }
+                }
             }
-            if (!basin.acceptOutputs(recipeOutputItems, recipeOutputFluids, simulate)) return false;
+            if (!basin.acceptOutputs(recipeOutputItems, recipeOutputFluids, simulate))
+                return false;
         }
         return true;
     }
@@ -348,7 +240,7 @@ public class TieredBasinRecipe extends TieredProcessingRecipe<SmartInventory> {
     }
 
     @Override
-    public boolean matches(SmartInventory pContainer, Level pLevel) {
+    public boolean matches(Container pContainer, Level pLevel) {
         return false;
     }
 }

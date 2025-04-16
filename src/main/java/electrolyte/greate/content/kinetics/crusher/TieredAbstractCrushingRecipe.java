@@ -17,7 +17,7 @@ public abstract class TieredAbstractCrushingRecipe extends TieredProcessingRecip
     }
 
     @Override
-    protected boolean canSpecifyDuration() {
+    public boolean canSpecifyDuration() {
         return true;
     }
 }
