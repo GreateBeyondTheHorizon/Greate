@@ -1,5 +1,6 @@
 package electrolyte.greate.infrastructure.ponder;
 
+import com.simibubi.create.Create;
 import com.simibubi.create.infrastructure.ponder.AllCreatePonderTags;
 import com.simibubi.create.infrastructure.ponder.scenes.*;
 import com.simibubi.create.infrastructure.ponder.scenes.fluid.PumpScenes;
@@ -27,38 +28,38 @@ public class GreatePonderScenes {
 
     public static void register(PonderSceneRegistrationHelper<ResourceLocation> helper) {
         PonderSceneRegistrationHelper<ItemProviderEntry<?>> HELPER = helper.withKeyFunction(RegistryEntry::getId);
-        HELPER.forComponents(SHAFTS).addStoryBoard("shaft/relay", KineticsScenes::shaftAsRelay, AllCreatePonderTags.KINETIC_RELAYS);
-        HELPER.forComponents(SHAFTS).addStoryBoard("shaft/encasing", KineticsScenes::shaftsCanBeEncased);
-        HELPER.forComponents(ANDESITE_ENCASED_SHAFTS).addStoryBoard("shaft/encasing", KineticsScenes::shaftsCanBeEncased);
-        HELPER.forComponents(BRASS_ENCASED_SHAFTS).addStoryBoard("shaft/encasing", KineticsScenes::shaftsCanBeEncased);
+        HELPER.forComponents(SHAFTS).addStoryBoard(Create.asResource("shaft/relay"), KineticsScenes::shaftAsRelay, AllCreatePonderTags.KINETIC_RELAYS);
+        HELPER.forComponents(SHAFTS).addStoryBoard(Create.asResource("shaft/encasing"), KineticsScenes::shaftsCanBeEncased);
+        HELPER.forComponents(ANDESITE_ENCASED_SHAFTS).addStoryBoard(Create.asResource("shaft/encasing"), KineticsScenes::shaftsCanBeEncased);
+        HELPER.forComponents(BRASS_ENCASED_SHAFTS).addStoryBoard(Create.asResource("shaft/encasing"), KineticsScenes::shaftsCanBeEncased);
         HELPER.forComponents(COGWHEELS)
-                .addStoryBoard("cog/small", KineticsScenes::cogAsRelay, AllCreatePonderTags.KINETIC_RELAYS)
-                .addStoryBoard("cog/speedup", KineticsScenes::cogsSpeedUp)
-                .addStoryBoard("cog/encasing", KineticsScenes::cogwheelsCanBeEncased);
+                .addStoryBoard(Create.asResource("cog/small"), KineticsScenes::cogAsRelay, AllCreatePonderTags.KINETIC_RELAYS)
+                .addStoryBoard(Create.asResource("cog/speedup"), KineticsScenes::cogsSpeedUp)
+                .addStoryBoard(Create.asResource("cog/encasing"), KineticsScenes::cogwheelsCanBeEncased);
         HELPER.forComponents(LARGE_COGWHEELS)
-                .addStoryBoard("cog/speedup", KineticsScenes::cogsSpeedUp)
-                .addStoryBoard("cog/large", KineticsScenes::largeCogAsRelay, AllCreatePonderTags.KINETIC_RELAYS)
-                .addStoryBoard("cog/encasing", KineticsScenes::cogwheelsCanBeEncased);
+                .addStoryBoard(Create.asResource("cog/speedup"), KineticsScenes::cogsSpeedUp)
+                .addStoryBoard(Create.asResource("cog/large"), KineticsScenes::largeCogAsRelay, AllCreatePonderTags.KINETIC_RELAYS)
+                .addStoryBoard(Create.asResource("cog/encasing"), KineticsScenes::cogwheelsCanBeEncased);
         HELPER.forComponents(BELT_CONNECTORS)
-                .addStoryBoard("belt/connect", BeltScenes::beltConnector, AllCreatePonderTags.KINETIC_RELAYS)
-                .addStoryBoard("belt/directions", BeltScenes::directions)
-                .addStoryBoard("belt/transport", BeltScenes::transport, AllCreatePonderTags.LOGISTICS)
-                .addStoryBoard("belt/encasing", BeltScenes::beltsCanBeEncased);
-        HELPER.forComponents(GEARBOXES).addStoryBoard("gearbox", KineticsScenes::gearbox, AllCreatePonderTags.KINETIC_RELAYS);
-        HELPER.forComponents(VERTICAL_GEARBOXES).addStoryBoard("gearbox", KineticsScenes::gearbox, AllCreatePonderTags.KINETIC_RELAYS);
+                .addStoryBoard(Create.asResource("belt/connect"), BeltScenes::beltConnector, AllCreatePonderTags.KINETIC_RELAYS)
+                .addStoryBoard(Create.asResource("belt/directions"), BeltScenes::directions)
+                .addStoryBoard(Create.asResource("belt/transport"), BeltScenes::transport, AllCreatePonderTags.LOGISTICS)
+                .addStoryBoard(Create.asResource("belt/encasing"), BeltScenes::beltsCanBeEncased);
+        HELPER.forComponents(GEARBOXES).addStoryBoard(Create.asResource("gearbox"), KineticsScenes::gearbox, AllCreatePonderTags.KINETIC_RELAYS);
+        HELPER.forComponents(VERTICAL_GEARBOXES).addStoryBoard(Create.asResource("gearbox"), KineticsScenes::gearbox, AllCreatePonderTags.KINETIC_RELAYS);
         HELPER.forComponents(FANS)
-                .addStoryBoard("fan/direction", FanScenes::direction, AllCreatePonderTags.KINETIC_APPLIANCES)
-                .addStoryBoard("fan/processing", TieredFanScenes::processing);
-        HELPER.forComponents(MILLSTONES).addStoryBoard("millstone", ProcessingScenes::millstone);
-        HELPER.forComponents(CRUSHING_WHEELS).addStoryBoard("crushign_wheel", ProcessingScenes::crushingWheels);
-        HELPER.forComponents(MECHANICAL_MIXERS).addStoryBoard("mechanical_mixer/mixing", ProcessingScenes::mixing);
-        HELPER.forComponents(MECHANICAL_PRESSES).addStoryBoard("mechanical_press/compacting", ProcessingScenes::compacting);
+                .addStoryBoard(Create.asResource("fan/direction"), FanScenes::direction, AllCreatePonderTags.KINETIC_APPLIANCES)
+                .addStoryBoard(Create.asResource("fan/processing"), TieredFanScenes::processing); //TODO: fix
+        HELPER.forComponents(MILLSTONES).addStoryBoard(Create.asResource("millstone"), ProcessingScenes::millstone);
+        HELPER.forComponents(CRUSHING_WHEELS).addStoryBoard(Create.asResource("crushing_wheel"), ProcessingScenes::crushingWheels);
+        HELPER.forComponents(MECHANICAL_MIXERS).addStoryBoard(Create.asResource("mechanical_mixer/mixing"), ProcessingScenes::mixing);
+        HELPER.forComponents(MECHANICAL_PRESSES).addStoryBoard(Create.asResource("mechanical_press/compacting"), ProcessingScenes::compacting);
         HELPER.forComponents(SAWS)
-                .addStoryBoard("mechanical_saw/processing", MechanicalSawScenes::processing, AllCreatePonderTags.KINETIC_APPLIANCES)
-                .addStoryBoard("mechanical_saw/breaker", MechanicalSawScenes::treeCutting)
-                .addStoryBoard("mechanical_saw/contraption", MechanicalSawScenes::contraption, AllCreatePonderTags.CONTRAPTION_ACTOR);
+                .addStoryBoard(Create.asResource("mechanical_saw/processing"), MechanicalSawScenes::processing, AllCreatePonderTags.KINETIC_APPLIANCES)
+                .addStoryBoard(Create.asResource("mechanical_saw/breaker"), MechanicalSawScenes::treeCutting)
+                .addStoryBoard(Create.asResource("mechanical_saw/contraption"), MechanicalSawScenes::contraption, AllCreatePonderTags.CONTRAPTION_ACTOR);
         HELPER.forComponents(MECHANICAL_PUMPS)
-                .addStoryBoard("mechanical_pump/flow", PumpScenes::flow, AllCreatePonderTags.FLUIDS, AllCreatePonderTags.KINETIC_APPLIANCES)
-                .addStoryBoard("mechanical_pump/speed", PumpScenes::speed);
+                .addStoryBoard(Create.asResource("mechanical_pump/flow"), PumpScenes::flow, AllCreatePonderTags.FLUIDS, AllCreatePonderTags.KINETIC_APPLIANCES)
+                .addStoryBoard(Create.asResource("mechanical_pump/speed"), PumpScenes::speed);
     }
 }
