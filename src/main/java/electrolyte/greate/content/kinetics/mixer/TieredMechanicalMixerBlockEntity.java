@@ -99,7 +99,6 @@ public class TieredMechanicalMixerBlockEntity extends MechanicalMixerBlockEntity
 
     @Override
     protected void applyBasinRecipe() {
-        //TODO: potion recipes are broken
         if(currentRecipe == null) return;
         if(this.getSpeed() == 0) return;
 
