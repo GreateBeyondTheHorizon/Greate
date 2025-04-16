@@ -15,13 +15,13 @@ public class CreateRecipeRemoval {
         recipe.accept(Create.asResource("crafting/kinetics/basin"));
         recipe.accept(Create.asResource("crafting/kinetics/belt_connector"));
         recipe.accept(Create.asResource("crafting/kinetics/brass_hand"));
+        recipe.accept(Create.asResource("crafting/kinetics/chain_conveyor"));
         recipe.accept(Create.asResource("crafting/kinetics/chute"));
         recipe.accept(Create.asResource("crafting/kinetics/clutch"));
         recipe.accept(Create.asResource("crafting/kinetics/cogwheel"));
         recipe.accept(Create.asResource("crafting/kinetics/deployer"));
         recipe.accept(Create.asResource("crafting/kinetics/depot"));
         recipe.accept(Create.asResource("crafting/kinetics/encased_fan"));
-        recipe.accept(Create.asResource("crafting/kinetics/fluid_tank"));
         recipe.accept(Create.asResource("crafting/kinetics/flywheel"));
         recipe.accept(Create.asResource("crafting/kinetics/gantry_carriage"));
         recipe.accept(Create.asResource("crafting/kinetics/gearbox"));
@@ -43,6 +43,7 @@ public class CreateRecipeRemoval {
         recipe.accept(Create.asResource("crafting/kinetics/shaft"));
         recipe.accept(Create.asResource("crafting/kinetics/spout"));
         recipe.accept(Create.asResource("crafting/kinetics/turntable"));
+        recipe.accept(Create.asResource("crafting/kinetics/vertical_gearbox"));
         recipe.accept(Create.asResource("crafting/kinetics/vertical_gearbox_from_conversion"));
         recipe.accept(Create.asResource("crafting/kinetics/water_wheel"));
         recipe.accept(Create.asResource("crafting/kinetics/weighted_ejector"));
@@ -50,12 +51,10 @@ public class CreateRecipeRemoval {
         recipe.accept(Create.asResource("crafting/kinetics/windmill_bearing"));
         recipe.accept(Create.asResource("crafting/kinetics/wrench"));
 
-        recipe.accept(Create.asResource("crafting/logistics/redstone_link"));
-        recipe.accept(Create.asResource("crafting/logistics/display_link"));
+        recipe.accept(Create.asResource("cutting/andesite_alloy"));
 
         recipe.accept(Create.asResource("crafting/materials/andesite_alloy"));
         recipe.accept(Create.asResource("crafting/materials/andesite_alloy_from_zinc"));
-        recipe.accept(Create.asResource("crafting/materials/electron_tube"));
 
         recipe.accept(Create.asResource("deploying/cogwheel"));
         recipe.accept(Create.asResource("deploying/large_cogwheel"));
@@ -65,6 +64,7 @@ public class CreateRecipeRemoval {
         recipe.accept(Create.asResource("mixing/andesite_alloy"));
         recipe.accept(Create.asResource("mixing/andesite_alloy_from_zinc"));
 
+        recipe.accept(Create.asResource("sequenced_assembly/precision_mechanism"));
         recipe.accept(Create.asResource("sequenced_assembly/sturdy_sheet"));
     }
 }

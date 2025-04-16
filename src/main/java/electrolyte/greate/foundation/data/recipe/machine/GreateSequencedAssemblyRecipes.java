@@ -9,6 +9,7 @@ import com.gregtechceu.gtceu.api.data.chemical.material.stack.UnificationEntry;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
 import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
 import com.gregtechceu.gtceu.utils.GTUtil;
+import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.fluids.transfer.FillingRecipe;
 import com.simibubi.create.content.kinetics.deployer.DeployerApplicationRecipe;
@@ -17,6 +18,7 @@ import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipeB
 import com.simibubi.create.foundation.fluid.FluidIngredient;
 import electrolyte.greate.Greate;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluids;
 
 import java.util.Map;
@@ -64,6 +66,24 @@ public class GreateSequencedAssemblyRecipes {
                 .addStep(PressingRecipe::new, r -> r)
                 .addOutput(AllItems.STURDY_SHEET.asItem(), 1)
                 .loops(1)
+                .build(provider);
+
+        new SequencedAssemblyRecipeBuilder(Greate.id("precision_mechanism"))
+                .require(createIngFromTag("forge", "plates/gold"))
+                .transitionTo(AllItems.INCOMPLETE_PRECISION_MECHANISM)
+                .addStep(DeployerApplicationRecipe::new, r -> r.require(COGWHEELS[ULV]))
+                .addStep(DeployerApplicationRecipe::new, r -> r.require(LARGE_COGWHEELS[ULV]))
+                .addStep(DeployerApplicationRecipe::new, r -> r.require(Items.IRON_NUGGET))
+                .addOutput(AllItems.PRECISION_MECHANISM.get(), 120)
+                .addOutput(AllItems.GOLDEN_SHEET.get(), 8)
+                .addOutput(AllItems.ANDESITE_ALLOY.get(), 8)
+                .addOutput(AllBlocks.COGWHEEL.get(), 5)
+                .addOutput(Items.GOLD_NUGGET, 3)
+                .addOutput(AllBlocks.SHAFT.get(), 2)
+                .addOutput(AllItems.CRUSHED_GOLD.get(), 2)
+                .addOutput(Items.IRON_INGOT, 1)
+                .addOutput(Items.CLOCK, 1)
+                .loops(5)
                 .build(provider);
 
         wireGtSingle.executeHandler(provider, PropertyKey.WIRE, GreateSequencedAssemblyRecipes::addRecipe);

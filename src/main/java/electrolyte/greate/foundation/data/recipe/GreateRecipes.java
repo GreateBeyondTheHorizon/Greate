@@ -30,6 +30,7 @@ public class GreateRecipes {
         GreateMillstoneRecipes.register(provider);
         GreateMechanicalCraftingRecipes.register(provider);
         GreateMechanicalMixingRecipes.register(provider);
+        GreateSawingRecipes.register(provider);
         GreateSequencedAssemblyRecipes.register(provider);
         GreateSplashingRecipes.register(provider);
         GreateSpoutRecipes.register(provider);

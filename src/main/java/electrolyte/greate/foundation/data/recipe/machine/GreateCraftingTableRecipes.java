@@ -84,6 +84,10 @@ public class GreateCraftingTableRecipes {
                     " S ", "SCS", "wSh",
                     'S', SHAFTS[tier],
                     'C', AllBlocks.ANDESITE_CASING);
+            VanillaRecipeHelper.addShapedRecipe(provider, VERTICAL_GEARBOXES[tier].getId(), VERTICAL_GEARBOXES[tier].asStack(),
+                    "S S", "wCh", "S S",
+                    'S', SHAFTS[tier],
+                    'C', AllBlocks.ANDESITE_CASING);
             VanillaRecipeHelper.addShapedRecipe(provider, String.format("%s_whisk", tierMaterial.getName()), ChemicalHelper.get(whisk, tierMaterial),
                     "fId", "PIP", "PPP",
                     'I', new UnificationEntry(ingot, tierMaterial),
@@ -294,6 +298,12 @@ public class GreateCraftingTableRecipes {
                 'S', new UnificationEntry(screw, Iron),
                 'P', new UnificationEntry(plate, Iron),
                 'B', GTMachines.WOODEN_CRATE.asStack());
+        VanillaRecipeHelper.addShapedRecipe(provider, AllBlocks.CHAIN_CONVEYOR.getId(), new ItemStack(AllBlocks.CHAIN_CONVEYOR.asItem(), 2),
+                " A ", "ACA", " A ",
+                'A', AllBlocks.ANDESITE_CASING,
+                'C', LARGE_COGWHEELS[ULV]);
+        VanillaRecipeHelper.addShapelessRecipe(provider, AllBlocks.SEQUENCED_GEARSHIFT.getId(), AllBlocks.SEQUENCED_GEARSHIFT.asStack(),
+                AllBlocks.BRASS_CASING, COGWHEELS[ULV], AllItems.ELECTRON_TUBE);
 
         if(ConfigHolder.INSTANCE.recipes.hardToolArmorRecipes) {
             VanillaRecipeHelper.addShapedRecipe(provider, AllItems.COPPER_DIVING_HELMET.getId(), AllItems.COPPER_DIVING_HELMET.asStack(),
