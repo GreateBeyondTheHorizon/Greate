@@ -22,7 +22,7 @@ public class GreateMaterials {
 	public static Material RefinedRadiance;
 	public static Material ShadowSteel;
 
-	public static void init() {
+	public static void register() {
 		AndesiteAlloy = Builder("andesite_alloy")
 				.ingot().fluid()
 				.appendFlags(STD_METAL, GENERATE_BOLT_SCREW, GENERATE_ROTOR)

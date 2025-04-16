@@ -6,10 +6,8 @@ import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
 import electrolyte.greate.content.gtceu.machines.GreateRecipeTypes;
 import electrolyte.greate.foundation.data.recipe.GreateCraftingComponent;
 import electrolyte.greate.foundation.data.recipe.GreateRecipes;
-import electrolyte.greate.infrastructure.config.GreateConfigs;
-import electrolyte.greate.registry.*;
+import electrolyte.greate.registry.GreateTagPrefixes;
 import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraftforge.fml.ModLoadingContext;
 
 import java.util.function.Consumer;
 
@@ -22,21 +20,6 @@ public class GreateAddon implements IGTAddon {
 
 	@Override
 	public void initializeAddon() {
-		Shafts.register();
-		Belts.register();
-		Cogwheels.register();
-		CrushingWheels.register();
-		EncasedFans.register();
-		Gearboxes.register();
-		Girders.register();
-		MechanicalPresses.register();
-		MechanicalMixers.register();
-		Millstones.register();
-		Saws.register();
-		Pumps.register();
-		ModBlockEntityTypes.register();
-		ModItems.register();
-		GreateConfigs.register(ModLoadingContext.get());
 		Greate.LOGGER.info("Greate GT addon initialized!");
 	}
 

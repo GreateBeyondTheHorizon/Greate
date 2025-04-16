@@ -7,7 +7,7 @@ import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
 import electrolyte.greate.content.gtceu.machines.GreateMultiblockMachines;
 import electrolyte.greate.content.gtceu.machines.GreateRecipeTypes;
-import electrolyte.greate.registry.GreateMaterials;
+import electrolyte.greate.registry.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -18,12 +18,25 @@ public final class GreateRegistries {
 
 	@SubscribeEvent
 	public static void registerMaterials(MaterialEvent event) {
-		GreateMaterials.init();
-		GreateValues.init();
+		GreateMaterials.register();
 	}
 
 	@SubscribeEvent
-	public static void registerMultiblocks(RegisterEvent<ResourceLocation, MachineDefinition> event) {
+	public static void registerMachines(RegisterEvent<ResourceLocation, MachineDefinition> event) {
+		Shafts.register();
+		Belts.register();
+		Cogwheels.register();
+		CrushingWheels.register();
+		EncasedFans.register();
+		Gearboxes.register();
+		Girders.register();
+		MechanicalPresses.register();
+		MechanicalMixers.register();
+		Millstones.register();
+		Saws.register();
+		Pumps.register();
+		ModBlockEntityTypes.register();
+		ModItems.register();
 		GreateMultiblockMachines.register();
 	}
 

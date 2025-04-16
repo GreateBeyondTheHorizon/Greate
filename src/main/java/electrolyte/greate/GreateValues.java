@@ -75,33 +75,27 @@ public class GreateValues {
      * Tier materials
      * Based on GTMaterials.VOLTAGE_COMMON_MATERIALS, but uses AndesiteAlloy instead of WroughtIron in the first tier.
      */
-    public static Material[] TM;
+    public static Material[] TM = new Material[]{
+            AndesiteAlloy,
+            Steel,
+            Aluminium,
+            StainlessSteel,
+            Titanium,
+            TungstenSteel,
+            RhodiumPlatedPalladium,
+            NaquadahAlloy,
+            Darmstadtium,
+            Neutronium,
+    };
 
     /**
      * Belt materials
      */
-    public static Material[] BM;
-
-    public static void init() {
-        TM = new Material[]{
-                AndesiteAlloy,
-                Steel,
-                Aluminium,
-                StainlessSteel,
-                Titanium,
-                TungstenSteel,
-                RhodiumPlatedPalladium,
-                NaquadahAlloy,
-                Darmstadtium,
-                Neutronium,
-        };
-
-        BM = new Material[]{
-                Rubber,
-                SiliconeRubber,
-                Polyethylene,
-                Polytetrafluoroethylene,
-                Polybenzimidazole,
-        };
-    }
+    public static Material[] BM = new Material[]{
+            Rubber,
+            SiliconeRubber,
+            Polyethylene,
+            Polytetrafluoroethylene,
+            Polybenzimidazole,
+    };
 }
