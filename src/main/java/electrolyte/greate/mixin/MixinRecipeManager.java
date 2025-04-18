@@ -38,7 +38,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class MixinRecipeManager {
 
     @Shadow public Map<RecipeType<?>, Map<ResourceLocation, Recipe<?>>> recipes;
-    @Shadow @Final private IContext context;
+    @Shadow(remap = false) @Final private IContext context;
 
     @Inject(method = "apply(Ljava/util/Map;Lnet/minecraft/server/packs/resources/ResourceManager;Lnet/minecraft/util/profiling/ProfilerFiller;)V", at = @At(value = "HEAD"))
     private void greate_apply(Map<ResourceLocation, JsonElement> pMap, ResourceManager pResourceManager, ProfilerFiller pProfiler, CallbackInfo ci) {

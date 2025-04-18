@@ -7,5 +7,5 @@ import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(BlockEntityBehaviour.class)
 public class MixinBlockEntityBehaviour {
-	@Shadow public SmartBlockEntity blockEntity;
+	@Shadow(remap = false) public SmartBlockEntity blockEntity;
 }

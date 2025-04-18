@@ -18,7 +18,7 @@ import java.util.Map;
 @Mixin(CStress.class)
 public class MixinCStress {
 
-    @Shadow @Final protected Map<ResourceLocation, ConfigValue<Double>> capacities;
+    @Shadow(remap = false) @Final protected Map<ResourceLocation, ConfigValue<Double>> capacities;
     @Unique private static final Map<ResourceLocation, Double> greate_NEW_DEFAULT_CAPACITIES = Map.ofEntries(
             Map.entry(Create.asResource("hand_crank"), 0.25d),
             Map.entry(Create.asResource("copper_valve_handle"), 0.25d),

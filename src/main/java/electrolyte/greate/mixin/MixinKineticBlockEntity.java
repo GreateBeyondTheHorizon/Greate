@@ -19,11 +19,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(KineticBlockEntity.class)
 public abstract class MixinKineticBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation, IHaveHoveringInformation, ITieredKineticBlockEntity {
 
-    @Shadow public abstract float getSpeed();
-    @Shadow protected float speed;
-    @Shadow protected float capacity;
+    @Shadow(remap = false) public abstract float getSpeed();
+    @Shadow(remap = false) protected float speed;
+    @Shadow(remap = false) protected float capacity;
 
-    @Shadow public abstract boolean hasNetwork();
+    @Shadow(remap = false) public abstract boolean hasNetwork();
 
     @Unique protected float greate_shaftMaxCapacity;
     @Unique protected float greate_networkMaxCapacity;

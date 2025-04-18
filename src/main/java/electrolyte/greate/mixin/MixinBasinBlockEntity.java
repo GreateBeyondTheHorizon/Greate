@@ -30,14 +30,14 @@ import java.util.List;
 @Mixin(BasinBlockEntity.class)
 public abstract class MixinBasinBlockEntity extends SmartBlockEntity {
 
-    @Shadow public SmartFluidTankBehaviour inputTank;
-    @Shadow protected SmartFluidTankBehaviour outputTank;
-    @Shadow private boolean contentsChanged;
-    @Shadow protected LazyOptional<IItemHandlerModifiable> itemCapability;
+    @Shadow(remap = false) public SmartFluidTankBehaviour inputTank;
+    @Shadow(remap = false) protected SmartFluidTankBehaviour outputTank;
+    @Shadow(remap = false) private boolean contentsChanged;
+    @Shadow(remap = false) protected LazyOptional<IItemHandlerModifiable> itemCapability;
 
-    @Shadow protected LazyOptional<IFluidHandler> fluidCapability;
+    @Shadow(remap = false) protected LazyOptional<IFluidHandler> fluidCapability;
 
-    @Shadow public abstract boolean isEmpty();
+    @Shadow(remap = false) public abstract boolean isEmpty();
 
     public MixinBasinBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);

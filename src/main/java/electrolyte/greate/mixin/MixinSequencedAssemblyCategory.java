@@ -23,8 +23,8 @@ import java.util.List;
 @Mixin(SequencedAssemblyCategory.class)
 public abstract class MixinSequencedAssemblyCategory extends CreateRecipeCategory<SequencedAssemblyRecipe> {
 
-    @Shadow protected abstract MutableComponent chanceComponent(float chance);
-    @Shadow private SequencedAssemblySubCategory getSubCategory(SequencedRecipe<?> recipe) { return null; }
+    @Shadow(remap = false) protected abstract MutableComponent chanceComponent(float chance);
+    @Shadow(remap = false) private SequencedAssemblySubCategory getSubCategory(SequencedRecipe<?> recipe) { return null; }
 
     public MixinSequencedAssemblyCategory(Info<SequencedAssemblyRecipe> info) {
         super(info);

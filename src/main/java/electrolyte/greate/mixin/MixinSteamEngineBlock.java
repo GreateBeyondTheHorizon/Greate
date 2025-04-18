@@ -32,17 +32,17 @@ import static electrolyte.greate.registry.Shafts.POWERED_SHAFTS;
 public abstract class MixinSteamEngineBlock extends FaceAttachedHorizontalDirectionalBlock
         implements SimpleWaterloggedBlock, IWrenchable, IBE<SteamEngineBlockEntity>  {
 
-    @Shadow
+    @Shadow(remap = false)
     public static BlockPos getShaftPos(BlockState sideState, BlockPos pos) {
         throw new IllegalStateException("Mixin did not apply!");
     }
 
-    @Shadow
+    @Shadow(remap = false)
     public static boolean isShaftValid(BlockState state, BlockState shaft) {
         throw new IllegalStateException("Mixin did not apply!");
     }
 
-    @Shadow
+    @Shadow(remap = false)
     public static Direction getFacing(BlockState sideState) {
         throw new IllegalStateException("Mixin did not apply!");
     }

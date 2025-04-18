@@ -21,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(SequencedRecipe.class)
 public abstract class MixinSequencedAssemblyRecipe<T extends ProcessingRecipe<?>, R extends TieredProcessingRecipe<?>> {
 
-    @Shadow private T wrapped;
+    @Shadow(remap = false) private T wrapped;
 
     @Inject(method = "writeToBuffer", at = @At(value = "HEAD"), remap = false, cancellable = true)
     private void greate_writeToBuffer(FriendlyByteBuf buffer, CallbackInfo ci) {

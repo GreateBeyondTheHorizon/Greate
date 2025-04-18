@@ -22,7 +22,7 @@ import java.util.List;
 @Mixin(DeployerBlockEntity.class)
 public abstract class MixinDeployerBlockEntity extends KineticBlockEntity {
 
-    @Shadow protected ItemStack heldItem;
+    @Shadow(remap = false) protected ItemStack heldItem;
 
     public MixinDeployerBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
         super(typeIn, pos, state);
