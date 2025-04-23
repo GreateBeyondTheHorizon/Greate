@@ -5,7 +5,7 @@ import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.content.Content;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
-import electrolyte.greate.content.kinetics.millstone.TieredMillingRecipe;
+import electrolyte.greate.content.kinetics.crusher.TieredAbstractCrushingRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingOutput;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import net.minecraft.world.item.ItemStack;
@@ -49,10 +49,11 @@ public class TieredRecipeHelper {
         }
         if(recipe instanceof ProcessingRecipe<?> pr) {
             List<ProcessingOutput> oldResults = pr.getRollableResults();
-            for(ProcessingOutput oldResult : oldResults) {
-                if(pr instanceof TieredMillingRecipe) {
+            for(int i = 0; i < oldResults.size(); i++) {
+                ProcessingOutput oldResult = oldResults.get(i);
+                if(pr instanceof TieredAbstractCrushingRecipe) {
                     if(machineTier < HV) {
-                        if(oldResult.getChance() == 1) {
+                        if(i == 0 || oldResult.getChance() == 1) {
                             if(oldResult instanceof TieredProcessingOutput tpo) {
                                 newResults.add(new TieredProcessingOutput(tpo.getStack(), tpo.getChance(), getExtraPercent(tpo.getExtraTierChance(), recipeTier, machineTier)));
                             } else {
