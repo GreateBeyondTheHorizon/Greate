@@ -1,16 +1,17 @@
 package electrolyte.greate.content.kinetics.fan;
 
+import com.simibubi.create.api.registry.CreateBuiltInRegistries;
 import com.simibubi.create.content.kinetics.belt.behaviour.TransportedItemStackHandlerBehaviour.TransportedResult;
 import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
 import com.simibubi.create.content.kinetics.fan.processing.AllFanProcessingTypes;
 import com.simibubi.create.content.kinetics.fan.processing.FanProcessingType;
-import com.simibubi.create.content.kinetics.fan.processing.FanProcessingTypeRegistry;
 import com.simibubi.create.infrastructure.config.AllConfigs;
 import electrolyte.greate.content.kinetics.fan.processing.GreateFanProcessingTypes;
 import electrolyte.greate.content.kinetics.fan.processing.GreateFanProcessingTypes.TieredHauntingType;
 import electrolyte.greate.content.kinetics.fan.processing.GreateFanProcessingTypes.TieredSplashingType;
 import electrolyte.greate.infrastructure.config.GreateConfigs;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -77,7 +78,15 @@ public class TieredFanProcessing {
         if(transported.processedBy != type) {
             transported.processedBy = type;
             transported.processingTime = getProcessingTime(transported.stack.getCount(), speed);
-            if(!type.canProcess(transported.stack, level)) {
+            if(type instanceof TieredHauntingType tht) {
+                if(!tht.canProcess(transported.stack, level, machineTier)) {
+                    transported.processingTime = -1;
+                }
+            } else if(type instanceof TieredSplashingType tst) {
+                if(!tst.canProcess(transported.stack, level, machineTier)) {
+                    transported.processingTime = -1;
+                }
+            } else if(!type.canProcess(transported.stack, level)) {
                 transported.processingTime = -1;
             }
             return ignore;
@@ -116,7 +125,11 @@ public class TieredFanProcessing {
         CompoundTag processing = createData.getCompound("Processing");
 
         if (!processing.contains("Type") || (AllFanProcessingTypes.parseLegacy(processing.getString("Type")) != type && GreateFanProcessingTypes.parseLegacy(processing.getString("Type")) != type)) {
-            processing.putString("Type", FanProcessingTypeRegistry.getIdOrThrow(type).toString());
+            ResourceLocation key = CreateBuiltInRegistries.FAN_PROCESSING_TYPE.getKey(type);
+            if(key == null) {
+                throw new IllegalArgumentException("Could not get id for FanProcessingType " + type + "!");
+            }
+            processing.putString("Type", key.toString());
             int processingTime = getProcessingTime(entity.getItem().getCount(), speed);
             processing.putInt("Time", processingTime);
         }

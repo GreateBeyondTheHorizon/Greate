@@ -4,11 +4,11 @@ import com.gregtechceu.gtceu.api.GTValues;
 import com.simibubi.create.content.kinetics.base.IRotate;
 import com.simibubi.create.foundation.item.KineticStats;
 import com.simibubi.create.foundation.item.TooltipModifier;
-import com.simibubi.create.foundation.utility.Components;
 import electrolyte.greate.GreateValues;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.infrastructure.config.GConfigUtility;
 import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.player.Player;
@@ -43,7 +43,7 @@ public class GreateKineticStats implements TooltipModifier {
         List<Component> kineticStats = getKineticStats(block, context.getEntity());
         if(!kineticStats.isEmpty()) {
             List<Component> tooltip = context.getToolTip();
-            tooltip.add(Components.immutableEmpty());
+            tooltip.add(CommonComponents.EMPTY);
             tooltip.addAll(kineticStats);
         }
     }

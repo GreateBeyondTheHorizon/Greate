@@ -9,6 +9,7 @@ import com.gregtechceu.gtceu.api.data.chemical.material.stack.UnificationEntry;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
 import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
 import com.gregtechceu.gtceu.utils.GTUtil;
+import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.fluids.transfer.FillingRecipe;
 import com.simibubi.create.content.kinetics.deployer.DeployerApplicationRecipe;
@@ -17,6 +18,7 @@ import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipeB
 import com.simibubi.create.foundation.fluid.FluidIngredient;
 import electrolyte.greate.Greate;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluids;
 
 import java.util.Map;
@@ -66,6 +68,24 @@ public class GreateSequencedAssemblyRecipes {
                 .loops(1)
                 .build(provider);
 
+        new SequencedAssemblyRecipeBuilder(Greate.id("precision_mechanism"))
+                .require(createIngFromTag("forge", "plates/gold"))
+                .transitionTo(AllItems.INCOMPLETE_PRECISION_MECHANISM)
+                .addStep(DeployerApplicationRecipe::new, r -> r.require(COGWHEELS[ULV]))
+                .addStep(DeployerApplicationRecipe::new, r -> r.require(LARGE_COGWHEELS[ULV]))
+                .addStep(DeployerApplicationRecipe::new, r -> r.require(Items.IRON_NUGGET))
+                .addOutput(AllItems.PRECISION_MECHANISM.get(), 120)
+                .addOutput(AllItems.GOLDEN_SHEET.get(), 8)
+                .addOutput(AllItems.ANDESITE_ALLOY.get(), 8)
+                .addOutput(AllBlocks.COGWHEEL.get(), 5)
+                .addOutput(Items.GOLD_NUGGET, 3)
+                .addOutput(AllBlocks.SHAFT.get(), 2)
+                .addOutput(AllItems.CRUSHED_GOLD.get(), 2)
+                .addOutput(Items.IRON_INGOT, 1)
+                .addOutput(Items.CLOCK, 1)
+                .loops(5)
+                .build(provider);
+
         wireGtSingle.executeHandler(provider, PropertyKey.WIRE, GreateSequencedAssemblyRecipes::addRecipe);
         wireGtDouble.executeHandler(provider, PropertyKey.WIRE, GreateSequencedAssemblyRecipes::addRecipe);
         wireGtQuadruple.executeHandler(provider, PropertyKey.WIRE, GreateSequencedAssemblyRecipes::addRecipe);
@@ -89,11 +109,13 @@ public class GreateSequencedAssemblyRecipes {
                 .transitionTo(ChemicalHelper.get(wirePrefix, material).getItem())
                 .addOutput(ChemicalHelper.get(cablePrefix, material), 1)
                 .loops(1);
+
             GTRecipeBuilder siliconeCoatingFactoryBuilder = WIRE_COATING_RECIPES
                     .recipeBuilder(Greate.id(String.format("%s_cable_%d_silicone", material.getName(), cableAmount)))
                     .EUt(VA[euT]).duration(100)
                     .inputItems(wirePrefix, material)
                     .outputItems(cablePrefix, material);
+
             if(voltageTier >= LuV) {
                 siliconeAssemblyBuilder.addStep(DeployerApplicationRecipe::new, r -> r.require(ChemicalHelper.get(foil, PolyphenyleneSulfide, insulationAmount).getItem()));
                 siliconeCoatingFactoryBuilder.inputItems(foil, PolyphenyleneSulfide, insulationAmount);
@@ -106,16 +128,19 @@ public class GreateSequencedAssemblyRecipes {
             siliconeCoatingFactoryBuilder.inputFluids(SiliconeRubber.getFluid(L * insulationAmount / 2));
             siliconeCoatingFactoryBuilder.save(provider);
 
+
             SequencedAssemblyRecipeBuilder styreneAssemblyBuilder = new SequencedAssemblyRecipeBuilder(Greate.id(String.format("%s_cable_%d_styrene", material.getName(), cableAmount)))
                     .require(ChemicalHelper.get(wirePrefix, material).getItem())
                     .transitionTo(ChemicalHelper.get(wirePrefix, material).getItem())
                     .addOutput(ChemicalHelper.get(cablePrefix, material), 1)
                     .loops(1);
+
             GTRecipeBuilder styreneCoatingFactoryBuilder = WIRE_COATING_RECIPES
                     .recipeBuilder(Greate.id(String.format("%s_cable_%d_styrene", material.getName(), cableAmount)))
                     .EUt(VA[euT]).duration(100)
                     .inputItems(wirePrefix, material)
                     .outputItems(cablePrefix, material);
+
             if(voltageTier >= LuV) {
                 styreneAssemblyBuilder.addStep(DeployerApplicationRecipe::new, r -> r.require(ChemicalHelper.get(foil, PolyphenyleneSulfide, insulationAmount).getItem()));
                 styreneCoatingFactoryBuilder.inputItems(foil, PolyphenyleneSulfide, insulationAmount);

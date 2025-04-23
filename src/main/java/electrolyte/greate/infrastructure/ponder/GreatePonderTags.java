@@ -1,8 +1,9 @@
 package electrolyte.greate.infrastructure.ponder;
 
-import com.simibubi.create.foundation.ponder.PonderRegistry;
+import net.createmod.ponder.api.registration.PonderTagRegistrationHelper;
+import net.minecraft.resources.ResourceLocation;
 
-import static com.simibubi.create.infrastructure.ponder.AllPonderTags.*;
+import static com.simibubi.create.infrastructure.ponder.AllCreatePonderTags.*;
 import static electrolyte.greate.GreateValues.BM;
 import static electrolyte.greate.GreateValues.TM;
 import static electrolyte.greate.registry.Belts.BELT_CONNECTORS;
@@ -16,30 +17,30 @@ import static electrolyte.greate.registry.Shafts.SHAFTS;
 
 public class GreatePonderTags {
 
-    public static void register() {
+    public static void register(PonderTagRegistrationHelper<ResourceLocation> helper) {
         for(int i = 0; i < TM.length; i++) {
-            PonderRegistry.TAGS.forTag(KINETIC_RELAYS)
-                    .add(SHAFTS[i].get())
-                    .add(COGWHEELS[i].get())
-                    .add(LARGE_COGWHEELS[i].get())
-                    .add(GEARBOXES[i].get());
+            helper.addToTag(KINETIC_RELAYS)
+                    .add(SHAFTS[i].getId())
+                    .add(COGWHEELS[i].getId())
+                    .add(LARGE_COGWHEELS[i].getId())
+                    .add(GEARBOXES[i].getId());
 
-            PonderRegistry.TAGS.forTag(KINETIC_APPLIANCES)
-                    .add(FANS[i])
-                    .add(MECHANICAL_PUMPS[i]);
+            helper.addToTag(KINETIC_APPLIANCES)
+                    .add(FANS[i].getId())
+                    .add(MECHANICAL_PUMPS[i].getId());
 
-            PonderRegistry.TAGS.forTag(CONTRAPTION_ACTOR)
-                    .add(SAWS[i]);
+            helper.addToTag(CONTRAPTION_ACTOR)
+                    .add(SAWS[i].getId());
 
-            PonderRegistry.TAGS.forTag(FLUIDS)
-                    .add(MECHANICAL_PUMPS[i]);
+            helper.addToTag(FLUIDS)
+                    .add(MECHANICAL_PUMPS[i].getId());
         }
         for(int i = 0; i < BM.length; i++) {
-            PonderRegistry.TAGS.forTag(KINETIC_RELAYS)
-                    .add(BELT_CONNECTORS[i].get());
+            helper.addToTag(KINETIC_RELAYS)
+                    .add(BELT_CONNECTORS[i].getId());
 
-            PonderRegistry.TAGS.forTag(LOGISTICS)
-                    .add(BELT_CONNECTORS[i].get());
+            helper.addToTag(LOGISTICS)
+                    .add(BELT_CONNECTORS[i].getId());
         }
     }
 }

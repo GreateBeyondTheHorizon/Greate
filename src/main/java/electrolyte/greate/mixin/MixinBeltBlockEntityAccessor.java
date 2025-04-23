@@ -8,9 +8,9 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(BeltBlockEntity.class)
 public interface MixinBeltBlockEntityAccessor {
 
-    @Accessor("inventory")
+    @Accessor(value = "inventory", remap = false)
     BeltInventory getInventoryField();
 
-    @Accessor("inventory")
+    @Accessor(value = "inventory", remap = false)
     void setInventoryField(BeltInventory inventory);
 }

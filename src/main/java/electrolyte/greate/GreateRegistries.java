@@ -6,6 +6,9 @@ import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.recipe.condition.RecipeConditionType;
 import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
+import electrolyte.greate.content.gtceu.machines.GreateMultiblockMachines;
+import electrolyte.greate.content.gtceu.machines.GreateRecipeTypes;
+import electrolyte.greate.registry.*;
 import electrolyte.greate.compat.gtceu.api.capability.recipe.GreateRecipeTypes;
 import electrolyte.greate.compat.gtceu.common.data.machines.GreateMachines;
 import electrolyte.greate.compat.gtceu.machine.GreateMultiblockMachines;
@@ -20,12 +23,25 @@ public final class GreateRegistries {
 
 	@SubscribeEvent
 	public static void registerMaterials(MaterialEvent event) {
-		GreateMaterials.init();
-		GreateValues.init();
+		GreateMaterials.register();
 	}
 
 	@SubscribeEvent
 	public static void registerMachines(RegisterEvent<ResourceLocation, MachineDefinition> event) {
+		Shafts.register();
+		Belts.register();
+		Cogwheels.register();
+		CrushingWheels.register();
+		EncasedFans.register();
+		Gearboxes.register();
+		Girders.register();
+		MechanicalPresses.register();
+		MechanicalMixers.register();
+		Millstones.register();
+		Saws.register();
+		Pumps.register();
+		ModBlockEntityTypes.register();
+		ModItems.register();
 		GreateMultiblockMachines.register();
 		GreateMachines.register();
 	}

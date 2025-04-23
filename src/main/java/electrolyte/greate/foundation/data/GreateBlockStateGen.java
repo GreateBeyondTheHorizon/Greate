@@ -177,9 +177,8 @@ public class GreateBlockStateGen {
             String material = c.getName().substring(0, c.getName().length() - 16);
             return ConfiguredModel.builder()
                     .modelFile(p.models().withExistingParent(c.getName() + "_cog", Create.asResource("block/mechanical_pump/cog"))
-                            .texture("5", p.modLoc("block/" + material + "/millstone")))
+                            .texture("2", p.modLoc("block/" + material + "/pump")))
                     .modelFile(p.models().withExistingParent(c.getName(), Create.asResource("block/mechanical_pump/block"))
-                            .texture("2", p.modLoc("block/" + material + "/pipes"))
                             .texture("4", p.modLoc("block/" + material + "/pump"))
                             .texture("particle", p.modLoc("block/" + material + "/pump")))
                     .rotationX(dir == Direction.DOWN ? 180

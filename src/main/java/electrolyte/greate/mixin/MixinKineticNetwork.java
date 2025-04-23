@@ -1,5 +1,6 @@
 package electrolyte.greate.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import com.simibubi.create.content.kinetics.KineticNetwork;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
@@ -15,13 +16,13 @@ import java.util.Map;
 @Mixin(KineticNetwork.class)
 public abstract class MixinKineticNetwork {
 
-    @Shadow public abstract void sync();
-    @Shadow public Map<KineticBlockEntity, Float> members;
-    @Shadow private float currentCapacity;
-    @Shadow private float currentStress;
-    @Shadow public abstract int getSize();
-    @Shadow public abstract float calculateStress();
-    @Shadow public abstract float calculateCapacity();
+    @Shadow(remap = false) public abstract void sync();
+    @Shadow(remap = false) public Map<KineticBlockEntity, Float> members;
+    @Shadow(remap = false) private float currentCapacity;
+    @Shadow(remap = false) private float currentStress;
+    @Shadow(remap = false) public abstract int getSize();
+    @Shadow(remap = false) public abstract float calculateStress();
+    @Shadow(remap = false) public abstract float calculateCapacity();
     @Unique private float greate_currentMaxCapacity;
 
     @Inject(method = "initFromTE", at = @At("RETURN"), remap = false)
@@ -39,13 +40,6 @@ public abstract class MixinKineticNetwork {
             currentCapacity = newMaxStress;
             greate_currentMaxCapacity = newMaxCapacity;
             sync();
-        }
-    }
-
-    @Inject(method = "updateFromNetwork", at = @At(value = "RETURN"), remap = false)
-    private void greate_updateFromNetwork(KineticBlockEntity be, CallbackInfo ci) {
-        if(be instanceof ITieredKineticBlockEntity itkbe) {
-            itkbe.updateFromNetwork(currentCapacity, currentStress, getSize(), greate_currentMaxCapacity);
         }
     }
 
@@ -79,5 +73,11 @@ public abstract class MixinKineticNetwork {
             }
         }
         return presentMaxCapacity;
+    }
+
+    @ModifyReturnValue(method = "calculateCapacity", at = @At("RETURN"), remap = false)
+    private float greate_calculateCapacity(float original) {
+        greate_updateMaxCapacity();
+        return Math.min(original, greate_currentMaxCapacity);
     }
 }

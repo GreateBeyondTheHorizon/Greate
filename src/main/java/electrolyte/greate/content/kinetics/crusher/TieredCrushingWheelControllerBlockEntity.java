@@ -1,8 +1,6 @@
 package electrolyte.greate.content.kinetics.crusher;
 
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
-import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
-import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.kinetics.crusher.CrushingWheelControllerBlockEntity;
 import com.simibubi.create.content.processing.recipe.ProcessingInventory;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
@@ -13,7 +11,6 @@ import electrolyte.greate.foundation.recipe.TieredRecipeFinder;
 import electrolyte.greate.foundation.recipe.TieredRecipeHelper;
 import electrolyte.greate.registry.ModRecipeTypes;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -44,8 +41,8 @@ public class TieredCrushingWheelControllerBlockEntity extends CrushingWheelContr
 
     private Optional<Recipe<?>> findValidRecipe() {
         return TieredRecipeFinder.findRecipe(CRUSHING_RECIPES_CACHE_KEY, level, wrapper,
-                RecipeConditions.isOfType(GTRecipeTypes.MACERATOR_RECIPES, ModRecipeTypes.CRUSHING.getType(),
-                        ModRecipeTypes.MILLING.getType(), AllRecipeTypes.MILLING.getType()).and(TieredRecipeConditions.firstIngredientMatches(wrapper.getItem(0))),
+                RecipeConditions.isOfType(ModRecipeTypes.CRUSHING.getType(), ModRecipeTypes.MILLING.getType())
+                        .and(TieredRecipeConditions.firstIngredientMatches(wrapper.getItem(0))),
                 TieredRecipeConditions.isEqualOrAboveTier(tier));
     }
 
@@ -81,13 +78,5 @@ public class TieredCrushingWheelControllerBlockEntity extends CrushingWheelContr
         }
         inventory.remainingTime = remainingTime;
         inventory.appliedRecipe = false;
-    }
-
-    private void intakeItem(ItemEntity itemEntity) {
-        inventory.clear();
-        inventory.setStackInSlot(0, itemEntity.getItem().copy());
-        itemInserted(inventory.getStackInSlot(0));
-        itemEntity.discard();
-        level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2 | 16);
     }
 }

@@ -1,6 +1,5 @@
 package electrolyte.greate.registry;
 
-import com.simibubi.create.content.kinetics.BlockStressDefaults;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -8,6 +7,7 @@ import electrolyte.greate.Greate;
 import electrolyte.greate.content.kinetics.TieredBlockMaterials;
 import electrolyte.greate.content.kinetics.millstone.TieredMillstoneBlock;
 import electrolyte.greate.foundation.data.GreateBuilderTransformers;
+import electrolyte.greate.infrastructure.config.GStress;
 import net.minecraft.world.level.material.MapColor;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
@@ -51,7 +51,7 @@ public class Millstones {
                 .properties(p -> p.mapColor(MapColor.METAL))
                 .transform(TagGen.pickaxeOnly())
                 .transform(GreateBuilderTransformers.tieredMillstone())
-                .transform(BlockStressDefaults.setImpact(millstoneImpact))
+                .transform(GStress.setImpact(millstoneImpact))
                 .transform(TieredBlockMaterials.setMaterialForBlock(TM[tier]))
                 .onRegister(c -> c.setTier(tier))
                 .register();

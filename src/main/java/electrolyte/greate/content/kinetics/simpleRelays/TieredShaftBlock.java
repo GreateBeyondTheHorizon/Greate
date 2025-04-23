@@ -4,13 +4,13 @@ import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.simpleRelays.AbstractSimpleShaftBlock;
 import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
 import com.simibubi.create.content.kinetics.steamEngine.PoweredShaftBlock;
-import com.simibubi.create.foundation.placement.IPlacementHelper;
-import com.simibubi.create.foundation.placement.PlacementHelpers;
-import com.simibubi.create.foundation.placement.PlacementOffset;
 import com.simibubi.create.foundation.placement.PoleHelper;
 import electrolyte.greate.content.decoration.encasing.IGirderEncasableBlock;
 import electrolyte.greate.content.kinetics.steamEngine.TieredPoweredShaftBlock;
 import electrolyte.greate.registry.ModBlockEntityTypes;
+import net.createmod.catnip.placement.IPlacementHelper;
+import net.createmod.catnip.placement.PlacementHelpers;
+import net.createmod.catnip.placement.PlacementOffset;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.world.InteractionHand;
@@ -26,6 +26,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
 import java.util.function.Predicate;
+
+import static electrolyte.greate.registry.Shafts.POWERED_SHAFTS;
 
 public class TieredShaftBlock extends ShaftBlock implements ITieredBlock, ITieredShaftBlock, IGirderEncasableBlock {
 
@@ -57,9 +59,9 @@ public class TieredShaftBlock extends ShaftBlock implements ITieredBlock, ITiere
         return pickCorrectShaftType(stateForPlacement, context.getLevel(), context.getClickedPos());
     }
 
-    public static BlockState pickCorrectShaftType(BlockState stateForPlacement, Level level, BlockPos pos) {
-        return PoweredShaftBlock.stillValid(stateForPlacement, level, pos) ?
-            TieredPoweredShaftBlock.getEquivalent(stateForPlacement) : stateForPlacement;
+    public static BlockState pickCorrectShaftType(BlockState stateForPlacement, Level level, BlockPos offsetPos, ItemStack shaft) {
+        return PoweredShaftBlock.stillValid(stateForPlacement, level, offsetPos) ?
+            TieredPoweredShaftBlock.getEquivalent(POWERED_SHAFTS[((ITieredBlock) ((BlockItem) shaft.getItem()).getBlock()).getTier()], stateForPlacement) : stateForPlacement;
     }
 
     @Override
@@ -108,7 +110,7 @@ public class TieredShaftBlock extends ShaftBlock implements ITieredBlock, ITiere
             PlacementOffset offset = super.getOffset(player, world, state, pos, ray);
             if (offset.isSuccessful())
                 offset.withTransform(offset.getTransform()
-                        .andThen(s -> TieredShaftBlock.pickCorrectShaftType(s, world, offset.getBlockPos())));
+                        .andThen(s -> TieredShaftBlock.pickCorrectShaftType(s, world, offset.getBlockPos(), player.getMainHandItem())));
             return offset;
         }
 

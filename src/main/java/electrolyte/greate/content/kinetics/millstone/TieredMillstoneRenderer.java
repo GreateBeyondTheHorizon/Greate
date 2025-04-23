@@ -1,8 +1,8 @@
 package electrolyte.greate.content.kinetics.millstone;
 
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
-import com.simibubi.create.foundation.render.CachedBufferer;
-import com.simibubi.create.foundation.render.SuperByteBuffer;
+import net.createmod.catnip.render.CachedBuffers;
+import net.createmod.catnip.render.SuperByteBuffer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider.Context;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -17,6 +17,6 @@ public class TieredMillstoneRenderer extends KineticBlockEntityRenderer<TieredMi
     @Override
     protected SuperByteBuffer getRotatedModel(TieredMillstoneBlockEntity be, BlockState state) {
         int tier = ((TieredMillstoneBlock) state.getBlock()).getTier();
-        return CachedBufferer.partial(MILLSTONE_INNER_MODELS[tier], state);
+        return CachedBuffers.partial(MILLSTONE_INNER_MODELS[tier], state);
     }
 }

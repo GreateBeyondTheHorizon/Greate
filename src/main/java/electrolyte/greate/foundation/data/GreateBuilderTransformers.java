@@ -2,7 +2,6 @@ package electrolyte.greate.foundation.data;
 
 import com.simibubi.create.Create;
 import com.simibubi.create.content.decoration.encasing.EncasedCTBehaviour;
-import com.simibubi.create.content.kinetics.BlockStressDefaults;
 import com.simibubi.create.content.kinetics.base.RotatedPillarKineticBlock;
 import com.simibubi.create.content.kinetics.simpleRelays.encased.EncasedCogCTBehaviour;
 import com.simibubi.create.content.kinetics.simpleRelays.encased.EncasedCogwheelBlock;
@@ -30,6 +29,7 @@ import electrolyte.greate.content.kinetics.simpleRelays.TieredCogwheelBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedCogwheelBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedShaftBlock;
+import electrolyte.greate.infrastructure.config.GStress;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -131,7 +131,7 @@ public class GreateBuilderTransformers {
     private static <B extends RotatedPillarKineticBlock, P> BlockBuilder<B, P> encasedBase(BlockBuilder<B, P> b, Supplier<ItemLike> drop) {
         return b.initialProperties(SharedProperties::stone)
                 .properties(BlockBehaviour.Properties::noOcclusion)
-                .transform(BlockStressDefaults.setNoImpact())
+                .transform(GStress.setNoImpact())
                 .loot((p, loot) -> p.dropOther(loot, drop.get()));
     }
 
@@ -210,9 +210,7 @@ public class GreateBuilderTransformers {
                 .model((c, p) -> {
                     String material = c.getName().substring(0, c.getName().length() - 16);
                     p.withExistingParent(c.getName(), Create.asResource("block/mechanical_pump/item"))
-                            .texture("2", p.modLoc("block/" + material + "/pipes"))
                             .texture("4", p.modLoc("block/" + material + "/pump"))
-                            .texture("5", p.modLoc("block/" + material + "/millstone"))
                             .texture("particle", p.modLoc("block/" + material + "/pump"));
                 }).build();
     }

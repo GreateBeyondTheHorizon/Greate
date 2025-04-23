@@ -1,7 +1,5 @@
 package electrolyte.greate.content.kinetics.millstone;
 
-import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
-import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.kinetics.millstone.MillstoneBlockEntity;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
 import com.simibubi.create.foundation.recipe.RecipeConditions;
@@ -122,13 +120,16 @@ public class TieredMillstoneBlockEntity extends MillstoneBlockEntity implements 
         tester.setStackInSlot(0, stack);
         RecipeWrapper inventoryIn = new RecipeWrapper(tester);
 
+        if(lastRecipe != null && TieredRecipeFinder.shouldRefreshRecipe()) {
+            lastRecipe = null;
+        }
         if(lastRecipe != null && TieredRecipeHelper.INSTANCE.firstIngredientMatches(lastRecipe, inventoryIn)) return true;
         return findRecipe(inventoryIn).isPresent();
     }
 
     private Optional<Recipe<?>> findRecipe(RecipeWrapper wrapper) {
         return TieredRecipeFinder.findRecipe(MILLING_RECIPE_CACHE_KEY, level, wrapper,
-                RecipeConditions.isOfType(GTRecipeTypes.MACERATOR_RECIPES, ModRecipeTypes.MILLING.getType(), AllRecipeTypes.MILLING.getType())
+                RecipeConditions.isOfType(ModRecipeTypes.MILLING.getType())
                         .and(TieredRecipeConditions.firstIngredientMatches(wrapper.getItem(0))),
                 TieredRecipeConditions.isEqualOrAboveTier(tier));
     }

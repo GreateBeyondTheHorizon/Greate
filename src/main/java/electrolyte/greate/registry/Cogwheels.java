@@ -3,20 +3,20 @@ package electrolyte.greate.registry;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllSpriteShifts;
 import com.simibubi.create.content.decoration.encasing.EncasingRegistry;
-import com.simibubi.create.content.kinetics.BlockStressDefaults;
 import com.simibubi.create.content.kinetics.simpleRelays.BracketedKineticBlockModel;
 import com.simibubi.create.content.kinetics.simpleRelays.CogwheelBlockItem;
 import com.simibubi.create.content.kinetics.simpleRelays.encased.EncasedCogCTBehaviour;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
-import com.simibubi.create.foundation.utility.Couple;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import electrolyte.greate.Greate;
 import electrolyte.greate.content.kinetics.TieredBlockMaterials;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredCogwheelBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedCogwheelBlock;
 import electrolyte.greate.foundation.data.GreateBlockStateGen;
+import electrolyte.greate.infrastructure.config.GStress;
+import net.createmod.catnip.data.Couple;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.MapColor;
 
@@ -180,7 +180,7 @@ public class Cogwheels {
                 .initialProperties(SharedProperties::stone)
                 .properties(p -> p.sound(SoundType.WOOD))
                 .properties(p -> p.mapColor(MapColor.DIRT))
-                .transform(BlockStressDefaults.setNoImpact())
+                .transform(GStress.setNoImpact())
                 .transform(TagGen.axeOrPickaxe())
                 .transform(TieredBlockMaterials.setMaterialForBlock(TM[tier]))
                 .blockstate(GreateBlockStateGen.tieredCogwheelProvider(false))
@@ -196,7 +196,7 @@ public class Cogwheels {
                 .initialProperties(SharedProperties::stone)
                 .properties(p -> p.sound(SoundType.WOOD))
                 .properties(p -> p.mapColor(MapColor.DIRT))
-                .transform(BlockStressDefaults.setNoImpact())
+                .transform(GStress.setNoImpact())
                 .transform(TagGen.axeOrPickaxe())
                 .transform(TieredBlockMaterials.setMaterialForBlock(TM[tier]))
                 .blockstate(GreateBlockStateGen.tieredCogwheelProvider(true))

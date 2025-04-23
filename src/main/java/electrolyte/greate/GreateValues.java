@@ -3,6 +3,19 @@ package electrolyte.greate;
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.recipe.content.Content;
+import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
+import com.simibubi.create.AllRecipeTypes;
+import electrolyte.greate.content.kinetics.crusher.TieredCrushingRecipe;
+import electrolyte.greate.content.kinetics.fan.processing.TieredHauntingRecipe;
+import electrolyte.greate.content.kinetics.fan.processing.TieredSplashingRecipe;
+import electrolyte.greate.content.kinetics.millstone.TieredMillingRecipe;
+import electrolyte.greate.content.kinetics.mixer.TieredCompactingRecipe;
+import electrolyte.greate.content.kinetics.mixer.TieredMixingRecipe;
+import electrolyte.greate.content.kinetics.press.TieredPressingRecipe;
+import electrolyte.greate.content.kinetics.saw.TieredCuttingRecipe;
+import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
+import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeFactory;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.List;
 
@@ -66,46 +79,48 @@ public class GreateValues {
         return GTValues.MAX;
     }
 
-    public static int getTierFromTierMaterial(Material tierMaterial) {
-        for (int i = 0; i < TM.length; i++) {
-            if (TM[i] == tierMaterial) {
-                return i;
-            }
-        }
-        return -1;
+    public static Material getMaterialFromTier(int tier) {
+        if(TM.length > tier) return TM[tier];
+        return null;
+    }
+
+    public static TieredProcessingRecipeFactory<TieredProcessingRecipe<?>> getFactory(ResourceLocation loc) {
+        if(loc.toString().startsWith(GTRecipeTypes.MACERATOR_RECIPES.registryName.toString()) || loc.toString().startsWith(AllRecipeTypes.MILLING.getId().toString())) return TieredMillingRecipe::new;
+        else if(loc.toString().startsWith(AllRecipeTypes.CRUSHING.getId().toString())) return TieredCrushingRecipe::new;
+        else if(loc.toString().startsWith(GTRecipeTypes.BENDER_RECIPES.registryName.toString()) || loc.toString().startsWith(AllRecipeTypes.PRESSING.getId().toString())) return TieredPressingRecipe::new;
+        else if(loc.toString().startsWith(GTRecipeTypes.MIXER_RECIPES.registryName.toString()) || loc.toString().startsWith(AllRecipeTypes.MIXING.getId().toString())) return TieredMixingRecipe::new;
+        else if(loc.toString().startsWith(GTRecipeTypes.CUTTER_RECIPES.registryName.toString()) || loc.toString().startsWith(AllRecipeTypes.CUTTING.getId().toString())) return TieredCuttingRecipe::new;
+        else if(loc.toString().startsWith(AllRecipeTypes.SPLASHING.getId().toString())) return TieredSplashingRecipe::new;
+        else if(loc.toString().startsWith(AllRecipeTypes.HAUNTING.getId().toString())) return TieredHauntingRecipe::new;
+        else if(loc.toString().startsWith(AllRecipeTypes.COMPACTING.getId().toString())) return TieredCompactingRecipe::new;
+        return null;
     }
 
     /**
      * Tier materials
      * Based on GTMaterials.VOLTAGE_COMMON_MATERIALS, but uses AndesiteAlloy instead of WroughtIron in the first tier.
      */
-    public static Material[] TM;
+    public static Material[] TM = new Material[]{
+            AndesiteAlloy,
+            Steel,
+            Aluminium,
+            StainlessSteel,
+            Titanium,
+            TungstenSteel,
+            RhodiumPlatedPalladium,
+            NaquadahAlloy,
+            Darmstadtium,
+            Neutronium,
+    };
 
     /**
      * Belt materials
      */
-    public static Material[] BM;
-
-    public static void init() {
-        TM = new Material[]{
-                AndesiteAlloy,
-                Steel,
-                Aluminium,
-                StainlessSteel,
-                Titanium,
-                TungstenSteel,
-                RhodiumPlatedPalladium,
-                NaquadahAlloy,
-                Darmstadtium,
-                Neutronium,
-        };
-
-        BM = new Material[]{
-                Rubber,
-                SiliconeRubber,
-                Polyethylene,
-                Polytetrafluoroethylene,
-                Polybenzimidazole,
-        };
-    }
+    public static Material[] BM = new Material[]{
+            Rubber,
+            SiliconeRubber,
+            Polyethylene,
+            Polytetrafluoroethylene,
+            Polybenzimidazole,
+    };
 }

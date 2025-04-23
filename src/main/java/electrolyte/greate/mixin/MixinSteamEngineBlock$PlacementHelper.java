@@ -3,10 +3,10 @@ package electrolyte.greate.mixin;
 import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
 import com.simibubi.create.content.kinetics.steamEngine.PoweredShaftBlock;
 import com.simibubi.create.content.kinetics.steamEngine.SteamEngineBlock;
-import com.simibubi.create.foundation.placement.PlacementOffset;
 import com.simibubi.create.foundation.utility.BlockHelper;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
 import electrolyte.greate.content.kinetics.steamEngine.TieredPoweredShaftBlock;
+import net.createmod.catnip.placement.PlacementOffset;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
@@ -33,7 +33,7 @@ public abstract class MixinSteamEngineBlock$PlacementHelper {
         cir.setReturnValue(i -> Block.byItem(i.getItem()) instanceof ShaftBlock);
     }
 
-    @Inject(method = "getOffset(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/BlockHitResult;)Lcom/simibubi/create/foundation/placement/PlacementOffset;", at = @At("HEAD"), remap = false, cancellable = true)
+    @Inject(method = "getOffset", at = @At("HEAD"), remap = false, cancellable = true)
     private void greate_getOffset(Player player, Level world, BlockState state, BlockPos pos, BlockHitResult ray, CallbackInfoReturnable<PlacementOffset> cir) {
         Block shaftType = Block.byItem(player.getMainHandItem().getItem());
         if (shaftType instanceof TieredShaftBlock) {

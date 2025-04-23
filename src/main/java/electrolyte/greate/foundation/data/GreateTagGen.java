@@ -1,13 +1,11 @@
 package electrolyte.greate.foundation.data;
 
-import com.gregtechceu.gtceu.GTCEu;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagEntry;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -73,23 +71,7 @@ public class GreateTagGen {
                     .add(AllItems.WHISK.asItem())
                     .add(AllItems.PROPELLER.asItem())
                     .add(AllItems.VERTICAL_GEARBOX.asItem())
-                    .add(AllBlocks.SHAFT.asItem())
-                    .add(AllItems.COPPER_SHEET.asItem())
-                    .add(AllItems.IRON_SHEET.asItem())
-                    .add(AllItems.GOLDEN_SHEET.asItem())
-                    .add(AllItems.BRASS_SHEET.asItem())
-                    .add(AllItems.CRUSHED_COPPER.asItem())
-                    .add(AllItems.CRUSHED_IRON.asItem())
-                    .add(AllItems.CRUSHED_PLATINUM.asItem())
-                    .add(AllItems.CRUSHED_GOLD.asItem())
-                    .add(AllItems.CRUSHED_LEAD.asItem())
-                    .add(AllItems.CRUSHED_NICKEL.asItem())
-                    .add(AllItems.CRUSHED_TIN.asItem())
-                    .add(AllItems.CRUSHED_SILVER.asItem())
-                    .add(AllItems.CRUSHED_ZINC.asItem())
-                    .add(AllItems.WHEAT_FLOUR.asItem())
-                    .add(TagEntry.element(GTCEu.id("obsidian_dust")))
-                    .add(TagEntry.element(GTCEu.id("netherrack_dust")));
+                    .add(AllBlocks.SHAFT.asItem());
         }
     }
 }

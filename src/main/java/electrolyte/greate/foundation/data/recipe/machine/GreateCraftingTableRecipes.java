@@ -63,7 +63,7 @@ public class GreateCraftingTableRecipes {
                     "NA", "AN", "fh",
                     'N', new UnificationEntry(plate, tierMaterial),
                     'A', new ItemStack(Blocks.ANDESITE));
-            VanillaRecipeHelper.addShapedRecipe(provider, SHAFTS[tier].getId(), SHAFTS[tier].asStack(4),
+            VanillaRecipeHelper.addShapedRecipe(provider, SHAFTS[tier].getId(), SHAFTS[tier].asStack(2),
                     "s ", " A",
                     'A', new UnificationEntry(plate, tierMaterial));
 
@@ -82,6 +82,10 @@ public class GreateCraftingTableRecipes {
                     GreateRecipes.createIngFromTag("forge", "tools/files"));
             VanillaRecipeHelper.addShapedRecipe(provider, GEARBOXES[tier].getId(), GEARBOXES[tier].asStack(),
                     " S ", "SCS", "wSh",
+                    'S', SHAFTS[tier],
+                    'C', AllBlocks.ANDESITE_CASING);
+            VanillaRecipeHelper.addShapedRecipe(provider, VERTICAL_GEARBOXES[tier].getId(), VERTICAL_GEARBOXES[tier].asStack(),
+                    "S S", "wCh", "S S",
                     'S', SHAFTS[tier],
                     'C', AllBlocks.ANDESITE_CASING);
             VanillaRecipeHelper.addShapedRecipe(provider, String.format("%s_whisk", tierMaterial.getName()), ChemicalHelper.get(whisk, tierMaterial),
@@ -294,9 +298,12 @@ public class GreateCraftingTableRecipes {
                 'S', new UnificationEntry(screw, Iron),
                 'P', new UnificationEntry(plate, Iron),
                 'B', GTMachines.WOODEN_CRATE.asStack());
-        VanillaRecipeHelper.addShapelessRecipe(provider, AllItems.DOUGH.getId(), AllItems.DOUGH.asStack(),
-                Items.WATER_BUCKET,
-                Ingredient.of(ChemicalHelper.get(new UnificationEntry(dust, Wheat), 1)));
+        VanillaRecipeHelper.addShapedRecipe(provider, AllBlocks.CHAIN_CONVEYOR.getId(), new ItemStack(AllBlocks.CHAIN_CONVEYOR.asItem(), 2),
+                " A ", "ACA", " A ",
+                'A', AllBlocks.ANDESITE_CASING,
+                'C', LARGE_COGWHEELS[ULV]);
+        VanillaRecipeHelper.addShapelessRecipe(provider, AllBlocks.SEQUENCED_GEARSHIFT.getId(), AllBlocks.SEQUENCED_GEARSHIFT.asStack(),
+                AllBlocks.BRASS_CASING, COGWHEELS[ULV], AllItems.ELECTRON_TUBE);
 
         if(ConfigHolder.INSTANCE.recipes.hardToolArmorRecipes) {
             VanillaRecipeHelper.addShapedRecipe(provider, AllItems.COPPER_DIVING_HELMET.getId(), AllItems.COPPER_DIVING_HELMET.asStack(),

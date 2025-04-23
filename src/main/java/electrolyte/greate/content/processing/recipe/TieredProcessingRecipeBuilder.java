@@ -3,7 +3,9 @@ package electrolyte.greate.content.processing.recipe;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.gregtechceu.gtceu.api.recipe.content.Content;
+import com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient.TagValue;
 import com.gregtechceu.gtceu.api.recipe.ingredient.IntCircuitIngredient;
+import com.gregtechceu.gtceu.api.recipe.ingredient.SizedIngredient;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder.ProcessingRecipeParams;
@@ -12,8 +14,8 @@ import com.simibubi.create.foundation.data.recipe.Mods;
 import com.simibubi.create.foundation.fluid.FluidHelper;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
-import com.simibubi.create.foundation.utility.Pair;
 import com.tterrag.registrate.util.DataIngredient;
+import net.createmod.catnip.data.Pair;
 import net.minecraft.core.NonNullList;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
@@ -61,10 +63,13 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
     public TieredProcessingRecipeBuilder<T> withItemIngredientsGT(List<Content> ingredients) {
         NonNullList<Ingredient> nonNullList = NonNullList.create();
         for(Content c : ingredients) {
-            Ingredient ingredient = (Ingredient) c.getContent();
-            if(!(ingredient instanceof IntCircuitIngredient)) {
-                nonNullList.add(ingredient);
+            if((Ingredient) c.getContent() instanceof SizedIngredient sizedIng) {
+                if(sizedIng.getInner() instanceof IntCircuitIngredient) {
+                    continue;
+                }
             }
+            if(c.getContent() instanceof IntCircuitIngredient) continue;
+            nonNullList.add((Ingredient) c.getContent());
         }
         return withItemIngredients(nonNullList);
     }
@@ -100,12 +105,12 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
         return withItemOutputs(list);
     }
 
-    public TieredProcessingRecipeBuilder<T> withItemOutputsGT(List<Content> list, int recipeTier, int machineTier) {
+    public TieredProcessingRecipeBuilder<T> withItemOutputsGT(List<Content> list) {
         NonNullList<ProcessingOutput> nonNullList = NonNullList.create();
         for(Content c : list) {
             ItemStack[] items = ((Ingredient) c.content).getItems();
             for (ItemStack item : items) {
-                nonNullList.add(new TieredProcessingOutput(item, (float) c.chance / 10000, getExtraPercent((float) c.tierChanceBoost / 10000, recipeTier, machineTier, true)));
+                nonNullList.add(new TieredProcessingOutput(item, (float) c.chance / 10000, (float) c.tierChanceBoost / 10000));
             }
         }
         return withItemOutputs(nonNullList);
@@ -129,7 +134,13 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
         NonNullList<FluidIngredient> nonNullList = NonNullList.create();
         for(Content c : ingredients) {
             com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient ingredient = (com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient) c.getContent();
-            nonNullList.add(FluidIngredient.fromFluid(ingredient.getStacks()[0].getFluid(), ingredient.getAmount()));
+            for(com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient.Value value : ingredient.values) {
+                if(value instanceof TagValue tag) {
+                    nonNullList.add(FluidIngredient.fromTag(tag.getTag(), ingredient.getAmount()));
+                } else {
+                    nonNullList.add(FluidIngredient.fromFluid(ingredient.getStacks()[0].getFluid(), ingredient.getAmount()));
+                }
+            }
         }
         return withFluidIngredients(nonNullList);
     }

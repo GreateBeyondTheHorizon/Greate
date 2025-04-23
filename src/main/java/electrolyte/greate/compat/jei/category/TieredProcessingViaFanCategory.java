@@ -1,6 +1,5 @@
 package electrolyte.greate.compat.jei.category;
 
-import com.jozufozu.flywheel.core.PartialModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.simibubi.create.AllBlocks;
@@ -8,8 +7,9 @@ import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.compat.jei.category.animations.AnimatedKinetics;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
-import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.foundation.utility.CreateLang;
 import com.tterrag.registrate.util.entry.BlockEntry;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import electrolyte.greate.content.kinetics.fan.TieredEncasedFanBlock;
 import electrolyte.greate.content.processing.recipe.TieredProcessingOutput;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
@@ -41,7 +41,7 @@ public abstract class TieredProcessingViaFanCategory<T extends Recipe<?>> extend
     }
 
     public static Supplier<ItemStack> getFan(BlockEntry<TieredEncasedFanBlock> fan, String name) {
-        return () -> fan.asStack().setHoverName(Lang.translateDirect("recipe." + name + ".fan").withStyle(s -> s.withItalic(false)));
+        return () -> fan.asStack().setHoverName(CreateLang.translateDirect("recipe." + name + ".fan").withStyle(s -> s.withItalic(false)));
     }
 
     @Override

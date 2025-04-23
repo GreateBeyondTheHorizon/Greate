@@ -1,11 +1,9 @@
 package electrolyte.greate.foundation.data.recipe;
 
 import com.gregtechceu.gtceu.api.capability.recipe.EURecipeCapability;
-import com.gregtechceu.gtceu.api.capability.recipe.FluidRecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.content.Content;
-import com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient;
 import com.gregtechceu.gtceu.common.data.GTItems;
 import com.gregtechceu.gtceu.common.item.IntCircuitBehaviour;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
@@ -62,15 +60,6 @@ public class TieredRecipeConditions {
                 } else {
                     return true;
                 }
-            } else if(r instanceof GTRecipe gtr) {
-                List<Content> fluidInputIngredients = gtr.getInputContents(FluidRecipeCapability.CAP);
-                FluidIngredient ing = (FluidIngredient) fluidInputIngredients.get(0).getContent();
-                if(!ing.isEmpty()) {
-                    boolean testFluid = ing.test(new FluidStack(stack.getFluid(), stack.getAmount()));
-                    return testFluid && ing.getAmount() <= stack.getAmount();
-                } else {
-                    return true;
-                }
             }
             return false;
         };
@@ -82,10 +71,6 @@ public class TieredRecipeConditions {
                 return filter.test(r.getResultItem(filter.getWorld().registryAccess()));
             } else if(r instanceof ProcessingRecipe<?> pr) {
                 return filter.test(pr.getResultItem(filter.getWorld().registryAccess()));
-            } else if(r instanceof GTRecipe gtr) {
-                List<Content> output = gtr.getOutputContents(ItemRecipeCapability.CAP);
-                Ingredient ing = (Ingredient) output.get(0).getContent();
-                return filter.test(ing.getItems()[0]);
             }
             return false;
         };

@@ -4,7 +4,6 @@ import com.google.common.base.Predicates;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
-import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.AllRecipeTypes;
@@ -13,7 +12,6 @@ import com.simibubi.create.compat.jei.DoubleItemIcon;
 import com.simibubi.create.compat.jei.EmptyBackground;
 import com.simibubi.create.compat.jei.ItemIcon;
 import com.simibubi.create.compat.jei.category.BlockCuttingCategory.CondensedBlockCuttingRecipe;
-import com.simibubi.create.content.fluids.potion.PotionMixingRecipes;
 import com.simibubi.create.content.kinetics.crafter.MechanicalCraftingRecipe;
 import com.simibubi.create.content.kinetics.crusher.AbstractCrushingRecipe;
 import com.simibubi.create.content.kinetics.fan.processing.HauntingRecipe;
@@ -22,9 +20,7 @@ import com.simibubi.create.content.kinetics.press.MechanicalPressBlockEntity;
 import com.simibubi.create.content.kinetics.press.PressingRecipe;
 import com.simibubi.create.content.kinetics.saw.CuttingRecipe;
 import com.simibubi.create.content.processing.basin.BasinRecipe;
-import com.simibubi.create.foundation.config.ConfigBase.ConfigBool;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
-import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.infrastructure.config.AllConfigs;
 import com.simibubi.create.infrastructure.config.CRecipes;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -33,16 +29,11 @@ import electrolyte.greate.compat.jei.category.*;
 import electrolyte.greate.compat.jei.category.GreateRecipeCategory.Info;
 import electrolyte.greate.compat.jei.category.TieredBlockCuttingCategory.TieredCondensedBlockCuttingRecipe;
 import electrolyte.greate.content.kinetics.crusher.TieredAbstractCrushingRecipe;
-import electrolyte.greate.content.kinetics.crusher.TieredCrushingRecipe;
 import electrolyte.greate.content.kinetics.fan.TieredEncasedFanBlock;
 import electrolyte.greate.content.kinetics.fan.processing.TieredHauntingRecipe;
 import electrolyte.greate.content.kinetics.fan.processing.TieredSplashingRecipe;
-import electrolyte.greate.content.kinetics.millstone.TieredMillingRecipe;
-import electrolyte.greate.content.kinetics.mixer.TieredCompactingRecipe;
-import electrolyte.greate.content.kinetics.mixer.TieredMixingRecipe;
 import electrolyte.greate.content.kinetics.press.TieredPressingRecipe;
 import electrolyte.greate.content.kinetics.saw.TieredCuttingRecipe;
-import electrolyte.greate.content.kinetics.saw.TieredSawBlockEntity;
 import electrolyte.greate.content.processing.basin.TieredBasinRecipe;
 import electrolyte.greate.registry.*;
 import mezz.jei.api.IModPlugin;
@@ -54,6 +45,8 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.IRuntimeRegistration;
 import mezz.jei.api.runtime.IIngredientManager;
+import net.createmod.catnip.config.ConfigBase.ConfigBool;
+import net.createmod.catnip.lang.Lang;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
@@ -63,7 +56,6 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.crafting.IShapedRecipe;
-import net.minecraftforge.fml.ModList;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -74,7 +66,6 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import static com.gregtechceu.gtceu.api.GTValues.ULV;
 import static electrolyte.greate.registry.EncasedFans.FANS;
 
 @JeiPlugin
@@ -93,65 +84,43 @@ public class GreateJEI implements IModPlugin {
 
                 milling = builder(TieredAbstractCrushingRecipe.class)
                     .addTypedRecipes(ModRecipeTypes.MILLING)
-                    .addTypedRecipes(AllRecipeTypes.MILLING::getType, TieredMillingRecipe::convertNormal)
-                    .addTypedRecipesGT(GTRecipeTypes.MACERATOR_RECIPES, TieredMillingRecipe::convertGT)
-                    .catalysts(Arrays.stream(Millstones.MILLSTONES)
-                            .<Supplier<ItemLike>>map(o -> o::get)
-                            .collect(Collectors.toList()))
+                    .catalysts(Millstones.MILLSTONES)
                     .doubleIconItem(Millstones.NEUTRONIUM_MILLSTONE.get(), AllItems.WHEAT_FLOUR.get())
                     .emptyBackground(177, 68)
                     .build("milling", TieredMillingCategory::new),
 
                 crushing = builder(TieredAbstractCrushingRecipe.class)
-                        .addTypedRecipesGT(GTRecipeTypes.MACERATOR_RECIPES, TieredCrushingRecipe::convertGT)
                         .addTypedRecipes(ModRecipeTypes.CRUSHING::getType)
-                        .addTypedRecipes(ModRecipeTypes.MILLING::getType)
-                        .addTypedRecipes(AllRecipeTypes.MILLING::getType, TieredCrushingRecipe::convertNormalCrushing)
-                        .catalysts(Arrays.stream(CrushingWheels.CRUSHING_WHEELS)
-                                .<Supplier<ItemLike>>map(o -> o::get)
-                                .collect(Collectors.toList()))
+                        .addTypedRecipesExcluding(ModRecipeTypes.MILLING::getType, ModRecipeTypes.CRUSHING::getType)
+                        .catalysts(CrushingWheels.CRUSHING_WHEELS)
                         .doubleIconItem(CrushingWheels.NEUTRONIUM_CRUSHING_WHEEL.get(), AllItems.CRUSHED_GOLD.get())
                         .emptyBackground(177, 115)
                         .build("crushing", TieredCrushingCategory::new),
 
                 washing = builder(TieredSplashingRecipe.class)
                         .addTypedRecipes(ModRecipeTypes.SPLASHING::getType)
-                        .addTypedRecipes(AllRecipeTypes.SPLASHING::getType, TieredSplashingRecipe::convertNormalSplashing)
-                        .catalystStacks(Arrays.stream(FANS)
-                                .map(o -> TieredProcessingViaFanCategory.getFan(o, "fan_washing"))
-                                .collect(Collectors.toList()))
+                        .catalysts(EncasedFans.FANS)
                         .doubleIconItem(AllItems.PROPELLER.get(), Items.WATER_BUCKET)
                         .emptyBackground(178, 87)
                         .build("fan_washing", TieredFanWashingCategory::new),
 
                 haunting = builder(TieredHauntingRecipe.class)
                         .addTypedRecipes(ModRecipeTypes.HAUNTING::getType)
-                        .addTypedRecipes(AllRecipeTypes.HAUNTING::getType, TieredHauntingRecipe::convertNormalHaunting)
-                        .catalystStacks(Arrays.stream(FANS)
-                                .map(o -> TieredProcessingViaFanCategory.getFan(o, "fan_haunting"))
-                                .collect(Collectors.toList()))
+                        .catalysts(EncasedFans.FANS)
                         .doubleIconItem(AllItems.PROPELLER.get(), Items.SOUL_CAMPFIRE)
                         .emptyBackground(178, 87)
                         .build("fan_haunting", TieredFanHauntingCategory::new),
 
                 pressing = builder(TieredPressingRecipe.class)
-                        .addTypedRecipesGT(GTRecipeTypes.BENDER_RECIPES, TieredPressingRecipe::convertGT)
                         .addTypedRecipes(ModRecipeTypes.PRESSING::getType)
-                        .addTypedRecipes(AllRecipeTypes.PRESSING::getType, TieredPressingRecipe::convertNormalPressing)
-                        .catalysts(Arrays.stream(MechanicalPresses.MECHANICAL_PRESSES)
-                                .<Supplier<ItemLike>>map(o -> o::get)
-                                .collect(Collectors.toList()))
+                        .catalysts(MechanicalPresses.MECHANICAL_PRESSES)
                         .doubleIconItem(MechanicalPresses.NEUTRONIUM_MECHANICAL_PRESS.get(), AllItems.IRON_SHEET.get())
                         .emptyBackground(177, 85)
                         .build("pressing", TieredPressingCategory::new),
 
                 mixing = builder(TieredBasinRecipe.class)
-                        .addTypedRecipesGT(GTRecipeTypes.MIXER_RECIPES, r -> TieredMixingRecipe.convertGTMixing(r, ULV))
                         .addTypedRecipes(ModRecipeTypes.MIXING::getType)
-                        .addTypedRecipes(AllRecipeTypes.MIXING::getType, TieredMixingRecipe::convertNormal)
-                        .catalysts(Arrays.stream(MechanicalMixers.MECHANICAL_MIXERS)
-                                .<Supplier<ItemLike>>map(o -> o::get)
-                                .collect(Collectors.toList()))
+                        .catalysts(MechanicalMixers.MECHANICAL_MIXERS)
                         .doubleIconItem(MechanicalMixers.NEUTRONIUM_MECHANICAL_MIXER.get(), AllBlocks.BASIN.get())
                         .emptyBackground(177, 118)
                         .build("mixing", TieredMixingCategory::standard),
@@ -165,9 +134,7 @@ public class GreateJEI implements IModPlugin {
                                 !AllRecipeTypes.shouldIgnoreInAutomation(r) &&
                                 !ModRecipeTypes.shouldIgnoreInAutomation(r),
                                 TieredBasinRecipe::convertShapeless)
-                        .catalysts(Arrays.stream(MechanicalMixers.MECHANICAL_MIXERS)
-                                .<Supplier<ItemLike>>map(o -> o::get)
-                                .collect(Collectors.toList()))
+                        .catalysts(MechanicalMixers.MECHANICAL_MIXERS)
                         .catalyst(AllBlocks.BASIN::get)
                         .doubleIconItem(MechanicalMixers.NEUTRONIUM_MECHANICAL_MIXER, Items.CRAFTING_TABLE)
                         .emptyBackground(177, 100)
@@ -175,25 +142,16 @@ public class GreateJEI implements IModPlugin {
 
                 brewing = builder(TieredBasinRecipe.class)
                         .enableWhen(c -> c.allowBrewingInMixer)
-                        .addRecipes(() -> {
-                            ArrayList<TieredMixingRecipe> brewingRecipes = new ArrayList<>();
-                            PotionMixingRecipes.ALL.forEach(potionRecipe -> brewingRecipes.add(TieredMixingRecipe.convertNormal(potionRecipe)));
-                            return brewingRecipes;
-                        })
-                        .catalysts(Arrays.stream(MechanicalMixers.MECHANICAL_MIXERS)
-                                .<Supplier<ItemLike>>map(o -> o::get)
-                                .collect(Collectors.toList()))
+                        .addTypedRecipes(ModRecipeTypes.BREWING::getType)
+                        .catalysts(MechanicalMixers.MECHANICAL_MIXERS)
                         .catalyst(AllBlocks.BASIN::get)
                         .doubleIconItem(MechanicalMixers.NEUTRONIUM_MECHANICAL_MIXER.get(), Blocks.BREWING_STAND)
                         .emptyBackground(177, 118)
                         .build("automatic_brewing", TieredMixingCategory::autoBrewing),
 
                 packing = builder(TieredBasinRecipe.class)
-                        .addTypedRecipes(AllRecipeTypes.COMPACTING::getType, TieredCompactingRecipe::convertNormalBasin)
                         .addTypedRecipes(ModRecipeTypes.COMPACTING::getType)
-                        .catalysts(Arrays.stream(MechanicalPresses.MECHANICAL_PRESSES)
-                                .<Supplier<ItemLike>>map(o -> o::get)
-                                .collect(Collectors.toList()))
+                        .catalysts(MechanicalPresses.MECHANICAL_PRESSES)
                         .catalyst(AllBlocks.BASIN::get)
                         .doubleIconItem(MechanicalPresses.NEUTRONIUM_MECHANICAL_PRESS.get(), AllBlocks.BASIN.get())
                         .emptyBackground(177, 118)
@@ -207,21 +165,15 @@ public class GreateJEI implements IModPlugin {
                                 !AllRecipeTypes.shouldIgnoreInAutomation(r) &&
                                 !ModRecipeTypes.shouldIgnoreInAutomation(r),
                                 TieredBasinRecipe::convertShapeless)
-                        .catalysts(Arrays.stream(MechanicalPresses.MECHANICAL_PRESSES)
-                                .<Supplier<ItemLike>>map(o -> o::get)
-                                .collect(Collectors.toList()))
+                        .catalysts(MechanicalPresses.MECHANICAL_PRESSES)
                         .catalyst(AllBlocks.BASIN::get)
                         .doubleIconItem(MechanicalPresses.NEUTRONIUM_MECHANICAL_PRESS, Blocks.CRAFTING_TABLE)
                         .emptyBackground(177, 100)
                         .build("automatic_packing", TieredPackingCategory::autoSquare),
 
                 sawing = builder(TieredCuttingRecipe.class)
-                        .addTypedRecipesGT(GTRecipeTypes.CUTTER_RECIPES, TieredCuttingRecipe::convertGTCutter)
                         .addTypedRecipes(ModRecipeTypes.CUTTING::getType)
-                        .addTypedRecipes(AllRecipeTypes.CUTTING::getType, TieredCuttingRecipe::convertNormalSawing)
-                        .catalysts(Arrays.stream(Saws.SAWS)
-                                .<Supplier<ItemLike>>map(o -> o::get)
-                                .collect(Collectors.toList()))
+                        .catalysts(Saws.SAWS)
                         .doubleIconItem(Saws.NEUTRONIUM_SAW, Items.OAK_LOG)
                         .emptyBackground(177, 85)
                         .build("sawing", TieredSawingCategory::new),
@@ -229,23 +181,10 @@ public class GreateJEI implements IModPlugin {
                 blockCutting = builder(TieredCondensedBlockCuttingRecipe.class)
                         .enableWhen(c -> c.allowStonecuttingOnSaw)
                         .addRecipes(() -> TieredBlockCuttingCategory.condenseRecipes(getTypedRecipesExcluding(RecipeType.STONECUTTING, Predicates.or(AllRecipeTypes::shouldIgnoreInAutomation, ModRecipeTypes::shouldIgnoreInAutomation))))
-                        .catalysts(Arrays.stream(Saws.SAWS)
-                                .<Supplier<ItemLike>>map(o -> o::get)
-                                .collect(Collectors.toList()))
+                        .catalysts(Saws.SAWS)
                         .doubleIconItem(Saws.NEUTRONIUM_SAW.get(), Items.STONE_BRICK_STAIRS)
                         .emptyBackground(177, 70)
-                        .build("block_cutting", TieredBlockCuttingCategory::new),
-
-                woodCutting = builder(TieredCondensedBlockCuttingRecipe.class)
-                        .enableIf(c -> c.allowWoodcuttingOnSaw.get() &&
-                                ModList.get().isLoaded("druidcraft"))
-                        .addRecipes(() -> TieredBlockCuttingCategory.condenseRecipes(getTypedRecipesExcluding(TieredSawBlockEntity.woodcuttingRecipeType.get(), Predicates.or(AllRecipeTypes::shouldIgnoreInAutomation, ModRecipeTypes::shouldIgnoreInAutomation))))
-                        .catalysts(Arrays.stream(Saws.SAWS)
-                                .<Supplier<ItemLike>>map(o -> o::get)
-                                .collect(Collectors.toList()))
-                        .doubleIconItem(Saws.NEUTRONIUM_SAW.get(), Items.OAK_STAIRS)
-                        .emptyBackground(177, 70)
-                        .build("wood_cutting", TieredBlockCuttingCategory::new);
+                        .build("block_cutting", TieredBlockCuttingCategory::new);
     }
 
     @Override
@@ -282,7 +221,6 @@ public class GreateJEI implements IModPlugin {
         registration.getRecipeManager().hideRecipeCategory(mezz.jei.api.recipe.RecipeType.create(Create.ID, "automatic_packing", BasinRecipe.class));
         registration.getRecipeManager().hideRecipeCategory(mezz.jei.api.recipe.RecipeType.create(Create.ID, "sawing", CuttingRecipe.class));
         registration.getRecipeManager().hideRecipeCategory(mezz.jei.api.recipe.RecipeType.create(Create.ID, "block_cutting", CondensedBlockCuttingRecipe.class));
-        registration.getRecipeManager().hideRecipeCategory(mezz.jei.api.recipe.RecipeType.create(Create.ID, "wood_cutting", CondensedBlockCuttingRecipe.class));
         registration.getRecipeManager().hideRecipeCategory(mezz.jei.api.recipe.RecipeType.create(Create.ID, "fan_haunting", HauntingRecipe.class));
         registration.getRecipeManager().hideRecipeCategory(mezz.jei.api.recipe.RecipeType.create(Create.ID, "fan_washing", SplashingRecipe.class));
     }
@@ -452,6 +390,10 @@ public class GreateJEI implements IModPlugin {
             return catalystStacks(Arrays.stream(suppliers)
                     .map(supplier -> (Supplier<ItemStack>) () -> new ItemStack(supplier.get().asItem()))
                     .collect(Collectors.toList()));
+        }
+
+        public final CategoryBuilder<T> catalysts(BlockEntry<?>[] blocks) {
+            return catalystStacks(Arrays.stream(blocks).map(s -> (Supplier<ItemStack>) () -> new ItemStack(s.get().asItem())).toList());
         }
 
         public CategoryBuilder<T> icon(IDrawable icon) {

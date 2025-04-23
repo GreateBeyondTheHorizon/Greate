@@ -1,17 +1,14 @@
 package electrolyte.greate.registry;
 
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
-import com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialIconSet;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.ToolProperty;
-import com.simibubi.create.AllItems;
 import electrolyte.greate.Greate;
 import electrolyte.greate.compat.gtceu.material.PropertyKeys;
 import electrolyte.greate.compat.gtceu.material.WhiskProperty;
 
 import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags.*;
 import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialIconSet.*;
-import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.dust;
 import static com.gregtechceu.gtceu.api.item.tool.GTToolType.BUZZSAW;
 import static com.gregtechceu.gtceu.common.data.GTElements.Ma;
 import static com.gregtechceu.gtceu.common.data.GTElements.Sp;
@@ -25,11 +22,11 @@ public class GreateMaterials {
 	public static Material RefinedRadiance;
 	public static Material ShadowSteel;
 
-	public static void init() {
+	public static void register() {
 		AndesiteAlloy = Builder("andesite_alloy")
 				.ingot().fluid()
 				.appendFlags(STD_METAL, GENERATE_BOLT_SCREW, GENERATE_ROTOR)
-				.color(0xDADBCA).secondaryColor(0xABC7B5).iconSet(new MaterialIconSet("andesite_alloy", DULL))
+				.color(0xDADBCA).secondaryColor(0xABC7B5).iconSet(DULL)
 				.toolStats(ToolProperty.Builder.of(1, 1, 64, 0, BUZZSAW).build())
 				.components(Andesite, 9, Iron, 1)
 				.buildAndRegister();
@@ -79,8 +76,6 @@ public class GreateMaterials {
 	}
 
 	public static void modifyMaterials() {
-		dust.setIgnored(Obsidian, AllItems.POWDERED_OBSIDIAN.asItem());
-		dust.setIgnored(Netherrack, AllItems.CINDER_FLOUR.asItem());
 	}
 
 	public static Material.Builder Builder(String id) {

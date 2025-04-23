@@ -15,13 +15,13 @@ import com.simibubi.create.content.logistics.tunnel.BeltTunnelBlock;
 import com.simibubi.create.content.schematics.requirement.ItemRequirement;
 import com.simibubi.create.content.schematics.requirement.ItemRequirement.ItemUseType;
 import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
-import com.simibubi.create.foundation.utility.Iterate;
 import electrolyte.greate.content.kinetics.belt.item.TieredBeltConnectorItem;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingWheelControllerBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
 import electrolyte.greate.registry.GreateSpriteShifts;
 import electrolyte.greate.registry.ModBlockEntityTypes;
+import net.createmod.catnip.data.Iterate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -290,12 +290,6 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
         if(state.getBlock() instanceof BeltTunnelBlock) return false;
         return true;
     }
-
-    /*public static boolean canTransportObjects(BlockState state) {
-        if(!(state.getBlock() instanceof TieredBeltBlock)) return false;
-        BeltSlope slope = state.getValue(SLOPE);
-        return slope != BeltSlope.VERTICAL && slope != BeltSlope.SIDEWAYS;
-    }*/
 
     public static List<BlockPos> getBeltChain(Level level, BlockPos controllerPos) {
         List<BlockPos> positions = new LinkedList<>();

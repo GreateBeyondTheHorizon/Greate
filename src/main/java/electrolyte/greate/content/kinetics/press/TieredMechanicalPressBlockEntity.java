@@ -1,8 +1,5 @@
 package electrolyte.greate.content.kinetics.press;
 
-import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
-import com.gregtechceu.gtceu.api.recipe.GTRecipe;
-import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
 import com.simibubi.create.content.kinetics.crafter.MechanicalCraftingRecipe;
@@ -14,8 +11,6 @@ import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour
 import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
 import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour;
 import com.simibubi.create.foundation.recipe.RecipeConditions;
-import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.foundation.utility.VecHelper;
 import electrolyte.greate.Greate;
 import electrolyte.greate.content.kinetics.base.ICircuitHolder;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
@@ -26,6 +21,8 @@ import electrolyte.greate.foundation.data.recipe.TieredRecipeConditions;
 import electrolyte.greate.foundation.recipe.TieredRecipeApplier;
 import electrolyte.greate.foundation.recipe.TieredRecipeFinder;
 import electrolyte.greate.registry.ModRecipeTypes;
+import net.createmod.catnip.lang.Lang;
+import net.createmod.catnip.math.VecHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -33,7 +30,6 @@ import net.minecraft.world.Container;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -96,9 +92,6 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
             }
             if(recipe.get() instanceof TieredProcessingRecipe<?>) {
                 stack.shrink(recipe.get().getIngredients().get(0).getItems()[0].getCount());
-            } else if(recipe.get() instanceof GTRecipe gtr) {
-                int amount = ((Ingredient) gtr.getInputContents(ItemRecipeCapability.CAP).get(0).getContent()).getItems()[0].getCount();
-                stack.shrink(amount);
             } else {
                 stack.shrink(1);
             }
@@ -149,7 +142,7 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
 
         pressingInv.setItem(0, stack);
         Optional<Recipe<?>> recipe = TieredRecipeFinder.findRecipe(PRESSING_RECIPE_CACHE_KEY, level, pressingInv,
-                RecipeConditions.isOfType(GTRecipeTypes.BENDER_RECIPES, ModRecipeTypes.PRESSING.getType(), AllRecipeTypes.PRESSING.getType())
+                RecipeConditions.isOfType(ModRecipeTypes.PRESSING.getType(), AllRecipeTypes.PRESSING.getType())
                         .and(TieredRecipeConditions.firstIngredientMatches(stack)),
                 TieredRecipeConditions.isEqualOrAboveTier(tier)
                         .and(TieredRecipeConditions.circuitMatches(targetCircuit.getValue()))
@@ -162,11 +155,9 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
     }
 
     @Override
-    protected <
-        C extends Container> boolean matchStaticFilters(Recipe<C> recipe) {
+    protected <C extends Container> boolean matchStaticFilters(Recipe<C> recipe) {
         return (recipe instanceof CraftingRecipe && !(recipe instanceof MechanicalCraftingRecipe) && canCompress(recipe)
                 && !AllRecipeTypes.shouldIgnoreInAutomation(recipe))
-                || recipe.getType() == AllRecipeTypes.COMPACTING.getType()
                 || recipe.getType() == ModRecipeTypes.COMPACTING.getType();
     }
 
@@ -179,6 +170,29 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
     public int getCircuitNumber() {
         return targetCircuit.getValue();
     }
+
+    /*@Override
+    protected boolean updateBasin() {
+        if (!isSpeedRequirementFulfilled())
+            return true;
+        if (getSpeed() == 0)
+            return true;
+        if (isRunning())
+            return true;
+        if (level == null || level.isClientSide)
+            return true;
+        Optional<BasinBlockEntity> basin = getBasin();
+        if (!basin.filter(BasinBlockEntity::canContinueProcessing).isPresent())
+            return true;
+
+        List<Recipe<?>> recipes = getMatchingRecipes();
+        if (recipes.isEmpty())
+            return true;
+        currentRecipe = recipes.get(0);
+        startProcessingBasin();
+        sendData();
+        return true;
+    }*/
 
     @Override
     protected void applyBasinRecipe() {
@@ -202,6 +216,7 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
     @Override
     protected <C extends Container> boolean matchBasinRecipe(Recipe<C> recipe) {
         if(recipe == null) return false;
+        if(!(recipe instanceof TieredProcessingRecipe<C>) && !(recipe instanceof CraftingRecipe)) return false;
         Optional<BasinBlockEntity> basin = getBasin();
         return basin.filter(basinBlockEntity -> TieredBasinRecipe.match(basinBlockEntity, recipe, this.tier)).isPresent();
     }
@@ -217,5 +232,9 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
             if(direction.getAxis().isVertical()) return false;
             return !((TieredMechanicalPressBlock) state.getBlock()).hasShaftTowards(level, getBlockPos(), state, direction);
         }
+    }
+
+    public int getTier() {
+        return tier;
     }
 }

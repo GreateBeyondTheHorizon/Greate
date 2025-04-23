@@ -1,19 +1,14 @@
 package electrolyte.greate.content.kinetics.fan.processing;
 
-import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import electrolyte.greate.content.kinetics.fan.processing.TieredSplashingRecipe.TieredSplashingWrapper;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
-import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeParams;
 import electrolyte.greate.registry.ModRecipeTypes;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-
-import static com.gregtechceu.gtceu.api.GTValues.ULV;
 
 @ParametersAreNonnullByDefault
 public class TieredSplashingRecipe extends TieredProcessingRecipe<TieredSplashingWrapper> {
@@ -41,10 +36,5 @@ public class TieredSplashingRecipe extends TieredProcessingRecipe<TieredSplashin
         public TieredSplashingWrapper() {
             super(new ItemStackHandler(1));
         }
-    }
-
-    public static TieredSplashingRecipe convertNormalSplashing(Recipe<?> recipe) {
-        ProcessingRecipe<?> pr = (ProcessingRecipe<?>) recipe;
-        return new TieredProcessingRecipeBuilder<>(TieredSplashingRecipe::new, recipe.getId()).withItemIngredients(pr.getIngredients()).withItemOutputs(pr.getRollableResults()).recipeTier(ULV).build();
     }
 }

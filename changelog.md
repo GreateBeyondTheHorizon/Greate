@@ -1,4 +1,3 @@
-- Update to GT 1.6.0
-- Min GT version is now 1.6.0
-- Rename Spouting Factory to Wire Coating Factory
-- Fix false-positive validation on recipes where there is a circuit
+- Update to Create 6.0.2 & GT 1.6.4
+- Fix tiered saws not rendering their shafts properly on contraptions
+- Fix tiered fans not applying tiered splashing/haunting recipes on depots

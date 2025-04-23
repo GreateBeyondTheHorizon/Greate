@@ -1,6 +1,7 @@
 package electrolyte.greate.foundation.events;
 
 import electrolyte.greate.Greate;
+import electrolyte.greate.foundation.data.recipe.GreateRuntimeRecipes;
 import electrolyte.greate.foundation.recipe.TieredRecipeFinder;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -13,5 +14,6 @@ public class GreateEventHandler {
     @SubscribeEvent
     public static void onResourceReload(AddReloadListenerEvent event) {
         event.addListener(TieredRecipeFinder.LISTENER);
+        event.addListener(GreateRuntimeRecipes.LISTENER);
     }
 }

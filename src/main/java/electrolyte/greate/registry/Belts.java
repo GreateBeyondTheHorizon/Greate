@@ -1,9 +1,8 @@
 package electrolyte.greate.registry;
 
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
-import com.simibubi.create.content.kinetics.BlockStressDefaults;
+import com.simibubi.create.AllDisplaySources;
 import com.simibubi.create.content.kinetics.belt.BeltModel;
-import com.simibubi.create.content.redstone.displayLink.source.ItemNameDisplaySource;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -14,6 +13,7 @@ import electrolyte.greate.content.kinetics.belt.TieredBeltBlock;
 import electrolyte.greate.content.kinetics.belt.TieredBeltGenerator;
 import electrolyte.greate.content.kinetics.belt.item.TieredBeltConnectorItem;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
+import electrolyte.greate.infrastructure.config.GStress;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -24,7 +24,7 @@ import net.minecraft.world.level.material.MapColor;
 import java.util.List;
 
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
-import static com.simibubi.create.content.redstone.displayLink.AllDisplayBehaviours.assignDataBehaviour;
+import static com.simibubi.create.api.behaviour.display.DisplaySource.displaySource;
 import static com.tterrag.registrate.providers.RegistrateLangProvider.toEnglishName;
 import static electrolyte.greate.Greate.REGISTRATE;
 import static electrolyte.greate.GreateValues.TM;
@@ -83,11 +83,11 @@ public class Belts {
                 .properties(p -> p.strength(0.8F))
                 .properties(p -> p.mapColor(MapColor.COLOR_GRAY))
                 .transform(TagGen.axeOrPickaxe())
-                .transform(BlockStressDefaults.setImpact(0))
+                .transform(GStress.setNoImpact())
                 .transform(TieredBlockMaterials.setMaterialForBeltBlock(material))
+                .transform(displaySource(AllDisplaySources.ITEM_NAMES))
                 .blockstate(new TieredBeltGenerator()::generateModel)
                 .onRegister(TieredBeltBlock::setupBeltModel)
-                .onRegister(assignDataBehaviour(new ItemNameDisplaySource(), "combine_item_names"))
                 .onRegister(CreateRegistrate.blockModel(() -> BeltModel::new))
                 .onRegister(c -> c.setBeltMaterial(material))
                 .onRegister(c -> c.setTier(tier))

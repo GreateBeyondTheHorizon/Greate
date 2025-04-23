@@ -6,8 +6,7 @@ import com.simibubi.create.AllFluids;
 import com.simibubi.create.content.fluids.potion.PotionFluidHandler;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
-import com.simibubi.create.foundation.utility.Components;
-import com.simibubi.create.foundation.utility.Lang;
+import com.simibubi.create.foundation.utility.CreateLang;
 import electrolyte.greate.Greate;
 import electrolyte.greate.GreateValues;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
@@ -19,6 +18,7 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import net.createmod.catnip.lang.Lang;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -112,7 +112,7 @@ public abstract class GreateRecipeCategory<T extends Recipe<?>> implements IReci
         return (view, tooltip) -> {
             float chance = output.getChance();
             if(chance != 1) {
-                tooltip.add(1, Lang.translateDirect("recipe.processing.chance", chance < 0.01 ? "<1" : chance * 100).withStyle(ChatFormatting.GOLD));
+                tooltip.add(1, CreateLang.translateDirect("recipe.processing.chance", chance < 0.01 ? "<1" : chance * 100).withStyle(ChatFormatting.GOLD));
             }
         };
     }
@@ -121,7 +121,7 @@ public abstract class GreateRecipeCategory<T extends Recipe<?>> implements IReci
         return (view, tooltip) -> {
             float chance = output.getChance();
             if (chance != 1) {
-                MutableComponent component = Lang.translateDirect("recipe.processing.chance", chance < 0.01 ? "<1" : chance * 100);
+                MutableComponent component = CreateLang.translateDirect("recipe.processing.chance", chance < 0.01 ? "<1" : chance * 100);
                 tooltip.add(1, component.withStyle(ChatFormatting.GOLD));
                 if(extraPercent != 0) {
                     String s = String.format("%2.2f", extraPercent * 100);
@@ -164,11 +164,11 @@ public abstract class GreateRecipeCategory<T extends Recipe<?>> implements IReci
             }
 
             int amount = mbAmount == -1 ? fluidStack.getAmount() : mbAmount;
-            Component text = Components.literal(String.valueOf(amount)).append(Lang.translateDirect("generic.unit.millibuckets")).withStyle(ChatFormatting.GOLD);
+            Component text = Component.literal(String.valueOf(amount)).append(CreateLang.translateDirect("generic.unit.millibuckets")).withStyle(ChatFormatting.GOLD);
             if (tooltip.isEmpty()) tooltip.add(0, text);
             else {
                 List<Component> siblings = tooltip.get(0).getSiblings();
-                siblings.add(Components.literal(" "));
+                siblings.add(Component.literal(" "));
                 siblings.add(text);
             }
         };
@@ -178,12 +178,12 @@ public abstract class GreateRecipeCategory<T extends Recipe<?>> implements IReci
         return new IDrawable() {
             @Override
             public int getWidth() {
-                return texture.width;
+                return texture.getWidth();
             }
 
             @Override
             public int getHeight() {
-                return texture.height;
+                return texture.getHeight();
             }
 
             @Override

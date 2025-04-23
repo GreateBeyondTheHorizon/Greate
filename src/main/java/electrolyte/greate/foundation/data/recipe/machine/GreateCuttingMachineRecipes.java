@@ -17,7 +17,7 @@ public class GreateCuttingMachineRecipes {
             CUTTER_RECIPES
                     .recipeBuilder(SHAFTS[tier].getId())
                     .inputItems(ALLOYS[tier])
-                    .outputItems(SHAFTS[tier], 6)
+                    .outputItems(SHAFTS[tier], 4)
                     .duration(100)
                     .EUt(VA[tier])
                     .save(provider);
