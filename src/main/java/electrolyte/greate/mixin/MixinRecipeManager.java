@@ -1,18 +1,15 @@
 package electrolyte.greate.mixin;
 
 import com.google.gson.JsonElement;
+import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
-import com.simibubi.create.AllRecipeTypes;
+import com.simibubi.create.Create;
 import com.simibubi.create.content.fluids.potion.PotionMixingRecipes;
 import electrolyte.greate.Greate;
+import electrolyte.greate.GreateValues;
 import electrolyte.greate.compat.kubejs.GreateKubeJSHelper;
-import electrolyte.greate.content.kinetics.fan.processing.TieredHauntingRecipe;
-import electrolyte.greate.content.kinetics.fan.processing.TieredSplashingRecipe;
-import electrolyte.greate.content.kinetics.millstone.TieredMillingRecipe;
-import electrolyte.greate.content.kinetics.mixer.TieredCompactingRecipe;
-import electrolyte.greate.content.kinetics.mixer.TieredMixingRecipe;
-import electrolyte.greate.content.kinetics.press.TieredPressingRecipe;
-import electrolyte.greate.content.kinetics.saw.TieredCuttingRecipe;
+import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
+import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeFactory;
 import electrolyte.greate.foundation.data.recipe.GreateRuntimeRecipes;
 import electrolyte.greate.foundation.data.recipe.removal.GreateRecipeRemoval;
 import net.minecraft.resources.ResourceLocation;
@@ -59,43 +56,14 @@ public class MixinRecipeManager {
         AtomicInteger recipeCount = new AtomicInteger();
         pMap.forEach((resourceLocation, jsonElement) -> {
             if(jsonElement.isJsonObject() && CraftingHelper.processConditions(jsonElement.getAsJsonObject(), "conditions", this.context)) {
-                if(resourceLocation.toString().startsWith(GTRecipeTypes.MACERATOR_RECIPES.registryName.toString())) {
-                    GreateRuntimeRecipes.convertGTRecipe(TieredMillingRecipe::new, resourceLocation, jsonElement);
-                    recipeCount.getAndIncrement();
-                } else if(resourceLocation.toString().startsWith(AllRecipeTypes.MILLING.getId().toString())) {
-                    GreateRuntimeRecipes.convertCreateRecipe(TieredMillingRecipe::new, resourceLocation, jsonElement);
-                    recipeCount.getAndIncrement();
-                }
-                else if(resourceLocation.toString().startsWith(AllRecipeTypes.SPLASHING.getId().toString())) {
-                    GreateRuntimeRecipes.convertCreateRecipe(TieredSplashingRecipe::new, resourceLocation, jsonElement);
-                    recipeCount.getAndIncrement();
-                } else if(resourceLocation.toString().startsWith(AllRecipeTypes.HAUNTING.getId().toString())) {
-                    GreateRuntimeRecipes.convertCreateRecipe(TieredHauntingRecipe::new, resourceLocation, jsonElement);
-                    recipeCount.getAndIncrement();
-                }
-                else if(resourceLocation.toString().startsWith(GTRecipeTypes.BENDER_RECIPES.registryName.toString())) {
-                    GreateRuntimeRecipes.convertGTRecipe(TieredPressingRecipe::new, resourceLocation, jsonElement, false);
-                    recipeCount.getAndIncrement();
-                } else if(resourceLocation.toString().startsWith(AllRecipeTypes.PRESSING.getId().toString())) {
-                    GreateRuntimeRecipes.convertCreateRecipe(TieredPressingRecipe::new, resourceLocation, jsonElement);
-                    recipeCount.getAndIncrement();
-                }
-                else if(resourceLocation.toString().startsWith(GTRecipeTypes.MIXER_RECIPES.registryName.toString())) {
-                    GreateRuntimeRecipes.convertGTRecipe(TieredMixingRecipe::new, resourceLocation, jsonElement);
-                    recipeCount.getAndIncrement();
-                } else if(resourceLocation.toString().startsWith(AllRecipeTypes.MIXING.getId().toString())) {
-                    GreateRuntimeRecipes.convertCreateRecipe(TieredMixingRecipe::new, resourceLocation, jsonElement);
-                    recipeCount.getAndIncrement();
-                }
-                else if(resourceLocation.toString().startsWith(AllRecipeTypes.COMPACTING.getId().toString())) {
-                    GreateRuntimeRecipes.convertCreateRecipe(TieredCompactingRecipe::new, resourceLocation, jsonElement);
-                    recipeCount.getAndIncrement();
-                }
-                else if(resourceLocation.toString().startsWith(GTRecipeTypes.CUTTER_RECIPES.registryName.toString())) {
-                    GreateRuntimeRecipes.convertGTRecipe(TieredCuttingRecipe::new, resourceLocation, jsonElement);
-                    recipeCount.getAndIncrement();
-                } else if(resourceLocation.toString().startsWith(AllRecipeTypes.CUTTING.getId().toString())) {
-                    GreateRuntimeRecipes.convertCreateRecipe(TieredCuttingRecipe::new, resourceLocation, jsonElement);
+                TieredProcessingRecipeFactory<TieredProcessingRecipe<?>> factory = GreateValues.getFactory(resourceLocation);
+                if(factory != null) {
+                    String type = jsonElement.getAsJsonObject().get("type").getAsString();
+                    if(type.startsWith(GTCEu.MOD_ID)) {
+                        GreateRuntimeRecipes.convertGTRecipe(factory, resourceLocation, jsonElement, !type.startsWith(GTRecipeTypes.BENDER_RECIPES.registryName.toString()));
+                    } else if(type.startsWith(Create.ID)) {
+                        GreateRuntimeRecipes.convertCreateRecipe(factory, resourceLocation, jsonElement);
+                    }
                     recipeCount.getAndIncrement();
                 }
             }

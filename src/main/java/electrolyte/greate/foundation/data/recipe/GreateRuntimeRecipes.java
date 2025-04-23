@@ -46,11 +46,6 @@ public class GreateRuntimeRecipes {
                 .build();
     }
 
-    public static void convertGTRecipe(TieredProcessingRecipeFactory<TieredProcessingRecipe<?>> factory, ResourceLocation recipeId, JsonElement recipeJson) {
-        convertGTRecipe(factory, recipeId, recipeJson, true);
-    }
-
-
     public static void convertCreateRecipe(TieredProcessingRecipeFactory<TieredProcessingRecipe<?>> factory, ResourceLocation recipeId, JsonElement recipeJson) {
         TieredProcessingRecipeSerializer<TieredProcessingRecipe<?>> serializer = new TieredProcessingRecipeSerializer<>(factory);
         ProcessingRecipe<?> recipe = serializer.fromJson(recipeId, recipeJson.getAsJsonObject());
