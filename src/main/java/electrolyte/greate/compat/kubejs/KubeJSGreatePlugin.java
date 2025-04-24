@@ -89,6 +89,7 @@ public class KubeJSGreatePlugin extends KubeJSPlugin {
                     inputs.forEach((recipeCapability, contents) -> {
                         if(recipeCapability instanceof ItemRecipeCapability) {
                             builder.withItemIngredientsGT(contents);
+                            builder.recipeCircuit(TieredProcessingRecipe.getCircuitFromGTRecipe(contents));
                         }
                         if(recipeCapability instanceof FluidRecipeCapability) {
                             builder.withFluidIngredientsGT(contents);
