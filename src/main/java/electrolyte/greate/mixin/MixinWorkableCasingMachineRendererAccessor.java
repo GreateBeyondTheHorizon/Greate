@@ -8,5 +8,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(WorkableCasingMachineRenderer.class)
 public interface MixinWorkableCasingMachineRendererAccessor {
 
-    @Accessor("baseCasing") ResourceLocation getBaseCasing();
+    @Accessor(value = "baseCasing", remap = false) ResourceLocation getBaseCasing();
 }

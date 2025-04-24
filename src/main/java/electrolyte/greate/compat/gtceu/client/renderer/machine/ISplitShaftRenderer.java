@@ -1,16 +1,16 @@
 package electrolyte.greate.compat.gtceu.client.renderer.machine;
 
-import com.jozufozu.flywheel.backend.Backend;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.kinetics.base.IRotate;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
-import com.simibubi.create.foundation.render.CachedBufferer;
-import com.simibubi.create.foundation.render.SuperByteBuffer;
-import com.simibubi.create.foundation.utility.AnimationTickHolder;
-import com.simibubi.create.foundation.utility.Iterate;
+import dev.engine_room.flywheel.api.visualization.VisualizationManager;
 import electrolyte.greate.compat.gtceu.common.blockentity.TieredKineticMachineBlockEntity;
 import electrolyte.greate.compat.gtceu.common.machine.kinetic.IKineticMachine;
+import net.createmod.catnip.animation.AnimationTickHolder;
+import net.createmod.catnip.data.Iterate;
+import net.createmod.catnip.render.CachedBuffers;
+import net.createmod.catnip.render.SuperByteBuffer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
@@ -25,7 +25,7 @@ public interface ISplitShaftRenderer extends IKineticMachineRenderer {
     @OnlyIn(Dist.CLIENT)
     default void renderSafe(TieredKineticMachineBlockEntity te, float partialTicks, PoseStack ms,
                             MultiBufferSource bufferSource, int light, int overlay) {
-        if (! Backend.canUseInstancing(te.getLevel())) {
+        if (!VisualizationManager.supportsVisualization(te.getLevel())) {
             Block block = te.getBlockState().getBlock();
             Direction.Axis boxAxis = ((IRotate) block).getRotationAxis(te.getBlockState());
             BlockPos pos = te.getBlockPos();
@@ -43,7 +43,7 @@ public interface ISplitShaftRenderer extends IKineticMachineRenderer {
                     angle *= modifier;
                     angle += offset;
                     angle = angle / 180.0F * 3.1415927F;
-                    SuperByteBuffer superByteBuffer = CachedBufferer.partialFacing(AllPartialModels.SHAFT_HALF,
+                    SuperByteBuffer superByteBuffer = CachedBuffers.partialFacing(AllPartialModels.SHAFT_HALF,
                             te.getBlockState(), direction);
                     KineticBlockEntityRenderer.kineticRotationTransform(superByteBuffer, te, axis, angle, light);
                     superByteBuffer.renderInto(ms, bufferSource.getBuffer(RenderType.solid()));

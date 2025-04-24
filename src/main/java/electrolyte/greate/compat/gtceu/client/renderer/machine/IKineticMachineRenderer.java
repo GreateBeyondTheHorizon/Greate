@@ -1,12 +1,12 @@
 package electrolyte.greate.compat.gtceu.client.renderer.machine;
 
-import com.jozufozu.flywheel.backend.Backend;
 import com.lowdragmc.lowdraglib.client.renderer.IRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
-import com.simibubi.create.foundation.render.CachedBufferer;
-import com.simibubi.create.foundation.render.SuperByteBuffer;
+import dev.engine_room.flywheel.api.visualization.VisualizationManager;
 import electrolyte.greate.compat.gtceu.common.blockentity.TieredKineticMachineBlockEntity;
+import net.createmod.catnip.render.CachedBuffers;
+import net.createmod.catnip.render.SuperByteBuffer;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -44,7 +44,7 @@ public interface IKineticMachineRenderer extends IRenderer {
     @OnlyIn(Dist.CLIENT)
     default void renderSafe(TieredKineticMachineBlockEntity te, float partialTicks, PoseStack ms,
                             MultiBufferSource bufferSource, int light, int overlay) {
-        if (Backend.canUseInstancing(te.getLevel())) return;
+        if (VisualizationManager.supportsVisualization(te.getLevel())) return;
         BlockState state = getRenderedBlockState(te);
         RenderType type = getRenderType(te, state);
         if (type != null) {
@@ -60,6 +60,6 @@ public interface IKineticMachineRenderer extends IRenderer {
 
     @OnlyIn(Dist.CLIENT)
     default SuperByteBuffer getRotatedModel(TieredKineticMachineBlockEntity te, BlockState state) {
-        return CachedBufferer.block(KineticBlockEntityRenderer.KINETIC_BLOCK, state);
+        return CachedBuffers.block(KineticBlockEntityRenderer.KINETIC_BLOCK, state);
     }
 }

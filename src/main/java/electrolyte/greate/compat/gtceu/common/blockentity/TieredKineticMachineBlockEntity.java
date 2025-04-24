@@ -5,19 +5,12 @@ import com.gregtechceu.gtceu.api.blockentity.MetaMachineBlockEntity;
 import com.gregtechceu.gtceu.api.item.tool.GTToolType;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.MetaMachine;
-import com.jozufozu.flywheel.api.MaterialManager;
-import com.jozufozu.flywheel.backend.instancing.InstancedRenderRegistry;
-import com.jozufozu.flywheel.backend.instancing.blockentity.BlockEntityInstance;
-import com.lowdragmc.lowdraglib.LDLib;
 import com.lowdragmc.lowdraglib.gui.texture.ResourceTexture;
 import com.lowdragmc.lowdraglib.syncdata.annotation.DescSynced;
 import com.lowdragmc.lowdraglib.syncdata.managed.MultiManagedStorage;
 import com.simibubi.create.content.kinetics.KineticNetwork;
 import com.simibubi.create.content.kinetics.base.IRotate.SpeedLevel;
 import com.simibubi.create.content.kinetics.base.KineticEffectHandler;
-import com.tterrag.registrate.util.OneTimeEventReceiver;
-import com.tterrag.registrate.util.nullness.NonNullSupplier;
-import electrolyte.greate.GreateRegistries;
 import electrolyte.greate.compat.gtceu.common.machine.TieredKineticMachineDefinition;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredKineticBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -28,17 +21,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Set;
 import java.util.UUID;
-import java.util.function.BiFunction;
 
 public class TieredKineticMachineBlockEntity extends TieredKineticBlockEntity implements IMachineBlockEntity {
 
@@ -68,15 +57,6 @@ public class TieredKineticMachineBlockEntity extends TieredKineticBlockEntity im
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
         var result = MetaMachineBlockEntity.getCapability(getMetaMachine(), cap, side);
         return result == null ? super.getCapability(cap, side) : result;
-    }
-
-    //TODO: fix whatever the fuck this is
-    public static void onBlockEntityRegister(BlockEntityType blockEntityType,
-                                             NonNullSupplier<BiFunction<MaterialManager, TieredKineticMachineBlockEntity, BlockEntityInstance<? super TieredKineticMachineBlockEntity>>> instanceFactory,
-                                             boolean renderNormally) {
-        if(instanceFactory != null && LDLib.isClient()) {
-            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> OneTimeEventReceiver.addModListener(GreateRegistries.REGISTRATE, FMLClientSetupEvent.class, ($) -> InstancedRenderRegistry.configure(blockEntityType).factory(instanceFactory.get()).skipRender((be) -> !renderNormally).apply()));
-        }
     }
 
     @Override

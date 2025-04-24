@@ -11,8 +11,8 @@ import org.spongepowered.asm.mixin.Unique;
 @Mixin(GTRecipeJS.class)
 public abstract class MixinGTRecipeJS { //We love load order issues!!!!
 
-    @Shadow public abstract <T> GTRecipeJS input(RecipeCapability<T> capability, Object... obj);
-    @Shadow public abstract <T> GTRecipeJS output(RecipeCapability<T> capability, Object... obj);
+    @Shadow(remap = false) public abstract <T> GTRecipeJS input(RecipeCapability<T> capability, Object... obj);
+    @Shadow(remap = false) public abstract <T> GTRecipeJS output(RecipeCapability<T> capability, Object... obj);
 
     @Unique
     public GTRecipeJS inputStress(float stress) {
