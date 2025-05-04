@@ -33,7 +33,7 @@ public abstract class MixinKineticBlockEntity extends SmartBlockEntity implement
     }
 
     @Inject(method = "write", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/blockEntity/SmartBlockEntity;write(Lnet/minecraft/nbt/CompoundTag;Z)V"), remap = false)
-    private void greate_Write(CompoundTag compound, boolean clientPacket, CallbackInfo ci) {
+    private void greate_write(CompoundTag compound, boolean clientPacket, CallbackInfo ci) {
         compound.putFloat("MaxCapacity", getMaxCapacityFromBlock(this.getBlockState().getBlock()));
         if(hasNetwork()) {
             CompoundTag networkTag = compound.getCompound("Network");
@@ -43,7 +43,7 @@ public abstract class MixinKineticBlockEntity extends SmartBlockEntity implement
     }
 
     @Inject(method = "read", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/kinetics/transmission/sequencer/SequencedGearshiftBlockEntity$SequenceContext;fromNBT(Lnet/minecraft/nbt/CompoundTag;)Lcom/simibubi/create/content/kinetics/transmission/sequencer/SequencedGearshiftBlockEntity$SequenceContext;"), remap = false)
-    private void greate_Read(CompoundTag tag, boolean clientPacket, CallbackInfo ci) {
+    private void greate_read(CompoundTag tag, boolean clientPacket, CallbackInfo ci) {
         greate_shaftMaxCapacity = tag.getFloat("MaxCapacity");
         if(tag.contains("Network")) {
             CompoundTag networkTag = tag.getCompound("Network");

@@ -1,6 +1,5 @@
 package electrolyte.greate.foundation.data.recipe;
 
-import com.gregtechceu.gtceu.api.capability.recipe.EURecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.content.Content;
@@ -8,7 +7,6 @@ import com.gregtechceu.gtceu.common.data.GTItems;
 import com.gregtechceu.gtceu.common.item.IntCircuitBehaviour;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour;
-import electrolyte.greate.GreateValues;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -25,13 +23,6 @@ public class TieredRecipeConditions {
         return r -> {
             if(r instanceof ProcessingRecipe<?> || r instanceof StonecutterRecipe) {
                 return !r.getIngredients().isEmpty() && r.getIngredients().get(0).test(stack);
-            } else if(r instanceof GTRecipe gtr) {
-                List<Content> inputIngredients = gtr.getInputContents(ItemRecipeCapability.CAP);
-                if(inputIngredients.isEmpty()) return false;
-                for(Content c : inputIngredients) {
-                    Ingredient ing = (Ingredient) c.getContent();
-                    if(ing.test(stack)) return true;
-                }
             }
             return false;
         };
@@ -80,8 +71,6 @@ public class TieredRecipeConditions {
         return r -> {
             if(r instanceof TieredProcessingRecipe<?> pr) {
                 return pr.getRecipeTier() <= machineTier;
-            } else if(r instanceof GTRecipe gtr) {
-                return GreateValues.convertGTEUToTier(gtr.getTickInputContents(EURecipeCapability.CAP)) <= machineTier;
             }
             return true;
         };

@@ -11,84 +11,54 @@ import electrolyte.greate.registry.ModRecipeTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 import java.util.List;
 import java.util.Optional;
 
 public class TieredMillstoneBlockEntity extends MillstoneBlockEntity implements ITieredKineticBlockEntity {
-    public int timer;
-    private Recipe<? extends Container> lastRecipe;
+    private TieredMillingRecipe lastRecipe;
     private int tier;
     private static final Object MILLING_RECIPE_CACHE_KEY = new Object();
 
     public TieredMillstoneBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
         super(typeIn, pos, state);
-        capability = LazyOptional.of(TieredMillstoneInventoryHandler::new);
         tier = ((TieredMillstoneBlock) state.getBlock()).getTier();
     }
 
-    @Override
-    public void tick() {
-        super.tick();
-
-        if(getSpeed() == 0) return;
-
-        for(int i = 0; i < outputInv.getSlots(); i++) {
-            if(outputInv.getStackInSlot(i).getCount() == outputInv.getSlotLimit(i)) return;
-        }
-
-        if(timer > 0) {
-            timer -= getProcessingSpeed();
-
-            if(level.isClientSide) {
-                spawnParticles();
-                return;
-            }
-
-            if(timer <= 0) {
-                process();
-            }
-            return;
-        }
-
-        if(inputInv.getStackInSlot(0).isEmpty()) return;
-
+    public void setupRecipe() {
         RecipeWrapper inventoryIn = new RecipeWrapper(inputInv);
-        if(lastRecipe == null || !TieredRecipeHelper.INSTANCE.firstIngredientMatches(lastRecipe, inventoryIn)) {
+        if(lastRecipe == null || !lastRecipe.matches(inventoryIn, level)) {
             Optional<Recipe<?>> recipe = findRecipe(inventoryIn);
             if(recipe.isEmpty()) {
                 timer = 100;
                 sendData();
             } else {
-                lastRecipe = recipe.get();
-                timer = TieredRecipeHelper.INSTANCE.findDuration(recipe.get());
+                lastRecipe = (TieredMillingRecipe) recipe.get();
+                timer = ((TieredMillingRecipe) recipe.get()).getProcessingDuration();
                 sendData();
             }
             return;
         }
-        timer = TieredRecipeHelper.INSTANCE.findDuration(lastRecipe);
+        timer = lastRecipe.getProcessingDuration();
         sendData();
     }
 
-    private void process() {
+    public void processRecipe() {
         if(inputInv.getStackInSlot(0).isEmpty()) return;
         RecipeWrapper inventoryIn = new RecipeWrapper(inputInv);
 
-        if(lastRecipe == null || !TieredRecipeHelper.INSTANCE.firstIngredientMatches(lastRecipe, inventoryIn)) {
+        if(lastRecipe == null || !lastRecipe.matches(inventoryIn, level)) {
             Optional<Recipe<?>> recipe = findRecipe(inventoryIn);
 
             if(recipe.isEmpty()) return;
-            lastRecipe = recipe.get();
+            lastRecipe = (TieredMillingRecipe) recipe.get();
         }
 
         ItemStack stackInSlot = inputInv.getStackInSlot(0);
@@ -103,19 +73,7 @@ public class TieredMillstoneBlockEntity extends MillstoneBlockEntity implements 
         setChanged();
     }
 
-    @Override
-    protected void read(CompoundTag compound, boolean clientPacket) {
-        super.read(compound, clientPacket);
-        timer = compound.getInt("Timer");
-    }
-
-    @Override
-    public void write(CompoundTag compound, boolean clientPacket) {
-        super.write(compound, clientPacket);
-        compound.putInt("Timer", timer);
-    }
-
-    private boolean canProcess(ItemStack stack) {
+    public boolean canProcess(ItemStack stack) {
         ItemStackHandler tester = new ItemStackHandler(1);
         tester.setStackInSlot(0, stack);
         RecipeWrapper inventoryIn = new RecipeWrapper(tester);
@@ -123,11 +81,11 @@ public class TieredMillstoneBlockEntity extends MillstoneBlockEntity implements 
         if(lastRecipe != null && TieredRecipeFinder.shouldRefreshRecipe()) {
             lastRecipe = null;
         }
-        if(lastRecipe != null && TieredRecipeHelper.INSTANCE.firstIngredientMatches(lastRecipe, inventoryIn)) return true;
+        if(lastRecipe != null && lastRecipe.matches(inventoryIn, level)) return true;
         return findRecipe(inventoryIn).isPresent();
     }
 
-    private Optional<Recipe<?>> findRecipe(RecipeWrapper wrapper) {
+    public Optional<Recipe<?>> findRecipe(RecipeWrapper wrapper) {
         return TieredRecipeFinder.findRecipe(MILLING_RECIPE_CACHE_KEY, level, wrapper,
                 RecipeConditions.isOfType(ModRecipeTypes.MILLING.getType())
                         .and(TieredRecipeConditions.firstIngredientMatches(wrapper.getItem(0))),
@@ -140,29 +98,13 @@ public class TieredMillstoneBlockEntity extends MillstoneBlockEntity implements 
         return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, tier, capacity, stress);
     }
 
-    private class TieredMillstoneInventoryHandler extends CombinedInvWrapper {
-
-        public TieredMillstoneInventoryHandler() {
-            super(inputInv, outputInv);
-        }
-
-        @Override
-        public boolean isItemValid(int slot, ItemStack stack) {
-            if(outputInv == getHandlerFromIndex(getIndexForSlot(slot))) return false;
-            return canProcess(stack) && super.isItemValid(slot, stack);
-        }
-
-        @Override
-        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-            if(outputInv == getHandlerFromIndex(getIndexForSlot(slot))) return stack;
-            if(!isItemValid(slot, stack)) return stack;
-            return super.insertItem(slot, stack, simulate);
-        }
-
-        @Override
-        public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            if(inputInv == getHandlerFromIndex(getIndexForSlot(slot))) return ItemStack.EMPTY;
-            return super.extractItem(slot, amount, simulate);
-        }
+    /**
+     * @see <a href="https://github.com/Creators-of-Create/Create/issues/8212">crusher deletes items</a> & related issues
+     * When there is items in the output inventory and items in the input inventory on world save, the input inventory
+     * will be completely voided upon world reload.
+     **/
+    @Override
+    public void write(CompoundTag compound, boolean clientPacket) {
+        super.write(compound, clientPacket);
     }
 }
