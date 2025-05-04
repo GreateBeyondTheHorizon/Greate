@@ -67,7 +67,6 @@ repositories {
             includeGroup "dev.engine-room.flywheel"
             includeGroup "com.simibubi.create"
         }
-
     }
     maven { url = 'https://maven.blamejared.com'
         content {
@@ -79,7 +78,7 @@ repositories {
             includeGroup "dev.architectury"
         }
     }
-    maven { url = 'https://maven.saps.dev/minecraft'
+    maven { url = 'https://maven.latvian.dev/releases'
         content {
             includeGroup 'dev.latvian.mods'
         }
