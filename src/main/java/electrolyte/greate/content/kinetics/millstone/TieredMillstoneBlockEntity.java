@@ -9,7 +9,6 @@ import electrolyte.greate.foundation.recipe.TieredRecipeFinder;
 import electrolyte.greate.foundation.recipe.TieredRecipeHelper;
 import electrolyte.greate.registry.ModRecipeTypes;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
@@ -96,15 +95,5 @@ public class TieredMillstoneBlockEntity extends MillstoneBlockEntity implements 
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
         return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, tier, capacity, stress);
-    }
-
-    /**
-     * @see <a href="https://github.com/Creators-of-Create/Create/issues/8212">crusher deletes items</a> & related issues
-     * When there is items in the output inventory and items in the input inventory on world save, the input inventory
-     * will be completely voided upon world reload.
-     **/
-    @Override
-    public void write(CompoundTag compound, boolean clientPacket) {
-        super.write(compound, clientPacket);
     }
 }

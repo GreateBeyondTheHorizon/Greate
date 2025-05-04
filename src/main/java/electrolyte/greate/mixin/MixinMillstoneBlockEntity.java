@@ -25,6 +25,8 @@ public abstract class MixinMillstoneBlockEntity extends KineticBlockEntity {
 
     @Shadow(remap = false) public ItemStackHandler inputInv;
 
+    @Shadow(remap = false) private void process() {}
+
     public MixinMillstoneBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
         super(typeIn, pos, state);
     }
@@ -33,6 +35,7 @@ public abstract class MixinMillstoneBlockEntity extends KineticBlockEntity {
     private boolean greate_tick(MillingRecipe instance, RecipeWrapper inv, Level worldIn) {
         if(((MillstoneBlockEntity) (Object) this) instanceof TieredMillstoneBlockEntity tmbe) {
             tmbe.setupRecipe();
+            return false;
         }
         return !lastRecipe.matches(new RecipeWrapper(inputInv), level);
     }
@@ -41,13 +44,15 @@ public abstract class MixinMillstoneBlockEntity extends KineticBlockEntity {
     private void greate_process(MillstoneBlockEntity millstone) {
         if(millstone instanceof TieredMillstoneBlockEntity tmbe) {
             tmbe.processRecipe();
+        } else {
+            process();
         }
     }
 
     @Redirect(method = "canProcess", at = @At(value = "INVOKE", target = "Ljava/util/Optional;isPresent()Z"), remap = false)
     private boolean greate_canProcess(Optional<MillingRecipe> instance, ItemStack stack) {
         if(((MillstoneBlockEntity) (Object) this) instanceof TieredMillstoneBlockEntity tmbe) {
-            tmbe.canProcess(stack);
+            return tmbe.canProcess(stack);
         }
         return instance.isPresent();
     }
