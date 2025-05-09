@@ -224,7 +224,7 @@ public class Cogwheels {
         return REGISTRATE
                 .block("andesite_encased_large_" + TM[tier].getName() + "_cogwheel", p -> TieredEncasedCogwheelBlock.large(p, AllBlocks.ANDESITE_CASING::get, LARGE_COGWHEELS[tier]::get))
                 .properties(p -> p.mapColor(MapColor.PODZOL))
-                .transform(tieredEncasedLargeCogwheel(COGWHEELS[tier], () -> AllSpriteShifts.ANDESITE_CASING))
+                .transform(tieredEncasedLargeCogwheel(LARGE_COGWHEELS[tier], () -> AllSpriteShifts.ANDESITE_CASING))
                 .transform(EncasingRegistry.addVariantTo(LARGE_COGWHEELS[tier]))
                 .transform(TagGen.axeOrPickaxe())
                 .transform(TieredBlockMaterials.setMaterialForBlock(TM[tier]))
@@ -250,7 +250,7 @@ public class Cogwheels {
         return REGISTRATE
                 .block("brass_encased_large_" + TM[tier].getName() + "_cogwheel", p -> TieredEncasedCogwheelBlock.large(p, AllBlocks.BRASS_CASING::get, LARGE_COGWHEELS[tier]::get))
                 .properties(p -> p.mapColor(MapColor.PODZOL))
-                .transform(tieredEncasedLargeCogwheel(COGWHEELS[tier], () -> AllSpriteShifts.BRASS_CASING))
+                .transform(tieredEncasedLargeCogwheel(LARGE_COGWHEELS[tier], () -> AllSpriteShifts.BRASS_CASING))
                 .transform(EncasingRegistry.addVariantTo(LARGE_COGWHEELS[tier]))
                 .transform(TagGen.axeOrPickaxe())
                 .transform(TieredBlockMaterials.setMaterialForBlock(TM[tier]))
