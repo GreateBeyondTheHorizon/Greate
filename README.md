@@ -19,6 +19,7 @@ Welcome to **Greate**, a Minecraft mod that combines the best of Create and Greg
 
 ## Downloads 📁
 
+* ### [Curseforge](https://www.curseforge.com/minecraft/mc-mods/greate/files/all?page=1&pageSize=20&showAlphaFiles=show)
 * ### [Modrinth](https://modrinth.com/mod/greate)
 * ### [Github Releases](https://github.com/GreateBeyondTheHorizon/Greate/releases)
 
@@ -33,5 +34,3 @@ Got a question or just want to chat? You can reach us on [our Discord](https://d
 ---
 
 💡*Please note, this mod is in early development. Gameplay elements may change as we refine and expand the mod.*
-
-⌨️*Modpack Developers: While this mod is in alpha, you are free to include the jar in your modpacks (CF & Modrinth). Once we enter beta (and hence publish to CF), we ask that you include it in the respective platform's manifest instead.*
