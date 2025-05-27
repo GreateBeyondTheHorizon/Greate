@@ -60,24 +60,22 @@ public class NotifiableStressTrait extends NotifiableRecipeHandlerTrait<Float> i
 
     @Override
     public List<Float> handleRecipeInner(IO io, GTRecipe gtRecipe, List<Float> list, @Nullable String slotName, boolean simulate) {
-        if(machine instanceof IKineticMachine km) {
-            float requiredSU = list.stream().reduce(0f, Float::sum);
-            var kineticDef = km.getKineticDefinition();
-            if(io == IO.IN && !kineticDef.isSource()) {
-                float generatedSU = km.getKineticHolder().getNetworkCapacity();
-                if(generatedSU > 0) {
-                    if(!simulate) km.getKineticHolder().setStressApplied(requiredSU);
-                    requiredSU -= generatedSU;
-                }
-            } else if(io == IO.OUT && kineticDef.isSource()) {
-                if(simulate) {
-                    available = km.getKineticHolder().scheduleWorkingStress((float) gtRecipe.getTickOutputContents(StressRecipeCapability.STRESS_CAPABILITY).get(0).getContent(), true);
-                }
-                requiredSU -= available;
+        if(!(machine instanceof IKineticMachine km)) return list;
+        float requiredSU = list.stream().reduce(0f, Float::sum);
+        var kineticDef = km.getKineticDefinition();
+        if(io == IO.IN && !kineticDef.isSource()) {
+            float generatedSU = km.getKineticHolder().getNetworkCapacity();
+            if(generatedSU > 0) {
+                if(!simulate) km.getKineticHolder().setStressApplied(requiredSU);
+                requiredSU -= generatedSU;
             }
-            return requiredSU <= 0 ? null : Collections.singletonList(requiredSU);
+        } else if(io == IO.OUT && kineticDef.isSource()) {
+            if(simulate) {
+                available = km.getKineticHolder().scheduleWorkingStress((float) gtRecipe.getTickOutputContents(StressRecipeCapability.STRESS_CAPABILITY).get(0).getContent(), true);
+            }
+            requiredSU -= available;
         }
-        return list;
+        return requiredSU <= 0 ? null : Collections.singletonList(requiredSU);
     }
 
     @Override

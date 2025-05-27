@@ -61,7 +61,7 @@ public class KubeJSGreatePlugin extends KubeJSPlugin {
     public void registerBindings(BindingsEvent event) {
         event.add("TieredOutputItem", TieredOutputItem.class);
         event.add("GreateValues", GreateValues.class);
-        event.add("GreateRecipeCapabilties", GreateRecipeCapabilities.class);
+        event.add("GreateRecipeCapabilities", GreateRecipeCapabilities.class);
     }
 
     @Override
@@ -137,8 +137,8 @@ public class KubeJSGreatePlugin extends KubeJSPlugin {
     @Override
     public void registerRecipeComponents(RecipeComponentFactoryRegistryEvent event) {
         event.register("inputStress", GreateRecipeComponents.STRESS_IN);
-        event.register("greateOutputStress", GreateRecipeComponents.STRESS_OUT);
-        event.register("greateInputRPM", GreateRecipeComponents.RPM_IN);
-        event.register("greateOutputRPM", GreateRecipeComponents.RPM_OUT);
+        event.register("outputStress", GreateRecipeComponents.STRESS_OUT);
+        event.register("inputRPM", GreateRecipeComponents.RPM_IN);
+        event.register("outputRPM", GreateRecipeComponents.RPM_OUT);
     }
 }
