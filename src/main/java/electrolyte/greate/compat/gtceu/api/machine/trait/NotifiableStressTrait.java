@@ -71,7 +71,7 @@ public class NotifiableStressTrait extends NotifiableRecipeHandlerTrait<Float> i
             }
         } else if(io == IO.OUT && kineticDef.isSource()) {
             if(simulate) {
-                available = km.getKineticHolder().scheduleWorkingStress((float) gtRecipe.getTickOutputContents(StressRecipeCapability.STRESS_CAPABILITY).get(0).getContent(), true);
+                available = km.getKineticHolder().scheduleWorkingStress(requiredSU, true);
             }
             requiredSU -= available;
         }

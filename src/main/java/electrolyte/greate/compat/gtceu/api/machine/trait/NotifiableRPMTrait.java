@@ -61,22 +61,20 @@ public class NotifiableRPMTrait extends NotifiableRecipeHandlerTrait<Float> impl
 
     @Override
     public List<Float> handleRecipeInner(IO io, GTRecipe gtRecipe, List<Float> list, @Nullable String slotName, boolean simulate) {
-        if(machine instanceof IKineticMachine km) {
-            float requiredRPM = list.stream().reduce(0f, Float::sum);
-            var kineticDef = km.getKineticDefinition();
-            if(io == IO.IN && !kineticDef.isSource()) {
-                float currentRPM = Mth.abs(km.getKineticHolder().getSpeed());
-                if(currentRPM > 0) requiredRPM = requiredRPM - currentRPM;
-            } else if(io == IO.OUT && kineticDef.isSource()) {
-                if(!simulate) {
-                    kineticDef.setTorque((float) gtRecipe.getTickOutputContents(RPMRecipeCapability.RPM_CAPABILITY).get(0).getContent());
-                    available = km.getKineticHolder().scheduleWorkingRPM((float) gtRecipe.getTickOutputContents(RPMRecipeCapability.RPM_CAPABILITY).get(0).getContent(), false);
-                }
-                requiredRPM -= available;
+        if(!(machine instanceof IKineticMachine km)) return list;
+        float requiredRPM = list.stream().reduce(0f, Float::sum);
+        var kineticDef = km.getKineticDefinition();
+        if(io == IO.IN && !kineticDef.isSource()) {
+            float currentRPM = Mth.abs(km.getKineticHolder().getSpeed());
+            if(currentRPM > 0) requiredRPM = requiredRPM - currentRPM;
+        } else if(io == IO.OUT && kineticDef.isSource()) {
+            if(simulate) {
+                //kineticDef.setTorque((float) gtRecipe.getTickOutputContents(RPMRecipeCapability.RPM_CAPABILITY).get(0).getContent());
+                available = km.getKineticHolder().scheduleWorkingRPM((float) gtRecipe.getTickOutputContents(RPMRecipeCapability.RPM_CAPABILITY).get(0).getContent(), true);
             }
-            return requiredRPM <= 0 ? null : Collections.singletonList(requiredRPM);
+            requiredRPM -= available;
         }
-        return list;
+        return requiredRPM <= 0 ? null : Collections.singletonList(requiredRPM);
     }
 
     @Override

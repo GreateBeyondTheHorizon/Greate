@@ -14,6 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ForgeConfigSpec.Builder;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -84,6 +85,14 @@ public class GStress extends ConfigBase {
         ResourceLocation loc = CatnipServices.REGISTRIES.getKeyOrThrow(block);
         ConfigValue<Double> impact = this.capacities.get(loc);
         return impact == null ? null : impact::get;
+    }
+
+    public static void setCapacity(ResourceLocation id, double capacity) {
+        DEFAULT_CAPACITIES.put(id, capacity);
+    }
+
+    public static void setImpact(ResourceLocation id, double impact) {
+        DEFAULT_IMPACTS.put(id, impact);
     }
 
     public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> setCapacity(double capacity) {

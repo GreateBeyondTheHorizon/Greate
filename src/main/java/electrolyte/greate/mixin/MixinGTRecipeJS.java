@@ -13,6 +13,7 @@ public abstract class MixinGTRecipeJS { //We love load order issues!!!!
 
     @Shadow(remap = false) public abstract <T> GTRecipeJS input(RecipeCapability<T> capability, Object... obj);
     @Shadow(remap = false) public abstract <T> GTRecipeJS output(RecipeCapability<T> capability, Object... obj);
+    @Shadow(remap = false) public boolean perTick;
 
     @Unique
     public GTRecipeJS inputStress(float stress) {
@@ -21,8 +22,9 @@ public abstract class MixinGTRecipeJS { //We love load order issues!!!!
 
     @Unique
     public GTRecipeJS inputStress(float stress, float rpm) {
-        return this.input(StressRecipeCapability.STRESS_CAPABILITY, stress).perTick(true)
-                .input(RPMRecipeCapability.RPM_CAPABILITY, rpm).perTick(true);
+        perTick = true;
+        return this.input(StressRecipeCapability.STRESS_CAPABILITY, stress)
+                .input(RPMRecipeCapability.RPM_CAPABILITY, rpm);
     }
 
     @Unique
@@ -32,7 +34,8 @@ public abstract class MixinGTRecipeJS { //We love load order issues!!!!
 
     @Unique
     public GTRecipeJS outputStress(float stress, float rpm) {
-        return this.output(StressRecipeCapability.STRESS_CAPABILITY, stress).perTick(true)
-                .output(RPMRecipeCapability.RPM_CAPABILITY, rpm).perTick(true);
+        perTick = true;
+        return this.output(StressRecipeCapability.STRESS_CAPABILITY, stress)
+                .output(RPMRecipeCapability.RPM_CAPABILITY, rpm);
     }
 }

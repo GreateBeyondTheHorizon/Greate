@@ -123,7 +123,7 @@ public class TieredKineticMachineBlockEntity extends TieredKineticBlockEntity im
 
     public float scheduleWorkingStress(float su, boolean simulate) {
         if(getDefinition().isSource()) {
-            float stressGenerated = Math.min(su, Float.MAX_VALUE) / this.getTheoreticalSpeed();
+            float stressGenerated = Math.min(su, Float.MAX_VALUE);
             workingStress = stressGenerated;
             updateGeneratedRotation();
             return stressGenerated;
