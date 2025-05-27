@@ -67,7 +67,6 @@ repositories {
             includeGroup "dev.engine-room.flywheel"
             includeGroup "com.simibubi.create"
         }
-
     }
     maven { url = 'https://maven.blamejared.com'
         content {
@@ -100,7 +99,6 @@ repositories {
             includeGroup 'com.gregtechceu.gtceu'
         }
     }
-    maven { url = 'https://jitpack.io' } //mixinextras
     maven { url = 'https://maven.parchmentmc.org' }
     maven { url = 'https://maven.neoforged.net/releases' }
     maven { url = 'https://maven.quiltmc.org/repository/release/' }
