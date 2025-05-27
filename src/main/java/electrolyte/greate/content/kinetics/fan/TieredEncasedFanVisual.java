@@ -28,8 +28,8 @@ public class TieredEncasedFanVisual extends KineticBlockEntityVisual<TieredEncas
         dir = blockState.getValue(EncasedFanBlock.FACING);
         opposite = dir.getOpposite();
         int tier = ((TieredEncasedFanBlock) blockState.getBlock()).getTier();
-        halfShaft = instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.partial(SHAFT_HALF_MODELS[tier], opposite)).createInstance();
-        fanInner = instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.partial(FAN_INNER_MODELS[tier], opposite)).createInstance();
+        halfShaft = instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.partial(SHAFT_HALF_MODELS[tier])).createInstance();
+        fanInner = instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.partial(FAN_INNER_MODELS[tier])).createInstance();
 
         halfShaft.setup(blockEntity)
                 .setPosition(getVisualPosition())
