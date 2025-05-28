@@ -4,7 +4,6 @@ import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import electrolyte.greate.Greate;
-import electrolyte.greate.content.kinetics.TieredBlockMaterials;
 import electrolyte.greate.content.kinetics.press.TieredMechanicalPressBlock;
 import electrolyte.greate.foundation.data.GreateBuilderTransformers;
 import electrolyte.greate.infrastructure.config.GStress;
@@ -52,7 +51,6 @@ public class MechanicalPresses {
                 .transform(TagGen.axeOrPickaxe())
                 .transform(GStress.setImpact(stressImpact))
                 .transform(GreateBuilderTransformers.tieredMechanicalPress())
-                .transform(TieredBlockMaterials.setMaterialForBlock(TM[tier]))
                 .onRegister(c -> c.setTier(tier))
                 .register();
     }

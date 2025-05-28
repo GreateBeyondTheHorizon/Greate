@@ -5,7 +5,6 @@ import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import electrolyte.greate.Greate;
 import electrolyte.greate.GreateValues;
-import electrolyte.greate.content.kinetics.TieredBlockMaterials;
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import it.unimi.dsi.fastutil.objects.Object2DoubleOpenHashMap;
 import net.createmod.catnip.config.ConfigBase;
@@ -31,40 +30,22 @@ public class GStress extends ConfigBase {
     @Override
     public void registerAll(Builder builder) {
         builder.comment("." + Comments.su + Comments.impact).push("impact");
-        TieredBlockMaterials.MATERIAL_FOR_BLOCK.forEach(pair -> {
-            ResourceLocation r = pair.getFirst();
-            Material blockMaterial = pair.getSecond();
+        DEFAULT_IMPACTS.forEach((id, value) -> {
             for(Material material : GreateValues.TM) {
-                if(material.equals(blockMaterial) && DEFAULT_IMPACTS.containsKey(r)) {
-                    double impact = DEFAULT_IMPACTS.getDouble(r);
+                if(id.getPath().contains(material.getName()) && DEFAULT_IMPACTS.containsKey(id)) {
                     builder.push(material.getName());
-                    this.impacts.put(r, builder.define(r.getPath(), impact));
-                    builder.pop();
-                }
-            }
-        });
-        TieredBlockMaterials.MATERIAL_FOR_BELT_BLOCK.forEach(pair -> {
-            ResourceLocation r = pair.getFirst();
-            Material blockBeltMaterial = pair.getSecond();
-            for(Material beltMaterial : GreateValues.BM) {
-                if(beltMaterial.equals(blockBeltMaterial) && DEFAULT_IMPACTS.containsKey(r)) {
-                    double impact = DEFAULT_IMPACTS.getDouble(r);
-                    builder.push(beltMaterial.getName());
-                    this.impacts.put(r, builder.define(r.getPath(), impact));
+                    this.impacts.put(id, builder.define(id.getPath(), value));
                     builder.pop();
                 }
             }
         });
         builder.pop();
         builder.comment("." + Comments.su + Comments.capacity).push("capacity");
-        TieredBlockMaterials.MATERIAL_FOR_BLOCK.forEach(pair -> {
-            ResourceLocation r = pair.getFirst();
-            Material blockMaterial = pair.getSecond();
+        DEFAULT_CAPACITIES.forEach((id, value) -> {
             for(Material material : GreateValues.TM) {
-                if(material.equals(blockMaterial) && DEFAULT_CAPACITIES.containsKey(r)) {
-                    double capacity = DEFAULT_CAPACITIES.getDouble(r);
+                if(id.getPath().contains(material.getName()) && DEFAULT_CAPACITIES.containsKey(id)) {
                     builder.push(material.getName());
-                    this.capacities.put(r, builder.define(r.getPath(), capacity));
+                    this.capacities.put(id, builder.define(id.getPath(), value));
                     builder.pop();
                 }
             }

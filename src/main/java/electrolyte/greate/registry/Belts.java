@@ -8,7 +8,6 @@ import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import electrolyte.greate.Greate;
-import electrolyte.greate.content.kinetics.TieredBlockMaterials;
 import electrolyte.greate.content.kinetics.belt.TieredBeltBlock;
 import electrolyte.greate.content.kinetics.belt.TieredBeltGenerator;
 import electrolyte.greate.content.kinetics.belt.item.TieredBeltConnectorItem;
@@ -84,7 +83,6 @@ public class Belts {
                 .properties(p -> p.mapColor(MapColor.COLOR_GRAY))
                 .transform(TagGen.axeOrPickaxe())
                 .transform(GStress.setNoImpact())
-                .transform(TieredBlockMaterials.setMaterialForBeltBlock(material))
                 .transform(displaySource(AllDisplaySources.ITEM_NAMES))
                 .blockstate(new TieredBeltGenerator()::generateModel)
                 .onRegister(TieredBeltBlock::setupBeltModel)

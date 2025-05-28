@@ -4,7 +4,6 @@ import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import electrolyte.greate.Greate;
-import electrolyte.greate.content.kinetics.TieredBlockMaterials;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingWheelBlock;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingWheelControllerBlock;
 import electrolyte.greate.foundation.data.GreateBlockStateGen;
@@ -83,7 +82,6 @@ public class CrushingWheels {
                 .addLayer(() -> RenderType::cutoutMipped)
                 .transform(GreateBuilderTransformers.tieredCrushingWheel())
                 .transform(GStress.setImpact(stressImpact))
-                .transform(TieredBlockMaterials.setMaterialForBlock(TM[tier]))
                 .onRegister(c -> c.setTier(tier))
                 .register();
     }

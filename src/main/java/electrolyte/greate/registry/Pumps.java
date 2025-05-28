@@ -4,7 +4,6 @@ import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import electrolyte.greate.Greate;
 import electrolyte.greate.content.fluids.pump.TieredPumpBlock;
-import electrolyte.greate.content.kinetics.TieredBlockMaterials;
 import electrolyte.greate.foundation.data.GreateBuilderTransformers;
 import electrolyte.greate.infrastructure.config.GStress;
 import net.minecraft.world.level.material.MapColor;
@@ -52,7 +51,6 @@ public class Pumps {
 				.transform(pickaxeOnly())
 				.transform(GreateBuilderTransformers.tieredMechanicalPump())
 				.transform(GStress.setImpact(pumpImpact))
-				.transform(TieredBlockMaterials.setMaterialForBlock(TM[tier]))
 				.onRegister(c -> c.setTier(tier))
 				.register();
 	}

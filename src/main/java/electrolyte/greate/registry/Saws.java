@@ -5,7 +5,6 @@ import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import electrolyte.greate.Greate;
-import electrolyte.greate.content.kinetics.TieredBlockMaterials;
 import electrolyte.greate.content.kinetics.saw.TieredSawBlock;
 import electrolyte.greate.content.kinetics.saw.TieredSawGenerator;
 import electrolyte.greate.content.kinetics.saw.TieredSawMovementBehaviour;
@@ -59,7 +58,6 @@ public class Saws {
                 .transform(TagGen.axeOrPickaxe())
                 .blockstate(new TieredSawGenerator()::generateModel)
                 .transform(GStress.setImpact(stressImpact))
-                .transform(TieredBlockMaterials.setMaterialForBlock(TM[tier]))
                 .onRegister(movementBehaviour(new TieredSawMovementBehaviour()))
                 .onRegister(c -> c.setTier(tier))
                 .addLayer(() -> RenderType::cutoutMipped)

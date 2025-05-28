@@ -9,7 +9,6 @@ import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import electrolyte.greate.Greate;
-import electrolyte.greate.content.kinetics.TieredBlockMaterials;
 import electrolyte.greate.content.kinetics.gearbox.TieredGearboxBlock;
 import electrolyte.greate.content.kinetics.gearbox.TieredVerticalGearboxItem;
 import electrolyte.greate.foundation.data.GreateBuilderTransformers;
@@ -89,7 +88,6 @@ public class Gearboxes {
                 .transform(GStress.setNoImpact())
                 .transform(TagGen.axeOrPickaxe())
                 .transform(GreateBuilderTransformers.tieredGearbox())
-                .transform(TieredBlockMaterials.setMaterialForBlock(TM[tier]))
                 .onRegister(CreateRegistrate.connectedTextures(() -> new EncasedCTBehaviour(AllSpriteShifts.ANDESITE_CASING)))
                 .onRegister(CreateRegistrate.casingConnectivity((block, c) -> c.make(block, AllSpriteShifts.ANDESITE_CASING,
                         (s, f) -> f.getAxis() == s.getValue(GearboxBlock.AXIS))))

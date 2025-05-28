@@ -42,6 +42,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegisterEvent;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
@@ -83,7 +84,7 @@ public class Greate {
         CREATIVE_TABS.register(eventBus);
         REGISTRATE.registerEventListeners(eventBus);
         GreateLang.register();
-        GreateConfigs.register(ModLoadingContext.get());
+        REGISTRATE.addRegisterCallback(ForgeRegistries.BLOCKS.getRegistryKey(), () -> GreateConfigs.register(ModLoadingContext.get()));
         ModRecipeTypes.register(eventBus);
     }
 
