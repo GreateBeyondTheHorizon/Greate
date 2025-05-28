@@ -122,4 +122,9 @@ public class NotifiableStressTrait extends NotifiableRecipeHandlerTrait<Float> i
             }
         }
     }
+
+    @Override
+    public boolean isDistinct() {
+        return false;
+    }
 }

@@ -9,6 +9,7 @@ import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import electrolyte.greate.compat.gtceu.common.blockentity.TieredKineticMachineBlockEntity;
 import electrolyte.greate.compat.gtceu.common.machine.TieredKineticMachineDefinition;
 import electrolyte.greate.compat.gtceu.common.machine.kinetic.IKineticMachine;
+import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
@@ -22,7 +23,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-public class TieredKineticMachineBlock extends MetaMachineBlock implements IRotate {
+public class TieredKineticMachineBlock extends MetaMachineBlock implements IRotate, ITieredBlock {
 
     private int tier;
 
@@ -107,5 +108,15 @@ public class TieredKineticMachineBlock extends MetaMachineBlock implements IRota
             }
         }
         return null;
+    }
+
+    @Override
+    public int getTier() {
+        return tier;
+    }
+
+    @Override
+    public void setTier(int tier) {
+        this.tier = tier;
     }
 }

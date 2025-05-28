@@ -68,14 +68,6 @@ public class GStress extends ConfigBase {
         return impact == null ? null : impact::get;
     }
 
-    public static void setCapacity(ResourceLocation id, double capacity) {
-        DEFAULT_CAPACITIES.put(id, capacity);
-    }
-
-    public static void setImpact(ResourceLocation id, double impact) {
-        DEFAULT_IMPACTS.put(id, impact);
-    }
-
     public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> setCapacity(double capacity) {
         return b -> {
             ResourceLocation id = Greate.id(b.getName());

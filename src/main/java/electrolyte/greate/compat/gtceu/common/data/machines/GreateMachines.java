@@ -1,14 +1,12 @@
 package electrolyte.greate.compat.gtceu.common.data.machines;
 
 import com.gregtechceu.gtceu.api.GTValues;
-import com.gregtechceu.gtceu.api.block.IMachineBlock;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.data.RotationState;
 import com.gregtechceu.gtceu.api.item.MetaMachineItem;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.gregtechceu.gtceu.api.registry.registrate.MachineBuilder;
-import com.simibubi.create.api.stress.BlockStressValues;
 import electrolyte.greate.Greate;
 import electrolyte.greate.GreateRegistries;
 import electrolyte.greate.compat.gtceu.api.machine.multiblock.GreatePartAbility;
@@ -17,13 +15,9 @@ import electrolyte.greate.compat.gtceu.common.block.TieredKineticMachineBlock;
 import electrolyte.greate.compat.gtceu.common.blockentity.TieredKineticMachineBlockEntity;
 import electrolyte.greate.compat.gtceu.common.machine.TieredKineticMachineDefinition;
 import electrolyte.greate.compat.gtceu.common.machine.multiblock.part.TieredKineticPartMachine;
-import electrolyte.greate.infrastructure.config.GStress;
-import net.createmod.catnip.data.Couple;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
-import javax.annotation.Nullable;
 import java.util.Locale;
 import java.util.function.BiFunction;
 

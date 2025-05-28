@@ -70,7 +70,7 @@ public class NotifiableRPMTrait extends NotifiableRecipeHandlerTrait<Float> impl
         } else if(io == IO.OUT && kineticDef.isSource()) {
             if(simulate) {
                 //kineticDef.setTorque((float) gtRecipe.getTickOutputContents(RPMRecipeCapability.RPM_CAPABILITY).get(0).getContent());
-                available = km.getKineticHolder().scheduleWorkingRPM((float) gtRecipe.getTickOutputContents(RPMRecipeCapability.RPM_CAPABILITY).get(0).getContent(), true);
+                available = km.getKineticHolder().scheduleWorkingRPM(requiredRPM, true);
             }
             requiredRPM -= available;
         }
@@ -120,5 +120,10 @@ public class NotifiableRPMTrait extends NotifiableRecipeHandlerTrait<Float> impl
                 km.getKineticHolder().stopWorking();
             }
         }
+    }
+
+    @Override
+    public boolean isDistinct() {
+        return false;
     }
 }
