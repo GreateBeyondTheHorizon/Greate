@@ -59,6 +59,7 @@ public class NotifiableRPMTrait extends NotifiableRecipeHandlerTrait<Float> impl
         return handlerIO;
     }
 
+    // (rpm works, stress does not, also it does not stop outputing unless machine is manually turned off)
     @Override
     public List<Float> handleRecipeInner(IO io, GTRecipe gtRecipe, List<Float> list, @Nullable String slotName, boolean simulate) {
         if(!(machine instanceof IKineticMachine km)) return list;
@@ -69,7 +70,6 @@ public class NotifiableRPMTrait extends NotifiableRecipeHandlerTrait<Float> impl
             if(currentRPM > 0) requiredRPM = requiredRPM - currentRPM;
         } else if(io == IO.OUT && kineticDef.isSource()) {
             if(simulate) {
-                //kineticDef.setTorque((float) gtRecipe.getTickOutputContents(RPMRecipeCapability.RPM_CAPABILITY).get(0).getContent());
                 available = km.getKineticHolder().scheduleWorkingRPM(requiredRPM, true);
             }
             requiredRPM -= available;
