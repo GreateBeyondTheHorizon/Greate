@@ -10,7 +10,6 @@ import electrolyte.greate.Greate;
 import electrolyte.greate.content.decoration.encasing.GirderEncasingRegistry;
 import electrolyte.greate.content.decoration.girder.GreateGirderBlockStateGenerator;
 import electrolyte.greate.content.decoration.girder.TieredGirderEncasedShaftBlock;
-import electrolyte.greate.content.kinetics.TieredBlockMaterials;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -67,7 +66,6 @@ public class Girders {
                 .onRegister(CreateRegistrate.blockModel(() -> ConnectedGirderModel::new))
                 .onRegister(c -> c.setTier(tier))
                 .transform(GirderEncasingRegistry.addVariantTo(SHAFTS[tier]))
-                .transform(TieredBlockMaterials.setMaterialForBlock(TM[tier]))
                 .register();
     }
 }

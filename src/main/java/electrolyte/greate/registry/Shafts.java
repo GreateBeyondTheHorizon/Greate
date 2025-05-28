@@ -13,7 +13,6 @@ import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import electrolyte.greate.Greate;
-import electrolyte.greate.content.kinetics.TieredBlockMaterials;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedShaftBlock;
 import electrolyte.greate.content.kinetics.steamEngine.TieredPoweredShaftBlock;
@@ -139,7 +138,6 @@ public class Shafts {
                 .initialProperties(SharedProperties::stone)
                 .properties(p -> p.mapColor(MapColor.METAL))
                 .transform(GStress.setNoImpact())
-                .transform(TieredBlockMaterials.setMaterialForBlock(TM[tier]))
                 .transform(TagGen.pickaxeOnly())
                 .blockstate(GreateBlockStateGen.tieredShaftProvider())
                 .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
@@ -155,7 +153,6 @@ public class Shafts {
                 .initialProperties(SharedProperties::stone)
                 .properties(p -> p.mapColor(MapColor.METAL))
                 .transform(TagGen.pickaxeOnly())
-                .transform(TieredBlockMaterials.setMaterialForBlock(TM[tier]))
                 .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
                 .loot((l, b) -> l.dropOther(b, SHAFTS[tier].get()))
                 .onRegister(c -> c.setTier(tier))
@@ -182,7 +179,6 @@ public class Shafts {
                 .transform(encasingTransformer)
                 .transform(EncasingRegistry.addVariantTo(SHAFTS[tier]))
                 .transform(TagGen.axeOrPickaxe())
-                .transform(TieredBlockMaterials.setMaterialForBlock(TM[tier]))
                 .onRegister(c -> c.setTier(tier))
                 .register();
     }

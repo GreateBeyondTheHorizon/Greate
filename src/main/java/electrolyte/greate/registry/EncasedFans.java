@@ -4,7 +4,6 @@ import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import electrolyte.greate.Greate;
-import electrolyte.greate.content.kinetics.TieredBlockMaterials;
 import electrolyte.greate.content.kinetics.fan.TieredEncasedFanBlock;
 import electrolyte.greate.foundation.data.GreateBuilderTransformers;
 import electrolyte.greate.infrastructure.config.GStress;
@@ -55,7 +54,6 @@ public class EncasedFans {
                 .transform(GreateBuilderTransformers.tieredEncasedFan())
                 .transform(TagGen.axeOrPickaxe())
                 .transform(GStress.setImpact(stressImpact))
-                .transform(TieredBlockMaterials.setMaterialForBlock(TM[tier]))
                 .onRegister(c -> c.setTier(tier))
                 .register();
     }
