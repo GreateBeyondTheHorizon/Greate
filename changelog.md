@@ -1,10 +1,5 @@
-- Certain recipes will now use tagged versions of their inputs, to allow both Create & GT items to be used
-- Inherited recipes from Create/GT & addons will now use a unique id, which now allows KubeJS to target them
-- Tiered crushers can now perform regular crushing recipes (modpack devs will need to resolve conflicts)
-- Wire coating recipes via the wire coating factory are now always enabled.
-- If `hardMiscRecipes` is enabled, assembler wire coating recipes will be disabled.
-- Fix powered shafts not being placed correctly
-- Allow tiered saws to handle packages
-- Fix some uncraftable create items
-- Fix broken ponder scenes
-- Tiered millstones will now always output the first item in a recipe, regardless of if it is a chance output (MV and below will continue to not give byproducts)
+- Fix large encased cogwheels dropping small variants
+- Fix tiered encased fans not working with chutes
+- Fix broken fan & shaft models on tiered encased fans
+- Fix broken impacts on tiered blocks
+- Disable eating belts, as quarktech armor consumes them

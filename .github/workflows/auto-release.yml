@@ -42,9 +42,13 @@ jobs:
         version: ${{ steps.version.outputs.greate_version }}
         changelog-file: changelog.md
 
+        curseforge-id: 901996
+        curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+
         modrinth-id: 8wDcQuht
         modrinth-featured: true
         modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+
         version-type: alpha
 
         loaders: |
