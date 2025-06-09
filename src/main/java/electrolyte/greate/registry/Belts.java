@@ -95,7 +95,7 @@ public class Belts {
     public static ItemEntry<TieredBeltConnectorItem> beltConnector(String name, List<BlockEntry<TieredShaftBlock>> validShafts, Material beltMaterial) {
         return REGISTRATE
                 .item(name, p -> new TieredBeltConnectorItem(p, validShafts))
-                .transform(p -> p.properties(b -> b.food(new FoodProperties.Builder().alwaysEat().nutrition(1).saturationMod(0.1F).effect(() -> new MobEffectInstance(MobEffects.POISON, 100, 0, true, true), 1.0F).build())))
+                //.transform(p -> p.properties(b -> b.food(new FoodProperties.Builder().alwaysEat().nutrition(1).saturationMod(0.1F).effect(() -> new MobEffectInstance(MobEffects.POISON, 100, 0, true, true), 1.0F).build()))) TODO: disabled b/c quarktech armor auto eats
                 .onRegister(c -> c.setBeltMaterial(beltMaterial))
                 .register();
     }

@@ -35,7 +35,7 @@ public class GreateAdvancements implements DataProvider {
     public static final List<GreateAdvancement> ENTRIES = new ArrayList<>();
     public static final GreateAdvancement START = null,
 
-    ROOT = create("root", b -> b
+    /*ROOT = create("root", b -> b
             .icon(AllItems.WRENCH)
             .title("Welcome to Greate")
             .description("Prepare for endless torture")
@@ -48,7 +48,7 @@ public class GreateAdvancements implements DataProvider {
             .description("Consume every type of belt")
             .whenItemsConsumed(Belts.BELT_CONNECTORS)
             .after(ROOT)
-            .special(SECRET_NOISY)),
+            .special(SECRET_NOISY)),*/ //TODO: disabled b/c quarktech armor auto eats
 
     END = null;
 
