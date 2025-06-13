@@ -1,5 +1,1 @@
-- Fix large encased cogwheels dropping small variants
-- Fix tiered encased fans not working with chutes
-- Fix broken fan & shaft models on tiered encased fans
-- Fix broken impacts on tiered blocks
-- Disable eating belts, as quarktech armor consumes them
+- Fix mixin crash with TFMG
