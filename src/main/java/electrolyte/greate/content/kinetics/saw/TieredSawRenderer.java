@@ -10,12 +10,12 @@ import com.simibubi.create.content.kinetics.saw.SawBlockEntity;
 import com.simibubi.create.content.kinetics.saw.SawRenderer;
 import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringRenderer;
 import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
-import com.simibubi.create.foundation.fluid.FluidRenderer;
 import com.simibubi.create.foundation.virtualWorld.VirtualRenderWorld;
 import dev.engine_room.flywheel.api.visualization.VisualizationManager;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.createmod.catnip.math.AngleHelper;
 import net.createmod.catnip.math.VecHelper;
+import net.createmod.catnip.platform.ForgeCatnipServices;
 import net.createmod.catnip.render.CachedBuffers;
 import net.createmod.catnip.render.SuperByteBuffer;
 import net.minecraft.client.renderer.LevelRenderer;
@@ -176,9 +176,9 @@ public class TieredSawRenderer extends SawRenderer {
         FluidStack renderedFluid = behaviour.getTanks()[0].getRenderedFluid();
         if(renderedFluid.isEmpty()) return;
         if(be.getBlockState().getValue(SawBlock.AXIS_ALONG_FIRST_COORDINATE)) {
-            FluidRenderer.renderFluidBox(renderedFluid.getFluid(), renderedFluid.getAmount(), xMin, yMin, zMin, xMax, yMax, zMax, bufferSource, poseStack, light, false, false, renderedFluid.getTag());
+            ForgeCatnipServices.FLUID_RENDERER.renderFluidBox(renderedFluid, xMin, yMin, zMin, xMax, yMax, zMax, bufferSource, poseStack, light, false, false);
         } else {
-            FluidRenderer.renderFluidBox(renderedFluid.getFluid(), renderedFluid.getAmount(), zMin, yMin, xMin, zMax, yMax, xMax, bufferSource, poseStack, light, false, false, renderedFluid.getTag());
+            ForgeCatnipServices.FLUID_RENDERER.renderFluidBox(renderedFluid, zMin, yMin, xMin, zMax, yMax, xMax, bufferSource, poseStack, light, false, false);
         }
     }
 }

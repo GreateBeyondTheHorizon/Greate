@@ -1,7 +1,7 @@
 package electrolyte.greate.foundation.data.recipe.machine;
 
 import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
-import com.simibubi.create.foundation.data.recipe.MechanicalCraftingRecipeBuilder;
+import com.simibubi.create.api.data.recipe.MechanicalCraftingRecipeBuilder;
 import net.minecraft.data.recipes.FinishedRecipe;
 
 import java.util.function.Consumer;
