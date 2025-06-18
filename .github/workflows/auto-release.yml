@@ -30,7 +30,7 @@ jobs:
       with:
           cache-disabled: true
           arguments: build
-    - name: Upload Release to Github & Modrinth
+    - name: Upload Release to Github, Curseforge & Modrinth
       uses: Kir-Antipov/mc-publish@v3.3
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}

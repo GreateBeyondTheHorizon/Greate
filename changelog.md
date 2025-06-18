@@ -1,1 +1,2 @@
-- Fix mixin crash with TFMG
+- Fix crash with create 6.0.6
+- Min create version is now 6.0.6
