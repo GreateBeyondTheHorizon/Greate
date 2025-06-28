@@ -1,6 +1,5 @@
 package electrolyte.greate.foundation.data.recipe.machine;
 
-import com.google.common.collect.ImmutableMap;
 import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
@@ -11,10 +10,12 @@ import com.simibubi.create.content.fluids.transfer.FillingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
 import electrolyte.greate.Greate;
+import it.unimi.dsi.fastutil.objects.Reference2IntMap;
+import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
+import net.minecraft.Util;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 
-import java.util.Map;
 import java.util.function.Consumer;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
@@ -24,22 +25,27 @@ import static electrolyte.greate.content.gtceu.machines.GreateRecipeTypes.WIRE_C
 
 public class GreateSpoutRecipes {
 
-    private static final Map<TagPrefix, Integer> INSULATION_AMOUNT = ImmutableMap.of(
-            cableGtSingle, 1,
-            cableGtDouble, 1,
-            cableGtQuadruple, 2,
-            cableGtOctal, 3,
-            cableGtHex, 5);
+    private static final Reference2IntMap<TagPrefix> INSULATION_AMOUNT = Util.make(new Reference2IntOpenHashMap<>(),
+            map -> {
+            map.put(cableGtSingle, 1);
+            map.put(cableGtDouble, 1);
+            map.put(cableGtQuadruple, 2);
+            map.put(cableGtOctal, 3);
+            map.put(cableGtHex, 5);
+    });
 
-    public static void register(Consumer<FinishedRecipe> provider) {
-        wireGtSingle.executeHandler(provider, PropertyKey.WIRE, GreateSpoutRecipes::addRecipe);
-        wireGtDouble.executeHandler(provider, PropertyKey.WIRE, GreateSpoutRecipes::addRecipe);
-        wireGtQuadruple.executeHandler(provider, PropertyKey.WIRE, GreateSpoutRecipes::addRecipe);
-        wireGtOctal.executeHandler(provider, PropertyKey.WIRE, GreateSpoutRecipes::addRecipe);
-        wireGtHex.executeHandler(provider, PropertyKey.WIRE, GreateSpoutRecipes::addRecipe);
+    public static void registerCableRecipes(Consumer<FinishedRecipe> provider, Material material) {
+        WireProperties property = material.getProperty(PropertyKey.WIRE);
+        if(property != null) {
+            addRecipe(provider, property, wireGtSingle, material);
+            addRecipe(provider, property, wireGtDouble, material);
+            addRecipe(provider, property, wireGtQuadruple, material);
+            addRecipe(provider, property, wireGtOctal, material);
+            addRecipe(provider, property, wireGtHex, material);
+        }
     }
 
-    public static void addRecipe(TagPrefix wirePrefix, Material material, WireProperties property, Consumer<FinishedRecipe> provider) {
+    public static void addRecipe(Consumer<FinishedRecipe> provider, WireProperties property, TagPrefix wirePrefix, Material material) {
         if(property.isSuperconductor()) return;
         int cableAmount = (int) (wirePrefix.getMaterialAmount(material) * 2 / M);
         TagPrefix cablePrefix = TagPrefix.get("cable" + wirePrefix.name().substring(4));

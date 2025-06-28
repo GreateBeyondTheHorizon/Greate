@@ -75,9 +75,6 @@ public class GreateMaterials {
 		RhodiumPlatedPalladium.setProperty(PropertyKey.TOOL, ToolProperty.Builder.of(35.0F, 10.0F, 2560, 4, BUZZSAW).build());
 	}
 
-	public static void modifyMaterials() {
-	}
-
 	public static Material.Builder Builder(String id) {
 		return new Material.Builder(Greate.id(id));
 	}

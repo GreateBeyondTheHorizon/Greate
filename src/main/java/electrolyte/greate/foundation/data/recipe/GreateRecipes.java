@@ -1,7 +1,10 @@
 package electrolyte.greate.foundation.data.recipe;
 
+import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
-import com.gregtechceu.gtceu.api.data.chemical.material.stack.UnificationEntry;
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
+import com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags;
+import com.gregtechceu.gtceu.api.data.chemical.material.stack.MaterialEntry;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import electrolyte.greate.foundation.data.recipe.machine.*;
@@ -33,7 +36,12 @@ public class GreateRecipes {
         GreateSawingRecipes.register(provider);
         GreateSequencedAssemblyRecipes.register(provider);
         GreateSplashingRecipes.register(provider);
-        GreateSpoutRecipes.register(provider);
+
+        for(Material material : GTCEuAPI.materialManager.getRegisteredMaterials()) {
+            if(material.hasFlag(MaterialFlags.NO_UNIFICATION)) continue;
+            GreateSequencedAssemblyRecipes.registerCableRecipes(provider, material);
+            GreateSpoutRecipes.registerCableRecipes(provider, material);
+        }
     }
 
     public static void conversionCycle(Consumer<FinishedRecipe> provider, List<ItemProviderEntry<? extends ItemLike>> cycle) {
@@ -49,7 +57,7 @@ public class GreateRecipes {
         return Ingredient.of(TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), new ResourceLocation(namespace, path)));
     }
 
-    public static Ingredient createIngFromUnificationEntry(Object ingredient) {
-        return Ingredient.of(ChemicalHelper.getTag(((UnificationEntry) ingredient).tagPrefix, ((UnificationEntry) ingredient).material));
+    public static Ingredient createIngFromMaterialEntry(Object ingredient) {
+        return Ingredient.of(ChemicalHelper.getTag(((MaterialEntry) ingredient).tagPrefix(), ((MaterialEntry) ingredient).material()));
     }
 }

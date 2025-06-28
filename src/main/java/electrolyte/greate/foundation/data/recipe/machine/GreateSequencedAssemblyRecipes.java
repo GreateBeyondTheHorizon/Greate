@@ -1,11 +1,10 @@
 package electrolyte.greate.foundation.data.recipe.machine;
 
-import com.google.common.collect.ImmutableMap;
 import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.WireProperties;
-import com.gregtechceu.gtceu.api.data.chemical.material.stack.UnificationEntry;
+import com.gregtechceu.gtceu.api.data.chemical.material.stack.MaterialEntry;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
 import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
 import com.gregtechceu.gtceu.utils.GTUtil;
@@ -17,33 +16,37 @@ import com.simibubi.create.content.kinetics.press.PressingRecipe;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipeBuilder;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
 import electrolyte.greate.Greate;
+import it.unimi.dsi.fastutil.objects.Reference2IntMap;
+import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
+import net.minecraft.Util;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.material.Fluids;
 
-import java.util.Map;
 import java.util.function.Consumer;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
 import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.*;
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
-import static com.gregtechceu.gtceu.data.recipe.CraftingComponent.PLATE;
+import static com.gregtechceu.gtceu.data.recipe.GTCraftingComponents.PLATE;
 import static electrolyte.greate.GreateValues.TM;
 import static electrolyte.greate.content.gtceu.machines.GreateRecipeTypes.WIRE_COATING_RECIPES;
+import static electrolyte.greate.foundation.data.recipe.GreateRecipes.createIngFromMaterialEntry;
 import static electrolyte.greate.foundation.data.recipe.GreateRecipes.createIngFromTag;
-import static electrolyte.greate.foundation.data.recipe.GreateRecipes.createIngFromUnificationEntry;
 import static electrolyte.greate.registry.Cogwheels.COGWHEELS;
 import static electrolyte.greate.registry.Cogwheels.LARGE_COGWHEELS;
 import static electrolyte.greate.registry.Shafts.SHAFTS;
 
 public class GreateSequencedAssemblyRecipes {
 
-    private static final Map<TagPrefix, Integer> INSULATION_AMOUNT = ImmutableMap.of(
-            cableGtSingle, 1,
-            cableGtDouble, 1,
-            cableGtQuadruple, 2,
-            cableGtOctal, 3,
-            cableGtHex, 5);
+    private static final Reference2IntMap<TagPrefix> INSULATION_AMOUNT = Util.make(new Reference2IntOpenHashMap<>(),
+            map -> {
+            map.put(cableGtSingle, 1);
+            map.put(cableGtDouble, 1);
+            map.put(cableGtQuadruple, 2);
+            map.put(cableGtOctal, 3);
+            map.put(cableGtHex, 5);
+    });
 
     public static void register(Consumer<FinishedRecipe> provider) {
         for(int tier = 0; tier < TM.length; tier++) {
@@ -51,8 +54,8 @@ public class GreateSequencedAssemblyRecipes {
             new SequencedAssemblyRecipeBuilder(LARGE_COGWHEELS[tier].getId())
                     .require(SHAFTS[tier])
                     .transitionTo(COGWHEELS[tier])
-                    .addStep(DeployerApplicationRecipe::new, r -> r.require(createIngFromUnificationEntry(finalTier != 0 ? PLATE.getIngredient(finalTier - 1) : new UnificationEntry(plate, Wood))))
-                    .addStep(DeployerApplicationRecipe::new, r -> r.require(createIngFromUnificationEntry(finalTier != 0 ? PLATE.getIngredient(finalTier - 1) : new UnificationEntry(plate, Wood))))
+                    .addStep(DeployerApplicationRecipe::new, r -> r.require(createIngFromMaterialEntry(finalTier != 0 ? PLATE.get(finalTier - 1) : new MaterialEntry(plate, Wood))))
+                    .addStep(DeployerApplicationRecipe::new, r -> r.require(createIngFromMaterialEntry(finalTier != 0 ? PLATE.get(finalTier - 1) : new MaterialEntry(plate, Wood))))
                     .addOutput(LARGE_COGWHEELS[tier], 1)
                     .loops(1)
                     .build(provider);
@@ -85,17 +88,21 @@ public class GreateSequencedAssemblyRecipes {
                 .addOutput(Items.CLOCK, 1)
                 .loops(5)
                 .build(provider);
+    }
 
-        wireGtSingle.executeHandler(provider, PropertyKey.WIRE, GreateSequencedAssemblyRecipes::addRecipe);
-        wireGtDouble.executeHandler(provider, PropertyKey.WIRE, GreateSequencedAssemblyRecipes::addRecipe);
-        wireGtQuadruple.executeHandler(provider, PropertyKey.WIRE, GreateSequencedAssemblyRecipes::addRecipe);
-        wireGtOctal.executeHandler(provider, PropertyKey.WIRE, GreateSequencedAssemblyRecipes::addRecipe);
-        wireGtHex.executeHandler(provider, PropertyKey.WIRE, GreateSequencedAssemblyRecipes::addRecipe);
-
+    public static void registerCableRecipes(Consumer<FinishedRecipe> provider, Material material) {
+        WireProperties property = material.getProperty(PropertyKey.WIRE);
+        if(property != null) {
+            addRecipe(provider, property, wireGtSingle, material);
+            addRecipe(provider, property, wireGtDouble, material);
+            addRecipe(provider, property, wireGtQuadruple, material);
+            addRecipe(provider, property, wireGtOctal, material);
+            addRecipe(provider, property, wireGtHex, material);
+        }
     }
 
     //WireRecipeHandler
-    public static void addRecipe(TagPrefix wirePrefix, Material material, WireProperties property, Consumer<FinishedRecipe> provider) {
+    public static void addRecipe(Consumer<FinishedRecipe> provider, WireProperties property, TagPrefix wirePrefix, Material material) {
         if(property.isSuperconductor()) return;
         int cableAmount = (int) (wirePrefix.getMaterialAmount(material) * 2 / M);
         TagPrefix cablePrefix = TagPrefix.get("cable" + wirePrefix.name().substring(4));

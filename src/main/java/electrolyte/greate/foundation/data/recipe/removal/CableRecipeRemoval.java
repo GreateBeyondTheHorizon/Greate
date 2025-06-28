@@ -1,7 +1,9 @@
 package electrolyte.greate.foundation.data.recipe.removal;
 
 import com.gregtechceu.gtceu.GTCEu;
+import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
+import com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.WireProperties;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
@@ -15,15 +17,21 @@ import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.*;
 
 public class CableRecipeRemoval {
 
-    public static void disableAssemblerRecipes(Consumer<ResourceLocation> recipe) {
-        wireGtSingle.executeHandler(null, PropertyKey.WIRE, (tagPrefix, material, property, consumer) -> CableRecipeRemoval.removeRecipe(tagPrefix, material, property, recipe));
-        wireGtDouble.executeHandler(null, PropertyKey.WIRE, (tagPrefix, material, property, consumer) -> CableRecipeRemoval.removeRecipe(tagPrefix, material, property, recipe));
-        wireGtQuadruple.executeHandler(null, PropertyKey.WIRE, (tagPrefix, material, property, consumer) -> CableRecipeRemoval.removeRecipe(tagPrefix, material, property, recipe));
-        wireGtOctal.executeHandler(null, PropertyKey.WIRE, (tagPrefix, material, property, consumer) -> CableRecipeRemoval.removeRecipe(tagPrefix, material, property, recipe));
-        wireGtHex.executeHandler(null, PropertyKey.WIRE, (tagPrefix, material, property, consumer) -> CableRecipeRemoval.removeRecipe(tagPrefix, material, property, recipe));
+    public static void disableCableRecipes(Consumer<ResourceLocation> provider) {
+        for(Material material : GTCEuAPI.materialManager.getRegisteredMaterials()) {
+            if(material.hasFlag(MaterialFlags.NO_UNIFICATION)) continue;
+            WireProperties property = material.getProperty(PropertyKey.WIRE);
+            if(property != null) {
+                removeRecipe(provider, property, wireGtSingle, material);
+                removeRecipe(provider, property, wireGtDouble, material);
+                removeRecipe(provider, property, wireGtQuadruple, material);
+                removeRecipe(provider, property, wireGtOctal, material);
+                removeRecipe(provider, property, wireGtHex, material);
+            }
+        }
     }
 
-    public static void removeRecipe(TagPrefix wirePrefix, Material material, WireProperties property, Consumer<ResourceLocation> recipe) {
+    public static void removeRecipe(Consumer<ResourceLocation> recipe, WireProperties property, TagPrefix wirePrefix, Material material) {
         if(property.isSuperconductor()) return;
         int voltageTier = GTUtil.getTierByVoltage(property.getVoltage());
         int factor = (int) (wirePrefix.getMaterialAmount(material) * 2 / M);

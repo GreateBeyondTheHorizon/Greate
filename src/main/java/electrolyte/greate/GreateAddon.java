@@ -39,6 +39,4 @@ public class GreateAddon implements IGTAddon {
 	public void registerTagPrefixes() {
 		GreateTagPrefixes.register();
 	}
-
-
 }

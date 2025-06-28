@@ -5,13 +5,13 @@ import net.minecraft.resources.ResourceLocation;
 
 import java.util.function.Consumer;
 
-import static electrolyte.greate.foundation.data.recipe.removal.CableRecipeRemoval.disableAssemblerRecipes;
+import static electrolyte.greate.foundation.data.recipe.removal.CableRecipeRemoval.disableCableRecipes;
 
 public class GTRecipeRemoval {
 
     public static void disableGTRecipes(Consumer<ResourceLocation> recipe) {
         if(ConfigHolder.INSTANCE.recipes.hardMiscRecipes) {
-            disableAssemblerRecipes(recipe);
+            disableCableRecipes(recipe);
         }
     }
 }
