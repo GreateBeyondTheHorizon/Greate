@@ -1,4 +1,4 @@
-// 1.20.1	2025-06-09T13:04:57.452795235	Registrate Provider for greate [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
+// 1.20.1	2025-06-30T19:28:32.829769767	Registrate Provider for greate [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
 f4e4278d7bc1d07ca2ed77174a9e045a71cfdec9 assets/greate/blockstates/aluminium_cogwheel.json
 7f34dcbfb9923f8310cac4320343257721576c07 assets/greate/blockstates/aluminium_crushing_wheel.json
 4b0e51a1c10685f7d432467339afc9c2e24793b0 assets/greate/blockstates/aluminium_crushing_wheel_controller.json
@@ -209,8 +209,8 @@ d32fec57fdc211d6ddf1672ccf943c00f206a211 assets/greate/blockstates/tungsten_stee
 d8b5e6ddde0e2a603a7b2336c08dbafba3e75efa assets/greate/blockstates/tungsten_steel_mechanical_saw.json
 53be595bd11592b7ca147db06888ec74bda80f73 assets/greate/blockstates/tungsten_steel_millstone.json
 19df2f562bf730c88a655292ceda6d80043ac009 assets/greate/blockstates/tungsten_steel_shaft.json
-104908eb89f9490f2eed4457c42e969150f9f415 assets/greate/lang/en_ud.json
-a98fdea2eac2048de08a6955cbb07c5a52f72e77 assets/greate/lang/en_us.json
+a642f657821b87190d3e51b82d4aa8d0528d5440 assets/greate/lang/en_ud.json
+e688fd7926e05abfc51c990de46c323c6e4d0858 assets/greate/lang/en_us.json
 e0549d6d5f65018f65583c80113ea7feb397066c assets/greate/models/block/aluminium_cogwheel.json
 9915e6ca9728cb87b0c8bb2f0d15a0a69e711559 assets/greate/models/block/aluminium_cogwheel_shaft.json
 162c0c7b7d12494f9fff4bf25e2504a060b608df assets/greate/models/block/aluminium_cogwheel_shaftless.json
@@ -790,7 +790,6 @@ e930a9eb1d4b257a515c58cc3535ffcc2f5c5260 assets/greate/models/block/tungsten_ste
 28068a416f9bd6b05344b15685abfd450b56b78b assets/greate/models/block/tungsten_steel_millstone_inner.json
 027e06fed9c247b079d809f38bf43b4a9be8ef30 assets/greate/models/block/tungsten_steel_shaft.json
 6c6b098e9215708e41e1320840419d9e3338fedc assets/greate/models/block/tungsten_steel_shaft_half.json
-9f43da4aacbeff85049681bd8bf52588f6a6e0b9 assets/greate/models/item/aluminium_alloy.json
 944829504142fb549f4e9a4f269782673e63bc0e assets/greate/models/item/aluminium_cogwheel.json
 c1da31a32601b8168eb5d955c0003ace13514531 assets/greate/models/item/aluminium_crushing_wheel.json
 dc737f387a30fda7094c7635e7d99ee3bab5b0be assets/greate/models/item/aluminium_encased_fan.json
@@ -873,7 +872,6 @@ a361b80dd3e151edba09f9f024cce898c6d9fcc2 assets/greate/models/item/brass_encased
 97af0312f0dda0ee5e9145f2a4c869e49edab2c6 assets/greate/models/item/brass_encased_titanium_shaft.json
 2bff62a6d695a0affa217569c764e37b584495f9 assets/greate/models/item/brass_encased_tungsten_steel_cogwheel.json
 70ff081dca6373a209dce7015019cd45caeda927 assets/greate/models/item/brass_encased_tungsten_steel_shaft.json
-02fbe057c0a30328429a969b05584f639850fb82 assets/greate/models/item/darmstadtium_alloy.json
 da15c7155da4a0c3caa5e279af958642636a07da assets/greate/models/item/darmstadtium_cogwheel.json
 ca7e388223414c1fb43e3fa997ae9fa8bd74dd0f assets/greate/models/item/darmstadtium_crushing_wheel.json
 f73c8522fb6312ad3ccd0d50db3305a98284e04e assets/greate/models/item/darmstadtium_encased_fan.json
@@ -895,7 +893,6 @@ c88f09f9a499de4660d3b84f70c3c5da607d8aaf assets/greate/models/item/large_rhodium
 a38746ca30f3e193927f07b599350b039113a8ad assets/greate/models/item/large_steel_cogwheel.json
 22362491436554ea6a009996c2d10adedd0705b4 assets/greate/models/item/large_titanium_cogwheel.json
 8337eeb9ee80535edeeff7218466485d05a055e9 assets/greate/models/item/large_tungsten_steel_cogwheel.json
-b325b31100d2d9eead2c308c781716f965af7b17 assets/greate/models/item/naquadah_alloy_alloy.json
 e894c7e555dc5b40e6701edfb365e7ac16b077a2 assets/greate/models/item/naquadah_alloy_cogwheel.json
 7ba9f17141e50799e5388bd3b5b3221a13c895eb assets/greate/models/item/naquadah_alloy_crushing_wheel.json
 ff434f931b68fcc7312940b5f0373a452dcea2a9 assets/greate/models/item/naquadah_alloy_encased_fan.json
@@ -907,7 +904,6 @@ a0a5fe812574438dfd1ea277e792d665a76c940e assets/greate/models/item/naquadah_allo
 caa677b4ae98aab66f7e450a0a53e1405b340cf8 assets/greate/models/item/naquadah_alloy_millstone.json
 98c75b8e255473413981ba076071060b74a71e75 assets/greate/models/item/naquadah_alloy_shaft.json
 7f3e46fab372245cec5aaee8ddb1bd42aa8c3508 assets/greate/models/item/naquadah_alloy_vertical_gearbox.json
-614f22ffb364a593c7d2dbe1e435cda28c52794f assets/greate/models/item/neutronium_alloy.json
 e412cb66b4f131e7e2f746a12e88a5947a564239 assets/greate/models/item/neutronium_cogwheel.json
 1c31bd35c55f892c276ecf487ab7f613715e0bc0 assets/greate/models/item/neutronium_crushing_wheel.json
 9f56868a4cf2fba9334cb04d633cb15554153e95 assets/greate/models/item/neutronium_encased_fan.json
@@ -922,7 +918,6 @@ dbe8fa07ab7f66d7e8d07d7f2ca63212dfc35f14 assets/greate/models/item/neutronium_mi
 959b1518b6b8c630aff6fd6e31e54d611cd0f933 assets/greate/models/item/polybenzimidazole_belt_connector.json
 dd458841adbba6af94d4ee772ab23077067e4ce2 assets/greate/models/item/polyethylene_belt_connector.json
 d4b365cda57054645d6e84e820f0fc1927a718d5 assets/greate/models/item/polytetrafluoroethylene_belt_connector.json
-c5212ef019c8a8e7dd044a193bf3ba35a0fbf59b assets/greate/models/item/rhodium_plated_palladium_alloy.json
 b73c4666a83ebd66d380af83283edae0ec3a67d1 assets/greate/models/item/rhodium_plated_palladium_cogwheel.json
 637c27c4c46de672bacf90b6ce6b40c6df65b8d2 assets/greate/models/item/rhodium_plated_palladium_crushing_wheel.json
 46fc854ba5949f5072aa8538b4789e127fd67adf assets/greate/models/item/rhodium_plated_palladium_encased_fan.json
@@ -936,7 +931,6 @@ d469d1cc79a6752d2126ca687c06675212884ade assets/greate/models/item/rhodium_plate
 f88c3123083cc8915d377f8736d29504d16b27ec assets/greate/models/item/rhodium_plated_palladium_vertical_gearbox.json
 97541e0c812f03512cb89112a9442baf957c86c0 assets/greate/models/item/rubber_belt_connector.json
 55d51917172c179c088c010c35d945cb7d649df3 assets/greate/models/item/silicone_rubber_belt_connector.json
-44b5f5ffb9f73fbf02dc57f19d12e926e87c575f assets/greate/models/item/stainless_steel_alloy.json
 dabf8b5fe4245cc6dc4b0a8bc098c7137c62d806 assets/greate/models/item/stainless_steel_cogwheel.json
 5139b16f09ec0ae4c367f8fea3f70a086338c211 assets/greate/models/item/stainless_steel_crushing_wheel.json
 6c5de48b0d304a308730b93936d95db2004cba72 assets/greate/models/item/stainless_steel_encased_fan.json
@@ -948,7 +942,6 @@ b7d250a5fa2e9b27680e5ff1dc33542a66d78840 assets/greate/models/item/stainless_ste
 b216dfe98165bf9c825705d0fe2e7bc865f90411 assets/greate/models/item/stainless_steel_millstone.json
 28331ca85fb672c4227bd6a38aabcf9c1123695b assets/greate/models/item/stainless_steel_shaft.json
 46a0cd9499bc6d4071139f339806cb5f67b3ef27 assets/greate/models/item/stainless_steel_vertical_gearbox.json
-8f907de994ea305c37d4c9015d585eb8fbf188d9 assets/greate/models/item/steel_alloy.json
 5d795d033529a067b7765e337db2658d1f6b861d assets/greate/models/item/steel_cogwheel.json
 14c64a77ea3887bf5d56329eea13fbd4398c097a assets/greate/models/item/steel_crushing_wheel.json
 d0581f0ee6b6d66ad506e47d7a5f56137fc105ef assets/greate/models/item/steel_encased_fan.json
@@ -960,7 +953,6 @@ dbc47b054be6bbfd29f3a341e594d08e9e4f38b6 assets/greate/models/item/steel_mechani
 e72f5d0e0c70e21f2c8775131df3a206d65db16a assets/greate/models/item/steel_millstone.json
 577e52d30bfcd3e118b2705b044162ede71ba1bd assets/greate/models/item/steel_shaft.json
 88119ad9a60e69f5707a386a0392d2a911704674 assets/greate/models/item/steel_vertical_gearbox.json
-36aa9f3dcccb61e4fc7a0170ed1d79f8689ef2bb assets/greate/models/item/titanium_alloy.json
 4d419ea9dc11b70578fcc80a11dcb8d7bb7b316f assets/greate/models/item/titanium_cogwheel.json
 b15bce498ed7e687f511ab99f249ef4efc23e1be assets/greate/models/item/titanium_crushing_wheel.json
 a8d68ed534c3cb6179ce870c0ceae033747a9ae2 assets/greate/models/item/titanium_encased_fan.json
@@ -972,7 +964,6 @@ ae0b702dae33811ef2f87add5eed77d70b475658 assets/greate/models/item/titanium_mech
 cfd9264b19dff188ef5b33367c7ab42fc23c00f3 assets/greate/models/item/titanium_millstone.json
 5c9279409fa2f0f7d4cfd44799275abd05b8fd68 assets/greate/models/item/titanium_shaft.json
 2e403e742ae2f0a23d3b6449aa69d7df21b31902 assets/greate/models/item/titanium_vertical_gearbox.json
-ef10badca00030af595fb07ca0bf0ea0fc8b8d1f assets/greate/models/item/tungsten_steel_alloy.json
 31ba2ca797341b205b1162f81e911bce13affb8d assets/greate/models/item/tungsten_steel_cogwheel.json
 ed95c1e8c4252f6384e69e23feed3f07c0491a8d assets/greate/models/item/tungsten_steel_crushing_wheel.json
 e9d5f80205750cc377a5d94923461275d2d16927 assets/greate/models/item/tungsten_steel_encased_fan.json

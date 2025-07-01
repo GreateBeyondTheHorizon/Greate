@@ -1,28 +1,31 @@
 package electrolyte.greate.registry;
 
-import com.gregtechceu.gtceu.api.GTValues;
-import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
-import electrolyte.greate.content.gtceu.material.MaterialIconTypes;
-import electrolyte.greate.content.gtceu.material.PropertyKeys;
+import electrolyte.greate.content.gtceu.material.GreateMaterialFlags;
+import electrolyte.greate.content.gtceu.material.GreateMaterialIconTypes;
 
-import java.util.function.Predicate;
+import static com.gregtechceu.gtceu.api.GTValues.M;
 
 public class GreateTagPrefixes {
-	public static TagPrefix whisk;
-
-	public static void register() {
-		whisk = new TagPrefix("whisk")
+	public static TagPrefix whisk = new TagPrefix("whisk")
 				.defaultTagPath("whisks/%s")
 				.unformattedTagPath("whisks")
-				.materialAmount(GTValues.M)
-				.materialIconType(MaterialIconTypes.whisk)
+				.materialAmount(M * 7)
+				.materialIconType(GreateMaterialIconTypes.whisk)
 				.unificationEnabled(true)
 				.generateItem(true)
-				.generationCondition(Conditions.hasWhiskProperty);
-	}
+				.enableRecycling()
+				.generationCondition(m -> m.hasFlag(GreateMaterialFlags.GENERATE_WHISK));
 
-	public static class Conditions {
-		public static final Predicate<Material> hasWhiskProperty = mat -> mat.hasProperty(PropertyKeys.WHISK);
-	}
+	public static TagPrefix alloy = new TagPrefix("alloy")
+				.defaultTagPath("alloys/%s")
+				.unformattedTagPath("alloys")
+				.materialAmount(M * 2)
+				.materialIconType(GreateMaterialIconTypes.alloy)
+				.unificationEnabled(true)
+				.generateItem(true)
+				.enableRecycling()
+				.generationCondition(m -> m.hasFlag(GreateMaterialFlags.GENERATE_ALLOY));
+
+	public static void register() {}
 }

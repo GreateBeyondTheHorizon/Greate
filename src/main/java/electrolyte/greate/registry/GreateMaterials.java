@@ -3,16 +3,23 @@ package electrolyte.greate.registry;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.ToolProperty;
+import com.gregtechceu.gtceu.api.data.chemical.material.stack.MaterialStack;
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllItems;
 import electrolyte.greate.Greate;
-import electrolyte.greate.content.gtceu.material.PropertyKeys;
-import electrolyte.greate.content.gtceu.material.WhiskProperty;
 
+import static com.gregtechceu.gtceu.api.GTValues.M;
 import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags.*;
 import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialIconSet.*;
+import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.block;
+import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.ingot;
 import static com.gregtechceu.gtceu.api.item.tool.GTToolType.BUZZSAW;
 import static com.gregtechceu.gtceu.common.data.GTElements.Ma;
 import static com.gregtechceu.gtceu.common.data.GTElements.Sp;
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
+import static electrolyte.greate.content.gtceu.material.GreateMaterialFlags.GENERATE_ALLOY;
+import static electrolyte.greate.content.gtceu.material.GreateMaterialFlags.GENERATE_WHISK;
+import static electrolyte.greate.registry.GreateTagPrefixes.alloy;
 
 public class GreateMaterials {
 
@@ -55,24 +62,26 @@ public class GreateMaterials {
 				.setFormula(ChromaticCompound.getChemicalFormula() + Sp.symbol());
 
 		WroughtIron.addFlags(GENERATE_ROTOR);
-		Aluminium.addFlags(GENERATE_ROTOR);
-		Neutronium.addFlags(GENERATE_ROTOR);
-		Copper.addFlags(GENERATE_BOLT_SCREW);
 
-		// Add whisks to Greate tier materials
-		AndesiteAlloy.setProperty(PropertyKeys.WHISK, new WhiskProperty());
-		Steel.setProperty(PropertyKeys.WHISK, new WhiskProperty());
-		Aluminium.setProperty(PropertyKeys.WHISK, new WhiskProperty());
-		StainlessSteel.setProperty(PropertyKeys.WHISK, new WhiskProperty());
-		Titanium.setProperty(PropertyKeys.WHISK, new WhiskProperty());
-		TungstenSteel.setProperty(PropertyKeys.WHISK, new WhiskProperty());
-		RhodiumPlatedPalladium.setProperty(PropertyKeys.WHISK, new WhiskProperty());
-		NaquadahAlloy.setProperty(PropertyKeys.WHISK, new WhiskProperty());
-		Darmstadtium.setProperty(PropertyKeys.WHISK, new WhiskProperty());
-		Neutronium.setProperty(PropertyKeys.WHISK, new WhiskProperty());
+		AndesiteAlloy.addFlags(GENERATE_WHISK);
+		WroughtIron.addFlags(GENERATE_ALLOY);
+		Steel.addFlags(GENERATE_WHISK, GENERATE_ALLOY);
+		Aluminium.addFlags(GENERATE_ROTOR, GENERATE_WHISK, GENERATE_ALLOY);
+		StainlessSteel.addFlags(GENERATE_WHISK, GENERATE_ALLOY);
+		Titanium.addFlags(GENERATE_WHISK, GENERATE_ALLOY);
+		TungstenSteel.addFlags(GENERATE_WHISK, GENERATE_ALLOY);
+		RhodiumPlatedPalladium.addFlags(GENERATE_WHISK, GENERATE_ALLOY);
+		NaquadahAlloy.addFlags(GENERATE_WHISK, GENERATE_ALLOY);
+		Darmstadtium.addFlags(GENERATE_WHISK, GENERATE_ALLOY);
+		Neutronium.addFlags(GENERATE_ROTOR, GENERATE_WHISK, GENERATE_ALLOY);
 
 		Darmstadtium.setProperty(PropertyKey.TOOL, ToolProperty.Builder.of(50.0F, 15.0F, 5120, 5, BUZZSAW).build());
 		RhodiumPlatedPalladium.setProperty(PropertyKey.TOOL, ToolProperty.Builder.of(35.0F, 10.0F, 2560, 4, BUZZSAW).build());
+
+		alloy.addSecondaryMaterial(new MaterialStack(Andesite, M * 2));
+		alloy.setIgnored(WroughtIron, () -> AllItems.ANDESITE_ALLOY);
+		block.setIgnored(AndesiteAlloy, () -> AllBlocks.ANDESITE_ALLOY_BLOCK);
+		ingot.setIgnored(AndesiteAlloy, () -> AllItems.ANDESITE_ALLOY);
 	}
 
 	public static Material.Builder Builder(String id) {

@@ -36,7 +36,6 @@ public final class GreateRegistries {
 		Saws.register();
 		Pumps.register();
 		ModBlockEntityTypes.register();
-		ModItems.register();
 		GreateMultiblockMachines.register();
 	}
 
