@@ -1,60 +1,34 @@
 package electrolyte.greate.foundation.data.recipe.machine;
 
-import electrolyte.greate.GreateValues;
+import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
+import electrolyte.greate.content.gtceu.material.GreateMaterialFlags;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
 
 import java.util.function.Consumer;
 
+import static com.gregtechceu.gtceu.api.GTValues.LV;
 import static com.gregtechceu.gtceu.api.GTValues.VA;
 import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.dust;
 import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.ingot;
-import static com.gregtechceu.gtceu.common.data.GTMaterials.WroughtIron;
 import static com.gregtechceu.gtceu.common.data.GTRecipeTypes.ALLOY_SMELTER_RECIPES;
-import static electrolyte.greate.GreateValues.TM;
-import static electrolyte.greate.registry.ModItems.ALLOYS;
+import static electrolyte.greate.registry.GreateTagPrefixes.alloy;
 
 public class GreateAlloySmelterRecipes {
 
-    public static void register(Consumer<FinishedRecipe> provider) {
-        for(int tier = 0; tier < TM.length; tier++) {
-            if(tier != 0) {
-                ALLOY_SMELTER_RECIPES
-                        .recipeBuilder(ALLOYS[tier].getId().withSuffix("_from_dust"))
-                        .inputItems(dust, GreateValues.getMaterialFromTier(tier))
-                        .inputItems(Blocks.ANDESITE.asItem())
-                        .outputItems(ALLOYS[tier])
-                        .duration(100)
-                        .EUt(VA[tier])
-                        .save(provider);
+    public static void register(Consumer<FinishedRecipe> provider) {}
 
-                ALLOY_SMELTER_RECIPES
-                        .recipeBuilder(ALLOYS[tier].getId().withSuffix("_from_ingot"))
-                        .inputItems(ingot, GreateValues.getMaterialFromTier(tier))
-                        .inputItems(Blocks.ANDESITE.asItem())
-                        .outputItems(ALLOYS[tier])
-                        .duration(100)
-                        .EUt(VA[tier])
-                        .save(provider);
-            } else {
-                ALLOY_SMELTER_RECIPES
-                        .recipeBuilder(ALLOYS[tier].getId().withSuffix("_from_dust"))
-                        .inputItems(dust, WroughtIron)
-                        .inputItems(Blocks.ANDESITE.asItem())
-                        .outputItems(ALLOYS[tier])
-                        .duration(100)
-                        .EUt(VA[tier])
-                        .save(provider);
-
-                ALLOY_SMELTER_RECIPES
-                        .recipeBuilder(ALLOYS[tier].getId().withSuffix("_from_ingot"))
-                        .inputItems(ingot, WroughtIron)
-                        .inputItems(Blocks.ANDESITE.asItem())
-                        .outputItems(ALLOYS[tier])
-                        .duration(100)
-                        .EUt(VA[tier])
-                        .save(provider);
-            }
-        }
+    public static void registerMaterialRecipes(Consumer<FinishedRecipe> provider, Material material) {
+        if(!material.hasFlag(GreateMaterialFlags.GENERATE_ALLOY)) return;
+        ALLOY_SMELTER_RECIPES
+                .recipeBuilder(material.getName() + "_alloy")
+                .inputItems(Ingredient.of(ChemicalHelper.get(dust, material), ChemicalHelper.get(ingot, material)))
+                .inputItems(Blocks.ANDESITE.asItem())
+                .outputItems(alloy, material)
+                .duration(200)
+                .EUt(VA[LV])
+                .save(provider);
     }
 }

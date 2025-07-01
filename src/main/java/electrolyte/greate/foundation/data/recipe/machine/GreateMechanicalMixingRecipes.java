@@ -1,8 +1,9 @@
 package electrolyte.greate.foundation.data.recipe.machine;
 
 import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
-import com.simibubi.create.content.processing.recipe.HeatCondition;
-import electrolyte.greate.GreateValues;
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
+import electrolyte.greate.Greate;
+import electrolyte.greate.content.gtceu.material.GreateMaterialFlags;
 import electrolyte.greate.content.kinetics.mixer.TieredMixingRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder;
 import net.minecraft.data.recipes.FinishedRecipe;
@@ -11,35 +12,23 @@ import net.minecraft.world.level.block.Blocks;
 
 import java.util.function.Consumer;
 
+import static com.gregtechceu.gtceu.api.GTValues.LV;
 import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.dust;
 import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.ingot;
-import static com.gregtechceu.gtceu.common.data.GTMaterials.WroughtIron;
-import static electrolyte.greate.GreateValues.TM;
-import static electrolyte.greate.registry.ModItems.ALLOYS;
+import static electrolyte.greate.registry.GreateTagPrefixes.alloy;
 
 public class GreateMechanicalMixingRecipes {
 
-    public static void register(Consumer<FinishedRecipe> provider) {
-        for(int tier = 0; tier < TM.length; tier++) {
-            if(tier != 0) {
-                new TieredProcessingRecipeBuilder<>(TieredMixingRecipe::new, ALLOYS[tier].getId())
-                        .withItemIngredients(Ingredient.of(ChemicalHelper.get(dust, GreateValues.getMaterialFromTier(tier)), ChemicalHelper.get(ingot, GreateValues.getMaterialFromTier(tier))), Ingredient.of(Blocks.ANDESITE))
-                        .withSingleItemOutput(ALLOYS[tier].asStack())
-                        .requiresHeat(HeatCondition.HEATED)
-                        .duration(100)
-                        .recipeTier(tier)
-                        .recipeCircuit(4)
-                        .build(provider);
-            } else {
-                new TieredProcessingRecipeBuilder<>(TieredMixingRecipe::new, ALLOYS[tier].getId())
-                        .withItemIngredients(Ingredient.of(ChemicalHelper.get(dust, WroughtIron), ChemicalHelper.get(ingot, WroughtIron)), Ingredient.of(Blocks.ANDESITE))
-                        .withSingleItemOutput(ALLOYS[tier].asStack())
-                        .requiresHeat(HeatCondition.HEATED)
-                        .duration(100)
-                        .recipeTier(tier)
-                        .recipeCircuit(4)
-                        .build(provider);
-            }
-        }
+    public static void register(Consumer<FinishedRecipe> provider) {}
+
+    public static void registerMaterialRecipes(Consumer<FinishedRecipe> provider, Material material) {
+        if(!material.hasFlag(GreateMaterialFlags.GENERATE_ALLOY)) return;
+        new TieredProcessingRecipeBuilder<>(TieredMixingRecipe::new, Greate.id("mixing/" + material.getName()))
+                .withItemIngredients(Ingredient.of(ChemicalHelper.get(dust, material), ChemicalHelper.get(ingot, material)), Ingredient.of(Blocks.ANDESITE))
+                .withSingleItemOutput(ChemicalHelper.get(alloy, material))
+                .duration(200)
+                .recipeTier(LV)
+                .recipeCircuit(4)
+                .build(provider);
     }
 }

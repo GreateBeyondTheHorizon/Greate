@@ -12,7 +12,7 @@ import static electrolyte.greate.foundation.data.recipe.removal.GTRecipeRemoval.
 
 public class GreateRecipeRemoval {
 
-    public static void init(Consumer<ResourceLocation> recipe) {
+    public static void register(Consumer<ResourceLocation> recipe) {
         if(ConfigHolder.INSTANCE.recipes.hardDyeRecipes) disableDyeRecipes(recipe);
         if(ConfigHolder.INSTANCE.recipes.hardToolArmorRecipes) disableArmorToolRecipes(recipe);
         disableCreateRecipes(recipe);

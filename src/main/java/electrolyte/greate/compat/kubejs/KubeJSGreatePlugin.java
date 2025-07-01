@@ -19,10 +19,12 @@ import dev.latvian.mods.rhino.util.wrap.TypeWrappers;
 import electrolyte.greate.Greate;
 import electrolyte.greate.GreateValues;
 import electrolyte.greate.compat.kubejs.item.TieredOutputItem;
+import electrolyte.greate.content.gtceu.material.GreateMaterialFlags;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeFactory;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeSerializer;
+import electrolyte.greate.foundation.data.recipe.GreateCraftingComponents;
 import electrolyte.greate.registry.ModRecipeTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Recipe;
@@ -59,6 +61,8 @@ public class KubeJSGreatePlugin extends KubeJSPlugin {
     public void registerBindings(BindingsEvent event) {
         event.add("TieredOutputItem", TieredOutputItem.class);
         event.add("GreateValues", GreateValues.class);
+        event.add("GreateCraftingComponents", GreateCraftingComponents.class);
+        event.add("GreateMaterialFlags", GreateMaterialFlags.class);
     }
 
     @Override

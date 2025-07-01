@@ -72,9 +72,7 @@ public class GreateValues {
         long eut = (Long) content.get(0).getContent();
         for (int i = 0; i < GTValues.V.length; i++) {
             long voltage = GTValues.V[i];
-            if (eut <= voltage) {
-                return GTValues.ALL_TIERS[i];
-            }
+            if (eut <= voltage) return GTValues.ALL_TIERS[i];
         }
         return GTValues.MAX;
     }

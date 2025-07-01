@@ -14,6 +14,7 @@ import com.gregtechceu.gtceu.data.recipe.VanillaRecipeHelper;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import electrolyte.greate.Greate;
+import electrolyte.greate.content.gtceu.material.GreateMaterialFlags;
 import electrolyte.greate.foundation.data.recipe.GreateRecipes;
 import electrolyte.greate.registry.Cogwheels;
 import net.minecraft.data.recipes.FinishedRecipe;
@@ -37,6 +38,7 @@ import static com.gregtechceu.gtceu.data.recipe.GTCraftingComponents.*;
 import static electrolyte.greate.GreateValues.BM;
 import static electrolyte.greate.GreateValues.TM;
 import static electrolyte.greate.content.gtceu.machines.GreateMultiblockMachines.WIRE_COATING_FACTORY;
+import static electrolyte.greate.foundation.data.recipe.GreateCraftingComponents.SHAFT;
 import static electrolyte.greate.foundation.data.recipe.GreateRecipes.conversionCycle;
 import static electrolyte.greate.registry.Belts.BELT_CONNECTORS;
 import static electrolyte.greate.registry.Cogwheels.COGWHEELS;
@@ -45,11 +47,11 @@ import static electrolyte.greate.registry.EncasedFans.FANS;
 import static electrolyte.greate.registry.Gearboxes.GEARBOXES;
 import static electrolyte.greate.registry.Gearboxes.VERTICAL_GEARBOXES;
 import static electrolyte.greate.registry.GreateMaterials.AndesiteAlloy;
+import static electrolyte.greate.registry.GreateTagPrefixes.alloy;
 import static electrolyte.greate.registry.GreateTagPrefixes.whisk;
 import static electrolyte.greate.registry.MechanicalMixers.MECHANICAL_MIXERS;
 import static electrolyte.greate.registry.MechanicalPresses.MECHANICAL_PRESSES;
 import static electrolyte.greate.registry.Millstones.MILLSTONES;
-import static electrolyte.greate.registry.ModItems.ALLOYS;
 import static electrolyte.greate.registry.Pumps.MECHANICAL_PUMPS;
 import static electrolyte.greate.registry.Saws.SAWS;
 import static electrolyte.greate.registry.Shafts.SHAFTS;
@@ -59,20 +61,17 @@ public class GreateCraftingTableRecipes {
     public static void register(Consumer<FinishedRecipe> provider) {
         for (int tier = 0; tier < TM.length; tier++) {
             Material tierMaterial = TM[tier];
-            VanillaRecipeHelper.addShapedRecipe(provider, ALLOYS[tier].getId(), ALLOYS[tier].asStack(),
-                    "NA", "AN", "fh",
-                    'N', new MaterialEntry(plate, tierMaterial),
-                    'A', new ItemStack(Blocks.ANDESITE));
-            VanillaRecipeHelper.addShapedRecipe(provider, SHAFTS[tier].getId(), SHAFTS[tier].asStack(2),
+            VanillaRecipeHelper.addShapedRecipe(provider, TM[tier].getName() + "_shaft", ((ItemStack) SHAFT.get(tier)).copyWithCount(2),
                     "s ", " A",
                     'A', new MaterialEntry(plate, tierMaterial));
 
             Material previousTierMaterial = tier - 1 == -1 ? Wood : TM[tier - 1];
-            VanillaRecipeHelper.addShapelessRecipe(provider, COGWHEELS[tier].getId(), COGWHEELS[tier].asStack(), SHAFTS[tier].asStack(),
+            VanillaRecipeHelper.addShapelessRecipe(provider, COGWHEELS[tier].getId(), COGWHEELS[tier].asStack(),
+                    SHAFT.get(tier),
                     new MaterialEntry(plate, previousTierMaterial),
                     GreateRecipes.createIngFromTag("forge", "tools/files"));
             VanillaRecipeHelper.addShapelessRecipe(provider, LARGE_COGWHEELS[tier].getId(), LARGE_COGWHEELS[tier].asStack(),
-                    SHAFTS[tier],
+                    SHAFT.get(tier),
                     new MaterialEntry(plate, previousTierMaterial),
                     new MaterialEntry(plate, previousTierMaterial),
                     GreateRecipes.createIngFromTag("forge", "tools/files"));
@@ -82,16 +81,12 @@ public class GreateCraftingTableRecipes {
                     GreateRecipes.createIngFromTag("forge", "tools/files"));
             VanillaRecipeHelper.addShapedRecipe(provider, GEARBOXES[tier].getId(), GEARBOXES[tier].asStack(),
                     " S ", "SCS", "wSh",
-                    'S', SHAFTS[tier],
+                    'S', SHAFT.get(tier),
                     'C', AllBlocks.ANDESITE_CASING);
             VanillaRecipeHelper.addShapedRecipe(provider, VERTICAL_GEARBOXES[tier].getId(), VERTICAL_GEARBOXES[tier].asStack(),
                     "S S", "wCh", "S S",
-                    'S', SHAFTS[tier],
+                    'S', SHAFT.get(tier),
                     'C', AllBlocks.ANDESITE_CASING);
-            VanillaRecipeHelper.addShapedRecipe(provider, String.format("%s_whisk", tierMaterial.getName()), ChemicalHelper.get(whisk, tierMaterial),
-                    "fId", "PIP", "PPP",
-                    'I', new MaterialEntry(ingot, tierMaterial),
-                    'P', new MaterialEntry(plate, tierMaterial));
             conversionCycle(provider, ImmutableList.of(GEARBOXES[tier], VERTICAL_GEARBOXES[tier]));
 
             // Machines
@@ -105,13 +100,13 @@ public class GreateCraftingTableRecipes {
                 VanillaRecipeHelper.addShapedRecipe(provider, MECHANICAL_PRESSES[tier].getId(), MECHANICAL_PRESSES[tier].asStack(),
                         "PSP", "CMC", "wBh",
                         'P', new MaterialEntry(plate, tierMaterial),
-                        'S', SHAFTS[tier],
+                        'S', SHAFT.get(tier),
                         'C', CIRCUIT.get(tier),
                         'M', CASING.get(tier),
                         'B', new MaterialEntry(block, tierMaterial));
                 VanillaRecipeHelper.addShapedRecipe(provider, MECHANICAL_MIXERS[tier].getId(), MECHANICAL_MIXERS[tier].asStack(),
                         " S ", "CMC", "wWh",
-                        'S', SHAFTS[tier],
+                        'S', SHAFT.get(tier),
                         'C', CIRCUIT.get(tier),
                         'M', CASING.get(tier),
                         'W', new MaterialEntry(whisk, tierMaterial));
@@ -121,14 +116,10 @@ public class GreateCraftingTableRecipes {
                         'W', Ingredient.of(ItemTags.WOODEN_SLABS),
                         'H', CASING.get(tier),
                         'C', CIRCUIT.get(tier),
-                        'S', SHAFTS[tier]);
-                VanillaRecipeHelper.addShapedRecipe(provider, String.format("%s_whisk", tierMaterial.getName()), ChemicalHelper.get(whisk, tierMaterial),
-                        "fId", "PIP", "PPP",
-                        'I', new MaterialEntry(ingot, tierMaterial),
-                        'P', new MaterialEntry(plate, tierMaterial));
+                        'S', SHAFT.get(tier));
                 VanillaRecipeHelper.addShapedRecipe(provider, FANS[tier].getId(), FANS[tier].asStack(),
                         " S ", "CMC", "wRh",
-                        'S', SHAFTS[tier],
+                        'S', SHAFT.get(tier),
                         'C', CIRCUIT.get(tier),
                         'M', CASING.get(tier),
                         'R', new MaterialEntry(rotor, tierMaterial));
@@ -140,7 +131,7 @@ public class GreateCraftingTableRecipes {
                             'S', new MaterialEntry(toolHeadBuzzSaw, tierMaterial),
                             'M', MOTOR.get(tier),
                             'C', CASING.get(tier),
-                            'H', SHAFTS[tier],
+                            'H', SHAFT.get(tier),
                             'O', CONVEYOR.get(tier));
                 }
             }
@@ -353,5 +344,21 @@ public class GreateCraftingTableRecipes {
                 'G', GTItems.GLASS_TUBE,
                 'R', AllItems.POLISHED_ROSE_QUARTZ,
                 'S', new MaterialEntry(wireGtSingle, Steel));
+    }
+
+    public static void registerMaterialRecipes(Consumer<FinishedRecipe> provider, Material material) {
+        if(material.hasFlag(GreateMaterialFlags.GENERATE_ALLOY)) {
+            VanillaRecipeHelper.addShapedRecipe(provider, material.getName() + "_alloy", ChemicalHelper.get(alloy, material),
+                    "NA", "AN", "fh",
+                    'N', new MaterialEntry(plate, material),
+                    'A', new ItemStack(Blocks.ANDESITE));
+        }
+
+        if(material.hasFlag(GreateMaterialFlags.GENERATE_WHISK)) {
+            VanillaRecipeHelper.addShapedRecipe(provider, material.getName() + "_whisk", ChemicalHelper.get(whisk, material),
+                    "fId", "PIP", "PPP",
+                    'I', new MaterialEntry(ingot, material),
+                    'P', new MaterialEntry(plate, material));
+        }
     }
 }

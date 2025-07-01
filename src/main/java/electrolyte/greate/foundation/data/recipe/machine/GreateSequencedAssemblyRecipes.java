@@ -108,7 +108,7 @@ public class GreateSequencedAssemblyRecipes {
         TagPrefix cablePrefix = TagPrefix.get("cable" + wirePrefix.name().substring(4));
         int voltageTier = GTUtil.getTierByVoltage(property.getVoltage());
         int euT = voltageTier > 0 ? voltageTier - 1 : ULV;
-        int insulationAmount = INSULATION_AMOUNT.get(cablePrefix);
+        int insulationAmount = INSULATION_AMOUNT.getInt(cablePrefix);
 
         if(voltageTier >= EV) {
             SequencedAssemblyRecipeBuilder siliconeAssemblyBuilder = new SequencedAssemblyRecipeBuilder(Greate.id(String.format("%s_cable_%d_silicone", material.getName(), cableAmount)))

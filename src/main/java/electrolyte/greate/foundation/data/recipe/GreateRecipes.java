@@ -22,23 +22,26 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class GreateRecipes {
-    public static void init(Consumer<FinishedRecipe> provider) {
-        GreateAlloySmelterRecipes.register(provider);
-        GreateAssemblerRecipes.register(provider);
+    public static void register(Consumer<FinishedRecipe> provider) {
+        //GreateAlloySmelterRecipes.register(provider);
+        //GreateAssemblerRecipes.register(provider);
         GreateChemicalBath.register(provider);
         GreateCraftingTableRecipes.register(provider);
         GreateCuttingMachineRecipes.register(provider);
         GreateDeployerRecipes.register(provider);
-        GreateMaceratorRecipes.register(provider);
+        //GreateMaceratorRecipes.register(provider);
         GreateMillstoneRecipes.register(provider);
         GreateMechanicalCraftingRecipes.register(provider);
-        GreateMechanicalMixingRecipes.register(provider);
+        //GreateMechanicalMixingRecipes.register(provider);
         GreateSawingRecipes.register(provider);
         GreateSequencedAssemblyRecipes.register(provider);
-        GreateSplashingRecipes.register(provider);
+        //GreateSplashingRecipes.register(provider);
 
         for(Material material : GTCEuAPI.materialManager.getRegisteredMaterials()) {
             if(material.hasFlag(MaterialFlags.NO_UNIFICATION)) continue;
+            GreateAlloySmelterRecipes.registerMaterialRecipes(provider, material);
+            GreateCraftingTableRecipes.registerMaterialRecipes(provider, material);
+            GreateMechanicalMixingRecipes.registerMaterialRecipes(provider, material);
             GreateSequencedAssemblyRecipes.registerCableRecipes(provider, material);
             GreateSpoutRecipes.registerCableRecipes(provider, material);
         }
