@@ -7,6 +7,8 @@ import com.gregtechceu.gtceu.api.data.chemical.material.stack.MaterialStack;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import electrolyte.greate.Greate;
+import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
+import electrolyte.greate.content.gtceu.material.KineticProperty;
 
 import static com.gregtechceu.gtceu.api.GTValues.M;
 import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags.*;
@@ -35,7 +37,7 @@ public class GreateMaterials {
 				.appendFlags(STD_METAL, GENERATE_BOLT_SCREW, GENERATE_ROTOR)
 				.color(0xDADBCA).secondaryColor(0xABC7B5).iconSet(DULL)
 				.toolStats(ToolProperty.Builder.of(1, 1, 64, 0, BUZZSAW).build())
-				.components(Andesite, 9, Iron, 1)
+				.components(Andesite, 1, WroughtIron, 1)
 				.buildAndRegister();
 		RoseQuartz = Builder("rose_quartz")
 				.gem()
@@ -62,6 +64,17 @@ public class GreateMaterials {
 				.setFormula(ChromaticCompound.getChemicalFormula() + Sp.symbol());
 
 		WroughtIron.addFlags(GENERATE_ROTOR);
+
+		AndesiteAlloy.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(0, 8));
+		Steel.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(1, 32));
+		Aluminium.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(2, 128));
+		StainlessSteel.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(3, 512));
+		Titanium.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(4, 2048));
+		TungstenSteel.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(5, 8192));
+		RhodiumPlatedPalladium.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(6, 32768));
+		NaquadahAlloy.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(7, 131072));
+		Darmstadtium.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(8, 524288));
+		Neutronium.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(9, 2097152));
 
 		AndesiteAlloy.addFlags(GENERATE_WHISK);
 		WroughtIron.addFlags(GENERATE_ALLOY);

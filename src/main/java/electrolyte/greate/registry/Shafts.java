@@ -1,5 +1,10 @@
 package electrolyte.greate.registry;
 
+import com.google.common.collect.ImmutableTable;
+import com.google.common.collect.Table;
+import com.gregtechceu.gtceu.api.GTCEuAPI;
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
+import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllSpriteShifts;
 import com.simibubi.create.content.decoration.encasing.CasingBlock;
@@ -13,6 +18,8 @@ import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import electrolyte.greate.Greate;
+import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
+import electrolyte.greate.content.gtceu.material.KineticProperty;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedShaftBlock;
 import electrolyte.greate.content.kinetics.steamEngine.TieredPoweredShaftBlock;
@@ -26,6 +33,9 @@ import static electrolyte.greate.Greate.REGISTRATE;
 import static electrolyte.greate.GreateValues.TM;
 
 public class Shafts {
+
+    static ImmutableTable.Builder<TagPrefix, Material, BlockEntry<TieredShaftBlock>> SHAFTS_BUILDER = ImmutableTable.builder();
+    public static Table<TagPrefix, Material, BlockEntry<TieredShaftBlock>> NEW_SHAFTS;
 
     // Shaft
     public static final BlockEntry<TieredShaftBlock>[] SHAFTS = new BlockEntry[10];
@@ -83,17 +93,26 @@ public class Shafts {
     public static void register() {
         REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
 
+        for(Material material : GTCEuAPI.materialManager.getRegisteredMaterials()) {
+            if(!material.hasProperty(GreatePropertyKeys.KINETIC)) continue;
+            KineticProperty prop = material.getProperty(GreatePropertyKeys.KINETIC);
+            var temp = shaft(prop.getTier(), material);
+            SHAFTS[prop.getTier()] = temp;
+            SHAFTS_BUILDER.put(GreateTagPrefixes.shaft, material, temp);
+        }
+        NEW_SHAFTS = SHAFTS_BUILDER.build();
+
         // Shaft
-        SHAFTS[ULV] = ANDESITE_SHAFT = shaft(ULV);
-        SHAFTS[LV] = STEEL_SHAFT = shaft(LV);
-        SHAFTS[MV] = ALUMINIUM_SHAFT = shaft(MV);
-        SHAFTS[HV] = STAINLESS_STEEL_SHAFT = shaft(HV);
-        SHAFTS[EV] = TITANIUM_SHAFT = shaft(EV);
-        SHAFTS[IV] = TUNGSTENSTEEL_SHAFT = shaft(IV);
-        SHAFTS[LuV] = PALLADIUM_SHAFT = shaft(LuV);
-        SHAFTS[ZPM] = NAQUADAH_SHAFT = shaft(ZPM);
-        SHAFTS[UV] = DARMSTADTIUM_SHAFT = shaft(UV);
-        SHAFTS[UHV] = NEUTRONIUM_SHAFT = shaft(UHV);
+        //SHAFTS[ULV] = ANDESITE_SHAFT = shaft(ULV);
+        //SHAFTS[LV] = STEEL_SHAFT = shaft(LV);
+        //SHAFTS[MV] = ALUMINIUM_SHAFT = shaft(MV);
+        //SHAFTS[HV] = STAINLESS_STEEL_SHAFT = shaft(HV);
+        //SHAFTS[EV] = TITANIUM_SHAFT = shaft(EV);
+        //SHAFTS[IV] = TUNGSTENSTEEL_SHAFT = shaft(IV);
+        //SHAFTS[LuV] = PALLADIUM_SHAFT = shaft(LuV);
+        //SHAFTS[ZPM] = NAQUADAH_SHAFT = shaft(ZPM);
+        //SHAFTS[UV] = DARMSTADTIUM_SHAFT = shaft(UV);
+        //SHAFTS[UHV] = NEUTRONIUM_SHAFT = shaft(UHV);
 
         // Powered shaft
         POWERED_SHAFTS[ULV] = POWERED_ANDESITE_SHAFT = poweredShaft(ULV);
@@ -135,6 +154,21 @@ public class Shafts {
     public static BlockEntry<TieredShaftBlock> shaft(int tier) {
         return REGISTRATE
                 .block(TM[tier].getName() + "_shaft", TieredShaftBlock::new)
+                .initialProperties(SharedProperties::stone)
+                .properties(p -> p.mapColor(MapColor.METAL))
+                .transform(GStress.setNoImpact())
+                .transform(TagGen.pickaxeOnly())
+                .blockstate(GreateBlockStateGen.tieredShaftProvider())
+                .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+                .onRegister(c -> c.setTier(tier))
+                .simpleItem()
+                .item().build()
+                .register();
+    }
+
+    public static BlockEntry<TieredShaftBlock> shaft(int tier, Material mat) {
+        return REGISTRATE
+                .block(mat.getName() + "_shaft", TieredShaftBlock::new)
                 .initialProperties(SharedProperties::stone)
                 .properties(p -> p.mapColor(MapColor.METAL))
                 .transform(GStress.setNoImpact())

@@ -6,4 +6,5 @@ public class GreateMaterialIconTypes {
 
 	public static final MaterialIconType whisk = new MaterialIconType("whisk");
 	public static final MaterialIconType alloy = new MaterialIconType("alloy");
+	public static final MaterialIconType shaft = new MaterialIconType("shaft");
 }

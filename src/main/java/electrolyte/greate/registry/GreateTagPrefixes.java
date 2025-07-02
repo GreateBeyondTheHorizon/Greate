@@ -27,5 +27,14 @@ public class GreateTagPrefixes {
 				.enableRecycling()
 				.generationCondition(m -> m.hasFlag(GreateMaterialFlags.GENERATE_ALLOY));
 
+	public static TagPrefix shaft = new TagPrefix("shaft")
+			.defaultTagPath("shafts/%s")
+			.unformattedTagPath("shafts")
+			.materialAmount(M / 2)
+			.itemTable(() -> Shafts.NEW_SHAFTS)
+			.unificationEnabled(true)
+			.enableRecycling()
+			.generationCondition(m -> m.hasFlag(GreateMaterialFlags.GENERATE_SHAFT));
+
 	public static void register() {}
 }

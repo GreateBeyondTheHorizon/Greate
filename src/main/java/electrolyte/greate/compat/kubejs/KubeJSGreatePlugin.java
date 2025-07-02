@@ -20,6 +20,7 @@ import electrolyte.greate.Greate;
 import electrolyte.greate.GreateValues;
 import electrolyte.greate.compat.kubejs.item.TieredOutputItem;
 import electrolyte.greate.content.gtceu.material.GreateMaterialFlags;
+import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeFactory;
@@ -63,6 +64,7 @@ public class KubeJSGreatePlugin extends KubeJSPlugin {
         event.add("GreateValues", GreateValues.class);
         event.add("GreateCraftingComponents", GreateCraftingComponents.class);
         event.add("GreateMaterialFlags", GreateMaterialFlags.class);
+        event.add("GreatePropertyKeys", GreatePropertyKeys.class);
     }
 
     @Override
