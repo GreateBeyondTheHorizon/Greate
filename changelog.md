@@ -1,2 +1,1 @@
-- Fix crash with create 6.0.6
-- Min create version is now 6.0.6
+- Fix incorrect texture for brass encased andesite alloy shaft
