@@ -2,6 +2,7 @@ package electrolyte.greate;
 
 import com.gregtechceu.gtceu.api.GTCEuAPI.RegisterEvent;
 import com.gregtechceu.gtceu.api.data.chemical.material.event.MaterialEvent;
+import com.gregtechceu.gtceu.api.data.chemical.material.event.PostMaterialEvent;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
@@ -22,7 +23,7 @@ public final class GreateRegistries {
 	}
 
 	@SubscribeEvent
-	public static void registerMachines(RegisterEvent<ResourceLocation, MachineDefinition> event) {
+	public static void registerMaterialBlocks(PostMaterialEvent event) {
 		Shafts.register();
 		Belts.register();
 		Cogwheels.register();
@@ -36,6 +37,10 @@ public final class GreateRegistries {
 		Saws.register();
 		Pumps.register();
 		ModBlockEntityTypes.register();
+	}
+
+	@SubscribeEvent
+	public static void registerMachines(RegisterEvent<ResourceLocation, MachineDefinition> event) {
 		GreateMultiblockMachines.register();
 	}
 
