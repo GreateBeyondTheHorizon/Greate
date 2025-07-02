@@ -55,7 +55,7 @@ public class GreateBlockStateGen {
     public static <T extends Block> NonNullBiConsumer<DataGenContext<Block, T>, RegistrateBlockstateProvider> tieredEncasedShaftProvider() {
         return (ctx, prov) -> prov.getVariantBuilder(ctx.getEntry()).forAllStatesExcept(state -> {
             Axis axis = state.getValue(BlockStateProperties.AXIS);
-            String shaftType = ctx.getName().contains("andesite") ? "andesite" : "brass";
+            String shaftType = ctx.getName().contains("andesite_encased") ? "andesite" : "brass";
             return ConfiguredModel.builder()
                     .modelFile(prov.models().withExistingParent(ctx.getName(), Create.asResource("block/encased_shaft/block_" + shaftType)))
                     .uvLock(true)
