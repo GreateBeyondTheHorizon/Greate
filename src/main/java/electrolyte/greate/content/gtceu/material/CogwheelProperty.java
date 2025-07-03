@@ -14,7 +14,7 @@ public class CogwheelProperty implements IMaterialProperty {
 
     @Override
     public void verifyProperty(MaterialProperties materialProperties) {
-        materialProperties.ensureSet(GreatePropertyKeys.KINETIC);
+        materialProperties.ensureSet(GreatePropertyKeys.KINETIC, true);
     }
 
     public Material getPreviousMaterial() {

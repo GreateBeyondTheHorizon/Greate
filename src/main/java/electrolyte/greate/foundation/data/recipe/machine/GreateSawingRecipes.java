@@ -5,7 +5,7 @@ import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
 import electrolyte.greate.Greate;
-import electrolyte.greate.content.gtceu.material.GreateMaterialFlags;
+import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
 import electrolyte.greate.content.kinetics.saw.TieredCuttingRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder;
 import net.minecraft.data.recipes.FinishedRecipe;
@@ -23,7 +23,7 @@ public class GreateSawingRecipes {
     public static void register(Consumer<FinishedRecipe> provider) {}
 
     public static void registerMaterialRecipes(Consumer<FinishedRecipe> provider, Material material) {
-        if(material.hasFlag(GreateMaterialFlags.GENERATE_SHAFT)) {
+        if(material.hasProperty(GreatePropertyKeys.KINETIC)) {
             new TieredProcessingRecipeBuilder<>(TieredCuttingRecipe::new, Greate.id(material.getName() + "_shaft_water"))
                     .withItemIngredients(Ingredient.of(ChemicalHelper.get(alloy, material)))
                     .withFluidIngredients(FluidIngredient.fromFluidStack(GTMaterials.Water.getFluid(Math.max(4, Math.min(1000, 100 * VA[LV] / 320)))))

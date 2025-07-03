@@ -1,6 +1,7 @@
 package electrolyte.greate.content.gtceu.material;
 
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
+import com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.IMaterialProperty;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.MaterialProperties;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
@@ -30,8 +31,8 @@ public class KineticProperty implements IMaterialProperty {
     public void verifyProperty(MaterialProperties materialProperties) {
         if(materialProperties.hasProperty(PropertyKey.INGOT)) {
             Material mat = materialProperties.getMaterial();
-            if(!mat.hasFlag(GreateMaterialFlags.GENERATE_SHAFT)) {
-                mat.addFlags(GreateMaterialFlags.GENERATE_SHAFT);
+            if(!mat.hasFlag(MaterialFlags.GENERATE_PLATE)) {
+                mat.addFlags(MaterialFlags.GENERATE_PLATE);
             }
         }
     }

@@ -2,7 +2,7 @@ package electrolyte.greate.foundation.data.recipe.machine;
 
 import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
-import electrolyte.greate.content.gtceu.material.GreateMaterialFlags;
+import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
 import net.minecraft.data.recipes.FinishedRecipe;
 
 import java.util.function.Consumer;
@@ -18,7 +18,7 @@ public class GreateCuttingMachineRecipes {
     public static void register(Consumer<FinishedRecipe> provider) {}
 
     public static void registerMaterialRecipes(Consumer<FinishedRecipe> provider, Material material) {
-        if(material.hasFlag(GreateMaterialFlags.GENERATE_SHAFT)) {
+        if(material.hasProperty(GreatePropertyKeys.KINETIC)) {
             CUTTER_RECIPES
                     .recipeBuilder(material.getName() + "_shaft")
                     .inputItems(alloy, material)

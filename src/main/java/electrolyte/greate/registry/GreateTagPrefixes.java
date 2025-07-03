@@ -33,25 +33,19 @@ public class GreateTagPrefixes {
 			.itemTable(() -> Shafts.NEW_SHAFTS)
 			.materialAmount(M / 2)
 			.unificationEnabled(true)
-			.enableRecycling()
-			//todo: may not need this, kineticproperty should handle it
-			.generationCondition(m -> m.hasFlag(GreateMaterialFlags.GENERATE_SHAFT));
+			.enableRecycling();
 
 	public static TagPrefix poweredShaft = new TagPrefix("powered_shaft")
-			.itemTable(() -> Shafts.NEW_POWERED_SHAFTS)
-			.generationCondition(m -> m.hasFlag(GreateMaterialFlags.GENERATE_SHAFT));
+			.itemTable(() -> Shafts.NEW_POWERED_SHAFTS);
 
 	public static TagPrefix andesiteEncasedShaft = new TagPrefix("andesite_encased_shaft")
-			.itemTable(() -> Shafts.NEW_ANDESITE_ENCASED_SHAFTS)
-			.generationCondition(m -> m.hasFlag(GreateMaterialFlags.GENERATE_SHAFT));
+			.itemTable(() -> Shafts.NEW_ANDESITE_ENCASED_SHAFTS);
 
 	public static TagPrefix brassEncasedShaft = new TagPrefix("brass_encased_shaft")
-			.itemTable(() -> Shafts.NEW_BRASS_ENCASED_SHAFTS)
-			.generationCondition(m -> m.hasFlag(GreateMaterialFlags.GENERATE_SHAFT));
+			.itemTable(() -> Shafts.NEW_BRASS_ENCASED_SHAFTS);
 
 	public static TagPrefix girderEncasedShaft = new TagPrefix("girder_encased_shaft")
-			.itemTable(() -> Girders.NEW_GIRDERS)
-			.generationCondition(m -> m.hasFlag(GreateMaterialFlags.GENERATE_SHAFT));
+			.itemTable(() -> Girders.NEW_GIRDERS);
 
 	public static TagPrefix cogwheel = new TagPrefix("cogwheel")
 			.defaultTagPath("cogwheels/%s")
@@ -59,8 +53,7 @@ public class GreateTagPrefixes {
 			.itemTable(() -> Cogwheels.NEW_COGWHEELS)
 			.materialAmount(M / 2)
 			.unificationEnabled(true)
-			.enableRecycling()
-			.generationCondition(m -> m.hasFlag(GreateMaterialFlags.GENERATE_COGWHEEL));
+			.enableRecycling();
 
 	public static TagPrefix largeCogwheel = new TagPrefix("large_cogwheel")
 			.defaultTagPath("large_cogwheels/%s")
@@ -68,24 +61,19 @@ public class GreateTagPrefixes {
 			.itemTable(() -> Cogwheels.NEW_LARGE_COGWHEELS)
 			.materialAmount(M / 2)
 			.unificationEnabled(true)
-			.enableRecycling()
-			.generationCondition(m -> m.hasFlag(GreateMaterialFlags.GENERATE_COGWHEEL));
+			.enableRecycling();
 
 	public static TagPrefix andesiteEncasedCogwheel = new TagPrefix("andesite_encased_cogwheel")
-			.itemTable(() -> Cogwheels.NEW_ANDESITE_ENCASED_COGWHEELS)
-			.generationCondition(m -> m.hasFlag(GreateMaterialFlags.GENERATE_COGWHEEL));
+			.itemTable(() -> Cogwheels.NEW_ANDESITE_ENCASED_COGWHEELS);
 
 	public static TagPrefix brassEncasedCogwheel = new TagPrefix("brass_encased_cogwheel")
-			.itemTable(() -> Cogwheels.NEW_BRASS_ENCASED_COGWHEELS)
-			.generationCondition(m -> m.hasFlag(GreateMaterialFlags.GENERATE_COGWHEEL));
+			.itemTable(() -> Cogwheels.NEW_BRASS_ENCASED_COGWHEELS);
 
 	public static TagPrefix andesiteEncasedLargeCogwheel = new TagPrefix("andesite_encased_large_cogwheel")
-			.itemTable(() -> Cogwheels.NEW_ANDESITE_ENCASED_LARGE_COGWHEELS)
-			.generationCondition(m -> m.hasFlag(GreateMaterialFlags.GENERATE_COGWHEEL));
+			.itemTable(() -> Cogwheels.NEW_ANDESITE_ENCASED_LARGE_COGWHEELS);
 
 	public static TagPrefix brassEncasedLargeCogwheel = new TagPrefix("brass_encased_large_cogwheel")
-			.itemTable(() -> Cogwheels.NEW_BRASS_ENCASED_LARGE_COGWHEELS)
-			.generationCondition(m -> m.hasFlag(GreateMaterialFlags.GENERATE_COGWHEEL));
+			.itemTable(() -> Cogwheels.NEW_BRASS_ENCASED_LARGE_COGWHEELS);
 
 	public static void register() {}
 }
