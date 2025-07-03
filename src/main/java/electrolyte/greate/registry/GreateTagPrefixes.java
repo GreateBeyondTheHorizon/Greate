@@ -38,15 +38,19 @@ public class GreateTagPrefixes {
 
 	public static TagPrefix poweredShaft = new TagPrefix("powered_shaft")
 			.itemTable(() -> Shafts.NEW_POWERED_SHAFTS)
-			.generationCondition(m -> m.hasFlag(GreateMaterialFlags.GENERATE_POWERED_SHAFT));
+			.generationCondition(m -> m.hasFlag(GreateMaterialFlags.GENERATE_SHAFT));
 
 	public static TagPrefix andesiteEncasedShaft = new TagPrefix("andesite_encased_shaft")
 			.itemTable(() -> Shafts.NEW_ANDESITE_ENCASED_SHAFTS)
-			.generationCondition(m -> m.hasFlag(GreateMaterialFlags.GENERATE_ANDESITE_ENCASED_SHAFT));
+			.generationCondition(m -> m.hasFlag(GreateMaterialFlags.GENERATE_SHAFT));
 
 	public static TagPrefix brassEncasedShaft = new TagPrefix("brass_encased_shaft")
 			.itemTable(() -> Shafts.NEW_BRASS_ENCASED_SHAFTS)
-			.generationCondition(m -> m.hasFlag(GreateMaterialFlags.GENERATE_BRASS_ENCASED_SHAFT));
+			.generationCondition(m -> m.hasFlag(GreateMaterialFlags.GENERATE_SHAFT));
+
+	public static TagPrefix girderEncasedShaft = new TagPrefix("girder_encased_shaft")
+			.itemTable(() -> Girders.NEW_GIRDERS)
+			.generationCondition(m -> m.hasFlag(GreateMaterialFlags.GENERATE_SHAFT));
 
 	public static void register() {}
 }

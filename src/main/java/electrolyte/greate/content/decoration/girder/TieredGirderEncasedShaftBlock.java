@@ -1,10 +1,11 @@
 package electrolyte.greate.content.decoration.girder;
 
+import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.decoration.girder.GirderEncasedShaftBlock;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.schematics.requirement.ItemRequirement;
-
 import electrolyte.greate.content.decoration.encasing.IGirderEncasedBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredShaftBlock;
@@ -25,17 +26,18 @@ import net.minecraft.world.phys.HitResult;
 
 import java.util.function.Supplier;
 
+import static electrolyte.greate.registry.GreateTagPrefixes.shaft;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.AXIS;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.WATERLOGGED;
 
 public class TieredGirderEncasedShaftBlock extends GirderEncasedShaftBlock implements ITieredBlock, ITieredShaftBlock, IGirderEncasedBlock {
 
-    private final Supplier<Block> shaft;
+    private final Supplier<Block> shaftBlock;
     private int tier;
 
-    public TieredGirderEncasedShaftBlock(Properties properties, Supplier<Block> shaft) {
+    public TieredGirderEncasedShaftBlock(Properties properties, Material material) {
         super(properties);
-        this.shaft = shaft;
+        this.shaftBlock = () -> ChemicalHelper.getBlock(shaft, material);
     }
 
     @Override
@@ -45,7 +47,7 @@ public class TieredGirderEncasedShaftBlock extends GirderEncasedShaftBlock imple
 
     @Override
     public ItemRequirement getRequiredItems(BlockState state, BlockEntity blockEntity) {
-        return ItemRequirement.of(shaft.get().defaultBlockState(), blockEntity)
+        return ItemRequirement.of(shaftBlock.get().defaultBlockState(), blockEntity)
                 .union(ItemRequirement.of(AllBlocks.METAL_GIRDER.getDefaultState(), blockEntity));
     }
 
@@ -69,7 +71,7 @@ public class TieredGirderEncasedShaftBlock extends GirderEncasedShaftBlock imple
 
     @Override
     public Block getShaft() {
-        return shaft.get();
+        return shaftBlock.get();
     }
 
     @Override

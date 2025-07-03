@@ -28,7 +28,7 @@ import net.minecraft.world.level.material.MapColor;
 import java.util.Objects;
 
 import static electrolyte.greate.Greate.REGISTRATE;
-import static electrolyte.greate.registry.GreateTagPrefixes.shaft;
+import static electrolyte.greate.registry.GreateTagPrefixes.*;
 
 public class Shafts {
 
@@ -79,7 +79,7 @@ public class Shafts {
                     .simpleItem()
                     .item().build()
                     .register();
-            SHAFTS_BUILDER.put(GreateTagPrefixes.shaft, mat, shaftEntry);
+            SHAFTS_BUILDER.put(shaft, mat, shaftEntry);
         }
         NEW_SHAFTS = SHAFTS_BUILDER.build();
     }
@@ -98,7 +98,7 @@ public class Shafts {
                     .loot((l, b) -> l.dropOther(b, Objects.requireNonNull(NEW_SHAFTS.get(shaft, mat))))
                     .onRegister(c -> c.setTier(tier))
                     .register();
-            POWERED_SHAFTS_BUILDER.put(GreateTagPrefixes.poweredShaft, mat, shaftEntry);
+            POWERED_SHAFTS_BUILDER.put(poweredShaft, mat, shaftEntry);
         }
         NEW_POWERED_SHAFTS = POWERED_SHAFTS_BUILDER.build();
     }
@@ -117,7 +117,7 @@ public class Shafts {
                      .transform(TagGen.axeOrPickaxe())
                      .onRegister(c -> c.setTier(tier))
                      .register();
-             ANDESITE_ENCASED_SHAFTS_BUILDER.put(GreateTagPrefixes.andesiteEncasedShaft, mat, encasedShaftEntry);
+             ANDESITE_ENCASED_SHAFTS_BUILDER.put(andesiteEncasedShaft, mat, encasedShaftEntry);
         }
         NEW_ANDESITE_ENCASED_SHAFTS = ANDESITE_ENCASED_SHAFTS_BUILDER.build();
     }
@@ -136,7 +136,7 @@ public class Shafts {
                      .transform(TagGen.axeOrPickaxe())
                      .onRegister(c -> c.setTier(tier))
                      .register();
-             BRASS_ENCASED_SHAFTS_BUILDER.put(GreateTagPrefixes.brassEncasedShaft, mat, encasedShaftEntry);
+             BRASS_ENCASED_SHAFTS_BUILDER.put(brassEncasedShaft, mat, encasedShaftEntry);
         }
         NEW_BRASS_ENCASED_SHAFTS = BRASS_ENCASED_SHAFTS_BUILDER.build();
     }

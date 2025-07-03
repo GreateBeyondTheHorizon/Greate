@@ -5,8 +5,7 @@ import com.simibubi.create.AllItems;
 
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
 import static electrolyte.greate.registry.GreateMaterials.AndesiteAlloy;
-import static electrolyte.greate.registry.GreateTagPrefixes.alloy;
-import static electrolyte.greate.registry.GreateTagPrefixes.shaft;
+import static electrolyte.greate.registry.GreateTagPrefixes.*;
 
 public class GreateCraftingComponents {
 
@@ -23,7 +22,7 @@ public class GreateCraftingComponents {
                 .add(4, shaft, Titanium)
                 .add(5, shaft, TungstenSteel)
                 .add(6, shaft, RhodiumPlatedPalladium)
-                .add(7, shaft, Naquadah)
+                .add(7, shaft, NaquadahAlloy)
                 .add(8, shaft, Darmstadtium)
                 .add(9, shaft, Neutronium);
 
@@ -35,7 +34,7 @@ public class GreateCraftingComponents {
                 .add(4, alloy, Titanium)
                 .add(5, alloy, TungstenSteel)
                 .add(6, alloy, RhodiumPlatedPalladium)
-                .add(7, alloy, Naquadah)
+                .add(7, alloy, NaquadahAlloy)
                 .add(8, alloy, Darmstadtium)
                 .add(9, alloy, Neutronium);
     }
