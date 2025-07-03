@@ -47,21 +47,19 @@ import static electrolyte.greate.registry.EncasedFans.FANS;
 import static electrolyte.greate.registry.Gearboxes.GEARBOXES;
 import static electrolyte.greate.registry.Gearboxes.VERTICAL_GEARBOXES;
 import static electrolyte.greate.registry.GreateMaterials.AndesiteAlloy;
-import static electrolyte.greate.registry.GreateTagPrefixes.alloy;
-import static electrolyte.greate.registry.GreateTagPrefixes.whisk;
+import static electrolyte.greate.registry.GreateTagPrefixes.*;
 import static electrolyte.greate.registry.MechanicalMixers.MECHANICAL_MIXERS;
 import static electrolyte.greate.registry.MechanicalPresses.MECHANICAL_PRESSES;
 import static electrolyte.greate.registry.Millstones.MILLSTONES;
 import static electrolyte.greate.registry.Pumps.MECHANICAL_PUMPS;
 import static electrolyte.greate.registry.Saws.SAWS;
-import static electrolyte.greate.registry.Shafts.SHAFTS;
 
 public class GreateCraftingTableRecipes {
 
     public static void register(Consumer<FinishedRecipe> provider) {
         for (int tier = 0; tier < TM.length; tier++) {
             Material tierMaterial = TM[tier];
-            VanillaRecipeHelper.addShapedRecipe(provider, TM[tier].getName() + "_shaft", ((ItemStack) SHAFT.get(tier)).copyWithCount(2),
+            VanillaRecipeHelper.addShapedRecipe(provider, tierMaterial.getName() + "_shaft", ChemicalHelper.get(shaft, tierMaterial).copyWithCount(2),
                     "s ", " A",
                     'A', new MaterialEntry(plate, tierMaterial));
 
@@ -143,19 +141,19 @@ public class GreateCraftingTableRecipes {
                 'G', new MaterialEntry(TagPrefix.pipeSmallFluid, GTMaterials.TinAlloy),
                 'S', new MaterialEntry(toolHeadBuzzSaw, AndesiteAlloy),
                 'M', new MaterialEntry(plate, WroughtIron),
-                'C', CASING.get(ULV), 'H', SHAFTS[ULV],
+                'C', CASING.get(ULV), 'H', SHAFT.get(ULV),
                 'O', new MaterialEntry(plate, AndesiteAlloy));
         VanillaRecipeHelper.addShapedRecipe(provider, MECHANICAL_PRESSES[0].getId(), MECHANICAL_PRESSES[0].asStack(),
                 "PSP", "CMC", "wBh",
                 'P', new MaterialEntry(plate, AndesiteAlloy),
-                'S', SHAFTS[0],
+                'S', SHAFT.get(0),
                 'C', new MaterialEntry(plate, WroughtIron),
                 'M', CASING.get(0),
                 'B', new MaterialEntry(block, TM[0]));
         VanillaRecipeHelper.addShapedRecipe(provider, MECHANICAL_MIXERS[0].getId(), MECHANICAL_MIXERS[0].asStack(),
                 "PSP", "CMC", "wWh",
                 'P', new MaterialEntry(plate, AndesiteAlloy),
-                'S', SHAFTS[0],
+                'S', SHAFT.get(0),
                 'C', new MaterialEntry(plate, WroughtIron),
                 'M', CASING.get(0),
                 'W', new MaterialEntry(whisk, AndesiteAlloy));
@@ -165,10 +163,10 @@ public class GreateCraftingTableRecipes {
                 'C', new MaterialEntry(plate, AndesiteAlloy),
                 'H', CASING.get(0),
                 'W', Ingredient.of(ItemTags.WOODEN_SLABS),
-                'S', SHAFTS[0]);
+                'S', SHAFT.get(0));
         VanillaRecipeHelper.addShapedRecipe(provider, FANS[0].getId(), FANS[0].asStack(),
                 "ASA", "CMC", "wRh",
-                'S', SHAFTS[0],
+                'S', SHAFT.get(0),
                 'A', new MaterialEntry(plate, AndesiteAlloy),
                 'C', new MaterialEntry(plate, WroughtIron),
                 'M', CASING.get(0),
@@ -236,34 +234,34 @@ public class GreateCraftingTableRecipes {
                 'C', COGWHEELS[LV]);
         VanillaRecipeHelper.addShapelessRecipe(provider, AllBlocks.CLUTCH.getId(), AllBlocks.CLUTCH.asStack(),
                 AllBlocks.ANDESITE_CASING,
-                SHAFTS[ULV],
+                SHAFT.get(ULV),
                 Blocks.REDSTONE_WIRE);
         VanillaRecipeHelper.addShapedRecipe(provider, AllBlocks.TURNTABLE.getId(), AllBlocks.TURNTABLE.asStack(),
                 " S ", "wHf",
                 'S', ItemTags.WOODEN_SLABS,
-                'H', SHAFTS[LV]);
+                'H', SHAFT.get(LV));
         VanillaRecipeHelper.addShapedRecipe(provider, AllBlocks.FLYWHEEL.getId(), AllBlocks.FLYWHEEL.asStack(),
                 "BBB", "BSB", "BBB",
                 'B', new MaterialEntry(plate, Brass),
-                'S', SHAFTS[ULV]);
+                'S', SHAFT.get(ULV));
         VanillaRecipeHelper.addShapedRecipe(provider, AllBlocks.WATER_WHEEL.getId(), AllBlocks.WATER_WHEEL.asStack(),
                 "BBB", "BSB", "BBB",
                 'B', new MaterialEntry(plate, Wood),
-                'S', SHAFTS[ULV]);
+                'S', SHAFT.get(ULV));
         VanillaRecipeHelper.addShapedRecipe(provider, AllBlocks.LARGE_WATER_WHEEL.getId(), AllBlocks.LARGE_WATER_WHEEL.asStack(),
                 "PPP", "PWP", "PPP",
                 'P', new MaterialEntry(plate, Wood),
-                'W', SHAFTS[LV]);
+                'W', SHAFT.get(LV));
         VanillaRecipeHelper.addShapedRecipe(provider, AllBlocks.WINDMILL_BEARING.getId(), AllBlocks.WINDMILL_BEARING.asStack(),
                 " S ", " T ", "wHf",
                 'S', ItemTags.WOODEN_SLABS,
                 'T', Tags.Items.STONE,
-                'H', SHAFTS[MV]);
+                'H', SHAFT.get(MV));
         VanillaRecipeHelper.addShapedRecipe(provider, AllBlocks.MECHANICAL_BEARING.getId(), AllBlocks.MECHANICAL_BEARING.asStack(),
                 " S ", " C ", "wHf",
                 'S', ItemTags.WOODEN_SLABS,
                 'C', AllBlocks.ANDESITE_CASING,
-                'H', SHAFTS[LV]);
+                'H', SHAFT.get(LV));
         VanillaRecipeHelper.addShapedRecipe(provider, AllBlocks.ANALOG_LEVER.getId(), AllBlocks.ANALOG_LEVER.asStack(),
                 " B ", " S ", " C ",
                 'B', Blocks.STONE_BUTTON,
@@ -304,7 +302,7 @@ public class GreateCraftingTableRecipes {
             VanillaRecipeHelper.addShapedRecipe(provider, AllItems.COPPER_BACKTANK.getId(), AllItems.COPPER_BACKTANK.asStack(),
                     "ASA", "CBC", "wCf",
                     'A', new MaterialEntry(plate, AndesiteAlloy),
-                    'S', SHAFTS[LV],
+                    'S', SHAFT.get(LV),
                     'C', new MaterialEntry(plate, Copper),
                     'B', Blocks.COPPER_BLOCK);
             VanillaRecipeHelper.addShapedRecipe(provider, AllItems.COPPER_DIVING_HELMET.getId(), AllItems.COPPER_DIVING_HELMET.asStack(),
@@ -320,7 +318,7 @@ public class GreateCraftingTableRecipes {
                     'S', new MaterialEntry(toolHeadBuzzSaw, Neutronium),
                     'M', MOTOR.get(UHV),
                     'C', CASING.get(UHV),
-                    'H', SHAFTS[UHV],
+                    'H', SHAFT.get(UHV),
                     'O', CONVEYOR.get(UHV));
         }
 

@@ -21,14 +21,15 @@ public class GreateAlloySmelterRecipes {
     public static void register(Consumer<FinishedRecipe> provider) {}
 
     public static void registerMaterialRecipes(Consumer<FinishedRecipe> provider, Material material) {
-        if(!material.hasFlag(GreateMaterialFlags.GENERATE_ALLOY)) return;
-        ALLOY_SMELTER_RECIPES
-                .recipeBuilder(material.getName() + "_alloy")
-                .inputItems(Ingredient.of(ChemicalHelper.get(dust, material), ChemicalHelper.get(ingot, material)))
-                .inputItems(Blocks.ANDESITE.asItem())
-                .outputItems(alloy, material)
-                .duration(200)
-                .EUt(VA[LV])
-                .save(provider);
+        if(material.hasFlag(GreateMaterialFlags.GENERATE_ALLOY)) {
+            ALLOY_SMELTER_RECIPES
+                    .recipeBuilder(material.getName() + "_alloy")
+                    .inputItems(Ingredient.of(ChemicalHelper.get(dust, material), ChemicalHelper.get(ingot, material)))
+                    .inputItems(Blocks.ANDESITE.asItem())
+                    .outputItems(alloy, material)
+                    .duration(300)
+                    .EUt(VA[LV])
+                    .save(provider);
+        }
     }
 }

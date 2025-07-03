@@ -22,13 +22,14 @@ public class GreateMechanicalMixingRecipes {
     public static void register(Consumer<FinishedRecipe> provider) {}
 
     public static void registerMaterialRecipes(Consumer<FinishedRecipe> provider, Material material) {
-        if(!material.hasFlag(GreateMaterialFlags.GENERATE_ALLOY)) return;
-        new TieredProcessingRecipeBuilder<>(TieredMixingRecipe::new, Greate.id("mixing/" + material.getName()))
-                .withItemIngredients(Ingredient.of(ChemicalHelper.get(dust, material), ChemicalHelper.get(ingot, material)), Ingredient.of(Blocks.ANDESITE))
-                .withSingleItemOutput(ChemicalHelper.get(alloy, material))
-                .duration(200)
-                .recipeTier(LV)
-                .recipeCircuit(4)
-                .build(provider);
+        if(material.hasFlag(GreateMaterialFlags.GENERATE_ALLOY)) {
+            new TieredProcessingRecipeBuilder<>(TieredMixingRecipe::new, Greate.id("mixing/" + material.getName()))
+                    .withItemIngredients(Ingredient.of(ChemicalHelper.get(dust, material), ChemicalHelper.get(ingot, material)), Ingredient.of(Blocks.ANDESITE))
+                    .withSingleItemOutput(ChemicalHelper.get(alloy, material))
+                    .duration(300)
+                    .recipeTier(LV)
+                    .recipeCircuit(4)
+                    .build(provider);
+        }
     }
 }

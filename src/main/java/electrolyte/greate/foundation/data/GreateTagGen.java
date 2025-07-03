@@ -17,8 +17,6 @@ import java.util.concurrent.CompletableFuture;
 
 import static electrolyte.greate.GreateValues.TM;
 import static electrolyte.greate.registry.Cogwheels.*;
-import static electrolyte.greate.registry.Shafts.ANDESITE_ENCASED_SHAFTS;
-import static electrolyte.greate.registry.Shafts.BRASS_ENCASED_SHAFTS;
 
 public class GreateTagGen {
 
@@ -44,8 +42,6 @@ public class GreateTagGen {
         protected void addTags(Provider pProvider) {
             for(int i = 0; i < TM.length; i++) {
                 this.tag(HIDE_FROM_RECIPE_VIEWERS)
-                        .add(ANDESITE_ENCASED_SHAFTS[i].asItem())
-                        .add(BRASS_ENCASED_SHAFTS[i].asItem())
                         .add(ANDESITE_ENCASED_COGWHEELS[i].asItem())
                         .add(ANDESITE_ENCASED_LARGE_COGWHEELS[i].asItem())
                         .add(BRASS_ENCASED_COGWHEELS[i].asItem())

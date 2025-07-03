@@ -22,7 +22,7 @@ import static electrolyte.greate.registry.MechanicalPresses.MECHANICAL_PRESSES;
 import static electrolyte.greate.registry.Millstones.MILLSTONES;
 import static electrolyte.greate.registry.Pumps.MECHANICAL_PUMPS;
 import static electrolyte.greate.registry.Saws.SAWS;
-import static electrolyte.greate.registry.Shafts.*;
+import static electrolyte.greate.registry.Shafts.SHAFTS;
 
 public class GreatePonderScenes {
 
@@ -30,8 +30,6 @@ public class GreatePonderScenes {
         PonderSceneRegistrationHelper<ItemProviderEntry<?>> HELPER = helper.withKeyFunction(RegistryEntry::getId);
         HELPER.forComponents(SHAFTS).addStoryBoard(Create.asResource("shaft/relay"), KineticsScenes::shaftAsRelay, AllCreatePonderTags.KINETIC_RELAYS);
         HELPER.forComponents(SHAFTS).addStoryBoard(Create.asResource("shaft/encasing"), KineticsScenes::shaftsCanBeEncased);
-        HELPER.forComponents(ANDESITE_ENCASED_SHAFTS).addStoryBoard(Create.asResource("shaft/encasing"), KineticsScenes::shaftsCanBeEncased);
-        HELPER.forComponents(BRASS_ENCASED_SHAFTS).addStoryBoard(Create.asResource("shaft/encasing"), KineticsScenes::shaftsCanBeEncased);
         HELPER.forComponents(COGWHEELS)
                 .addStoryBoard(Create.asResource("cog/small"), KineticsScenes::cogAsRelay, AllCreatePonderTags.KINETIC_RELAYS)
                 .addStoryBoard(Create.asResource("cog/speedup"), KineticsScenes::cogsSpeedUp)

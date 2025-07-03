@@ -16,7 +16,6 @@ import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateItemModelProvider;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
-import electrolyte.greate.Greate;
 import electrolyte.greate.content.fluids.pump.TieredPumpBlock;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingWheelBlock;
 import electrolyte.greate.content.kinetics.fan.TieredEncasedFanBlock;
@@ -47,42 +46,12 @@ import static electrolyte.greate.foundation.data.GreateBlockStateGen.*;
 
 public class GreateBuilderTransformers {
 
-    public static <B extends TieredEncasedShaftBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> tieredAndesiteEncasedShaft(BlockEntry<TieredShaftBlock> shaftBlock, Supplier<CTSpriteShiftEntry> casingShift) {
+    public static <B extends TieredEncasedShaftBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> tieredEncasedShaft(BlockEntry<TieredShaftBlock> shaftBlock, Supplier<CTSpriteShiftEntry> casingShift) {
         return builder -> encasedBase(builder, shaftBlock::get)
                 .onRegister(CreateRegistrate.connectedTextures(() -> new EncasedCTBehaviour(casingShift.get())))
                 .onRegister(CreateRegistrate.casingConnectivity((block, cc) -> cc.make(block, casingShift.get(),
                         (s, f) -> f.getAxis() != s.getValue(EncasedShaftBlock.AXIS))))
-                .blockstate(tieredEncasedShaftProvider())
-                .item()
-                .model((c, p) -> {
-                   String material = c.getName().substring(17, c.getName().length() - 6);
-                   p.withExistingParent(c.getName(), Create.asResource("block/encased_shaft/item"))
-                           .texture("0", Create.asResource("block/andesite_casing"))
-                           .texture("1", Create.asResource("block/gearbox"))
-                           .texture("particle", Create.asResource("block/andesite_casing"))
-                           .texture("1_0", Greate.id("block/" + material + "/axis"))
-                           .texture("1_1", Greate.id("block/" + material + "/axis_top"));
-                })
-                .build();
-    }
-
-    public static <B extends TieredEncasedShaftBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> tieredBrassEncasedShaft(BlockEntry<TieredShaftBlock> shaftBlock, Supplier<CTSpriteShiftEntry> casingShift) {
-        return builder -> encasedBase(builder, shaftBlock::get)
-                .onRegister(CreateRegistrate.connectedTextures(() -> new EncasedCTBehaviour(casingShift.get())))
-                .onRegister(CreateRegistrate.casingConnectivity((block, cc) -> cc.make(block, casingShift.get(),
-                        (s, f) -> f.getAxis() != s.getValue(EncasedShaftBlock.AXIS))))
-                .blockstate(tieredEncasedShaftProvider())
-                .item()
-                .model((c, p) -> {
-                    String material = c.getName().substring(14, c.getName().length() - 6);
-                    p.withExistingParent(c.getName(), Create.asResource("block/encased_shaft/item"))
-                            .texture("0", Create.asResource("block/brass_casing"))
-                            .texture("1", Create.asResource("block/brass_gearbox"))
-                            .texture("particle", Create.asResource("block/brass_casing"))
-                            .texture("1_0", Greate.id("block/" + material + "/axis"))
-                            .texture("1_1", Greate.id("block/" + material + "/axis_top"));
-                })
-                .build();
+                .blockstate(tieredEncasedShaftProvider());
     }
 
     public static <B extends TieredEncasedCogwheelBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> tieredEncasedCogwheel(BlockEntry<TieredCogwheelBlock> cogwheel, Supplier<CTSpriteShiftEntry> casingShift) {
