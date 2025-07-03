@@ -67,7 +67,7 @@ public class Shafts {
             KineticProperty prop = mat.getProperty(GreatePropertyKeys.KINETIC);
             int tier = prop.getTier();
             var shaftEntry = REGISTRATE
-                    .block(mat.getName() + "_shaft", TieredShaftBlock::new)
+                    .block(mat.getName() + "_shaft", p -> new TieredShaftBlock(p, mat))
                     .initialProperties(SharedProperties::stone)
                     .properties(p -> p.mapColor(MapColor.METAL))
                     .transform(GStress.setNoImpact())
@@ -90,7 +90,7 @@ public class Shafts {
             KineticProperty prop = mat.getProperty(GreatePropertyKeys.KINETIC);
             int tier = prop.getTier();
             var shaftEntry = REGISTRATE
-                    .block("powered_" + mat.getName() + "_shaft", p -> new TieredPoweredShaftBlock(p, Objects.requireNonNull(NEW_SHAFTS.get(shaft, mat))::get))
+                    .block("powered_" + mat.getName() + "_shaft", p -> new TieredPoweredShaftBlock(p, mat))
                     .initialProperties(SharedProperties::stone)
                     .properties(p -> p.mapColor(MapColor.METAL))
                     .transform(TagGen.pickaxeOnly())
@@ -110,7 +110,7 @@ public class Shafts {
              int tier = prop.getTier();
              BlockEntry<TieredShaftBlock> shaftEntry = Objects.requireNonNull(NEW_SHAFTS.get(shaft, mat));
              var encasedShaftEntry = REGISTRATE
-                     .block("andesite_encased_" + mat.getName() + "_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.ANDESITE_CASING::get, shaftEntry::get))
+                     .block("andesite_encased_" + mat.getName() + "_shaft", p -> new TieredEncasedShaftBlock(p, mat, AllBlocks.ANDESITE_CASING::get))
                      .properties(p -> p.mapColor(MapColor.PODZOL))
                      .transform(GreateBuilderTransformers.tieredEncasedShaft(shaftEntry, () -> AllSpriteShifts.ANDESITE_CASING))
                      .transform(EncasingRegistry.addVariantTo(shaftEntry))
@@ -129,7 +129,7 @@ public class Shafts {
              int tier = prop.getTier();
              BlockEntry<TieredShaftBlock> shaftEntry = Objects.requireNonNull(NEW_SHAFTS.get(shaft, mat));
              var encasedShaftEntry = REGISTRATE
-                     .block("brass_encased_" + mat.getName() + "_shaft", p -> new TieredEncasedShaftBlock(p, AllBlocks.BRASS_CASING::get, shaftEntry::get))
+                     .block("brass_encased_" + mat.getName() + "_shaft", p -> new TieredEncasedShaftBlock(p, mat, AllBlocks.BRASS_CASING::get))
                      .properties(p -> p.mapColor(MapColor.PODZOL))
                      .transform(GreateBuilderTransformers.tieredEncasedShaft(shaftEntry, () -> AllSpriteShifts.BRASS_CASING))
                      .transform(EncasingRegistry.addVariantTo(shaftEntry))

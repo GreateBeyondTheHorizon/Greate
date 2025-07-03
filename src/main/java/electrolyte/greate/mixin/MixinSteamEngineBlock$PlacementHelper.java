@@ -1,11 +1,13 @@
 package electrolyte.greate.mixin;
 
+import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
 import com.simibubi.create.content.kinetics.steamEngine.PoweredShaftBlock;
 import com.simibubi.create.content.kinetics.steamEngine.SteamEngineBlock;
 import com.simibubi.create.foundation.utility.BlockHelper;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
-import electrolyte.greate.content.kinetics.steamEngine.TieredPoweredShaftBlock;
+import electrolyte.greate.registry.GreateTagPrefixes;
 import net.createmod.catnip.placement.PlacementOffset;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -41,18 +43,21 @@ public abstract class MixinSteamEngineBlock$PlacementHelper {
             BlockState shaft = shaftType.defaultBlockState();
             for (Direction dir : Direction.orderedByNearest(player)) {
                 shaft = shaft.setValue(ShaftBlock.AXIS, dir.getAxis());
-                if (isShaftValid(state, shaft)) {
-                    break;
-                }
+                if (isShaftValid(state, shaft)) break;
             }
 
             BlockState newState = world.getBlockState(shaftPos);
-            if (!newState.canBeReplaced())
+            if (!newState.canBeReplaced()) {
                 cir.setReturnValue(PlacementOffset.fail());
+                return;
+            }
             Axis axis = shaft.getValue(ShaftBlock.AXIS);
-            cir.setReturnValue(PlacementOffset.success(shaftPos,
-                    s -> BlockHelper.copyProperties(s, TieredPoweredShaftBlock.SHAFTS.get(((TieredShaftBlock) s.getBlock())).defaultBlockState())
-                            .setValue(PoweredShaftBlock.AXIS, axis)));
+            cir.setReturnValue(PlacementOffset.success(shaftPos, s -> {
+                Material mat = ChemicalHelper.getMaterialEntry(shaftType).material();
+                return BlockHelper.copyProperties(s,
+                        (world.isClientSide ? ChemicalHelper.getBlock(GreateTagPrefixes.shaft, mat) : ChemicalHelper.getBlock(GreateTagPrefixes.poweredShaft, mat)).defaultBlockState())
+                        .setValue(PoweredShaftBlock.AXIS, axis);
+            }));
         }
     }
 }

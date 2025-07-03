@@ -1,9 +1,10 @@
 package electrolyte.greate.content.kinetics.simpleRelays.encased;
 
+import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.simpleRelays.encased.EncasedShaftBlock;
 import com.simibubi.create.content.schematics.requirement.ItemRequirement;
-
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredShaftBlock;
 import electrolyte.greate.registry.ModBlockEntityTypes;
@@ -22,14 +23,16 @@ import net.minecraft.world.phys.HitResult;
 
 import java.util.function.Supplier;
 
+import static electrolyte.greate.registry.GreateTagPrefixes.shaft;
+
 public class TieredEncasedShaftBlock extends EncasedShaftBlock implements ITieredBlock, ITieredShaftBlock {
 
-    private final Supplier<Block> shaft;
+    private final Supplier<Block> shaftType;
     private int tier;
 
-    public TieredEncasedShaftBlock(Properties properties, Supplier<Block> casing, Supplier<Block> shaft) {
+    public TieredEncasedShaftBlock(Properties properties, Material material, Supplier<Block> casing) {
         super(properties, casing);
-        this.shaft = shaft;
+        this.shaftType = () -> ChemicalHelper.getBlock(shaft, material);
     }
 
     @Override
@@ -60,7 +63,7 @@ public class TieredEncasedShaftBlock extends EncasedShaftBlock implements ITiere
 
     @Override
     public Block getShaft() {
-        return shaft.get();
+        return shaftType.get();
     }
 
     @Override

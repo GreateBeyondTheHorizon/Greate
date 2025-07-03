@@ -1,9 +1,10 @@
 package electrolyte.greate.content.kinetics.steamEngine;
 
+import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
 import com.simibubi.create.content.kinetics.steamEngine.PoweredShaftBlock;
-import com.tterrag.registrate.util.entry.BlockEntry;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredShaftBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
@@ -25,20 +26,20 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Supplier;
+
+import static electrolyte.greate.registry.GreateTagPrefixes.shaft;
 
 public class TieredPoweredShaftBlock extends PoweredShaftBlock implements ITieredBlock, ITieredShaftBlock {
 
     private int tier;
-    private Block shaftType;
-    public static Map<TieredShaftBlock, TieredPoweredShaftBlock> SHAFTS = new HashMap<>();
+    private Supplier<Block> shaftType;
+    private Material material;
 
-    public TieredPoweredShaftBlock(Properties properties, Supplier<Block> shaftType) {
+    public TieredPoweredShaftBlock(Properties properties, Material material) {
         super(properties);
-        this.shaftType = shaftType.get();
-        SHAFTS.put((TieredShaftBlock) shaftType.get(), this);
+        this.material = material;
+        this.shaftType = () -> ChemicalHelper.getBlock(shaft, material);
     }
 
     @Override
@@ -67,12 +68,6 @@ public class TieredPoweredShaftBlock extends PoweredShaftBlock implements ITiere
         }
     }
 
-    public static BlockState getEquivalent(BlockEntry<TieredPoweredShaftBlock> poweredShaftBlock, BlockState stateForPlacement) {
-        return poweredShaftBlock.get().defaultBlockState()
-                .setValue(PoweredShaftBlock.AXIS, stateForPlacement.getValue(ShaftBlock.AXIS))
-                .setValue(WATERLOGGED, stateForPlacement.getValue(WATERLOGGED));
-    }
-
     @Override
     public ItemStack getCloneItemStack(BlockGetter pLevel, BlockPos pPos, BlockState pState) {
         return getShaft().asItem().getDefaultInstance();
@@ -90,6 +85,10 @@ public class TieredPoweredShaftBlock extends PoweredShaftBlock implements ITiere
 
     @Override
     public Block getShaft() {
-        return shaftType;
+        return shaftType.get();
+    }
+
+    public Material getMaterial() {
+        return material;
     }
 }

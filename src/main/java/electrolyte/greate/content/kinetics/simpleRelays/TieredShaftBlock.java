@@ -1,5 +1,7 @@
 package electrolyte.greate.content.kinetics.simpleRelays;
 
+import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.simpleRelays.AbstractSimpleShaftBlock;
 import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
@@ -27,15 +29,17 @@ import net.minecraft.world.phys.BlockHitResult;
 
 import java.util.function.Predicate;
 
-import static electrolyte.greate.registry.Shafts.POWERED_SHAFTS;
+import static electrolyte.greate.registry.GreateTagPrefixes.poweredShaft;
 
 public class TieredShaftBlock extends ShaftBlock implements ITieredBlock, ITieredShaftBlock, IGirderEncasableBlock {
 
     public static final int placementHelperId = PlacementHelpers.register(new PlacementHelper());
     private int tier;
+    private Material material;
 
-    public TieredShaftBlock(Properties properties) {
+    public TieredShaftBlock(Properties properties, Material material) {
         super(properties);
+        this.material = material;
     }
 
     @Override
@@ -56,12 +60,15 @@ public class TieredShaftBlock extends ShaftBlock implements ITieredBlock, ITiere
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         BlockState stateForPlacement = super.getStateForPlacement(context);
-        return pickCorrectShaftType(stateForPlacement, context.getLevel(), context.getClickedPos());
+        return pickShaftType(stateForPlacement, context.getLevel(), context.getClickedPos());
     }
 
-    public static BlockState pickCorrectShaftType(BlockState stateForPlacement, Level level, BlockPos offsetPos, ItemStack shaft) {
+    public BlockState pickShaftType(BlockState stateForPlacement, Level level, BlockPos offsetPos) {
         return PoweredShaftBlock.stillValid(stateForPlacement, level, offsetPos) ?
-            TieredPoweredShaftBlock.getEquivalent(POWERED_SHAFTS[((ITieredBlock) ((BlockItem) shaft.getItem()).getBlock()).getTier()], stateForPlacement) : stateForPlacement;
+                ChemicalHelper.getBlock(poweredShaft, material).defaultBlockState()
+                        .setValue(PoweredShaftBlock.AXIS, stateForPlacement.getValue(ShaftBlock.AXIS))
+                        .setValue(WATERLOGGED, stateForPlacement.getValue(WATERLOGGED))
+                : stateForPlacement;
     }
 
     @Override
@@ -88,6 +95,10 @@ public class TieredShaftBlock extends ShaftBlock implements ITieredBlock, ITiere
         return this;
     }
 
+    public Material getMaterial() {
+        return material;
+    }
+
     private static class PlacementHelper extends PoleHelper<Axis> {
         private PlacementHelper() {
             super(state -> state.getBlock() instanceof AbstractSimpleShaftBlock
@@ -108,9 +119,14 @@ public class TieredShaftBlock extends ShaftBlock implements ITieredBlock, ITiere
         @Override
         public PlacementOffset getOffset(Player player, Level world, BlockState state, BlockPos pos, BlockHitResult ray) {
             PlacementOffset offset = super.getOffset(player, world, state, pos, ray);
+            ItemStack shaft = player.getMainHandItem();
             if (offset.isSuccessful())
                 offset.withTransform(offset.getTransform()
-                        .andThen(s -> TieredShaftBlock.pickCorrectShaftType(s, world, offset.getBlockPos(), player.getMainHandItem())));
+                        .andThen(stateForPlacement -> PoweredShaftBlock.stillValid(stateForPlacement, world, offset.getBlockPos()) ?
+                                ChemicalHelper.getBlock(poweredShaft, ChemicalHelper.getMaterialEntry(shaft.getItem()).material()).defaultBlockState()
+                                        .setValue(PoweredShaftBlock.AXIS, stateForPlacement.getValue(ShaftBlock.AXIS))
+                                        .setValue(WATERLOGGED, stateForPlacement.getValue(WATERLOGGED))
+                                : stateForPlacement));
             return offset;
         }
 
