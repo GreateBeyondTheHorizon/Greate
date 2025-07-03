@@ -13,12 +13,13 @@ import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
-import static electrolyte.greate.GreateValues.TM;
-import static electrolyte.greate.registry.Cogwheels.*;
-
 public class GreateTagGen {
+
+    public static final TagKey<Item> OBSIDIAN_DUST = ForgeRegistries.ITEMS.tags().createOptionalTagKey(new ResourceLocation("forge", "dusts/obsidian"), Set.of());
+    public static final TagKey<Item> GOLD_PLATE = ForgeRegistries.ITEMS.tags().createOptionalTagKey(new ResourceLocation("forge", "plates/gold"), Set.of());
 
     private static final TagKey<Item> HIDE_FROM_RECIPE_VIEWERS = ForgeRegistries.ITEMS.tags().createTagKey(new ResourceLocation("c", "hidden_from_recipe_viewers"));
 
@@ -40,13 +41,6 @@ public class GreateTagGen {
 
         @Override
         protected void addTags(Provider pProvider) {
-            for(int i = 0; i < TM.length; i++) {
-                this.tag(HIDE_FROM_RECIPE_VIEWERS)
-                        .add(ANDESITE_ENCASED_COGWHEELS[i].asItem())
-                        .add(ANDESITE_ENCASED_LARGE_COGWHEELS[i].asItem())
-                        .add(BRASS_ENCASED_COGWHEELS[i].asItem())
-                        .add(BRASS_ENCASED_LARGE_COGWHEELS[i].asItem());
-            }
             this.tag(HIDE_FROM_RECIPE_VIEWERS)
                     .add(AllBlocks.ANDESITE_ENCASED_SHAFT.asItem())
                     .add(AllBlocks.BRASS_ENCASED_SHAFT.asItem())

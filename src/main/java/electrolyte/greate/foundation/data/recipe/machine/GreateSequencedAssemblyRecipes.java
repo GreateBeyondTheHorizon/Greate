@@ -4,7 +4,6 @@ import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.WireProperties;
-import com.gregtechceu.gtceu.api.data.chemical.material.stack.MaterialEntry;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
 import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
 import com.gregtechceu.gtceu.utils.GTUtil;
@@ -16,6 +15,9 @@ import com.simibubi.create.content.kinetics.press.PressingRecipe;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipeBuilder;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
 import electrolyte.greate.Greate;
+import electrolyte.greate.content.gtceu.material.CogwheelProperty;
+import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
+import electrolyte.greate.foundation.data.GreateTagGen;
 import it.unimi.dsi.fastutil.objects.Reference2IntMap;
 import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
 import net.minecraft.Util;
@@ -28,14 +30,10 @@ import java.util.function.Consumer;
 import static com.gregtechceu.gtceu.api.GTValues.*;
 import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.*;
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
-import static com.gregtechceu.gtceu.data.recipe.GTCraftingComponents.PLATE;
-import static electrolyte.greate.GreateValues.TM;
 import static electrolyte.greate.content.gtceu.machines.GreateRecipeTypes.WIRE_COATING_RECIPES;
-import static electrolyte.greate.foundation.data.recipe.GreateRecipes.createIngFromMaterialEntry;
-import static electrolyte.greate.foundation.data.recipe.GreateRecipes.createIngFromTag;
 import static electrolyte.greate.registry.Cogwheels.COGWHEELS;
 import static electrolyte.greate.registry.Cogwheels.LARGE_COGWHEELS;
-import static electrolyte.greate.registry.Shafts.SHAFTS;
+import static electrolyte.greate.registry.GreateTagPrefixes.*;
 
 public class GreateSequencedAssemblyRecipes {
 
@@ -49,20 +47,8 @@ public class GreateSequencedAssemblyRecipes {
     });
 
     public static void register(Consumer<FinishedRecipe> provider) {
-        for(int tier = 0; tier < TM.length; tier++) {
-            int finalTier = tier;
-            new SequencedAssemblyRecipeBuilder(LARGE_COGWHEELS[tier].getId())
-                    .require(SHAFTS[tier])
-                    .transitionTo(COGWHEELS[tier])
-                    .addStep(DeployerApplicationRecipe::new, r -> r.require(createIngFromMaterialEntry(finalTier != 0 ? PLATE.get(finalTier - 1) : new MaterialEntry(plate, Wood))))
-                    .addStep(DeployerApplicationRecipe::new, r -> r.require(createIngFromMaterialEntry(finalTier != 0 ? PLATE.get(finalTier - 1) : new MaterialEntry(plate, Wood))))
-                    .addOutput(LARGE_COGWHEELS[tier], 1)
-                    .loops(1)
-                    .build(provider);
-        }
-
         new SequencedAssemblyRecipeBuilder(Greate.id("sturdy_sheet"))
-                .require(createIngFromTag("forge", "dusts/obsidian"))
+                .require(GreateTagGen.OBSIDIAN_DUST)
                 .transitionTo(AllItems.INCOMPLETE_REINFORCED_SHEET)
                 .addStep(FillingRecipe::new, r -> r.require(Fluids.LAVA, 500))
                 .addStep(PressingRecipe::new, r -> r)
@@ -72,7 +58,7 @@ public class GreateSequencedAssemblyRecipes {
                 .build(provider);
 
         new SequencedAssemblyRecipeBuilder(Greate.id("precision_mechanism"))
-                .require(createIngFromTag("forge", "plates/gold"))
+                .require(GreateTagGen.GOLD_PLATE)
                 .transitionTo(AllItems.INCOMPLETE_PRECISION_MECHANISM)
                 .addStep(DeployerApplicationRecipe::new, r -> r.require(COGWHEELS[ULV]))
                 .addStep(DeployerApplicationRecipe::new, r -> r.require(LARGE_COGWHEELS[ULV]))
@@ -90,7 +76,7 @@ public class GreateSequencedAssemblyRecipes {
                 .build(provider);
     }
 
-    public static void registerCableRecipes(Consumer<FinishedRecipe> provider, Material material) {
+    public static void registerMaterialRecipes(Consumer<FinishedRecipe> provider, Material material) {
         WireProperties property = material.getProperty(PropertyKey.WIRE);
         if(property != null) {
             addRecipe(provider, property, wireGtSingle, material);
@@ -99,10 +85,26 @@ public class GreateSequencedAssemblyRecipes {
             addRecipe(provider, property, wireGtOctal, material);
             addRecipe(provider, property, wireGtHex, material);
         }
+        CogwheelProperty cogwheelProperty = material.getProperty(GreatePropertyKeys.COGWHEEL);
+        if(cogwheelProperty != null) {
+            addCogwheelDeployingRecipes(provider, material, cogwheelProperty);
+        }
+    }
+
+    private static void addCogwheelDeployingRecipes(Consumer<FinishedRecipe> provider, Material material, CogwheelProperty property) {
+        Material prevMat = property.getPreviousMaterial();
+        new SequencedAssemblyRecipeBuilder(Greate.id(material.getName() + "_large_cogwheel"))
+                    .require(ChemicalHelper.get(shaft, material).getItem())
+                    .transitionTo(ChemicalHelper.get(cogwheel, material).getItem())
+                    .addStep(DeployerApplicationRecipe::new, r -> r.require(ChemicalHelper.get(plate, prevMat).getItem()))
+                    .addStep(DeployerApplicationRecipe::new, r -> r.require(ChemicalHelper.get(plate, prevMat).getItem()))
+                    .addOutput(ChemicalHelper.get(largeCogwheel, material), 1)
+                    .loops(1)
+                    .build(provider);
     }
 
     //WireRecipeHandler
-    public static void addRecipe(Consumer<FinishedRecipe> provider, WireProperties property, TagPrefix wirePrefix, Material material) {
+    private static void addRecipe(Consumer<FinishedRecipe> provider, WireProperties property, TagPrefix wirePrefix, Material material) {
         if(property.isSuperconductor()) return;
         int cableAmount = (int) (wirePrefix.getMaterialAmount(material) * 2 / M);
         TagPrefix cablePrefix = TagPrefix.get("cable" + wirePrefix.name().substring(4));
