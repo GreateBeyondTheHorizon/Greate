@@ -1,10 +1,8 @@
 package electrolyte.greate.foundation.data.recipe;
 
 import com.gregtechceu.gtceu.api.GTCEuAPI;
-import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags;
-import com.gregtechceu.gtceu.api.data.chemical.material.stack.MaterialEntry;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import electrolyte.greate.foundation.data.recipe.machine.*;
@@ -12,11 +10,7 @@ import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -25,7 +19,6 @@ public class GreateRecipes {
     public static void register(Consumer<FinishedRecipe> provider) {
         GreateChemicalBath.register(provider);
         GreateCraftingTableRecipes.register(provider);
-        GreateDeployerRecipes.register(provider);
         GreateMillstoneRecipes.register(provider);
         GreateMechanicalCraftingRecipes.register(provider);
         GreateSequencedAssemblyRecipes.register(provider);
@@ -35,9 +28,10 @@ public class GreateRecipes {
             GreateAlloySmelterRecipes.registerMaterialRecipes(provider, material);
             GreateCraftingTableRecipes.registerMaterialRecipes(provider, material);
             GreateCuttingMachineRecipes.registerMaterialRecipes(provider, material);
+            GreateDeployerRecipes.registerMaterialRecipes(provider, material);
             GreateMechanicalMixingRecipes.registerMaterialRecipes(provider, material);
             GreateSawingRecipes.registerMaterialRecipes(provider, material);
-            GreateSequencedAssemblyRecipes.registerCableRecipes(provider, material);
+            GreateSequencedAssemblyRecipes.registerMaterialRecipes(provider, material);
             GreateSpoutRecipes.registerCableRecipes(provider, material);
         }
     }
@@ -49,13 +43,5 @@ public class GreateRecipes {
             var builder = ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, nextEntry).requires(currentEntry).unlockedBy("has_cycle_origin", RegistrateRecipeProvider.has(currentEntry));
             builder.save(provider, RecipeBuilder.getDefaultRecipeId(builder.getResult()).withSuffix("_from_conversion"));
         }
-    }
-
-    public static Ingredient createIngFromTag(String namespace, String path) {
-        return Ingredient.of(TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), new ResourceLocation(namespace, path)));
-    }
-
-    public static Ingredient createIngFromMaterialEntry(Object ingredient) {
-        return Ingredient.of(ChemicalHelper.getTag(((MaterialEntry) ingredient).tagPrefix(), ((MaterialEntry) ingredient).material()));
     }
 }

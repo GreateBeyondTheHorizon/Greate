@@ -1,5 +1,7 @@
 package electrolyte.greate.content.kinetics.simpleRelays.encased;
 
+import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.simpleRelays.SimpleKineticBlockEntity;
 import com.simibubi.create.content.kinetics.simpleRelays.encased.EncasedCogwheelBlock;
@@ -21,22 +23,25 @@ import net.minecraft.world.phys.HitResult;
 
 import java.util.function.Supplier;
 
+import static electrolyte.greate.registry.GreateTagPrefixes.cogwheel;
+import static electrolyte.greate.registry.GreateTagPrefixes.largeCogwheel;
+
 public class TieredEncasedCogwheelBlock extends EncasedCogwheelBlock implements ITieredBlock {
 
     private int tier;
-    private final Supplier<Block> cogwheel;
+    private final Supplier<Block> cogwheelBlock;
 
-    public static TieredEncasedCogwheelBlock small(Properties properties, Supplier<Block> casing, Supplier<Block> cogwheel) {
-        return new TieredEncasedCogwheelBlock(properties, false, casing, cogwheel);
+    public static TieredEncasedCogwheelBlock small(Properties properties, Supplier<Block> casing, Material mat) {
+        return new TieredEncasedCogwheelBlock(properties, false, casing, () -> ChemicalHelper.getBlock(cogwheel, mat));
     }
 
-    public static TieredEncasedCogwheelBlock large(Properties properties, Supplier<Block> casing, Supplier<Block> cogwheel) {
-        return new TieredEncasedCogwheelBlock(properties, true, casing, cogwheel);
+    public static TieredEncasedCogwheelBlock large(Properties properties, Supplier<Block> casing, Material mat) {
+        return new TieredEncasedCogwheelBlock(properties, true, casing, () -> ChemicalHelper.getBlock(largeCogwheel, mat));
     }
 
     public TieredEncasedCogwheelBlock(Properties properties, boolean isLarge, Supplier<Block> casing, Supplier<Block> cogwheel) {
         super(properties, isLarge, casing);
-        this.cogwheel = cogwheel;
+        this.cogwheelBlock = cogwheel;
     }
 
     @Override
@@ -58,7 +63,7 @@ public class TieredEncasedCogwheelBlock extends EncasedCogwheelBlock implements 
     }
 
     public Block getCogWheel() {
-        return cogwheel.get();
+        return cogwheelBlock.get();
     }
 
     @Override

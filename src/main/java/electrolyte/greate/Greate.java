@@ -18,7 +18,6 @@ import electrolyte.greate.foundation.data.GreateTagGen.GreateItemTagGen;
 import electrolyte.greate.foundation.item.GreateKineticStats;
 import electrolyte.greate.infrastructure.config.GreateConfigs;
 import electrolyte.greate.infrastructure.ponder.GreatePonderPlugin;
-import electrolyte.greate.registry.Cogwheels;
 import electrolyte.greate.registry.GreateLang;
 import electrolyte.greate.registry.GreatePartialModels;
 import electrolyte.greate.registry.ModRecipeTypes;
@@ -138,48 +137,7 @@ public class Greate {
 
         private static Predicate<Item> excludedItems() {
             Set<Item> exclusions = new ReferenceOpenHashSet<>();
-            List<ItemProviderEntry<?>> simpleExclusions = List.of(
-                    Cogwheels.ANDESITE_ENCASED_ANDESITE_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_ANDESITE_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_LARGE_ANDESITE_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_LARGE_ANDESITE_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_STEEL_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_STEEL_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_LARGE_STEEL_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_LARGE_STEEL_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_ALUMINIUM_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_ALUMINIUM_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_LARGE_ALUMINIUM_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_LARGE_ALUMINIUM_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_STAINLESS_STEEL_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_STAINLESS_STEEL_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_LARGE_STAINLESS_STEEL_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_LARGE_STAINLESS_STEEL_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_TITANIUM_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_TITANIUM_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_LARGE_TITANIUM_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_LARGE_TITANIUM_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_TUNGSTENSTEEL_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_TUNGSTENSTEEL_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_LARGE_TUNGSTENSTEEL_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_LARGE_TUNGSTENSTEEL_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_PALLADIUM_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_PALLADIUM_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_LARGE_PALLADIUM_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_LARGE_PALLADIUM_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_NAQUADAH_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_NAQUADAH_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_LARGE_NAQUADAH_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_LARGE_NAQUADAH_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_DARMSTADTIUM_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_DARMSTADTIUM_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_LARGE_DARMSTADTIUM_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_LARGE_DARMSTADTIUM_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_NEUTRONIUM_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_NEUTRONIUM_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_LARGE_NEUTRONIUM_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_LARGE_NEUTRONIUM_COGWHEEL
-            );
+            List<ItemProviderEntry<?>> simpleExclusions = List.of();
             for(ItemProviderEntry<?> entry : simpleExclusions) {
                 exclusions.add(entry.asItem());
             }

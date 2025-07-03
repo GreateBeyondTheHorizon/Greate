@@ -14,9 +14,9 @@ import com.gregtechceu.gtceu.data.recipe.VanillaRecipeHelper;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import electrolyte.greate.Greate;
+import electrolyte.greate.content.gtceu.material.CogwheelProperty;
 import electrolyte.greate.content.gtceu.material.GreateMaterialFlags;
-import electrolyte.greate.foundation.data.recipe.GreateRecipes;
-import electrolyte.greate.registry.Cogwheels;
+import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.DyeColor;
@@ -38,6 +38,7 @@ import static com.gregtechceu.gtceu.data.recipe.GTCraftingComponents.*;
 import static electrolyte.greate.GreateValues.BM;
 import static electrolyte.greate.GreateValues.TM;
 import static electrolyte.greate.content.gtceu.machines.GreateMultiblockMachines.WIRE_COATING_FACTORY;
+import static electrolyte.greate.foundation.data.recipe.GreateCraftingComponents.COGWHEEL;
 import static electrolyte.greate.foundation.data.recipe.GreateCraftingComponents.SHAFT;
 import static electrolyte.greate.foundation.data.recipe.GreateRecipes.conversionCycle;
 import static electrolyte.greate.registry.Belts.BELT_CONNECTORS;
@@ -59,32 +60,6 @@ public class GreateCraftingTableRecipes {
     public static void register(Consumer<FinishedRecipe> provider) {
         for (int tier = 0; tier < TM.length; tier++) {
             Material tierMaterial = TM[tier];
-            VanillaRecipeHelper.addShapedRecipe(provider, tierMaterial.getName() + "_shaft", ChemicalHelper.get(shaft, tierMaterial).copyWithCount(2),
-                    "s ", " A",
-                    'A', new MaterialEntry(plate, tierMaterial));
-
-            Material previousTierMaterial = tier - 1 == -1 ? Wood : TM[tier - 1];
-            VanillaRecipeHelper.addShapelessRecipe(provider, COGWHEELS[tier].getId(), COGWHEELS[tier].asStack(),
-                    SHAFT.get(tier),
-                    new MaterialEntry(plate, previousTierMaterial),
-                    GreateRecipes.createIngFromTag("forge", "tools/files"));
-            VanillaRecipeHelper.addShapelessRecipe(provider, LARGE_COGWHEELS[tier].getId(), LARGE_COGWHEELS[tier].asStack(),
-                    SHAFT.get(tier),
-                    new MaterialEntry(plate, previousTierMaterial),
-                    new MaterialEntry(plate, previousTierMaterial),
-                    GreateRecipes.createIngFromTag("forge", "tools/files"));
-            VanillaRecipeHelper.addShapelessRecipe(provider, LARGE_COGWHEELS[tier].getId().withSuffix("_from_little"), LARGE_COGWHEELS[tier].asStack(),
-                    COGWHEELS[tier],
-                    new MaterialEntry(plate, previousTierMaterial),
-                    GreateRecipes.createIngFromTag("forge", "tools/files"));
-            VanillaRecipeHelper.addShapedRecipe(provider, GEARBOXES[tier].getId(), GEARBOXES[tier].asStack(),
-                    " S ", "SCS", "wSh",
-                    'S', SHAFT.get(tier),
-                    'C', AllBlocks.ANDESITE_CASING);
-            VanillaRecipeHelper.addShapedRecipe(provider, VERTICAL_GEARBOXES[tier].getId(), VERTICAL_GEARBOXES[tier].asStack(),
-                    "S S", "wCh", "S S",
-                    'S', SHAFT.get(tier),
-                    'C', AllBlocks.ANDESITE_CASING);
             conversionCycle(provider, ImmutableList.of(GEARBOXES[tier], VERTICAL_GEARBOXES[tier]));
 
             // Machines
@@ -210,7 +185,7 @@ public class GreateCraftingTableRecipes {
                 'A', AllBlocks.BRASS_CASING);
         VanillaRecipeHelper.addShapedRecipe(provider, AllBlocks.TOOLBOXES.get(DyeColor.BROWN).getId(), AllBlocks.TOOLBOXES.get(DyeColor.BROWN).asStack(),
                 " C ", "PHP", "wLf",
-                'C', Cogwheels.ANDESITE_COGWHEEL,
+                'C', COGWHEEL.get(ULV),
                 'P', new MaterialEntry(plate, Gold),
                 'H', Ingredient.of(Tags.Items.CHESTS_WOODEN),
                 'L', Items.LEATHER);
@@ -357,6 +332,36 @@ public class GreateCraftingTableRecipes {
                     "fId", "PIP", "PPP",
                     'I', new MaterialEntry(ingot, material),
                     'P', new MaterialEntry(plate, material));
+        }
+
+        if(material.hasProperty(GreatePropertyKeys.COGWHEEL)) {
+            CogwheelProperty prop = material.getProperty(GreatePropertyKeys.COGWHEEL);
+            VanillaRecipeHelper.addShapedRecipe(provider, material.getName() + "_shaft", ChemicalHelper.get(shaft, material).copyWithCount(2),
+                    "s ", " A",
+                    'A', new MaterialEntry(plate, material));
+
+            Material previousTierMaterial = prop.getPreviousMaterial();
+            VanillaRecipeHelper.addShapelessRecipe(provider, Greate.id(material.getName()).withSuffix("_cogwheel"), ChemicalHelper.get(cogwheel, material),
+                    new MaterialEntry(shaft, material),
+                    new MaterialEntry(plate, previousTierMaterial),
+                    'f');
+            VanillaRecipeHelper.addShapelessRecipe(provider, Greate.id(material.getName()).withSuffix("_large_cogwheel"), ChemicalHelper.get(largeCogwheel, material),
+                    new MaterialEntry(shaft, material),
+                    new MaterialEntry(plate, previousTierMaterial),
+                    new MaterialEntry(plate, previousTierMaterial),
+                    'f');
+            VanillaRecipeHelper.addShapelessRecipe(provider, Greate.id(material.getName()).withSuffix("_large_cogwheel_from_little"), ChemicalHelper.get(largeCogwheel, material),
+                    new MaterialEntry(cogwheel, material),
+                    new MaterialEntry(plate, previousTierMaterial),
+                    'f');
+            /*VanillaRecipeHelper.addShapedRecipe(provider, GEARBOXES[tier].getId(), GEARBOXES[tier].asStack(),
+                    " S ", "SCS", "wSh",
+                    'S', new MaterialEntry(shaft, material),
+                    'C', AllBlocks.ANDESITE_CASING);
+            VanillaRecipeHelper.addShapedRecipe(provider, VERTICAL_GEARBOXES[tier].getId(), VERTICAL_GEARBOXES[tier].asStack(),
+                    "S S", "wCh", "S S",
+                    'S', new MaterialEntry(shaft, material),
+                    'C', AllBlocks.ANDESITE_CASING);*/
         }
     }
 }

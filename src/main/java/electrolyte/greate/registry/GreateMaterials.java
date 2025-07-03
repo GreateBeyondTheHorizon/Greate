@@ -7,6 +7,7 @@ import com.gregtechceu.gtceu.api.data.chemical.material.stack.MaterialStack;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import electrolyte.greate.Greate;
+import electrolyte.greate.content.gtceu.material.CogwheelProperty;
 import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
 import electrolyte.greate.content.gtceu.material.KineticProperty;
 
@@ -75,6 +76,17 @@ public class GreateMaterials {
 		NaquadahAlloy.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(7, 131072));
 		Darmstadtium.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(8, 524288));
 		Neutronium.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(9, 2097152));
+
+		AndesiteAlloy.setProperty(GreatePropertyKeys.COGWHEEL, new CogwheelProperty(Wood));
+		Steel.setProperty(GreatePropertyKeys.COGWHEEL, new CogwheelProperty(AndesiteAlloy));
+		Aluminium.setProperty(GreatePropertyKeys.COGWHEEL, new CogwheelProperty(Steel));
+		StainlessSteel.setProperty(GreatePropertyKeys.COGWHEEL, new CogwheelProperty(Aluminium));
+		Titanium.setProperty(GreatePropertyKeys.COGWHEEL, new CogwheelProperty(StainlessSteel));
+		TungstenSteel.setProperty(GreatePropertyKeys.COGWHEEL, new CogwheelProperty(Titanium));
+		RhodiumPlatedPalladium.setProperty(GreatePropertyKeys.COGWHEEL, new CogwheelProperty(TungstenSteel));
+		NaquadahAlloy.setProperty(GreatePropertyKeys.COGWHEEL, new CogwheelProperty(RhodiumPlatedPalladium));
+		Darmstadtium.setProperty(GreatePropertyKeys.COGWHEEL, new CogwheelProperty(NaquadahAlloy));
+		Neutronium.setProperty(GreatePropertyKeys.COGWHEEL, new CogwheelProperty(Darmstadtium));
 
 		AndesiteAlloy.addFlags(GENERATE_WHISK);
 		WroughtIron.addFlags(GENERATE_ALLOY);

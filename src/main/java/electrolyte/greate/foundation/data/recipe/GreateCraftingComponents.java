@@ -12,6 +12,8 @@ public class GreateCraftingComponents {
     //TODO: add other crafting components (alloys)
     public static CraftingComponent SHAFT;
     public static CraftingComponent ALLOY;
+    public static CraftingComponent COGWHEEL;
+    public static CraftingComponent LARGE_COGWHEEL;
 
     public static void register() {
         SHAFT = CraftingComponent.of("shaft", shaft, AndesiteAlloy)
@@ -37,5 +39,29 @@ public class GreateCraftingComponents {
                 .add(7, alloy, NaquadahAlloy)
                 .add(8, alloy, Darmstadtium)
                 .add(9, alloy, Neutronium);
+
+        COGWHEEL = CraftingComponent.of("cogwheel", cogwheel, AndesiteAlloy)
+                .add(0, cogwheel, AndesiteAlloy)
+                .add(1, cogwheel, Steel)
+                .add(2, cogwheel, Aluminium)
+                .add(3, cogwheel, StainlessSteel)
+                .add(4, cogwheel, Titanium)
+                .add(5, cogwheel, TungstenSteel)
+                .add(6, cogwheel, RhodiumPlatedPalladium)
+                .add(7, cogwheel, NaquadahAlloy)
+                .add(8, cogwheel, Darmstadtium)
+                .add(9, cogwheel, Neutronium);
+
+        LARGE_COGWHEEL = CraftingComponent.of("large_cogwheel", largeCogwheel, AndesiteAlloy)
+                .add(0, largeCogwheel, AndesiteAlloy)
+                .add(1, largeCogwheel, Steel)
+                .add(2, largeCogwheel, Aluminium)
+                .add(3, largeCogwheel, StainlessSteel)
+                .add(4, largeCogwheel, Titanium)
+                .add(5, largeCogwheel, TungstenSteel)
+                .add(6, largeCogwheel, RhodiumPlatedPalladium)
+                .add(7, largeCogwheel, NaquadahAlloy)
+                .add(8, largeCogwheel, Darmstadtium)
+                .add(9, largeCogwheel, Neutronium);
     }
 }

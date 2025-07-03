@@ -54,10 +54,10 @@ public class GreateBuilderTransformers {
                 .blockstate(tieredEncasedShaftProvider());
     }
 
-    public static <B extends TieredEncasedCogwheelBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> tieredEncasedCogwheel(BlockEntry<TieredCogwheelBlock> cogwheel, Supplier<CTSpriteShiftEntry> casingShift) {
+    public static <B extends TieredEncasedCogwheelBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> tieredEncasedCogwheel(Supplier<TieredCogwheelBlock> cogwheel, Supplier<CTSpriteShiftEntry> casingShift) {
         return b -> tieredEncasedCogwheelBase(b, casingShift, cogwheel::get, false);
     }
-    public static <B extends TieredEncasedCogwheelBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> tieredEncasedLargeCogwheel(BlockEntry<TieredCogwheelBlock> cogwheel, Supplier<CTSpriteShiftEntry> casingShift) {
+    public static <B extends TieredEncasedCogwheelBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> tieredEncasedLargeCogwheel(Supplier<TieredCogwheelBlock> cogwheel, Supplier<CTSpriteShiftEntry> casingShift) {
         return b -> tieredEncasedCogwheelBase(b, casingShift, cogwheel::get, true)
                 .onRegister(CreateRegistrate.connectedTextures(() -> new EncasedCogCTBehaviour(casingShift.get())));
     }
@@ -82,19 +82,7 @@ public class GreateBuilderTransformers {
                             .texture("4", Create.asResource("block/" + gearbox))
                             .texture("1", new ResourceLocation("block/stripped_" + wood + "_log_top"))
                             .texture("side", Create.asResource("block/" + casing + encasedSuffix));
-                }, false))
-                .item()
-                .model((c, p) -> {
-                    String encasedSuffix = "_encased_cogwheel_side" + (large ? "_connected" : "");
-                    String blockFolder = large ? "encased_large_cogwheel" : "encased_cogwheel";
-                    String wood = c.getName().contains("brass") ? "dark_oak" : "spruce";
-                    String casing = c.getName().contains("brass") ? "brass" : "andesite";
-                    p.withExistingParent(c.getName(), Create.asResource("block/" + blockFolder + "/item"))
-                            .texture("casing", Create.asResource("block/" + casing + "_casing"))
-                            .texture("particle", Create.asResource("block/" + casing + "_casing"))
-                            .texture("1", new ResourceLocation("block/stripped_" + wood + "_log_top"))
-                            .texture("side", Create.asResource("block/" + casing + encasedSuffix));
-                }).build();
+                }, false));
     }
 
     private static <B extends RotatedPillarKineticBlock, P> BlockBuilder<B, P> encasedBase(BlockBuilder<B, P> b, Supplier<ItemLike> drop) {
