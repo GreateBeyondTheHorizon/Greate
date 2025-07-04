@@ -74,20 +74,21 @@ public class Cogwheels {
     public static void generateCogwheels() {
         for(Material mat : GTCEuAPI.materialManager.getRegisteredMaterials()) {
             if(!mat.hasProperty(GreatePropertyKeys.KINETIC)) continue;
+            if(!mat.hasProperty(GreatePropertyKeys.COGWHEEL)) continue;
             KineticProperty prop = mat.getProperty(GreatePropertyKeys.KINETIC);
             int tier = prop.getTier();
             var cogwheelEntry = REGISTRATE
-                .block(mat.getName() + "_cogwheel", TieredCogwheelBlock::small)
-                .initialProperties(SharedProperties::stone)
-                .properties(p -> p.sound(SoundType.WOOD))
-                .properties(p -> p.mapColor(MapColor.DIRT))
-                .transform(GStress.setNoImpact())
-                .transform(TagGen.axeOrPickaxe())
-                .blockstate(GreateBlockStateGen.tieredCogwheelProvider(false))
-                .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
-                .onRegister(c -> c.setTier(tier))
-                .item(CogwheelBlockItem::new).build()
-                .register();
+                    .block(mat.getName() + "_cogwheel", TieredCogwheelBlock::small)
+                    .initialProperties(SharedProperties::stone)
+                    .properties(p -> p.sound(SoundType.WOOD))
+                    .properties(p -> p.mapColor(MapColor.DIRT))
+                    .transform(GStress.setNoImpact())
+                    .transform(TagGen.axeOrPickaxe())
+                    .blockstate(GreateBlockStateGen.tieredCogwheelProvider(false))
+                    .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
+                    .onRegister(c -> c.setTier(tier))
+                    .item(CogwheelBlockItem::new).build()
+                    .register();
             COGWHEELS_BUILDER.put(cogwheel, mat, cogwheelEntry);
         }
         NEW_COGWHEELS = COGWHEELS_BUILDER.build();
@@ -96,6 +97,7 @@ public class Cogwheels {
     public static void generateLargeCogwheels() {
         for(Material mat : GTCEuAPI.materialManager.getRegisteredMaterials()) {
             if(!mat.hasProperty(GreatePropertyKeys.KINETIC)) continue;
+            if(!mat.hasProperty(GreatePropertyKeys.COGWHEEL)) continue;
             KineticProperty prop = mat.getProperty(GreatePropertyKeys.KINETIC);
             int tier = prop.getTier();
             var cogwheelEntry = REGISTRATE
@@ -118,6 +120,7 @@ public class Cogwheels {
     public static void generateAndesiteEncasedCogwheels() {
         for(Material mat : GTCEuAPI.materialManager.getRegisteredMaterials()) {
             if(!mat.hasProperty(GreatePropertyKeys.KINETIC)) continue;
+            if(!mat.hasProperty(GreatePropertyKeys.COGWHEEL)) continue;
             KineticProperty prop = mat.getProperty(GreatePropertyKeys.KINETIC);
             int tier = prop.getTier();
             Supplier<TieredCogwheelBlock> cogwheelSupplier = () -> (TieredCogwheelBlock) ChemicalHelper.getBlock(cogwheel, mat);
@@ -151,6 +154,7 @@ public class Cogwheels {
     public static void generateBrassEncasedCogwheels() {
         for(Material mat : GTCEuAPI.materialManager.getRegisteredMaterials()) {
             if(!mat.hasProperty(GreatePropertyKeys.KINETIC)) continue;
+            if(!mat.hasProperty(GreatePropertyKeys.COGWHEEL)) continue;
             KineticProperty prop = mat.getProperty(GreatePropertyKeys.KINETIC);
             int tier = prop.getTier();
             Supplier<TieredCogwheelBlock> cogwheelSupplier = () -> (TieredCogwheelBlock) ChemicalHelper.getBlock(cogwheel, mat);

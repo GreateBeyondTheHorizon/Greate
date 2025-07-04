@@ -334,26 +334,30 @@ public class GreateCraftingTableRecipes {
                     'P', new MaterialEntry(plate, material));
         }
 
+        //<!!! [ONLY KINETIC RELATED RECIPES BELOW THIS LINE] !!!>
+        if(!material.hasProperty(GreatePropertyKeys.KINETIC)) return;
+        VanillaRecipeHelper.addShapedRecipe(provider, material.getName() + "_shaft", ChemicalHelper.get(shaft, material).copyWithCount(2),
+                    "s ", " P",
+                    'P', new MaterialEntry(plate, material));
+
         if(material.hasProperty(GreatePropertyKeys.COGWHEEL)) {
             CogwheelProperty prop = material.getProperty(GreatePropertyKeys.COGWHEEL);
-            VanillaRecipeHelper.addShapedRecipe(provider, material.getName() + "_shaft", ChemicalHelper.get(shaft, material).copyWithCount(2),
-                    "s ", " A",
-                    'A', new MaterialEntry(plate, material));
-
             Material previousTierMaterial = prop.getPreviousMaterial();
-            VanillaRecipeHelper.addShapelessRecipe(provider, Greate.id(material.getName()).withSuffix("_cogwheel"), ChemicalHelper.get(cogwheel, material),
-                    new MaterialEntry(shaft, material),
-                    new MaterialEntry(plate, previousTierMaterial),
-                    'f');
-            VanillaRecipeHelper.addShapelessRecipe(provider, Greate.id(material.getName()).withSuffix("_large_cogwheel"), ChemicalHelper.get(largeCogwheel, material),
-                    new MaterialEntry(shaft, material),
-                    new MaterialEntry(plate, previousTierMaterial),
-                    new MaterialEntry(plate, previousTierMaterial),
-                    'f');
-            VanillaRecipeHelper.addShapelessRecipe(provider, Greate.id(material.getName()).withSuffix("_large_cogwheel_from_little"), ChemicalHelper.get(largeCogwheel, material),
-                    new MaterialEntry(cogwheel, material),
-                    new MaterialEntry(plate, previousTierMaterial),
-                    'f');
+            VanillaRecipeHelper.addShapedRecipe(provider, true,material.getName() + "_cogwheel", ChemicalHelper.get(cogwheel, material),
+                    "SP", "f ",
+                    'S', new MaterialEntry(shaft, material),
+                    'P', new MaterialEntry(plate, previousTierMaterial));
+
+            VanillaRecipeHelper.addShapedRecipe(provider, true,material.getName() + "_large_cogwheel", ChemicalHelper.get(largeCogwheel, material),
+                    "SP", "Pf",
+                    'S', new MaterialEntry(shaft, material),
+                    'P', new MaterialEntry(plate, previousTierMaterial));
+
+            VanillaRecipeHelper.addShapedRecipe(provider ,material.getName() + "_large_cogwheel_from_little", ChemicalHelper.get(largeCogwheel, material),
+                    "CP", "f ",
+                    'C', new MaterialEntry(cogwheel, material),
+                    'P', new MaterialEntry(plate, previousTierMaterial));
+
             /*VanillaRecipeHelper.addShapedRecipe(provider, GEARBOXES[tier].getId(), GEARBOXES[tier].asStack(),
                     " S ", "SCS", "wSh",
                     'S', new MaterialEntry(shaft, material),
