@@ -5,9 +5,11 @@ import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.fluids.potion.PotionMixingRecipes;
+import dev.latvian.mods.kubejs.recipe.RecipesEventJS;
 import electrolyte.greate.Greate;
 import electrolyte.greate.GreateValues;
 import electrolyte.greate.compat.kubejs.GreateKubeJSHelper;
+import electrolyte.greate.compat.kubejs.KubeJSGreatePlugin;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeFactory;
 import electrolyte.greate.foundation.data.recipe.GreateRuntimeRecipes;
@@ -37,6 +39,12 @@ public class MixinRecipeManager {
     @Shadow public Map<RecipeType<?>, Map<ResourceLocation, Recipe<?>>> recipes;
     @Shadow(remap = false) @Final private IContext context;
 
+    /**
+     * <!!! [WARNING: JANK BELOW] !!!>
+     * TODO: these recipes can be removed with kube using id or targeting an output, but cannot be removed by targeting the input
+     * @see GreateRuntimeRecipes
+     * @see KubeJSGreatePlugin#injectRuntimeRecipes(RecipesEventJS, RecipeManager, Map)
+     **/
     @Inject(method = "apply(Ljava/util/Map;Lnet/minecraft/server/packs/resources/ResourceManager;Lnet/minecraft/util/profiling/ProfilerFiller;)V", at = @At(value = "HEAD"))
     private void greate_apply(Map<ResourceLocation, JsonElement> pMap, ResourceManager pResourceManager, ProfilerFiller pProfiler, CallbackInfo ci) {
         GreateRecipeRemoval.register(recipe -> {
@@ -45,11 +53,7 @@ public class MixinRecipeManager {
             }
         });
 
-        /**
-         * <!!! [WARNING: JANK BELOW] !!!>
-         * TODO: these recipes can be removed with kube using id or targeting an output, but cannot be removed by targeting the input
-         * @see GreateRuntimeRecipes
-         */
+
         long currentTime = System.currentTimeMillis();
         Greate.LOGGER.info("Converting GT & Create recipes...");
         if(ModList.get().isLoaded("kubejs")) GreateKubeJSHelper.kubeStuff();
