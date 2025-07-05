@@ -70,6 +70,8 @@ public class KubeJSGreatePlugin extends KubeJSPlugin {
     public void injectRuntimeRecipes(RecipesEventJS event, RecipeManager manager, Map<ResourceLocation, Recipe<?>> recipesByName) {
         for(RecipeJS r : event.addedRecipes) {
             if(r instanceof GTRecipeJS gtRecipeJS) {
+                if(r.getId().endsWith("_manual_only")) continue;
+                if(r.getId().endsWith("_electric_only")) continue;
                 TieredProcessingRecipeFactory<TieredProcessingRecipe<?>> factory = GreateValues.getFactory(gtRecipeJS.getType());
                 if(factory == null) continue;
                 TieredProcessingRecipeBuilder<TieredProcessingRecipe<?>> builder = new TieredProcessingRecipeBuilder<>(factory, Greate.id("integration/" + gtRecipeJS.idWithoutType().toString().replace(":", "/")));
