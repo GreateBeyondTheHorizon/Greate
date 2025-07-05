@@ -1,1 +1,1 @@
-- Fix incorrect texture for brass encased andesite alloy shaft
+- Allow inherited recipes to be ignored in greate machines (add _manual_only or _electric_only to the end of a recipe id)
