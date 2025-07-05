@@ -154,7 +154,7 @@ public class Cogwheels {
                     .onRegister(c -> c.setTier(tier))
                     .transform(TagGen.axeOrPickaxe())
                     .register();
-            BRASS_ENCASED_COGWHEELS_BUILDER.put(andesiteEncasedCogwheel, mat, cogwheelEntry);
+            BRASS_ENCASED_COGWHEELS_BUILDER.put(brassEncasedCogwheel, mat, cogwheelEntry);
 
             Supplier<TieredCogwheelBlock> largeCogwheelSupplier = () -> (TieredCogwheelBlock) ChemicalHelper.getBlock(largeCogwheel, mat);
              var largeCogwheelEntry = REGISTRATE
@@ -165,7 +165,7 @@ public class Cogwheels {
                      .transform(TagGen.axeOrPickaxe())
                      .onRegister(c -> c.setTier(tier))
                      .register();
-             BRASS_ENCASED_LARGE_COGWHEELS_BUILDER.put(andesiteEncasedLargeCogwheel, mat, largeCogwheelEntry);
+             BRASS_ENCASED_LARGE_COGWHEELS_BUILDER.put(brassEncasedLargeCogwheel, mat, largeCogwheelEntry);
         }
         BRASS_ENCASED_COGWHEELS = BRASS_ENCASED_COGWHEELS_BUILDER.build();
         BRASS_ENCASED_LARGE_COGWHEELS = BRASS_ENCASED_LARGE_COGWHEELS_BUILDER.build();
