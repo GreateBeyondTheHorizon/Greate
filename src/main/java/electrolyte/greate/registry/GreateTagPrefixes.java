@@ -75,5 +75,21 @@ public class GreateTagPrefixes {
 	public static TagPrefix brassEncasedLargeCogwheel = new TagPrefix("brass_encased_large_cogwheel")
 			.itemTable(() -> Cogwheels.BRASS_ENCASED_LARGE_COGWHEELS);
 
+	public static TagPrefix gearbox = new TagPrefix("gearbox")
+			.defaultTagPath("gearboxes/%s")
+			.unformattedTagPath("gearboxes")
+			.itemTable(() -> Gearboxes.NEW_GEARBOXES)
+			.materialAmount(M * 2)
+			.unificationEnabled(true)
+			.enableRecycling();
+
+	public static TagPrefix verticalGearbox = new TagPrefix("vertical_gearbox")
+			.defaultTagPath("vertical_gearboxes/%s")
+			.unformattedTagPath("vertical_gearboxes")
+			.itemTable(() -> Gearboxes.NEW_VERTICAL_GEARBOXES)
+			.materialAmount(M * 2)
+			.unificationEnabled(true)
+			.enableRecycling();
+
 	public static void register() {}
 }

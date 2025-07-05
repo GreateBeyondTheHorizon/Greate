@@ -14,6 +14,9 @@ public class GreateCraftingComponents {
     public static CraftingComponent ALLOY;
     public static CraftingComponent COGWHEEL;
     public static CraftingComponent LARGE_COGWHEEL;
+    public static CraftingComponent GEARBOX;
+    public static CraftingComponent VERTICAL_GEARBOX;
+
 
     public static void register() {
         SHAFT = CraftingComponent.of("shaft", shaft, AndesiteAlloy)
@@ -63,5 +66,29 @@ public class GreateCraftingComponents {
                 .add(7, largeCogwheel, NaquadahAlloy)
                 .add(8, largeCogwheel, Darmstadtium)
                 .add(9, largeCogwheel, Neutronium);
+
+        GEARBOX = CraftingComponent.of("gearbox", gearbox, AndesiteAlloy)
+                .add(0, gearbox, AndesiteAlloy)
+                .add(1, gearbox, Steel)
+                .add(2, gearbox, Aluminium)
+                .add(3, gearbox, StainlessSteel)
+                .add(4, gearbox, Titanium)
+                .add(5, gearbox, TungstenSteel)
+                .add(6, gearbox, RhodiumPlatedPalladium)
+                .add(7, gearbox, NaquadahAlloy)
+                .add(8, gearbox, Darmstadtium)
+                .add(9, gearbox, Neutronium);
+
+        VERTICAL_GEARBOX = CraftingComponent.of("vertical_gearbox", verticalGearbox, AndesiteAlloy)
+                .add(0, verticalGearbox, AndesiteAlloy)
+                .add(1, verticalGearbox, Steel)
+                .add(2, verticalGearbox, Aluminium)
+                .add(3, verticalGearbox, StainlessSteel)
+                .add(4, verticalGearbox, Titanium)
+                .add(5, verticalGearbox, TungstenSteel)
+                .add(6, verticalGearbox, RhodiumPlatedPalladium)
+                .add(7, verticalGearbox, NaquadahAlloy)
+                .add(8, verticalGearbox, Darmstadtium)
+                .add(9, verticalGearbox, Neutronium);
     }
 }

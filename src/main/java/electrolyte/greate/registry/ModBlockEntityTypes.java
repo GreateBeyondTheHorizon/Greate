@@ -75,7 +75,7 @@ public class ModBlockEntityTypes {
     public static final BlockEntityEntry<TieredGearboxBlockEntity> TIERED_GEARBOX = REGISTRATE
             .blockEntity("tiered_gearbox", TieredGearboxBlockEntity::new)
             .visual(() -> TieredGearboxVisual::new, false)
-            .validBlocks(Gearboxes.GEARBOXES)
+            .validBlocksDeferred(() -> new ArrayList<>(Gearboxes.NEW_GEARBOXES.values()))
             .renderer(() -> TieredGearboxRenderer::new)
             .register();
 

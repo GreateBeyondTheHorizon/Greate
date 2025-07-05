@@ -1,6 +1,8 @@
 package electrolyte.greate.content.kinetics.gearbox;
 
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.simibubi.create.content.kinetics.base.IRotate;
+import electrolyte.greate.Greate;
 import net.createmod.catnip.data.Iterate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -14,24 +16,23 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
-import java.util.HashMap;
 import java.util.Map;
+
+import static electrolyte.greate.registry.Gearboxes.NEW_GEARBOXES;
+import static electrolyte.greate.registry.GreateTagPrefixes.gearbox;
 
 public class TieredVerticalGearboxItem extends BlockItem {
 
-    public static final Map<Block, TieredVerticalGearboxItem> MAP = new HashMap<>();
-    private String material;
+    private Material material;
 
-    public TieredVerticalGearboxItem(Properties pProperties, Block pBlock) {
-        super(pBlock, pProperties);
-        material = pBlock.getName().getString();
-        material = material.substring(13, material.length() - 8);
-        MAP.put(pBlock, this);
+    public TieredVerticalGearboxItem(Properties pProperties, Material material) {
+        super(NEW_GEARBOXES.column(material).get(gearbox).get(), pProperties);
+        this.material = material;
     }
 
     @Override
     public String getDescriptionId() {
-        return "item.greate." +  material + "_vertical_gearbox";
+        return "item." + Greate.MOD_ID + "." + material.getName() + "_vertical_gearbox";
     }
 
     @Override

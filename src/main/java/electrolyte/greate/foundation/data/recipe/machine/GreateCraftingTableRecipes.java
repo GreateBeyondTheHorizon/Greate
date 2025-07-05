@@ -1,6 +1,5 @@
 package electrolyte.greate.foundation.data.recipe.machine;
 
-import com.google.common.collect.ImmutableList;
 import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
@@ -39,11 +38,8 @@ import static electrolyte.greate.GreateValues.BM;
 import static electrolyte.greate.GreateValues.TM;
 import static electrolyte.greate.content.gtceu.machines.GreateMultiblockMachines.WIRE_COATING_FACTORY;
 import static electrolyte.greate.foundation.data.recipe.GreateCraftingComponents.*;
-import static electrolyte.greate.foundation.data.recipe.GreateRecipes.conversionCycle;
 import static electrolyte.greate.registry.Belts.BELT_CONNECTORS;
 import static electrolyte.greate.registry.EncasedFans.FANS;
-import static electrolyte.greate.registry.Gearboxes.GEARBOXES;
-import static electrolyte.greate.registry.Gearboxes.VERTICAL_GEARBOXES;
 import static electrolyte.greate.registry.GreateMaterials.AndesiteAlloy;
 import static electrolyte.greate.registry.GreateTagPrefixes.*;
 import static electrolyte.greate.registry.MechanicalMixers.MECHANICAL_MIXERS;
@@ -57,7 +53,6 @@ public class GreateCraftingTableRecipes {
     public static void register(Consumer<FinishedRecipe> provider) {
         for (int tier = 0; tier < TM.length; tier++) {
             Material tierMaterial = TM[tier];
-            conversionCycle(provider, ImmutableList.of(GEARBOXES[tier], VERTICAL_GEARBOXES[tier]));
 
             // Machines
             VanillaRecipeHelper.addShapedRecipe(provider, MECHANICAL_PUMPS[tier].getId(), MECHANICAL_PUMPS[tier].asStack(),
@@ -355,14 +350,21 @@ public class GreateCraftingTableRecipes {
                     'C', new MaterialEntry(cogwheel, material),
                     'P', new MaterialEntry(plate, previousTierMaterial));
 
-            /*VanillaRecipeHelper.addShapedRecipe(provider, GEARBOXES[tier].getId(), GEARBOXES[tier].asStack(),
+            VanillaRecipeHelper.addShapedRecipe(provider, true, material.getName() + "_gearbox", ChemicalHelper.get(gearbox, material),
                     " S ", "SCS", "wSh",
                     'S', new MaterialEntry(shaft, material),
                     'C', AllBlocks.ANDESITE_CASING);
-            VanillaRecipeHelper.addShapedRecipe(provider, VERTICAL_GEARBOXES[tier].getId(), VERTICAL_GEARBOXES[tier].asStack(),
+
+            VanillaRecipeHelper.addShapedRecipe(provider, true, material.getName() + "_vertical_gearbox", ChemicalHelper.get(verticalGearbox, material),
                     "S S", "wCh", "S S",
                     'S', new MaterialEntry(shaft, material),
-                    'C', AllBlocks.ANDESITE_CASING);*/
+                    'C', AllBlocks.ANDESITE_CASING);
+
+            VanillaRecipeHelper.addShapelessRecipe(provider, material.getName() + "_gearbox_from_conversion", ChemicalHelper.get(gearbox, material),
+                    ChemicalHelper.get(verticalGearbox, material));
+
+            VanillaRecipeHelper.addShapelessRecipe(provider, material.getName() + "_vertical_gearbox_from_conversion", ChemicalHelper.get(verticalGearbox, material),
+                    ChemicalHelper.get(gearbox, material));
         }
     }
 }

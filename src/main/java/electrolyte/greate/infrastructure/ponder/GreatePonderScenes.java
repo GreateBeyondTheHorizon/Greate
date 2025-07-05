@@ -15,8 +15,8 @@ import static electrolyte.greate.registry.Cogwheels.COGWHEELS;
 import static electrolyte.greate.registry.Cogwheels.LARGE_COGWHEELS;
 import static electrolyte.greate.registry.CrushingWheels.CRUSHING_WHEELS;
 import static electrolyte.greate.registry.EncasedFans.FANS;
-import static electrolyte.greate.registry.Gearboxes.GEARBOXES;
-import static electrolyte.greate.registry.Gearboxes.VERTICAL_GEARBOXES;
+import static electrolyte.greate.registry.Gearboxes.NEW_GEARBOXES;
+import static electrolyte.greate.registry.Gearboxes.NEW_VERTICAL_GEARBOXES;
 import static electrolyte.greate.registry.MechanicalMixers.MECHANICAL_MIXERS;
 import static electrolyte.greate.registry.MechanicalPresses.MECHANICAL_PRESSES;
 import static electrolyte.greate.registry.Millstones.MILLSTONES;
@@ -43,8 +43,8 @@ public class GreatePonderScenes {
                 .addStoryBoard(Create.asResource("belt/directions"), BeltScenes::directions)
                 .addStoryBoard(Create.asResource("belt/transport"), BeltScenes::transport, AllCreatePonderTags.LOGISTICS)
                 .addStoryBoard(Create.asResource("belt/encasing"), BeltScenes::beltsCanBeEncased);
-        HELPER.forComponents(GEARBOXES).addStoryBoard(Create.asResource("gearbox"), KineticsScenes::gearbox, AllCreatePonderTags.KINETIC_RELAYS);
-        HELPER.forComponents(VERTICAL_GEARBOXES).addStoryBoard(Create.asResource("gearbox"), KineticsScenes::gearbox, AllCreatePonderTags.KINETIC_RELAYS);
+        HELPER.forComponents(NEW_GEARBOXES.values()).addStoryBoard(Create.asResource("gearbox"), KineticsScenes::gearbox, AllCreatePonderTags.KINETIC_RELAYS);
+        HELPER.forComponents(NEW_VERTICAL_GEARBOXES.values()).addStoryBoard(Create.asResource("gearbox"), KineticsScenes::gearbox, AllCreatePonderTags.KINETIC_RELAYS);
         HELPER.forComponents(FANS)
                 .addStoryBoard(Create.asResource("fan/direction"), FanScenes::direction, AllCreatePonderTags.KINETIC_APPLIANCES)
                 .addStoryBoard(Create.asResource("fan/processing"), TieredFanScenes::processing); //TODO: fix

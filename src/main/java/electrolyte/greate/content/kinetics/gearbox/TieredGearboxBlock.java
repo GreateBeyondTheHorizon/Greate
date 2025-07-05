@@ -1,5 +1,7 @@
 package electrolyte.greate.content.kinetics.gearbox;
 
+import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.simibubi.create.content.kinetics.gearbox.GearboxBlock;
 import com.simibubi.create.content.kinetics.gearbox.GearboxBlockEntity;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
@@ -15,12 +17,16 @@ import net.minecraft.world.phys.HitResult;
 
 import java.util.List;
 
+import static electrolyte.greate.registry.GreateTagPrefixes.verticalGearbox;
+
 public class TieredGearboxBlock extends GearboxBlock implements ITieredBlock {
 
     private int tier;
+    private Material material;
 
-    public TieredGearboxBlock(Properties properties) {
+    public TieredGearboxBlock(Properties properties, Material material) {
         super(properties);
+        this.material = material;
     }
 
     @Override
@@ -28,7 +34,7 @@ public class TieredGearboxBlock extends GearboxBlock implements ITieredBlock {
         if(pState.getValue(AXIS).isVertical()) {
             return super.getDrops(pState, pBuilder);
         }
-        return List.of(TieredVerticalGearboxItem.MAP.get(this).getDefaultInstance());
+        return List.of(ChemicalHelper.get(verticalGearbox, material));
     }
 
     @Override
@@ -36,7 +42,7 @@ public class TieredGearboxBlock extends GearboxBlock implements ITieredBlock {
         if(state.getValue(AXIS).isVertical()) {
             return super.getCloneItemStack(state, target, level, pos, player);
         }
-        return TieredVerticalGearboxItem.MAP.get(this).getDefaultInstance();
+        return ChemicalHelper.get(verticalGearbox, material);
     }
 
     @Override
