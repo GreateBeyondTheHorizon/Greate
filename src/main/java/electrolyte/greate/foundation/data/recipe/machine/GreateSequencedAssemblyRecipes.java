@@ -9,21 +9,19 @@ import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
 import com.gregtechceu.gtceu.utils.GTUtil;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
+import com.simibubi.create.AllTags;
 import com.simibubi.create.content.fluids.transfer.FillingRecipe;
 import com.simibubi.create.content.kinetics.deployer.DeployerApplicationRecipe;
-import com.simibubi.create.content.kinetics.press.PressingRecipe;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipeBuilder;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
 import electrolyte.greate.Greate;
 import electrolyte.greate.content.gtceu.material.CogwheelProperty;
 import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
-import electrolyte.greate.foundation.data.GreateTagGen;
 import it.unimi.dsi.fastutil.objects.Reference2IntMap;
 import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
 import net.minecraft.Util;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.material.Fluids;
 
 import java.util.function.Consumer;
 
@@ -46,18 +44,8 @@ public class GreateSequencedAssemblyRecipes {
     });
 
     public static void register(Consumer<FinishedRecipe> provider) {
-        new SequencedAssemblyRecipeBuilder(Greate.id("sturdy_sheet"))
-                .require(GreateTagGen.OBSIDIAN_DUST)
-                .transitionTo(AllItems.INCOMPLETE_REINFORCED_SHEET)
-                .addStep(FillingRecipe::new, r -> r.require(Fluids.LAVA, 500))
-                .addStep(PressingRecipe::new, r -> r)
-                .addStep(PressingRecipe::new, r -> r)
-                .addOutput(AllItems.STURDY_SHEET.asItem(), 1)
-                .loops(1)
-                .build(provider);
-
         new SequencedAssemblyRecipeBuilder(Greate.id("precision_mechanism"))
-                .require(GreateTagGen.GOLD_PLATE)
+                .require(AllTags.forgeItemTag("plates/gold"))
                 .transitionTo(AllItems.INCOMPLETE_PRECISION_MECHANISM)
                 .addStep(DeployerApplicationRecipe::new, r -> r.require(ChemicalHelper.get(cogwheel, AndesiteAlloy).getItem()))
                 .addStep(DeployerApplicationRecipe::new, r -> r.require(ChemicalHelper.get(largeCogwheel, AndesiteAlloy).getItem()))

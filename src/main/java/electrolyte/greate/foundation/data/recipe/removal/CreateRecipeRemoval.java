@@ -65,6 +65,5 @@ public class CreateRecipeRemoval {
         recipe.accept(Create.asResource("mixing/andesite_alloy_from_zinc"));
 
         recipe.accept(Create.asResource("sequenced_assembly/precision_mechanism"));
-        recipe.accept(Create.asResource("sequenced_assembly/sturdy_sheet"));
     }
 }

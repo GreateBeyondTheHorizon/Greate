@@ -13,13 +13,9 @@ import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class GreateTagGen {
-
-    public static final TagKey<Item> OBSIDIAN_DUST = ForgeRegistries.ITEMS.tags().createOptionalTagKey(new ResourceLocation("forge", "dusts/obsidian"), Set.of());
-    public static final TagKey<Item> GOLD_PLATE = ForgeRegistries.ITEMS.tags().createOptionalTagKey(new ResourceLocation("forge", "plates/gold"), Set.of());
 
     private static final TagKey<Item> HIDE_FROM_RECIPE_VIEWERS = ForgeRegistries.ITEMS.tags().createTagKey(new ResourceLocation("c", "hidden_from_recipe_viewers"));
 
