@@ -42,33 +42,19 @@ public class Cogwheels {
     static ImmutableTable.Builder<TagPrefix, Material, BlockEntry<TieredCogwheelBlock>> LARGE_COGWHEELS_BUILDER = ImmutableTable.builder();
     static ImmutableTable.Builder<TagPrefix, Material, BlockEntry<TieredEncasedCogwheelBlock>> ANDESITE_ENCASED_LARGE_COGWHEELS_BUILDER = ImmutableTable.builder();
     static ImmutableTable.Builder<TagPrefix, Material, BlockEntry<TieredEncasedCogwheelBlock>> BRASS_ENCASED_LARGE_COGWHEELS_BUILDER = ImmutableTable.builder();
-    public static Table<TagPrefix, Material, BlockEntry<TieredCogwheelBlock>> NEW_COGWHEELS;
-    public static Table<TagPrefix, Material, BlockEntry<TieredEncasedCogwheelBlock>> NEW_ANDESITE_ENCASED_COGWHEELS;
-    public static Table<TagPrefix, Material, BlockEntry<TieredEncasedCogwheelBlock>> NEW_BRASS_ENCASED_COGWHEELS;
-    public static Table<TagPrefix, Material, BlockEntry<TieredCogwheelBlock>> NEW_LARGE_COGWHEELS;
-    public static Table<TagPrefix, Material, BlockEntry<TieredEncasedCogwheelBlock>> NEW_ANDESITE_ENCASED_LARGE_COGWHEELS;
-    public static Table<TagPrefix, Material, BlockEntry<TieredEncasedCogwheelBlock>> NEW_BRASS_ENCASED_LARGE_COGWHEELS;
+    public static Table<TagPrefix, Material, BlockEntry<TieredCogwheelBlock>> COGWHEELS;
+    public static Table<TagPrefix, Material, BlockEntry<TieredEncasedCogwheelBlock>> ANDESITE_ENCASED_COGWHEELS;
+    public static Table<TagPrefix, Material, BlockEntry<TieredEncasedCogwheelBlock>> BRASS_ENCASED_COGWHEELS;
+    public static Table<TagPrefix, Material, BlockEntry<TieredCogwheelBlock>> LARGE_COGWHEELS;
+    public static Table<TagPrefix, Material, BlockEntry<TieredEncasedCogwheelBlock>> ANDESITE_ENCASED_LARGE_COGWHEELS;
+    public static Table<TagPrefix, Material, BlockEntry<TieredEncasedCogwheelBlock>> BRASS_ENCASED_LARGE_COGWHEELS;
 
-    public static BlockEntry<TieredCogwheelBlock>[] COGWHEELS;
-    public static BlockEntry<TieredCogwheelBlock>[] LARGE_COGWHEELS;
-    public static BlockEntry<TieredEncasedCogwheelBlock>[] ANDESITE_ENCASED_COGWHEELS;
-    public static BlockEntry<TieredEncasedCogwheelBlock>[] ANDESITE_ENCASED_LARGE_COGWHEELS;
-    public static BlockEntry<TieredEncasedCogwheelBlock>[] BRASS_ENCASED_COGWHEELS;
-    public static BlockEntry<TieredEncasedCogwheelBlock>[] BRASS_ENCASED_LARGE_COGWHEELS;
-
-    @SuppressWarnings({"unchecked"})
     public static void register() {
         REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
         generateCogwheels();
-        COGWHEELS = NEW_COGWHEELS.values().toArray(BlockEntry[]::new);
         generateLargeCogwheels();
-        LARGE_COGWHEELS = NEW_LARGE_COGWHEELS.values().toArray(BlockEntry[]::new);
         generateAndesiteEncasedCogwheels();
-        ANDESITE_ENCASED_COGWHEELS = NEW_ANDESITE_ENCASED_COGWHEELS.values().toArray(BlockEntry[]::new);
-        ANDESITE_ENCASED_LARGE_COGWHEELS = NEW_ANDESITE_ENCASED_LARGE_COGWHEELS.values().toArray(BlockEntry[]::new);
         generateBrassEncasedCogwheels();
-        BRASS_ENCASED_COGWHEELS = NEW_BRASS_ENCASED_COGWHEELS.values().toArray(BlockEntry[]::new);
-        BRASS_ENCASED_LARGE_COGWHEELS = NEW_BRASS_ENCASED_LARGE_COGWHEELS.values().toArray(BlockEntry[]::new);
     }
 
     public static void generateCogwheels() {
@@ -91,7 +77,7 @@ public class Cogwheels {
                     .register();
             COGWHEELS_BUILDER.put(cogwheel, mat, cogwheelEntry);
         }
-        NEW_COGWHEELS = COGWHEELS_BUILDER.build();
+        COGWHEELS = COGWHEELS_BUILDER.build();
     }
     
     public static void generateLargeCogwheels() {
@@ -114,7 +100,7 @@ public class Cogwheels {
                     .register();
             LARGE_COGWHEELS_BUILDER.put(largeCogwheel, mat, cogwheelEntry);
         }
-        NEW_LARGE_COGWHEELS = LARGE_COGWHEELS_BUILDER.build();
+        LARGE_COGWHEELS = LARGE_COGWHEELS_BUILDER.build();
     }
     
     public static void generateAndesiteEncasedCogwheels() {
@@ -147,8 +133,8 @@ public class Cogwheels {
                      .register();
              ANDESITE_ENCASED_LARGE_COGWHEELS_BUILDER.put(andesiteEncasedLargeCogwheel, mat, largeCogwheelEntry);
         }
-        NEW_ANDESITE_ENCASED_COGWHEELS = ANDESITE_ENCASED_COGWHEELS_BUILDER.build();
-        NEW_ANDESITE_ENCASED_LARGE_COGWHEELS = ANDESITE_ENCASED_LARGE_COGWHEELS_BUILDER.build();
+        ANDESITE_ENCASED_COGWHEELS = ANDESITE_ENCASED_COGWHEELS_BUILDER.build();
+        ANDESITE_ENCASED_LARGE_COGWHEELS = ANDESITE_ENCASED_LARGE_COGWHEELS_BUILDER.build();
     }
 
     public static void generateBrassEncasedCogwheels() {
@@ -181,7 +167,7 @@ public class Cogwheels {
                      .register();
              BRASS_ENCASED_LARGE_COGWHEELS_BUILDER.put(andesiteEncasedLargeCogwheel, mat, largeCogwheelEntry);
         }
-        NEW_BRASS_ENCASED_COGWHEELS = BRASS_ENCASED_COGWHEELS_BUILDER.build();
-        NEW_BRASS_ENCASED_LARGE_COGWHEELS = BRASS_ENCASED_LARGE_COGWHEELS_BUILDER.build();
+        BRASS_ENCASED_COGWHEELS = BRASS_ENCASED_COGWHEELS_BUILDER.build();
+        BRASS_ENCASED_LARGE_COGWHEELS = BRASS_ENCASED_LARGE_COGWHEELS_BUILDER.build();
     }
 }

@@ -32,14 +32,11 @@ import static electrolyte.greate.registry.GreateTagPrefixes.shaft;
 public class Girders {
 
     static ImmutableTable.Builder<TagPrefix, Material, BlockEntry<TieredGirderEncasedShaftBlock>> GIRDERS_BUILDER = ImmutableTable.builder();
-    public static Table<TagPrefix, Material, BlockEntry<TieredGirderEncasedShaftBlock>> NEW_GIRDERS;
-    public static BlockEntry<TieredGirderEncasedShaftBlock>[] METAL_GIRDER_ENCASED_SHAFTS;
+    public static Table<TagPrefix, Material, BlockEntry<TieredGirderEncasedShaftBlock>> GIRDERS;
 
-    @SuppressWarnings({"unchecked"})
     public static void register() {
         REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
         generateGirders();
-        METAL_GIRDER_ENCASED_SHAFTS = NEW_GIRDERS.values().toArray(BlockEntry[]::new);
     }
 
     public static void generateGirders() {
@@ -64,6 +61,6 @@ public class Girders {
                     .register();
             GIRDERS_BUILDER.put(girderEncasedShaft, mat, girderEntry);
         }
-        NEW_GIRDERS = GIRDERS_BUILDER.build();
+        GIRDERS = GIRDERS_BUILDER.build();
     }
 }

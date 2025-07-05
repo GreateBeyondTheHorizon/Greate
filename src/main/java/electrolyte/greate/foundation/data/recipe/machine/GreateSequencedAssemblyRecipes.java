@@ -31,8 +31,7 @@ import static com.gregtechceu.gtceu.api.GTValues.*;
 import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.*;
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
 import static electrolyte.greate.content.gtceu.machines.GreateRecipeTypes.WIRE_COATING_RECIPES;
-import static electrolyte.greate.registry.Cogwheels.COGWHEELS;
-import static electrolyte.greate.registry.Cogwheels.LARGE_COGWHEELS;
+import static electrolyte.greate.registry.GreateMaterials.AndesiteAlloy;
 import static electrolyte.greate.registry.GreateTagPrefixes.*;
 
 public class GreateSequencedAssemblyRecipes {
@@ -60,8 +59,8 @@ public class GreateSequencedAssemblyRecipes {
         new SequencedAssemblyRecipeBuilder(Greate.id("precision_mechanism"))
                 .require(GreateTagGen.GOLD_PLATE)
                 .transitionTo(AllItems.INCOMPLETE_PRECISION_MECHANISM)
-                .addStep(DeployerApplicationRecipe::new, r -> r.require(COGWHEELS[ULV]))
-                .addStep(DeployerApplicationRecipe::new, r -> r.require(LARGE_COGWHEELS[ULV]))
+                .addStep(DeployerApplicationRecipe::new, r -> r.require(ChemicalHelper.get(cogwheel, AndesiteAlloy).getItem()))
+                .addStep(DeployerApplicationRecipe::new, r -> r.require(ChemicalHelper.get(largeCogwheel, AndesiteAlloy).getItem()))
                 .addStep(DeployerApplicationRecipe::new, r -> r.require(Items.IRON_NUGGET))
                 .addOutput(AllItems.PRECISION_MECHANISM.get(), 120)
                 .addOutput(AllItems.GOLDEN_SHEET.get(), 8)

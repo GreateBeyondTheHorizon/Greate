@@ -36,21 +36,21 @@ public class GreateTagPrefixes {
 			.enableRecycling();
 
 	public static TagPrefix poweredShaft = new TagPrefix("powered_shaft")
-			.itemTable(() -> Shafts.NEW_POWERED_SHAFTS);
+			.itemTable(() -> Shafts.POWERED_SHAFTS);
 
 	public static TagPrefix andesiteEncasedShaft = new TagPrefix("andesite_encased_shaft")
-			.itemTable(() -> Shafts.NEW_ANDESITE_ENCASED_SHAFTS);
+			.itemTable(() -> Shafts.ANDESITE_ENCASED_SHAFTS);
 
 	public static TagPrefix brassEncasedShaft = new TagPrefix("brass_encased_shaft")
-			.itemTable(() -> Shafts.NEW_BRASS_ENCASED_SHAFTS);
+			.itemTable(() -> Shafts.BRASS_ENCASED_SHAFTS);
 
 	public static TagPrefix girderEncasedShaft = new TagPrefix("girder_encased_shaft")
-			.itemTable(() -> Girders.NEW_GIRDERS);
+			.itemTable(() -> Girders.GIRDERS);
 
 	public static TagPrefix cogwheel = new TagPrefix("cogwheel")
 			.defaultTagPath("cogwheels/%s")
 			.unformattedTagPath("cogwheels")
-			.itemTable(() -> Cogwheels.NEW_COGWHEELS)
+			.itemTable(() -> Cogwheels.COGWHEELS)
 			.materialAmount(M / 2)
 			.unificationEnabled(true)
 			.enableRecycling();
@@ -58,22 +58,22 @@ public class GreateTagPrefixes {
 	public static TagPrefix largeCogwheel = new TagPrefix("large_cogwheel")
 			.defaultTagPath("large_cogwheels/%s")
 			.unformattedTagPath("large_cogwheels")
-			.itemTable(() -> Cogwheels.NEW_LARGE_COGWHEELS)
+			.itemTable(() -> Cogwheels.LARGE_COGWHEELS)
 			.materialAmount(M / 2)
 			.unificationEnabled(true)
 			.enableRecycling();
 
 	public static TagPrefix andesiteEncasedCogwheel = new TagPrefix("andesite_encased_cogwheel")
-			.itemTable(() -> Cogwheels.NEW_ANDESITE_ENCASED_COGWHEELS);
+			.itemTable(() -> Cogwheels.ANDESITE_ENCASED_COGWHEELS);
 
 	public static TagPrefix brassEncasedCogwheel = new TagPrefix("brass_encased_cogwheel")
-			.itemTable(() -> Cogwheels.NEW_BRASS_ENCASED_COGWHEELS);
+			.itemTable(() -> Cogwheels.BRASS_ENCASED_COGWHEELS);
 
 	public static TagPrefix andesiteEncasedLargeCogwheel = new TagPrefix("andesite_encased_large_cogwheel")
-			.itemTable(() -> Cogwheels.NEW_ANDESITE_ENCASED_LARGE_COGWHEELS);
+			.itemTable(() -> Cogwheels.ANDESITE_ENCASED_LARGE_COGWHEELS);
 
 	public static TagPrefix brassEncasedLargeCogwheel = new TagPrefix("brass_encased_large_cogwheel")
-			.itemTable(() -> Cogwheels.NEW_BRASS_ENCASED_LARGE_COGWHEELS);
+			.itemTable(() -> Cogwheels.BRASS_ENCASED_LARGE_COGWHEELS);
 
 	public static void register() {}
 }

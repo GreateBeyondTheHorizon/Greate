@@ -37,28 +37,20 @@ public class Shafts {
     static ImmutableTable.Builder<TagPrefix, Material, BlockEntry<TieredEncasedShaftBlock>> ANDESITE_ENCASED_SHAFTS_BUILDER = ImmutableTable.builder();
     static ImmutableTable.Builder<TagPrefix, Material, BlockEntry<TieredEncasedShaftBlock>> BRASS_ENCASED_SHAFTS_BUILDER = ImmutableTable.builder();
     public static Table<TagPrefix, Material, BlockEntry<TieredShaftBlock>> NEW_SHAFTS;
-    public static Table<TagPrefix, Material, BlockEntry<TieredPoweredShaftBlock>> NEW_POWERED_SHAFTS;
-    public static Table<TagPrefix, Material, BlockEntry<TieredEncasedShaftBlock>> NEW_ANDESITE_ENCASED_SHAFTS;
-    public static Table<TagPrefix, Material, BlockEntry<TieredEncasedShaftBlock>> NEW_BRASS_ENCASED_SHAFTS;
+    public static Table<TagPrefix, Material, BlockEntry<TieredPoweredShaftBlock>> POWERED_SHAFTS;
+    public static Table<TagPrefix, Material, BlockEntry<TieredEncasedShaftBlock>> ANDESITE_ENCASED_SHAFTS;
+    public static Table<TagPrefix, Material, BlockEntry<TieredEncasedShaftBlock>> BRASS_ENCASED_SHAFTS;
 
     public static BlockEntry<TieredShaftBlock>[] SHAFTS;
-    public static BlockEntry<TieredPoweredShaftBlock>[] POWERED_SHAFTS;
-    public static BlockEntry<TieredEncasedShaftBlock>[] ANDESITE_ENCASED_SHAFTS;
-    public static BlockEntry<TieredEncasedShaftBlock>[] BRASS_ENCASED_SHAFTS;
 
     @SuppressWarnings({"unchecked"})
     public static void register() {
         REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
-        //i hate generics i hate generics i hate generics
-        //TODO: fix this after kinetic input/output boxes are done
         generateShafts();
         SHAFTS = NEW_SHAFTS.values().toArray(BlockEntry[]::new);
         generatePoweredShafts();
-        POWERED_SHAFTS = NEW_POWERED_SHAFTS.values().toArray(BlockEntry[]::new);
         generateAndesiteEncasedShafts();
-        ANDESITE_ENCASED_SHAFTS = NEW_ANDESITE_ENCASED_SHAFTS.values().toArray(BlockEntry[]::new);
         generateBrassEncasedShafts();
-        BRASS_ENCASED_SHAFTS = NEW_BRASS_ENCASED_SHAFTS.values().toArray(BlockEntry[]::new);
     }
 
     public static void generateShafts() {
@@ -100,7 +92,7 @@ public class Shafts {
                     .register();
             POWERED_SHAFTS_BUILDER.put(poweredShaft, mat, shaftEntry);
         }
-        NEW_POWERED_SHAFTS = POWERED_SHAFTS_BUILDER.build();
+        POWERED_SHAFTS = POWERED_SHAFTS_BUILDER.build();
     }
 
     public static void generateAndesiteEncasedShafts() {
@@ -119,7 +111,7 @@ public class Shafts {
                      .register();
              ANDESITE_ENCASED_SHAFTS_BUILDER.put(andesiteEncasedShaft, mat, encasedShaftEntry);
         }
-        NEW_ANDESITE_ENCASED_SHAFTS = ANDESITE_ENCASED_SHAFTS_BUILDER.build();
+        ANDESITE_ENCASED_SHAFTS = ANDESITE_ENCASED_SHAFTS_BUILDER.build();
     }
 
     public static void generateBrassEncasedShafts() {
@@ -138,6 +130,6 @@ public class Shafts {
                      .register();
              BRASS_ENCASED_SHAFTS_BUILDER.put(brassEncasedShaft, mat, encasedShaftEntry);
         }
-        NEW_BRASS_ENCASED_SHAFTS = BRASS_ENCASED_SHAFTS_BUILDER.build();
+        BRASS_ENCASED_SHAFTS = BRASS_ENCASED_SHAFTS_BUILDER.build();
     }
 }

@@ -38,12 +38,9 @@ import static com.gregtechceu.gtceu.data.recipe.GTCraftingComponents.*;
 import static electrolyte.greate.GreateValues.BM;
 import static electrolyte.greate.GreateValues.TM;
 import static electrolyte.greate.content.gtceu.machines.GreateMultiblockMachines.WIRE_COATING_FACTORY;
-import static electrolyte.greate.foundation.data.recipe.GreateCraftingComponents.COGWHEEL;
-import static electrolyte.greate.foundation.data.recipe.GreateCraftingComponents.SHAFT;
+import static electrolyte.greate.foundation.data.recipe.GreateCraftingComponents.*;
 import static electrolyte.greate.foundation.data.recipe.GreateRecipes.conversionCycle;
 import static electrolyte.greate.registry.Belts.BELT_CONNECTORS;
-import static electrolyte.greate.registry.Cogwheels.COGWHEELS;
-import static electrolyte.greate.registry.Cogwheels.LARGE_COGWHEELS;
 import static electrolyte.greate.registry.EncasedFans.FANS;
 import static electrolyte.greate.registry.Gearboxes.GEARBOXES;
 import static electrolyte.greate.registry.Gearboxes.VERTICAL_GEARBOXES;
@@ -68,7 +65,7 @@ public class GreateCraftingTableRecipes {
                     'S', new MaterialEntry(screw, tierMaterial),
                     'R', new MaterialEntry(ring, Rubber),
                     'P', AllBlocks.FLUID_PIPE,
-                    'C', COGWHEELS[tier]);
+                    'C', COGWHEEL.get(tier));
             if(tier != 0) {
                 VanillaRecipeHelper.addShapedRecipe(provider, MECHANICAL_PRESSES[tier].getId(), MECHANICAL_PRESSES[tier].asStack(),
                         "PSP", "CMC", "wBh",
@@ -85,7 +82,7 @@ public class GreateCraftingTableRecipes {
                         'W', new MaterialEntry(whisk, tierMaterial));
                 VanillaRecipeHelper.addShapedRecipe(provider, MILLSTONES[tier].getId(), MILLSTONES[tier].asStack(),
                         "CAC", "WHW", "wSh",
-                        'A', COGWHEELS[tier],
+                        'A', COGWHEEL.get(tier),
                         'W', Ingredient.of(ItemTags.WOODEN_SLABS),
                         'H', CASING.get(tier),
                         'C', CIRCUIT.get(tier),
@@ -134,7 +131,7 @@ public class GreateCraftingTableRecipes {
                 'W', new MaterialEntry(whisk, AndesiteAlloy));
         VanillaRecipeHelper.addShapedRecipe(provider, MILLSTONES[0].getId(), MILLSTONES[0].asStack(),
                 "CAC", "WHW", "wSh",
-                'A', COGWHEELS[0],
+                'A', COGWHEEL.get(0),
                 'C', new MaterialEntry(plate, AndesiteAlloy),
                 'H', CASING.get(0),
                 'W', Ingredient.of(ItemTags.WOODEN_SLABS),
@@ -151,7 +148,7 @@ public class GreateCraftingTableRecipes {
         VanillaRecipeHelper.addShapedRecipe(provider, AllItems.WRENCH.getId(), AllItems.WRENCH.asStack(),
                 "PP", "PC", " S",
                 'P', new MaterialEntry(plate, Gold),
-                'C', COGWHEELS[ULV],
+                'C', COGWHEEL.get(ULV),
                 'S', new MaterialEntry(rod, Wood));
         VanillaRecipeHelper.addShapedRecipe(provider, AllBlocks.CHUTE.getId(), AllBlocks.CHUTE.asStack(),
                 "PGP", "PCP", "wPh",
@@ -193,20 +190,20 @@ public class GreateCraftingTableRecipes {
                 " G ", " D ", "wCf",
                 'G', new MaterialEntry(plate, Gold),
                 'D', AllBlocks.DEPOT,
-                'C', COGWHEELS[LV]);
+                'C', COGWHEEL.get(LV));
         VanillaRecipeHelper.addShapelessRecipe(provider, AllBlocks.GEARSHIFT.getId(), AllBlocks.GEARSHIFT.asStack(),
                 AllBlocks.ANDESITE_CASING,
-                COGWHEELS[ULV],
+                COGWHEEL.get(ULV),
                 Blocks.REDSTONE_WIRE);
         VanillaRecipeHelper.addShapelessRecipe(provider, AllBlocks.SEQUENCED_GEARSHIFT.getId(), AllBlocks.SEQUENCED_GEARSHIFT.asStack(),
                 AllBlocks.BRASS_CASING,
-                COGWHEELS[ULV],
+                COGWHEEL.get(ULV),
                 AllItems.ELECTRON_TUBE);
         VanillaRecipeHelper.addShapedRecipe(provider, AllBlocks.GANTRY_CARRIAGE.getId(), AllBlocks.GANTRY_CARRIAGE.asStack(),
                 " S ", " O ", "wCf",
                 'S', ItemTags.WOODEN_SLABS,
                 'O', AllBlocks.ANDESITE_CASING,
-                'C', COGWHEELS[LV]);
+                'C', COGWHEEL.get(LV));
         VanillaRecipeHelper.addShapelessRecipe(provider, AllBlocks.CLUTCH.getId(), AllBlocks.CLUTCH.asStack(),
                 AllBlocks.ANDESITE_CASING,
                 SHAFT.get(ULV),
@@ -265,9 +262,9 @@ public class GreateCraftingTableRecipes {
         VanillaRecipeHelper.addShapedRecipe(provider, AllBlocks.CHAIN_CONVEYOR.getId(), new ItemStack(AllBlocks.CHAIN_CONVEYOR.asItem(), 2),
                 " A ", "ACA", " A ",
                 'A', AllBlocks.ANDESITE_CASING,
-                'C', LARGE_COGWHEELS[ULV]);
+                'C', LARGE_COGWHEEL.get(ULV));
         VanillaRecipeHelper.addShapelessRecipe(provider, AllBlocks.SEQUENCED_GEARSHIFT.getId(), AllBlocks.SEQUENCED_GEARSHIFT.asStack(),
-                AllBlocks.BRASS_CASING, COGWHEELS[ULV], AllItems.ELECTRON_TUBE);
+                AllBlocks.BRASS_CASING, COGWHEEL.get(ULV), AllItems.ELECTRON_TUBE);
 
         if(ConfigHolder.INSTANCE.recipes.hardToolArmorRecipes) {
             VanillaRecipeHelper.addShapedRecipe(provider, AllItems.COPPER_DIVING_HELMET.getId(), AllItems.COPPER_DIVING_HELMET.asStack(),
