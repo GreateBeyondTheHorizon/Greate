@@ -32,8 +32,8 @@ public class Gearboxes {
 
     static ImmutableTable.Builder<TagPrefix, Material, BlockEntry<TieredGearboxBlock>> GEARBOXES_BUILDER = ImmutableTable.builder();
     static ImmutableTable.Builder<TagPrefix, Material, ItemEntry<TieredVerticalGearboxItem>> VERTICAL_GEARBOXES_BUILDER = ImmutableTable.builder();
-    public static Table<TagPrefix, Material, BlockEntry<TieredGearboxBlock>> NEW_GEARBOXES;
-    public static Table<TagPrefix, Material, ItemEntry<TieredVerticalGearboxItem>> NEW_VERTICAL_GEARBOXES;
+    public static Table<TagPrefix, Material, BlockEntry<TieredGearboxBlock>> GEARBOXES;
+    public static Table<TagPrefix, Material, ItemEntry<TieredVerticalGearboxItem>> VERTICAL_GEARBOXES;
 
     public static void register() {
         REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
@@ -62,7 +62,7 @@ public class Gearboxes {
                     .register();
             GEARBOXES_BUILDER.put(gearbox, mat, gearboxEntry);
         }
-        NEW_GEARBOXES = GEARBOXES_BUILDER.build();
+        GEARBOXES = GEARBOXES_BUILDER.build();
     }
 
     public static void generateVerticalGearboxes() {
@@ -75,6 +75,6 @@ public class Gearboxes {
                     .register();
             VERTICAL_GEARBOXES_BUILDER.put(verticalGearbox, mat, gearboxEntry);
         }
-        NEW_VERTICAL_GEARBOXES = VERTICAL_GEARBOXES_BUILDER.build();
+        VERTICAL_GEARBOXES = VERTICAL_GEARBOXES_BUILDER.build();
     }
 }

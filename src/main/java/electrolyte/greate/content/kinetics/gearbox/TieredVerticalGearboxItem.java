@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 import java.util.Map;
 
-import static electrolyte.greate.registry.Gearboxes.NEW_GEARBOXES;
+import static electrolyte.greate.registry.Gearboxes.GEARBOXES;
 import static electrolyte.greate.registry.GreateTagPrefixes.gearbox;
 
 public class TieredVerticalGearboxItem extends BlockItem {
@@ -26,7 +26,7 @@ public class TieredVerticalGearboxItem extends BlockItem {
     private Material material;
 
     public TieredVerticalGearboxItem(Properties pProperties, Material material) {
-        super(NEW_GEARBOXES.column(material).get(gearbox).get(), pProperties);
+        super(GEARBOXES.column(material).get(gearbox).get(), pProperties);
         this.material = material;
     }
 
