@@ -18,12 +18,10 @@ public class GreateRecipes {
 
         for(Material material : GTCEuAPI.materialManager.getRegisteredMaterials()) {
             if(material.hasFlag(MaterialFlags.NO_UNIFICATION)) continue;
-            GreateAlloySmelterRecipes.registerMaterialRecipes(provider, material);
             GreateCraftingTableRecipes.registerMaterialRecipes(provider, material);
             GreateCuttingMachineRecipes.registerMaterialRecipes(provider, material);
             GreateDeployerRecipes.registerMaterialRecipes(provider, material);
-            GreateMechanicalMixingRecipes.registerMaterialRecipes(provider, material);
-            GreateSawingRecipes.registerMaterialRecipes(provider, material);
+            GreateMixingRecipes.registerMaterialRecipes(provider, material);
             GreateSequencedAssemblyRecipes.registerMaterialRecipes(provider, material);
             GreateSpoutRecipes.registerCableRecipes(provider, material);
         }

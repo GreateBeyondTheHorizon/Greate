@@ -103,7 +103,7 @@ public class GreateMaterials {
 		Darmstadtium.setProperty(PropertyKey.TOOL, ToolProperty.Builder.of(50.0F, 15.0F, 5120, 5, BUZZSAW).build());
 		RhodiumPlatedPalladium.setProperty(PropertyKey.TOOL, ToolProperty.Builder.of(35.0F, 10.0F, 2560, 4, BUZZSAW).build());
 
-		alloy.addSecondaryMaterial(new MaterialStack(Andesite, M * 2));
+		alloy.addSecondaryMaterial(new MaterialStack(Andesite, M));
 		alloy.setIgnored(WroughtIron, () -> AllItems.ANDESITE_ALLOY);
 		block.setIgnored(AndesiteAlloy, () -> AllBlocks.ANDESITE_ALLOY_BLOCK);
 		ingot.setIgnored(AndesiteAlloy, () -> AllItems.ANDESITE_ALLOY);

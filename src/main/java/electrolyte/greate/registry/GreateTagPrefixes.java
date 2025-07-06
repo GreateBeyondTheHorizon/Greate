@@ -20,7 +20,7 @@ public class GreateTagPrefixes {
 	public static TagPrefix alloy = new TagPrefix("alloy")
 			.defaultTagPath("alloys/%s")
 			.unformattedTagPath("alloys")
-			.materialAmount(M * 2)
+			.materialAmount(M)
 			.materialIconType(GreateMaterialIconTypes.alloy)
 			.unificationEnabled(true)
 			.generateItem(true)
@@ -31,7 +31,7 @@ public class GreateTagPrefixes {
 			.defaultTagPath("shafts/%s")
 			.unformattedTagPath("shafts")
 			.itemTable(() -> Shafts.NEW_SHAFTS)
-			.materialAmount(M / 2)
+			.materialAmount(M / 4)
 			.unificationEnabled(true)
 			.enableRecycling();
 
@@ -51,7 +51,7 @@ public class GreateTagPrefixes {
 			.defaultTagPath("cogwheels/%s")
 			.unformattedTagPath("cogwheels")
 			.itemTable(() -> Cogwheels.COGWHEELS)
-			.materialAmount(M / 2)
+			.materialAmount(M / 4)
 			.unificationEnabled(true)
 			.enableRecycling();
 
@@ -59,7 +59,7 @@ public class GreateTagPrefixes {
 			.defaultTagPath("large_cogwheels/%s")
 			.unformattedTagPath("large_cogwheels")
 			.itemTable(() -> Cogwheels.LARGE_COGWHEELS)
-			.materialAmount(M / 2)
+			.materialAmount(M / 4)
 			.unificationEnabled(true)
 			.enableRecycling();
 
@@ -78,16 +78,16 @@ public class GreateTagPrefixes {
 	public static TagPrefix gearbox = new TagPrefix("gearbox")
 			.defaultTagPath("gearboxes/%s")
 			.unformattedTagPath("gearboxes")
-			.itemTable(() -> Gearboxes.NEW_GEARBOXES)
-			.materialAmount(M * 2)
+			.itemTable(() -> Gearboxes.GEARBOXES)
+			.materialAmount(M)
 			.unificationEnabled(true)
 			.enableRecycling();
 
 	public static TagPrefix verticalGearbox = new TagPrefix("vertical_gearbox")
 			.defaultTagPath("vertical_gearboxes/%s")
 			.unformattedTagPath("vertical_gearboxes")
-			.itemTable(() -> Gearboxes.NEW_VERTICAL_GEARBOXES)
-			.materialAmount(M * 2)
+			.itemTable(() -> Gearboxes.VERTICAL_GEARBOXES)
+			.materialAmount(M)
 			.unificationEnabled(true)
 			.enableRecycling();
 

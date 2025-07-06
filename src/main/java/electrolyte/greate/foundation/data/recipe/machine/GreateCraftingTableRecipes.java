@@ -328,9 +328,9 @@ public class GreateCraftingTableRecipes {
 
         //<!!! [ONLY KINETIC RELATED RECIPES BELOW THIS LINE] !!!>
         if(!material.hasProperty(GreatePropertyKeys.KINETIC)) return;
-        VanillaRecipeHelper.addShapedRecipe(provider, material.getName() + "_shaft", ChemicalHelper.get(shaft, material).copyWithCount(2),
-                    "s ", " P",
-                    'P', new MaterialEntry(plate, material));
+        VanillaRecipeHelper.addShapedRecipe(provider, material.getName() + "_shaft", ChemicalHelper.get(shaft, material).copyWithCount(4),
+                    "s ", " A",
+                    'A', new MaterialEntry(alloy, material));
 
         if(material.hasProperty(GreatePropertyKeys.COGWHEEL)) {
             CogwheelProperty prop = material.getProperty(GreatePropertyKeys.COGWHEEL);
