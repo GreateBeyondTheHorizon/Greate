@@ -47,7 +47,7 @@ minecraft {
             property 'forge.enabledGameTestNamespaces', 'greate'
         }
         data {
-            args '--all', '--mod', 'greate', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing-mod', 'create'
+            args '--all', '--mod', 'greate', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing-mod', 'create', '--existing-mod', 'gtceu'
         }
     }
 }
