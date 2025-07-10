@@ -55,34 +55,34 @@ public class GreateCraftingTableRecipes {
             Material tierMaterial = TM[tier];
 
             // Machines
-            VanillaRecipeHelper.addShapedRecipe(provider, MECHANICAL_PUMPS[tier].getId(), MECHANICAL_PUMPS[tier].asStack(),
+            VanillaRecipeHelper.addShapedRecipe(provider, true, MECHANICAL_PUMPS[tier].getId(), MECHANICAL_PUMPS[tier].asStack(),
                     " RS", "wPC", " RS",
                     'S', new MaterialEntry(screw, tierMaterial),
                     'R', new MaterialEntry(ring, Rubber),
                     'P', AllBlocks.FLUID_PIPE,
                     'C', COGWHEEL.get(tier));
             if(tier != 0) {
-                VanillaRecipeHelper.addShapedRecipe(provider, MECHANICAL_PRESSES[tier].getId(), MECHANICAL_PRESSES[tier].asStack(),
+                VanillaRecipeHelper.addShapedRecipe(provider, true, MECHANICAL_PRESSES[tier].getId(), MECHANICAL_PRESSES[tier].asStack(),
                         "PSP", "CMC", "wBh",
                         'P', new MaterialEntry(plate, tierMaterial),
                         'S', SHAFT.get(tier),
                         'C', CIRCUIT.get(tier),
                         'M', CASING.get(tier),
                         'B', new MaterialEntry(block, tierMaterial));
-                VanillaRecipeHelper.addShapedRecipe(provider, MECHANICAL_MIXERS[tier].getId(), MECHANICAL_MIXERS[tier].asStack(),
+                VanillaRecipeHelper.addShapedRecipe(provider, true, MECHANICAL_MIXERS[tier].getId(), MECHANICAL_MIXERS[tier].asStack(),
                         " S ", "CMC", "wWh",
                         'S', SHAFT.get(tier),
                         'C', CIRCUIT.get(tier),
                         'M', CASING.get(tier),
                         'W', new MaterialEntry(whisk, tierMaterial));
-                VanillaRecipeHelper.addShapedRecipe(provider, MILLSTONES[tier].getId(), MILLSTONES[tier].asStack(),
+                VanillaRecipeHelper.addShapedRecipe(provider, true, MILLSTONES[tier].getId(), MILLSTONES[tier].asStack(),
                         "CAC", "WHW", "wSh",
                         'A', COGWHEEL.get(tier),
                         'W', Ingredient.of(ItemTags.WOODEN_SLABS),
                         'H', CASING.get(tier),
                         'C', CIRCUIT.get(tier),
                         'S', SHAFT.get(tier));
-                VanillaRecipeHelper.addShapedRecipe(provider, FANS[tier].getId(), FANS[tier].asStack(),
+                VanillaRecipeHelper.addShapedRecipe(provider, true, FANS[tier].getId(), FANS[tier].asStack(),
                         " S ", "CMC", "wRh",
                         'S', SHAFT.get(tier),
                         'C', CIRCUIT.get(tier),
@@ -90,7 +90,7 @@ public class GreateCraftingTableRecipes {
                         'R', new MaterialEntry(rotor, tierMaterial));
 
                 if(tier != 9) {
-                    VanillaRecipeHelper.addShapedRecipe(provider, SAWS[tier].getId(), SAWS[tier].asStack(),
+                    VanillaRecipeHelper.addShapedRecipe(provider, true, SAWS[tier].getId(), SAWS[tier].asStack(),
                             "GSG", "MCM", "OHO",
                             'G', CIRCUIT.get(tier),
                             'S', new MaterialEntry(toolHeadBuzzSaw, tierMaterial),
@@ -103,35 +103,35 @@ public class GreateCraftingTableRecipes {
         }
 
         // ULS machines
-        VanillaRecipeHelper.addShapedRecipe(provider, SAWS[0].getId(), SAWS[0].asStack(),
+        VanillaRecipeHelper.addShapedRecipe(provider, true, SAWS[0].getId(), SAWS[0].asStack(),
                 "GSG", "OCO", "MHM",
                 'G', new MaterialEntry(TagPrefix.pipeSmallFluid, GTMaterials.TinAlloy),
                 'S', new MaterialEntry(toolHeadBuzzSaw, AndesiteAlloy),
                 'M', new MaterialEntry(plate, WroughtIron),
                 'C', CASING.get(ULV), 'H', SHAFT.get(ULV),
                 'O', new MaterialEntry(plate, AndesiteAlloy));
-        VanillaRecipeHelper.addShapedRecipe(provider, MECHANICAL_PRESSES[0].getId(), MECHANICAL_PRESSES[0].asStack(),
+        VanillaRecipeHelper.addShapedRecipe(provider, true, MECHANICAL_PRESSES[0].getId(), MECHANICAL_PRESSES[0].asStack(),
                 "PSP", "CMC", "wBh",
                 'P', new MaterialEntry(plate, AndesiteAlloy),
                 'S', SHAFT.get(0),
                 'C', new MaterialEntry(plate, WroughtIron),
                 'M', CASING.get(0),
                 'B', new MaterialEntry(block, TM[0]));
-        VanillaRecipeHelper.addShapedRecipe(provider, MECHANICAL_MIXERS[0].getId(), MECHANICAL_MIXERS[0].asStack(),
+        VanillaRecipeHelper.addShapedRecipe(provider, true, MECHANICAL_MIXERS[0].getId(), MECHANICAL_MIXERS[0].asStack(),
                 "PSP", "CMC", "wWh",
                 'P', new MaterialEntry(plate, AndesiteAlloy),
                 'S', SHAFT.get(0),
                 'C', new MaterialEntry(plate, WroughtIron),
                 'M', CASING.get(0),
                 'W', new MaterialEntry(whisk, AndesiteAlloy));
-        VanillaRecipeHelper.addShapedRecipe(provider, MILLSTONES[0].getId(), MILLSTONES[0].asStack(),
+        VanillaRecipeHelper.addShapedRecipe(provider, true, MILLSTONES[0].getId(), MILLSTONES[0].asStack(),
                 "CAC", "WHW", "wSh",
                 'A', COGWHEEL.get(0),
                 'C', new MaterialEntry(plate, AndesiteAlloy),
                 'H', CASING.get(0),
                 'W', Ingredient.of(ItemTags.WOODEN_SLABS),
                 'S', SHAFT.get(0));
-        VanillaRecipeHelper.addShapedRecipe(provider, FANS[0].getId(), FANS[0].asStack(),
+        VanillaRecipeHelper.addShapedRecipe(provider, true, FANS[0].getId(), FANS[0].asStack(),
                 "ASA", "CMC", "wRh",
                 'S', SHAFT.get(0),
                 'A', new MaterialEntry(plate, AndesiteAlloy),
@@ -279,7 +279,7 @@ public class GreateCraftingTableRecipes {
         }
 
         if(GTCEuAPI.isHighTier()) {
-            VanillaRecipeHelper.addShapedRecipe(provider, SAWS[9].getId(), SAWS[9].asStack(),
+            VanillaRecipeHelper.addShapedRecipe(provider, true, SAWS[9].getId(), SAWS[9].asStack(),
                     "GSG", "MCM", "OHO",
                     'G', CIRCUIT.get(UHV),
                     'S', new MaterialEntry(toolHeadBuzzSaw, Neutronium),
@@ -345,7 +345,7 @@ public class GreateCraftingTableRecipes {
                     'S', new MaterialEntry(shaft, material),
                     'P', new MaterialEntry(plate, previousTierMaterial));
 
-            VanillaRecipeHelper.addShapedRecipe(provider ,material.getName() + "_large_cogwheel_from_little", ChemicalHelper.get(largeCogwheel, material),
+            VanillaRecipeHelper.addShapedRecipe(provider,material.getName() + "_large_cogwheel_from_little", ChemicalHelper.get(largeCogwheel, material),
                     "CP", "f ",
                     'C', new MaterialEntry(cogwheel, material),
                     'P', new MaterialEntry(plate, previousTierMaterial));
