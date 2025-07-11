@@ -1,5 +1,6 @@
 package electrolyte.greate.content.kinetics.belt;
 
+import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
@@ -58,8 +59,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import static electrolyte.greate.registry.Belts.BELT_CONNECTORS;
-import static electrolyte.greate.registry.Shafts.SHAFTS;
+import static electrolyte.greate.GreateValues.TM;
+import static electrolyte.greate.registry.GreateTagPrefixes.beltConnector;
+import static electrolyte.greate.registry.GreateTagPrefixes.shaft;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.AXIS;
 
 public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredBelt {
@@ -73,7 +75,7 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
 
     @Override
     public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
-        return BELT_CONNECTORS[this.tier / 2].asItem().getDefaultInstance();
+        return ChemicalHelper.get(beltConnector, beltMaterial);
     }
 
     @Override
@@ -83,9 +85,9 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
         if(be instanceof TieredBeltBlockEntity tbe) {
             if(tbe.hasPulley()) {
                 drops.removeIf(s -> s.is(AllBlocks.SHAFT.asItem()));
-                drops.addAll(Block.byItem(SHAFTS[tier].asItem()).getDrops(pState, pBuilder));
+                drops.add(ChemicalHelper.get(shaft, TM[tier]));
             }
-            drops.add(BELT_CONNECTORS[tier / 2].asItem().getDefaultInstance());
+            drops.add(ChemicalHelper.get(beltConnector, beltMaterial));
         }
         return drops;
     }
@@ -148,7 +150,7 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
                 pLevel.playSound(null, pPos, SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.2F, 1F + new Random().nextFloat());
             }
         }
-        if(isShaft && heldItem.is(SHAFTS[tier].asItem())) {
+        if(isShaft && heldItem.is(ChemicalHelper.get(shaft, TM[tier]).getItem())) {
             if(pState.getValue(PART) != BeltPart.MIDDLE) return InteractionResult.PASS;
             if(pLevel.isClientSide) return InteractionResult.SUCCESS;
             if(!pPlayer.isCreative()) heldItem.shrink(1);
@@ -186,7 +188,7 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
                 return InteractionResult.SUCCESS;
             KineticBlockEntity.switchToBlockState(level, pos, state.setValue(PART, BeltPart.MIDDLE));
             if(player != null && ! player.isCreative()) {
-                player.getInventory().placeItemBackInInventory(SHAFTS[tier].get().asItem().getDefaultInstance());
+                player.getInventory().placeItemBackInInventory(ChemicalHelper.get(shaft, TM[tier]));
             }
             return InteractionResult.SUCCESS;
         }
@@ -262,7 +264,7 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
                 hasPulley = beltBE.hasPulley();
             }
 
-            BlockState shaftState = SHAFTS[tier].get().defaultBlockState().setValue(AXIS, getRotationAxis(currentState));
+            BlockState shaftState = ChemicalHelper.getBlock(shaft, TM[tier]).defaultBlockState().setValue(AXIS, getRotationAxis(currentState));
             pLevel.removeBlockEntity(currentPos);
             pLevel.setBlock(currentPos, ProperWaterloggedBlock.withWater(pLevel, hasPulley ? shaftState : Blocks.AIR.defaultBlockState(), currentPos), 3);
             pLevel.levelEvent(2001, currentPos, Block.getId(currentState));
@@ -315,9 +317,9 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
     public ItemRequirement getRequiredItems(BlockState state, BlockEntity blockEntity) {
         List<ItemStack> required = new ArrayList<>();
         if(state.getValue(PART) != BeltPart.MIDDLE)
-            required.add(SHAFTS[tier].get().asItem().getDefaultInstance());
+            required.add(ChemicalHelper.get(shaft, TM[tier]));
         if(state.getValue(PART) == BeltPart.START)
-            required.add(BELT_CONNECTORS[tier / 2].get().getDefaultInstance());
+            required.add(ChemicalHelper.get(beltConnector, beltMaterial));
         if(required.isEmpty())
             return ItemRequirement.NONE;
         return new ItemRequirement(ItemUseType.CONSUME, required);

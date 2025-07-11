@@ -13,8 +13,8 @@ public class GreateTagPrefixes {
 			.materialAmount(M * 7)
 			.materialIconType(GreateMaterialIconTypes.whisk)
 			.unificationEnabled(true)
-			.generateItem(true)
 			.enableRecycling()
+			.generateItem(true)
 			.generationCondition(m -> m.hasFlag(GreateMaterialFlags.GENERATE_WHISK));
 
 	public static TagPrefix alloy = new TagPrefix("alloy")
@@ -23,8 +23,8 @@ public class GreateTagPrefixes {
 			.materialAmount(M)
 			.materialIconType(GreateMaterialIconTypes.alloy)
 			.unificationEnabled(true)
-			.generateItem(true)
 			.enableRecycling()
+			.generateItem(true)
 			.generationCondition(m -> m.hasFlag(GreateMaterialFlags.GENERATE_ALLOY));
 
 	public static TagPrefix shaft = new TagPrefix("shaft")
@@ -88,6 +88,14 @@ public class GreateTagPrefixes {
 			.unformattedTagPath("vertical_gearboxes")
 			.itemTable(() -> Gearboxes.VERTICAL_GEARBOXES)
 			.materialAmount(M)
+			.unificationEnabled(true)
+			.enableRecycling();
+
+	public static TagPrefix beltConnector = new TagPrefix("belt_connector")
+			.defaultTagPath("belt_connectors/%s")
+			.unformattedTagPath("belt_connectors")
+			.itemTable(() -> Belts.NEW_BELT_CONNECTORS)
+			.materialAmount(M * 6)
 			.unificationEnabled(true)
 			.enableRecycling();
 

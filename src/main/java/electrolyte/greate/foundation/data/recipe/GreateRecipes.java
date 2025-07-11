@@ -12,6 +12,7 @@ public class GreateRecipes {
     public static void register(Consumer<FinishedRecipe> provider) {
         GreateChemicalBath.register(provider);
         GreateCraftingTableRecipes.register(provider);
+        GreateCuttingMachineRecipes.register(provider);
         GreateMillstoneRecipes.register(provider);
         GreateMechanicalCraftingRecipes.register(provider);
         GreateSequencedAssemblyRecipes.register(provider);

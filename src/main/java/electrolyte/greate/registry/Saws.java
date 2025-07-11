@@ -1,5 +1,6 @@
 package electrolyte.greate.registry;
 
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.simibubi.create.AllTags.AllItemTags;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
@@ -14,10 +15,10 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.level.material.MapColor;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
+import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
 import static com.simibubi.create.api.behaviour.movement.MovementBehaviour.movementBehaviour;
 import static electrolyte.greate.Greate.REGISTRATE;
-import static electrolyte.greate.GreateValues.TM;
-import static electrolyte.greate.registry.Shafts.SHAFTS;
+import static electrolyte.greate.registry.GreateMaterials.AndesiteAlloy;
 
 public class Saws {
 
@@ -37,21 +38,21 @@ public class Saws {
     public static void register() {
         REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
 
-        SAWS[ULV] = ANDESITE_SAW = saw(ULV, 1.0);
-        SAWS[LV] = STEEL_SAW = saw(LV, 2.0);
-        SAWS[MV] = ALUMINIUM_SAW = saw(MV, 3.0);
-        SAWS[HV] = STAINLESS_STEEL_SAW = saw(HV, 4.0);
-        SAWS[EV] = TITANIUM_SAW = saw(EV, 5.0);
-        SAWS[IV] = TUNGSTENSTEEL_SAW = saw(IV, 6.0);
-        SAWS[LuV] = PALLADIUM_SAW = saw(LuV, 7.0);
-        SAWS[ZPM] = NAQUADAH_SAW = saw(ZPM, 8.0);
-        SAWS[UV] = DARMSTADTIUM_SAW = saw(UV, 9.0);
-        SAWS[UHV] = NEUTRONIUM_SAW = saw(UHV, 10.0);
+        SAWS[ULV] = ANDESITE_SAW = saw(ULV, 1.0, AndesiteAlloy);
+        SAWS[LV] = STEEL_SAW = saw(LV, 2.0, Steel);
+        SAWS[MV] = ALUMINIUM_SAW = saw(MV, 3.0, Aluminium);
+        SAWS[HV] = STAINLESS_STEEL_SAW = saw(HV, 4.0, StainlessSteel);
+        SAWS[EV] = TITANIUM_SAW = saw(EV, 5.0, Titanium);
+        SAWS[IV] = TUNGSTENSTEEL_SAW = saw(IV, 6.0, TungstenSteel);
+        SAWS[LuV] = PALLADIUM_SAW = saw(LuV, 7.0, RhodiumPlatedPalladium);
+        SAWS[ZPM] = NAQUADAH_SAW = saw(ZPM, 8.0, NaquadahAlloy);
+        SAWS[UV] = DARMSTADTIUM_SAW = saw(UV, 9.0, Darmstadtium);
+        SAWS[UHV] = NEUTRONIUM_SAW = saw(UHV, 10.0, Neutronium);
     }
 
-    public static BlockEntry<TieredSawBlock> saw(int tier, double stressImpact) {
+    public static BlockEntry<TieredSawBlock> saw(int tier, double stressImpact, Material mat) {
         return REGISTRATE
-                .block(TM[tier].getName() + "_mechanical_saw", p -> new TieredSawBlock(p, SHAFTS[tier].get()))
+                .block(mat.getName() + "_mechanical_saw", p -> new TieredSawBlock(p, mat))
                 .initialProperties(SharedProperties::stone)
                 .addLayer(() -> RenderType::cutoutMipped)
                 .properties(p -> p.mapColor(MapColor.PODZOL))

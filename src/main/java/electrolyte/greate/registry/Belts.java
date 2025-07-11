@@ -1,6 +1,11 @@
 package electrolyte.greate.registry;
 
+import com.google.common.collect.ImmutableTable;
+import com.google.common.collect.Table;
+import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
+import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
+import com.gregtechceu.gtceu.common.data.GTItems;
 import com.simibubi.create.AllDisplaySources;
 import com.simibubi.create.content.kinetics.belt.BeltModel;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -8,26 +13,21 @@ import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import electrolyte.greate.Greate;
+import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
 import electrolyte.greate.content.kinetics.belt.TieredBeltBlock;
 import electrolyte.greate.content.kinetics.belt.TieredBeltGenerator;
 import electrolyte.greate.content.kinetics.belt.item.TieredBeltConnectorItem;
-import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
 import electrolyte.greate.infrastructure.config.GStress;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.MapColor;
-
-import java.util.List;
 
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
 import static com.simibubi.create.api.behaviour.display.DisplaySource.displaySource;
 import static com.tterrag.registrate.providers.RegistrateLangProvider.toEnglishName;
 import static electrolyte.greate.Greate.REGISTRATE;
 import static electrolyte.greate.GreateValues.TM;
-import static electrolyte.greate.registry.Shafts.SHAFTS;
+import static electrolyte.greate.registry.GreateTagPrefixes.beltConnector;
 
 public class Belts {
 
@@ -44,13 +44,8 @@ public class Belts {
             POLYBENZIMIDAZOLE_BELT_DARMSTADTIUM,
             POLYBENZIMIDAZOLE_BELT_NEUTRONIUM;
 
-    public static final ItemEntry<TieredBeltConnectorItem>[] BELT_CONNECTORS = new ItemEntry[5];
-    public static ItemEntry<TieredBeltConnectorItem>
-            RUBBER_BELT_CONNECTOR,
-            SILICONE_RUBBER_BELT_CONNECTOR,
-            POLYETHYLENE_BELT_CONNECTOR,
-            POLYTETRAFLUOROETHYLENE_BELT_CONNECTOR,
-            POLYBENZIMIDAZOLE_BELT_CONNECTOR;
+    static ImmutableTable.Builder<TagPrefix, Material, ItemEntry<TieredBeltConnectorItem>> BELT_CONNECTORS_BUILDER = ImmutableTable.builder();
+    public static Table<TagPrefix, Material, ItemEntry<TieredBeltConnectorItem>> NEW_BELT_CONNECTORS;
 
     public static void register() {
         REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
@@ -66,11 +61,7 @@ public class Belts {
         BELTS[8] = POLYBENZIMIDAZOLE_BELT_DARMSTADTIUM = belt(Polybenzimidazole, 8);
         BELTS[9] = POLYBENZIMIDAZOLE_BELT_NEUTRONIUM = belt(Polybenzimidazole, 9);
 
-        BELT_CONNECTORS[0] = RUBBER_BELT_CONNECTOR = beltConnector("rubber_belt_connector", List.of(SHAFTS[0], SHAFTS[1]), Rubber);
-        BELT_CONNECTORS[1] = SILICONE_RUBBER_BELT_CONNECTOR = beltConnector("silicone_rubber_belt_connector", List.of(SHAFTS[2], SHAFTS[3]), SiliconeRubber);
-        BELT_CONNECTORS[2] = POLYETHYLENE_BELT_CONNECTOR = beltConnector("polyethylene_belt_connector", List.of(SHAFTS[4], SHAFTS[5]), Polyethylene);
-        BELT_CONNECTORS[3] = POLYTETRAFLUOROETHYLENE_BELT_CONNECTOR = beltConnector("polytetrafluoroethylene_belt_connector", List.of(SHAFTS[6], SHAFTS[7]), Polytetrafluoroethylene);
-        BELT_CONNECTORS[4] = POLYBENZIMIDAZOLE_BELT_CONNECTOR = beltConnector("polybenzimidazole_belt_connector", List.of(SHAFTS[8], SHAFTS[9]), Polybenzimidazole);
+        generateBeltConnectors();
     }
 
     public static BlockEntry<TieredBeltBlock> belt(Material material, int tier) {
@@ -92,11 +83,17 @@ public class Belts {
                 .register();
     }
 
-    public static ItemEntry<TieredBeltConnectorItem> beltConnector(String name, List<BlockEntry<TieredShaftBlock>> validShafts, Material beltMaterial) {
-        return REGISTRATE
-                .item(name, p -> new TieredBeltConnectorItem(p, validShafts))
+    private static void generateBeltConnectors() {
+        for(Material material : GTCEuAPI.materialManager.getRegisteredMaterials()) {
+            if(material.hasProperty(GreatePropertyKeys.BELT)) {
+                var beltEntry = REGISTRATE
+                .item(material.getName() + "_belt_connector", p -> new TieredBeltConnectorItem(p, material))
+                .transform(GTItems.unificationItem(beltConnector, material))
                 //.transform(p -> p.properties(b -> b.food(new FoodProperties.Builder().alwaysEat().nutrition(1).saturationMod(0.1F).effect(() -> new MobEffectInstance(MobEffects.POISON, 100, 0, true, true), 1.0F).build()))) TODO: disabled b/c quarktech armor auto eats
-                .onRegister(c -> c.setBeltMaterial(beltMaterial))
                 .register();
+                BELT_CONNECTORS_BUILDER.put(beltConnector, material, beltEntry);
+            }
+        }
+        NEW_BELT_CONNECTORS = BELT_CONNECTORS_BUILDER.build();
     }
 }

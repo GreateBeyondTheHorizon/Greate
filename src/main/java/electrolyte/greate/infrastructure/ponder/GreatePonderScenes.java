@@ -10,7 +10,7 @@ import electrolyte.greate.infrastructure.ponder.scenes.TieredFanScenes;
 import net.createmod.ponder.api.registration.PonderSceneRegistrationHelper;
 import net.minecraft.resources.ResourceLocation;
 
-import static electrolyte.greate.registry.Belts.BELT_CONNECTORS;
+import static electrolyte.greate.registry.Belts.NEW_BELT_CONNECTORS;
 import static electrolyte.greate.registry.Cogwheels.COGWHEELS;
 import static electrolyte.greate.registry.Cogwheels.LARGE_COGWHEELS;
 import static electrolyte.greate.registry.CrushingWheels.CRUSHING_WHEELS;
@@ -38,7 +38,7 @@ public class GreatePonderScenes {
                 .addStoryBoard(Create.asResource("cog/speedup"), KineticsScenes::cogsSpeedUp)
                 .addStoryBoard(Create.asResource("cog/large"), KineticsScenes::largeCogAsRelay, AllCreatePonderTags.KINETIC_RELAYS)
                 .addStoryBoard(Create.asResource("cog/encasing"), KineticsScenes::cogwheelsCanBeEncased);
-        HELPER.forComponents(BELT_CONNECTORS)
+        HELPER.forComponents(NEW_BELT_CONNECTORS.values())
                 .addStoryBoard(Create.asResource("belt/connect"), BeltScenes::beltConnector, AllCreatePonderTags.KINETIC_RELAYS)
                 .addStoryBoard(Create.asResource("belt/directions"), BeltScenes::directions)
                 .addStoryBoard(Create.asResource("belt/transport"), BeltScenes::transport, AllCreatePonderTags.LOGISTICS)

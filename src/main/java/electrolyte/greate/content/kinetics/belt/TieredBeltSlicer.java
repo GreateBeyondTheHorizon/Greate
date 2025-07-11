@@ -1,5 +1,6 @@
 package electrolyte.greate.content.kinetics.belt;
 
+import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.belt.*;
@@ -29,8 +30,9 @@ import net.minecraft.world.phys.Vec3;
 import java.util.List;
 import java.util.Optional;
 
-import static electrolyte.greate.registry.Belts.BELT_CONNECTORS;
-import static electrolyte.greate.registry.Shafts.SHAFTS;
+import static electrolyte.greate.GreateValues.TM;
+import static electrolyte.greate.registry.GreateTagPrefixes.beltConnector;
+import static electrolyte.greate.registry.GreateTagPrefixes.shaft;
 
 public class TieredBeltSlicer {
 
@@ -131,8 +133,8 @@ public class TieredBeltSlicer {
                 KineticBlockEntity.switchToBlockState(level, next, state.setValue(BeltBlock.CASING, segmentBE != null && segmentBE.casing != CasingType.NONE).setValue(BeltBlock.PART, BeltPart.MIDDLE));
                 if(!creative) {
                     int tier = ((TieredBeltBlockEntity) controllerBE).getTier();
-                    player.getInventory().placeItemBackInInventory(SHAFTS[tier].asStack(2));
-                    player.getInventory().placeItemBackInInventory(BELT_CONNECTORS[tier / 2].asStack());
+                    player.getInventory().placeItemBackInInventory(ChemicalHelper.get(shaft, TM[tier]).copyWithCount(2));
+                    player.getInventory().placeItemBackInInventory(ChemicalHelper.get(beltConnector, beltMaterial));
                 }
 
                 BlockPos search = controllerBE.getBlockPos();

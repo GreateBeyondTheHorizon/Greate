@@ -7,9 +7,12 @@ import com.gregtechceu.gtceu.api.data.chemical.material.stack.MaterialStack;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import electrolyte.greate.Greate;
+import electrolyte.greate.content.gtceu.material.BeltProperty;
 import electrolyte.greate.content.gtceu.material.CogwheelProperty;
 import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
 import electrolyte.greate.content.gtceu.material.KineticProperty;
+
+import java.util.List;
 
 import static com.gregtechceu.gtceu.api.GTValues.M;
 import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags.*;
@@ -102,6 +105,12 @@ public class GreateMaterials {
 
 		Darmstadtium.setProperty(PropertyKey.TOOL, ToolProperty.Builder.of(50.0F, 15.0F, 5120, 5, BUZZSAW).build());
 		RhodiumPlatedPalladium.setProperty(PropertyKey.TOOL, ToolProperty.Builder.of(35.0F, 10.0F, 2560, 4, BUZZSAW).build());
+
+		Rubber.setProperty(GreatePropertyKeys.BELT, new BeltProperty(List.of(AndesiteAlloy, Steel)));
+		SiliconeRubber.setProperty(GreatePropertyKeys.BELT, new BeltProperty(List.of(Aluminium, StainlessSteel)));
+		Polyethylene.setProperty(GreatePropertyKeys.BELT, new BeltProperty(List.of(Titanium, TungstenSteel)));
+		Polytetrafluoroethylene.setProperty(GreatePropertyKeys.BELT, new BeltProperty(List.of(RhodiumPlatedPalladium, NaquadahAlloy)));
+		Polybenzimidazole.setProperty(GreatePropertyKeys.BELT, new BeltProperty(List.of(Darmstadtium, Neutronium)));
 
 		alloy.addSecondaryMaterial(new MaterialStack(Andesite, M));
 		alloy.setIgnored(WroughtIron, () -> AllItems.ANDESITE_ALLOY);

@@ -4,9 +4,8 @@ import net.createmod.ponder.api.registration.PonderTagRegistrationHelper;
 import net.minecraft.resources.ResourceLocation;
 
 import static com.simibubi.create.infrastructure.ponder.AllCreatePonderTags.*;
-import static electrolyte.greate.GreateValues.BM;
 import static electrolyte.greate.GreateValues.TM;
-import static electrolyte.greate.registry.Belts.BELT_CONNECTORS;
+import static electrolyte.greate.registry.Belts.NEW_BELT_CONNECTORS;
 import static electrolyte.greate.registry.Cogwheels.COGWHEELS;
 import static electrolyte.greate.registry.Cogwheels.LARGE_COGWHEELS;
 import static electrolyte.greate.registry.EncasedFans.FANS;
@@ -36,12 +35,9 @@ public class GreatePonderTags {
         LARGE_COGWHEELS.values().forEach(largeCogwheel -> helper.addToTag(KINETIC_RELAYS).add(largeCogwheel.getId()));
         GEARBOXES.values().forEach(gearbox -> helper.addToTag(KINETIC_RELAYS).add(gearbox.getId()));
 
-        for(int i = 0; i < BM.length; i++) {
-            helper.addToTag(KINETIC_RELAYS)
-                    .add(BELT_CONNECTORS[i].getId());
-
-            helper.addToTag(LOGISTICS)
-                    .add(BELT_CONNECTORS[i].getId());
-        }
+        NEW_BELT_CONNECTORS.values().forEach(connector -> {
+            helper.addToTag(KINETIC_RELAYS).add(connector.getId());
+            helper.addToTag(LOGISTICS).add(connector.getId());
+        });
     }
 }

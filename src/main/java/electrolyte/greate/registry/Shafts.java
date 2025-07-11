@@ -41,13 +41,9 @@ public class Shafts {
     public static Table<TagPrefix, Material, BlockEntry<TieredEncasedShaftBlock>> ANDESITE_ENCASED_SHAFTS;
     public static Table<TagPrefix, Material, BlockEntry<TieredEncasedShaftBlock>> BRASS_ENCASED_SHAFTS;
 
-    public static BlockEntry<TieredShaftBlock>[] SHAFTS;
-
-    @SuppressWarnings({"unchecked"})
     public static void register() {
         REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
         generateShafts();
-        SHAFTS = NEW_SHAFTS.values().toArray(BlockEntry[]::new);
         generatePoweredShafts();
         generateAndesiteEncasedShafts();
         generateBrassEncasedShafts();

@@ -34,11 +34,9 @@ import static com.gregtechceu.gtceu.common.data.GTItems.ELECTRIC_PUMP_IV;
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
 import static com.gregtechceu.gtceu.data.recipe.CustomTags.IV_CIRCUITS;
 import static com.gregtechceu.gtceu.data.recipe.GTCraftingComponents.*;
-import static electrolyte.greate.GreateValues.BM;
 import static electrolyte.greate.GreateValues.TM;
 import static electrolyte.greate.content.gtceu.machines.GreateMultiblockMachines.WIRE_COATING_FACTORY;
 import static electrolyte.greate.foundation.data.recipe.GreateCraftingComponents.*;
-import static electrolyte.greate.registry.Belts.BELT_CONNECTORS;
 import static electrolyte.greate.registry.EncasedFans.FANS;
 import static electrolyte.greate.registry.GreateMaterials.AndesiteAlloy;
 import static electrolyte.greate.registry.GreateTagPrefixes.*;
@@ -138,6 +136,10 @@ public class GreateCraftingTableRecipes {
                 'C', new MaterialEntry(plate, WroughtIron),
                 'M', CASING.get(0),
                 'R', new MaterialEntry(rotor, AndesiteAlloy));
+
+        VanillaRecipeHelper.addShapedRecipe(provider, AndesiteAlloy.getName() + "_shaft", ChemicalHelper.get(shaft, AndesiteAlloy).copyWithCount(4),
+                    "s ", " A",
+                    'A', new MaterialEntry(alloy, WroughtIron)); //special case for andesite alloy (from create)
 
         //Default Create Things
         VanillaRecipeHelper.addShapedRecipe(provider, AllItems.WRENCH.getId(), AllItems.WRENCH.asStack(),
@@ -289,13 +291,6 @@ public class GreateCraftingTableRecipes {
                     'O', CONVEYOR.get(UHV));
         }
 
-        for (int beltTier = 0; beltTier < BM.length; beltTier++) {
-            Material beltMaterial = BM[beltTier];
-            VanillaRecipeHelper.addShapedRecipe(provider, BELT_CONNECTORS[beltTier].getId(), BELT_CONNECTORS[beltTier].asStack(),
-                    "PPP", "PPP", "f h",
-                    'P', new MaterialEntry(plate, beltMaterial));
-        }
-
         VanillaRecipeHelper.addShapedRecipe(provider, true, Greate.id("wire_coating_factory"), WIRE_COATING_FACTORY.asStack(),
                 "WCW", "PSP", "WCW",
                 'W', CASING_WATERTIGHT,
@@ -326,11 +321,20 @@ public class GreateCraftingTableRecipes {
                     'P', new MaterialEntry(plate, material));
         }
 
+        if(material.hasProperty(GreatePropertyKeys.BELT)) {
+            VanillaRecipeHelper.addShapedRecipe(provider, true, material.getName() + "_belt_connector", ChemicalHelper.get(beltConnector, material),
+                    "PPP", "PPP", "f h",
+                    'P', new MaterialEntry(plate, material));
+        }
+
         //<!!! [ONLY KINETIC RELATED RECIPES BELOW THIS LINE] !!!>
         if(!material.hasProperty(GreatePropertyKeys.KINETIC)) return;
-        VanillaRecipeHelper.addShapedRecipe(provider, material.getName() + "_shaft", ChemicalHelper.get(shaft, material).copyWithCount(4),
+
+        if(!material.getName().equals(AndesiteAlloy.getName())) { //special case, since wrought iron is 'andesite alloy'
+            VanillaRecipeHelper.addShapedRecipe(provider, material.getName() + "_shaft", ChemicalHelper.get(shaft, material).copyWithCount(4),
                     "s ", " A",
-                    'A', new MaterialEntry(alloy, material));
+                    'A', ChemicalHelper.get(alloy, material));
+        }
 
         if(material.hasProperty(GreatePropertyKeys.COGWHEEL)) {
             CogwheelProperty prop = material.getProperty(GreatePropertyKeys.COGWHEEL);

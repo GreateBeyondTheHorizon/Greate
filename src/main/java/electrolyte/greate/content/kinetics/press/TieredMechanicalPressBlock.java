@@ -1,5 +1,7 @@
 package electrolyte.greate.content.kinetics.press;
 
+import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.simibubi.create.content.kinetics.press.MechanicalPressBlock;
 import com.simibubi.create.content.kinetics.press.MechanicalPressBlockEntity;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
@@ -8,14 +10,18 @@ import electrolyte.greate.registry.ModBlockEntityTypes;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
+import java.util.function.Supplier;
+
+import static electrolyte.greate.registry.GreateTagPrefixes.shaft;
+
 public class TieredMechanicalPressBlock extends MechanicalPressBlock implements ITieredBlock, ITieredShaftBlock {
 
     private int tier;
-    private Block shaft;
+    private Supplier<Block> shaftBlock;
 
-    public TieredMechanicalPressBlock(Properties properties, Block shaft) {
+    public TieredMechanicalPressBlock(Properties properties, Material mat) {
         super(properties);
-        this.shaft = shaft;
+        this.shaftBlock = () -> ChemicalHelper.getBlock(shaft, mat);
     }
 
     @Override
@@ -35,6 +41,6 @@ public class TieredMechanicalPressBlock extends MechanicalPressBlock implements 
 
     @Override
     public Block getShaft() {
-        return this.shaft;
+        return shaftBlock.get();
     }
 }

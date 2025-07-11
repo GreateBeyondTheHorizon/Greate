@@ -11,6 +11,7 @@ import com.simibubi.create.foundation.advancement.AllAdvancements;
 import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import electrolyte.greate.GreateValues;
+import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
 import electrolyte.greate.content.kinetics.belt.ITieredBelt;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredBracketedKineticBlockEntity;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
@@ -46,15 +47,18 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static electrolyte.greate.registry.Belts.BELTS;
+import static electrolyte.greate.registry.GreateTagPrefixes.shaft;
+import static electrolyte.greate.registry.Shafts.NEW_SHAFTS;
 
 public class TieredBeltConnectorItem extends Item implements ITieredBelt {
 
     private Material material;
-    private final List<BlockEntry<TieredShaftBlock>> validShafts;
+    private final List<Material> validShafts;
 
-    public TieredBeltConnectorItem(Properties pProperties, List<BlockEntry<TieredShaftBlock>> validShafts) {
+    public TieredBeltConnectorItem(Properties pProperties, Material material) {
         super(pProperties);
-        this.validShafts = validShafts;
+        this.validShafts = material.getProperty(GreatePropertyKeys.BELT).getValidShafts();
+        this.material = material;
     }
 
     @Override
@@ -69,10 +73,10 @@ public class TieredBeltConnectorItem extends Item implements ITieredBelt {
         String beltLength = String.valueOf(GConfigUtility.getBeltLengthFromMaterial(material));
         MutableComponent beltLengthComponent = Component.translatable(beltLength).withStyle(ChatFormatting.BOLD).withStyle(Style.EMPTY.withColor(ChatFormatting.AQUA));
 
-        int s1RGB = GreateValues.TM[validShafts.get(0).get().getTier()].getMaterialRGB();
-        int s2RGB = GreateValues.TM[validShafts.get(1).get().getTier()].getMaterialRGB();
-        String shaft1_name = validShafts.get(0).get().getShaft().getName().getString();
-        String shaft2_name = validShafts.get(1).get().getShaft().getName().getString();
+        int s1RGB = GreateValues.TM[getValidShafts().get(0).get().getTier()].getMaterialRGB();
+        int s2RGB = GreateValues.TM[getValidShafts().get(1).get().getTier()].getMaterialRGB();
+        String shaft1_name = getValidShafts().get(0).get().getShaft().getName().getString();
+        String shaft2_name = getValidShafts().get(1).get().getShaft().getName().getString();
         MutableComponent s1nComponent = Component.literal(shaft1_name).withStyle(Style.EMPTY.withColor(s1RGB));
         MutableComponent s2nComponent = Component.literal(shaft2_name).withStyle(Style.EMPTY.withColor(s2RGB));
 
@@ -273,6 +277,10 @@ public class TieredBeltConnectorItem extends Item implements ITieredBelt {
     }
 
     public List<BlockEntry<TieredShaftBlock>> getValidShafts() {
-        return validShafts;
+        ArrayList<BlockEntry<TieredShaftBlock>> list = new ArrayList<>();
+        for(Material mat : validShafts) {
+            list.add(NEW_SHAFTS.get(shaft, mat));
+        }
+        return list;
     }
 }
