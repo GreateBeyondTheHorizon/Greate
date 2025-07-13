@@ -3,6 +3,7 @@ package electrolyte.greate.foundation.data.recipe;
 import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags;
+import electrolyte.greate.Greate;
 import electrolyte.greate.foundation.data.recipe.machine.*;
 import net.minecraft.data.recipes.FinishedRecipe;
 
@@ -10,8 +11,14 @@ import java.util.function.Consumer;
 
 public class GreateRecipes {
     public static void register(Consumer<FinishedRecipe> provider) {
-        GreateChemicalBath.register(provider);
+        if(Greate.CONFIG.enableHardCreateRecipes) {
+            GreateCraftingTableRecipes.registerHardCreateRecipes(provider);
+        } else GreateCraftingTableRecipes.registerEasyCreateRecipes(provider);
+
+        GreateAssemblerRecipes.register(provider);
+        GreateChemicalBathRecipes.register(provider);
         GreateCraftingTableRecipes.register(provider);
+        GreateCraftingTableRecipes.registerCreateRecipes(provider);
         GreateCuttingMachineRecipes.register(provider);
         GreateMillstoneRecipes.register(provider);
         GreateMechanicalCraftingRecipes.register(provider);

@@ -16,7 +16,7 @@ import static com.gregtechceu.gtceu.common.data.GTMaterials.CHEMICAL_DYES;
 import static com.gregtechceu.gtceu.common.data.GTMaterials.Chlorine;
 import static com.gregtechceu.gtceu.common.data.GTRecipeTypes.CHEMICAL_BATH_RECIPES;
 
-public class GreateChemicalBath {
+public class GreateChemicalBathRecipes {
 
     public static void register(Consumer<FinishedRecipe> provider) {
         for(DyeColor color : DyeColor.values()) {

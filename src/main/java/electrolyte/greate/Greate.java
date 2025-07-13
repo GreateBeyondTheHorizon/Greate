@@ -11,12 +11,16 @@ import com.simibubi.create.foundation.item.TooltipModifier;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
+import dev.toma.configuration.Configuration;
+import dev.toma.configuration.config.ConfigHolder;
+import dev.toma.configuration.config.format.ConfigFormats;
 import electrolyte.greate.content.kinetics.fan.processing.GreateFanProcessingTypes;
 import electrolyte.greate.foundation.advancement.GreateAdvancements;
 import electrolyte.greate.foundation.data.GreateTagGen.GreateBlockTagGen;
 import electrolyte.greate.foundation.data.GreateTagGen.GreateItemTagGen;
 import electrolyte.greate.foundation.item.GreateKineticStats;
 import electrolyte.greate.infrastructure.config.GreateConfigs;
+import electrolyte.greate.infrastructure.config.GreateRecipeConfig;
 import electrolyte.greate.infrastructure.ponder.GreatePonderPlugin;
 import electrolyte.greate.registry.GreateLang;
 import electrolyte.greate.registry.GreatePartialModels;
@@ -62,6 +66,7 @@ public class Greate {
     public static final Logger LOGGER = LogUtils.getLogger();
     public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(Greate.MOD_ID);
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Greate.MOD_ID);
+    public static GreateRecipeConfig CONFIG;
 
     static {
         REGISTRATE.setTooltipModifierFactory(i -> new ItemDescription.Modifier(i, Palette.STANDARD_CREATE).andThen(TooltipModifier.mapNull(GreateKineticStats.create(i))));
@@ -84,8 +89,11 @@ public class Greate {
         CREATIVE_TABS.register(eventBus);
         REGISTRATE.registerEventListeners(eventBus);
         GreateLang.register();
-        REGISTRATE.addRegisterCallback(ForgeRegistries.BLOCKS.getRegistryKey(), () -> GreateConfigs.register(ModLoadingContext.get()));
         ModRecipeTypes.register(eventBus);
+
+        REGISTRATE.addRegisterCallback(ForgeRegistries.BLOCKS.getRegistryKey(), () -> GreateConfigs.register(ModLoadingContext.get()));
+        ConfigHolder<GreateRecipeConfig> configHolder = Configuration.registerConfig(GreateRecipeConfig.class, ConfigFormats.yaml());
+        CONFIG = configHolder.getConfigInstance();
     }
 
     public static ResourceLocation id(String path) {
