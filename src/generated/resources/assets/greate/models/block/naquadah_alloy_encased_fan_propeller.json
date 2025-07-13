@@ -1,5 +1,6 @@
 {
   "parent": "create:block/encased_fan/propeller",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "axis": "greate:block/naquadah_alloy/axis",
     "axis_top": "greate:block/naquadah_alloy/axis_top",

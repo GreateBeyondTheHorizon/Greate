@@ -131,8 +131,8 @@ dependencies {
     implementation fg.deobf("curse.maven:jade-324717:${jade_version}")
     runtimeOnly fg.deobf("curse.maven:spark-361579:${spark_version}")
 
-    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.3.2"))
-    implementation fg.deobf("io.github.llamalad7:mixinextras-forge:0.3.2")
+    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:${mixin_extras_version}"))
+    implementation fg.deobf("io.github.llamalad7:mixinextras-forge:${mixin_extras_version}")
 }
 
 mixin {

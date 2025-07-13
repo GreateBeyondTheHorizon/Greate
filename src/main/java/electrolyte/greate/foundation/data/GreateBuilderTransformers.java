@@ -111,17 +111,16 @@ public class GreateBuilderTransformers {
     public static <B extends TieredMillstoneBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> tieredMillstone() {
         return b -> b.blockstate(tieredMillstoneProvider())
                 .item()
-                .model((c, p) -> {
-                    p.withExistingParent(c.getName(), Create.asResource("block/millstone/item"))
-                            .texture("5", p.modLoc("block/" + c.getName().substring(0, c.getName().length() - 10) + "/millstone"));
-                }).build();
+                .model((c, p) ->
+                        p.withExistingParent(c.getName(), Create.asResource("block/millstone/item"))
+                            .texture("5", p.modLoc("block/" + c.getName().substring(0, c.getName().length() - 10) + "/millstone"))).build();
     }
 
     public static <B extends TieredCrushingWheelBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> tieredCrushingWheel() {
         return b -> b.blockstate(tieredCrushingWheelProvider())
                 .item()
-                .model((c, p) -> {
-                    p.withExistingParent(c.getName(), p.modLoc("block/" + c.getName() + "_textures"))
+                .model((c, p) ->
+                        p.withExistingParent(c.getName(), p.modLoc("block/" + c.getName() + "_textures"))
                             .customLoader(ObjModelBuilder::begin).modelLocation(Create.asResource("models/block/crushing_wheel/crushing_wheel.obj")).flipV(true).end()
                             .transforms()
                             .transform(ItemDisplayContext.GUI)
@@ -131,18 +130,18 @@ public class GreateBuilderTransformers {
                             .transform(ItemDisplayContext.FIXED)
                             .rotation(90, 0, 0)
                             .scale(0.45F, 0.45F, 0.45F)
-                            .end();
-                }).build();
+                            .end()).build();
     }
 
     public static <B extends TieredMechanicalPressBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> tieredMechanicalPress() {
         return b -> b.blockstate(tieredMechanicalPressProvider())
                 .item(AssemblyOperatorBlockItem::new)
                 .model((c, p) -> {
+                    String material = c.getName().substring(0, c.getName().length() - 17);
                     p.withExistingParent(c.getName(), Create.asResource("block/mechanical_press/item"))
-                            .texture("0", p.modLoc("block/" + c.getName().substring(0, c.getName().length() - 17) + "/axis"))
-                            .texture("1", p.modLoc("block/" + c.getName().substring(0, c.getName().length() - 17) + "/axis_top"))
-                            .texture("mechanical_press_head", p.modLoc("block/" + c.getName().substring(0, c.getName().length() - 17) + "/mechanical_press_head"))
+                            .texture("0", p.modLoc("block/" + material + "/axis"))
+                            .texture("1", p.modLoc("block/" + material + "/axis_top"))
+                            .texture("mechanical_press_head", p.modLoc("block/" + material + "/mechanical_press_head"))
                             .texture("8", p.modLoc("block/mechanical_press_side"))
                             .texture("particle", p.modLoc("block/mechanical_press_side"));
                 }).build();

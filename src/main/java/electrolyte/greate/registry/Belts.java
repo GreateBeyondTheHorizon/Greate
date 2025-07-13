@@ -18,7 +18,6 @@ import electrolyte.greate.content.kinetics.belt.TieredBeltBlock;
 import electrolyte.greate.content.kinetics.belt.TieredBeltGenerator;
 import electrolyte.greate.content.kinetics.belt.item.TieredBeltConnectorItem;
 import electrolyte.greate.infrastructure.config.GStress;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.MapColor;
 
@@ -68,7 +67,6 @@ public class Belts {
         return REGISTRATE
                 .block(material.getName() + "_belt_" + TM[tier].getName(), TieredBeltBlock::new)
                 .lang(toEnglishName(material.getName() + "_belt"))
-                .addLayer(() -> RenderType::cutoutMipped)
                 .properties(p -> p.sound(SoundType.WOOL))
                 .properties(p -> p.strength(0.8F))
                 .properties(p -> p.mapColor(MapColor.COLOR_GRAY))

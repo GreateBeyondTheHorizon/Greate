@@ -1,3 +1,4 @@
 {
-  "parent": "create:block/mechanical_saw/horizontal"
+  "parent": "create:block/mechanical_saw/horizontal",
+  "render_type": "minecraft:cutout_mipped"
 }
