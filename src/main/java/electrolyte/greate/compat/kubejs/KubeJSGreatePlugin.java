@@ -14,11 +14,8 @@ import dev.latvian.mods.kubejs.recipe.RecipesEventJS;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
 import dev.latvian.mods.kubejs.recipe.schema.RegisterRecipeSchemasEvent;
 import dev.latvian.mods.kubejs.script.BindingsEvent;
-import dev.latvian.mods.kubejs.script.ScriptType;
-import dev.latvian.mods.rhino.util.wrap.TypeWrappers;
 import electrolyte.greate.Greate;
 import electrolyte.greate.GreateValues;
-import electrolyte.greate.compat.kubejs.item.TieredOutputItem;
 import electrolyte.greate.content.gtceu.material.GreateMaterialFlags;
 import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
@@ -60,16 +57,10 @@ public class KubeJSGreatePlugin extends KubeJSPlugin {
 
     @Override
     public void registerBindings(BindingsEvent event) {
-        event.add("TieredOutputItem", TieredOutputItem.class);
         event.add("GreateValues", GreateValues.class);
         event.add("GreateCraftingComponents", GreateCraftingComponents.class);
         event.add("GreateMaterialFlags", GreateMaterialFlags.class);
         event.add("GreatePropertyKeys", GreatePropertyKeys.class);
-    }
-
-    @Override
-    public void registerTypeWrappers(ScriptType type, TypeWrappers typeWrappers) {
-        typeWrappers.registerSimple(TieredOutputItem.class, TieredOutputItem::of);
     }
 
     @Override
