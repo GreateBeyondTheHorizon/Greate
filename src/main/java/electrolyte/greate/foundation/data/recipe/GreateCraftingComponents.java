@@ -3,92 +3,106 @@ package electrolyte.greate.foundation.data.recipe;
 import com.gregtechceu.gtceu.data.recipe.CraftingComponent;
 import com.simibubi.create.AllItems;
 
+import static com.gregtechceu.gtceu.api.GTValues.*;
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
 import static electrolyte.greate.registry.GreateMaterials.AndesiteAlloy;
 import static electrolyte.greate.registry.GreateTagPrefixes.*;
+import static electrolyte.greate.registry.Pumps.MECHANICAL_PUMPS;
 
 public class GreateCraftingComponents {
 
-    //TODO: add other crafting components (alloys)
     public static CraftingComponent SHAFT;
     public static CraftingComponent ALLOY;
     public static CraftingComponent COGWHEEL;
     public static CraftingComponent LARGE_COGWHEEL;
     public static CraftingComponent GEARBOX;
     public static CraftingComponent VERTICAL_GEARBOX;
+    public static CraftingComponent PUMP;
 
 
     public static void register() {
         SHAFT = CraftingComponent.of("shaft", shaft, AndesiteAlloy)
-                .add(0, shaft, AndesiteAlloy)
-                .add(1, shaft, Steel)
-                .add(2, shaft, Aluminium)
-                .add(3, shaft, StainlessSteel)
-                .add(4, shaft, Titanium)
-                .add(5, shaft, TungstenSteel)
-                .add(6, shaft, RhodiumPlatedPalladium)
-                .add(7, shaft, NaquadahAlloy)
-                .add(8, shaft, Darmstadtium)
-                .add(9, shaft, Neutronium);
+                .add(ULV, shaft, AndesiteAlloy)
+                .add(LV, shaft, Steel)
+                .add(MV, shaft, Aluminium)
+                .add(HV, shaft, StainlessSteel)
+                .add(EV, shaft, Titanium)
+                .add(IV, shaft, TungstenSteel)
+                .add(LuV, shaft, RhodiumPlatedPalladium)
+                .add(ZPM, shaft, NaquadahAlloy)
+                .add(UV, shaft, Darmstadtium)
+                .add(UHV, shaft, Neutronium);
 
         ALLOY = CraftingComponent.of("alloy", alloy, AndesiteAlloy)
-                .add(0, AllItems.ANDESITE_ALLOY.asStack())
-                .add(1, alloy, Steel)
-                .add(2, alloy, Aluminium)
-                .add(3, alloy, StainlessSteel)
-                .add(4, alloy, Titanium)
-                .add(5, alloy, TungstenSteel)
-                .add(6, alloy, RhodiumPlatedPalladium)
-                .add(7, alloy, NaquadahAlloy)
-                .add(8, alloy, Darmstadtium)
-                .add(9, alloy, Neutronium);
+                .add(ULV, AllItems.ANDESITE_ALLOY.asStack())
+                .add(LV, alloy, Steel)
+                .add(MV, alloy, Aluminium)
+                .add(HV, alloy, StainlessSteel)
+                .add(EV, alloy, Titanium)
+                .add(IV, alloy, TungstenSteel)
+                .add(LuV, alloy, RhodiumPlatedPalladium)
+                .add(ZPM, alloy, NaquadahAlloy)
+                .add(UV, alloy, Darmstadtium)
+                .add(UHV, alloy, Neutronium);
 
         COGWHEEL = CraftingComponent.of("cogwheel", cogwheel, AndesiteAlloy)
-                .add(0, cogwheel, AndesiteAlloy)
-                .add(1, cogwheel, Steel)
-                .add(2, cogwheel, Aluminium)
-                .add(3, cogwheel, StainlessSteel)
-                .add(4, cogwheel, Titanium)
-                .add(5, cogwheel, TungstenSteel)
-                .add(6, cogwheel, RhodiumPlatedPalladium)
-                .add(7, cogwheel, NaquadahAlloy)
-                .add(8, cogwheel, Darmstadtium)
-                .add(9, cogwheel, Neutronium);
+                .add(ULV, cogwheel, AndesiteAlloy)
+                .add(LV, cogwheel, Steel)
+                .add(MV, cogwheel, Aluminium)
+                .add(HV, cogwheel, StainlessSteel)
+                .add(EV, cogwheel, Titanium)
+                .add(IV, cogwheel, TungstenSteel)
+                .add(LuV, cogwheel, RhodiumPlatedPalladium)
+                .add(ZPM, cogwheel, NaquadahAlloy)
+                .add(UV, cogwheel, Darmstadtium)
+                .add(UHV, cogwheel, Neutronium);
 
         LARGE_COGWHEEL = CraftingComponent.of("large_cogwheel", largeCogwheel, AndesiteAlloy)
-                .add(0, largeCogwheel, AndesiteAlloy)
-                .add(1, largeCogwheel, Steel)
-                .add(2, largeCogwheel, Aluminium)
-                .add(3, largeCogwheel, StainlessSteel)
-                .add(4, largeCogwheel, Titanium)
-                .add(5, largeCogwheel, TungstenSteel)
-                .add(6, largeCogwheel, RhodiumPlatedPalladium)
-                .add(7, largeCogwheel, NaquadahAlloy)
-                .add(8, largeCogwheel, Darmstadtium)
-                .add(9, largeCogwheel, Neutronium);
+                .add(ULV, largeCogwheel, AndesiteAlloy)
+                .add(LV, largeCogwheel, Steel)
+                .add(MV, largeCogwheel, Aluminium)
+                .add(HV, largeCogwheel, StainlessSteel)
+                .add(EV, largeCogwheel, Titanium)
+                .add(IV, largeCogwheel, TungstenSteel)
+                .add(LuV, largeCogwheel, RhodiumPlatedPalladium)
+                .add(ZPM, largeCogwheel, NaquadahAlloy)
+                .add(UV, largeCogwheel, Darmstadtium)
+                .add(UHV, largeCogwheel, Neutronium);
 
         GEARBOX = CraftingComponent.of("gearbox", gearbox, AndesiteAlloy)
-                .add(0, gearbox, AndesiteAlloy)
-                .add(1, gearbox, Steel)
-                .add(2, gearbox, Aluminium)
-                .add(3, gearbox, StainlessSteel)
-                .add(4, gearbox, Titanium)
-                .add(5, gearbox, TungstenSteel)
-                .add(6, gearbox, RhodiumPlatedPalladium)
-                .add(7, gearbox, NaquadahAlloy)
-                .add(8, gearbox, Darmstadtium)
-                .add(9, gearbox, Neutronium);
+                .add(ULV, gearbox, AndesiteAlloy)
+                .add(LV, gearbox, Steel)
+                .add(MV, gearbox, Aluminium)
+                .add(HV, gearbox, StainlessSteel)
+                .add(EV, gearbox, Titanium)
+                .add(IV, gearbox, TungstenSteel)
+                .add(LuV, gearbox, RhodiumPlatedPalladium)
+                .add(ZPM, gearbox, NaquadahAlloy)
+                .add(UV, gearbox, Darmstadtium)
+                .add(UHV, gearbox, Neutronium);
 
         VERTICAL_GEARBOX = CraftingComponent.of("vertical_gearbox", verticalGearbox, AndesiteAlloy)
-                .add(0, verticalGearbox, AndesiteAlloy)
-                .add(1, verticalGearbox, Steel)
-                .add(2, verticalGearbox, Aluminium)
-                .add(3, verticalGearbox, StainlessSteel)
-                .add(4, verticalGearbox, Titanium)
-                .add(5, verticalGearbox, TungstenSteel)
-                .add(6, verticalGearbox, RhodiumPlatedPalladium)
-                .add(7, verticalGearbox, NaquadahAlloy)
-                .add(8, verticalGearbox, Darmstadtium)
-                .add(9, verticalGearbox, Neutronium);
+                .add(ULV, verticalGearbox, AndesiteAlloy)
+                .add(LV, verticalGearbox, Steel)
+                .add(MV, verticalGearbox, Aluminium)
+                .add(HV, verticalGearbox, StainlessSteel)
+                .add(EV, verticalGearbox, Titanium)
+                .add(IV, verticalGearbox, TungstenSteel)
+                .add(LuV, verticalGearbox, RhodiumPlatedPalladium)
+                .add(ZPM, verticalGearbox, NaquadahAlloy)
+                .add(UV, verticalGearbox, Darmstadtium)
+                .add(UHV, verticalGearbox, Neutronium);
+
+        PUMP = CraftingComponent.of("pump", MECHANICAL_PUMPS[ULV].asStack())
+                .add(ULV, MECHANICAL_PUMPS[ULV].asStack())
+                .add(LV, MECHANICAL_PUMPS[LV].asStack())
+                .add(MV, MECHANICAL_PUMPS[MV].asStack())
+                .add(HV, MECHANICAL_PUMPS[HV].asStack())
+                .add(EV, MECHANICAL_PUMPS[EV].asStack())
+                .add(IV, MECHANICAL_PUMPS[IV].asStack())
+                .add(LuV, MECHANICAL_PUMPS[LuV].asStack())
+                .add(ZPM, MECHANICAL_PUMPS[ZPM].asStack())
+                .add(UV, MECHANICAL_PUMPS[UV].asStack())
+                .add(UHV, MECHANICAL_PUMPS[UHV].asStack());
     }
 }
