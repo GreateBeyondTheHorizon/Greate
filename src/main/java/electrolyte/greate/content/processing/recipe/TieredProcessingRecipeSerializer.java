@@ -75,7 +75,7 @@ public class TieredProcessingRecipeSerializer<T extends TieredProcessingRecipe<?
             if (GsonHelper.isValidNode(jsonObject, "fluid"))
                 fluidResults.add(FluidHelper.deserializeFluidStack(jsonObject));
             else
-                results.add(TieredProcessingOutput.deserialize(je));
+                results.add(ProcessingOutput.deserialize(je));
         }
 
         builder.withItemIngredients(ingredients)
@@ -137,7 +137,7 @@ public class TieredProcessingRecipeSerializer<T extends TieredProcessingRecipe<?
 
         size = buffer.readVarInt();
         for (int i = 0; i < size; i++)
-            results.add(TieredProcessingOutput.read(buffer));
+            results.add(ProcessingOutput.read(buffer));
 
         size = buffer.readVarInt();
         for (int i = 0; i < size; i++)

@@ -2,6 +2,7 @@ package electrolyte.greate.compat.jei.category;
 
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
+import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.content.processing.burner.BlazeBurnerBlock.HeatLevel;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
@@ -9,7 +10,6 @@ import com.simibubi.create.foundation.fluid.FluidIngredient;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import com.simibubi.create.foundation.utility.CreateLang;
 import electrolyte.greate.content.processing.basin.TieredBasinRecipe;
-import electrolyte.greate.content.processing.recipe.TieredProcessingOutput;
 import electrolyte.greate.foundation.item.GreateItemHelper;
 import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -75,11 +75,7 @@ public class TieredBasinCategory extends GreateRecipeCategory<TieredBasinRecipe>
             IRecipeSlotBuilder baseBuilder = builder.addSlot(RecipeIngredientRole.OUTPUT, xPosition, yPosition)
                     .setBackground(getRenderedSlot(output), -1, -1)
                     .addItemStack(output.getStack());
-            if(output instanceof TieredProcessingOutput tieredProcessingOutput) {
-                baseBuilder.addTooltipCallback(addStochasticTooltipWithExtraPercent(tieredProcessingOutput, tieredProcessingOutput.getExtraTierChance()));
-            } else {
-                baseBuilder.addTooltipCallback(addStochasticTooltip(output));
-            }
+            baseBuilder.addRichTooltipCallback(CreateRecipeCategory.addStochasticTooltip(output));
             i++;
         }
 

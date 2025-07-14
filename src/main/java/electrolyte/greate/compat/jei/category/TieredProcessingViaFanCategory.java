@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllPartialModels;
+import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.compat.jei.category.animations.AnimatedKinetics;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
@@ -11,7 +12,6 @@ import com.simibubi.create.foundation.utility.CreateLang;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import electrolyte.greate.content.kinetics.fan.TieredEncasedFanBlock;
-import electrolyte.greate.content.processing.recipe.TieredProcessingOutput;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
@@ -129,11 +129,7 @@ public abstract class TieredProcessingViaFanCategory<T extends Recipe<?>> extend
                         .addSlot(RecipeIngredientRole.OUTPUT, 141 + xOffset, 48 + yOffset)
                         .setBackground(getRenderedSlot(output), -1, -1)
                         .addItemStack(output.getStack());
-                if(output instanceof TieredProcessingOutput tpo) {
-                    baseBuilder.addTooltipCallback(addStochasticTooltipWithExtraPercent(tpo, tpo.getExtraTierChance()));
-                } else {
-                    baseBuilder.addTooltipCallback(addStochasticTooltip(output));
-                }
+                baseBuilder.addRichTooltipCallback(CreateRecipeCategory.addStochasticTooltip(output));
                 i++;
             }
         }

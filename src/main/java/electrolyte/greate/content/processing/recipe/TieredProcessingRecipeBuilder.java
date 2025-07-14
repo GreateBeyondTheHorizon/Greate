@@ -93,32 +93,15 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
         return withItemOutputs(list);
     }
 
-    public TieredProcessingRecipeBuilder<T> withItemOutputs(List<ProcessingOutput> outputs, int recipeTier, int machineTier) {
-        NonNullList<ProcessingOutput> list = NonNullList.create();
-        for(ProcessingOutput output : outputs) {
-            if(output instanceof TieredProcessingOutput tieredOutput) {
-                list.add(new TieredProcessingOutput(output.getStack(), output.getChance(), getExtraPercent(tieredOutput.getExtraTierChance(), recipeTier, machineTier, false)));
-            } else {
-                list.add(new TieredProcessingOutput(output.getStack(), output.getChance(), 0));
-            }
-        }
-        return withItemOutputs(list);
-    }
-
     public TieredProcessingRecipeBuilder<T> withItemOutputsGT(List<Content> list) {
         NonNullList<ProcessingOutput> nonNullList = NonNullList.create();
         for(Content c : list) {
             ItemStack[] items = ((Ingredient) c.content).getItems();
             for (ItemStack item : items) {
-                nonNullList.add(new TieredProcessingOutput(item, (float) c.chance / 10000, (float) c.tierChanceBoost / 10000));
+                nonNullList.add(new ProcessingOutput(item, (float) c.chance / 10000));
             }
         }
         return withItemOutputs(nonNullList);
-    }
-
-    private float getExtraPercent(float baseExtraPercent, int recipeTier, int machineTier, boolean addJEIOffset) {
-        int jeiOffset = addJEIOffset ? 1 : 0;
-        return baseExtraPercent * jeiOffset + (machineTier - recipeTier);
     }
 
     public TieredProcessingRecipeBuilder<T> withFluidIngredients(FluidIngredient... ingredients) {
