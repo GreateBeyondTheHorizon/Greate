@@ -29,7 +29,6 @@ import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedCogwheelBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedShaftBlock;
 import electrolyte.greate.infrastructure.config.GStress;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
@@ -64,7 +63,7 @@ public class GreateBuilderTransformers {
 
     private static <B extends TieredEncasedCogwheelBlock, P> BlockBuilder<B, P> tieredEncasedCogwheelBase(BlockBuilder<B, P> b,
         Supplier<CTSpriteShiftEntry> casingShift, Supplier<ItemLike> drop, boolean large) {
-        return encasedBase(b, drop).addLayer(() -> RenderType::cutoutMipped)
+        return encasedBase(b, drop)
                 .onRegister(CreateRegistrate.casingConnectivity((block, cc) -> cc.make(block, casingShift.get(),
                         (s, f) -> f.getAxis() == s.getValue(TieredEncasedCogwheelBlock.AXIS) && !s.getValue(f.getAxisDirection() == Direction.AxisDirection.POSITIVE ? TieredEncasedCogwheelBlock.TOP_SHAFT : TieredEncasedCogwheelBlock.BOTTOM_SHAFT))))
                 .blockstate((c, p) -> axisBlock(c, p, blockState -> {
@@ -76,7 +75,7 @@ public class GreateBuilderTransformers {
                     String suffix = (blockState.getValue(EncasedCogwheelBlock.TOP_SHAFT) ? "_top" : "")
                             + (blockState.getValue(EncasedCogwheelBlock.BOTTOM_SHAFT) ? "_bottom" : "");
                     String modelName = c.getName() + suffix;
-                    return p.models().withExistingParent(modelName, Create.asResource("block/" + blockFolder + "/block" + suffix))
+                    return p.models().withExistingParent(modelName, Create.asResource("block/" + blockFolder + "/block" + suffix)).renderType(CUTOUT_MIPPED)
                             .texture("casing", Create.asResource("block/" + casing + "_casing"))
                             .texture("particle", Create.asResource("block/" + casing + "_casing"))
                             .texture("4", Create.asResource("block/" + gearbox))
