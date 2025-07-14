@@ -1,11 +1,11 @@
 package electrolyte.greate.compat.jei.category;
 
+import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import electrolyte.greate.compat.jei.category.animations.TieredAnimatedCrushingWheels;
 import electrolyte.greate.content.kinetics.crusher.TieredAbstractCrushingRecipe;
-import electrolyte.greate.content.processing.recipe.TieredProcessingOutput;
 import electrolyte.greate.registry.CrushingWheels;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
@@ -40,12 +40,7 @@ public class TieredCrushingCategory extends GreateRecipeCategory<TieredAbstractC
                     .addSlot(RecipeIngredientRole.OUTPUT, (xOffset) + entry.posX() + 1, yOffset + entry.posY() + 1)
                     .setBackground(getRenderedSlot(entry.output()), - 1, - 1)
                     .addItemStack(entry.output().getStack());
-
-            if(entry.output instanceof TieredProcessingOutput tieredProcessingOutput) {
-                baseBuilder.addTooltipCallback(addStochasticTooltipWithExtraPercent(tieredProcessingOutput, tieredProcessingOutput.getExtraTierChance()));
-            } else {
-                baseBuilder.addTooltipCallback(addStochasticTooltip(entry.output));
-            }
+            baseBuilder.addRichTooltipCallback(CreateRecipeCategory.addStochasticTooltip(entry.output));
         });
     }
 

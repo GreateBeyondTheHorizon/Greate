@@ -3,16 +3,29 @@ package electrolyte.greate.registry;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.ToolProperty;
+import com.gregtechceu.gtceu.api.data.chemical.material.stack.MaterialStack;
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllItems;
 import electrolyte.greate.Greate;
-import electrolyte.greate.content.gtceu.material.PropertyKeys;
-import electrolyte.greate.content.gtceu.material.WhiskProperty;
+import electrolyte.greate.content.gtceu.material.BeltProperty;
+import electrolyte.greate.content.gtceu.material.CogwheelProperty;
+import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
+import electrolyte.greate.content.gtceu.material.KineticProperty;
 
+import java.util.List;
+
+import static com.gregtechceu.gtceu.api.GTValues.M;
 import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags.*;
 import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialIconSet.*;
+import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.block;
+import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.ingot;
 import static com.gregtechceu.gtceu.api.item.tool.GTToolType.BUZZSAW;
 import static com.gregtechceu.gtceu.common.data.GTElements.Ma;
 import static com.gregtechceu.gtceu.common.data.GTElements.Sp;
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
+import static electrolyte.greate.content.gtceu.material.GreateMaterialFlags.GENERATE_ALLOY;
+import static electrolyte.greate.content.gtceu.material.GreateMaterialFlags.GENERATE_WHISK;
+import static electrolyte.greate.registry.GreateTagPrefixes.alloy;
 
 public class GreateMaterials {
 
@@ -28,7 +41,7 @@ public class GreateMaterials {
 				.appendFlags(STD_METAL, GENERATE_BOLT_SCREW, GENERATE_ROTOR)
 				.color(0xDADBCA).secondaryColor(0xABC7B5).iconSet(DULL)
 				.toolStats(ToolProperty.Builder.of(1, 1, 64, 0, BUZZSAW).build())
-				.components(Andesite, 9, Iron, 1)
+				.components(Andesite, 1, WroughtIron, 1)
 				.buildAndRegister();
 		RoseQuartz = Builder("rose_quartz")
 				.gem()
@@ -55,27 +68,54 @@ public class GreateMaterials {
 				.setFormula(ChromaticCompound.getChemicalFormula() + Sp.symbol());
 
 		WroughtIron.addFlags(GENERATE_ROTOR);
-		Aluminium.addFlags(GENERATE_ROTOR);
-		Neutronium.addFlags(GENERATE_ROTOR);
-		Copper.addFlags(GENERATE_BOLT_SCREW);
 
-		// Add whisks to Greate tier materials
-		AndesiteAlloy.setProperty(PropertyKeys.WHISK, new WhiskProperty());
-		Steel.setProperty(PropertyKeys.WHISK, new WhiskProperty());
-		Aluminium.setProperty(PropertyKeys.WHISK, new WhiskProperty());
-		StainlessSteel.setProperty(PropertyKeys.WHISK, new WhiskProperty());
-		Titanium.setProperty(PropertyKeys.WHISK, new WhiskProperty());
-		TungstenSteel.setProperty(PropertyKeys.WHISK, new WhiskProperty());
-		RhodiumPlatedPalladium.setProperty(PropertyKeys.WHISK, new WhiskProperty());
-		NaquadahAlloy.setProperty(PropertyKeys.WHISK, new WhiskProperty());
-		Darmstadtium.setProperty(PropertyKeys.WHISK, new WhiskProperty());
-		Neutronium.setProperty(PropertyKeys.WHISK, new WhiskProperty());
+		AndesiteAlloy.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(0, 8));
+		Steel.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(1, 32));
+		Aluminium.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(2, 128));
+		StainlessSteel.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(3, 512));
+		Titanium.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(4, 2048));
+		TungstenSteel.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(5, 8192));
+		RhodiumPlatedPalladium.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(6, 32768));
+		NaquadahAlloy.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(7, 131072));
+		Darmstadtium.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(8, 524288));
+		Neutronium.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(9, 2097152));
+
+		AndesiteAlloy.setProperty(GreatePropertyKeys.COGWHEEL, new CogwheelProperty(Wood));
+		Steel.setProperty(GreatePropertyKeys.COGWHEEL, new CogwheelProperty(AndesiteAlloy));
+		Aluminium.setProperty(GreatePropertyKeys.COGWHEEL, new CogwheelProperty(Steel));
+		StainlessSteel.setProperty(GreatePropertyKeys.COGWHEEL, new CogwheelProperty(Aluminium));
+		Titanium.setProperty(GreatePropertyKeys.COGWHEEL, new CogwheelProperty(StainlessSteel));
+		TungstenSteel.setProperty(GreatePropertyKeys.COGWHEEL, new CogwheelProperty(Titanium));
+		RhodiumPlatedPalladium.setProperty(GreatePropertyKeys.COGWHEEL, new CogwheelProperty(TungstenSteel));
+		NaquadahAlloy.setProperty(GreatePropertyKeys.COGWHEEL, new CogwheelProperty(RhodiumPlatedPalladium));
+		Darmstadtium.setProperty(GreatePropertyKeys.COGWHEEL, new CogwheelProperty(NaquadahAlloy));
+		Neutronium.setProperty(GreatePropertyKeys.COGWHEEL, new CogwheelProperty(Darmstadtium));
+
+		AndesiteAlloy.addFlags(GENERATE_WHISK);
+		WroughtIron.addFlags(GENERATE_ALLOY);
+		Steel.addFlags(GENERATE_WHISK, GENERATE_ALLOY);
+		Aluminium.addFlags(GENERATE_ROTOR, GENERATE_WHISK, GENERATE_ALLOY);
+		StainlessSteel.addFlags(GENERATE_WHISK, GENERATE_ALLOY);
+		Titanium.addFlags(GENERATE_WHISK, GENERATE_ALLOY);
+		TungstenSteel.addFlags(GENERATE_WHISK, GENERATE_ALLOY);
+		RhodiumPlatedPalladium.addFlags(GENERATE_WHISK, GENERATE_ALLOY);
+		NaquadahAlloy.addFlags(GENERATE_WHISK, GENERATE_ALLOY);
+		Darmstadtium.addFlags(GENERATE_WHISK, GENERATE_ALLOY);
+		Neutronium.addFlags(GENERATE_ROTOR, GENERATE_WHISK, GENERATE_ALLOY);
 
 		Darmstadtium.setProperty(PropertyKey.TOOL, ToolProperty.Builder.of(50.0F, 15.0F, 5120, 5, BUZZSAW).build());
 		RhodiumPlatedPalladium.setProperty(PropertyKey.TOOL, ToolProperty.Builder.of(35.0F, 10.0F, 2560, 4, BUZZSAW).build());
-	}
 
-	public static void modifyMaterials() {
+		Rubber.setProperty(GreatePropertyKeys.BELT, new BeltProperty(List.of(AndesiteAlloy, Steel)));
+		SiliconeRubber.setProperty(GreatePropertyKeys.BELT, new BeltProperty(List.of(Aluminium, StainlessSteel)));
+		Polyethylene.setProperty(GreatePropertyKeys.BELT, new BeltProperty(List.of(Titanium, TungstenSteel)));
+		Polytetrafluoroethylene.setProperty(GreatePropertyKeys.BELT, new BeltProperty(List.of(RhodiumPlatedPalladium, NaquadahAlloy)));
+		Polybenzimidazole.setProperty(GreatePropertyKeys.BELT, new BeltProperty(List.of(Darmstadtium, Neutronium)));
+
+		alloy.addSecondaryMaterial(new MaterialStack(Andesite, M));
+		alloy.setIgnored(WroughtIron, () -> AllItems.ANDESITE_ALLOY);
+		block.setIgnored(AndesiteAlloy, () -> AllBlocks.ANDESITE_ALLOY_BLOCK);
+		ingot.setIgnored(AndesiteAlloy, () -> AllItems.ANDESITE_ALLOY);
 	}
 
 	public static Material.Builder Builder(String id) {

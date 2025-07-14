@@ -1,14 +1,12 @@
 package electrolyte.greate.compat.jade.provider;
 
 import electrolyte.greate.Greate;
-import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
+import electrolyte.greate.content.kinetics.belt.TieredBeltBlock;
 import net.minecraft.resources.ResourceLocation;
 import snownee.jade.api.BlockAccessor;
 import snownee.jade.api.IBlockComponentProvider;
 import snownee.jade.api.ITooltip;
 import snownee.jade.api.config.IPluginConfig;
-
-import static electrolyte.greate.registry.Belts.BELT_CONNECTORS;
 
 public class BeltBlockComponentProvider implements IBlockComponentProvider {
 
@@ -16,8 +14,8 @@ public class BeltBlockComponentProvider implements IBlockComponentProvider {
 
     @Override
     public void appendTooltip(ITooltip iTooltip, BlockAccessor blockAccessor, IPluginConfig iPluginConfig) {
-        if(blockAccessor.getBlock() instanceof ITieredBlock tieredBlock) {
-            iTooltip.getElementHelper().item(BELT_CONNECTORS[tieredBlock.getTier() / 2].asStack());
+        if(blockAccessor.getBlock() instanceof TieredBeltBlock) {
+            iTooltip.getElementHelper().item(blockAccessor.getPickedResult());
         }
     }
 

@@ -1,5 +1,6 @@
 package electrolyte.greate.content.kinetics.saw;
 
+import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.content.contraptions.behaviour.MovementContext;
 import com.simibubi.create.content.contraptions.render.ContraptionMatrices;
@@ -29,8 +30,9 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fluids.FluidStack;
 
+import static electrolyte.greate.GreateValues.TM;
 import static electrolyte.greate.registry.GreatePartialModels.*;
-import static electrolyte.greate.registry.Shafts.SHAFTS;
+import static electrolyte.greate.registry.GreateTagPrefixes.shaft;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.FACING;
 
 public class TieredSawRenderer extends SawRenderer {
@@ -101,7 +103,7 @@ public class TieredSawRenderer extends SawRenderer {
 
     @Override
     protected BlockState getRenderedBlockState(KineticBlockEntity be) {
-        return SHAFTS[tier].getDefaultState().setValue(BlockStateProperties.AXIS, KineticBlockEntityRenderer.getRotationAxisOf(be));
+        return ChemicalHelper.getBlock(shaft, TM[tier]).defaultBlockState().setValue(BlockStateProperties.AXIS, KineticBlockEntityRenderer.getRotationAxisOf(be));
     }
 
     public static void renderInContraption(MovementContext context, VirtualRenderWorld renderWorld, ContraptionMatrices matrices, MultiBufferSource bufferSource) {

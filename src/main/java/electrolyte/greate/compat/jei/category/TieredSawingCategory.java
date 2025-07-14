@@ -1,16 +1,14 @@
 package electrolyte.greate.compat.jei.category;
 
+import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
-
 import electrolyte.greate.compat.jei.category.animations.TieredAnimatedSaw;
 import electrolyte.greate.content.kinetics.saw.TieredCuttingRecipe;
-import electrolyte.greate.content.processing.recipe.TieredProcessingOutput;
 import electrolyte.greate.registry.Saws;
 import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
-import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
@@ -45,14 +43,10 @@ public class TieredSawingCategory extends GreateRecipeCategory<TieredCuttingReci
         for(ProcessingOutput output : results) {
             int xOffset = i % 2 == 0 ? 0 : 19;
             int yOffset = (i / 2) * -19;
-            IRecipeSlotBuilder baseBuilder = builder.addSlot(RecipeIngredientRole.OUTPUT, 118 + xOffset, 48 + yOffset)
+            builder.addSlot(RecipeIngredientRole.OUTPUT, 118 + xOffset, 48 + yOffset)
                     .setBackground(getRenderedSlot(output), -1, -1)
-                    .addItemStack(output.getStack());
-            if(output instanceof TieredProcessingOutput tieredProcessingOutput) {
-                baseBuilder.addTooltipCallback(addStochasticTooltipWithExtraPercent(tieredProcessingOutput, tieredProcessingOutput.getExtraTierChance()));
-            } else {
-                baseBuilder.addTooltipCallback(addStochasticTooltip(output));
-            }
+                    .addItemStack(output.getStack())
+                    .addRichTooltipCallback(CreateRecipeCategory.addStochasticTooltip(output));
             i++;
         }
     }

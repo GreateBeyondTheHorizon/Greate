@@ -1,5 +1,6 @@
 {
   "parent": "create:block/encased_large_cogwheel/block",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "1": "minecraft:block/stripped_dark_oak_log_top",
     "4": "create:block/brass_gearbox",

@@ -1,5 +1,9 @@
 package electrolyte.greate.mixin;
 
+import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.simibubi.create.content.fluids.tank.FluidTankBlock;
 import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
@@ -21,12 +25,9 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.Arrays;
-import java.util.Optional;
-
-import static electrolyte.greate.registry.Shafts.POWERED_SHAFTS;
+import static electrolyte.greate.registry.GreateTagPrefixes.poweredShaft;
+import static net.minecraft.world.level.block.state.properties.BlockStateProperties.WATERLOGGED;
 
 @Mixin(SteamEngineBlock.class)
 public abstract class MixinSteamEngineBlock extends FaceAttachedHorizontalDirectionalBlock
@@ -51,12 +52,14 @@ public abstract class MixinSteamEngineBlock extends FaceAttachedHorizontalDirect
         super(pProperties);
     }
 
-    @Inject(method = "isShaftValid", at = @At("HEAD"), remap = false, cancellable = true)
-    private static void greate_isShaftValid(BlockState state, BlockState shaft, CallbackInfoReturnable<Boolean> cir) {
-        if((shaft.getBlock() instanceof ShaftBlock || shaft.getBlock() instanceof PoweredShaftBlock) &&
-                shaft.getValue(ShaftBlock.AXIS) != getConnectedDirection(state).getAxis()) {
-            cir.setReturnValue(true);
-        }
+    @WrapOperation(method = "isShaftValid", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z", ordinal = 0), remap = false)
+    private static boolean greate_isShaftValid(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
+        return state.getBlock() instanceof ShaftBlock;
+    }
+
+    @WrapOperation(method = "isShaftValid", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z", ordinal = 1), remap = false)
+    private static boolean greate_isPoweredShaftValid(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
+        return state.getBlock() instanceof PoweredShaftBlock;
     }
 
     @Inject(method = "onPlace", at = @At("HEAD"), cancellable = true)
@@ -66,11 +69,11 @@ public abstract class MixinSteamEngineBlock extends FaceAttachedHorizontalDirect
         BlockState shaftState = pLevel.getBlockState(shaftPos);
         if(shaftState.getBlock() instanceof TieredShaftBlock tsb) {
             if(isShaftValid(pState, shaftState)) {
-                Optional<BlockEntry<TieredPoweredShaftBlock>> poweredShaftBlock = Arrays.stream(POWERED_SHAFTS).filter(p -> p.get().getShaft().equals(tsb)).findFirst();
-                if(poweredShaftBlock.isPresent()) {
-                    pLevel.setBlock(shaftPos, TieredPoweredShaftBlock.getEquivalent(poweredShaftBlock.get(), shaftState), 3);
-                    ci.cancel();
-                }
+                Material mat = tsb.getMaterial();
+                pLevel.setBlock(shaftPos, ChemicalHelper.getBlock(poweredShaft, mat).defaultBlockState()
+                        .setValue(PoweredShaftBlock.AXIS, shaftState.getValue(ShaftBlock.AXIS))
+                        .setValue(WATERLOGGED, shaftState.getValue(WATERLOGGED)), 3);
+                ci.cancel();
             }
         }
     }

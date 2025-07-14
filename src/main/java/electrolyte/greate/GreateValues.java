@@ -3,6 +3,7 @@ package electrolyte.greate;
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.recipe.content.Content;
+import com.gregtechceu.gtceu.api.recipe.ingredient.EnergyStack;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.simibubi.create.AllRecipeTypes;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingRecipe;
@@ -69,12 +70,10 @@ public class GreateValues {
 
     public static int convertGTEUToTier(List<Content> content) {
         if (content.isEmpty()) return GTValues.ULV;
-        long eut = (Long) content.get(0).getContent();
+        long eut = ((EnergyStack) content.get(0).getContent()).voltage();
         for (int i = 0; i < GTValues.V.length; i++) {
             long voltage = GTValues.V[i];
-            if (eut <= voltage) {
-                return GTValues.ALL_TIERS[i];
-            }
+            if (eut <= voltage) return GTValues.ALL_TIERS[i];
         }
         return GTValues.MAX;
     }

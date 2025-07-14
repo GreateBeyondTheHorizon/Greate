@@ -11,14 +11,20 @@ import com.simibubi.create.foundation.item.TooltipModifier;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
+import dev.toma.configuration.Configuration;
+import dev.toma.configuration.config.ConfigHolder;
+import dev.toma.configuration.config.format.ConfigFormats;
 import electrolyte.greate.content.kinetics.fan.processing.GreateFanProcessingTypes;
 import electrolyte.greate.foundation.advancement.GreateAdvancements;
 import electrolyte.greate.foundation.data.GreateTagGen.GreateBlockTagGen;
 import electrolyte.greate.foundation.data.GreateTagGen.GreateItemTagGen;
 import electrolyte.greate.foundation.item.GreateKineticStats;
 import electrolyte.greate.infrastructure.config.GreateConfigs;
+import electrolyte.greate.infrastructure.config.GreateRecipeConfig;
 import electrolyte.greate.infrastructure.ponder.GreatePonderPlugin;
-import electrolyte.greate.registry.*;
+import electrolyte.greate.registry.GreateLang;
+import electrolyte.greate.registry.GreatePartialModels;
+import electrolyte.greate.registry.ModRecipeTypes;
 import it.unimi.dsi.fastutil.objects.ReferenceArrayList;
 import it.unimi.dsi.fastutil.objects.ReferenceLinkedOpenHashSet;
 import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet;
@@ -39,7 +45,6 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -61,6 +66,7 @@ public class Greate {
     public static final Logger LOGGER = LogUtils.getLogger();
     public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(Greate.MOD_ID);
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Greate.MOD_ID);
+    public static GreateRecipeConfig CONFIG;
 
     static {
         REGISTRATE.setTooltipModifierFactory(i -> new ItemDescription.Modifier(i, Palette.STANDARD_CREATE).andThen(TooltipModifier.mapNull(GreateKineticStats.create(i))));
@@ -70,7 +76,6 @@ public class Greate {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
         MinecraftForge.EVENT_BUS.register(this);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::commonSetup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::gatherData);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onRegister);
 
@@ -84,12 +89,15 @@ public class Greate {
         CREATIVE_TABS.register(eventBus);
         REGISTRATE.registerEventListeners(eventBus);
         GreateLang.register();
-        REGISTRATE.addRegisterCallback(ForgeRegistries.BLOCKS.getRegistryKey(), () -> GreateConfigs.register(ModLoadingContext.get()));
         ModRecipeTypes.register(eventBus);
+
+        REGISTRATE.addRegisterCallback(ForgeRegistries.BLOCKS.getRegistryKey(), () -> GreateConfigs.register(ModLoadingContext.get()));
+        ConfigHolder<GreateRecipeConfig> configHolder = Configuration.registerConfig(GreateRecipeConfig.class, ConfigFormats.yaml());
+        CONFIG = configHolder.getConfigInstance();
     }
 
     public static ResourceLocation id(String path) {
-        return new ResourceLocation(MOD_ID, FormattingUtil.toLowerCaseUnder(path));
+        return new ResourceLocation(MOD_ID, FormattingUtil.toLowerCaseUnderscore(path));
     }
 
     public static final RegistryObject<CreativeModeTab> GREATE_TAB = CREATIVE_TABS.register("greate",
@@ -102,10 +110,6 @@ public class Greate {
     private void clientSetup(FMLClientSetupEvent event) {
         GreatePartialModels.register();
         PonderIndex.addPlugin(new GreatePonderPlugin());
-    }
-
-    private void commonSetup(FMLCommonSetupEvent event) {
-        GreateMaterials.modifyMaterials();
     }
 
     private void onRegister(RegisterEvent event) {
@@ -141,69 +145,7 @@ public class Greate {
 
         private static Predicate<Item> excludedItems() {
             Set<Item> exclusions = new ReferenceOpenHashSet<>();
-            List<ItemProviderEntry<?>> simpleExclusions = List.of(
-                    Cogwheels.ANDESITE_ENCASED_ANDESITE_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_ANDESITE_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_LARGE_ANDESITE_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_LARGE_ANDESITE_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_STEEL_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_STEEL_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_LARGE_STEEL_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_LARGE_STEEL_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_ALUMINIUM_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_ALUMINIUM_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_LARGE_ALUMINIUM_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_LARGE_ALUMINIUM_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_STAINLESS_STEEL_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_STAINLESS_STEEL_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_LARGE_STAINLESS_STEEL_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_LARGE_STAINLESS_STEEL_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_TITANIUM_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_TITANIUM_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_LARGE_TITANIUM_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_LARGE_TITANIUM_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_TUNGSTENSTEEL_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_TUNGSTENSTEEL_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_LARGE_TUNGSTENSTEEL_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_LARGE_TUNGSTENSTEEL_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_PALLADIUM_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_PALLADIUM_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_LARGE_PALLADIUM_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_LARGE_PALLADIUM_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_NAQUADAH_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_NAQUADAH_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_LARGE_NAQUADAH_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_LARGE_NAQUADAH_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_DARMSTADTIUM_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_DARMSTADTIUM_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_LARGE_DARMSTADTIUM_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_LARGE_DARMSTADTIUM_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_NEUTRONIUM_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_NEUTRONIUM_COGWHEEL,
-                    Cogwheels.ANDESITE_ENCASED_LARGE_NEUTRONIUM_COGWHEEL,
-                    Cogwheels.BRASS_ENCASED_LARGE_NEUTRONIUM_COGWHEEL,
-
-                    Shafts.ANDESITE_ENCASED_ANDESITE_SHAFT,
-                    Shafts.BRASS_ENCASED_ANDESITE_SHAFT,
-                    Shafts.ANDESITE_ENCASED_STEEL_SHAFT,
-                    Shafts.BRASS_ENCASED_STEEL_SHAFT,
-                    Shafts.ANDESITE_ENCASED_ALUMINIUM_SHAFT,
-                    Shafts.BRASS_ENCASED_ALUMINIUM_SHAFT,
-                    Shafts.ANDESITE_ENCASED_STAINLESS_STEEL_SHAFT,
-                    Shafts.BRASS_ENCASED_STAINLESS_STEEL_SHAFT,
-                    Shafts.ANDESITE_ENCASED_TITANIUM_SHAFT,
-                    Shafts.BRASS_ENCASED_TITANIUM_SHAFT,
-                    Shafts.ANDESITE_ENCASED_TUNGSTENSTEEL_SHAFT,
-                    Shafts.BRASS_ENCASED_TUNGSTENSTEEL_SHAFT,
-                    Shafts.ANDESITE_ENCASED_PALLADIUM_SHAFT,
-                    Shafts.BRASS_ENCASED_PALLADIUM_SHAFT,
-                    Shafts.ANDESITE_ENCASED_NAQUADAH_SHAFT,
-                    Shafts.BRASS_ENCASED_NAQUADAH_SHAFT,
-                    Shafts.ANDESITE_ENCASED_DARMSTADTIUM_SHAFT,
-                    Shafts.BRASS_ENCASED_DARMSTADTIUM_SHAFT,
-                    Shafts.ANDESITE_ENCASED_NEUTRONIUM_SHAFT,
-                    Shafts.BRASS_ENCASED_NEUTRONIUM_SHAFT
-            );
+            List<ItemProviderEntry<?>> simpleExclusions = List.of();
             for(ItemProviderEntry<?> entry : simpleExclusions) {
                 exclusions.add(entry.asItem());
             }

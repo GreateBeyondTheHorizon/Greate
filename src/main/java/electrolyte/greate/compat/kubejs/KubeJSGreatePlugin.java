@@ -14,15 +14,15 @@ import dev.latvian.mods.kubejs.recipe.RecipesEventJS;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
 import dev.latvian.mods.kubejs.recipe.schema.RegisterRecipeSchemasEvent;
 import dev.latvian.mods.kubejs.script.BindingsEvent;
-import dev.latvian.mods.kubejs.script.ScriptType;
-import dev.latvian.mods.rhino.util.wrap.TypeWrappers;
 import electrolyte.greate.Greate;
 import electrolyte.greate.GreateValues;
-import electrolyte.greate.compat.kubejs.item.TieredOutputItem;
+import electrolyte.greate.content.gtceu.material.GreateMaterialFlags;
+import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeFactory;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeSerializer;
+import electrolyte.greate.foundation.data.recipe.GreateCraftingComponents;
 import electrolyte.greate.registry.ModRecipeTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Recipe;
@@ -57,13 +57,10 @@ public class KubeJSGreatePlugin extends KubeJSPlugin {
 
     @Override
     public void registerBindings(BindingsEvent event) {
-        event.add("TieredOutputItem", TieredOutputItem.class);
         event.add("GreateValues", GreateValues.class);
-    }
-
-    @Override
-    public void registerTypeWrappers(ScriptType type, TypeWrappers typeWrappers) {
-        typeWrappers.registerSimple(TieredOutputItem.class, TieredOutputItem::of);
+        event.add("GreateCraftingComponents", GreateCraftingComponents.class);
+        event.add("GreateMaterialFlags", GreateMaterialFlags.class);
+        event.add("GreatePropertyKeys", GreatePropertyKeys.class);
     }
 
     @Override

@@ -33,6 +33,8 @@ import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedCog
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedCogVisual;
 import electrolyte.greate.content.kinetics.steamEngine.TieredPoweredShaftBlockEntity;
 
+import java.util.ArrayList;
+
 import static electrolyte.greate.Greate.REGISTRATE;
 
 public class ModBlockEntityTypes {
@@ -40,47 +42,47 @@ public class ModBlockEntityTypes {
     public static final BlockEntityEntry<TieredBracketedKineticBlockEntity> TIERED_BRACKETED_KINETIC = REGISTRATE
             .blockEntity("tiered_bracketed_kinetic", TieredBracketedKineticBlockEntity::new)
             .visual(() -> TieredBracketedKineticBlockEntityVisual::create, false)
-            .validBlocks(Shafts.SHAFTS)
-            .validBlocks(Cogwheels.COGWHEELS)
-            .validBlocks(Cogwheels.LARGE_COGWHEELS)
+            .validBlocksDeferred(() -> new ArrayList<>(Shafts.NEW_SHAFTS.values()))
+            .validBlocksDeferred(() -> new ArrayList<>(Cogwheels.COGWHEELS.values()))
+            .validBlocksDeferred(() -> new ArrayList<>(Cogwheels.LARGE_COGWHEELS.values()))
             .renderer(() -> TieredBracketedKineticBlockEntityRenderer::new)
             .register();
     public static final BlockEntityEntry<TieredKineticBlockEntity> TIERED_ENCASED_SHAFT = REGISTRATE
             .blockEntity("tiered_encased_shaft", TieredKineticBlockEntity::new)
             .visual(() -> TieredSingleAxisRotatingVisual::shaft, false)
-            .validBlocks(Shafts.ANDESITE_ENCASED_SHAFTS)
-            .validBlocks(Shafts.BRASS_ENCASED_SHAFTS)
-            .validBlocks(Girders.METAL_GIRDER_ENCASED_SHAFTS)
+            .validBlocksDeferred(() -> new ArrayList<>(Shafts.ANDESITE_ENCASED_SHAFTS.values()))
+            .validBlocksDeferred(() -> new ArrayList<>(Shafts.BRASS_ENCASED_SHAFTS.values()))
+            .validBlocksDeferred(() -> new ArrayList<>(Girders.GIRDERS.values()))
             .renderer(() -> TieredShaftRenderer::new)
             .register();
 
     public static final BlockEntityEntry<TieredSimpleKineticBlockEntity> TIERED_ENCASED_COGWHEEL = REGISTRATE
             .blockEntity("tiered_encased_cogwheel", TieredSimpleKineticBlockEntity::new)
             .visual(() -> TieredEncasedCogVisual::small, false)
-            .validBlocks(Cogwheels.ANDESITE_ENCASED_COGWHEELS)
-            .validBlocks(Cogwheels.BRASS_ENCASED_COGWHEELS)
+            .validBlocksDeferred(() -> new ArrayList<>(Cogwheels.ANDESITE_ENCASED_COGWHEELS.values()))
+            .validBlocksDeferred(() -> new ArrayList<>(Cogwheels.BRASS_ENCASED_COGWHEELS.values()))
             .renderer(() -> TieredEncasedCogRenderer::small)
             .register();
 
     public static final BlockEntityEntry<TieredSimpleKineticBlockEntity> TIERED_ENCASED_LARGE_COGWHEEL = REGISTRATE
             .blockEntity("tiered_encased_large_cogwheel", TieredSimpleKineticBlockEntity::new)
             .visual(() -> TieredEncasedCogVisual::large, false)
-            .validBlocks(Cogwheels.ANDESITE_ENCASED_LARGE_COGWHEELS)
-            .validBlocks(Cogwheels.BRASS_ENCASED_LARGE_COGWHEELS)
+            .validBlocksDeferred(() -> new ArrayList<>(Cogwheels.ANDESITE_ENCASED_LARGE_COGWHEELS.values()))
+            .validBlocksDeferred(() -> new ArrayList<>(Cogwheels.BRASS_ENCASED_LARGE_COGWHEELS.values()))
             .renderer(() -> TieredEncasedCogRenderer::large)
             .register();
 
     public static final BlockEntityEntry<TieredGearboxBlockEntity> TIERED_GEARBOX = REGISTRATE
             .blockEntity("tiered_gearbox", TieredGearboxBlockEntity::new)
             .visual(() -> TieredGearboxVisual::new, false)
-            .validBlocks(Gearboxes.GEARBOXES)
+            .validBlocksDeferred(() -> new ArrayList<>(Gearboxes.GEARBOXES.values()))
             .renderer(() -> TieredGearboxRenderer::new)
             .register();
 
     public static final BlockEntityEntry<TieredPoweredShaftBlockEntity> TIERED_POWERED_SHAFT = REGISTRATE
             .blockEntity("tiered_powered_shaft", TieredPoweredShaftBlockEntity::new)
             .visual(() -> TieredSingleAxisRotatingVisual::poweredShaft)
-            .validBlocks(Shafts.POWERED_SHAFTS)
+            .validBlocksDeferred(() -> new ArrayList<>(Shafts.POWERED_SHAFTS.values()))
             .renderer(() -> KineticBlockEntityRenderer::new)
             .register();
 

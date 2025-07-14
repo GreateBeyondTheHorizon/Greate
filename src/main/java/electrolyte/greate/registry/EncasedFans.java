@@ -7,7 +7,6 @@ import electrolyte.greate.Greate;
 import electrolyte.greate.content.kinetics.fan.TieredEncasedFanBlock;
 import electrolyte.greate.foundation.data.GreateBuilderTransformers;
 import electrolyte.greate.infrastructure.config.GStress;
-import net.minecraft.client.renderer.RenderType;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
 import static electrolyte.greate.Greate.REGISTRATE;
@@ -50,7 +49,6 @@ public class EncasedFans {
         return REGISTRATE
                 .block(TM[tier].getName() + "_encased_fan", p -> new TieredEncasedFanBlock(p, FAN_INNER_MODELS[tier], SHAFT_HALF_MODELS[tier]))
                 .initialProperties(SharedProperties::stone)
-                .addLayer(() -> RenderType::cutoutMipped)
                 .transform(GreateBuilderTransformers.tieredEncasedFan())
                 .transform(TagGen.axeOrPickaxe())
                 .transform(GStress.setImpact(stressImpact))

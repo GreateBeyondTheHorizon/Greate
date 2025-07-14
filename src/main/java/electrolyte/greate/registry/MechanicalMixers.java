@@ -7,7 +7,6 @@ import electrolyte.greate.Greate;
 import electrolyte.greate.content.kinetics.mixer.TieredMechanicalMixerBlock;
 import electrolyte.greate.foundation.data.GreateBuilderTransformers;
 import electrolyte.greate.infrastructure.config.GStress;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.level.material.MapColor;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
@@ -51,7 +50,6 @@ public class MechanicalMixers {
                 .transform(TagGen.axeOrPickaxe())
                 .transform(GStress.setImpact(stressImpact))
                 .transform(GreateBuilderTransformers.tieredMechanicalMixer())
-                .addLayer(() -> RenderType::cutoutMipped)
                 .onRegister(c -> c.setTier(tier))
                 .register();
     }

@@ -1,3 +1,4 @@
 {
-  "parent": "create:block/mechanical_mixer/pole"
+  "parent": "create:block/mechanical_mixer/pole",
+  "render_type": "minecraft:cutout_mipped"
 }

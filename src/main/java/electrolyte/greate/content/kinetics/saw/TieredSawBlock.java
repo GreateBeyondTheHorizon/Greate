@@ -1,5 +1,7 @@
 package electrolyte.greate.content.kinetics.saw;
 
+import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.simibubi.create.content.fluids.transfer.GenericItemEmptying;
 import com.simibubi.create.content.fluids.transfer.GenericItemFilling;
 import com.simibubi.create.content.kinetics.saw.SawBlock;
@@ -32,17 +34,20 @@ import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
+
+import static electrolyte.greate.registry.GreateTagPrefixes.shaft;
 
 public class TieredSawBlock extends SawBlock implements ITieredBlock, ITieredShaftBlock {
 
     private int tier;
-    private Block shaft;
+    private Supplier<Block> shaftBlock;
 
     private static final int PLACEMENT_HELPER_ID = PlacementHelpers.register(new PlacementHelper());
 
-    public TieredSawBlock(Properties properties, Block shaft) {
+    public TieredSawBlock(Properties properties, Material mat) {
         super(properties);
-        this.shaft = shaft;
+        this.shaftBlock = () -> ChemicalHelper.getBlock(shaft, mat);
     }
 
     @Override
@@ -62,7 +67,7 @@ public class TieredSawBlock extends SawBlock implements ITieredBlock, ITieredSha
 
     @Override
     public Block getShaft() {
-        return this.shaft;
+        return shaftBlock.get();
     }
 
     @Override

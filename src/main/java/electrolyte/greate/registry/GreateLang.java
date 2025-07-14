@@ -51,6 +51,8 @@ public class GreateLang {
         REGISTRATE.addRawLang("material.greate.refined_radiance", "Refined Radiance");
         REGISTRATE.addRawLang("material.greate.shadow_steel", "Shadow Steel");
         REGISTRATE.addRawLang("tagprefix.whisk", "%s Whisk");
+        REGISTRATE.addRawLang("tagprefix.alloy", "%s Alloy");
+        REGISTRATE.addRawLang("item.gtceu.naquadah_alloy_alloy", "Naquadah Alloy");
 
         //Greate GT-Addon
         REGISTRATE.addRawLang("block.greate.wire_coating_factory", "Wire Coating Factory");

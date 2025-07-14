@@ -47,7 +47,7 @@ minecraft {
             property 'forge.enabledGameTestNamespaces', 'greate'
         }
         data {
-            args '--all', '--mod', 'greate', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing-mod', 'create'
+            args '--all', '--mod', 'greate', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing-mod', 'create', '--existing-mod', 'gtceu'
         }
     }
 }
@@ -126,13 +126,13 @@ dependencies {
 
     implementation fg.deobf("com.lowdragmc.ldlib:ldlib-forge-${minecraft_version}:${ldlib_version}") { transitive = false }
     implementation fg.deobf("com.gregtechceu.gtceu:gtceu-${minecraft_version}:${gregtech_version}:slim") { transitive = false }
-    runtimeOnly fg.deobf("dev.toma.configuration:configuration-forge-${minecraft_version}:${configuration_version}")
+    implementation fg.deobf("dev.toma.configuration:configuration-forge-${minecraft_version}:${configuration_version}")
 
     implementation fg.deobf("curse.maven:jade-324717:${jade_version}")
     runtimeOnly fg.deobf("curse.maven:spark-361579:${spark_version}")
 
-    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.3.2"))
-    implementation fg.deobf("io.github.llamalad7:mixinextras-forge:0.3.2")
+    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:${mixin_extras_version}"))
+    implementation fg.deobf("io.github.llamalad7:mixinextras-forge:${mixin_extras_version}")
 }
 
 mixin {

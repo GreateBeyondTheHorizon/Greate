@@ -1,5 +1,6 @@
 {
   "parent": "create:block/encased_fan/propeller",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "axis": "greate:block/rhodium_plated_palladium/axis",
     "axis_top": "greate:block/rhodium_plated_palladium/axis_top",

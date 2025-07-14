@@ -1,5 +1,6 @@
 {
   "parent": "create:block/crushing_wheel/textures",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "axis": "greate:block/titanium/axis",
     "axis_top": "greate:block/titanium/axis_top"
