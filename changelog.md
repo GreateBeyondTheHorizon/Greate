@@ -1,14 +1,3 @@
-- Update to GT 7.0.0
-- Min GT version is now 7.0.0
-- Update various recipes
-- Use `TagPrefix` generation for alloys & whisks
-- Expose `GreateCraftingComponents`, `GreateMaterialFlags` & `GreatePropertyKeys` to Kube for modpack use
-- Fix wrong material value for `AndesiteAlloy`
-- Fix wrong decomp value for `Whisks`
-- Use `TagPrefix` for various blocks & items to allow them to be decomped & get a material tooltip
-- Allow machines to be recycled
-- Remove item forms of encased shafts & encased cogwheels
-- New config options for recipes (Disable wire coating in crafting grid/assembler/packer is now handled via `enableGTWireCoatingRecipes`; Harder create recipes are now handled via `enableHardCreateRecipes`)
-- Add assembler recipes for various create components
-- Add easy/hard recipes for various create components
-- Remove `TieredOutputItem` & `TieredProcessingOutput` (chance boosting)
+- Fix crash with tiered encased fans
+- Fix crash with fluid tags used as inputs in recipes
+- Min GT version is now 7.0.2
