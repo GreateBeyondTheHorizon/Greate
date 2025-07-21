@@ -119,7 +119,7 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
             com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient ingredient = (com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient) c.getContent();
             for(com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient.Value value : ingredient.values) {
                 if(value instanceof TagValue tag) {
-                    nonNullList.add(FluidIngredient.fromTag(tag.getTag(), ingredient.getAmount()));
+                    nonNullList.add(FluidIngredient.fromTag(tag.tag(), ingredient.getAmount()));
                 } else {
                     nonNullList.add(FluidIngredient.fromFluid(ingredient.getStacks()[0].getFluid(), ingredient.getAmount()));
                 }
