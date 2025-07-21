@@ -3,21 +3,28 @@ package electrolyte.greate.foundation.events;
 import electrolyte.greate.content.kinetics.belt.item.TieredBeltConnectorHandler;
 import electrolyte.greate.content.kinetics.fan.TieredAirCurrent;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.event.TickEvent.ClientTickEvent;
-import net.minecraftforge.event.TickEvent.Phase;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 
 @EventBusSubscriber(Dist.CLIENT)
 public class GreateClientEvents {
 
     @SubscribeEvent
-    public static void onClientTick(ClientTickEvent event) {
+    public static void onClientTickPre(ClientTickEvent.Pre event) {
+        onClientTick(true);
+    }
+
+    @SubscribeEvent
+    public static void onClientTickPost(ClientTickEvent.Post event) {
+        onClientTick(false);
+    }
+
+    public static void onClientTick(boolean preEvent) {
         if(!isGameActive()) return;
-        if(event.phase == Phase.START) {
-            TieredAirCurrent.tickClientPlayerSounds();
-            return;
+        if(preEvent) {
+        TieredAirCurrent.tickClientPlayerSounds();
         }
         TieredBeltConnectorHandler.tick();
     }

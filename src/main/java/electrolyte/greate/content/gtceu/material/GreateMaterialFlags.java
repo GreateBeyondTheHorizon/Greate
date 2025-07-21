@@ -1,7 +1,7 @@
 package electrolyte.greate.content.gtceu.material;
 
-import com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlag;
-import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
+import com.gregtechceu.gtceu.api.material.material.info.MaterialFlag;
+import com.gregtechceu.gtceu.api.material.material.properties.PropertyKey;
 
 public class GreateMaterialFlags {
 

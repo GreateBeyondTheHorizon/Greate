@@ -1,6 +1,5 @@
 package electrolyte.greate.foundation.item;
 
-import com.gregtechceu.gtceu.api.recipe.ingredient.SizedIngredient;
 import net.createmod.catnip.data.Pair;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
@@ -15,9 +14,10 @@ public class GreateItemHelper {
     public static List<Pair<Ingredient, MutableInt>> condenseIngredients(NonNullList<Ingredient> recipeIngredients) {
         List<Pair<Ingredient, MutableInt>> actualIngredients = new ArrayList<>();
         Ingredients: for(Ingredient ing : recipeIngredients) {
-            if(ing instanceof SizedIngredient si) {
+            //TODO: check
+            /*if(ing instanceof SizedIngredient si) {
                  actualIngredients.add(Pair.of(ing, new MutableInt(si.getAmount())));
-            } else {
+            } else {*/
                 for(Pair<Ingredient, MutableInt> pair : actualIngredients) {
                     ItemStack[] stacks = pair.getFirst().getItems();
                     ItemStack[] stacks2 = ing.getItems();
@@ -31,7 +31,7 @@ public class GreateItemHelper {
                     }
                 }
                 actualIngredients.add(Pair.of(ing, new MutableInt(1)));
-            }
+            //}
         }
         return actualIngredients;
     }

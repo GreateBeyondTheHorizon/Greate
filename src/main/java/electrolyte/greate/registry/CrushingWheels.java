@@ -1,5 +1,6 @@
 package electrolyte.greate.registry;
 
+import com.gregtechceu.gtceu.api.material.material.Material;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -14,8 +15,9 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
+import static com.gregtechceu.gtceu.data.material.GTMaterials.*;
 import static electrolyte.greate.Greate.REGISTRATE;
-import static electrolyte.greate.GreateValues.TM;
+import static electrolyte.greate.registry.GreateMaterials.AndesiteAlloy;
 
 public class CrushingWheels {
 
@@ -48,32 +50,32 @@ public class CrushingWheels {
     public static void register() {
         REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
 
-        CRUSHING_WHEELS[ULV] = ANDESITE_CRUSHING_WHEEL = crushingWheel(ULV, 0.5);
-        CRUSHING_WHEELS[LV] = STEEL_CRUSHING_WHEEL = crushingWheel(LV, 1.0);
-        CRUSHING_WHEELS[MV] = ALUMINIUM_CRUSHING_WHEEL = crushingWheel( MV, 1.5);
-        CRUSHING_WHEELS[HV] = STAINLESS_STEEL_CRUSHING_WHEEL = crushingWheel(HV, 2.0);
-        CRUSHING_WHEELS[EV] = TITANIUM_CRUSHING_WHEEL = crushingWheel(EV, 2.5);
-        CRUSHING_WHEELS[IV] = TUNGSTENSTEEL_CRUSHING_WHEEL = crushingWheel(IV, 3.0);
-        CRUSHING_WHEELS[LuV] = PALLADIUM_CRUSHING_WHEEL = crushingWheel(LuV, 3.5);
-        CRUSHING_WHEELS[ZPM] = NAQUADAH_CRUSHING_WHEEL = crushingWheel(ZPM, 4.0);
-        CRUSHING_WHEELS[UV] = DARMSTADTIUM_CRUSHING_WHEEL = crushingWheel(UV, 4.5);
-        CRUSHING_WHEELS[UHV] = NEUTRONIUM_CRUSHING_WHEEL = crushingWheel(UHV, 5.0);
+        CRUSHING_WHEELS[ULV] = ANDESITE_CRUSHING_WHEEL = crushingWheel(AndesiteAlloy, ULV, 0.5);
+        CRUSHING_WHEELS[LV] = STEEL_CRUSHING_WHEEL = crushingWheel(Steel, LV, 1.0);
+        CRUSHING_WHEELS[MV] = ALUMINIUM_CRUSHING_WHEEL = crushingWheel(Aluminium, MV, 1.5);
+        CRUSHING_WHEELS[HV] = STAINLESS_STEEL_CRUSHING_WHEEL = crushingWheel(StainlessSteel, HV, 2.0);
+        CRUSHING_WHEELS[EV] = TITANIUM_CRUSHING_WHEEL = crushingWheel(Titanium, EV, 2.5);
+        CRUSHING_WHEELS[IV] = TUNGSTENSTEEL_CRUSHING_WHEEL = crushingWheel(TungstenSteel, IV, 3.0);
+        CRUSHING_WHEELS[LuV] = PALLADIUM_CRUSHING_WHEEL = crushingWheel(Rhodium, LuV, 3.5);
+        CRUSHING_WHEELS[ZPM] = NAQUADAH_CRUSHING_WHEEL = crushingWheel(Naquadah, ZPM, 4.0);
+        CRUSHING_WHEELS[UV] = DARMSTADTIUM_CRUSHING_WHEEL = crushingWheel(Darmstadtium, UV, 4.5);
+        CRUSHING_WHEELS[UHV] = NEUTRONIUM_CRUSHING_WHEEL = crushingWheel(Neutronium, UHV, 5.0);
 
-        CRUSHING_WHEEL_CONTROLLERS[ULV] = ANDESITE_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(ULV);
-        CRUSHING_WHEEL_CONTROLLERS[LV] = STEEL_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(LV);
-        CRUSHING_WHEEL_CONTROLLERS[MV] = ALUMINIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(MV);
-        CRUSHING_WHEEL_CONTROLLERS[HV] = STAINLESS_STEEL_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(HV);
-        CRUSHING_WHEEL_CONTROLLERS[EV] = TITANIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(EV);
-        CRUSHING_WHEEL_CONTROLLERS[IV] = TUNGSTENSTEEL_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(IV);
-        CRUSHING_WHEEL_CONTROLLERS[LuV] = PALLADIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(LuV);
-        CRUSHING_WHEEL_CONTROLLERS[ZPM] = NAQUADAH_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(ZPM);
-        CRUSHING_WHEEL_CONTROLLERS[UV] = DARMSTADTIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(UV);
-        CRUSHING_WHEEL_CONTROLLERS[UHV] = NEUTRONIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(UHV);
+        CRUSHING_WHEEL_CONTROLLERS[ULV] = ANDESITE_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(AndesiteAlloy, ULV);
+        CRUSHING_WHEEL_CONTROLLERS[LV] = STEEL_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(Steel, LV);
+        CRUSHING_WHEEL_CONTROLLERS[MV] = ALUMINIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(Aluminium, MV);
+        CRUSHING_WHEEL_CONTROLLERS[HV] = STAINLESS_STEEL_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(StainlessSteel, HV);
+        CRUSHING_WHEEL_CONTROLLERS[EV] = TITANIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(Titanium, EV);
+        CRUSHING_WHEEL_CONTROLLERS[IV] = TUNGSTENSTEEL_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(TungstenSteel, IV);
+        CRUSHING_WHEEL_CONTROLLERS[LuV] = PALLADIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(Rhodium, LuV);
+        CRUSHING_WHEEL_CONTROLLERS[ZPM] = NAQUADAH_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(Naquadah, ZPM);
+        CRUSHING_WHEEL_CONTROLLERS[UV] = DARMSTADTIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(Darmstadtium, UV);
+        CRUSHING_WHEEL_CONTROLLERS[UHV] = NEUTRONIUM_CRUSHING_WHEEL_CONTROLLER = crushingWheelController(Neutronium, UHV);
     }
 
-    public static BlockEntry<TieredCrushingWheelBlock> crushingWheel(int tier, double stressImpact) {
+    public static BlockEntry<TieredCrushingWheelBlock> crushingWheel(Material mat, int tier, double stressImpact) {
         return REGISTRATE
-                .block(TM[tier].getName() + "_crushing_wheel", TieredCrushingWheelBlock::new)
+                .block(mat.getName() + "_crushing_wheel", TieredCrushingWheelBlock::new)
                 .properties(p -> p.mapColor(MapColor.METAL))
                 .initialProperties(SharedProperties::stone)
                 .properties(BlockBehaviour.Properties::noOcclusion)
@@ -84,9 +86,9 @@ public class CrushingWheels {
                 .register();
     }
 
-    public static BlockEntry<TieredCrushingWheelControllerBlock> crushingWheelController(int tier) {
+    public static BlockEntry<TieredCrushingWheelControllerBlock> crushingWheelController(Material mat, int tier) {
         return REGISTRATE
-                .block(TM[tier].getName() + "_crushing_wheel_controller", p -> new TieredCrushingWheelControllerBlock(p, CRUSHING_WHEELS[tier].get()))
+                .block(mat.getName() + "_crushing_wheel_controller", p -> new TieredCrushingWheelControllerBlock(p, CRUSHING_WHEELS[tier].get()))
                 .properties(p -> p.mapColor(MapColor.STONE))
                 .properties(p -> p.noOcclusion()
                         .noLootTable()

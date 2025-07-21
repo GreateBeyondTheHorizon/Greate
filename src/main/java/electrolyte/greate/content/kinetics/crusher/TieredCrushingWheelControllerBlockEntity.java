@@ -1,6 +1,6 @@
 package electrolyte.greate.content.kinetics.crusher;
 
-import com.gregtechceu.gtceu.api.recipe.GTRecipe;
+import com.gregtechceu.gtceu.api.recipe.kind.GTRecipe;
 import com.simibubi.create.content.kinetics.crusher.CrushingWheelControllerBlockEntity;
 import com.simibubi.create.content.processing.recipe.ProcessingInventory;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
@@ -13,9 +13,11 @@ import electrolyte.greate.registry.ModRecipeTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
+import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,21 +41,21 @@ public class TieredCrushingWheelControllerBlockEntity extends CrushingWheelContr
         tier = ((TieredCrushingWheelControllerBlock) state.getBlock()).getTier();
     }
 
-    private Optional<Recipe<?>> findValidRecipe() {
-        return TieredRecipeFinder.findRecipe(CRUSHING_RECIPES_CACHE_KEY, level, wrapper,
+    private Optional<RecipeHolder<? extends Recipe<?>>> findValidRecipe() {
+        return TieredRecipeFinder.findRecipe(CRUSHING_RECIPES_CACHE_KEY, level, new SingleRecipeInput(wrapper.getItem(0)),
                 RecipeConditions.isOfType(ModRecipeTypes.CRUSHING.getType(), ModRecipeTypes.MILLING.getType())
                         .and(TieredRecipeConditions.firstIngredientMatches(wrapper.getItem(0))),
                 TieredRecipeConditions.isEqualOrAboveTier(tier));
     }
 
     public void applyValidRecipe() {
-        Optional<Recipe<?>> recipe = findValidRecipe();
+        Optional<RecipeHolder<? extends Recipe<?>>> recipe = findValidRecipe();
         List<ItemStack> list = new ArrayList<>();
         if(recipe.isPresent()) {
             int rolls = inventory.getStackInSlot(0).getCount();
             inventory.clear();
             for(int roll = 0; roll < rolls; roll++) {
-                List<ItemStack> rolledResults = TieredRecipeHelper.INSTANCE.getItemResults(recipe.get(), tier);
+                List<ItemStack> rolledResults = TieredRecipeHelper.INSTANCE.getItemResults(recipe.get().value(), tier);
                 for(ItemStack stack : rolledResults) {
                     ItemHelper.addToList(stack, list);
                 }
@@ -67,12 +69,13 @@ public class TieredCrushingWheelControllerBlockEntity extends CrushingWheelContr
     }
 
     private void itemInserted(ItemStack stack) {
-        Optional<Recipe<?>> recipe = findValidRecipe();
+        Optional<RecipeHolder<? extends Recipe<?>>> recipe = findValidRecipe();
         int remainingTime = 100;
         if(recipe.isPresent()) {
-            if(recipe.get() instanceof ProcessingRecipe<?> pr) {
+            if(recipe.get().value() instanceof ProcessingRecipe<?, ?> pr) {
                 remainingTime = pr.getProcessingDuration();
-            } else if(recipe.get() instanceof GTRecipe gtr) {
+                //TODO: check if needed
+            } else if(recipe.get().value() instanceof GTRecipe gtr) {
                 remainingTime = gtr.duration;
             }
         }

@@ -5,13 +5,14 @@ import com.simibubi.create.content.kinetics.fan.processing.AllFanProcessingTypes
 import com.simibubi.create.content.kinetics.fan.processing.AllFanProcessingTypes.SplashingType;
 import com.simibubi.create.content.kinetics.fan.processing.FanProcessingType;
 import electrolyte.greate.Greate;
-import electrolyte.greate.content.kinetics.fan.processing.TieredHauntingRecipe.TieredHauntingWrapper;
-import electrolyte.greate.content.kinetics.fan.processing.TieredSplashingRecipe.TieredSplashingWrapper;
 import electrolyte.greate.foundation.recipe.TieredRecipeApplier;
 import electrolyte.greate.registry.ModRecipeTypes;
 import it.unimi.dsi.fastutil.objects.Object2ReferenceOpenHashMap;
 import net.minecraft.core.Registry;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
@@ -54,7 +55,6 @@ public class GreateFanProcessingTypes {
     public static void register() {}
 
     public static class TieredHauntingType extends HauntingType {
-        private static final TieredHauntingWrapper TIERED_HAUNTING_WRAPPER = new TieredHauntingWrapper();
 
         @Override
         public int getPriority() {
@@ -63,8 +63,7 @@ public class GreateFanProcessingTypes {
 
         public boolean canProcess(ItemStack stack, Level level, int machineTier) {
             if(super.canProcess(stack, level)) return true;
-            TIERED_HAUNTING_WRAPPER.setItem(0, stack);
-            Optional<TieredHauntingRecipe> tieredRecipe = ModRecipeTypes.HAUNTING.find(TIERED_HAUNTING_WRAPPER, level, machineTier);
+            Optional<RecipeHolder<Recipe<SingleRecipeInput>>> tieredRecipe = ModRecipeTypes.HAUNTING.find(new SingleRecipeInput(stack), level, machineTier);
             return tieredRecipe.isPresent();
         }
 
@@ -72,15 +71,13 @@ public class GreateFanProcessingTypes {
         public List<ItemStack> process(ItemStack stack, Level level, int machineTier) {
             List<ItemStack> result = super.process(stack, level);
             if(result != null) return result;
-            TIERED_HAUNTING_WRAPPER.setItem(0, stack);
-            Optional<TieredHauntingRecipe> tieredRecipe = ModRecipeTypes.HAUNTING.find(TIERED_HAUNTING_WRAPPER, level, machineTier);
+            Optional<RecipeHolder<Recipe<SingleRecipeInput>>> tieredRecipe = ModRecipeTypes.HAUNTING.find(new SingleRecipeInput(stack), level, machineTier);
             return tieredRecipe.map(tieredHauntingRecipe ->
-                    TieredRecipeApplier.applyRecipeOn(level, stack, tieredHauntingRecipe, machineTier)).orElse(null);
+                    TieredRecipeApplier.applyRecipeOn(level, stack, tieredHauntingRecipe.value(), machineTier)).orElse(null);
         }
     }
 
     public static class TieredSplashingType extends SplashingType {
-        private static final TieredSplashingWrapper TIERED_SPLASHING_WRAPPER = new TieredSplashingWrapper();
 
         @Override
         public int getPriority() {
@@ -89,8 +86,7 @@ public class GreateFanProcessingTypes {
 
         public boolean canProcess(ItemStack stack, Level level, int machineTier) {
             if(super.canProcess(stack, level)) return true;
-            TIERED_SPLASHING_WRAPPER.setItem(0, stack);
-            Optional<TieredSplashingRecipe> tieredRecipe = ModRecipeTypes.SPLASHING.find(TIERED_SPLASHING_WRAPPER, level, machineTier);
+            Optional<RecipeHolder<Recipe<SingleRecipeInput>>> tieredRecipe = ModRecipeTypes.SPLASHING.find(new SingleRecipeInput(stack), level, machineTier);
             return tieredRecipe.isPresent();
         }
 
@@ -98,10 +94,9 @@ public class GreateFanProcessingTypes {
         public List<ItemStack> process(ItemStack stack, Level level, int machineTier) {
             List<ItemStack> result = super.process(stack, level);
             if(result != null) return result;
-            TIERED_SPLASHING_WRAPPER.setItem(0, stack);
-            Optional<TieredSplashingRecipe> tieredRecipe = ModRecipeTypes.SPLASHING.find(TIERED_SPLASHING_WRAPPER, level, machineTier);
+            Optional<RecipeHolder<Recipe<SingleRecipeInput>>> tieredRecipe = ModRecipeTypes.SPLASHING.find(new SingleRecipeInput(stack), level, machineTier);
             return tieredRecipe.map(tieredSplashingRecipe ->
-                    TieredRecipeApplier.applyRecipeOn(level, stack, tieredSplashingRecipe, machineTier)).orElse(null);
+                    TieredRecipeApplier.applyRecipeOn(level, stack, tieredSplashingRecipe.value(), machineTier)).orElse(null);
         }
     }
 }

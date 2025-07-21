@@ -1,10 +1,10 @@
 package electrolyte.greate.foundation.data.recipe;
 
-import com.gregtechceu.gtceu.data.recipe.CraftingComponent;
+import com.gregtechceu.gtceu.api.recipe.component.CraftingComponent;
 import com.simibubi.create.AllItems;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
-import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
+import static com.gregtechceu.gtceu.data.material.GTMaterials.*;
 import static electrolyte.greate.registry.GreateMaterials.AndesiteAlloy;
 import static electrolyte.greate.registry.GreateTagPrefixes.*;
 import static electrolyte.greate.registry.Pumps.MECHANICAL_PUMPS;

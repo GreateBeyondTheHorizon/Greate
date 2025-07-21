@@ -13,6 +13,7 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -42,14 +43,14 @@ public class TieredPackingCategory extends TieredBasinCategory {
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, TieredBasinRecipe recipe, IFocusGroup focuses) {
+    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<TieredBasinRecipe> recipe, IFocusGroup focuses) {
         if(packingType == PackingType.COMPACTING) {
             super.setRecipe(builder, recipe, focuses);
             return;
         }
 
         int i = 0;
-        NonNullList<Ingredient> ingredients = recipe.getIngredients();
+        NonNullList<Ingredient> ingredients = recipe.value().getIngredients();
         int size = ingredients.size();
         int rows = size == 4 ? 2 : 3;
         while(i < size) {
@@ -62,11 +63,11 @@ public class TieredPackingCategory extends TieredBasinCategory {
 
         builder.addSlot(RecipeIngredientRole.OUTPUT, 142, 51)
                 .setBackground(getRenderedSlot(), -1, -1)
-                .addItemStack(getResultItem(recipe));
+                .addItemStack(getResultItem(recipe.value()));
     }
 
     @Override
-    public void draw(TieredBasinRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double x, double y) {
+    public void draw(RecipeHolder<TieredBasinRecipe> recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double x, double y) {
         boolean type = packingType == PackingType.AUTO_SQUARE;
         double yOffset = type ? 90 : 108;
         super.draw(recipe, recipeSlotsView, graphics, x, yOffset);
@@ -75,10 +76,10 @@ public class TieredPackingCategory extends TieredBasinCategory {
             AllGuiTextures.JEI_SHADOW.render(graphics, 81, 68);
         }
 
-        HeatCondition requiredHeat = recipe.getRequiredHeat();
+        HeatCondition requiredHeat = recipe.value().getRequiredHeat();
         if(requiredHeat != HeatCondition.NONE) {
             heater.withHeat(requiredHeat.visualizeAsBlazeBurner()).draw(graphics, getBackground().getWidth() / 2 + 3, 55);
         }
-        new TieredAnimatedMechanicalPress(MechanicalPresses.MECHANICAL_PRESSES[recipe.getRecipeTier()].get(), true).draw(graphics, getBackground().getWidth() / 2 + 3, 34);
+        new TieredAnimatedMechanicalPress(MechanicalPresses.MECHANICAL_PRESSES[recipe.value().getRecipeTier()].get(), true).draw(graphics, getBackground().getWidth() / 2 + 3, 34);
     }
 }

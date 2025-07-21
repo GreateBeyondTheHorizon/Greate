@@ -1,6 +1,8 @@
 package electrolyte.greate.registry;
 
-import com.google.common.collect.ImmutableSet;
+import com.mojang.serialization.Codec;
+import com.simibubi.create.AllRecipeTypes;
+import com.simibubi.create.AllTags.AllRecipeSerializerTags;
 import com.simibubi.create.Create;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import electrolyte.greate.Greate;
@@ -15,29 +17,24 @@ import electrolyte.greate.content.kinetics.press.TieredPressingRecipe;
 import electrolyte.greate.content.kinetics.saw.TieredCuttingRecipe;
 import electrolyte.greate.content.processing.basin.TieredBasinRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
-import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeFactory;
-import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeSerializer;
+import electrolyte.greate.content.processing.recipe.TieredStandardProcessingRecipe.Factory;
+import electrolyte.greate.content.processing.recipe.TieredStandardProcessingRecipe.Serializer;
 import net.createmod.catnip.lang.Lang;
-import net.createmod.catnip.platform.CatnipServices;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.Container;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.Supplier;
 
-public enum ModRecipeTypes implements IRecipeTypeInfo {
+public enum ModRecipeTypes implements IRecipeTypeInfo, StringRepresentable {
 
 	MILLING(TieredMillingRecipe::new),
 	CRUSHING(TieredCrushingRecipe::new),
@@ -50,15 +47,20 @@ public enum ModRecipeTypes implements IRecipeTypeInfo {
 	SPLASHING(TieredSplashingRecipe::new),
 	HAUNTING(TieredHauntingRecipe::new);
 
-	private final ResourceLocation id;
-	private final RegistryObject<RecipeSerializer<?>> serializerObject;
+	public final ResourceLocation id;
+	public final Supplier<RecipeSerializer<?>> serializerSupplier;
+	private final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<?>> serializerObject;
 	@Nullable
-	private final RegistryObject<RecipeType<?>> typeObject;
+	private final DeferredHolder<RecipeType<?>, RecipeType<?>> typeObject;
 	private final Supplier<RecipeType<?>> type;
+
+	private boolean isProcessingRecipe;
+	public static final Codec<ModRecipeTypes> CODEC = StringRepresentable.fromEnum(ModRecipeTypes::values);
 
 	ModRecipeTypes(Supplier<RecipeSerializer<?>> serializerSupplier, Supplier<RecipeType<?>> typeSupplier, boolean registerType) {
 		String name = Lang.asId(name());
 		id = Create.asResource(name);
+		this.serializerSupplier = serializerSupplier;
 		serializerObject = Registers.SERIALIZER_REGISTER.register(name, serializerSupplier);
 		if (registerType) {
 			typeObject = Registers.TYPE_REGISTER.register(name, typeSupplier);
@@ -67,22 +69,26 @@ public enum ModRecipeTypes implements IRecipeTypeInfo {
 			typeObject = null;
 			type = typeSupplier;
 		}
+		isProcessingRecipe = false;
 	}
 
 	ModRecipeTypes(Supplier<RecipeSerializer<?>> serializerSupplier) {
 		String name = Lang.asId(name());
 		id = Greate.id(name);
+		this.serializerSupplier = serializerSupplier;
 		serializerObject = Registers.SERIALIZER_REGISTER.register(name, serializerSupplier);
 		typeObject = Registers.TYPE_REGISTER.register(name, () -> RecipeType.simple(id));
 		type = typeObject;
+		isProcessingRecipe = false;
 	}
 
-	ModRecipeTypes(TieredProcessingRecipeFactory<?> processingFactory) {
-		this(() -> new TieredProcessingRecipeSerializer<>(processingFactory));
+	ModRecipeTypes(Factory<?> processingFactory) {
+		this(() -> new Serializer<>(processingFactory));
+		isProcessingRecipe = true;
 	}
 
 	public static void register(IEventBus modEventBus) {
-		ShapedRecipe.setCraftingSize(9, 9);
+		ShapedRecipePattern.setCraftingSize(9, 9);
 		Registers.SERIALIZER_REGISTER.register(modEventBus);
 		Registers.TYPE_REGISTER.register(modEventBus);
 	}
@@ -100,14 +106,14 @@ public enum ModRecipeTypes implements IRecipeTypeInfo {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends RecipeType<?>> T getType() {
-		return (T) type.get();
+	public <I extends RecipeInput, R extends Recipe<I>> RecipeType<R> getType() {
+		return (RecipeType<R>) type.get();
 	}
 
-	public <C extends Container, T extends Recipe<C>> Optional<T> find(C inv, Level world, int tier) {
-		Optional<T> recipe = world.getRecipeManager().getRecipeFor(getType(), inv, world);
+	public <I extends RecipeInput, R extends Recipe<I>> Optional<RecipeHolder<R>> find(I inv, Level world, int tier) {
+		Optional<RecipeHolder<R>> recipe = world.getRecipeManager().getRecipeFor(getType(), inv, world);
 		if(recipe.isPresent()) {
-			if(recipe.get() instanceof TieredProcessingRecipe<?> tieredRecipe) {
+			if(recipe.get().value() instanceof TieredProcessingRecipe<?, ?> tieredRecipe) {
 				if(tieredRecipe.getRecipeTier() <= tier) {
 					return recipe;
 				}
@@ -116,20 +122,20 @@ public enum ModRecipeTypes implements IRecipeTypeInfo {
 		return Optional.empty();
 	}
 
-	public static final Set<ResourceLocation> RECIPE_DENY_SET =
-		ImmutableSet.of(new ResourceLocation("occultism", "spirit_trade"), new ResourceLocation("occultism", "ritual"));
-
-	public static boolean shouldIgnoreInAutomation(Recipe<?> recipe) {
-		RecipeSerializer<?> serializer = recipe.getSerializer();
-		if (serializer != null && RECIPE_DENY_SET.contains(CatnipServices.REGISTRIES.getKeyOrThrow(serializer)))
+	public static boolean shouldIgnoreInAutomation(RecipeHolder<?> recipe) {
+		RecipeSerializer<?> serializer = recipe.value().getSerializer();
+		if (serializer != null && AllRecipeSerializerTags.AUTOMATION_IGNORE.matches(serializer))
 			return true;
-		return recipe.getId()
-			.getPath()
-			.endsWith("_manual_only");
+		return !AllRecipeTypes.CAN_BE_AUTOMATED.test(recipe);
+	}
+
+	@Override
+	public @NotNull String getSerializedName() {
+		return id.toString();
 	}
 
 	private static class Registers {
-		private static final DeferredRegister<RecipeSerializer<?>> SERIALIZER_REGISTER = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Greate.MOD_ID);
+		private static final DeferredRegister<RecipeSerializer<?>> SERIALIZER_REGISTER = DeferredRegister.create(Registries.RECIPE_SERIALIZER, Greate.MOD_ID);
 		private static final DeferredRegister<RecipeType<?>> TYPE_REGISTER = DeferredRegister.create(Registries.RECIPE_TYPE, Greate.MOD_ID);
 	}
 

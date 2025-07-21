@@ -1,6 +1,6 @@
 package electrolyte.greate.content.gtceu.material;
 
-import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
+import com.gregtechceu.gtceu.api.material.material.properties.PropertyKey;
 
 public class GreatePropertyKeys {
 

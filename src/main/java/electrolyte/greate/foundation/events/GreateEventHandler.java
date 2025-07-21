@@ -3,12 +3,12 @@ package electrolyte.greate.foundation.events;
 import electrolyte.greate.Greate;
 import electrolyte.greate.foundation.data.recipe.GreateRuntimeRecipes;
 import electrolyte.greate.foundation.recipe.TieredRecipeFinder;
-import net.minecraftforge.event.AddReloadListenerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.EventBusSubscriber.Bus;
+import net.neoforged.neoforge.event.AddReloadListenerEvent;
 
-@EventBusSubscriber(modid = Greate.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@EventBusSubscriber(modid = Greate.MOD_ID, bus = Bus.GAME)
 public class GreateEventHandler {
 
     @SubscribeEvent

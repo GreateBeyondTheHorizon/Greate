@@ -7,11 +7,11 @@ import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.model.generators.ConfiguredModel;
-import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.client.model.generators.ModelFile.UncheckedModelFile;
+import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.client.model.generators.ModelFile.UncheckedModelFile;
 
-import static electrolyte.greate.foundation.data.GreateBlockStateGen.CUTOUT_MIPPED;
+import static net.minecraft.client.renderer.RenderType.CUTOUT_MIPPED;
 
 public class TieredSawGenerator extends SawGenerator {
 
@@ -24,29 +24,29 @@ public class TieredSawGenerator extends SawGenerator {
 
     public <T extends TieredSawBlock> void generateModel(DataGenContext<Block, T> ctx, RegistrateBlockstateProvider prov) {
         String material = ctx.getName().substring(0, ctx.getName().length() - 15);
-        prov.models().withExistingParent(ctx.getName() + "_blade_horizontal_active", Create.asResource("block/mechanical_saw/blade_horizontal_active")).renderType(CUTOUT_MIPPED)
+        prov.models().withExistingParent(ctx.getName() + "_blade_horizontal_active", Create.asResource("block/mechanical_saw/blade_horizontal_active")).renderType(CUTOUT_MIPPED.name)
                 .texture("stonecutter_saw", prov.modLoc("block/" + material + "/saw"));
 
-        prov.models().withExistingParent(ctx.getName() + "_blade_horizontal_inactive", Create.asResource("block/mechanical_saw/blade_horizontal_inactive")).renderType(CUTOUT_MIPPED)
+        prov.models().withExistingParent(ctx.getName() + "_blade_horizontal_inactive", Create.asResource("block/mechanical_saw/blade_horizontal_inactive")).renderType(CUTOUT_MIPPED.name)
                 .texture("stonecutter_saw", prov.modLoc("block/" + material + "/static_saw"))
                 .texture("stonecutter_saw_reversed", prov.modLoc("block/" + material + "/static_saw"));
 
-        prov.models().withExistingParent(ctx.getName() + "_blade_horizontal_reversed", Create.asResource("block/mechanical_saw/blade_horizontal_reversed")).renderType(CUTOUT_MIPPED)
+        prov.models().withExistingParent(ctx.getName() + "_blade_horizontal_reversed", Create.asResource("block/mechanical_saw/blade_horizontal_reversed")).renderType(CUTOUT_MIPPED.name)
                 .texture("stonecutter_saw", prov.modLoc("block/" + material + "/saw"));
 
-        prov.models().withExistingParent(ctx.getName() + "_blade_vertical_active", Create.asResource("block/mechanical_saw/blade_vertical_active")).renderType(CUTOUT_MIPPED)
+        prov.models().withExistingParent(ctx.getName() + "_blade_vertical_active", Create.asResource("block/mechanical_saw/blade_vertical_active")).renderType(CUTOUT_MIPPED.name)
                 .texture("stonecutter_saw", prov.modLoc("block/" + material + "/saw"));
 
-        prov.models().withExistingParent(ctx.getName() + "_blade_vertical_inactive", Create.asResource("block/mechanical_saw/blade_vertical_inactive")).renderType(CUTOUT_MIPPED)
+        prov.models().withExistingParent(ctx.getName() + "_blade_vertical_inactive", Create.asResource("block/mechanical_saw/blade_vertical_inactive")).renderType(CUTOUT_MIPPED.name)
                 .texture("stonecutter_saw", prov.modLoc("block/" + material + "/static_saw"))
                 .texture("stonecutter_saw_reversed", prov.modLoc("block/" + material + "/static_saw"));
 
-        prov.models().withExistingParent(ctx.getName() + "_blade_vertical_reversed", Create.asResource("block/mechanical_saw/blade_vertical_reversed")).renderType(CUTOUT_MIPPED)
+        prov.models().withExistingParent(ctx.getName() + "_blade_vertical_reversed", Create.asResource("block/mechanical_saw/blade_vertical_reversed")).renderType(CUTOUT_MIPPED.name)
                 .texture("stonecutter_saw", prov.modLoc("block/" + material + "/saw"));
 
-        prov.models().withExistingParent(ctx.getName() + "_horizontal", Create.asResource("block/mechanical_saw/horizontal")).renderType(CUTOUT_MIPPED);
+        prov.models().withExistingParent(ctx.getName() + "_horizontal", Create.asResource("block/mechanical_saw/horizontal")).renderType(CUTOUT_MIPPED.name);
 
-        prov.models().withExistingParent(ctx.getName() + "_vertical", Create.asResource("block/mechanical_saw/vertical")).renderType(CUTOUT_MIPPED);
+        prov.models().withExistingParent(ctx.getName() + "_vertical", Create.asResource("block/mechanical_saw/vertical")).renderType(CUTOUT_MIPPED.name);
 
         prov.getVariantBuilder(ctx.getEntry()).forAllStates(state -> ConfiguredModel.builder()
                 .modelFile(getModel(ctx, prov, state))

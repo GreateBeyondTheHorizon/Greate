@@ -1,9 +1,9 @@
 package electrolyte.greate.registry;
 
-import com.gregtechceu.gtceu.api.data.chemical.material.Material;
-import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
-import com.gregtechceu.gtceu.api.data.chemical.material.properties.ToolProperty;
-import com.gregtechceu.gtceu.api.data.chemical.material.stack.MaterialStack;
+import com.gregtechceu.gtceu.api.material.material.Material;
+import com.gregtechceu.gtceu.api.material.material.properties.PropertyKey;
+import com.gregtechceu.gtceu.api.material.material.properties.ToolProperty;
+import com.gregtechceu.gtceu.api.material.material.stack.MaterialStack;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import electrolyte.greate.Greate;
@@ -15,14 +15,14 @@ import electrolyte.greate.content.gtceu.material.KineticProperty;
 import java.util.List;
 
 import static com.gregtechceu.gtceu.api.GTValues.M;
-import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags.*;
-import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialIconSet.*;
-import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.block;
-import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.ingot;
-import static com.gregtechceu.gtceu.api.item.tool.GTToolType.BUZZSAW;
-import static com.gregtechceu.gtceu.common.data.GTElements.Ma;
-import static com.gregtechceu.gtceu.common.data.GTElements.Sp;
-import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
+import static com.gregtechceu.gtceu.api.item.tool.GTToolType.BUZZSAW_LV;
+import static com.gregtechceu.gtceu.api.material.material.info.MaterialFlags.*;
+import static com.gregtechceu.gtceu.api.material.material.info.MaterialIconSet.*;
+import static com.gregtechceu.gtceu.api.tag.TagPrefix.block;
+import static com.gregtechceu.gtceu.api.tag.TagPrefix.ingot;
+import static com.gregtechceu.gtceu.data.material.GTElements.Ma;
+import static com.gregtechceu.gtceu.data.material.GTElements.Sp;
+import static com.gregtechceu.gtceu.data.material.GTMaterials.*;
 import static electrolyte.greate.content.gtceu.material.GreateMaterialFlags.GENERATE_ALLOY;
 import static electrolyte.greate.content.gtceu.material.GreateMaterialFlags.GENERATE_WHISK;
 import static electrolyte.greate.registry.GreateTagPrefixes.alloy;
@@ -40,7 +40,7 @@ public class GreateMaterials {
 				.ingot().fluid()
 				.appendFlags(STD_METAL, GENERATE_BOLT_SCREW, GENERATE_ROTOR)
 				.color(0xDADBCA).secondaryColor(0xABC7B5).iconSet(DULL)
-				.toolStats(ToolProperty.Builder.of(1, 1, 64, 0, BUZZSAW).build())
+				.toolStats(ToolProperty.Builder.of(1, 1, 64, 0, BUZZSAW_LV).build())
 				.components(Andesite, 1, WroughtIron, 1)
 				.buildAndRegister();
 		RoseQuartz = Builder("rose_quartz")
@@ -103,8 +103,8 @@ public class GreateMaterials {
 		Darmstadtium.addFlags(GENERATE_WHISK, GENERATE_ALLOY);
 		Neutronium.addFlags(GENERATE_ROTOR, GENERATE_WHISK, GENERATE_ALLOY);
 
-		Darmstadtium.setProperty(PropertyKey.TOOL, ToolProperty.Builder.of(50.0F, 15.0F, 5120, 5, BUZZSAW).build());
-		RhodiumPlatedPalladium.setProperty(PropertyKey.TOOL, ToolProperty.Builder.of(35.0F, 10.0F, 2560, 4, BUZZSAW).build());
+		Darmstadtium.setProperty(PropertyKey.TOOL, ToolProperty.Builder.of(50.0F, 15.0F, 5120, 5, BUZZSAW_LV).build());
+		RhodiumPlatedPalladium.setProperty(PropertyKey.TOOL, ToolProperty.Builder.of(35.0F, 10.0F, 2560, 4, BUZZSAW_LV).build());
 
 		Rubber.setProperty(GreatePropertyKeys.BELT, new BeltProperty(List.of(AndesiteAlloy, Steel)));
 		SiliconeRubber.setProperty(GreatePropertyKeys.BELT, new BeltProperty(List.of(Aluminium, StainlessSteel)));

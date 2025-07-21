@@ -1,28 +1,9 @@
 package electrolyte.greate.foundation.data.recipe;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.gregtechceu.gtceu.api.capability.recipe.EURecipeCapability;
-import com.gregtechceu.gtceu.api.capability.recipe.FluidRecipeCapability;
-import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
-import com.gregtechceu.gtceu.api.recipe.GTRecipe;
-import com.gregtechceu.gtceu.api.recipe.GTRecipeSerializer;
-import com.simibubi.create.content.kinetics.mixer.MixingRecipe;
-import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
-import electrolyte.greate.Greate;
-import electrolyte.greate.GreateValues;
-import electrolyte.greate.content.kinetics.mixer.TieredBrewingRecipe;
-import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
-import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder;
-import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeFactory;
-import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeSerializer;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
-
-import java.util.Collections;
-
-import static com.gregtechceu.gtceu.api.GTValues.ULV;
 
 public class GreateRuntimeRecipes {
 
@@ -32,7 +13,7 @@ public class GreateRuntimeRecipes {
         JSON_FILES.trim();
     };
 
-    public static void convertGTRecipe(TieredProcessingRecipeFactory<TieredProcessingRecipe<?>> factory, ResourceLocation recipeId, JsonElement recipeJson, boolean supportsDuration) {
+    /*public static void convertGTRecipe(TieredProcessingRecipeFactory<TieredProcessingRecipe<?>> factory, ResourceLocation recipeId, JsonElement recipeJson, boolean supportsDuration) {
         GTRecipe recipe = GTRecipeSerializer.SERIALIZER.fromJson(recipeId, recipeJson.getAsJsonObject());
         int recipeTier = GreateValues.convertGTEUToTier(recipe.getTickInputContents(EURecipeCapability.CAP));
         new Builder<>(factory, recipe.getId())
@@ -46,8 +27,8 @@ public class GreateRuntimeRecipes {
                 .build();
     }
 
-    public static void convertCreateRecipe(TieredProcessingRecipeFactory<TieredProcessingRecipe<?>> factory, ResourceLocation recipeId, JsonElement recipeJson) {
-        TieredProcessingRecipeSerializer<TieredProcessingRecipe<?>> serializer = new TieredProcessingRecipeSerializer<>(factory);
+    public static void convertCreateRecipe(Factory<ProcessingRecipeParams, ProcessingRecipe<?, ProcessingRecipeParams>> factory, ResourceLocation recipeId, JsonElement recipeJson) {
+        TieredProcessingRecipeSerializer<TieredProcessingRecipe<?>> serializer = new Serializer<>(factory);
         ProcessingRecipe<?> recipe = serializer.fromJson(recipeId, recipeJson.getAsJsonObject());
         new Builder<>(factory, recipe.getId())
                 .withItemIngredients(recipe.getIngredients())
@@ -69,9 +50,9 @@ public class GreateRuntimeRecipes {
                 .requiresHeat(recipe.getRequiredHeat())
                 .recipeTier(ULV)
                 .build();
-    }
+    }*/
 
-    private static class Builder<T extends TieredProcessingRecipe<?>> extends TieredProcessingRecipeBuilder<T> {
+    /*private static class Builder<T extends TieredProcessingRecipe<?>> extends TieredProcessingRecipeBuilder<T> {
 
         public Builder(TieredProcessingRecipeFactory<T> factory, ResourceLocation recipeId) {
             super(factory, Greate.id("integration/" + recipeId.toString().replace(":", "/")));
@@ -84,5 +65,5 @@ public class GreateRuntimeRecipes {
             JSON_FILES.put(result.getId(), result.serializeRecipe());
             return t;
         }
-    }
+    }*/
 }

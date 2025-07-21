@@ -3,9 +3,9 @@ package electrolyte.greate.registry;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
 import com.gregtechceu.gtceu.api.GTCEuAPI;
-import com.gregtechceu.gtceu.api.data.chemical.material.Material;
-import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
-import com.gregtechceu.gtceu.common.data.GTItems;
+import com.gregtechceu.gtceu.api.material.material.Material;
+import com.gregtechceu.gtceu.api.tag.TagPrefix;
+import com.gregtechceu.gtceu.data.item.GTItems;
 import com.simibubi.create.AllDisplaySources;
 import com.simibubi.create.content.kinetics.belt.BeltModel;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -21,11 +21,10 @@ import electrolyte.greate.infrastructure.config.GStress;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.MapColor;
 
-import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
+import static com.gregtechceu.gtceu.data.material.GTMaterials.*;
 import static com.simibubi.create.api.behaviour.display.DisplaySource.displaySource;
 import static com.tterrag.registrate.providers.RegistrateLangProvider.toEnglishName;
 import static electrolyte.greate.Greate.REGISTRATE;
-import static electrolyte.greate.GreateValues.TM;
 import static electrolyte.greate.registry.GreateTagPrefixes.beltConnector;
 
 public class Belts {
@@ -65,7 +64,7 @@ public class Belts {
 
     public static BlockEntry<TieredBeltBlock> belt(Material material, int tier) {
         return REGISTRATE
-                .block(material.getName() + "_belt_" + TM[tier].getName(), TieredBeltBlock::new)
+                .block(material.getName() + "_belt_" + material.getName(), TieredBeltBlock::new)
                 .lang(toEnglishName(material.getName() + "_belt"))
                 .properties(p -> p.sound(SoundType.WOOL))
                 .properties(p -> p.strength(0.8F))
@@ -82,7 +81,7 @@ public class Belts {
     }
 
     private static void generateBeltConnectors() {
-        for(Material material : GTCEuAPI.materialManager.getRegisteredMaterials()) {
+        for(Material material : GTCEuAPI.materialManager) {
             if(material.hasProperty(GreatePropertyKeys.BELT)) {
                 var beltEntry = REGISTRATE
                 .item(material.getName() + "_belt_connector", p -> new TieredBeltConnectorItem(p, material))

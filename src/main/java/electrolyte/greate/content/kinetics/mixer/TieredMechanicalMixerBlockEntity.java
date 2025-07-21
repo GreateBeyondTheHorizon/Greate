@@ -21,23 +21,19 @@ import net.createmod.catnip.math.VecHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingRecipe;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.crafting.IShapedRecipe;
-import net.minecraftforge.items.IItemHandler;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.capabilities.Capabilities.ItemHandler;
+import net.neoforged.neoforge.items.IItemHandler;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class TieredMechanicalMixerBlockEntity extends MechanicalMixerBlockEntity implements ITieredKineticBlockEntity, ICircuitHolder {
 
@@ -79,12 +75,12 @@ public class TieredMechanicalMixerBlockEntity extends MechanicalMixerBlockEntity
     }
 
     @Override
-    protected <C extends Container> boolean matchStaticFilters(Recipe<C> r) {
-        return ((r instanceof CraftingRecipe && !(r instanceof IShapedRecipe<?>)
-                && AllConfigs.server().recipes.allowShapelessInMixer.get() && r.getIngredients().size() > 1
-                && !MechanicalPressBlockEntity.canCompress(r)) && !AllRecipeTypes.shouldIgnoreInAutomation(r)
-                || r.getType() == ModRecipeTypes.MIXING.getType()
-                || (AllConfigs.server().recipes.allowBrewingInMixer.get() && r.getType() == ModRecipeTypes.BREWING.getType()));
+    protected boolean matchStaticFilters(RecipeHolder<? extends Recipe<?>> r) {
+        return ((r.value() instanceof CraftingRecipe && !(r.value() instanceof ShapedRecipe)
+                && AllConfigs.server().recipes.allowShapelessInMixer.get() && r.value().getIngredients().size() > 1
+                && !MechanicalPressBlockEntity.canCompress(r.value())) && !AllRecipeTypes.shouldIgnoreInAutomation(r)
+                || r.value().getType() == ModRecipeTypes.MIXING.getType()
+                || (AllConfigs.server().recipes.allowBrewingInMixer.get() && r.value().getType() == ModRecipeTypes.BREWING.getType()));
     }
 
     @Override
@@ -129,14 +125,11 @@ public class TieredMechanicalMixerBlockEntity extends MechanicalMixerBlockEntity
                 .orElse(true))
             return matchingRecipes;
 
-        List<Recipe<?>> recipes = RecipeFinder.get(getRecipeCacheKey(), level, this::matchStaticFilters);
-        matchingRecipes = recipes.stream()
-                .filter(this::matchBasinRecipe)
-                .sorted((r1, r2) -> r2.getIngredients()
-                        .size()
-                        - r1.getIngredients()
-                        .size())
-                .collect(Collectors.toList());
+        List<Recipe<?>> recipes = new ArrayList<>();
+        for(RecipeHolder<? extends Recipe<?>> r : RecipeFinder.get(getRecipeCacheKey(), level, this::matchStaticFilters)) {
+            recipes.add(r.value());
+        }
+        recipes.sort((r1, r2) -> r2.getIngredients().size() - r1.getIngredients().size());
 
         if (!AllConfigs.server().recipes.allowBrewingInMixer.get())
             return matchingRecipes;
@@ -149,9 +142,7 @@ public class TieredMechanicalMixerBlockEntity extends MechanicalMixerBlockEntity
         if (basin.isEmpty())
             return matchingRecipes;
 
-        IItemHandler availableItems = basinBlockEntity
-                .getCapability(ForgeCapabilities.ITEM_HANDLER)
-                .orElse(null);
+        IItemHandler availableItems = level.getCapability(ItemHandler.BLOCK, basinBlockEntity.getBlockPos(), null);
         if (availableItems == null)
             return matchingRecipes;
 
@@ -160,19 +151,19 @@ public class TieredMechanicalMixerBlockEntity extends MechanicalMixerBlockEntity
             if (stack.isEmpty())
                 continue;
 
-            List<MixingRecipe> list = PotionMixingRecipes.BY_ITEM.get(stack.getItem());
-            if (list == null)
-                continue;
+            List<MixingRecipe> list = PotionMixingRecipes.sortRecipesByItem(level).get(stack.getItem());
+            if (list == null) continue;
             for (MixingRecipe mixingRecipe : list)
-                if (matchBasinRecipe(mixingRecipe))
+                if (matchBasinRecipe(mixingRecipe)) {
                     matchingRecipes.add(mixingRecipe);
+                }
         }
 
         return matchingRecipes;
     }
 
     @Override
-    protected <C extends Container> boolean matchBasinRecipe(Recipe<C> recipe) {
+    protected <I extends RecipeInput> boolean matchBasinRecipe(Recipe<I> recipe) {
         if(recipe == null) return false;
         Optional<BasinBlockEntity> basin = getBasin();
         return basin.filter(basinBlockEntity -> TieredBasinRecipe.match(basinBlockEntity, recipe, this.tier)).isPresent();

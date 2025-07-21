@@ -14,30 +14,27 @@ import com.simibubi.create.infrastructure.config.AllConfigs;
 import electrolyte.greate.content.kinetics.base.ICircuitHolder;
 import electrolyte.greate.content.kinetics.mixer.TieredBrewingRecipe;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
-import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
-import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder;
-import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeParams;
+import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeParams;
+import electrolyte.greate.content.processing.recipe.TieredStandardProcessingRecipe;
 import electrolyte.greate.registry.ModRecipeTypes;
 import net.createmod.catnip.data.Iterate;
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.Container;
-import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingRecipe;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.items.IItemHandler;
+import net.neoforged.neoforge.capabilities.Capabilities.FluidHandler;
+import net.neoforged.neoforge.capabilities.Capabilities.ItemHandler;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.items.IItemHandler;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class TieredBasinRecipe extends TieredProcessingRecipe<Container> {
+public class TieredBasinRecipe extends TieredStandardProcessingRecipe<RecipeInput> {
 
     public TieredBasinRecipe(TieredProcessingRecipeParams params) {
         this(ModRecipeTypes.BASIN, params);
@@ -53,10 +50,10 @@ public class TieredBasinRecipe extends TieredProcessingRecipe<Container> {
         if (filter == null) return false;
 
         boolean filterTest = filter.test(recipe.getResultItem(basin.getLevel().registryAccess()));
-        if (recipe instanceof ProcessingRecipe<?> basinRecipe) {
-            if(basinRecipe instanceof TieredProcessingRecipe<?> tpr) {
+        if(recipe instanceof TieredBasinRecipe tpr) {
                 recipeTier = tpr.getRecipeTier();
-            }
+        }
+        if (recipe instanceof BasinRecipe basinRecipe) {
             if (basinRecipe.getRollableResults().isEmpty()
                     && !basinRecipe.getFluidResults().isEmpty())
                 filterTest = filter.test(basinRecipe.getFluidResults().get(0));
@@ -74,14 +71,15 @@ public class TieredBasinRecipe extends TieredProcessingRecipe<Container> {
     private static boolean apply(BasinBlockEntity basin, Recipe<?> recipe, boolean test) {
         if(recipe instanceof BasinRecipe) return false;
         if(!AllConfigs.server().recipes.allowBrewingInMixer.get() && recipe instanceof TieredBrewingRecipe) return false;
+        boolean isBasinRecipe = recipe instanceof BasinRecipe || recipe instanceof TieredBasinRecipe;
         boolean isTieredBasinRecipe = recipe instanceof TieredBasinRecipe;
-        IItemHandler availableItems = basin.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
-        IFluidHandler availableFluids = basin.getCapability(ForgeCapabilities.FLUID_HANDLER).orElse(null);
+        IItemHandler availableItems = basin.getLevel().getCapability(ItemHandler.BLOCK, basin.getBlockPos(), null);
+        IFluidHandler availableFluids = basin.getLevel().getCapability(FluidHandler.BLOCK, basin.getBlockPos(), null);
 
         if (availableItems == null || availableFluids == null) return false;
 
         HeatLevel heat = BasinBlockEntity.getHeatLevelOf(basin.getLevel().getBlockState(basin.getBlockPos().below(1)));
-        if ((isTieredBasinRecipe) && !((ProcessingRecipe<?>) recipe).getRequiredHeat().testBlazeBurner(heat)) {
+        if ((isBasinRecipe) && !((ProcessingRecipe<?,?>) recipe).getRequiredHeat().testBlazeBurner(heat)) {
             return false;
         }
 
@@ -101,8 +99,8 @@ public class TieredBasinRecipe extends TieredProcessingRecipe<Container> {
         List<FluidStack> recipeOutputFluids = new ArrayList<>();
 
         List<Ingredient> ingredients = new LinkedList<>(recipe.getIngredients());
-        List<FluidIngredient> fluidIngredients = isTieredBasinRecipe
-                ? ((ProcessingRecipe<?>) recipe).getFluidIngredients()
+        List<FluidIngredient> fluidIngredients = isBasinRecipe
+                ? ((ProcessingRecipe<?, ?>) recipe).getFluidIngredients()
                 : Collections.emptyList();
 
         for (boolean simulate : Iterate.trueAndFalse) {
@@ -157,7 +155,7 @@ public class TieredBasinRecipe extends TieredProcessingRecipe<Container> {
             }
 
             if (simulate) {
-                CraftingContainer remainderContainer = new DummyCraftingContainer(availableItems, extractedItemsFromSlot);
+                CraftingInput remainderContainer = new DummyCraftingContainer(availableItems, extractedItemsFromSlot).asCraftInput();
                 if(recipe instanceof TieredBasinRecipe basinRecipe) {
                     recipeOutputItems.addAll(basinRecipe.rollResults());
 
@@ -202,11 +200,12 @@ public class TieredBasinRecipe extends TieredProcessingRecipe<Container> {
         return true;
     }
 
-    public static TieredBasinRecipe convertShapeless(Recipe<?> recipe) {
-        return new TieredProcessingRecipeBuilder<>(TieredBasinRecipe::new, recipe.getId())
-                        .withItemIngredients(recipe.getIngredients())
-                        .withSingleItemOutput(recipe.getResultItem(Minecraft.getInstance().level.registryAccess()))
+    public static RecipeHolder<TieredBasinRecipe> convertShapeless(RecipeHolder<?> recipe) {
+        TieredBasinRecipe basinRecipe = new Builder<>(TieredBasinRecipe::new, recipe.id())
+                        .withItemIngredients(recipe.value().getIngredients())
+                        .withSingleItemOutput(recipe.value().getResultItem(Minecraft.getInstance().level.registryAccess()))
                         .build();
+        return new RecipeHolder<>(recipe.id(), basinRecipe);
     }
 
     @Override
@@ -240,7 +239,7 @@ public class TieredBasinRecipe extends TieredProcessingRecipe<Container> {
     }
 
     @Override
-    public boolean matches(Container pContainer, Level pLevel) {
+    public boolean matches(RecipeInput pInput, @Nonnull Level pLevel) {
         return false;
     }
 }

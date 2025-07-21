@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public abstract class MixinSawBlockEntity {
 
     @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/kinetics/saw/SawBlockEntity;applyRecipe()V"), remap = false)
-    private void greate_tick(SawBlockEntity be) {
+    private void greate$tick(SawBlockEntity be) {
         if(be instanceof TieredSawBlockEntity tsbe) {
             tsbe.applyValidRecipe();
         }

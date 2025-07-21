@@ -1,8 +1,6 @@
 package electrolyte.greate;
 
 import com.gregtechceu.gtceu.api.GTValues;
-import com.gregtechceu.gtceu.api.machine.MachineDefinition;
-import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.utils.FormattingUtil;
 import com.mojang.logging.LogUtils;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -14,7 +12,6 @@ import com.tterrag.registrate.util.entry.RegistryEntry;
 import dev.toma.configuration.Configuration;
 import dev.toma.configuration.config.ConfigHolder;
 import dev.toma.configuration.config.format.ConfigFormats;
-import electrolyte.greate.content.kinetics.fan.processing.GreateFanProcessingTypes;
 import electrolyte.greate.foundation.advancement.GreateAdvancements;
 import electrolyte.greate.foundation.data.GreateTagGen.GreateBlockTagGen;
 import electrolyte.greate.foundation.data.GreateTagGen.GreateItemTagGen;
@@ -23,13 +20,13 @@ import electrolyte.greate.infrastructure.config.GreateConfigs;
 import electrolyte.greate.infrastructure.config.GreateRecipeConfig;
 import electrolyte.greate.infrastructure.ponder.GreatePonderPlugin;
 import electrolyte.greate.registry.GreateLang;
-import electrolyte.greate.registry.GreatePartialModels;
 import electrolyte.greate.registry.ModRecipeTypes;
 import it.unimi.dsi.fastutil.objects.ReferenceArrayList;
 import it.unimi.dsi.fastutil.objects.ReferenceLinkedOpenHashSet;
 import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet;
 import net.createmod.catnip.lang.FontHelper.Palette;
 import net.createmod.ponder.foundation.PonderIndex;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -38,18 +35,15 @@ import net.minecraft.world.item.CreativeModeTab.DisplayItemsGenerator;
 import net.minecraft.world.item.CreativeModeTab.ItemDisplayParameters;
 import net.minecraft.world.item.CreativeModeTab.Output;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.data.loading.DatagenModLoader;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegisterEvent;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.data.loading.DatagenModLoader;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 import org.slf4j.Logger;
 
 import java.util.LinkedList;
@@ -72,35 +66,31 @@ public class Greate {
         REGISTRATE.setTooltipModifierFactory(i -> new ItemDescription.Modifier(i, Palette.STANDARD_CREATE).andThen(TooltipModifier.mapNull(GreateKineticStats.create(i))));
     }
 
-    public Greate() {
-        IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        MinecraftForge.EVENT_BUS.register(this);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::gatherData);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onRegister);
+    public Greate(IEventBus modEventBus, ModContainer modContainer) {
+        modEventBus.addListener(this::clientSetup);
+        modEventBus.addListener(this::gatherData);
 
-        if(!DatagenModLoader.isRunningDataGen()) { //needed due to using both create & gt registrate
-            GreateRegistries.REGISTRATE.registerRegistrate();
+        if(! DatagenModLoader.isRunningDataGen()) { //needed due to using both create & gt registrate
+            //GreateRegistries.REGISTRATE.registerEventListeners(modEventBus);
         }
 
-        FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(GTRecipeType.class, GreateRegistries::registerRecipeTypes);
-        FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(MachineDefinition.class, GreateRegistries::registerMachines);
+        //modEventBus.addGenericListener(GTRecipeType.class, GreateRegistries::registerRecipeTypes);
 
-        CREATIVE_TABS.register(eventBus);
-        REGISTRATE.registerEventListeners(eventBus);
+        CREATIVE_TABS.register(modEventBus);
+        //REGISTRATE.registerEventListeners(modEventBus);
         GreateLang.register();
-        ModRecipeTypes.register(eventBus);
+        ModRecipeTypes.register(modEventBus);
 
-        REGISTRATE.addRegisterCallback(ForgeRegistries.BLOCKS.getRegistryKey(), () -> GreateConfigs.register(ModLoadingContext.get()));
-        ConfigHolder<GreateRecipeConfig> configHolder = Configuration.registerConfig(GreateRecipeConfig.class, ConfigFormats.yaml());
+        REGISTRATE.addRegisterCallback(BuiltInRegistries.BLOCK.key(), () -> GreateConfigs.register(ModLoadingContext.get(), modContainer));
+        ConfigHolder<GreateRecipeConfig> configHolder = Configuration.registerConfig(GreateRecipeConfig.class, ConfigFormats.YAML);
         CONFIG = configHolder.getConfigInstance();
     }
 
     public static ResourceLocation id(String path) {
-        return new ResourceLocation(MOD_ID, FormattingUtil.toLowerCaseUnderscore(path));
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, FormattingUtil.toLowerCaseUnderscore(path));
     }
 
-    public static final RegistryObject<CreativeModeTab> GREATE_TAB = CREATIVE_TABS.register("greate",
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> GREATE_TAB = CREATIVE_TABS.register("greate",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.greate"))
                     .icon(() -> new ItemStack(MILLSTONES[GTValues.UHV]))
@@ -108,12 +98,7 @@ public class Greate {
                     .build());
 
     private void clientSetup(FMLClientSetupEvent event) {
-        GreatePartialModels.register();
-        PonderIndex.addPlugin(new GreatePonderPlugin());
-    }
-
-    private void onRegister(RegisterEvent event) {
-        GreateFanProcessingTypes.register();
+        //PonderIndex.addPlugin(new GreatePonderPlugin());
     }
 
     private void gatherData(GatherDataEvent event) {
@@ -123,7 +108,7 @@ public class Greate {
             GreateAdvancements.provideLang(p::add);
         });
         if(event.includeServer()) {
-            event.getGenerator().addProvider(true, new GreateAdvancements(event.getGenerator().getPackOutput()));
+            event.getGenerator().addProvider(true, new GreateAdvancements(event.getGenerator().getPackOutput(), event.getLookupProvider()));
             GreateBlockTagGen blockTags = new GreateBlockTagGen(event.getGenerator().getPackOutput(), event.getLookupProvider(), Greate.MOD_ID, event.getExistingFileHelper());
             event.getGenerator().addProvider(true, blockTags);
             event.getGenerator().addProvider(true, new GreateItemTagGen(event.getGenerator().getPackOutput(), event.getLookupProvider(), blockTags.contentsGetter(), Greate.MOD_ID, event.getExistingFileHelper()));
@@ -145,8 +130,8 @@ public class Greate {
 
         private static Predicate<Item> excludedItems() {
             Set<Item> exclusions = new ReferenceOpenHashSet<>();
-            List<ItemProviderEntry<?>> simpleExclusions = List.of();
-            for(ItemProviderEntry<?> entry : simpleExclusions) {
+            List<ItemProviderEntry<?, ?>> simpleExclusions = List.of();
+            for(ItemProviderEntry<?, ?> entry : simpleExclusions) {
                 exclusions.add(entry.asItem());
             }
             return exclusions::contains;
@@ -154,7 +139,7 @@ public class Greate {
 
         private List<Item> collectBlocks(Predicate<Item> exclusionPredicate) {
             List<Item> items = new ReferenceArrayList<>();
-            for(RegistryEntry<Block> entry : REGISTRATE.getAll(Registries.BLOCK)) {
+            for(RegistryEntry<Block, Block> entry : REGISTRATE.getAll(Registries.BLOCK)) {
                 if(!REGISTRATE.isInCreativeTab(entry, GREATE_TAB)) continue;
                 Item item = entry.get().asItem();
                 if(item == Items.AIR) continue;
@@ -166,7 +151,7 @@ public class Greate {
 
         private List<Item> collectItems(Predicate<Item> exclusionPredicate) {
             List<Item> items = new ReferenceArrayList<>();
-            for(RegistryEntry<Item> entry : REGISTRATE.getAll(Registries.ITEM)) {
+            for(RegistryEntry<Item, Item> entry : REGISTRATE.getAll(Registries.ITEM)) {
                 if(!REGISTRATE.isInCreativeTab(entry, GREATE_TAB)) continue;
                 if(entry.get() instanceof BlockItem) continue;
                 if(!exclusionPredicate.test(entry.get())) items.add(entry.get());

@@ -1,12 +1,14 @@
 package electrolyte.greate.content.kinetics.millstone;
 
 import electrolyte.greate.content.kinetics.crusher.TieredAbstractCrushingRecipe;
-import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeParams;
+import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeParams;
 import electrolyte.greate.registry.ModRecipeTypes;
+import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+
+;
 
 @ParametersAreNonnullByDefault
 public class TieredMillingRecipe extends TieredAbstractCrushingRecipe {
@@ -21,7 +23,7 @@ public class TieredMillingRecipe extends TieredAbstractCrushingRecipe {
     }
 
     @Override
-    public boolean matches(RecipeWrapper pContainer, Level pLevel) {
+    public boolean matches(RecipeInput pContainer, Level pLevel) {
         if(pContainer.isEmpty()) return false;
         return ingredients.get(0).test(pContainer.getItem(0));
     }

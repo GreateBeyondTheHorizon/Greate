@@ -1,26 +1,24 @@
 package electrolyte.greate.foundation.data.recipe.machine;
 
-import com.gregtechceu.gtceu.common.data.GTItems;
-import com.gregtechceu.gtceu.common.data.GTMachines;
+import com.gregtechceu.gtceu.data.item.GTItems;
+import com.gregtechceu.gtceu.data.machine.GTMachines;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import electrolyte.greate.Greate;
-import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.Tags.Items;
-
-import java.util.function.Consumer;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.Tags.Items;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
-import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.*;
-import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
-import static com.gregtechceu.gtceu.common.data.GTRecipeTypes.ASSEMBLER_RECIPES;
+import static com.gregtechceu.gtceu.api.tag.TagPrefix.*;
+import static com.gregtechceu.gtceu.data.material.GTMaterials.*;
+import static com.gregtechceu.gtceu.data.recipe.GTRecipeTypes.ASSEMBLER_RECIPES;
 import static electrolyte.greate.registry.GreateMaterials.AndesiteAlloy;
 
 public class GreateAssemblerRecipes {
 
-    public static void register(Consumer<FinishedRecipe> provider) {
+    public static void register(RecipeOutput provider) {
         ASSEMBLER_RECIPES
                 .recipeBuilder(Greate.id("hopper_iron"))
                 .inputItems(plate, Iron, 5)

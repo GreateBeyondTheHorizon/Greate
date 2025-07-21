@@ -1,10 +1,10 @@
 package electrolyte.greate;
 
 import com.gregtechceu.gtceu.api.GTValues;
-import com.gregtechceu.gtceu.api.data.chemical.material.Material;
+import com.gregtechceu.gtceu.api.material.material.Material;
 import com.gregtechceu.gtceu.api.recipe.content.Content;
 import com.gregtechceu.gtceu.api.recipe.ingredient.EnergyStack;
-import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
+import com.gregtechceu.gtceu.data.recipe.GTRecipeTypes;
 import com.simibubi.create.AllRecipeTypes;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingRecipe;
 import electrolyte.greate.content.kinetics.fan.processing.TieredHauntingRecipe;
@@ -14,13 +14,13 @@ import electrolyte.greate.content.kinetics.mixer.TieredCompactingRecipe;
 import electrolyte.greate.content.kinetics.mixer.TieredMixingRecipe;
 import electrolyte.greate.content.kinetics.press.TieredPressingRecipe;
 import electrolyte.greate.content.kinetics.saw.TieredCuttingRecipe;
-import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
-import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeFactory;
+import electrolyte.greate.content.processing.recipe.TieredStandardProcessingRecipe;
+import electrolyte.greate.content.processing.recipe.TieredStandardProcessingRecipe.Factory;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.List;
 
-import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
+import static com.gregtechceu.gtceu.data.material.GTMaterials.*;
 import static electrolyte.greate.registry.GreateMaterials.AndesiteAlloy;
 import static net.minecraft.ChatFormatting.*;
 
@@ -83,7 +83,7 @@ public class GreateValues {
         return null;
     }
 
-    public static TieredProcessingRecipeFactory<TieredProcessingRecipe<?>> getFactory(ResourceLocation loc) {
+    public static Factory<TieredStandardProcessingRecipe<?>> getFactory(ResourceLocation loc) {
         if(loc.toString().startsWith(GTRecipeTypes.MACERATOR_RECIPES.registryName.toString()) || loc.toString().startsWith(AllRecipeTypes.MILLING.getId().toString())) return TieredMillingRecipe::new;
         else if(loc.toString().startsWith(AllRecipeTypes.CRUSHING.getId().toString())) return TieredCrushingRecipe::new;
         else if(loc.toString().startsWith(GTRecipeTypes.BENDER_RECIPES.registryName.toString()) || loc.toString().startsWith(AllRecipeTypes.PRESSING.getId().toString())) return TieredPressingRecipe::new;

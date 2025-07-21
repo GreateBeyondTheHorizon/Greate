@@ -1,6 +1,6 @@
 package electrolyte.greate.registry;
 
-import com.gregtechceu.gtceu.api.data.chemical.material.Material;
+import com.gregtechceu.gtceu.api.material.material.Material;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import electrolyte.greate.Greate;
 
@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
+import static com.gregtechceu.gtceu.data.material.GTMaterials.*;
 import static electrolyte.greate.GreateValues.TM;
 import static electrolyte.greate.registry.GreateMaterials.AndesiteAlloy;
 

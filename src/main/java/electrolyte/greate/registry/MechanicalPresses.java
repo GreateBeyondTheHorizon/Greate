@@ -1,6 +1,6 @@
 package electrolyte.greate.registry;
 
-import com.gregtechceu.gtceu.api.data.chemical.material.Material;
+import com.gregtechceu.gtceu.api.material.material.Material;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -11,7 +11,7 @@ import electrolyte.greate.infrastructure.config.GStress;
 import net.minecraft.world.level.material.MapColor;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
-import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
+import static com.gregtechceu.gtceu.data.material.GTMaterials.*;
 import static electrolyte.greate.Greate.REGISTRATE;
 import static electrolyte.greate.registry.GreateMaterials.AndesiteAlloy;
 

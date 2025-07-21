@@ -12,12 +12,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
-import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
+import net.neoforged.neoforge.items.IItemHandlerModifiable;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -33,9 +32,8 @@ public abstract class MixinBasinBlockEntity extends SmartBlockEntity {
     @Shadow(remap = false) public SmartFluidTankBehaviour inputTank;
     @Shadow(remap = false) protected SmartFluidTankBehaviour outputTank;
     @Shadow(remap = false) private boolean contentsChanged;
-    @Shadow(remap = false) protected LazyOptional<IItemHandlerModifiable> itemCapability;
-
-    @Shadow(remap = false) protected LazyOptional<IFluidHandler> fluidCapability;
+    @Shadow(remap = false) protected IItemHandlerModifiable itemCapability;
+    @Shadow(remap = false) protected IFluidHandler fluidCapability;
 
     @Shadow(remap = false) public abstract boolean isEmpty();
 
@@ -44,7 +42,7 @@ public abstract class MixinBasinBlockEntity extends SmartBlockEntity {
     }
 
     @Inject(method = "addBehaviours", at = @At("RETURN"), remap = false)
-    private void greate_addBehaviors(List<BlockEntityBehaviour> behaviours, CallbackInfo ci) {
+    private void greate$addBehaviors(List<BlockEntityBehaviour> behaviours, CallbackInfo ci) {
         behaviours.remove(inputTank);
         behaviours.remove(outputTank);
         inputTank = new SmartFluidTankBehaviour(SmartFluidTankBehaviour.INPUT, this, 2, 16000, true).whenFluidUpdates(() -> contentsChanged = true);
@@ -54,14 +52,14 @@ public abstract class MixinBasinBlockEntity extends SmartBlockEntity {
     }
 
     @Inject(method = "addToGoggleTooltip", at = @At("HEAD"), remap = false, cancellable = true)
-    private void greate_addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking, CallbackInfoReturnable<Boolean> cir) {
+    private void greate$addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking, CallbackInfoReturnable<Boolean> cir) {
         CreateLang.translate("gui.goggles.basin_contents").forGoggles(tooltip);
-        IItemHandlerModifiable items = itemCapability.orElse(new ItemStackHandler());
-        IFluidHandler fluids = fluidCapability.orElse(new FluidTank(0));
+        if(itemCapability == null) itemCapability = new ItemStackHandler();
+        if(fluidCapability == null) fluidCapability = new FluidTank(0);
         boolean isEmpty = true;
 
-        for(int i = 0; i < items.getSlots(); i++) {
-            ItemStack stackInSlot = items.getStackInSlot(i);
+        for(int i = 0; i < itemCapability.getSlots(); i++) {
+            ItemStack stackInSlot = itemCapability.getStackInSlot(i);
             if(stackInSlot.isEmpty()) continue;
             CreateLang.text("")
                     .add(Component.translatable(stackInSlot.getHoverName().getString()).withStyle(ChatFormatting.GRAY))
@@ -71,8 +69,8 @@ public abstract class MixinBasinBlockEntity extends SmartBlockEntity {
         }
 
         LangBuilder mb = CreateLang.translate("generic.unit.millibuckets");
-        for(int i = 0; i < fluids.getTanks(); i++) {
-            FluidStack fluidStack = fluids.getFluidInTank(i);
+        for(int i = 0; i < fluidCapability.getTanks(); i++) {
+            FluidStack fluidStack = fluidCapability.getFluidInTank(i);
             if(fluidStack.isEmpty()) continue;
             CreateLang.text("")
                     .add(CreateLang.fluidName(fluidStack)

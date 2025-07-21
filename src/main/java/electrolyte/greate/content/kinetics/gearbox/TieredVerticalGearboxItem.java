@@ -1,6 +1,6 @@
 package electrolyte.greate.content.kinetics.gearbox;
 
-import com.gregtechceu.gtceu.api.data.chemical.material.Material;
+import com.gregtechceu.gtceu.api.material.material.Material;
 import com.simibubi.create.content.kinetics.base.IRotate;
 import electrolyte.greate.Greate;
 import net.createmod.catnip.data.Iterate;

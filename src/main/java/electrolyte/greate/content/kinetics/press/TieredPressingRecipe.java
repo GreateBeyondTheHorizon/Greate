@@ -5,16 +5,16 @@ import com.simibubi.create.compat.jei.category.sequencedAssembly.SequencedAssemb
 import com.simibubi.create.content.processing.sequenced.IAssemblyRecipe;
 import electrolyte.greate.Greate;
 import electrolyte.greate.compat.jei.category.sequencedassembly.TieredPressingSubCategory;
-import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
-import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeParams;
+import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeParams;
+import electrolyte.greate.content.processing.recipe.TieredStandardProcessingRecipe;
 import electrolyte.greate.registry.MechanicalPresses;
 import electrolyte.greate.registry.ModRecipeTypes;
 import net.createmod.catnip.lang.LangBuilder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 @ParametersAreNonnullByDefault
-public class TieredPressingRecipe extends TieredProcessingRecipe<RecipeWrapper> implements IAssemblyRecipe {
+public class TieredPressingRecipe extends TieredStandardProcessingRecipe<SingleRecipeInput> implements IAssemblyRecipe {
     public TieredPressingRecipe(TieredProcessingRecipeParams params) {
         super(ModRecipeTypes.PRESSING, params);
     }
@@ -56,7 +56,7 @@ public class TieredPressingRecipe extends TieredProcessingRecipe<RecipeWrapper> 
     }
 
     @Override
-    public boolean matches(RecipeWrapper pContainer, Level pLevel) {
+    public boolean matches(SingleRecipeInput pContainer, Level pLevel) {
         if(pContainer.isEmpty()) return false;
         return ingredients.get(0).test(pContainer.getItem(0));
     }

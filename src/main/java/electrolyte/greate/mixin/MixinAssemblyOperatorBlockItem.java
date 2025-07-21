@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MixinAssemblyOperatorBlockItem {
 
     @Inject(method = "operatesOn", at = @At("TAIL"), remap = false, cancellable = true)
-    private void greate_operatesOn(LevelReader world, BlockPos pos, BlockState placedOnState, CallbackInfoReturnable<Boolean> cir) {
+    private void greate$operatesOn(LevelReader world, BlockPos pos, BlockState placedOnState, CallbackInfoReturnable<Boolean> cir) {
         if(placedOnState.getBlock() instanceof BeltBlock) {
             cir.setReturnValue(placedOnState.getValue(BeltBlock.SLOPE) == BeltSlope.HORIZONTAL);
         }

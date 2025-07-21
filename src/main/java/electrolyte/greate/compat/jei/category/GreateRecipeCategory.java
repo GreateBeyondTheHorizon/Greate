@@ -1,7 +1,7 @@
 package electrolyte.greate.compat.jei.category;
 
-import com.gregtechceu.gtceu.common.data.GTItems;
-import com.gregtechceu.gtceu.common.item.IntCircuitBehaviour;
+import com.gregtechceu.gtceu.common.item.behavior.IntCircuitBehaviour;
+import com.gregtechceu.gtceu.data.item.GTItems;
 import com.simibubi.create.AllFluids;
 import com.simibubi.create.content.fluids.potion.PotionFluidHandler;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
@@ -10,10 +10,10 @@ import com.simibubi.create.foundation.utility.CreateLang;
 import electrolyte.greate.Greate;
 import electrolyte.greate.GreateValues;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
-import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotTooltipCallback;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
+import mezz.jei.api.neoforge.NeoForgeTypes;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
@@ -25,8 +25,8 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,17 +34,17 @@ import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-public abstract class GreateRecipeCategory<T extends Recipe<?>> implements IRecipeCategory<T> {
+public abstract class GreateRecipeCategory<T extends Recipe<?>> implements IRecipeCategory<RecipeHolder<T>> {
 
     private static final IDrawable BASIC_SLOT = asDrawable(AllGuiTextures.JEI_SLOT);
     private static final IDrawable CHANCE_SLOT = asDrawable(AllGuiTextures.JEI_CHANCE_SLOT);
 
-    protected final RecipeType<T> type;
+    protected final RecipeType<RecipeHolder<T>> type;
     protected final Component title;
     protected final IDrawable background;
     protected final IDrawable icon;
 
-    private final Supplier<List<T>> recipes;
+    private final Supplier<List<RecipeHolder<T>>> recipes;
     private final List<Supplier<? extends ItemStack>> catalysts;
 
     public GreateRecipeCategory(Info<T> info) {
@@ -56,9 +56,8 @@ public abstract class GreateRecipeCategory<T extends Recipe<?>> implements IReci
         this.catalysts = info.catalysts();
     }
 
-    @NotNull
     @Override
-    public RecipeType<T> getRecipeType() {
+    public RecipeType<RecipeHolder<T>> getRecipeType() {
         return type;
     }
 
@@ -100,9 +99,9 @@ public abstract class GreateRecipeCategory<T extends Recipe<?>> implements IReci
         return CHANCE_SLOT;
     }
 
-    public static ItemStack getCircuitStack(TieredProcessingRecipe<?> recipe) {
+    public static ItemStack getCircuitStack(TieredProcessingRecipe<?, ?> recipe) {
         if(recipe.getCircuitNumber() == -1) return ItemStack.EMPTY;
-        ItemStack circuitStack = new ItemStack(GTItems.PROGRAMMED_CIRCUIT);
+        ItemStack circuitStack = new ItemStack(GTItems.PROGRAMMED_CIRCUIT.asItem());
         IntCircuitBehaviour.setCircuitConfiguration(circuitStack, recipe.getCircuitNumber());
         return circuitStack;
     }
@@ -120,7 +119,7 @@ public abstract class GreateRecipeCategory<T extends Recipe<?>> implements IReci
 
     public static IRecipeSlotTooltipCallback addFluidTooltip(int mbAmount) {
         return (view, tooltip) -> {
-            Optional<FluidStack> displayed = view.getDisplayedIngredient(ForgeTypes.FLUID_STACK);
+            Optional<FluidStack> displayed = view.getDisplayedIngredient(NeoForgeTypes.FLUID_STACK);
             if (displayed.isEmpty()) return;
 
             FluidStack fluidStack = displayed.get();
@@ -131,7 +130,7 @@ public abstract class GreateRecipeCategory<T extends Recipe<?>> implements IReci
                 else tooltip.set(0, name);
 
                 ArrayList<Component> potionTooltip = new ArrayList<>();
-                PotionFluidHandler.addPotionTooltip(fluidStack, potionTooltip, 1);
+                PotionFluidHandler.addPotionTooltip(fluidStack, potionTooltip::add, 1);
                 tooltip.addAll(1, potionTooltip.stream().toList());
             }
 
@@ -165,15 +164,15 @@ public abstract class GreateRecipeCategory<T extends Recipe<?>> implements IReci
         };
     }
 
-    public record Info<T extends Recipe<?>>(RecipeType<T> recipeType, Component title, IDrawable background, IDrawable icon, Supplier<List<T>> recipes, List<Supplier<? extends ItemStack>> catalysts) {}
+    public record Info<T extends Recipe<?>>(RecipeType<RecipeHolder<T>> recipeType, Component title, IDrawable background, IDrawable icon, Supplier<List<RecipeHolder<T>>> recipes, List<Supplier<? extends ItemStack>> catalysts) {}
 
     public interface Factory<T extends Recipe<?>> {
         GreateRecipeCategory<T> create(Info<T> info);
     }
 
     @Override
-    public void draw(T recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double x, double y) {
+    public void draw(RecipeHolder<T> recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double x, double y) {
         IRecipeCategory.super.draw(recipe, recipeSlotsView, graphics, x, y);
-        graphics.drawString(Minecraft.getInstance().font, Lang.builder(Greate.MOD_ID).translate("jei.recipe_tier").component().getString() + GreateValues.SN[((TieredProcessingRecipe<?>) recipe).getRecipeTier()], (float) x, (float) y, 0x3f3f3f, false);
+        graphics.drawString(Minecraft.getInstance().font, Lang.builder(Greate.MOD_ID).translate("jei.recipe_tier").component().getString() + GreateValues.SN[((TieredProcessingRecipe<?,?>) recipe.value()).getRecipeTier()], (float) x, (float) y, 0x3f3f3f, false);
     }
 }

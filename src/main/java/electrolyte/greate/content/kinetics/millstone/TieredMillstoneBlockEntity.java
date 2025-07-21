@@ -12,11 +12,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
+import net.neoforged.neoforge.items.ItemHandlerHelper;
+import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,13 +36,13 @@ public class TieredMillstoneBlockEntity extends MillstoneBlockEntity implements 
     public void setupRecipe() {
         RecipeWrapper inventoryIn = new RecipeWrapper(inputInv);
         if(lastRecipe == null || !lastRecipe.matches(inventoryIn, level)) {
-            Optional<Recipe<?>> recipe = findRecipe(inventoryIn);
+            Optional<RecipeHolder<? extends Recipe<?>>> recipe = findRecipe(inventoryIn);
             if(recipe.isEmpty()) {
                 timer = 100;
                 sendData();
             } else {
-                lastRecipe = (TieredMillingRecipe) recipe.get();
-                timer = ((TieredMillingRecipe) recipe.get()).getProcessingDuration();
+                lastRecipe = (TieredMillingRecipe) recipe.get().value();
+                timer = ((TieredMillingRecipe) recipe.get().value()).getProcessingDuration();
                 sendData();
             }
             return;
@@ -54,10 +56,10 @@ public class TieredMillstoneBlockEntity extends MillstoneBlockEntity implements 
         RecipeWrapper inventoryIn = new RecipeWrapper(inputInv);
 
         if(lastRecipe == null || !lastRecipe.matches(inventoryIn, level)) {
-            Optional<Recipe<?>> recipe = findRecipe(inventoryIn);
+            Optional<RecipeHolder<? extends Recipe<?>>> recipe = findRecipe(inventoryIn);
 
             if(recipe.isEmpty()) return;
-            lastRecipe = (TieredMillingRecipe) recipe.get();
+            lastRecipe = (TieredMillingRecipe) recipe.get().value();
         }
 
         ItemStack stackInSlot = inputInv.getStackInSlot(0);
@@ -84,8 +86,8 @@ public class TieredMillstoneBlockEntity extends MillstoneBlockEntity implements 
         return findRecipe(inventoryIn).isPresent();
     }
 
-    public Optional<Recipe<?>> findRecipe(RecipeWrapper wrapper) {
-        return TieredRecipeFinder.findRecipe(MILLING_RECIPE_CACHE_KEY, level, wrapper,
+    public Optional<RecipeHolder<? extends Recipe<?>>> findRecipe(RecipeWrapper wrapper) {
+        return TieredRecipeFinder.findRecipe(MILLING_RECIPE_CACHE_KEY, level, new SingleRecipeInput(wrapper.getItem(0)),
                 RecipeConditions.isOfType(ModRecipeTypes.MILLING.getType())
                         .and(TieredRecipeConditions.firstIngredientMatches(wrapper.getItem(0))),
                 TieredRecipeConditions.isEqualOrAboveTier(tier));

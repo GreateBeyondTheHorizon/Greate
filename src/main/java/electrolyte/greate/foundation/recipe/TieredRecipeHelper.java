@@ -17,7 +17,7 @@ public class TieredRecipeHelper {
 
     public List<ItemStack> getItemResults(Recipe<?> recipe, int machineTier) {
         List<ProcessingOutput> newResults = new ArrayList<>();
-        if(recipe instanceof ProcessingRecipe<?> pr) {
+        if(recipe instanceof ProcessingRecipe<?, ?> pr) {
             List<ProcessingOutput> oldResults = pr.getRollableResults();
             for(int i = 0; i < oldResults.size(); i++) {
                 ProcessingOutput oldResult = oldResults.get(i);

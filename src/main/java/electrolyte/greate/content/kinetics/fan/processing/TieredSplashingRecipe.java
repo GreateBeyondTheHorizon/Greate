@@ -1,17 +1,15 @@
 package electrolyte.greate.content.kinetics.fan.processing;
 
-import electrolyte.greate.content.kinetics.fan.processing.TieredSplashingRecipe.TieredSplashingWrapper;
-import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
-import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeParams;
+import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeParams;
+import electrolyte.greate.content.processing.recipe.TieredStandardProcessingRecipe;
 import electrolyte.greate.registry.ModRecipeTypes;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public class TieredSplashingRecipe extends TieredProcessingRecipe<TieredSplashingWrapper> {
+public class TieredSplashingRecipe extends TieredStandardProcessingRecipe<SingleRecipeInput> {
     public TieredSplashingRecipe(TieredProcessingRecipeParams params) {
         super(ModRecipeTypes.SPLASHING, params);
     }
@@ -27,14 +25,8 @@ public class TieredSplashingRecipe extends TieredProcessingRecipe<TieredSplashin
     }
 
     @Override
-    public boolean matches(TieredSplashingWrapper container, Level level) {
-        if(container.isEmpty()) return false;
-        return ingredients.get(0).test(container.getItem(0));
-    }
-
-    public static class TieredSplashingWrapper extends RecipeWrapper {
-        public TieredSplashingWrapper() {
-            super(new ItemStackHandler(1));
-        }
+    public boolean matches(SingleRecipeInput inv, Level level) {
+        if(inv.isEmpty()) return false;
+        return ingredients.get(0).test(inv.getItem(0));
     }
 }

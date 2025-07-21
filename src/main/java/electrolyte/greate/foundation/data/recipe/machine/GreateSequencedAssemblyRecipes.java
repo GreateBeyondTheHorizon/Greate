@@ -1,11 +1,11 @@
 package electrolyte.greate.foundation.data.recipe.machine;
 
-import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
-import com.gregtechceu.gtceu.api.data.chemical.material.Material;
-import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
-import com.gregtechceu.gtceu.api.data.chemical.material.properties.WireProperties;
-import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
-import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
+import com.gregtechceu.gtceu.api.material.ChemicalHelper;
+import com.gregtechceu.gtceu.api.material.material.Material;
+import com.gregtechceu.gtceu.api.material.material.properties.PropertyKey;
+import com.gregtechceu.gtceu.api.material.material.properties.WireProperties;
+import com.gregtechceu.gtceu.api.tag.TagPrefix;
+import com.gregtechceu.gtceu.common.recipe.builder.GTRecipeBuilder;
 import com.gregtechceu.gtceu.utils.GTUtil;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
@@ -20,14 +20,12 @@ import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
 import it.unimi.dsi.fastutil.objects.Reference2IntMap;
 import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
 import net.minecraft.Util;
-import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.world.item.Items;
 
-import java.util.function.Consumer;
-
 import static com.gregtechceu.gtceu.api.GTValues.*;
-import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.*;
-import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
+import static com.gregtechceu.gtceu.api.tag.TagPrefix.*;
+import static com.gregtechceu.gtceu.data.material.GTMaterials.*;
 import static electrolyte.greate.content.gtceu.machines.GreateRecipeTypes.WIRE_COATING_RECIPES;
 import static electrolyte.greate.registry.GreateMaterials.AndesiteAlloy;
 import static electrolyte.greate.registry.GreateTagPrefixes.*;
@@ -43,9 +41,9 @@ public class GreateSequencedAssemblyRecipes {
             map.put(cableGtHex, 5);
     });
 
-    public static void register(Consumer<FinishedRecipe> provider) {
+    public static void register(RecipeOutput provider) {
         new SequencedAssemblyRecipeBuilder(Greate.id("precision_mechanism"))
-                .require(AllTags.forgeItemTag("plates/gold"))
+                .require(AllTags.commonItemTag("plates/gold"))
                 .transitionTo(AllItems.INCOMPLETE_PRECISION_MECHANISM)
                 .addStep(DeployerApplicationRecipe::new, r -> r.require(ChemicalHelper.get(cogwheel, AndesiteAlloy).getItem()))
                 .addStep(DeployerApplicationRecipe::new, r -> r.require(ChemicalHelper.get(largeCogwheel, AndesiteAlloy).getItem()))
@@ -63,7 +61,7 @@ public class GreateSequencedAssemblyRecipes {
                 .build(provider);
     }
 
-    public static void registerMaterialRecipes(Consumer<FinishedRecipe> provider, Material material) {
+    public static void registerMaterialRecipes(RecipeOutput provider, Material material) {
         WireProperties property = material.getProperty(PropertyKey.WIRE);
         if(property != null) {
             addRecipe(provider, property, wireGtSingle, material);
@@ -78,7 +76,7 @@ public class GreateSequencedAssemblyRecipes {
         }
     }
 
-    private static void addCogwheelDeployingRecipes(Consumer<FinishedRecipe> provider, Material material, CogwheelProperty property) {
+    private static void addCogwheelDeployingRecipes(RecipeOutput provider, Material material, CogwheelProperty property) {
         Material prevMat = property.getPreviousMaterial();
         new SequencedAssemblyRecipeBuilder(Greate.id(material.getName() + "_large_cogwheel"))
                     .require(ChemicalHelper.get(shaft, material).getItem())
@@ -91,7 +89,7 @@ public class GreateSequencedAssemblyRecipes {
     }
 
     //WireRecipeHandler
-    private static void addRecipe(Consumer<FinishedRecipe> provider, WireProperties property, TagPrefix wirePrefix, Material material) {
+    private static void addRecipe(RecipeOutput provider, WireProperties property, TagPrefix wirePrefix, Material material) {
         if(property.isSuperconductor()) return;
         int cableAmount = (int) (wirePrefix.getMaterialAmount(material) * 2 / M);
         TagPrefix cablePrefix = TagPrefix.get("cable" + wirePrefix.name().substring(4));

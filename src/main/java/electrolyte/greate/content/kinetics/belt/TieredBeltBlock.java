@@ -1,7 +1,7 @@
 package electrolyte.greate.content.kinetics.belt;
 
-import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
-import com.gregtechceu.gtceu.api.data.chemical.material.Material;
+import com.gregtechceu.gtceu.api.material.ChemicalHelper;
+import com.gregtechceu.gtceu.api.material.material.Material;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.fluids.transfer.GenericItemEmptying;
@@ -30,6 +30,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
@@ -38,6 +39,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -51,7 +53,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.Tags;
+import net.neoforged.neoforge.common.Tags;
 import org.apache.commons.lang3.mutable.MutableBoolean;
 
 import java.util.ArrayList;
@@ -74,7 +76,7 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
         return ChemicalHelper.get(beltConnector, beltMaterial);
     }
 
@@ -108,38 +110,38 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
     }
 
     @Override
-    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+    public ItemInteractionResult useItemOn(ItemStack stack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand hand, BlockHitResult pHit) {
         if(pPlayer.isShiftKeyDown() || ! pPlayer.mayBuild()) {
-            return InteractionResult.PASS;
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
-        ItemStack heldItem = pPlayer.getItemInHand(pHand);
+        ItemStack heldItem = pPlayer.getMainHandItem();
         boolean isWrench = AllItems.WRENCH.isIn(heldItem);
         boolean isConnector = heldItem.getItem() instanceof TieredBeltConnectorItem;
         boolean isShaft = Block.byItem(heldItem.getItem()) instanceof TieredShaftBlock;
         boolean isDye = heldItem.is(Tags.Items.DYES);
         boolean hasWater = GenericItemEmptying.emptyItem(pLevel, heldItem, true).getFirst().getFluid().isSame(Fluids.WATER);
-        boolean isHand = heldItem.isEmpty() && pHand == InteractionHand.MAIN_HAND;
+        boolean isHand = heldItem.isEmpty();
         if(isDye || hasWater) {
-            return onBlockEntityUse(pLevel, pPos, be -> be.applyColor(DyeColor.getColor(heldItem)) ? InteractionResult.SUCCESS : InteractionResult.PASS);
+            return onBlockEntityUseItemOn(pLevel, pPos, be -> be.applyColor(DyeColor.getColor(heldItem)) ? ItemInteractionResult.SUCCESS : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION);
         }
         if(isConnector) {
             if(((TieredBeltConnectorItem) heldItem.getItem()).getBeltMaterial() == ((TieredBeltBlock) pLevel.getBlockState(pPos).getBlock()).getBeltMaterial()) {
-                return TieredBeltSlicer.useConnector(pState, pLevel, pPos, pPlayer, pHand, pHit, new Feedback());
+                return TieredBeltSlicer.useConnector(pState, pLevel, pPos, pPlayer, pPlayer.getUsedItemHand(), pHit, new Feedback());
             }
         }
         if(isWrench) {
-            return BeltSlicer.useWrench(pState, pLevel, pPos, pPlayer, pHand, pHit, new Feedback());
+            return BeltSlicer.useWrench(pState, pLevel, pPos, pPlayer, pPlayer.getUsedItemHand(), pHit, new Feedback());
         }
 
         BeltBlockEntity beltBE = BeltHelper.getSegmentBE(pLevel, pPos);
         if(beltBE == null)
-            return InteractionResult.PASS;
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         if(isHand) {
             BeltBlockEntity controllerBE = beltBE.getControllerBE();
             if(controllerBE == null)
-                return InteractionResult.PASS;
+                return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
             if(pLevel.isClientSide)
-                return InteractionResult.SUCCESS;
+                return ItemInteractionResult.SUCCESS;
             MutableBoolean success = new MutableBoolean(false);
             controllerBE.getInventory().applyToEachWithin(beltBE.index + 0.5F, 0.55F, (s) -> {
                 pPlayer.getInventory().placeItemBackInInventory(s.stack);
@@ -151,24 +153,24 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
             }
         }
         if(isShaft && heldItem.is(ChemicalHelper.get(shaft, TM[tier]).getItem())) {
-            if(pState.getValue(PART) != BeltPart.MIDDLE) return InteractionResult.PASS;
-            if(pLevel.isClientSide) return InteractionResult.SUCCESS;
+            if(pState.getValue(PART) != BeltPart.MIDDLE) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            if(pLevel.isClientSide) return ItemInteractionResult.SUCCESS;
             if(!pPlayer.isCreative()) heldItem.shrink(1);
             KineticBlockEntity.switchToBlockState(pLevel, pPos, pState.setValue(PART, BeltPart.PULLEY));
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
         }
         if(AllBlocks.BRASS_CASING.isIn(heldItem)) {
             withBlockEntityDo(pLevel, pPos, be -> be.setCasingType(CasingType.BRASS));
             updateCoverProperty(pLevel, pPos, pLevel.getBlockState(pPos));
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
         }
 
         if(AllBlocks.ANDESITE_CASING.isIn(heldItem)) {
             withBlockEntityDo(pLevel, pPos, be -> be.setCasingType(CasingType.ANDESITE));
             updateCoverProperty(pLevel, pPos, pLevel.getBlockState(pPos));
-            return InteractionResult.SUCCESS;
+            return ItemInteractionResult.SUCCESS;
         }
-        return InteractionResult.PASS;
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     @Override

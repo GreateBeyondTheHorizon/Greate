@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MixinBeltFunnelBlock {
 
     @Inject(method = "getShapeForPosition", at = @At(value = "HEAD"), remap = false, cancellable = true)
-    private static void greate_getShapeForPosition(BlockGetter world, BlockPos pos, Direction facing, boolean extracting, CallbackInfoReturnable<Shape> cir) {
+    private static void greate$getShapeForPosition(BlockGetter world, BlockPos pos, Direction facing, boolean extracting, CallbackInfoReturnable<Shape> cir) {
         BlockPos posBelow = pos.below();
         BlockState stateBelow = world.getBlockState(posBelow);
         Shape perpendicularState = extracting ? Shape.PUSHING : Shape.PULLING;
@@ -31,7 +31,7 @@ public class MixinBeltFunnelBlock {
     }
 
     @Inject(method = "isOnValidBelt", at = @At("HEAD"), remap = false, cancellable = true)
-    private static void greate_isOnValidBelt(BlockState state, LevelReader world, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
+    private static void greate$isOnValidBelt(BlockState state, LevelReader world, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
         BlockState stateBelow = world.getBlockState(pos.below());
         if(stateBelow.getBlock() instanceof TieredBeltBlock) cir.setReturnValue(TieredBeltBlock.canTransportObjects(stateBelow));
     }

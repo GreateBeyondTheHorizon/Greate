@@ -1,6 +1,7 @@
 package electrolyte.greate.foundation.recipe;
 
-import com.gregtechceu.gtceu.api.recipe.GTRecipe;
+import com.gregtechceu.gtceu.api.recipe.kind.GTRecipe;
+import com.lowdragmc.lowdraglib.misc.ItemHandlerHelper;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipe;
 import com.simibubi.create.foundation.item.ItemHelper;
@@ -10,7 +11,6 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.ItemHandlerHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
 public class TieredRecipeApplier {
 
     public static void applyRecipeOn(ItemEntity entity, Recipe<?> recipe, int machineTier) {
-        if(recipe instanceof ProcessingRecipe<?> || recipe instanceof SequencedAssemblyRecipe) {
+        if(recipe instanceof ProcessingRecipe<?, ?> || recipe instanceof SequencedAssemblyRecipe) {
             RecipeApplier.applyRecipeOn(entity, recipe);
         } else {
             List<ItemStack> stacks = applyRecipeOn(entity.level(), entity.getItem(), recipe, machineTier);
@@ -38,7 +38,8 @@ public class TieredRecipeApplier {
 
     public static List<ItemStack> applyRecipeOn(Level level, ItemStack stackIn, Recipe<?> recipe, int machineTier) {
         List<ItemStack> stacks;
-        if(recipe instanceof TieredProcessingRecipe<?> tpr || recipe instanceof GTRecipe) {
+        //TODO: check
+        if(recipe instanceof TieredProcessingRecipe<?, ?> || recipe instanceof GTRecipe) {
             stacks = new ArrayList<>();
             for(int i = 0; i < stackIn.getCount(); i++) {
                 List<ItemStack> newOutputs = TieredRecipeHelper.INSTANCE.getItemResults(recipe, machineTier);
@@ -46,7 +47,7 @@ public class TieredRecipeApplier {
                     for(ItemStack previouslyRolled : stacks) {
                         if(stack.isEmpty())
                             continue;
-                        if(!ItemHandlerHelper.canItemStacksStack(stack, previouslyRolled))
+                        if(! ItemHandlerHelper.canItemStacksStack(stack, previouslyRolled))
                             continue;
                         int amount = Math.min(previouslyRolled.getMaxStackSize() - previouslyRolled.getCount(), stack.getCount());
                         previouslyRolled.grow(amount);

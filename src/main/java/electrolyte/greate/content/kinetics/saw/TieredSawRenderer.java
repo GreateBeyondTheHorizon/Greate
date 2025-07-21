@@ -1,6 +1,6 @@
 package electrolyte.greate.content.kinetics.saw;
 
-import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
+import com.gregtechceu.gtceu.api.material.ChemicalHelper;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.content.contraptions.behaviour.MovementContext;
 import com.simibubi.create.content.contraptions.render.ContraptionMatrices;
@@ -16,7 +16,7 @@ import dev.engine_room.flywheel.api.visualization.VisualizationManager;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.createmod.catnip.math.AngleHelper;
 import net.createmod.catnip.math.VecHelper;
-import net.createmod.catnip.platform.ForgeCatnipServices;
+import net.createmod.catnip.platform.NeoForgeCatnipServices;
 import net.createmod.catnip.render.CachedBuffers;
 import net.createmod.catnip.render.SuperByteBuffer;
 import net.minecraft.client.renderer.LevelRenderer;
@@ -28,7 +28,7 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 import static electrolyte.greate.GreateValues.TM;
 import static electrolyte.greate.registry.GreatePartialModels.*;
@@ -178,9 +178,9 @@ public class TieredSawRenderer extends SawRenderer {
         FluidStack renderedFluid = behaviour.getTanks()[0].getRenderedFluid();
         if(renderedFluid.isEmpty()) return;
         if(be.getBlockState().getValue(SawBlock.AXIS_ALONG_FIRST_COORDINATE)) {
-            ForgeCatnipServices.FLUID_RENDERER.renderFluidBox(renderedFluid, xMin, yMin, zMin, xMax, yMax, zMax, bufferSource, poseStack, light, false, false);
+            NeoForgeCatnipServices.FLUID_RENDERER.renderFluidBox(renderedFluid, xMin, yMin, zMin, xMax, yMax, zMax, bufferSource, poseStack, light, false, false);
         } else {
-            ForgeCatnipServices.FLUID_RENDERER.renderFluidBox(renderedFluid, zMin, yMin, xMin, zMax, yMax, xMax, bufferSource, poseStack, light, false, false);
+            NeoForgeCatnipServices.FLUID_RENDERER.renderFluidBox(renderedFluid, zMin, yMin, xMin, zMax, yMax, xMax, bufferSource, poseStack, light, false, false);
         }
     }
 }

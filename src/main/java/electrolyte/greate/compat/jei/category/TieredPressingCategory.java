@@ -13,6 +13,7 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
@@ -25,12 +26,12 @@ public class TieredPressingCategory extends GreateRecipeCategory<TieredPressingR
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, TieredPressingRecipe recipe, IFocusGroup focuses) {
+    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<TieredPressingRecipe> recipe, IFocusGroup focuses) {
         builder.addSlot(RecipeIngredientRole.INPUT, 27, 51)
                 .setBackground(getRenderedSlot(), -1, -1)
-                .addIngredients(recipe.getIngredients().get(0));
+                .addIngredients(recipe.value().getIngredients().get(0));
 
-        List<ProcessingOutput> results = recipe.getRollableResults();
+        List<ProcessingOutput> results = recipe.value().getRollableResults();
         int i = 0;
         for(ProcessingOutput output : results) {
             IRecipeSlotBuilder baseBuilder = builder.addSlot(RecipeIngredientRole.OUTPUT, 131 + 19 * i, 50)
@@ -40,7 +41,7 @@ public class TieredPressingCategory extends GreateRecipeCategory<TieredPressingR
             i++;
         }
 
-        ItemStack circuitStack = getCircuitStack(recipe);
+        ItemStack circuitStack = getCircuitStack(recipe.value());
         if(!circuitStack.isEmpty()) {
             builder.addSlot(RecipeIngredientRole.RENDER_ONLY, getBackground().getWidth() / 2 - 37, 2)
                     .setBackground(getRenderedSlot(), -1, -1)
@@ -49,10 +50,10 @@ public class TieredPressingCategory extends GreateRecipeCategory<TieredPressingR
     }
 
     @Override
-    public void draw(TieredPressingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double x, double y) {
+    public void draw(RecipeHolder<TieredPressingRecipe> recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double x, double y) {
         super.draw(recipe, recipeSlotsView, graphics, 1, 75);
         AllGuiTextures.JEI_SHADOW.render(graphics, 61, 41);
         AllGuiTextures.JEI_LONG_ARROW.render(graphics, 52, 54);
-        new TieredAnimatedMechanicalPress(MechanicalPresses.MECHANICAL_PRESSES[recipe.getRecipeTier()].get(), false).draw(graphics, getBackground().getWidth() / 2 - 17, 22);
+        new TieredAnimatedMechanicalPress(MechanicalPresses.MECHANICAL_PRESSES[recipe.value().getRecipeTier()].get(), false).draw(graphics, getBackground().getWidth() / 2 - 17, 22);
     }
 }

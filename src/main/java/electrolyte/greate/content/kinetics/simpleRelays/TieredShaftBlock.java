@@ -1,7 +1,7 @@
 package electrolyte.greate.content.kinetics.simpleRelays;
 
-import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
-import com.gregtechceu.gtceu.api.data.chemical.material.Material;
+import com.gregtechceu.gtceu.api.material.ChemicalHelper;
+import com.gregtechceu.gtceu.api.material.material.Material;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.simpleRelays.AbstractSimpleShaftBlock;
 import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
@@ -16,7 +16,7 @@ import net.createmod.catnip.placement.PlacementOffset;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -72,22 +72,21 @@ public class TieredShaftBlock extends ShaftBlock implements ITieredBlock, ITiere
     }
 
     @Override
-    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+    public ItemInteractionResult useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (pPlayer.isShiftKeyDown() || !pPlayer.mayBuild())
-            return InteractionResult.PASS;
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
-        ItemStack heldItem = pPlayer.getItemInHand(pHand);
-        InteractionResult resultEncase = tryEncase(pState, pLevel, pPos, heldItem, pPlayer, pHand, pHit);
-        InteractionResult resultGirderEncase = tryGirderEncase(pState, pLevel, pPos, heldItem, pPlayer, pHand, pHit);
+        ItemInteractionResult resultEncase = tryEncase(pState, pLevel, pPos, pStack, pPlayer, pHand, pHit);
+        ItemInteractionResult resultGirderEncase = tryGirderEncase(pState, pLevel, pPos, pStack, pPlayer, pHand, pHit);
         if (resultEncase.consumesAction()) return resultEncase;
         if (resultGirderEncase.consumesAction()) return resultGirderEncase;
 
         IPlacementHelper helper = PlacementHelpers.get(placementHelperId);
-        if (Block.byItem(heldItem.getItem()) == pState.getBlock())
+        if (Block.byItem(pStack.getItem()) == pState.getBlock())
             return helper.getOffset(pPlayer, pLevel, pState, pPos, pHit)
-                    .placeInWorld(pLevel, (BlockItem) heldItem.getItem(), pPlayer, pHand, pHit);
+                    .placeInWorld(pLevel, (BlockItem) pStack.getItem(), pPlayer, pHand, pHit);
 
-        return InteractionResult.PASS;
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package electrolyte.greate.content.kinetics.press;
 
+import com.lowdragmc.lowdraglib.misc.ItemHandlerHelper;
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
 import com.simibubi.create.content.kinetics.crafter.MechanicalCraftingRecipe;
@@ -26,17 +27,12 @@ import net.createmod.catnip.math.VecHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingRecipe;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 import java.util.List;
 import java.util.Optional;
@@ -90,7 +86,7 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
                 createdEntityStack.setDeltaMovement(VecHelper.offsetRandomly(Vec3.ZERO, level.random, 0.05f));
                 level.addFreshEntity(createdEntityStack);
             }
-            if(recipe.get() instanceof TieredProcessingRecipe<?>) {
+            if(recipe.get() instanceof TieredProcessingRecipe<?, ?>) {
                 stack.shrink(recipe.get().getIngredients().get(0).getItems()[0].getCount());
             } else {
                 stack.shrink(1);
@@ -122,43 +118,40 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
         return true;
     }
 
-    private static final RecipeWrapper pressingInv = new RecipeWrapper(new ItemStackHandler(1));
-
     public Optional<? extends Recipe<?>> getValidRecipe(ItemStack stack) {
-        Optional<PressingRecipe> assemblyRecipe = SequencedAssemblyRecipe.getRecipe(level, stack, AllRecipeTypes.PRESSING.getType(), PressingRecipe.class);
-        Optional<TieredPressingRecipe> tieredAssemblyRecipe = SequencedAssemblyRecipe.getRecipe(level, stack, ModRecipeTypes.PRESSING.getType(), TieredPressingRecipe.class);
+        Optional<RecipeHolder<PressingRecipe>> assemblyRecipe = SequencedAssemblyRecipe.getRecipe(level, stack, AllRecipeTypes.PRESSING.getType(), PressingRecipe.class);
+        Optional<RecipeHolder<TieredPressingRecipe>> tieredAssemblyRecipe = SequencedAssemblyRecipe.getRecipe(level, stack, ModRecipeTypes.PRESSING.getType(), TieredPressingRecipe.class);
 
         if(assemblyRecipe.isPresent()) {
-            currentRecipe = assemblyRecipe.get();
-            return assemblyRecipe;
+            currentRecipe = assemblyRecipe.get().value();
+            return Optional.of(assemblyRecipe.get().value());
         }
         if(tieredAssemblyRecipe.isPresent()) {
-            Predicate<Recipe<?>> predicate = TieredRecipeConditions.isEqualOrAboveTier(tier).and(TieredRecipeConditions.circuitMatches(targetCircuit.getValue()));
+            Predicate<RecipeHolder<? extends Recipe<?>>> predicate = TieredRecipeConditions.isEqualOrAboveTier(tier).and(TieredRecipeConditions.circuitMatches(targetCircuit.getValue()));
             if(predicate.test(tieredAssemblyRecipe.get())) {
-                currentRecipe = tieredAssemblyRecipe.get();
-                return tieredAssemblyRecipe;
+                currentRecipe = tieredAssemblyRecipe.get().value();
+                return Optional.of(tieredAssemblyRecipe.get().value());
             }
         }
 
-        pressingInv.setItem(0, stack);
-        Optional<Recipe<?>> recipe = TieredRecipeFinder.findRecipe(PRESSING_RECIPE_CACHE_KEY, level, pressingInv,
+        Optional<RecipeHolder<? extends Recipe<?>>> recipe = TieredRecipeFinder.findRecipe(PRESSING_RECIPE_CACHE_KEY, level, new SingleRecipeInput(stack),
                 RecipeConditions.isOfType(ModRecipeTypes.PRESSING.getType(), AllRecipeTypes.PRESSING.getType())
                         .and(TieredRecipeConditions.firstIngredientMatches(stack)),
                 TieredRecipeConditions.isEqualOrAboveTier(tier)
                         .and(TieredRecipeConditions.circuitMatches(targetCircuit.getValue()))
                         .and(TieredRecipeConditions.firstIngredientCountMatches(stack)));
         if(recipe.isPresent()) {
-            currentRecipe = recipe.get();
-            return recipe;
+            currentRecipe = recipe.get().value();
+            return Optional.of(recipe.get().value());
         }
         return Optional.empty();
     }
 
     @Override
-    protected <C extends Container> boolean matchStaticFilters(Recipe<C> recipe) {
-        return (recipe instanceof CraftingRecipe && !(recipe instanceof MechanicalCraftingRecipe) && canCompress(recipe)
+    protected boolean matchStaticFilters(RecipeHolder<? extends Recipe<?>> recipe) {
+        return (recipe.value() instanceof CraftingRecipe && !(recipe.value() instanceof MechanicalCraftingRecipe) && canCompress(recipe.value())
                 && !AllRecipeTypes.shouldIgnoreInAutomation(recipe))
-                || recipe.getType() == ModRecipeTypes.COMPACTING.getType();
+                || recipe.value().getType() == ModRecipeTypes.COMPACTING.getType();
     }
 
     @Override
@@ -214,9 +207,9 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
     }
 
     @Override
-    protected <C extends Container> boolean matchBasinRecipe(Recipe<C> recipe) {
+    protected <I extends RecipeInput> boolean matchBasinRecipe(Recipe<I> recipe) {
         if(recipe == null) return false;
-        if(!(recipe instanceof TieredProcessingRecipe<C>) && !(recipe instanceof CraftingRecipe)) return false;
+        if(!(recipe instanceof TieredProcessingRecipe<I, ?>) && !(recipe instanceof CraftingRecipe)) return false;
         Optional<BasinBlockEntity> basin = getBasin();
         return basin.filter(basinBlockEntity -> TieredBasinRecipe.match(basinBlockEntity, recipe, this.tier)).isPresent();
     }

@@ -27,7 +27,7 @@ import static electrolyte.greate.registry.Shafts.NEW_SHAFTS;
 public class GreatePonderScenes {
 
     public static void register(PonderSceneRegistrationHelper<ResourceLocation> helper) {
-        PonderSceneRegistrationHelper<ItemProviderEntry<?>> HELPER = helper.withKeyFunction(RegistryEntry::getId);
+        PonderSceneRegistrationHelper<ItemProviderEntry<?, ?>> HELPER = helper.withKeyFunction(RegistryEntry::getId);
         HELPER.forComponents(NEW_SHAFTS.values()).addStoryBoard(Create.asResource("shaft/relay"), KineticsScenes::shaftAsRelay, AllCreatePonderTags.KINETIC_RELAYS);
         HELPER.forComponents(NEW_SHAFTS.values()).addStoryBoard(Create.asResource("shaft/encasing"), KineticsScenes::shaftsCanBeEncased);
         HELPER.forComponents(COGWHEELS.values())

@@ -1,7 +1,7 @@
 package electrolyte.greate.content.kinetics.gearbox;
 
-import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
-import com.gregtechceu.gtceu.api.data.chemical.material.Material;
+import com.gregtechceu.gtceu.api.material.ChemicalHelper;
+import com.gregtechceu.gtceu.api.material.material.Material;
 import com.simibubi.create.content.kinetics.gearbox.GearboxBlock;
 import com.simibubi.create.content.kinetics.gearbox.GearboxBlockEntity;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
@@ -9,7 +9,7 @@ import electrolyte.greate.registry.ModBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams.Builder;
@@ -38,7 +38,7 @@ public class TieredGearboxBlock extends GearboxBlock implements ITieredBlock {
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
+    public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
         if(state.getValue(AXIS).isVertical()) {
             return super.getCloneItemStack(state, target, level, pos, player);
         }

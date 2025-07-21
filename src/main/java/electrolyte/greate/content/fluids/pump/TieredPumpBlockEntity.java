@@ -14,9 +14,8 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.capabilities.Capabilities.FluidHandler;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 import java.util.*;
 
@@ -165,10 +164,8 @@ public class TieredPumpBlockEntity extends PumpBlockEntity implements ITieredKin
 
 		// fluid handler endpoint
 		if (blockEntity != null) {
-			LazyOptional<IFluidHandler> capability =
-					blockEntity.getCapability(ForgeCapabilities.FLUID_HANDLER, face.getOpposite());
-			if (capability.isPresent())
-				return true;
+			IFluidHandler capability = blockEntity.getLevel().getCapability(FluidHandler.BLOCK, blockEntity.getBlockPos(), face.getOpposite());
+			if(capability != null) return true;
 		}
 
 		// open endpoint

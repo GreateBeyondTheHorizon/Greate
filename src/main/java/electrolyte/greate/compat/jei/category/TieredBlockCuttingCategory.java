@@ -10,10 +10,9 @@ import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.StonecutterRecipe;
 
 import java.util.ArrayList;
@@ -29,11 +28,11 @@ public class TieredBlockCuttingCategory extends GreateRecipeCategory<TieredConde
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, TieredCondensedBlockCuttingRecipe recipe, IFocusGroup focuses) {
-        List<List<ItemStack>> results = recipe.getCondensedOutputs();
+    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<TieredCondensedBlockCuttingRecipe> recipe, IFocusGroup focuses) {
+        List<List<ItemStack>> results = recipe.value().getCondensedOutputs();
         builder.addSlot(RecipeIngredientRole.INPUT, 5, 5)
                 .setBackground(getRenderedSlot(), -1, -1)
-                .addItemStacks(Arrays.asList(recipe.getIngredients().get(0).getItems()));
+                .addItemStacks(Arrays.asList(recipe.value().getIngredients().get(0).getItems()));
 
         int i = 0;
         for(List<ItemStack> itemStacks : results) {
@@ -47,7 +46,7 @@ public class TieredBlockCuttingCategory extends GreateRecipeCategory<TieredConde
     }
 
     @Override
-    public void draw(TieredCondensedBlockCuttingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double x, double y) {
+    public void draw(RecipeHolder<TieredCondensedBlockCuttingRecipe> recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double x, double y) {
         AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 31, 6);
         AllGuiTextures.JEI_SHADOW.render(graphics, 33 - 17, 37 + 13);
         new TieredAnimatedSaw(Saws.SAWS[0].get()).draw(graphics, 33, 37);
@@ -58,7 +57,7 @@ public class TieredBlockCuttingCategory extends GreateRecipeCategory<TieredConde
         List<ItemStack> outputs = new ArrayList<>();
 
         public TieredCondensedBlockCuttingRecipe(Ingredient ingredient) {
-            super(new ResourceLocation(""), "", ingredient, ItemStack.EMPTY);
+            super("", ingredient, ItemStack.EMPTY);
         }
 
         public void addOutput(ItemStack stack) {
@@ -93,20 +92,20 @@ public class TieredBlockCuttingCategory extends GreateRecipeCategory<TieredConde
         }
     }
 
-    public static List<TieredCondensedBlockCuttingRecipe> condenseRecipes(List<Recipe<?>> stoneCuttingRecipes) {
-        List<TieredCondensedBlockCuttingRecipe> condensedRecipes = new ArrayList<>();
-        Recipes: for(Recipe<?> recipe : stoneCuttingRecipes) {
-            Ingredient ingredient = recipe.getIngredients().get(0);
-            for(TieredCondensedBlockCuttingRecipe tieredCondensedRecipe : condensedRecipes) {
-                if(ItemHelper.matchIngredients(ingredient, tieredCondensedRecipe.getIngredients().get(0))) {
-                    tieredCondensedRecipe.addOutput(getResultItem(recipe));
+    public static List<RecipeHolder<TieredCondensedBlockCuttingRecipe>> condenseRecipes(List<RecipeHolder<?>> stoneCuttingRecipes) {
+        List<RecipeHolder<TieredCondensedBlockCuttingRecipe>> condensedRecipes = new ArrayList<>();
+        Recipes: for(RecipeHolder<?> recipe : stoneCuttingRecipes) {
+            Ingredient ingredient = recipe.value().getIngredients().get(0);
+            for(RecipeHolder<TieredCondensedBlockCuttingRecipe> tieredCondensedRecipe : condensedRecipes) {
+                if(ItemHelper.matchIngredients(ingredient, tieredCondensedRecipe.value().getIngredients().get(0))) {
+                    tieredCondensedRecipe.value().addOutput(getResultItem(recipe.value()));
                     continue Recipes;
                 }
             }
 
             TieredCondensedBlockCuttingRecipe tcbcr = new TieredCondensedBlockCuttingRecipe(ingredient);
-            tcbcr.addOutput(getResultItem(recipe));
-            condensedRecipes.add(tcbcr);
+            tcbcr.addOutput(getResultItem(recipe.value()));
+            condensedRecipes.add(new RecipeHolder<>(recipe.id(), tcbcr));
         }
         return condensedRecipes;
     }

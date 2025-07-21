@@ -6,17 +6,15 @@ import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraftforge.client.model.generators.ConfiguredModel;
-import net.minecraftforge.client.model.generators.ModelFile.UncheckedModelFile;
-import net.minecraftforge.client.model.generators.loaders.ObjModelBuilder;
+import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
+import net.neoforged.neoforge.client.model.generators.ModelFile.UncheckedModelFile;
+import net.neoforged.neoforge.client.model.generators.loaders.ObjModelBuilder;
+
+import static net.minecraft.client.renderer.RenderType.CUTOUT_MIPPED;
 
 public class GreateBlockStateGen {
-
-    public static final ResourceLocation CUTOUT_MIPPED = new ResourceLocation("cutout_mipped");
-    public static final ResourceLocation CUTOUT = new ResourceLocation("cutout");
 
     public static <T extends Block> NonNullBiConsumer<DataGenContext<Block, T>, RegistrateBlockstateProvider> tieredShaftProvider() {
         return (ctx, prov) -> prov.getVariantBuilder(ctx.getEntry()).forAllStatesExcept(state -> {
@@ -138,10 +136,10 @@ public class GreateBlockStateGen {
             Axis axis = state.getValue(BlockStateProperties.AXIS);
             String material = c.getName().substring(0, c.getName().length() - 15);
             return ConfiguredModel.builder()
-                    .modelFile(p.models().withExistingParent(c.getName() + "_textures", Create.asResource("block/crushing_wheel/textures")).renderType(CUTOUT_MIPPED)
+                    .modelFile(p.models().withExistingParent(c.getName() + "_textures", Create.asResource("block/crushing_wheel/textures")).renderType(CUTOUT_MIPPED.name)
                             .texture("axis", p.modLoc("block/" + material) + "/axis")
                             .texture("axis_top", p.modLoc("block/" + material) + "/axis_top"))
-                    .modelFile(p.models().withExistingParent(c.getName(), p.modLoc("block/" + c.getName() + "_textures")).renderType(CUTOUT_MIPPED)
+                    .modelFile(p.models().withExistingParent(c.getName(), p.modLoc("block/" + c.getName() + "_textures")).renderType(CUTOUT_MIPPED.name)
                     .customLoader(ObjModelBuilder::begin).modelLocation(Create.asResource("models/block/crushing_wheel/crushing_wheel.obj")).flipV(true).end())
                     .rotationX(axis == Axis.X ? 90 : axis == Axis.Z ? 90 : 0)
                     .rotationY(axis == Axis.X ? 90 : axis == Axis.Z ? 180 : 0)
@@ -171,10 +169,10 @@ public class GreateBlockStateGen {
 
     public static <T extends Block> NonNullBiConsumer<DataGenContext<Block, T>, RegistrateBlockstateProvider> tieredMechanicalMixerProvider() {
         return (c, p) -> p.getVariantBuilder(c.getEntry()).forAllStates(state -> ConfiguredModel.builder()
-                .modelFile(p.models().withExistingParent(c.getName() + "_head", Create.asResource("block/mechanical_mixer/head")).renderType(CUTOUT_MIPPED)
+                .modelFile(p.models().withExistingParent(c.getName() + "_head", Create.asResource("block/mechanical_mixer/head")).renderType(CUTOUT_MIPPED.name)
                         .texture("6", p.modLoc("block/" + c.getName().substring(0, c.getName().length() - 17) + "/mixer_head")))
-                .modelFile(p.models().withExistingParent(c.getName() + "_pole", Create.asResource("block/mechanical_mixer/pole")).renderType(CUTOUT_MIPPED))
-                .modelFile(p.models().withExistingParent(c.getName() + "_block", Create.asResource("block/mechanical_mixer/block")).renderType(CUTOUT_MIPPED)
+                .modelFile(p.models().withExistingParent(c.getName() + "_pole", Create.asResource("block/mechanical_mixer/pole")).renderType(CUTOUT_MIPPED.name))
+                .modelFile(p.models().withExistingParent(c.getName() + "_block", Create.asResource("block/mechanical_mixer/block")).renderType(CUTOUT_MIPPED.name)
                         .texture("4", p.modLoc("block/mechanical_mixer_base_side"))
                         .texture("particle", p.modLoc("block/mechanical_mixer_base_side")))
                 .build());
@@ -204,11 +202,11 @@ public class GreateBlockStateGen {
             Direction dir = state.getValue(BlockStateProperties.FACING);
             String material = c.getName().substring(0, c.getName().length() - 12);
             return ConfiguredModel.builder()
-                    .modelFile(p.models().withExistingParent(c.getName() + "_propeller", Create.asResource("block/encased_fan/propeller")).renderType(CUTOUT_MIPPED)
+                    .modelFile(p.models().withExistingParent(c.getName() + "_propeller", Create.asResource("block/encased_fan/propeller")).renderType(CUTOUT_MIPPED.name)
                             .texture("axis_top", p.modLoc("block/" + material + "/axis_top"))
                             .texture("fan_blades", p.modLoc("block/" + material + "/fan_blades"))
                             .texture("axis", p.modLoc("block/" + material + "/axis")))
-                    .modelFile(p.models().withExistingParent(c.getName(), Create.asResource("block/encased_fan/block")).renderType(CUTOUT_MIPPED))
+                    .modelFile(p.models().withExistingParent(c.getName(), Create.asResource("block/encased_fan/block")).renderType(CUTOUT_MIPPED.name))
                     .rotationX(dir == Direction.DOWN ? 180
                             : dir.getAxis().isHorizontal()
                             ? 90 : 0)

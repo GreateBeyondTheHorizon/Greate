@@ -1,6 +1,6 @@
 package electrolyte.greate.content.gtceu.material;
 
-import com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialIconType;
+import com.gregtechceu.gtceu.api.material.material.info.MaterialIconType;
 
 public class GreateMaterialIconTypes {
 

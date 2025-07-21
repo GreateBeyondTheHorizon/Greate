@@ -28,8 +28,8 @@ public abstract class MixinDeployerBlockEntity extends KineticBlockEntity {
         super(typeIn, pos, state);
     }
 
-    @Inject(method = "addToGoggleTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isEmpty()Z"), cancellable = true)
-    private void greate_addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking, CallbackInfoReturnable<Boolean> cir) {
+    @Inject(method = "addToGoggleTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isEmpty()Z"), remap = false, cancellable = true)
+    private void greate$addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking, CallbackInfoReturnable<Boolean> cir) {
         if(!heldItem.isEmpty()) {
             CreateLang.translate("tooltip.deployer.contains",
                     Component.translatable(heldItem.getHoverName().getString()), heldItem.getCount()).style(ChatFormatting.GREEN).forGoggles(tooltip);

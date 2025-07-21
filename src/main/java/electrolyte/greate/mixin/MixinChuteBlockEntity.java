@@ -21,12 +21,12 @@ public abstract class MixinChuteBlockEntity extends SmartBlockEntity implements 
     }
 
     @WrapOperation(method = "calculatePull", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z"), remap = false)
-    private boolean greate_calculatePull(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
+    private boolean greate$calculatePull(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
         return state.getBlock() instanceof EncasedFanBlock;
     }
 
     @WrapOperation(method = "calculatePush", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z"), remap = false)
-    private boolean greate_calculatePush(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
+    private boolean greate$calculatePush(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
         return state.getBlock() instanceof EncasedFanBlock;
     }
 }

@@ -4,8 +4,8 @@ import electrolyte.greate.Greate;
 import electrolyte.greate.content.kinetics.belt.TieredBeltBlock;
 import net.createmod.catnip.render.SpriteShiftEntry;
 import net.createmod.catnip.render.SpriteShifter;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.DyeColor;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -21,7 +21,7 @@ public class GreateSpriteShifts {
     public static final Map<TieredBeltBlock, List<SpriteShiftEntry>> BELT_SPRITES = new HashMap<>();
 
     public static void populateMaps(TieredBeltBlock belt) {
-        String blockID = ForgeRegistries.BLOCKS.getKey(belt).getPath();
+        String blockID = BuiltInRegistries.BLOCK.getKey(belt).getPath();
         String beltMaterial = blockID.substring(0, blockID.indexOf("belt") - 1);
         BELT_SPRITES.put(belt, List.of(
                 get(beltMaterial + "/belt", beltMaterial + "/belt_scroll"),

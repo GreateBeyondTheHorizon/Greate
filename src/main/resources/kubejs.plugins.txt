@@ -1,1 +1,1 @@
-electrolyte.greate.compat.kubejs.KubeJSGreatePlugin
+electrolyte.greate.compat.kubejs.KubeJSGreatePlugin greate

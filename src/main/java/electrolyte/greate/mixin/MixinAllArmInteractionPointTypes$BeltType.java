@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class MixinAllArmInteractionPointTypes$BeltType {
 
     @Inject(method = "canCreatePoint", at = @At("RETURN"), remap = false, cancellable = true)
-    private void greate_beltType(Level level, BlockPos pos, BlockState state, CallbackInfoReturnable<Boolean> cir) {
+    private void greate$beltType(Level level, BlockPos pos, BlockState state, CallbackInfoReturnable<Boolean> cir) {
         cir.setReturnValue((AllBlocks.BELT.has(state) || state.getBlock() instanceof TieredBeltBlock) &&
                 !(level.getBlockState(pos.above()).getBlock() instanceof BeltTunnelBlock));
     }

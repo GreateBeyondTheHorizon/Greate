@@ -10,7 +10,7 @@ import net.minecraft.core.Direction.Axis;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -30,8 +30,8 @@ import static net.minecraft.world.level.block.state.properties.BlockStatePropert
 @Mixin(GirderBlock.class)
 public class MixinGirderBlock {
 
-    @Inject(method = "use", at = @At("RETURN"), cancellable = true)
-    private void greate_use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit, CallbackInfoReturnable<InteractionResult> cir) {
+    @Inject(method = "useItemOn", at = @At("RETURN"), remap = false, cancellable = true)
+    private void greate$useItemOn(ItemStack pStack, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit, CallbackInfoReturnable<ItemInteractionResult> cir) {
         if(Block.byItem(pPlayer.getItemInHand(pHand).getItem()) instanceof TieredShaftBlock tsb) {
             List<Block> variant = GirderEncasingRegistry.get(tsb);
             for(Block block : variant) {
@@ -47,9 +47,9 @@ public class MixinGirderBlock {
                         pPlayer.setItemInHand(pHand, ItemStack.EMPTY);
                     }
                 }
-                cir.setReturnValue(InteractionResult.SUCCESS);
+                cir.setReturnValue(ItemInteractionResult.SUCCESS);
             }
-            cir.setReturnValue(InteractionResult.SUCCESS);
+            cir.setReturnValue(ItemInteractionResult.SUCCESS);
         }
     }
 }

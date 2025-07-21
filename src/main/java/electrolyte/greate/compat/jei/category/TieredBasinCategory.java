@@ -11,10 +11,10 @@ import com.simibubi.create.foundation.gui.AllGuiTextures;
 import com.simibubi.create.foundation.utility.CreateLang;
 import electrolyte.greate.content.processing.basin.TieredBasinRecipe;
 import electrolyte.greate.foundation.item.GreateItemHelper;
-import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
+import mezz.jei.api.neoforge.NeoForgeTypes;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import net.createmod.catnip.data.Pair;
@@ -22,7 +22,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.fluids.FluidStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.neoforged.neoforge.fluids.FluidStack;
 import org.apache.commons.lang3.mutable.MutableInt;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -40,9 +41,9 @@ public class TieredBasinCategory extends GreateRecipeCategory<TieredBasinRecipe>
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, TieredBasinRecipe recipe, IFocusGroup focuses) {
-        List<Pair<Ingredient, MutableInt>> condensedIngredients = GreateItemHelper.condenseIngredients(recipe.getIngredients());
-        int size = condensedIngredients.size() + recipe.getFluidIngredients().size();
+    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<TieredBasinRecipe> recipe, IFocusGroup focuses) {
+        List<Pair<Ingredient, MutableInt>> condensedIngredients = GreateItemHelper.condenseIngredients(recipe.value().getIngredients());
+        int size = condensedIngredients.size() + recipe.value().getFluidIngredients().size();
         int xOffset = size < 3 ? (3 - size) * 19 / 2 : 0;
         int i = 0;
         for(Pair<Ingredient, MutableInt> pair : condensedIngredients) {
@@ -58,18 +59,18 @@ public class TieredBasinCategory extends GreateRecipeCategory<TieredBasinRecipe>
             i++;
         }
 
-        for(FluidIngredient ingredient : recipe.getFluidIngredients()) {
+        for(FluidIngredient ingredient : recipe.value().getFluidIngredients()) {
             builder.addSlot(RecipeIngredientRole.INPUT, 17 + xOffset + (i % 3) * 19, 51 - (i / 3) * 19)
                     .setBackground(getRenderedSlot(), -1, -1)
-                    .addIngredients(ForgeTypes.FLUID_STACK, withImprovedVisibility(ingredient.getMatchingFluidStacks()))
+                    .addIngredients(NeoForgeTypes.FLUID_STACK, withImprovedVisibility(ingredient.getMatchingFluidStacks()))
                     .addTooltipCallback(addFluidTooltip(ingredient.getRequiredAmount()));
             i++;
         }
 
-        size = recipe.getRollableResults().size() + recipe.getFluidResults().size();
+        size = recipe.value().getRollableResults().size() + recipe.value().getFluidResults().size();
         i = 0;
 
-        for(ProcessingOutput output : recipe.getRollableResults()) {
+        for(ProcessingOutput output : recipe.value().getRollableResults()) {
             int xPosition = 142 - (size % 2 != 0 && i == size - 1 ? 0 : i % 2 == 0 ? 10 : -9);
             int yPosition = -19 * (i / 2) + 51;
             IRecipeSlotBuilder baseBuilder = builder.addSlot(RecipeIngredientRole.OUTPUT, xPosition, yPosition)
@@ -79,16 +80,16 @@ public class TieredBasinCategory extends GreateRecipeCategory<TieredBasinRecipe>
             i++;
         }
 
-        for(FluidStack fluidResult : recipe.getFluidResults()) {
+        for(FluidStack fluidResult : recipe.value().getFluidResults()) {
             int xPosition = 142 - (size % 2 != 0 && i == size - 1 ? 0 : i % 2 == 0 ? 10 : -9);
             int yPosition = -19 * (i / 2) + 51;
             builder.addSlot(RecipeIngredientRole.OUTPUT, xPosition, yPosition)
                     .setBackground(getRenderedSlot(), -1, -1)
-                    .addIngredient(ForgeTypes.FLUID_STACK, withImprovedVisibility(fluidResult))
+                    .addIngredient(NeoForgeTypes.FLUID_STACK, withImprovedVisibility(fluidResult))
                     .addTooltipCallback(addFluidTooltip(fluidResult.getAmount()));
         }
 
-        HeatCondition requiredHeat = recipe.getRequiredHeat();
+        HeatCondition requiredHeat = recipe.value().getRequiredHeat();
         if(!requiredHeat.testBlazeBurner(HeatLevel.NONE)) {
             builder.addSlot(RecipeIngredientRole.RENDER_ONLY, 134, 81)
                     .addItemStack(AllBlocks.BLAZE_BURNER.asStack());
@@ -98,7 +99,7 @@ public class TieredBasinCategory extends GreateRecipeCategory<TieredBasinRecipe>
                     .addItemStack(AllItems.BLAZE_CAKE.asStack());
         }
 
-        ItemStack circuitStack = getCircuitStack(recipe);
+        ItemStack circuitStack = getCircuitStack(recipe.value());
         if(!circuitStack.isEmpty()) {
             builder.addSlot(RecipeIngredientRole.RENDER_ONLY, getBackground().getWidth() / 2 - 17, 13)
                     .setBackground(getRenderedSlot(), -1, -1)
@@ -107,11 +108,11 @@ public class TieredBasinCategory extends GreateRecipeCategory<TieredBasinRecipe>
     }
 
     @Override
-    public void draw(TieredBasinRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double x, double y) {
+    public void draw(RecipeHolder<TieredBasinRecipe> recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double x, double y) {
         super.draw(recipe, recipeSlotsView, graphics, 1, y);
-        HeatCondition requiredHeat = recipe.getRequiredHeat();
+        HeatCondition requiredHeat = recipe.value().getRequiredHeat();
         boolean noHeat = requiredHeat == HeatCondition.NONE;
-        int vRows = (1 + recipe.getFluidResults().size() + recipe.getRollableResults().size()) / 2;
+        int vRows = (1 + recipe.value().getFluidResults().size() + recipe.value().getRollableResults().size()) / 2;
         if(vRows <= 2) {
             AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 136, -19 * (vRows - 1) + 32);
         }

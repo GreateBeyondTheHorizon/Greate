@@ -36,12 +36,13 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraftforge.client.model.generators.loaders.ObjModelBuilder;
+import net.neoforged.neoforge.client.model.generators.loaders.ObjModelBuilder;
 
 import java.util.function.Supplier;
 
 import static com.simibubi.create.foundation.data.BlockStateGen.axisBlock;
 import static electrolyte.greate.foundation.data.GreateBlockStateGen.*;
+import static net.minecraft.client.renderer.RenderType.CUTOUT_MIPPED;
 
 public class GreateBuilderTransformers {
 
@@ -75,11 +76,11 @@ public class GreateBuilderTransformers {
                     String suffix = (blockState.getValue(EncasedCogwheelBlock.TOP_SHAFT) ? "_top" : "")
                             + (blockState.getValue(EncasedCogwheelBlock.BOTTOM_SHAFT) ? "_bottom" : "");
                     String modelName = c.getName() + suffix;
-                    return p.models().withExistingParent(modelName, Create.asResource("block/" + blockFolder + "/block" + suffix)).renderType(CUTOUT_MIPPED)
+                    return p.models().withExistingParent(modelName, Create.asResource("block/" + blockFolder + "/block" + suffix)).renderType(CUTOUT_MIPPED.name)
                             .texture("casing", Create.asResource("block/" + casing + "_casing"))
                             .texture("particle", Create.asResource("block/" + casing + "_casing"))
                             .texture("4", Create.asResource("block/" + gearbox))
-                            .texture("1", new ResourceLocation("block/stripped_" + wood + "_log_top"))
+                            .texture("1", ResourceLocation.withDefaultNamespace("block/stripped_" + wood + "_log_top"))
                             .texture("side", Create.asResource("block/" + casing + encasedSuffix));
                 }, false));
     }

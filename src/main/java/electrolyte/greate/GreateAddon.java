@@ -5,38 +5,27 @@ import com.gregtechceu.gtceu.api.addon.IGTAddon;
 import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
 import electrolyte.greate.content.gtceu.machines.GreateRecipeTypes;
 import electrolyte.greate.foundation.data.recipe.GreateCraftingComponents;
-import electrolyte.greate.foundation.data.recipe.GreateRecipes;
 import electrolyte.greate.registry.GreateTagPrefixes;
-import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeOutput;
 
-import java.util.function.Consumer;
-
-@GTAddon
+@GTAddon(Greate.MOD_ID)
 public class GreateAddon implements IGTAddon {
+
 	@Override
 	public GTRegistrate getRegistrate() {
 		return GreateRegistries.REGISTRATE;
 	}
 
 	@Override
-	public void initializeAddon() {
+	public void gtInitComplete() {
 		Greate.LOGGER.info("Greate GT addon initialized!");
+		GreateTagPrefixes.register();
 	}
 
 	@Override
-	public String addonModId() {
-		return Greate.MOD_ID;
-	}
-
-	@Override
-	public void addRecipes(Consumer<FinishedRecipe> provider) {
+	public void addRecipes(RecipeOutput provider) {
 		GreateRecipeTypes.register();
 		GreateCraftingComponents.register();
-		GreateRecipes.register(provider);
-	}
-
-	@Override
-	public void registerTagPrefixes() {
-		GreateTagPrefixes.register();
+		//GreateRecipes.register(provider);
 	}
 }

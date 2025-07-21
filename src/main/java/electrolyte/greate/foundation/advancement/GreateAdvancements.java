@@ -1,10 +1,10 @@
 package electrolyte.greate.foundation.advancement;
 
 import com.google.common.collect.Sets;
-import com.simibubi.create.AllItems;
 import electrolyte.greate.foundation.advancement.GreateAdvancement.Builder;
-import electrolyte.greate.registry.Belts;
 import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
@@ -21,15 +21,14 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
 
-import static electrolyte.greate.foundation.advancement.GreateAdvancement.TaskType.SECRET_NOISY;
-import static electrolyte.greate.foundation.advancement.GreateAdvancement.TaskType.SILENT;
-
 public class GreateAdvancements implements DataProvider {
 
     private final PackOutput output;
+    private final CompletableFuture<HolderLookup.Provider> registries;
 
-    public GreateAdvancements(PackOutput output) {
+    public GreateAdvancements(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         this.output = output;
+        this.registries = registries;
     }
 
     public static final List<GreateAdvancement> ENTRIES = new ArrayList<>();
@@ -54,22 +53,24 @@ public class GreateAdvancements implements DataProvider {
 
     @Override
     public CompletableFuture<?> run(CachedOutput pOutput) {
-        PathProvider pathProvider = output.createPathProvider(Target.DATA_PACK, "advancements");
-        List<CompletableFuture<?>> futures = new ArrayList<>();
-        Set<ResourceLocation> set = Sets.newHashSet();
-        Consumer<Advancement> consumer = (adv) -> {
-            ResourceLocation id = adv.getId();
-            if(!set.add(id)) {
-                throw new IllegalStateException("Duplicate Advancement " + id);
-            }
-            Path path = pathProvider.json(id);
-            futures.add(DataProvider.saveStable(pOutput, adv.deconstruct().serializeToJson(), path));
-        };
+        return this.registries.thenCompose(provider -> {
+            PathProvider pathProvider = output.createPathProvider(Target.DATA_PACK, "advancements");
+            List<CompletableFuture<?>> futures = new ArrayList<>();
+            Set<ResourceLocation> set = Sets.newHashSet();
+            Consumer<AdvancementHolder> consumer = (adv) -> {
+                ResourceLocation id = adv.id();
+                if(!set.add(id)) {
+                    throw new IllegalStateException("Duplicate Advancement " + id);
+                }
+                Path path = pathProvider.json(id);
+                futures.add(DataProvider.saveStable(pOutput, provider, Advancement.CODEC, adv.value(), path));
+            };
 
-        for(GreateAdvancement adv : ENTRIES) {
-            adv.save(consumer);
-        }
-        return CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new));
+            for(GreateAdvancement adv : ENTRIES) {
+                adv.save(consumer, provider);
+            }
+            return CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new));
+        });
     }
 
     @Override

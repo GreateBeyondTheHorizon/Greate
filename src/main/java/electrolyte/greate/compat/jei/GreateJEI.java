@@ -2,8 +2,7 @@ package electrolyte.greate.compat.jei;
 
 import com.google.common.base.Predicates;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
-import com.gregtechceu.gtceu.api.recipe.GTRecipe;
-import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
+import com.gregtechceu.gtceu.api.recipe.kind.GTRecipe;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.AllRecipeTypes;
@@ -22,7 +21,6 @@ import com.simibubi.create.content.kinetics.saw.CuttingRecipe;
 import com.simibubi.create.content.processing.basin.BasinRecipe;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import com.simibubi.create.infrastructure.config.AllConfigs;
-import com.simibubi.create.infrastructure.config.CRecipes;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import electrolyte.greate.Greate;
 import electrolyte.greate.compat.jei.category.*;
@@ -55,7 +53,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.crafting.IShapedRecipe;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -67,6 +64,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static electrolyte.greate.registry.EncasedFans.FANS;
+import static mezz.jei.api.recipe.RecipeType.createRecipeHolderType;
 
 @JeiPlugin
 @SuppressWarnings("unused")
@@ -126,11 +124,11 @@ public class GreateJEI implements IModPlugin {
                         .build("mixing", TieredMixingCategory::standard),
 
                 autoShapeless = builder(TieredBasinRecipe.class)
-                        .enableWhen(c -> c.allowShapelessInMixer)
-                        .addAllRecipesIf(r -> r instanceof CraftingRecipe &&
-                                !(r instanceof IShapedRecipe<?>) &&
-                                r.getIngredients().size() > 1 &&
-                                !MechanicalPressBlockEntity.canCompress(r) &&
+                        .enableWhen(AllConfigs.server().recipes.allowShapelessInMixer)
+                        .addAllRecipesIf(r -> r.value() instanceof CraftingRecipe &&
+                                !(r.value() instanceof ShapedRecipe) &&
+                                r.value().getIngredients().size() > 1 &&
+                                !MechanicalPressBlockEntity.canCompress(r.value()) &&
                                 !AllRecipeTypes.shouldIgnoreInAutomation(r) &&
                                 !ModRecipeTypes.shouldIgnoreInAutomation(r),
                                 TieredBasinRecipe::convertShapeless)
@@ -141,7 +139,7 @@ public class GreateJEI implements IModPlugin {
                         .build("automatic_shapeless", TieredMixingCategory::autoShapeless),
 
                 brewing = builder(TieredBasinRecipe.class)
-                        .enableWhen(c -> c.allowBrewingInMixer)
+                        .enableWhen(AllConfigs.server().recipes.allowBrewingInMixer)
                         .addTypedRecipes(ModRecipeTypes.BREWING::getType)
                         .catalysts(MechanicalMixers.MECHANICAL_MIXERS)
                         .catalyst(AllBlocks.BASIN::get)
@@ -158,10 +156,10 @@ public class GreateJEI implements IModPlugin {
                         .build("packing", TieredPackingCategory::standard),
 
                 autoSquare = builder(TieredBasinRecipe.class)
-                        .enableWhen(c -> c.allowShapedSquareInPress)
-                        .addAllRecipesIf(r -> (r instanceof CraftingRecipe) &&
-                                !(r instanceof MechanicalCraftingRecipe) &&
-                                MechanicalPressBlockEntity.canCompress(r) &&
+                        .enableWhen(AllConfigs.server().recipes.allowShapedSquareInPress)
+                        .addAllRecipesIf(r -> (r.value() instanceof CraftingRecipe) &&
+                                !(r.value() instanceof MechanicalCraftingRecipe) &&
+                                MechanicalPressBlockEntity.canCompress(r.value()) &&
                                 !AllRecipeTypes.shouldIgnoreInAutomation(r) &&
                                 !ModRecipeTypes.shouldIgnoreInAutomation(r),
                                 TieredBasinRecipe::convertShapeless)
@@ -179,7 +177,7 @@ public class GreateJEI implements IModPlugin {
                         .build("sawing", TieredSawingCategory::new),
 
                 blockCutting = builder(TieredCondensedBlockCuttingRecipe.class)
-                        .enableWhen(c -> c.allowStonecuttingOnSaw)
+                        .enableWhen(AllConfigs.server().recipes.allowStonecuttingOnSaw)
                         .addRecipes(() -> TieredBlockCuttingCategory.condenseRecipes(getTypedRecipesExcluding(RecipeType.STONECUTTING, Predicates.or(AllRecipeTypes::shouldIgnoreInAutomation, ModRecipeTypes::shouldIgnoreInAutomation))))
                         .catalysts(Saws.SAWS)
                         .doubleIconItem(Saws.NEUTRONIUM_SAW.get(), Items.STONE_BRICK_STAIRS)
@@ -234,48 +232,48 @@ public class GreateJEI implements IModPlugin {
         }
     }
 
-    private class CategoryBuilder<T extends Recipe<?>> {
+    private class CategoryBuilder<T extends Recipe<? extends RecipeInput>> {
         private final Class<? extends T> recipeClass;
-        private Predicate<CRecipes> predicate = cRecipes -> true;
+        private Supplier<Boolean> config = () -> true;
 
         private IDrawable background;
         private IDrawable icon;
 
-        private final List<Consumer<List<T>>> recipeListConsumers = new ArrayList<>();
+        private final List<Consumer<List<RecipeHolder<T>>>> recipeListConsumers = new ArrayList<>();
         private final List<Supplier<? extends ItemStack>> catalysts = new ArrayList<>();
 
         public CategoryBuilder(Class<? extends T> recipeClass) {
             this.recipeClass = recipeClass;
         }
 
-        public CategoryBuilder<T> enableIf(Predicate<CRecipes> predicate) {
-            this.predicate = predicate;
+        public CategoryBuilder<T> enableWhen(Supplier<Boolean> predicate) {
+            this.config = predicate;
             return this;
         }
 
-        public CategoryBuilder<T> enableWhen(Function<CRecipes, ConfigBool> configValue) {
-            predicate = c -> configValue.apply(c).get();
+        public CategoryBuilder<T> enableWhen(ConfigBool configValue) {
+            this.config = configValue::get;
             return this;
         }
 
-        public CategoryBuilder<T> addRecipeListConsumer(Consumer<List<T>> consumer) {
+        public CategoryBuilder<T> addRecipeListConsumer(Consumer<List<RecipeHolder<T>>> consumer) {
             recipeListConsumers.add(consumer);
             return this;
         }
 
-        public CategoryBuilder<T> addRecipes(Supplier<Collection<? extends T>> collection) {
+        public CategoryBuilder<T> addRecipes(Supplier<Collection<? extends RecipeHolder<T>>> collection) {
             return addRecipeListConsumer(recipes -> recipes.addAll(collection.get()));
         }
 
-        public CategoryBuilder<T> addAllRecipesIf(Predicate<Recipe<?>> predicate) {
-            return addRecipeListConsumer(recipes -> consumeAllRecipes(recipe -> {
+        public CategoryBuilder<T> addAllRecipesIf(Predicate<RecipeHolder<T>> predicate) {
+            return addRecipeListConsumer(recipes -> consumeAllRecipesOfType(recipe -> {
                 if(predicate.test(recipe)) {
-                    recipes.add((T) recipe);
+                    recipes.add(recipe);
                 }
             }));
         }
 
-        public CategoryBuilder<T> addAllRecipesIf(Predicate<Recipe<?>> predicate, Function<Recipe<?>, T> converter) {
+        public CategoryBuilder<T> addAllRecipesIf(Predicate<RecipeHolder<?>> predicate, Function<RecipeHolder<?>, RecipeHolder<T>> converter) {
             return addRecipeListConsumer(recipes -> consumeAllRecipes(recipe -> {
                 if(predicate.test(recipe)) {
                     recipes.add(converter.apply(recipe));
@@ -287,30 +285,30 @@ public class GreateJEI implements IModPlugin {
             return addTypedRecipes(recipeTypeEntry::getType);
         }
 
-        public CategoryBuilder<T> addTypedRecipes(Supplier<RecipeType<? extends T>> recipeType) {
-            return addRecipeListConsumer(recipes -> GreateJEI.<T>consumeTypedRecipes(recipes::add, recipeType.get()));
+        public <I extends RecipeInput, R extends Recipe<I>> CategoryBuilder<T> addTypedRecipes(Supplier<RecipeType<R>> recipeType) {
+            return addRecipeListConsumer(recipes -> GreateJEI.<T>consumeTypedRecipes(recipe -> {
+                if(recipeClass.isInstance(recipe.value())) {
+                    recipes.add((RecipeHolder<T>) recipe);
+                }
+            }, recipeType.get()));
         }
 
-        public CategoryBuilder<T> addTypedRecipes(Supplier<RecipeType<? extends T>> recipeType, Function<Recipe<?>, T> converter) {
+        public CategoryBuilder<T> addTypedRecipes(Supplier<RecipeType<? extends T>> recipeType, Function<RecipeHolder<?>, RecipeHolder<T>> converter) {
             return addRecipeListConsumer(recipes -> GreateJEI.<T>consumeTypedRecipes(recipe -> recipes.add(converter.apply(recipe)), recipeType.get()));
         }
 
-        public CategoryBuilder<T> addTypedRecipesGT(GTRecipeType recipeType, Function<GTRecipe, T> converter) {
-            return addRecipeListConsumer(recipes -> GreateJEI.<T>consumeTypedRecipes(recipe -> recipes.add(converter.apply((GTRecipe) recipe)), recipeType));
-        }
-
-        public CategoryBuilder<T> addTypedRecipesIf(Supplier<RecipeType<? extends T>> recipeType, Predicate<Recipe<?>> predicate) {
-            return addRecipeListConsumer(recipes -> GreateJEI.<T>consumeTypedRecipes(recipe -> {
+        public CategoryBuilder<T> addTypedRecipesIf(Supplier<RecipeType<? extends T>> recipeType, Predicate<RecipeHolder<?>> predicate) {
+            return addRecipeListConsumer(recipes -> consumeTypedRecipesTyped(recipe -> {
                 if(predicate.test(recipe)) recipes.add(recipe);
             }, recipeType.get()));
         }
 
         public CategoryBuilder<T> addTypedRecipesExcluding(Supplier<RecipeType<? extends T>> recipeType, Supplier<RecipeType<? extends T>> excluded) {
             return addRecipeListConsumer(recipes -> {
-                List<Recipe<?>> excludedRecipes = getTypedRecipes(excluded.get());
-                GreateJEI.<T>consumeTypedRecipes(recipe -> {
-                    for (Recipe<?> excludedRecipe : excludedRecipes) {
-                        if (doInputsMatch(recipe, excludedRecipe)) {
+                List<RecipeHolder<?>> excludedRecipes = getTypedRecipes(excluded.get());
+                consumeTypedRecipesTyped(recipe -> {
+                    for (RecipeHolder<?> excludedRecipe : excludedRecipes) {
+                        if (doInputsMatch(recipe.value(), excludedRecipe.value())) {
                             return;
                         }
                     }
@@ -319,40 +317,12 @@ public class GreateJEI implements IModPlugin {
             });
         }
 
-        public CategoryBuilder<T> addTypedRecipesExcluding(Supplier<RecipeType<? extends T>> recipeType, Supplier<RecipeType<? extends T>> excluded, Function<Recipe<?>, T> converter) {
-            return addRecipeListConsumer(recipes -> {
-                List<Recipe<?>> excludedRecipes = getTypedRecipes(excluded.get());
-                GreateJEI.<T>consumeTypedRecipes(recipe -> {
-                   for(Recipe<?> excludedRecipe : excludedRecipes) {
-                       if(doInputsMatch(recipe, excludedRecipe)) {
-                           return;
-                       }
-                   }
-                   recipes.add(converter.apply(recipe));
-                }, recipeType.get());
-            });
-        }
-
-        public CategoryBuilder<T> addTypedRecipesExcludingGT(Supplier<RecipeType<? extends T>> recipeType, GTRecipeType excluded, Function<Recipe<?>, T> converter) {
-            return addRecipeListConsumer(recipes -> {
-                List<Recipe<?>> excludedRecipes = getTypedRecipes(excluded);
-                GreateJEI.<T>consumeTypedRecipes(recipe -> {
-                    for(Recipe<?> excludedRecipe : excludedRecipes) {
-                        if(doInputsMatchGT(recipe, excludedRecipe)) {
-                            return;
-                        }
-                    }
-                    recipes.add(converter.apply(recipe));
-                }, recipeType.get());
-            });
-        }
-
         public CategoryBuilder<T> removeRecipes(Supplier<RecipeType<? extends T>> recipeType) {
             return addRecipeListConsumer(recipes -> {
-               List<Recipe<?>> excludedRecipes = getTypedRecipes(recipeType.get());
+               List<RecipeHolder<?>> excludedRecipes = getTypedRecipes(recipeType.get());
                recipes.removeIf(recipe -> {
-                  for(Recipe<?> excludedRecipe : excludedRecipes) {
-                      if(doInputsMatch(recipe, excludedRecipe) && doOutputsMatch(recipe, excludedRecipe)) return true;
+                  for(RecipeHolder<?> excludedRecipe : excludedRecipes) {
+                      if(doInputsMatch(recipe.value(), excludedRecipe.value()) && doOutputsMatch(recipe.value(), excludedRecipe.value())) return true;
                   }
                    return false;
                });
@@ -422,11 +392,11 @@ public class GreateJEI implements IModPlugin {
         }
 
         public GreateRecipeCategory<T> build(String name, GreateRecipeCategory.Factory<T> factory) {
-            Supplier<List<T>> recipesSupplier;
-            if(predicate.test(AllConfigs.server().recipes)) {
+            Supplier<List<RecipeHolder<T>>> recipesSupplier;
+            if(config.get()) {
                 recipesSupplier = () -> {
-                    List<T> recipes = new ArrayList<>();
-                    for(Consumer<List<T>> consumer : recipeListConsumers) {
+                    List<RecipeHolder<T>> recipes = new ArrayList<>();
+                    for(Consumer<List<RecipeHolder<T>>> consumer : recipeListConsumers) {
                         consumer.accept(recipes);
                     }
                     return recipes;
@@ -436,33 +406,53 @@ public class GreateJEI implements IModPlugin {
             }
 
             GreateRecipeCategory.Info<T> info = new Info<>(
-                    new mezz.jei.api.recipe.RecipeType<>(Greate.id(name), recipeClass),
-                    Lang.builder(Greate.MOD_ID).translate("recipe." + name).component(), background, icon, recipesSupplier, catalysts);
+                    createRecipeHolderType(Greate.id(name)),
+                    Lang.builder(Greate.MOD_ID).translate("recipe." + name).component(),
+                            background,
+                            icon,
+                            recipesSupplier,
+                            catalysts);
             GreateRecipeCategory<T> category = factory.create(info);
             allCategories.add(category);
             return category;
         }
-    }
 
-    public static void consumeAllRecipes(Consumer<Recipe<?>> consumer) {
-        Minecraft.getInstance().getConnection().getRecipeManager().getRecipes().forEach(consumer);
-    }
+        private void consumeAllRecipesOfType(Consumer<RecipeHolder<T>> consumer) {
+            GreateJEI.consumeAllRecipes(recipeHolder -> {
+                if(recipeClass.isInstance(recipeHolder.value())) {
+                    consumer.accept((RecipeHolder<T>) recipeHolder);
+                }
+            });
+        }
 
-    public static <T extends Recipe<?>> void consumeTypedRecipes(Consumer<T> consumer, RecipeType<?> type) {
-        Map<ResourceLocation, Recipe<?>> map = Minecraft.getInstance().getConnection().getRecipeManager().recipes.get(type);
-        if(map != null) {
-            map.values().forEach(recipe -> consumer.accept((T) recipe));
+        private void consumeTypedRecipesTyped(Consumer<RecipeHolder<T>> consumer, RecipeType<?> type) {
+            consumeTypedRecipes(recipeHolder -> {
+                if(recipeClass.isInstance(recipeHolder.value())) {
+                    consumer.accept((RecipeHolder<T>) recipeHolder);
+                }
+            }, type);
         }
     }
 
-    public static List<Recipe<?>> getTypedRecipes(RecipeType<?> type) {
-        List<Recipe<?>> recipes = new ArrayList<>();
+    public static void consumeAllRecipes(Consumer<RecipeHolder<?>> consumer) {
+        Minecraft.getInstance().getConnection().getRecipeManager().getRecipes().forEach(consumer);
+    }
+
+    public static <T extends Recipe<?>> void consumeTypedRecipes(Consumer<RecipeHolder<?>> consumer, RecipeType<?> type) {
+        List<? extends RecipeHolder<?>> map = Minecraft.getInstance().getConnection().getRecipeManager().getAllRecipesFor((RecipeType) type);
+        if(!map.isEmpty()) {
+            map.forEach(consumer);
+        }
+    }
+
+    public static List<RecipeHolder<?>> getTypedRecipes(RecipeType<?> type) {
+        List<RecipeHolder<?>> recipes = new ArrayList<>();
         consumeTypedRecipes(recipes::add, type);
         return recipes;
     }
 
-    public static List<Recipe<?>> getTypedRecipesExcluding(RecipeType<?> type, Predicate<Recipe<?>> exclusionPredicate) {
-        List<Recipe<?>> recipes = getTypedRecipes(type);
+    public static List<RecipeHolder<?>> getTypedRecipesExcluding(RecipeType<?> type, Predicate<RecipeHolder<?>> exclusionPredicate) {
+        List<RecipeHolder<?>> recipes = getTypedRecipes(type);
         recipes.removeIf(exclusionPredicate);
         return recipes;
     }

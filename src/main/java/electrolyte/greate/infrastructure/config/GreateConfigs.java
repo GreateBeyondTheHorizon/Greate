@@ -3,14 +3,15 @@ package electrolyte.greate.infrastructure.config;
 import com.simibubi.create.api.stress.BlockStressValues;
 import electrolyte.greate.Greate;
 import net.createmod.catnip.config.ConfigBase;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.config.ModConfig.Type;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.EventBusSubscriber.Bus;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.config.ModConfig.Type;
+import net.neoforged.fml.event.config.ModConfigEvent;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.EnumMap;
@@ -39,7 +40,7 @@ public class GreateConfigs {
     }
 
     private static <T extends ConfigBase> T register(Supplier<T> factory, ModConfig.Type type) {
-        Pair<T, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(b -> {
+        Pair<T, ModConfigSpec> specPair = new ModConfigSpec.Builder().configure(b -> {
            T config = factory.get();
            config.registerAll(b);
            return config;
@@ -51,12 +52,12 @@ public class GreateConfigs {
         return config;
     }
 
-    public static void register(ModLoadingContext context) {
+    public static void register(ModLoadingContext context, ModContainer container) {
         if(context.getActiveNamespace().equals(Greate.MOD_ID)) {
             //CLIENT = register(GClient::new, Type.CLIENT);
             SERVER = register(GServer::new, Type.SERVER);
             for(Entry<Type, ConfigBase> pair : CONFIGS.entrySet()) {
-                context.registerConfig(pair.getKey(), pair.getValue().specification);
+                container.registerConfig(pair.getKey(), pair.getValue().specification);
             }
             GStress stress = server().kinetics.stressValues;
             BlockStressValues.IMPACTS.registerProvider(stress::getImpact);

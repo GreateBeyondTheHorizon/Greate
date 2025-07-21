@@ -1,51 +1,45 @@
 package electrolyte.greate;
 
-import com.gregtechceu.gtceu.api.GTCEuAPI.RegisterEvent;
-import com.gregtechceu.gtceu.api.data.chemical.material.event.MaterialEvent;
-import com.gregtechceu.gtceu.api.data.chemical.material.event.PostMaterialEvent;
-import com.gregtechceu.gtceu.api.machine.MachineDefinition;
-import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
+import com.gregtechceu.gtceu.api.registry.GTRegistries;
 import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
 import electrolyte.greate.content.gtceu.machines.GreateMultiblockMachines;
 import electrolyte.greate.content.gtceu.machines.GreateRecipeTypes;
+import electrolyte.greate.content.kinetics.fan.processing.GreateFanProcessingTypes;
 import electrolyte.greate.registry.*;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.LogicalSide;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.registries.RegisterEvent;
 
-@Mod.EventBusSubscriber(modid = Greate.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = Greate.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public final class GreateRegistries {
 	public static final GTRegistrate REGISTRATE = GTRegistrate.create(Greate.MOD_ID);
 
 	@SubscribeEvent
-	public static void registerMaterials(MaterialEvent event) {
-		GreateMaterials.register();
-	}
+	public static void registerEvent(RegisterEvent event) {
+		event.register(GTRegistries.MATERIAL_REGISTRY.registryKey(),helper -> {
+			GreateMaterials.register();
+			Shafts.register();
+			Belts.register();
+			Cogwheels.register();
+			CrushingWheels.register();
+			EncasedFans.register();
+			Gearboxes.register();
+			Girders.register();
+			MechanicalPresses.register();
+			MechanicalMixers.register();
+			Millstones.register();
+			Saws.register();
+			Pumps.register();
+			ModBlockEntityTypes.register();
 
-	@SubscribeEvent
-	public static void registerMaterialBlocks(PostMaterialEvent event) {
-		Shafts.register();
-		Belts.register();
-		Cogwheels.register();
-		CrushingWheels.register();
-		EncasedFans.register();
-		Gearboxes.register();
-		Girders.register();
-		MechanicalPresses.register();
-		MechanicalMixers.register();
-		Millstones.register();
-		Saws.register();
-		Pumps.register();
-		ModBlockEntityTypes.register();
-	}
-
-	@SubscribeEvent
-	public static void registerMachines(RegisterEvent<ResourceLocation, MachineDefinition> event) {
+			//TODO: check
+			if(LogicalSide.CLIENT.isClient()) {
+				GreatePartialModels.register();
+			}
+		});
 		GreateMultiblockMachines.register();
-	}
-
-	@SubscribeEvent
-	public static void registerRecipeTypes(RegisterEvent<ResourceLocation, GTRecipeType> event) {
 		GreateRecipeTypes.register();
+        GreateFanProcessingTypes.register();
 	}
 }

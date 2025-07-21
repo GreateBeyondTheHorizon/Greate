@@ -15,7 +15,8 @@ public class BeltBlockComponentProvider implements IBlockComponentProvider {
     @Override
     public void appendTooltip(ITooltip iTooltip, BlockAccessor blockAccessor, IPluginConfig iPluginConfig) {
         if(blockAccessor.getBlock() instanceof TieredBeltBlock) {
-            iTooltip.getElementHelper().item(blockAccessor.getPickedResult());
+            //TODO:fix
+            //iTooltip.getElementHelper().item(blockAccessor.getPickedResult());
         }
     }
 

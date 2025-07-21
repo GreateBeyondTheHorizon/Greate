@@ -1,21 +1,23 @@
 package electrolyte.greate.content.gtceu.machines;
 
 import com.gregtechceu.gtceu.GTCEu;
-import com.gregtechceu.gtceu.api.data.RotationState;
 import com.gregtechceu.gtceu.api.machine.MultiblockMachineDefinition;
+import com.gregtechceu.gtceu.api.machine.RotationState;
 import com.gregtechceu.gtceu.api.machine.multiblock.CoilWorkableElectricMultiblockMachine;
-import com.gregtechceu.gtceu.api.pattern.FactoryBlockPattern;
-import com.gregtechceu.gtceu.api.pattern.Predicates;
+import com.gregtechceu.gtceu.api.multiblock.FactoryBlockPattern;
+import com.gregtechceu.gtceu.api.multiblock.Predicates;
 import com.gregtechceu.gtceu.api.recipe.OverclockingLogic;
-import com.gregtechceu.gtceu.common.data.GTRecipeModifiers;
+import com.gregtechceu.gtceu.data.recipe.GTRecipeModifiers;
 import com.simibubi.create.AllBlocks;
 import net.minecraft.network.chat.Component;
 
-import static com.gregtechceu.gtceu.api.pattern.Predicates.*;
-import static com.gregtechceu.gtceu.common.data.GCYMBlocks.CASING_WATERTIGHT;
-import static com.gregtechceu.gtceu.common.data.GTBlocks.*;
+import static com.gregtechceu.gtceu.api.multiblock.Predicates.*;
+import static com.gregtechceu.gtceu.data.block.GCYMBlocks.CASING_WATERTIGHT;
+import static com.gregtechceu.gtceu.data.block.GTBlocks.*;
 import static electrolyte.greate.GreateRegistries.REGISTRATE;
 import static electrolyte.greate.content.gtceu.machines.GreateRecipeTypes.WIRE_COATING_RECIPES;
+
+;
 
 public class GreateMultiblockMachines {
 
@@ -49,7 +51,6 @@ public class GreateMultiblockMachines {
                     .where('D', blocks(AllBlocks.DEPOT.get()))
                     .where('P', blocks(AllBlocks.SPOUT.get()))
                     .build())
-            //TODO: fix model
             .workableCasingModel(GTCEu.id("block/casings/gcym/watertight_casing"),
                     GTCEu.id("block/multiblock/gcym/large_wiremill"))
             .register();

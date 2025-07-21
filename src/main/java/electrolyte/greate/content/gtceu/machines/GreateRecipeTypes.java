@@ -3,11 +3,11 @@ package electrolyte.greate.content.gtceu.machines;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.gui.GuiTextures;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
-import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
-import com.gregtechceu.gtceu.common.data.GTSoundEntries;
+import com.gregtechceu.gtceu.data.recipe.GTRecipeTypes;
+import com.gregtechceu.gtceu.data.sound.GTSoundEntries;
 import com.lowdragmc.lowdraglib.gui.texture.ProgressTexture.FillDirection;
 
-import static com.gregtechceu.gtceu.common.data.GTRecipeTypes.ELECTRIC;
+import static com.gregtechceu.gtceu.data.recipe.GTRecipeTypes.ELECTRIC;
 
 public class GreateRecipeTypes {
 

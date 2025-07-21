@@ -5,20 +5,18 @@ import com.simibubi.create.AllTags.AllItemTags;
 import com.simibubi.create.Create;
 import electrolyte.greate.Greate;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 
-import java.util.function.Consumer;
-
 import static com.gregtechceu.gtceu.api.GTValues.*;
-import static com.gregtechceu.gtceu.common.data.GTMaterials.CHEMICAL_DYES;
-import static com.gregtechceu.gtceu.common.data.GTMaterials.Chlorine;
-import static com.gregtechceu.gtceu.common.data.GTRecipeTypes.CHEMICAL_BATH_RECIPES;
+import static com.gregtechceu.gtceu.data.material.GTMaterials.CHEMICAL_DYES;
+import static com.gregtechceu.gtceu.data.material.GTMaterials.Chlorine;
+import static com.gregtechceu.gtceu.data.recipe.GTRecipeTypes.CHEMICAL_BATH_RECIPES;
 
 public class GreateChemicalBathRecipes {
 
-    public static void register(Consumer<FinishedRecipe> provider) {
+    public static void register(RecipeOutput provider) {
         for(DyeColor color : DyeColor.values()) {
             String dyeName = color.getName();
             CHEMICAL_BATH_RECIPES

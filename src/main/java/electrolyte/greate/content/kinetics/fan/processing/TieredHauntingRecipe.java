@@ -1,17 +1,15 @@
 package electrolyte.greate.content.kinetics.fan.processing;
 
-import electrolyte.greate.content.kinetics.fan.processing.TieredHauntingRecipe.TieredHauntingWrapper;
-import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
-import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeParams;
+import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeParams;
+import electrolyte.greate.content.processing.recipe.TieredStandardProcessingRecipe;
 import electrolyte.greate.registry.ModRecipeTypes;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public class TieredHauntingRecipe extends TieredProcessingRecipe<TieredHauntingWrapper> {
+public class TieredHauntingRecipe extends TieredStandardProcessingRecipe<SingleRecipeInput> {
     public TieredHauntingRecipe(TieredProcessingRecipeParams params) {
         super(ModRecipeTypes.HAUNTING, params);
     }
@@ -27,14 +25,8 @@ public class TieredHauntingRecipe extends TieredProcessingRecipe<TieredHauntingW
     }
 
     @Override
-    public boolean matches(TieredHauntingWrapper container, Level level) {
-        if(container.isEmpty()) return false;
-        return ingredients.get(0).test(container.getItem(0));
-    }
-
-    public static class TieredHauntingWrapper extends RecipeWrapper {
-        public TieredHauntingWrapper() {
-            super(new ItemStackHandler(1));
-        }
+    public boolean matches(SingleRecipeInput inv, Level level) {
+        if(inv.isEmpty()) return false;
+        return ingredients.get(0).test(inv.getItem(0));
     }
 }

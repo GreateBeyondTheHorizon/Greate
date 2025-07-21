@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public abstract class MixinCrushingWheelControllerBlockEntity {
 
     @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/kinetics/crusher/CrushingWheelControllerBlockEntity;applyRecipe()V"), remap = false)
-    private void greate_tick(CrushingWheelControllerBlockEntity cwbe) {
+    private void greate$tick(CrushingWheelControllerBlockEntity cwbe) {
         if(cwbe instanceof TieredCrushingWheelControllerBlockEntity tcwbe) tcwbe.applyValidRecipe();
     }
 }

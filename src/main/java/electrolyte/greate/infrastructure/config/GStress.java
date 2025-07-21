@@ -1,6 +1,6 @@
 package electrolyte.greate.infrastructure.config;
 
-import com.gregtechceu.gtceu.api.data.chemical.material.Material;
+import com.gregtechceu.gtceu.api.material.material.Material;
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import electrolyte.greate.Greate;
@@ -8,11 +8,11 @@ import electrolyte.greate.GreateValues;
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import it.unimi.dsi.fastutil.objects.Object2DoubleOpenHashMap;
 import net.createmod.catnip.config.ConfigBase;
-import net.createmod.catnip.platform.CatnipServices;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.ForgeConfigSpec.Builder;
-import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
+import net.neoforged.neoforge.common.ModConfigSpec.Builder;
+import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -55,14 +55,14 @@ public class GStress extends ConfigBase {
 
     @Nullable
     public DoubleSupplier getImpact(Block block) {
-        ResourceLocation loc = CatnipServices.REGISTRIES.getKeyOrThrow(block);
+        ResourceLocation loc = BuiltInRegistries.BLOCK.getKeyOrNull(block);
         ConfigValue<Double> impact = this.impacts.get(loc);
         return impact == null ? null : impact::get;
     }
 
     @Nullable
     public DoubleSupplier getCapacity(Block block) {
-        ResourceLocation loc = CatnipServices.REGISTRIES.getKeyOrThrow(block);
+        ResourceLocation loc = BuiltInRegistries.BLOCK.getKeyOrNull(block);
         ConfigValue<Double> impact = this.capacities.get(loc);
         return impact == null ? null : impact::get;
     }

@@ -1,7 +1,7 @@
 package electrolyte.greate.foundation.data.recipe.removal;
 
-import com.gregtechceu.gtceu.api.data.chemical.material.MarkerMaterial;
-import com.gregtechceu.gtceu.api.data.chemical.material.MarkerMaterials.Color;
+import com.gregtechceu.gtceu.api.material.material.MarkerMaterial;
+import com.gregtechceu.gtceu.api.material.material.MarkerMaterials.Color;
 import com.simibubi.create.Create;
 import net.minecraft.resources.ResourceLocation;
 

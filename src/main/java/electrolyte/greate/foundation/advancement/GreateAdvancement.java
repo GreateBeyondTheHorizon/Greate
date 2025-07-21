@@ -6,10 +6,13 @@ import com.simibubi.create.foundation.advancement.SimpleCreateTrigger;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import electrolyte.greate.Greate;
 import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.CriterionTriggerInstance;
-import net.minecraft.advancements.FrameType;
+import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.advancements.AdvancementType;
+import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.ConsumeItemTrigger;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -17,6 +20,7 @@ import net.minecraft.world.level.ItemLike;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
 public class GreateAdvancement {
@@ -24,31 +28,25 @@ public class GreateAdvancement {
     static final ResourceLocation BACKGROUND = Create.asResource("textures/gui/advancements.png");
     static final String LANG = "advancement." + Greate.MOD_ID + ".";
     static final String SECRET_SUFFIX = "§7\n(Hidden Advancement)";
-    private Advancement.Builder builder;
+    private final Advancement.Builder mcBuilder = Advancement.Builder.advancement();
+    private final Builder builder = new Builder();
     private SimpleCreateTrigger builtInTrigger;
     private GreateAdvancement parent;
-    Advancement datagenResult;
+    AdvancementHolder datagenResult;
     private String id;
     private String title;
     private String description;
 
     public GreateAdvancement(String id, UnaryOperator<Builder> b) {
-        this.builder = Advancement.Builder.advancement();
         this.id = id;
+        b.apply(builder);
 
-        Builder t = new Builder();
-        b.apply(t);
-
-        if(!t.externalTrigger) {
+        if(!builder.externalTrigger) {
             builtInTrigger = AllTriggers.addSimple(id + "_builtin");
-            builder.addCriterion("0", builtInTrigger.instance());
+            mcBuilder.addCriterion("0", builtInTrigger.createCriterion(builtInTrigger.instance()));
         }
 
-        builder.display(t.icon, Component.translatable(titleKey()),
-                Component.translatable(descriptionKey()).withStyle(s -> s.withColor(0xDBA213)),
-                id.equals("root") ? BACKGROUND : null, t.type.frame, t.type.toast, t.type.announce, t.type.hide);
-
-        if(t.type == TaskType.SECRET) {
+        if(builder.type == TaskType.SECRET) {
             description += SECRET_SUFFIX;
         }
 
@@ -63,9 +61,15 @@ public class GreateAdvancement {
         return titleKey() + ".desc";
     }
 
-    void save(Consumer<Advancement> advancementConsumer) {
-        if(parent != null) builder.parent(parent.datagenResult);
-        datagenResult = builder.save(advancementConsumer, Greate.id(id).toString());
+    void save(Consumer<AdvancementHolder> advancementConsumer, HolderLookup.Provider registries) {
+        if(parent != null) mcBuilder.parent(parent.datagenResult);
+        if(builder.func != null) builder.icon(builder.func.apply(registries));
+
+        mcBuilder.display(builder.icon, Component.translatable(titleKey()),
+                Component.translatable(descriptionKey()).withStyle(s -> s.withColor(0xDBA213)),
+                id.equals("root") ? BACKGROUND : null, builder.type.frame, builder.type.toast, builder.type.announce, builder.type.hide);
+
+        datagenResult = mcBuilder.save(advancementConsumer, Greate.id(id).toString());
     }
 
     void provideLang(BiConsumer<String, String> consumer) {
@@ -75,21 +79,21 @@ public class GreateAdvancement {
 
     static enum TaskType {
 
-        SILENT(FrameType.TASK, false, false, false),
-        NORMAL(FrameType.TASK, true, false, false),
-        NOISY(FrameType.TASK, true, true, false),
-        EXPERT(FrameType.GOAL, true, true, false),
-        SECRET(FrameType.GOAL, true, true, true),
-        SECRET_NOISY(FrameType.CHALLENGE, true, true, true),
+        SILENT(AdvancementType.TASK, false, false, false),
+        NORMAL(AdvancementType.TASK, true, false, false),
+        NOISY(AdvancementType.TASK, true, true, false),
+        EXPERT(AdvancementType.GOAL, true, true, false),
+        SECRET(AdvancementType.GOAL, true, true, true),
+        SECRET_NOISY(AdvancementType.CHALLENGE, true, true, true),
 
         ;
 
-        private FrameType frame;
+        private AdvancementType frame;
         private boolean toast;
         private boolean announce;
         private boolean hide;
 
-        private TaskType(FrameType frame, boolean toast, boolean announce, boolean hide) {
+        TaskType(AdvancementType frame, boolean toast, boolean announce, boolean hide) {
             this.frame = frame;
             this.toast = toast;
             this.announce = announce;
@@ -102,6 +106,7 @@ public class GreateAdvancement {
         private boolean externalTrigger;
         private int keyIndex;
         private ItemStack icon;
+        private Function<Provider, ItemStack> func;
 
         Builder special(TaskType type) {
             this.type = type;
@@ -113,12 +118,17 @@ public class GreateAdvancement {
             return this;
         }
 
-        Builder icon(ItemProviderEntry<?> item) {
+        Builder icon(ItemProviderEntry<?, ?> item) {
             return icon(item.asStack());
         }
 
         Builder icon(ItemStack stack) {
             icon = stack;
+            return this;
+        }
+
+        Builder icon(Function<Provider, ItemStack> func) {
+            this.func = func;
             return this;
         }
 
@@ -148,8 +158,8 @@ public class GreateAdvancement {
             return externalTrigger(ConsumeItemTrigger.TriggerInstance.usedItem(item));
         }
 
-        Builder externalTrigger(CriterionTriggerInstance trigger) {
-            builder.addCriterion(String.valueOf(keyIndex), trigger);
+        Builder externalTrigger(Criterion<?> trigger) {
+            mcBuilder.addCriterion(String.valueOf(keyIndex), trigger);
             externalTrigger = true;
             keyIndex++;
             return this;

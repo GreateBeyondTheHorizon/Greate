@@ -1,13 +1,13 @@
 package electrolyte.greate.content.gtceu.material;
 
-import com.gregtechceu.gtceu.api.data.chemical.material.Material;
-import com.gregtechceu.gtceu.api.data.chemical.material.properties.IMaterialProperty;
-import com.gregtechceu.gtceu.api.data.chemical.material.properties.MaterialProperties;
-import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
+import com.gregtechceu.gtceu.api.material.material.Material;
+import com.gregtechceu.gtceu.api.material.material.properties.IMaterialProperty;
+import com.gregtechceu.gtceu.api.material.material.properties.MaterialProperties;
+import com.gregtechceu.gtceu.api.material.material.properties.PropertyKey;
 
 import java.util.List;
 
-import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags.GENERATE_PLATE;
+import static com.gregtechceu.gtceu.api.material.material.info.MaterialFlags.GENERATE_PLATE;
 
 public class BeltProperty implements IMaterialProperty {
 

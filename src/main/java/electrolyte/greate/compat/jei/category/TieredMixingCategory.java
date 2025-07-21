@@ -7,6 +7,7 @@ import electrolyte.greate.content.processing.basin.TieredBasinRecipe;
 import electrolyte.greate.registry.MechanicalMixers;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -38,14 +39,14 @@ public class TieredMixingCategory extends TieredBasinCategory {
     }
 
     @Override
-    public void draw(TieredBasinRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double x, double y) {
+    public void draw(RecipeHolder<TieredBasinRecipe> recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double x, double y) {
         boolean mixingType = type == MixingType.AUTO_SHAPELESS;
         double yOffset = mixingType ? 90 : 107;
         super.draw(recipe, recipeSlotsView, graphics, 1, yOffset);
-        HeatCondition requiredHeat = recipe.getRequiredHeat();
+        HeatCondition requiredHeat = recipe.value().getRequiredHeat();
         if(requiredHeat != HeatCondition.NONE) {
             heater.withHeat(requiredHeat.visualizeAsBlazeBurner()).draw(graphics, getBackground().getWidth() / 2 + 3, 55);
         }
-        new TieredAnimatedMixer(MechanicalMixers.MECHANICAL_MIXERS[recipe.getRecipeTier()].get()).draw(graphics, getBackground().getWidth() / 2 + 3, 34);
+        new TieredAnimatedMixer(MechanicalMixers.MECHANICAL_MIXERS[recipe.value().getRecipeTier()].get()).draw(graphics, getBackground().getWidth() / 2 + 3, 34);
     }
 }

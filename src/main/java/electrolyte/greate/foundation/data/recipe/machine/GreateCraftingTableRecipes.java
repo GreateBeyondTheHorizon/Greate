@@ -1,14 +1,14 @@
 package electrolyte.greate.foundation.data.recipe.machine;
 
 import com.gregtechceu.gtceu.api.GTCEuAPI;
-import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
-import com.gregtechceu.gtceu.api.data.chemical.material.Material;
-import com.gregtechceu.gtceu.api.data.chemical.material.stack.MaterialEntry;
-import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
-import com.gregtechceu.gtceu.common.data.GTItems;
-import com.gregtechceu.gtceu.common.data.GTMachines;
-import com.gregtechceu.gtceu.common.data.GTMaterials;
+import com.gregtechceu.gtceu.api.material.ChemicalHelper;
+import com.gregtechceu.gtceu.api.material.material.Material;
+import com.gregtechceu.gtceu.api.material.material.stack.MaterialEntry;
+import com.gregtechceu.gtceu.api.tag.TagPrefix;
 import com.gregtechceu.gtceu.config.ConfigHolder;
+import com.gregtechceu.gtceu.data.item.GTItems;
+import com.gregtechceu.gtceu.data.machine.GTMachines;
+import com.gregtechceu.gtceu.data.material.GTMaterials;
 import com.gregtechceu.gtceu.data.recipe.VanillaRecipeHelper;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
@@ -16,24 +16,22 @@ import electrolyte.greate.Greate;
 import electrolyte.greate.content.gtceu.material.CogwheelProperty;
 import electrolyte.greate.content.gtceu.material.GreateMaterialFlags;
 import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
-import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.Tags;
-
-import java.util.function.Consumer;
+import net.neoforged.neoforge.common.Tags;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
-import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.*;
-import static com.gregtechceu.gtceu.common.data.GCYMBlocks.CASING_WATERTIGHT;
-import static com.gregtechceu.gtceu.common.data.GTItems.ELECTRIC_PUMP_IV;
-import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
-import static com.gregtechceu.gtceu.data.recipe.CustomTags.IV_CIRCUITS;
+import static com.gregtechceu.gtceu.api.tag.TagPrefix.*;
+import static com.gregtechceu.gtceu.data.block.GCYMBlocks.CASING_WATERTIGHT;
+import static com.gregtechceu.gtceu.data.item.GTItems.ELECTRIC_PUMP_IV;
+import static com.gregtechceu.gtceu.data.material.GTMaterials.*;
 import static com.gregtechceu.gtceu.data.recipe.GTCraftingComponents.*;
+import static com.gregtechceu.gtceu.data.tag.CustomTags.IV_CIRCUITS;
 import static electrolyte.greate.GreateValues.TM;
 import static electrolyte.greate.content.gtceu.machines.GreateMultiblockMachines.WIRE_COATING_FACTORY;
 import static electrolyte.greate.foundation.data.recipe.GreateCraftingComponents.*;
@@ -49,7 +47,7 @@ import static electrolyte.greate.registry.Saws.SAWS;
 
 public class GreateCraftingTableRecipes {
 
-    public static void register(Consumer<FinishedRecipe> provider) {
+    public static void register(RecipeOutput provider) {
         for (int tier = 0; tier < TM.length; tier++) {
             Material tierMaterial = TM[tier];
 
@@ -146,7 +144,7 @@ public class GreateCraftingTableRecipes {
             VanillaRecipeHelper.addShapedRecipe(provider, AllItems.COPPER_DIVING_HELMET.getId(), AllItems.COPPER_DIVING_HELMET.asStack(),
                     "PPP", "PGP",
                     'P', new MaterialEntry(plate, Copper),
-                    'G', Tags.Items.GLASS);
+                    'G', Tags.Items.GLASS_BLOCKS);
             VanillaRecipeHelper.addShapedRecipe(provider, AllItems.COPPER_BACKTANK.getId(), AllItems.COPPER_BACKTANK.asStack(),
                     "ASA", "CBC", "wCf",
                     'A', new MaterialEntry(plate, AndesiteAlloy),
@@ -185,7 +183,7 @@ public class GreateCraftingTableRecipes {
                 'S', new MaterialEntry(wireGtSingle, Steel));
     }
 
-    public static void registerMaterialRecipes(Consumer<FinishedRecipe> provider, Material material) {
+    public static void registerMaterialRecipes(RecipeOutput provider, Material material) {
         if(material.hasFlag(GreateMaterialFlags.GENERATE_ALLOY)) {
             VanillaRecipeHelper.addShapedRecipe(provider, material.getName() + "_alloy", ChemicalHelper.get(alloy, material),
                     "NA", "AN", "fh",
@@ -251,7 +249,7 @@ public class GreateCraftingTableRecipes {
         }
     }
 
-    public static void registerCreateRecipes(Consumer<FinishedRecipe> provider) {
+    public static void registerCreateRecipes(RecipeOutput provider) {
         VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllItems.WRENCH.getId().getPath()), AllItems.WRENCH.asStack(),
                 "PP", "PC", " S",
                 'P', new MaterialEntry(plate, Gold),
@@ -282,7 +280,7 @@ public class GreateCraftingTableRecipes {
 
     }
 
-    public static void registerEasyCreateRecipes(Consumer<FinishedRecipe> provider) {
+    public static void registerEasyCreateRecipes(RecipeOutput provider) {
         VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllBlocks.WATER_WHEEL.getId().getPath()), AllBlocks.WATER_WHEEL.asStack(),
                 "BBB", "BSB", "BBB",
                 'B', ItemTags.WOODEN_SLABS,
@@ -294,7 +292,7 @@ public class GreateCraftingTableRecipes {
         VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllBlocks.WINDMILL_BEARING.getId().getPath()), AllBlocks.WINDMILL_BEARING.asStack(),
                 " S ", " T ", "wHf",
                 'S', ItemTags.WOODEN_SLABS,
-                'T', Tags.Items.STONE,
+                'T', Tags.Items.STONES,
                 'H', SHAFT.get(ULV));
         VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllBlocks.MECHANICAL_BEARING.getId().getPath()), AllBlocks.MECHANICAL_BEARING.asStack(),
                 " S ", " C ", "wHf",
@@ -327,7 +325,7 @@ public class GreateCraftingTableRecipes {
                 'H', SHAFT.get(ULV));
     }
 
-    public static void registerHardCreateRecipes(Consumer<FinishedRecipe> provider) {
+    public static void registerHardCreateRecipes(RecipeOutput provider) {
         VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllBlocks.CHUTE.getId().getPath()), AllBlocks.CHUTE.asStack(),
                 "PGP", "PCP", "wPh",
                 'P', new MaterialEntry(plate, Iron),
@@ -385,7 +383,7 @@ public class GreateCraftingTableRecipes {
         VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllBlocks.WINDMILL_BEARING.getId().getPath()), AllBlocks.WINDMILL_BEARING.asStack(),
                 " S ", " T ", "wHf",
                 'S', ItemTags.WOODEN_SLABS,
-                'T', Tags.Items.STONE,
+                'T', Tags.Items.STONES,
                 'H', SHAFT.get(MV));
         VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllBlocks.MECHANICAL_BEARING.getId().getPath()), AllBlocks.MECHANICAL_BEARING.asStack(),
                 " S ", " C ", "wHf",

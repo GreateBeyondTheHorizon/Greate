@@ -6,18 +6,18 @@ import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.data.BlockTagsProvider;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.common.data.BlockTagsProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.concurrent.CompletableFuture;
 
 public class GreateTagGen {
 
-    private static final TagKey<Item> HIDE_FROM_RECIPE_VIEWERS = ForgeRegistries.ITEMS.tags().createTagKey(new ResourceLocation("c", "hidden_from_recipe_viewers"));
+    private static final TagKey<Item> HIDE_FROM_RECIPE_VIEWERS = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "hidden_from_recipe_viewers"));
 
     public static class GreateBlockTagGen extends BlockTagsProvider {
 

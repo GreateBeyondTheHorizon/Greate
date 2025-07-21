@@ -5,6 +5,7 @@ import com.simibubi.create.content.kinetics.belt.transport.BeltMovementHandler;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
@@ -59,14 +60,14 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
     }
 
     @Override
-    public void write(CompoundTag compound, boolean clientPacket) {
+    public void write(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket) {
         compound.putInt("Tier", this.tier);
-        super.write(compound, clientPacket);
+        super.write(compound, registries, clientPacket);
     }
 
     @Override
-    protected void read(CompoundTag compound, boolean clientPacket) {
-        super.read(compound, clientPacket);
+    protected void read(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket) {
+        super.read(compound, registries, clientPacket);
         this.tier = compound.getInt("Tier");
         beltLength = compound.getInt("Length");
     }

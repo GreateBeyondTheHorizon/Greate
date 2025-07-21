@@ -1,6 +1,7 @@
 package electrolyte.greate.content.kinetics.belt.item;
 
-import com.gregtechceu.gtceu.api.data.chemical.material.Material;
+import com.gregtechceu.gtceu.api.material.material.Material;
+import com.simibubi.create.AllDataComponents;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.belt.BeltBlock;
 import com.simibubi.create.content.kinetics.belt.BeltPart;
@@ -22,8 +23,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.Direction.AxisDirection;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -67,8 +66,8 @@ public class TieredBeltConnectorItem extends Item implements ITieredBelt {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flag) {
-        super.appendHoverText(stack, world, tooltip, flag);
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+        super.appendHoverText(stack, context, tooltip, flag);
 
         String beltLength = String.valueOf(GConfigUtility.getBeltLengthFromMaterial(material));
         MutableComponent beltLengthComponent = Component.translatable(beltLength).withStyle(ChatFormatting.BOLD).withStyle(Style.EMPTY.withColor(ChatFormatting.AQUA));
@@ -94,27 +93,26 @@ public class TieredBeltConnectorItem extends Item implements ITieredBelt {
     @Override
     public InteractionResult useOn(UseOnContext pContext) {
         Player player = pContext.getPlayer();
+        ItemStack heldStack = pContext.getItemInHand();
         if(player != null && player.isShiftKeyDown()) {
-            pContext.getItemInHand().setTag(null);
+            heldStack.remove(AllDataComponents.BELT_FIRST_SHAFT);
             return InteractionResult.SUCCESS;
         }
         Level level = pContext.getLevel();
         BlockPos pos = pContext.getClickedPos();
         boolean validAxis = validateAxis(level, pos);
         if(level.isClientSide) return validAxis ? InteractionResult.SUCCESS : InteractionResult.FAIL;
-        CompoundTag tag = pContext.getItemInHand().getOrCreateTag();
         BlockPos firstPulley = null;
-        if(tag.contains("FirstPulley")) {
-            firstPulley = NbtUtils.readBlockPos(tag.getCompound("FirstPulley"));
+        if(heldStack.has(AllDataComponents.BELT_FIRST_SHAFT)) {
+            firstPulley = heldStack.get(AllDataComponents.BELT_FIRST_SHAFT);
             if(!validateAxis(level, firstPulley) || !firstPulley.closerThan(pos,
                     GConfigUtility.getBeltLengthFromMaterial(((TieredBeltConnectorItem) pContext.getItemInHand().getItem()).getBeltMaterial()) * 2)) {
-                tag.remove("FirstPulley");
-                pContext.getItemInHand().setTag(tag);
+                heldStack.remove(AllDataComponents.BELT_FIRST_SHAFT);
             }
         }
 
         if(!validAxis || player == null) return InteractionResult.FAIL;
-        if(tag.contains("FirstPulley")) {
+        if(heldStack.has(AllDataComponents.BELT_FIRST_SHAFT)) {
             if(!canConnect(level, firstPulley, pos, pContext.getItemInHand())) return InteractionResult.FAIL;
             if(firstPulley != null && !firstPulley.equals(pos)) {
                 createBelts(level, firstPulley, pos);
@@ -125,13 +123,12 @@ public class TieredBeltConnectorItem extends Item implements ITieredBelt {
             }
 
             if(!pContext.getItemInHand().isEmpty()) {
-                pContext.getItemInHand().setTag(null);
+                heldStack.remove(AllDataComponents.BELT_FIRST_SHAFT);
                 player.getCooldowns().addCooldown(this, 5);
             }
             return InteractionResult.SUCCESS;
         }
-        tag.put("FirstPulley", NbtUtils.writeBlockPos(pos));
-        pContext.getItemInHand().setTag(tag);
+        heldStack.set(AllDataComponents.BELT_FIRST_SHAFT, pos);
         player.getCooldowns().addCooldown(this, 5);
         return InteractionResult.SUCCESS;
     }

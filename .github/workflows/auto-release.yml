@@ -24,7 +24,7 @@ jobs:
       id: version
       with:
         file: gradle.properties
-        property: greate_version
+        property: mod_version
     - name: Build
       uses: gradle/gradle-build-action@v2.4.2
       with:
@@ -34,12 +34,12 @@ jobs:
       uses: Kir-Antipov/mc-publish@v3.3
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        github-tag: ${{ steps.version.outputs.greate_version }}
+        github-tag: ${{ steps.version.outputs.mod_version }}
         github-generate-changelog: false
         github-prerelease: true
 
-        name: Greate ${{ steps.version.outputs.greate_version }}
-        version: ${{ steps.version.outputs.greate_version }}
+        name: Greate ${{ steps.version.outputs.mod_version }}
+        version: ${{ steps.version.outputs.mod_version }}
         changelog-file: changelog.md
 
         curseforge-id: 901996

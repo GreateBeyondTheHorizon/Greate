@@ -1,13 +1,12 @@
 package electrolyte.greate.content.kinetics.belt.item;
 
+import com.simibubi.create.AllDataComponents;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
 import electrolyte.greate.infrastructure.config.GConfigUtility;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtUtils;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -35,12 +34,9 @@ public class TieredBeltConnectorHandler {
         for(InteractionHand hand : InteractionHand.values()) {
             ItemStack heldStack = player.getItemInHand(hand);
             if(!(heldStack.getItem() instanceof TieredBeltConnectorItem tbci)) continue;
-            if(!heldStack.hasTag()) continue;
+            if(!heldStack.has(AllDataComponents.BELT_FIRST_SHAFT)) continue;
 
-            CompoundTag tag = heldStack.getTag();
-            if(!tag.contains("FirstPulley")) continue;
-
-            BlockPos first = NbtUtils.readBlockPos(tag.getCompound("FirstPulley"));
+            BlockPos first = heldStack.get(AllDataComponents.BELT_FIRST_SHAFT);
             if(!level.getBlockState(first).hasProperty(BlockStateProperties.AXIS)) continue;
 
             Axis axis = level.getBlockState(first).getValue(BlockStateProperties.AXIS);

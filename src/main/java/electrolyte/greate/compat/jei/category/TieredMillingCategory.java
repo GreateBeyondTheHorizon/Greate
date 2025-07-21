@@ -12,6 +12,7 @@ import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
@@ -24,12 +25,12 @@ public class TieredMillingCategory extends GreateRecipeCategory<TieredAbstractCr
     }
 
     @Override
-    public void setRecipe(IRecipeLayoutBuilder builder, TieredAbstractCrushingRecipe recipe, IFocusGroup focuses) {
+    public void setRecipe(IRecipeLayoutBuilder builder, RecipeHolder<TieredAbstractCrushingRecipe> recipe, IFocusGroup focuses) {
         builder.addSlot(RecipeIngredientRole.INPUT, 15, 9)
                 .setBackground(getRenderedSlot(), -1, -1)
-                .addIngredients(recipe.getIngredients().get(0));
+                .addIngredients(recipe.value().getIngredients().get(0));
 
-        List<ProcessingOutput> results = recipe.getRollableResults();
+        List<ProcessingOutput> results = recipe.value().getRollableResults();
         boolean single = results.size() == 1;
         int i = 0;
         for(ProcessingOutput output : results) {
@@ -44,10 +45,10 @@ public class TieredMillingCategory extends GreateRecipeCategory<TieredAbstractCr
     }
 
     @Override
-    public void draw(TieredAbstractCrushingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double x, double y) {
+    public void draw(RecipeHolder<TieredAbstractCrushingRecipe> recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double x, double y) {
         super.draw(recipe, recipeSlotsView, graphics, 1, 57);
         AllGuiTextures.JEI_ARROW.render(graphics, 85, 32);
         AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 43, 4);
-        new TieredAnimatedMillstone(Millstones.MILLSTONES[recipe.getRecipeTier()].get()).draw(graphics, 48, 27);
+        new TieredAnimatedMillstone(Millstones.MILLSTONES[recipe.value().getRecipeTier()].get()).draw(graphics, 48, 27);
     }
 }

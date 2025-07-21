@@ -1,7 +1,7 @@
 package electrolyte.greate.content.kinetics.belt;
 
-import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
-import com.gregtechceu.gtceu.api.data.chemical.material.Material;
+import com.gregtechceu.gtceu.api.material.ChemicalHelper;
+import com.gregtechceu.gtceu.api.material.material.Material;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.belt.*;
 import com.simibubi.create.content.kinetics.belt.BeltBlockEntity.CasingType;
@@ -18,7 +18,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
@@ -36,22 +36,19 @@ import static electrolyte.greate.registry.GreateTagPrefixes.shaft;
 
 public class TieredBeltSlicer {
 
-    public static InteractionResult useConnector(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult, Feedback feedback) {
+    public static ItemInteractionResult useConnector(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult, Feedback feedback) {
         BeltBlockEntity controllerBE = BeltHelper.getControllerBE(level, pos);
-        if(controllerBE == null)
-            return InteractionResult.PASS;
+        if(controllerBE == null) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         int beltLength = controllerBE.beltLength;
         Material beltMaterial = ((TieredBeltConnectorItem) player.getItemInHand(hand).getItem()).getBeltMaterial();
-        if(beltLength == GConfigUtility.getBeltLengthFromMaterial(beltMaterial))
-            return InteractionResult.FAIL;
+        if(beltLength == GConfigUtility.getBeltLengthFromMaterial(beltMaterial)) return ItemInteractionResult.FAIL;
 
         BlockPos beltVector = BlockPos.containing(BeltHelper.getBeltVector(state));
         BeltPart beltPart = state.getValue(BeltBlock.PART);
         Direction direction = state.getValue(BeltBlock.HORIZONTAL_FACING);
         List<BlockPos> beltChain = BeltBlock.getBeltChain(level, controllerBE.getBlockPos());
         boolean creative = player.isCreative();
-        if(!hoveringEnd(state, hitResult))
-            return InteractionResult.PASS;
+        if(!hoveringEnd(state, hitResult)) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
         BlockPos next = beltPart == BeltPart.START ? pos.subtract(beltVector) : pos.offset(beltVector);
         BeltBlockEntity mergedController = null;
@@ -59,16 +56,12 @@ public class TieredBeltSlicer {
 
         BlockState nextState = level.getBlockState(next);
         if(!nextState.canBeReplaced()) {
-            if(!(state.getBlock() instanceof TieredBeltBlock))
-                return InteractionResult.FAIL;
-            if(!(beltStatesCompatible(state, nextState)))
-                return InteractionResult.FAIL;
+            if(!(state.getBlock() instanceof TieredBeltBlock)) return ItemInteractionResult.FAIL;
+            if(!(beltStatesCompatible(state, nextState))) return ItemInteractionResult.FAIL;
 
             mergedController = BeltHelper.getControllerBE(level, next);
-            if(mergedController == null)
-                return InteractionResult.FAIL;
-            if(mergedController.beltLength + beltLength > GConfigUtility.getBeltLengthFromMaterial(beltMaterial))
-                return InteractionResult.FAIL;
+            if(mergedController == null) return ItemInteractionResult.FAIL;
+            if(mergedController.beltLength + beltLength > GConfigUtility.getBeltLengthFromMaterial(beltMaterial)) return ItemInteractionResult.FAIL;
 
             mergedBeltLength = mergedController.beltLength;
 
@@ -172,7 +165,7 @@ public class TieredBeltSlicer {
                 }
             }
         }
-        return InteractionResult.SUCCESS;
+        return ItemInteractionResult.SUCCESS;
     }
 
     private static boolean hoveringEnd(BlockState state, BlockHitResult hitResult) {

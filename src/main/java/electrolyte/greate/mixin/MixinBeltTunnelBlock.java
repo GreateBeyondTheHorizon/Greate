@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MixinBeltTunnelBlock {
 
     @Inject(method = "isValidPositionForPlacement", at = @At("HEAD"), cancellable = true, remap = false)
-    private void greate_isValidPositionForPlacement(BlockState state, LevelReader worldIn, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
+    private void greate$isValidPositionForPlacement(BlockState state, LevelReader worldIn, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
         BlockState blockState = worldIn.getBlockState(pos.below());
         if(!(blockState.getBlock() instanceof BeltBlock)) {
             cir.setReturnValue(false);

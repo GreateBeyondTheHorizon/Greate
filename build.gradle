@@ -1,62 +1,79 @@
 plugins {
-    id 'eclipse'
-    id 'idea'
+    id 'java-library'
     id 'maven-publish'
-    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
-    id 'org.spongepowered.mixin' version '0.7.+'
-    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+    id 'net.neoforged.moddev' version '2.0.99'
+    id 'idea'
 }
 
-version = "${greate_version}"
-group = 'electrolyte.greate'
-archivesBaseName = 'greate'
+tasks.named('wrapper', Wrapper).configure {
+    distributionType = Wrapper.DistributionType.BIN
+}
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+version = mod_version
+group = mod_group_id
 
-minecraft {
-    mappings channel: 'parchment', version: '2023.09.03-1.20.1'
+base {
+    archivesName = mod_id
+}
 
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+neoForge {
+    version = project.neo_version
+
+    parchment {
+        mappingsVersion = project.parchment_mappings_version
+        minecraftVersion = project.parchment_minecraft_version
+    }
 
     runs {
-
         configureEach {
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
+            systemProperty 'forge.logging.markers', 'REGISTRIES'
+            logLevel = org.slf4j.event.Level.DEBUG
 
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-
-            mods {
-                "greate" {
-                    source sourceSets.main
-                }
-            }
-            arg '-mixin.config=create.mixins.json'
+            systemProperty 'mixin.env.remapRefMap', 'true'
+            systemProperty 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
         }
 
         client {
-            property 'forge.enabledGameTestNamespaces', 'greate'
+            client()
+            gameDirectory = project.file("run/${minecraft_version}/run-client")
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
 
         server {
-            property 'forge.enabledGameTestNamespaces', 'greate'
+            server()
+            gameDirectory = project.file("run/${minecraft_version}/run-server")
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
 
         gameTestServer {
-            property 'forge.enabledGameTestNamespaces', 'greate'
+            type = "gameTestServer"
+            gameDirectory = project.file("run/${minecraft_version}/run-gametestserver")
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
         data {
-            args '--all', '--mod', 'greate', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'), '--existing-mod', 'create', '--existing-mod', 'gtceu'
+            data()
+            gameDirectory = project.file("run/${minecraft_version}/run-data")
+            programArguments.addAll '--all', '--mod', project.mod_id, '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath(), '--existing-mod', 'create', '--existing-mod', 'gtceu'
+        }
+    }
+    mods {
+        "${mod_id}" {
+            sourceSet(sourceSets.main)
         }
     }
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
+configurations {
+    runtimeClasspath.extendsFrom localRuntime
+}
+
 repositories {
     mavenCentral()
-    maven { url = 'https://maven.tterrag.com/'
+    maven { url = 'https://mvn.devos.one/snapshots/'
         content {
             includeGroup "com.tterrag.registrate"
         }
@@ -73,7 +90,7 @@ repositories {
             includeGroup "mezz.jei"
         }
     }
-    maven { url = 'https://maven.architectury.dev/'
+    maven { url = 'https://maven.shedaniel.me/'
         content {
             includeGroup "dev.architectury"
         }
@@ -91,6 +108,10 @@ repositories {
     maven { url = 'https://maven.firstdarkdev.xyz/snapshots'
         content {
             includeGroup 'com.lowdragmc.ldlib'
+        }
+    }
+    maven { url = 'https://api.repsy.io/mvn/toma/public/'
+        content {
             includeGroup 'dev.toma.configuration'
         }
     }
@@ -105,59 +126,60 @@ repositories {
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    implementation ("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
+    implementation "net.createmod.ponder:Ponder-NeoForge-${minecraft_version}:${ponder_version}"
+    compileOnly "dev.engine-room.flywheel:flywheel-neoforge-api-${minecraft_version}:${flywheel_version}"
+    runtimeOnly "dev.engine-room.flywheel:flywheel-neoforge-${minecraft_version}:${flywheel_version}"
+    implementation "com.tterrag.registrate:Registrate:${registrate_version}"
 
-    annotationProcessor "org.spongepowered:mixin:0.8.7:processor"
+    compileOnly ("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}") { transitive = false }
+    compileOnly ("mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}") { transitive = false }
+    runtimeOnly ("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}") { transitive = false }
 
-    implementation fg.deobf("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
-    implementation(fg.deobf("net.createmod.ponder:Ponder-Forge-${minecraft_version}:${ponder_version}"))
-    compileOnly fg.deobf("dev.engine-room.flywheel:flywheel-forge-api-${minecraft_version}:${flywheel_version}")
-    runtimeOnly fg.deobf("dev.engine-room.flywheel:flywheel-forge-${minecraft_version}:${flywheel_version}")
-    implementation fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
+    implementation "dev.architectury:architectury-neoforge:${architectury_version}"
+    implementation "dev.latvian.mods:rhino:${rhino_version}"
+    implementation ("dev.latvian.mods:kubejs-neoforge:${kubejs_version}") {transitive = false }
+    //compileOnly ("dev.latvian.mods:kubejs-create-neoforge:${kubejs_create_version}") { transitive = false }
 
-    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}") { transitive = false }
-    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}") { transitive = false }
-    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}") { transitive = false }
+    implementation ("com.lowdragmc.ldlib:ldlib-neoforge-${minecraft_version}:${ldlib_version}") { transitive = false }
+    implementation ("com.gregtechceu.gtceu:gtceu-${minecraft_version}:${gregtech_version}") { transitive = false }
+    implementation "dev.toma.configuration:configuration-${minecraft_version}:${configuration_version}"
 
-    implementation fg.deobf("dev.architectury:architectury-forge:${architectury_version}")
-    implementation fg.deobf("dev.latvian.mods:rhino-forge:${rhino_version}")
-    implementation fg.deobf("dev.latvian.mods:kubejs-forge:${kubejs_version}")
-    implementation fg.deobf("dev.latvian.mods:kubejs-create-forge:${kubejs_create_version}") { transitive = false }
-
-    implementation fg.deobf("com.lowdragmc.ldlib:ldlib-forge-${minecraft_version}:${ldlib_version}") { transitive = false }
-    implementation fg.deobf("com.gregtechceu.gtceu:gtceu-${minecraft_version}:${gregtech_version}:slim") { transitive = false }
-    implementation fg.deobf("dev.toma.configuration:configuration-forge-${minecraft_version}:${configuration_version}")
-
-    implementation fg.deobf("curse.maven:jade-324717:${jade_version}")
-    runtimeOnly fg.deobf("curse.maven:spark-361579:${spark_version}")
+    implementation "curse.maven:jade-324717:${jade_version}"
+    runtimeOnly "curse.maven:spark-361579:${spark_version}"
 
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:${mixin_extras_version}"))
-    implementation fg.deobf("io.github.llamalad7:mixinextras-forge:${mixin_extras_version}")
+    implementation "io.github.llamalad7:mixinextras-neoforge:${mixin_extras_version}"
 }
 
-mixin {
-    add sourceSets.main, "greate-refmap.json"
-    config "greate.mixin.json"
+var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
+    var replaceProperties = [
+            minecraft_verison: minecraft_version,
+            minecraft_version_range: minecraft_version_range,
+            neo_version: neo_version,
+            loader_version_range: loader_version_range,
+            mod_id: mod_id,
+            mod_name: mod_name,
+            mod_license: mod_license,
+            mod_version: mod_version,
+            mod_authors: mod_authors,
+            mod_description: mod_description,
+            create_version_range: create_version_range,
+            gregtech_version_range: gregtech_version_range
+    ]
+    inputs.properties replaceProperties
+    expand replaceProperties
+    from "src/main/templates"
+    into "build/generates/sources/modMetadata"
 }
 
-jar {
-    manifest {
-        attributes([
-                "Specification-Title"     : "greate",
-                "Specification-Vendor"    : "electrolyte",
-                "Specification-Version"   : "1",
-                "Implementation-Title"    : project.name,
-                "Implementation-Version"  : project.jar.archiveVersion,
-                "Implementation-Vendor"   : "electrolyte",
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-        ])
-    }
-}
+sourceSets.main.resources.srcDir generateModMetadata
+neoForge.ideSyncTask generateModMetadata
 
 publishing {
     publications {
-        mavenJava(MavenPublication) {
-            artifact jar
+        register('mavenJava', MavenPublication) {
+            from components.java
         }
     }
     repositories {

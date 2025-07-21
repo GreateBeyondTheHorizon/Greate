@@ -5,8 +5,8 @@ import com.simibubi.create.compat.jei.category.sequencedAssembly.SequencedAssemb
 import com.simibubi.create.content.processing.sequenced.IAssemblyRecipe;
 import electrolyte.greate.Greate;
 import electrolyte.greate.compat.jei.category.sequencedassembly.TieredCuttingSubCategory;
-import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
-import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeParams;
+import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeParams;
+import electrolyte.greate.content.processing.recipe.TieredStandardProcessingRecipe;
 import electrolyte.greate.registry.ModRecipeTypes;
 import electrolyte.greate.registry.Saws;
 import net.createmod.catnip.lang.LangBuilder;
@@ -14,17 +14,19 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
 
+;
+
 @ParametersAreNonnullByDefault
-public class TieredCuttingRecipe extends TieredProcessingRecipe<RecipeWrapper> implements IAssemblyRecipe {
+public class TieredCuttingRecipe extends TieredStandardProcessingRecipe<RecipeWrapper> implements IAssemblyRecipe {
 
     public TieredCuttingRecipe(TieredProcessingRecipeParams params) {
         super(ModRecipeTypes.CUTTING, params);

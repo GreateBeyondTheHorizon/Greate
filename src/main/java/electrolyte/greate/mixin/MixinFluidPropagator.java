@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(value = FluidPropagator.class, priority = 2000)
 public class MixinFluidPropagator {
 	@WrapOperation(method = "propagateChangedPipe", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z"), remap = false)
-	private static boolean greate_propagateChangedPipe(BlockEntry<PumpBlock> instance, BlockState targetState, Operation<Boolean> original) {
+	private static boolean greate$propagateChangedPipe(BlockEntry<PumpBlock> instance, BlockState targetState, Operation<Boolean> original) {
 		return targetState.getBlock() instanceof PumpBlock;
 	}
 }
