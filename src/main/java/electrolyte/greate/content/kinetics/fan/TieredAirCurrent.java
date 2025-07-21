@@ -41,6 +41,7 @@ public class TieredAirCurrent extends AirCurrent {
             TransportedItemStackHandlerBehaviour handler = pair.getKey();
             Level level = handler.getWorld();
             FanProcessingType processingType = pair.getRight();
+            if(processingType == null) continue;
 
             handler.handleProcessingOnAllItems(transported -> {
                 if(level.isClientSide) {
@@ -48,7 +49,7 @@ public class TieredAirCurrent extends AirCurrent {
                     return TransportedResult.doNothing();
                 }
                 TransportedResult applyProcessing = TieredFanProcessing.applyProcessing(source.getSpeed(), transported, level, processingType, machineTier);
-                if(! applyProcessing.doesNothing() && source instanceof EncasedFanBlockEntity fan)
+                if(!applyProcessing.doesNothing() && source instanceof EncasedFanBlockEntity fan)
                     fan.award(AllAdvancements.FAN_PROCESSING);
                 return applyProcessing;
             });
@@ -87,7 +88,6 @@ public class TieredAirCurrent extends AirCurrent {
             }
 
             FanProcessingType processingType = getTypeAt((float) entityDistance);
-
             if(processingType == null) continue;
 
             if(entity instanceof ItemEntity itemEntity) {
