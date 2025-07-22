@@ -1,3 +1,3 @@
-- Fix crash with tiered encased fans
-- Fix crash with fluid tags used as inputs in recipes
-- Min GT version is now 7.0.2
+- Fix assembler hopper recipes
+- Fix create kubejs recipes not being inherited by machines
+- Fix tiered mechanical press visual on basins
