@@ -45,7 +45,7 @@ public class TieredMechanicalPressVisual extends TieredShaftVisual<TieredMechani
 
     private float getRenderedHeadOffset(float partialTick) {
         PressingBehaviour pressingBehaviour = blockEntity.getPressingBehaviour();
-        return pressingBehaviour.getRenderedHeadOffset(partialTick * pressingBehaviour.mode.headOffset);
+        return pressingBehaviour.getRenderedHeadOffset(partialTick) * pressingBehaviour.mode.headOffset;
     }
 
     @Override
