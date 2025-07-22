@@ -13,7 +13,6 @@ import com.simibubi.create.AllTags;
 import com.simibubi.create.content.fluids.transfer.FillingRecipe;
 import com.simibubi.create.content.kinetics.deployer.DeployerApplicationRecipe;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipeBuilder;
-import com.simibubi.create.foundation.fluid.FluidIngredient;
 import electrolyte.greate.Greate;
 import electrolyte.greate.content.gtceu.material.CogwheelProperty;
 import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
@@ -22,6 +21,7 @@ import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
 import net.minecraft.Util;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.world.item.Items;
+import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
 import static com.gregtechceu.gtceu.api.tag.TagPrefix.*;
@@ -94,7 +94,6 @@ public class GreateSequencedAssemblyRecipes {
         int cableAmount = (int) (wirePrefix.getMaterialAmount(material) * 2 / M);
         TagPrefix cablePrefix = TagPrefix.get("cable" + wirePrefix.name().substring(4));
         int voltageTier = GTUtil.getTierByVoltage(property.getVoltage());
-        int euT = voltageTier > 0 ? voltageTier - 1 : ULV;
         int insulationAmount = INSULATION_AMOUNT.getInt(cablePrefix);
 
         if(voltageTier >= EV) {
@@ -106,7 +105,7 @@ public class GreateSequencedAssemblyRecipes {
 
             GTRecipeBuilder siliconeCoatingFactoryBuilder = WIRE_COATING_RECIPES
                     .recipeBuilder(Greate.id(String.format("%s_cable_%d_silicone", material.getName(), cableAmount)))
-                    .EUt(VA[euT]).duration(100)
+                    .EUt(VA[ULV]).duration(100)
                     .inputItems(wirePrefix, material)
                     .outputItems(cablePrefix, material);
 
@@ -115,7 +114,7 @@ public class GreateSequencedAssemblyRecipes {
                 siliconeCoatingFactoryBuilder.inputItems(foil, PolyphenyleneSulfide, insulationAmount);
             }
             siliconeAssemblyBuilder.addStep(DeployerApplicationRecipe::new, r -> r.require(ChemicalHelper.get(foil, PolyvinylChloride, insulationAmount).getItem()));
-            siliconeAssemblyBuilder.addStep(FillingRecipe::new, r -> r.require(FluidIngredient.fromFluid(SiliconeRubber.getFluid(), L * insulationAmount / 2)));
+            siliconeAssemblyBuilder.addStep(FillingRecipe::new, r -> r.require(SizedFluidIngredient.of(SiliconeRubber.getFluid(), L * insulationAmount / 2)));
             siliconeAssemblyBuilder.build(provider);
 
             siliconeCoatingFactoryBuilder.inputItems(foil, PolyvinylChloride, insulationAmount);
@@ -131,7 +130,7 @@ public class GreateSequencedAssemblyRecipes {
 
             GTRecipeBuilder styreneCoatingFactoryBuilder = WIRE_COATING_RECIPES
                     .recipeBuilder(Greate.id(String.format("%s_cable_%d_styrene", material.getName(), cableAmount)))
-                    .EUt(VA[euT]).duration(100)
+                    .EUt(VA[ULV]).duration(100)
                     .inputItems(wirePrefix, material)
                     .outputItems(cablePrefix, material);
 
@@ -140,7 +139,7 @@ public class GreateSequencedAssemblyRecipes {
                 styreneCoatingFactoryBuilder.inputItems(foil, PolyphenyleneSulfide, insulationAmount);
             }
             styreneAssemblyBuilder.addStep(DeployerApplicationRecipe::new, r -> r.require(ChemicalHelper.get(foil, PolyvinylChloride, insulationAmount).getItem()));
-            styreneAssemblyBuilder.addStep(FillingRecipe::new, r -> r.require(FluidIngredient.fromFluid(StyreneButadieneRubber.getFluid(), L * insulationAmount / 4)));
+            styreneAssemblyBuilder.addStep(FillingRecipe::new, r -> r.require(SizedFluidIngredient.of(StyreneButadieneRubber.getFluid(), L * insulationAmount / 4)));
             styreneAssemblyBuilder.build(provider);
 
             styreneCoatingFactoryBuilder.inputItems(foil, PolyvinylChloride, insulationAmount);

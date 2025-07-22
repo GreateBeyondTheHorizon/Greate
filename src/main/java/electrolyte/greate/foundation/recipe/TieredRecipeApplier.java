@@ -1,6 +1,5 @@
 package electrolyte.greate.foundation.recipe;
 
-import com.gregtechceu.gtceu.api.recipe.kind.GTRecipe;
 import com.lowdragmc.lowdraglib.misc.ItemHandlerHelper;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipe;
@@ -17,11 +16,11 @@ import java.util.List;
 
 public class TieredRecipeApplier {
 
-    public static void applyRecipeOn(ItemEntity entity, Recipe<?> recipe, int machineTier) {
-        if(recipe instanceof ProcessingRecipe<?, ?> || recipe instanceof SequencedAssemblyRecipe) {
-            RecipeApplier.applyRecipeOn(entity, recipe);
+    public static void applyRecipeOn(ItemEntity entity, Recipe<?> recipe, int machineTier, boolean returnProcessingRemainder) {
+        if(recipe instanceof ProcessingRecipe<?,?> || recipe instanceof SequencedAssemblyRecipe) {
+            RecipeApplier.applyRecipeOn(entity, recipe, returnProcessingRemainder);
         } else {
-            List<ItemStack> stacks = applyRecipeOn(entity.level(), entity.getItem(), recipe, machineTier);
+            List<ItemStack> stacks = applyRecipeOn(entity.level(), entity.getItem(), recipe, machineTier, returnProcessingRemainder);
             if(stacks == null) return;
             if(stacks.isEmpty()) {
                 entity.discard();
@@ -36,13 +35,12 @@ public class TieredRecipeApplier {
         }
     }
 
-    public static List<ItemStack> applyRecipeOn(Level level, ItemStack stackIn, Recipe<?> recipe, int machineTier) {
+    public static List<ItemStack> applyRecipeOn(Level level, ItemStack stackIn, Recipe<?> recipe, int machineTier, boolean returnProcessingRemainder) {
         List<ItemStack> stacks;
-        //TODO: check
-        if(recipe instanceof TieredProcessingRecipe<?, ?> || recipe instanceof GTRecipe) {
+        if(recipe instanceof TieredProcessingRecipe<?,?>) {
             stacks = new ArrayList<>();
             for(int i = 0; i < stackIn.getCount(); i++) {
-                List<ItemStack> newOutputs = TieredRecipeHelper.INSTANCE.getItemResults(recipe, machineTier);
+                List<ItemStack> newOutputs = TieredRecipeHelper.INSTANCE.getItemResults(recipe, machineTier, level.random);
                 for(ItemStack stack : newOutputs) {
                     for(ItemStack previouslyRolled : stacks) {
                         if(stack.isEmpty())
@@ -58,6 +56,9 @@ public class TieredRecipeApplier {
                         continue;
                     stacks.add(stack);
                 }
+            }
+            if(returnProcessingRemainder && stackIn.hasCraftingRemainingItem()) {
+                ItemHelper.addToList(stackIn.getCraftingRemainingItem(), stacks);
             }
         } else {
             ItemStack out = recipe.getResultItem(level.registryAccess()).copy();

@@ -1,0 +1,4 @@
+{
+  "parent": "create:block/belt_casing/sideways_pulley",
+  "render_type": "minecraft:cutout"
+}

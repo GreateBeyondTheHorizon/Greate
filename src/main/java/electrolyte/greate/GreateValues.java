@@ -83,13 +83,17 @@ public class GreateValues {
         return null;
     }
 
-    public static Factory<TieredStandardProcessingRecipe<?>> getFactory(ResourceLocation loc) {
+     public static Factory<TieredStandardProcessingRecipe<?>> getFactory(ResourceLocation loc) {
+        for(String s : Greate.CONFIG.ignoredRecipeTypes) {
+            if(loc.toString().startsWith(s)) return null;
+        }
         if(loc.toString().startsWith(GTRecipeTypes.MACERATOR_RECIPES.registryName.toString()) || loc.toString().startsWith(AllRecipeTypes.MILLING.getId().toString())) return TieredMillingRecipe::new;
         else if(loc.toString().startsWith(AllRecipeTypes.CRUSHING.getId().toString())) return TieredCrushingRecipe::new;
         else if(loc.toString().startsWith(GTRecipeTypes.BENDER_RECIPES.registryName.toString()) || loc.toString().startsWith(AllRecipeTypes.PRESSING.getId().toString())) return TieredPressingRecipe::new;
         else if(loc.toString().startsWith(GTRecipeTypes.MIXER_RECIPES.registryName.toString()) || loc.toString().startsWith(AllRecipeTypes.MIXING.getId().toString())) return TieredMixingRecipe::new;
         else if(loc.toString().startsWith(GTRecipeTypes.CUTTER_RECIPES.registryName.toString()) || loc.toString().startsWith(AllRecipeTypes.CUTTING.getId().toString())) return TieredCuttingRecipe::new;
-        else if(loc.toString().startsWith(AllRecipeTypes.SPLASHING.getId().toString())) return TieredSplashingRecipe::new;
+        else if(loc.toString().startsWith(GTRecipeTypes.ORE_WASHER_RECIPES.registryName.toString()) || loc.toString().startsWith(AllRecipeTypes.SPLASHING.getId().toString())) return TieredSplashingRecipe::new;
+        else if(loc.toString().startsWith(GTRecipeTypes.COMPRESSOR_RECIPES.registryName.toString())) return TieredCompactingRecipe::new;
         else if(loc.toString().startsWith(AllRecipeTypes.HAUNTING.getId().toString())) return TieredHauntingRecipe::new;
         else if(loc.toString().startsWith(AllRecipeTypes.COMPACTING.getId().toString())) return TieredCompactingRecipe::new;
         return null;

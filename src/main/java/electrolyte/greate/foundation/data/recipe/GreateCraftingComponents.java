@@ -33,8 +33,8 @@ public class GreateCraftingComponents {
                 .add(UV, shaft, Darmstadtium)
                 .add(UHV, shaft, Neutronium);
 
-        ALLOY = CraftingComponent.of("alloy", alloy, AndesiteAlloy)
-                .add(ULV, AllItems.ANDESITE_ALLOY.asStack())
+        ALLOY = CraftingComponent.of("alloy", AllItems.ANDESITE_ALLOY.asStack())
+                .add(ULV, alloy, AndesiteAlloy)
                 .add(LV, alloy, Steel)
                 .add(MV, alloy, Aluminium)
                 .add(HV, alloy, StainlessSteel)
@@ -93,7 +93,7 @@ public class GreateCraftingComponents {
                 .add(UV, verticalGearbox, Darmstadtium)
                 .add(UHV, verticalGearbox, Neutronium);
 
-        PUMP = CraftingComponent.of("pump", MECHANICAL_PUMPS[ULV].asStack())
+        PUMP = CraftingComponent.of("mechanical_pump", MECHANICAL_PUMPS[ULV].asStack())
                 .add(ULV, MECHANICAL_PUMPS[ULV].asStack())
                 .add(LV, MECHANICAL_PUMPS[LV].asStack())
                 .add(MV, MECHANICAL_PUMPS[MV].asStack())

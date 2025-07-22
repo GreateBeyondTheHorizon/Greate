@@ -2,18 +2,17 @@ package electrolyte.greate.compat.jei.category;
 
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
-import com.simibubi.create.foundation.fluid.FluidIngredient;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import electrolyte.greate.compat.jei.category.animations.TieredAnimatedSaw;
 import electrolyte.greate.content.kinetics.saw.TieredCuttingRecipe;
 import electrolyte.greate.registry.Saws;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
-import mezz.jei.api.neoforge.NeoForgeTypes;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
@@ -32,11 +31,10 @@ public class TieredSawingCategory extends GreateRecipeCategory<TieredCuttingReci
                 .addIngredients(recipe.value().getIngredients().get(0));
 
         if(!recipe.value().getFluidIngredients().isEmpty()) {
-            FluidIngredient ing = recipe.value().getFluidIngredients().get(0);
-            builder.addSlot(RecipeIngredientRole.INPUT, 28, 48)
-                    .setBackground(getRenderedSlot(), - 1, - 1)
-                    .addIngredients(NeoForgeTypes.FLUID_STACK, withImprovedVisibility(ing.getMatchingFluidStacks()))
-                    .addTooltipCallback(addFluidTooltip(ing.getRequiredAmount()));
+            SizedFluidIngredient ing = recipe.value().getFluidIngredients().get(0);
+            int x = 28;
+            int y = 48;
+            CreateRecipeCategory.addFluidSlot(builder, x, y, ing);
         }
 
         List<ProcessingOutput> results = recipe.value().getRollableResults();

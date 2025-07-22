@@ -30,7 +30,7 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
     @Override
     public void tick() {
         if(beltLength == 0) {
-            TieredBeltBlock.initBelt(level, worldPosition);
+            BeltBlock.initBelt(level, worldPosition);
         }
         super.tick();
         if(!(level.getBlockState(worldPosition).getBlock() instanceof TieredBeltBlock)) return;

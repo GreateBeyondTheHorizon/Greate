@@ -7,7 +7,6 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.EventBusSubscriber.Bus;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.config.ModConfig.Type;
 import net.neoforged.fml.event.config.ModConfigEvent;
@@ -19,7 +18,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Supplier;
 
-@EventBusSubscriber(bus = Bus.MOD)
+@EventBusSubscriber(modid = Greate.MOD_ID)
 public class GreateConfigs {
 
     private static final Map<Type, ConfigBase> CONFIGS = new EnumMap<>(ModConfig.Type.class);

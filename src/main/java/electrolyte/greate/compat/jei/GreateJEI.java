@@ -1,8 +1,6 @@
 package electrolyte.greate.compat.jei;
 
 import com.google.common.base.Predicates;
-import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
-import com.gregtechceu.gtceu.api.recipe.kind.GTRecipe;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.AllRecipeTypes;
@@ -84,7 +82,7 @@ public class GreateJEI implements IModPlugin {
                     .addTypedRecipes(ModRecipeTypes.MILLING)
                     .catalysts(Millstones.MILLSTONES)
                     .doubleIconItem(Millstones.NEUTRONIUM_MILLSTONE.get(), AllItems.WHEAT_FLOUR.get())
-                    .emptyBackground(177, 68)
+                    .emptyBackground(177, 78)
                     .build("milling", TieredMillingCategory::new),
 
                 crushing = builder(TieredAbstractCrushingRecipe.class)
@@ -92,7 +90,7 @@ public class GreateJEI implements IModPlugin {
                         .addTypedRecipesExcluding(ModRecipeTypes.MILLING::getType, ModRecipeTypes.CRUSHING::getType)
                         .catalysts(CrushingWheels.CRUSHING_WHEELS)
                         .doubleIconItem(CrushingWheels.NEUTRONIUM_CRUSHING_WHEEL.get(), AllItems.CRUSHED_GOLD.get())
-                        .emptyBackground(177, 115)
+                        .emptyBackground(177, 125)
                         .build("crushing", TieredCrushingCategory::new),
 
                 washing = builder(TieredSplashingRecipe.class)
@@ -462,15 +460,6 @@ public class GreateJEI implements IModPlugin {
         ItemStack[] matchingStacks = recipe1.getIngredients().get(0).getItems();
         if(matchingStacks.length == 0) return false;
         return recipe2.getIngredients().get(0).test(matchingStacks[0]);
-    }
-
-    public static boolean doInputsMatchGT(Recipe<?> recipe1, Recipe<?> recipe2) {
-        GTRecipe gtRecipe = (GTRecipe) recipe2;
-        if(recipe1.getIngredients().isEmpty() || gtRecipe.getInputContents(ItemRecipeCapability.CAP).isEmpty() || ((Ingredient) gtRecipe.getInputContents(ItemRecipeCapability.CAP).get(0).getContent()).isEmpty()) return false;
-        ItemStack[] matchingStacks = recipe1.getIngredients().get(0).getItems();
-        if(matchingStacks.length == 0) return false;
-        Ingredient ing = (Ingredient) gtRecipe.getInputContents(ItemRecipeCapability.CAP).get(0).getContent();
-        return ing.test(matchingStacks[0]);
     }
 
     public static boolean doOutputsMatch(Recipe<?> recipe1, Recipe<?> recipe2) {

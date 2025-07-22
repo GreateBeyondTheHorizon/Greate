@@ -8,13 +8,13 @@ import com.gregtechceu.gtceu.api.tag.TagPrefix;
 import com.gregtechceu.gtceu.utils.GTUtil;
 import com.simibubi.create.content.fluids.transfer.FillingRecipe;
 import com.simibubi.create.content.processing.recipe.StandardProcessingRecipe;
-import com.simibubi.create.foundation.fluid.FluidIngredient;
 import electrolyte.greate.Greate;
 import it.unimi.dsi.fastutil.objects.Reference2IntMap;
 import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
 import net.minecraft.Util;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
 import static com.gregtechceu.gtceu.api.tag.TagPrefix.*;
@@ -48,19 +48,18 @@ public class GreateSpoutRecipes {
         int cableAmount = (int) (wirePrefix.getMaterialAmount(material) * 2 / M);
         TagPrefix cablePrefix = TagPrefix.get("cable" + wirePrefix.name().substring(4));
         int voltageTier = GTUtil.getTierByVoltage(property.getVoltage());
-        int euT = voltageTier > 0 ? voltageTier - 1 : ULV;
-        int insulationAmount = INSULATION_AMOUNT.get(cablePrefix);
+        int insulationAmount = INSULATION_AMOUNT.getInt(cablePrefix);
 
         if(voltageTier < EV) {
             new StandardProcessingRecipe.Builder<>(FillingRecipe::new, Greate.id(String.format("%s_cable_%d_rubber", material.getName(), cableAmount)))
                     .withItemIngredients(Ingredient.of(ChemicalHelper.get(wirePrefix, material)))
-                    .withFluidIngredients(FluidIngredient.fromFluid(Rubber.getFluid(), L * insulationAmount))
+                    .withFluidIngredients(SizedFluidIngredient.of(Rubber.getFluid(), L * insulationAmount))
                     .withSingleItemOutput(ChemicalHelper.get(cablePrefix, material))
                     .build(provider);
 
             WIRE_COATING_RECIPES
                     .recipeBuilder(Greate.id(String.format("cover_%s_%s_rubber", material.getName(), cableAmount)))
-                    .EUt(VA[euT]).duration(100)
+                    .EUt(VA[ULV]).duration(100)
                     .inputItems(wirePrefix, material)
                     .inputFluids(Rubber.getFluid(L * insulationAmount))
                     .outputItems(cablePrefix, material)
@@ -69,13 +68,13 @@ public class GreateSpoutRecipes {
 
             new StandardProcessingRecipe.Builder<>(FillingRecipe::new, Greate.id(String.format("%s_cable_%d_slicone", material.getName(), cableAmount)))
                     .withItemIngredients(Ingredient.of(ChemicalHelper.get(wirePrefix, material)))
-                    .withFluidIngredients(FluidIngredient.fromFluid(SiliconeRubber.getFluid(), L * insulationAmount / 2))
+                    .withFluidIngredients(SizedFluidIngredient.of(SiliconeRubber.getFluid(), L * insulationAmount / 2))
                     .withSingleItemOutput(ChemicalHelper.get(cablePrefix, material))
                     .build(provider);
 
             WIRE_COATING_RECIPES
                     .recipeBuilder(Greate.id(String.format("cover_%s_%s_silicone", material.getName(), cableAmount)))
-                    .EUt(VA[euT]).duration(100)
+                    .EUt(VA[ULV]).duration(100)
                     .inputItems(wirePrefix, material)
                     .inputFluids(SiliconeRubber.getFluid(L * insulationAmount / 2))
                     .outputItems(cablePrefix, material)
@@ -84,13 +83,13 @@ public class GreateSpoutRecipes {
 
             new StandardProcessingRecipe.Builder<>(FillingRecipe::new, Greate.id(String.format("%s_cable_%d_styrene_butadiene", material.getName(), cableAmount)))
                     .withItemIngredients(Ingredient.of(ChemicalHelper.get(wirePrefix, material)))
-                    .withFluidIngredients(FluidIngredient.fromFluid(StyreneButadieneRubber.getFluid(), L * insulationAmount / 4))
+                    .withFluidIngredients(SizedFluidIngredient.of(StyreneButadieneRubber.getFluid(), L * insulationAmount / 4))
                     .withSingleItemOutput(ChemicalHelper.get(cablePrefix, material))
                     .build(provider);
 
            WIRE_COATING_RECIPES
                    .recipeBuilder(Greate.id(String.format("cover_%s_%s_styrene_butadiene", material.getName(), cableAmount)))
-                   .EUt(VA[euT]).duration(100)
+                   .EUt(VA[ULV]).duration(100)
                    .inputItems(wirePrefix, material)
                    .inputFluids(StyreneButadieneRubber.getFluid(L * insulationAmount / 4))
                    .outputItems(cablePrefix, material)

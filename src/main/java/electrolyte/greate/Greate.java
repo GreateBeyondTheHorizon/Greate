@@ -16,6 +16,7 @@ import dev.toma.configuration.config.format.ConfigFormats;
 import electrolyte.greate.foundation.advancement.GreateAdvancements;
 import electrolyte.greate.foundation.data.GreateTagGen.GreateBlockTagGen;
 import electrolyte.greate.foundation.data.GreateTagGen.GreateItemTagGen;
+import electrolyte.greate.foundation.data.recipe.datagen.GreateItemApplicationRecipeGen;
 import electrolyte.greate.foundation.item.GreateKineticStats;
 import electrolyte.greate.infrastructure.config.GreateConfigs;
 import electrolyte.greate.infrastructure.config.GreateRecipeConfig;
@@ -42,6 +43,7 @@ import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.data.loading.DatagenModLoader;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.slf4j.Logger;
@@ -68,7 +70,15 @@ public class Greate {
         modEventBus.addListener(this::clientSetup);
         modEventBus.addListener(this::gatherData);
 
-        CREATIVE_TABS.register(modEventBus);
+        if(!DatagenModLoader.isRunningDataGen()) { //needed due to using both create & gt registrate
+            //GreateRegistries.REGISTRATE.registerRegistrate();
+            //FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(MachineDefinition.class, GreateRegistries::registerMachines);
+        }
+
+        //FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(GTRecipeType.class, GreateRegistries::registerRecipeTypes);
+
+        //CREATIVE_TABS.register(eventBus);
+        //REGISTRATE.registerEventListeners(eventBus);
         GreateLang.register();
         ModRecipeTypes.register(modEventBus);
 
@@ -103,6 +113,7 @@ public class Greate {
             GreateBlockTagGen blockTags = new GreateBlockTagGen(event.getGenerator().getPackOutput(), event.getLookupProvider(), Greate.MOD_ID, event.getExistingFileHelper());
             event.getGenerator().addProvider(true, blockTags);
             event.getGenerator().addProvider(true, new GreateItemTagGen(event.getGenerator().getPackOutput(), event.getLookupProvider(), blockTags.contentsGetter(), Greate.MOD_ID, event.getExistingFileHelper()));
+            event.getGenerator().addProvider(true, new GreateItemApplicationRecipeGen(event.getGenerator().getPackOutput(), event.getLookupProvider()));
         }
     }
 

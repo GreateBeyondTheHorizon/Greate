@@ -90,6 +90,11 @@ public class GreatePartialModels {
             BELT_OVERLAY_START_BOTTOM = block("belt_overlay_start_bottom"), BELT_OVERLAY_END_BOTTOM = block("belt_overlay_end_bottom"), BELT_OVERLAY_MIDDLE_BOTTOM = block("belt_overlay_middle_bottom"),
             BELT_OVERLAY_START = block("belt_overlay_start"), BELT_OVERLAY_END = block("belt_overlay_end"), BELT_OVERLAY_MIDDLE = block("belt_overlay_middle");
 
+    public static final PartialModel
+            BELT_CASING_DIAGONAL_START = beltCasing(BeltPart.DIAGONAL_START), BELT_CASING_DIAGONAL_END = beltCasing(BeltPart.DIAGONAL_END), BELT_CASING_DIAGONAL_MIDDLE = beltCasing(BeltPart.DIAGONAL_MIDDLE),
+            BELT_CASING_SIDEWAYS_START = beltCasing(BeltPart.SIDEWAYS_START), BELT_CASING_SIDEWAYS_END = beltCasing(BeltPart.SIDEWAYS_END), BELT_CASING_SIDEWAYS_MIDDLE = beltCasing(BeltPart.SIDEWAYS_MIDDLE), BELT_CASING_SIDEWAYS_PULLEY = beltCasing(BeltPart.SIDEWAYS_PULLEY),
+            BELT_CASING_HORIZONTAL_START = beltCasing(BeltPart.HORIZONTAL_START), BELT_CASING_HORIZONTAL_END = beltCasing(BeltPart.HORIZONTAL_END), BELT_CASING_HORIZONTAL_MIDDLE = beltCasing(BeltPart.HORIZONTAL_MIDDLE), BELT_CASING_HORIZONTAL_PULLEY = beltCasing(BeltPart.HORIZONTAL_PULLEY);
+
     // Mechanical Press
     public static final PartialModel[] MECHANICAL_PRESS_HEAD_MODELS = new PartialModel[10];
     static {
@@ -150,6 +155,10 @@ public class GreatePartialModels {
         return partialModel;
     }
 
+    private static PartialModel beltCasing(BeltPart beltPart) {
+        return block("belt_casing_" + beltPart.name().toLowerCase());
+    }
+
     private static PartialModel beltPulley(Material beltMaterial, Material pulleyMaterial) {
         PartialModel partialModel = materialBlock(beltMaterial, "_belt_" + pulleyMaterial.getName() + "_pulley");
         List<PartialModel> partialModels = NEW_BELT_MODELS.getOrDefault(beltMaterial, new ArrayList<>());
@@ -183,5 +192,13 @@ public class GreatePartialModels {
         DIAGONAL_START,
         DIAGONAL_MIDDLE,
         DIAGONAL_END,
+        SIDEWAYS_START,
+        SIDEWAYS_MIDDLE,
+        SIDEWAYS_END,
+        SIDEWAYS_PULLEY,
+        HORIZONTAL_END,
+        HORIZONTAL_MIDDLE,
+        HORIZONTAL_PULLEY,
+        HORIZONTAL_START
     }
 }

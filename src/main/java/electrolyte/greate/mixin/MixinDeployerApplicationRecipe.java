@@ -1,19 +1,17 @@
 package electrolyte.greate.mixin;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.kinetics.deployer.DeployerApplicationRecipe;
 import com.simibubi.create.content.kinetics.deployer.ItemApplicationRecipe;
 import com.simibubi.create.content.kinetics.deployer.ItemApplicationRecipeParams;
 import com.simibubi.create.content.processing.sequenced.IAssemblyRecipe;
-import com.simibubi.create.foundation.utility.CreateLang;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(DeployerApplicationRecipe.class)
 public abstract class MixinDeployerApplicationRecipe extends ItemApplicationRecipe implements IAssemblyRecipe {
@@ -22,12 +20,9 @@ public abstract class MixinDeployerApplicationRecipe extends ItemApplicationReci
         super(type, params);
     }
 
-    @OnlyIn(Dist.CLIENT)
-    @Inject(method = "getDescriptionForAssembly", at = @At("HEAD"), remap = false, cancellable = true)
-    private void greate$getDescriptionForAssembly(CallbackInfoReturnable<Component> cir) {
+    @WrapOperation(method = "getDescriptionForAssembly", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/chat/Component;translatable(Ljava/lang/String;)Lnet/minecraft/network/chat/MutableComponent;"), remap = false)
+    private MutableComponent greate$getDescriptionForAssembly(String pKey, Operation<MutableComponent> original) {
         ItemStack[] matchingStacks = ingredients.get(1).getItems();
-        if(matchingStacks.length == 0) cir.setReturnValue(Component.literal("Invalid"));
-        cir.setReturnValue(CreateLang.translateDirect("recipe.assembly.deploying_item",
-                Component.translatable(matchingStacks[0].getHoverName().getString())));
+        return Component.translatable(matchingStacks[0].getHoverName().getString());
     }
 }

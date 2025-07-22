@@ -4,6 +4,7 @@ import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
+import electrolyte.greate.Greate;
 import electrolyte.greate.compat.jei.category.animations.TieredAnimatedCrushingWheels;
 import electrolyte.greate.content.kinetics.crusher.TieredAbstractCrushingRecipe;
 import electrolyte.greate.registry.CrushingWheels;
@@ -12,7 +13,9 @@ import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
+import net.createmod.catnip.lang.Lang;
 import net.createmod.catnip.layout.LayoutHelper;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
@@ -45,7 +48,7 @@ public class TieredCrushingCategory extends GreateRecipeCategory<TieredAbstractC
         });
     }
 
-    private List<LayoutEntry> layoutOutput(ProcessingRecipe<?,?> recipe) {
+    private List<LayoutEntry> layoutOutput(ProcessingRecipe<?, ?> recipe) {
         int size = recipe.getRollableResults().size();
         List<LayoutEntry> positions = new ArrayList<>(size);
         LayoutHelper layout = LayoutHelper.centeredHorizontal(size, 1, 18, 18, 1);
@@ -63,5 +66,6 @@ public class TieredCrushingCategory extends GreateRecipeCategory<TieredAbstractC
         super.draw(recipe, recipeSlotsView, graphics, 1, 103);
         AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 72, 7);
         new TieredAnimatedCrushingWheels(CrushingWheels.CRUSHING_WHEELS[recipe.value().getRecipeTier()].get()).draw(graphics, 62, 59);
+        graphics.drawString(Minecraft.getInstance().font, Lang.builder(Greate.MOD_ID).translate("jei.byproducts").component().getString(), 1, 116, 0x3f3f3f, false);
     }
 }

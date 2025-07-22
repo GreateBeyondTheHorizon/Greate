@@ -65,7 +65,7 @@ public class TieredMillstoneBlockEntity extends MillstoneBlockEntity implements 
         ItemStack stackInSlot = inputInv.getStackInSlot(0);
         stackInSlot.shrink(1);
         inputInv.setStackInSlot(0, stackInSlot);
-        List<ItemStack> results = TieredRecipeHelper.INSTANCE.getItemResults(lastRecipe, tier);
+        List<ItemStack> results = TieredRecipeHelper.INSTANCE.getItemResults(lastRecipe, tier, this.level.random);
         results.forEach(stack -> ItemHandlerHelper.insertItemStacked(outputInv, stack, false));
 
         award(AllAdvancements.MILLSTONE);

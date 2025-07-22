@@ -6,7 +6,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeParams;
-import com.simibubi.create.foundation.fluid.FluidIngredient;
+import com.simibubi.create.foundation.codec.CreateCodecs;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -33,9 +33,9 @@ public class TieredProcessingRecipeParams extends ProcessingRecipeParams {
 
     protected static <P extends TieredProcessingRecipeParams> MapCodec<P> tieredCodec(Supplier<P> factory) {
         return RecordCodecBuilder.mapCodec(i -> i.group(
-                Codec.either(FluidIngredient.CODEC, Ingredient.CODEC).listOf().fieldOf("ingredients")
+                Codec.either(CreateCodecs.FLAT_SIZED_FLUID_INGREDIENT_WITH_TYPE, Ingredient.CODEC).listOf().fieldOf("ingredients")
                         .forGetter(TieredProcessingRecipeParams::ingredients),
-                Codec.either(FluidStack.CODEC, ProcessingOutput.CODEC).listOf().fieldOf("results")
+                Codec.either(FluidStack.CODEC, ProcessingOutput.CODEC_NEW).listOf().fieldOf("results")
                         .forGetter(TieredProcessingRecipeParams::results),
                 Codec.INT.optionalFieldOf("processing_time", 0)
                         .forGetter(TieredProcessingRecipeParams::processingDuration),

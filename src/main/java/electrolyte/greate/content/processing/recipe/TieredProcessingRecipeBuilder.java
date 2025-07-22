@@ -5,7 +5,6 @@ import com.gregtechceu.gtceu.api.recipe.content.Content;
 import com.gregtechceu.gtceu.api.recipe.ingredient.IntCircuitIngredient;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
-import com.simibubi.create.foundation.fluid.FluidIngredient;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import electrolyte.greate.Greate;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe.Factory;
@@ -15,6 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.common.conditions.ICondition;
+import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +56,7 @@ public abstract class TieredProcessingRecipeBuilder<P extends TieredProcessingRe
     }
 
     public S withFluidIngredientsGT(List<Content> ingredients) {
-        NonNullList<FluidIngredient> nonNullList = NonNullList.create();
+        NonNullList<SizedFluidIngredient> nonNullList = NonNullList.create();
         //TODO: fix
         /*for(Content c : ingredients) {
             com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient ingredient = (com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient) c.getContent();

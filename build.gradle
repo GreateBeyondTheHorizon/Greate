@@ -1,7 +1,7 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.99'
+    id 'net.neoforged.moddev' version '2.0.120'
     id 'idea'
 }
 
@@ -110,7 +110,7 @@ repositories {
             includeGroup 'com.lowdragmc.ldlib'
         }
     }
-    maven { url = 'https://api.repsy.io/mvn/toma/public/'
+    maven { url = 'https://repo.repsy.io/mvn/toma/public/'
         content {
             includeGroup 'dev.toma.configuration'
         }
@@ -118,6 +118,11 @@ repositories {
     maven { url = 'https://maven.gtceu.com'
         content {
             includeGroup 'com.gregtechceu.gtceu'
+        }
+    }
+    maven { url = "https://maven.terraformersmc.com/"
+        content {
+            includeGroup 'dev.emi'
         }
     }
     maven { url = 'https://maven.parchmentmc.org' }
@@ -132,18 +137,21 @@ dependencies {
     runtimeOnly "dev.engine-room.flywheel:flywheel-neoforge-${minecraft_version}:${flywheel_version}"
     implementation "com.tterrag.registrate:Registrate:${registrate_version}"
 
-    compileOnly ("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}") { transitive = false }
-    compileOnly ("mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}") { transitive = false }
-    runtimeOnly ("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}") { transitive = false }
+    compileOnly ("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
+    compileOnly ("mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}")
+    runtimeOnly ("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
 
     implementation "dev.architectury:architectury-neoforge:${architectury_version}"
     implementation "dev.latvian.mods:rhino:${rhino_version}"
     implementation ("dev.latvian.mods:kubejs-neoforge:${kubejs_version}") {transitive = false }
-    //compileOnly ("dev.latvian.mods:kubejs-create-neoforge:${kubejs_create_version}") { transitive = false }
+    implementation ("dev.latvian.mods:kubejs-create-neoforge:${kubejs_create_version}") { transitive = false }
 
     implementation ("com.lowdragmc.ldlib:ldlib-neoforge-${minecraft_version}:${ldlib_version}") { transitive = false }
     implementation ("com.gregtechceu.gtceu:gtceu-${minecraft_version}:${gregtech_version}") { transitive = false }
     implementation "dev.toma.configuration:configuration-${minecraft_version}:${configuration_version}"
+
+    //compileOnly "dev.emi:emi-neoforge:${emi_version}+${minecraft_version}:api"
+    //runtimeOnly "dev.emi:emi-neoforge:${emi_version}+${minecraft_version}"
 
     implementation "curse.maven:jade-324717:${jade_version}"
     runtimeOnly "curse.maven:spark-361579:${spark_version}"

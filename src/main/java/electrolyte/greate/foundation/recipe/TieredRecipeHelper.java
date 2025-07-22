@@ -3,6 +3,7 @@ package electrolyte.greate.foundation.recipe;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import electrolyte.greate.content.kinetics.crusher.TieredAbstractCrushingRecipe;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 
@@ -15,7 +16,7 @@ public class TieredRecipeHelper {
 
     public static final TieredRecipeHelper INSTANCE = new TieredRecipeHelper();
 
-    public List<ItemStack> getItemResults(Recipe<?> recipe, int machineTier) {
+    public List<ItemStack> getItemResults(Recipe<?> recipe, int machineTier, RandomSource rand) {
         List<ProcessingOutput> newResults = new ArrayList<>();
         if(recipe instanceof ProcessingRecipe<?, ?> pr) {
             List<ProcessingOutput> oldResults = pr.getRollableResults();
@@ -31,7 +32,7 @@ public class TieredRecipeHelper {
                 }
                 newResults.add(oldResult);
             }
-            return new ArrayList<>(pr.rollResults(newResults));
+            return new ArrayList<>(pr.rollResults(newResults, rand));
         }
         return List.of(ItemStack.EMPTY);
     }

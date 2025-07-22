@@ -73,7 +73,7 @@ public class GreateFanProcessingTypes {
             if(result != null) return result;
             Optional<RecipeHolder<Recipe<SingleRecipeInput>>> tieredRecipe = ModRecipeTypes.HAUNTING.find(new SingleRecipeInput(stack), level, machineTier);
             return tieredRecipe.map(tieredHauntingRecipe ->
-                    TieredRecipeApplier.applyRecipeOn(level, stack, tieredHauntingRecipe.value(), machineTier)).orElse(null);
+                    TieredRecipeApplier.applyRecipeOn(level, stack, tieredHauntingRecipe.value(), machineTier, true)).orElse(null);
         }
     }
 
@@ -96,7 +96,7 @@ public class GreateFanProcessingTypes {
             if(result != null) return result;
             Optional<RecipeHolder<Recipe<SingleRecipeInput>>> tieredRecipe = ModRecipeTypes.SPLASHING.find(new SingleRecipeInput(stack), level, machineTier);
             return tieredRecipe.map(tieredSplashingRecipe ->
-                    TieredRecipeApplier.applyRecipeOn(level, stack, tieredSplashingRecipe.value(), machineTier)).orElse(null);
+                    TieredRecipeApplier.applyRecipeOn(level, stack, tieredSplashingRecipe.value(), machineTier, true)).orElse(null);
         }
     }
 }

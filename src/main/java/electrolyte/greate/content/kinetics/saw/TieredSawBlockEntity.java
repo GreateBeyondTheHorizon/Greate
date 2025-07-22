@@ -5,6 +5,7 @@ import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.kinetics.saw.CuttingRecipe;
 import com.simibubi.create.content.kinetics.saw.SawBlockEntity;
 import com.simibubi.create.content.logistics.box.PackageItem;
+import com.simibubi.create.content.processing.recipe.ProcessingInventory;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipe;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
@@ -20,8 +21,10 @@ import com.simibubi.create.infrastructure.config.AllConfigs;
 import electrolyte.greate.Greate;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
+import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import electrolyte.greate.foundation.data.recipe.TieredRecipeConditions;
 import electrolyte.greate.mixin.MixinSawBlockEntityAccessor;
+import electrolyte.greate.registry.ModBlockEntityTypes;
 import electrolyte.greate.registry.ModRecipeTypes;
 import net.createmod.catnip.lang.Lang;
 import net.createmod.catnip.lang.LangBuilder;
@@ -36,9 +39,11 @@ import net.minecraft.world.item.crafting.StonecutterRecipe;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities.FluidHandler;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
 import java.util.ArrayList;
@@ -57,6 +62,12 @@ public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKinet
     public TieredSawBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         tier = ((ITieredBlock) state.getBlock()).getTier();
+        inventory = new ProcessingInventory(this::start);
+    }
+
+    public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(FluidHandler.BLOCK, ModBlockEntityTypes.TIERED_SAW.get(),
+                (be, ctx) -> be.fluidCapability);
     }
 
     @Override
@@ -73,6 +84,9 @@ public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKinet
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
         ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, tier, capacity, stress);
         if(canProcess()) {
+            if(fluidCapability == null) {
+                fluidCapability = new FluidTank(0);
+            }
             LangBuilder mb = CreateLang.translate("generic.unit.millibuckets");
             FluidStack fluidStack = fluidCapability.getFluidInTank(0);
             if(!fluidStack.isEmpty()) {
@@ -92,12 +106,11 @@ public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKinet
     @Override
     public void invalidate() {
         super.invalidate();
-        if(fluidCapability != null) {
-            level.invalidateCapabilities(this.getBlockPos());
-        }
+        invalidateCapabilities();
     }
 
     public List<RecipeHolder<? extends Recipe<?>>> getValidRecipes() {
+        TieredSawBlockEntity be = (TieredSawBlockEntity) level.getBlockEntity(this.getBlockPos());
         Optional<RecipeHolder<CuttingRecipe>> assemblyRecipe = SequencedAssemblyRecipe.getRecipe(level, inventory.getStackInSlot(0), AllRecipeTypes.CUTTING.getType(), CuttingRecipe.class);
         Optional<RecipeHolder<TieredCuttingRecipe>> tieredAssemblyRecipe = SequencedAssemblyRecipe.getRecipe(level, inventory.getStackInSlot(0), ModRecipeTypes.CUTTING.getType(), TieredCuttingRecipe.class);
         FilteringBehaviour filtering = ((MixinSawBlockEntityAccessor) this).getFilteringBehaviour();
@@ -114,11 +127,12 @@ public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKinet
         Predicate<RecipeHolder<? extends Recipe<?>>> recipeTypes = RecipeConditions.isOfType(AllRecipeTypes.CUTTING.getType(), ModRecipeTypes.CUTTING.getType(),
                 AllConfigs.server().recipes.allowStonecuttingOnSaw.get() ? RecipeType.STONECUTTING : null);
         List<RecipeHolder<? extends Recipe<?>>> startedSearch = RecipeFinder.get(cuttingRecipesKey, level, recipeTypes);
-        IFluidHandler availableFluid = this.getLevel().getCapability(FluidHandler.BLOCK, this.getBlockPos(), null);
+        IFluidHandler availableFluid = inputTank.getCapability();
         if(availableFluid == null) return List.of();
         return startedSearch.stream()
                 .filter(TieredRecipeConditions.outputMatchesFilter(filtering))
                 .filter(TieredRecipeConditions.firstIngredientMatches(inventory.getStackInSlot(0)))
+                .filter(TieredRecipeConditions.firstIngredientCountMatches(inventory.getStackInSlot(0)))
                 .filter(TieredRecipeConditions.firstFluidMatches(availableFluid.getFluidInTank(0)))
                 .filter(TieredRecipeConditions.isEqualOrAboveTier(tier))
                 .filter(r -> !AllRecipeTypes.shouldIgnoreInAutomation(r))
@@ -148,20 +162,28 @@ public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKinet
         if(recipes.isEmpty()) return;
         if(recipeIndex >= recipes.size()) recipeIndex = 0;
 
-        Recipe<?> recipe = recipes.get(recipeIndex).value();
+        RecipeHolder<? extends Recipe<?>> recipe = recipes.get(recipeIndex);
         int rolls = inventory.getStackInSlot(0).getCount();
-        IFluidHandler availableFluid = this.getLevel().getCapability(FluidHandler.BLOCK, this.getBlockPos(), null);
+        int requiredAmount = 1;
+        if(recipe.value() instanceof TieredProcessingRecipe<?,?> tpr) {
+            requiredAmount = tpr.getIngredients().get(0).getItems()[0].getCount();
+            rolls /= requiredAmount;
+        }
+        IFluidHandler availableFluid = inputTank.getCapability();
         if(availableFluid == null) return;
-        inventory.clear();
+        if(recipe.value() instanceof TieredProcessingRecipe<?,?> tpr) {
+            inventory.setStackInSlot(0, input.copyWithCount(input.getCount() - (rolls * requiredAmount)));
+        } else inventory.clear();
         for(int roll = 0; roll < rolls; roll++) {
             List<ItemStack> results = new LinkedList<>();
-            if(recipe instanceof ProcessingRecipe<?, ?> pr) {
-                results = pr.rollResults();
+            if(recipe.value() instanceof ProcessingRecipe<?,?> pr) {
+                results = pr.rollResults(this.level.random);
                 if(!pr.getFluidIngredients().isEmpty()) {
-                    availableFluid.drain(pr.getFluidIngredients().get(0).getRequiredAmount(), FluidAction.EXECUTE);
+                    //todo: check
+                    availableFluid.drain(pr.getFluidIngredients().get(0).amount(), FluidAction.EXECUTE);
                 }
-            } else if(recipe instanceof StonecutterRecipe || recipe.getType() == woodcuttingRecipeType.get()) {
-                results.add(recipe.getResultItem(level.registryAccess()).copy());
+            } else if(recipe.value() instanceof StonecutterRecipe || recipe.value().getType() == woodcuttingRecipeType.get()) {
+                results.add(recipe.value().getResultItem(level.registryAccess()).copy());
             }
 
             for(ItemStack stack : results) {
@@ -200,12 +222,16 @@ public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKinet
             }
         }
 
-        Recipe<?> recipe = recipes.get(((MixinSawBlockEntityAccessor) this).getRecipeIndex()).value();
-        if(recipe instanceof ProcessingRecipe<?, ?> pr) {
+        RecipeHolder<? extends Recipe<?>> recipe = recipes.get(((MixinSawBlockEntityAccessor) this).getRecipeIndex());
+        if(recipe.value() instanceof ProcessingRecipe<?,?> pr) {
             time = pr.getProcessingDuration();
         }
 
-        inventory.remainingTime = time * Math.max(1, (inserted.getCount()  / 5));
+        int timePer = inserted.getCount();
+        if(recipe.value() instanceof TieredProcessingRecipe<?,?> tpr) {
+            timePer /= tpr.getIngredients().get(0).getItems()[0].getCount();
+        }
+        inventory.remainingTime = time * Math.max(1, (timePer / 5));
         inventory.recipeDuration = inventory.remainingTime;
         inventory.appliedRecipe = false;
         sendData();

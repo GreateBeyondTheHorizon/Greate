@@ -18,8 +18,7 @@ import static com.gregtechceu.gtceu.api.GTValues.M;
 import static com.gregtechceu.gtceu.api.item.tool.GTToolType.BUZZSAW_LV;
 import static com.gregtechceu.gtceu.api.material.material.info.MaterialFlags.*;
 import static com.gregtechceu.gtceu.api.material.material.info.MaterialIconSet.*;
-import static com.gregtechceu.gtceu.api.tag.TagPrefix.block;
-import static com.gregtechceu.gtceu.api.tag.TagPrefix.ingot;
+import static com.gregtechceu.gtceu.api.tag.TagPrefix.*;
 import static com.gregtechceu.gtceu.data.material.GTElements.Ma;
 import static com.gregtechceu.gtceu.data.material.GTElements.Sp;
 import static com.gregtechceu.gtceu.data.material.GTMaterials.*;
@@ -91,7 +90,7 @@ public class GreateMaterials {
 		Darmstadtium.setProperty(GreatePropertyKeys.COGWHEEL, new CogwheelProperty(NaquadahAlloy));
 		Neutronium.setProperty(GreatePropertyKeys.COGWHEEL, new CogwheelProperty(Darmstadtium));
 
-		AndesiteAlloy.addFlags(GENERATE_WHISK);
+		AndesiteAlloy.addFlags(GENERATE_WHISK, DISABLE_DECOMPOSITION);
 		WroughtIron.addFlags(GENERATE_ALLOY);
 		Steel.addFlags(GENERATE_WHISK, GENERATE_ALLOY);
 		Aluminium.addFlags(GENERATE_ROTOR, GENERATE_WHISK, GENERATE_ALLOY);
@@ -116,6 +115,7 @@ public class GreateMaterials {
 		alloy.setIgnored(WroughtIron, () -> AllItems.ANDESITE_ALLOY);
 		block.setIgnored(AndesiteAlloy, () -> AllBlocks.ANDESITE_ALLOY_BLOCK);
 		ingot.setIgnored(AndesiteAlloy, () -> AllItems.ANDESITE_ALLOY);
+		gem.setIgnored(RoseQuartz, () -> AllItems.ROSE_QUARTZ);
 	}
 
 	public static Material.Builder Builder(String id) {

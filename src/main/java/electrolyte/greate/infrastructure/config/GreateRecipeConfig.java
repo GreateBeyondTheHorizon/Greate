@@ -18,4 +18,9 @@ public class GreateRecipeConfig {
     @Synchronized
     @Comment({"Enable/Disable harder recipes for various Create blocks & items."})
     public boolean enableHardCreateRecipes = false;
+
+    @Configurable
+    @Synchronized
+    @Comment({"Recipe types that should not be copied to Greate machines. Ex. 'gtceu:macerator' for macerator recipes"})
+    public String[] ignoredRecipeTypes = {};
 }

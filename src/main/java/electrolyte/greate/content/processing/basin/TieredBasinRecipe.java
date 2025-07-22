@@ -7,7 +7,6 @@ import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour.TankSegment;
-import com.simibubi.create.foundation.fluid.FluidIngredient;
 import com.simibubi.create.foundation.recipe.DummyCraftingContainer;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import com.simibubi.create.infrastructure.config.AllConfigs;
@@ -26,6 +25,7 @@ import net.neoforged.neoforge.capabilities.Capabilities.FluidHandler;
 import net.neoforged.neoforge.capabilities.Capabilities.ItemHandler;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 import net.neoforged.neoforge.items.IItemHandler;
 
 import javax.annotation.Nonnull;
@@ -99,7 +99,7 @@ public class TieredBasinRecipe extends TieredStandardProcessingRecipe<RecipeInpu
         List<FluidStack> recipeOutputFluids = new ArrayList<>();
 
         List<Ingredient> ingredients = new LinkedList<>(recipe.getIngredients());
-        List<FluidIngredient> fluidIngredients = isBasinRecipe
+        List<SizedFluidIngredient> fluidIngredients = isBasinRecipe
                 ? ((ProcessingRecipe<?, ?>) recipe).getFluidIngredients()
                 : Collections.emptyList();
 
@@ -129,8 +129,8 @@ public class TieredBasinRecipe extends TieredStandardProcessingRecipe<RecipeInpu
             }
 
             boolean fluidsAffected = false;
-            FluidIngredients: for(FluidIngredient fluidIngredient : fluidIngredients) {
-                int amountRequired = fluidIngredient.getRequiredAmount();
+            FluidIngredients: for(SizedFluidIngredient fluidIngredient : fluidIngredients) {
+                int amountRequired = fluidIngredient.amount(); //todo: check
 
                 for(int tank = 0; tank < availableFluids.getTanks(); tank++) {
                     FluidStack fluidStack = availableFluids.getFluidInTank(tank);
@@ -157,7 +157,7 @@ public class TieredBasinRecipe extends TieredStandardProcessingRecipe<RecipeInpu
             if (simulate) {
                 CraftingInput remainderContainer = new DummyCraftingContainer(availableItems, extractedItemsFromSlot).asCraftInput();
                 if(recipe instanceof TieredBasinRecipe basinRecipe) {
-                    recipeOutputItems.addAll(basinRecipe.rollResults());
+                    recipeOutputItems.addAll(basinRecipe.rollResults(basin.getLevel().random));
 
                     for(FluidStack stack : basinRecipe.getFluidResults()) {
                         if(!stack.isEmpty()) {
@@ -170,7 +170,7 @@ public class TieredBasinRecipe extends TieredStandardProcessingRecipe<RecipeInpu
                         }
                     }
                 } else if(recipe instanceof BasinRecipe basinRecipe) {
-                    recipeOutputItems.addAll(basinRecipe.rollResults());
+                    recipeOutputItems.addAll(basinRecipe.rollResults(basin.getLevel().random));
 
                     for(FluidStack stack : basinRecipe.getFluidResults()) {
                         if(!stack.isEmpty()) {

@@ -1,0 +1,21 @@
+{
+  "type": "create:item_application",
+  "ingredients": [
+    [
+      {
+        "tag": "forge:stripped_logs"
+      },
+      {
+        "item": "gtceu:stripped_rubber_log"
+      }
+    ],
+    {
+      "item": "minecraft:copper_ingot"
+    }
+  ],
+  "results": [
+    {
+      "item": "create:copper_casing"
+    }
+  ]
+}

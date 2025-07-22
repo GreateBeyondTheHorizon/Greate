@@ -6,7 +6,6 @@ import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.content.processing.burner.BlazeBurnerBlock.HeatLevel;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
-import com.simibubi.create.foundation.fluid.FluidIngredient;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import com.simibubi.create.foundation.utility.CreateLang;
 import electrolyte.greate.content.processing.basin.TieredBasinRecipe;
@@ -14,7 +13,6 @@ import electrolyte.greate.foundation.item.GreateItemHelper;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
-import mezz.jei.api.neoforge.NeoForgeTypes;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import net.createmod.catnip.data.Pair;
@@ -24,6 +22,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient;
 import org.apache.commons.lang3.mutable.MutableInt;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -59,11 +58,10 @@ public class TieredBasinCategory extends GreateRecipeCategory<TieredBasinRecipe>
             i++;
         }
 
-        for(FluidIngredient ingredient : recipe.value().getFluidIngredients()) {
-            builder.addSlot(RecipeIngredientRole.INPUT, 17 + xOffset + (i % 3) * 19, 51 - (i / 3) * 19)
-                    .setBackground(getRenderedSlot(), -1, -1)
-                    .addIngredients(NeoForgeTypes.FLUID_STACK, withImprovedVisibility(ingredient.getMatchingFluidStacks()))
-                    .addTooltipCallback(addFluidTooltip(ingredient.getRequiredAmount()));
+        for(SizedFluidIngredient ingredient : recipe.value().getFluidIngredients()) {
+            int x = 17 + xOffset + (i % 3) * 19;
+            int y = 51 - (i / 3) * 19;
+            CreateRecipeCategory.addFluidSlot(builder, x, y, ingredient);
             i++;
         }
 
@@ -83,10 +81,7 @@ public class TieredBasinCategory extends GreateRecipeCategory<TieredBasinRecipe>
         for(FluidStack fluidResult : recipe.value().getFluidResults()) {
             int xPosition = 142 - (size % 2 != 0 && i == size - 1 ? 0 : i % 2 == 0 ? 10 : -9);
             int yPosition = -19 * (i / 2) + 51;
-            builder.addSlot(RecipeIngredientRole.OUTPUT, xPosition, yPosition)
-                    .setBackground(getRenderedSlot(), -1, -1)
-                    .addIngredient(NeoForgeTypes.FLUID_STACK, withImprovedVisibility(fluidResult))
-                    .addTooltipCallback(addFluidTooltip(fluidResult.getAmount()));
+            CreateRecipeCategory.addFluidSlot(builder, xPosition, yPosition, fluidResult);
         }
 
         HeatCondition requiredHeat = recipe.value().getRequiredHeat();

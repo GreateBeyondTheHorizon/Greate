@@ -1,0 +1,21 @@
+{
+  "type": "create:item_application",
+  "ingredients": [
+    [
+      {
+        "tag": "forge:stripped_wood"
+      },
+      {
+        "item": "gtceu:stripped_rubber_wood"
+      }
+    ],
+    {
+      "item": "minecraft:copper_ingot"
+    }
+  ],
+  "results": [
+    {
+      "item": "create:copper_casing"
+    }
+  ]
+}
