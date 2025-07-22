@@ -1,6 +1,7 @@
 package electrolyte.greate;
 
 import com.gregtechceu.gtceu.api.GTValues;
+import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
 import com.gregtechceu.gtceu.utils.FormattingUtil;
 import com.mojang.logging.LogUtils;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -41,7 +42,6 @@ import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
-import net.neoforged.neoforge.data.loading.DatagenModLoader;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.slf4j.Logger;
@@ -58,26 +58,17 @@ public class Greate {
 
     public static final String MOD_ID = "greate";
     public static final Logger LOGGER = LogUtils.getLogger();
-    public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(Greate.MOD_ID);
+    public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(Greate.MOD_ID)
+            .setTooltipModifierFactory(i -> new ItemDescription.Modifier(i, Palette.STANDARD_CREATE).andThen(TooltipModifier.mapNull(GreateKineticStats.create(i))));
+	public static final GTRegistrate GT_REGISTRATE = GTRegistrate.create(Greate.MOD_ID);
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Greate.MOD_ID);
     public static GreateRecipeConfig CONFIG;
-
-    static {
-        REGISTRATE.setTooltipModifierFactory(i -> new ItemDescription.Modifier(i, Palette.STANDARD_CREATE).andThen(TooltipModifier.mapNull(GreateKineticStats.create(i))));
-    }
 
     public Greate(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::clientSetup);
         modEventBus.addListener(this::gatherData);
 
-        if(! DatagenModLoader.isRunningDataGen()) { //needed due to using both create & gt registrate
-            //GreateRegistries.REGISTRATE.registerEventListeners(modEventBus);
-        }
-
-        //modEventBus.addGenericListener(GTRecipeType.class, GreateRegistries::registerRecipeTypes);
-
         CREATIVE_TABS.register(modEventBus);
-        //REGISTRATE.registerEventListeners(modEventBus);
         GreateLang.register();
         ModRecipeTypes.register(modEventBus);
 

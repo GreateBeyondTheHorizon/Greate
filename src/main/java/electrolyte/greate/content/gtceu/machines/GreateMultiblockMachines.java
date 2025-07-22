@@ -9,21 +9,19 @@ import com.gregtechceu.gtceu.api.multiblock.Predicates;
 import com.gregtechceu.gtceu.api.recipe.OverclockingLogic;
 import com.gregtechceu.gtceu.data.recipe.GTRecipeModifiers;
 import com.simibubi.create.AllBlocks;
+import electrolyte.greate.Greate;
 import net.minecraft.network.chat.Component;
 
 import static com.gregtechceu.gtceu.api.multiblock.Predicates.*;
 import static com.gregtechceu.gtceu.data.block.GCYMBlocks.CASING_WATERTIGHT;
 import static com.gregtechceu.gtceu.data.block.GTBlocks.*;
-import static electrolyte.greate.GreateRegistries.REGISTRATE;
 import static electrolyte.greate.content.gtceu.machines.GreateRecipeTypes.WIRE_COATING_RECIPES;
-
-;
 
 public class GreateMultiblockMachines {
 
     public static void register() {}
 
-    public static final MultiblockMachineDefinition WIRE_COATING_FACTORY = REGISTRATE
+    public static final MultiblockMachineDefinition WIRE_COATING_FACTORY = Greate.GT_REGISTRATE
             .multiblock("wire_coating_factory", CoilWorkableElectricMultiblockMachine::new)
             .langValue("Wire Coating Factory")
             .tooltips(Component.translatable("gtceu.multiblock.parallelizable.tooltip"))
