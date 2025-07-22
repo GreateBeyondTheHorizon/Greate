@@ -1,20 +1,13 @@
 package electrolyte.greate.foundation.data.recipe;
 
-import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
-import com.gregtechceu.gtceu.api.recipe.GTRecipe;
-import com.gregtechceu.gtceu.api.recipe.content.Content;
-import com.gregtechceu.gtceu.common.data.GTItems;
-import com.gregtechceu.gtceu.common.item.IntCircuitBehaviour;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.StonecutterRecipe;
 import net.minecraftforge.fluids.FluidStack;
 
-import java.util.List;
 import java.util.function.Predicate;
 
 public class TieredRecipeConditions {
@@ -32,10 +25,6 @@ public class TieredRecipeConditions {
         return r -> {
             if(r instanceof TieredProcessingRecipe<?>) {
                 return (r.getIngredients().get(0).getItems()[0].getCount() <= stack.getCount());
-            } else if(r instanceof GTRecipe gtr) {
-                List<Content> inputIngredients = gtr.getInputContents(ItemRecipeCapability.CAP);
-                Ingredient ing = (Ingredient) inputIngredients.get(0).getContent();
-                return ing.getItems()[0].getCount() <= stack.getCount();
             }
             return true;
         };
@@ -81,14 +70,6 @@ public class TieredRecipeConditions {
             if(r instanceof TieredProcessingRecipe<?> pr) {
                 if(pr.getCircuitNumber() != -1) {
                     return pr.getCircuitNumber() == machineCircuitNumber;
-                }
-            } else if(r instanceof GTRecipe gtr) {
-                for(Content c : gtr.getInputContents(ItemRecipeCapability.CAP)) {
-                    Ingredient ing = ((Ingredient) c.getContent());
-                    if(ing.getItems()[0].is(GTItems.PROGRAMMED_CIRCUIT.get())) {
-                        int circuit = IntCircuitBehaviour.getCircuitConfiguration(ing.getItems()[0]);
-                        return circuit == machineCircuitNumber;
-                    }
                 }
             }
             return true;

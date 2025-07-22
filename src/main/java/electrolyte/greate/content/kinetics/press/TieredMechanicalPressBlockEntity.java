@@ -142,7 +142,7 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
 
         pressingInv.setItem(0, stack);
         Optional<Recipe<?>> recipe = TieredRecipeFinder.findRecipe(PRESSING_RECIPE_CACHE_KEY, level, pressingInv,
-                RecipeConditions.isOfType(ModRecipeTypes.PRESSING.getType(), AllRecipeTypes.PRESSING.getType())
+                RecipeConditions.isOfType(ModRecipeTypes.PRESSING.getType())
                         .and(TieredRecipeConditions.firstIngredientMatches(stack)),
                 TieredRecipeConditions.isEqualOrAboveTier(tier)
                         .and(TieredRecipeConditions.circuitMatches(targetCircuit.getValue()))

@@ -1,6 +1,5 @@
 package electrolyte.greate.content.kinetics.crusher;
 
-import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.simibubi.create.content.kinetics.crusher.CrushingWheelControllerBlockEntity;
 import com.simibubi.create.content.processing.recipe.ProcessingInventory;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
@@ -72,8 +71,6 @@ public class TieredCrushingWheelControllerBlockEntity extends CrushingWheelContr
         if(recipe.isPresent()) {
             if(recipe.get() instanceof ProcessingRecipe<?> pr) {
                 remainingTime = pr.getProcessingDuration();
-            } else if(recipe.get() instanceof GTRecipe gtr) {
-                remainingTime = gtr.duration;
             }
         }
         inventory.remainingTime = remainingTime;
