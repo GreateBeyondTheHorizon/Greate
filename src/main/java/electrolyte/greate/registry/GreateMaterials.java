@@ -91,7 +91,7 @@ public class GreateMaterials {
 		Darmstadtium.setProperty(GreatePropertyKeys.COGWHEEL, new CogwheelProperty(NaquadahAlloy));
 		Neutronium.setProperty(GreatePropertyKeys.COGWHEEL, new CogwheelProperty(Darmstadtium));
 
-		AndesiteAlloy.addFlags(GENERATE_WHISK);
+		AndesiteAlloy.addFlags(GENERATE_WHISK, DISABLE_DECOMPOSITION);
 		WroughtIron.addFlags(GENERATE_ALLOY);
 		Steel.addFlags(GENERATE_WHISK, GENERATE_ALLOY);
 		Aluminium.addFlags(GENERATE_ROTOR, GENERATE_WHISK, GENERATE_ALLOY);

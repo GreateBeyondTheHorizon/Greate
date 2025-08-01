@@ -31,7 +31,7 @@ public class GreateTagPrefixes {
 			.defaultTagPath("shafts/%s")
 			.unformattedTagPath("shafts")
 			.itemTable(() -> Shafts.NEW_SHAFTS)
-			.materialAmount(M / 4)
+			.materialAmount(M / 6)
 			.unificationEnabled(true)
 			.enableRecycling();
 
