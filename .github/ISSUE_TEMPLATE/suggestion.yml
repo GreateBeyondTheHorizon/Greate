@@ -1,0 +1,12 @@
+name: Suggestion
+description: Suggest a new idea to add to Greate.
+title: "[Suggestion]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: What is your suggestion?
+      description: Add any relevant details, & try to be as specific as possible.
+    validations:
+      required: true
