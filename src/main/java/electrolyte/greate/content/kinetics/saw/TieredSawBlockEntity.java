@@ -5,6 +5,7 @@ import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.kinetics.saw.CuttingRecipe;
 import com.simibubi.create.content.kinetics.saw.SawBlockEntity;
 import com.simibubi.create.content.logistics.box.PackageItem;
+import com.simibubi.create.content.processing.recipe.ProcessingInventory;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipe;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
@@ -20,6 +21,7 @@ import com.simibubi.create.infrastructure.config.AllConfigs;
 import electrolyte.greate.Greate;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
+import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import electrolyte.greate.foundation.data.recipe.TieredRecipeConditions;
 import electrolyte.greate.mixin.MixinSawBlockEntityAccessor;
 import electrolyte.greate.registry.ModRecipeTypes;
@@ -62,6 +64,7 @@ public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKinet
     public TieredSawBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
         tier = ((ITieredBlock) state.getBlock()).getTier();
+        inventory = new ProcessingInventory(this::start);
     }
 
     @Override
@@ -129,6 +132,7 @@ public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKinet
         return startedSearch.stream()
                 .filter(TieredRecipeConditions.outputMatchesFilter(filtering))
                 .filter(TieredRecipeConditions.firstIngredientMatches(inventory.getStackInSlot(0)))
+                .filter(TieredRecipeConditions.firstIngredientCountMatches(inventory.getStackInSlot(0)))
                 .filter(TieredRecipeConditions.firstFluidMatches(availableFluid.getFluidInTank(0)))
                 .filter(TieredRecipeConditions.isEqualOrAboveTier(tier))
                 .filter(r -> !AllRecipeTypes.shouldIgnoreInAutomation(r))
@@ -160,9 +164,16 @@ public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKinet
 
         Recipe<?> recipe = recipes.get(recipeIndex);
         int rolls = inventory.getStackInSlot(0).getCount();
+        int requiredAmount = 1;
+        if(recipe instanceof TieredProcessingRecipe<?> tpr) {
+            requiredAmount = tpr.getIngredients().get(0).getItems()[0].getCount();
+            rolls /= requiredAmount;
+        }
         IFluidHandler availableFluid = this.getCapability(ForgeCapabilities.FLUID_HANDLER).orElse(null);
         if(availableFluid == null) return;
-        inventory.clear();
+        if(recipe instanceof TieredProcessingRecipe<?> tpr) {
+            inventory.setStackInSlot(0, input.copyWithCount(input.getCount() - (rolls * requiredAmount)));
+        } else inventory.clear();
         for(int roll = 0; roll < rolls; roll++) {
             List<ItemStack> results = new LinkedList<>();
             if(recipe instanceof ProcessingRecipe<?> pr) {
@@ -215,7 +226,11 @@ public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKinet
             time = pr.getProcessingDuration();
         }
 
-        inventory.remainingTime = time * Math.max(1, (inserted.getCount()  / 5));
+        int timePer = inserted.getCount();
+        if(recipe instanceof TieredProcessingRecipe<?> tpr) {
+            timePer /= tpr.getIngredients().get(0).getItems()[0].getCount();
+        }
+        inventory.remainingTime = time * Math.max(1, (timePer / 5));
         inventory.recipeDuration = inventory.remainingTime;
         inventory.appliedRecipe = false;
         sendData();
