@@ -1,3 +1,3 @@
-- Fix assembler hopper recipes
-- Fix create kubejs recipes not being inherited by machines
-- Fix tiered mechanical press visual on basins
+- Fix tunnels not connecting to tiered belts properly
+- Fix tiered shafts having the wrong material value
+- Fix tiered saws not running recipes with more than 1 item input properly 
