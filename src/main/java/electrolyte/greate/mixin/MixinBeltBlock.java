@@ -40,7 +40,7 @@ public abstract class MixinBeltBlock {
         return state.getBlock() instanceof BeltBlock;
     }
 
-    @WrapOperation(method = "updateEntityAfterFallOn", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z"), remap = false)
+    @WrapOperation(method = "updateEntityAfterFallOn", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z", ordinal = 0))
     private static boolean greate_updateEntityAfterFallOn(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
         return state.getBlock() instanceof BeltBlock;
     }
@@ -60,21 +60,21 @@ public abstract class MixinBeltBlock {
         return state.getBlock() instanceof BeltBlock;
     }
 
-    @Inject(method = "use", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/kinetics/belt/BeltSlicer;useConnector(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/phys/BlockHitResult;Lcom/simibubi/create/content/kinetics/belt/BeltSlicer$Feedback;)Lnet/minecraft/world/InteractionResult;"), cancellable = true, remap = false)
+    @Inject(method = "use", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/kinetics/belt/BeltSlicer;useConnector(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/phys/BlockHitResult;Lcom/simibubi/create/content/kinetics/belt/BeltSlicer$Feedback;)Lnet/minecraft/world/InteractionResult;"), cancellable = true)
     private void greate_isConnector(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir) {
         if(state.getBlock() instanceof TieredBeltBlock) {
             cir.setReturnValue(InteractionResult.PASS);
         }
     }
 
-    @Inject(method = "use", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getValue(Lnet/minecraft/world/level/block/state/properties/Property;)Ljava/lang/Comparable;"), cancellable = true, remap = false)
+    @Inject(method = "use", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getValue(Lnet/minecraft/world/level/block/state/properties/Property;)Ljava/lang/Comparable;"), cancellable = true)
     private void greate_isShaft(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir) {
         if(state.getBlock() instanceof TieredBeltBlock) {
             cir.setReturnValue(InteractionResult.PASS);
         }
     }
 
-    @Inject(method = "use", at = @At(value = "RETURN", ordinal = 14), cancellable = true, remap = false)
+    @Inject(method = "use", at = @At(value = "RETURN", ordinal = 14), cancellable = true)
     private void greate_use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir) {
         if(state.getBlock() instanceof TieredBeltBlock tbb) {
             ItemStack heldItem = player.getItemInHand(handIn);
@@ -97,7 +97,7 @@ public abstract class MixinBeltBlock {
         }
     }
 
-    @Inject(method = "onWrenched", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Inventory;placeItemBackInInventory(Lnet/minecraft/world/item/ItemStack;)V"), cancellable = true, remap = false)
+    @Inject(method = "onWrenched", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Inventory;placeItemBackInInventory(Lnet/minecraft/world/item/ItemStack;)V"), cancellable = true)
     private void greate_onWrenched(BlockState state, UseOnContext context, CallbackInfoReturnable<InteractionResult> cir) {
         if(state.getBlock() instanceof TieredBeltBlock tbb) {
             context.getPlayer().getInventory().placeItemBackInInventory(ChemicalHelper.get(shaft, TM[tbb.getTier()]));
