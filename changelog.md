@@ -1,3 +1,2 @@
-- Fix tunnels not connecting to tiered belts properly
-- Fix tiered shafts having the wrong material value
-- Fix tiered saws not running recipes with more than 1 item input properly 
+- Fix mixin crash
+- Fix duplicate crafting component
