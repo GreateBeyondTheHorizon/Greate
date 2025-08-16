@@ -96,7 +96,6 @@ public class GreateSequencedAssemblyRecipes {
         int cableAmount = (int) (wirePrefix.getMaterialAmount(material) * 2 / M);
         TagPrefix cablePrefix = TagPrefix.get("cable" + wirePrefix.name().substring(4));
         int voltageTier = GTUtil.getTierByVoltage(property.getVoltage());
-        int euT = voltageTier > 0 ? voltageTier - 1 : ULV;
         int insulationAmount = INSULATION_AMOUNT.getInt(cablePrefix);
 
         if(voltageTier >= EV) {
@@ -108,7 +107,7 @@ public class GreateSequencedAssemblyRecipes {
 
             GTRecipeBuilder siliconeCoatingFactoryBuilder = WIRE_COATING_RECIPES
                     .recipeBuilder(Greate.id(String.format("%s_cable_%d_silicone", material.getName(), cableAmount)))
-                    .EUt(VA[euT]).duration(100)
+                    .EUt(VA[ULV]).duration(100)
                     .inputItems(wirePrefix, material)
                     .outputItems(cablePrefix, material);
 
@@ -133,7 +132,7 @@ public class GreateSequencedAssemblyRecipes {
 
             GTRecipeBuilder styreneCoatingFactoryBuilder = WIRE_COATING_RECIPES
                     .recipeBuilder(Greate.id(String.format("%s_cable_%d_styrene", material.getName(), cableAmount)))
-                    .EUt(VA[euT]).duration(100)
+                    .EUt(VA[ULV]).duration(100)
                     .inputItems(wirePrefix, material)
                     .outputItems(cablePrefix, material);
 
