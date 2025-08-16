@@ -83,12 +83,19 @@ public abstract class MixinBeltBlock {
             if(isConnector) {
                 if(((TieredBeltConnectorItem) heldItem.getItem()).getBeltMaterial() == ((TieredBeltBlock) world.getBlockState(pos).getBlock()).getBeltMaterial()) {
                     cir.setReturnValue(TieredBeltSlicer.useConnector(state, world, pos, player, handIn, hit, new Feedback()));
+                    return;
                 }
             }
             if(isShaft) {
                 if(heldItem.is(ChemicalHelper.get(shaft, TM[tbb.getTier()]).getItem())) {
-                    if(state.getValue(PART) != BeltPart.MIDDLE) cir.setReturnValue(InteractionResult.PASS);
-                    if(world.isClientSide) cir.setReturnValue(InteractionResult.SUCCESS);
+                    if(state.getValue(PART) != BeltPart.MIDDLE) {
+                        cir.setReturnValue(InteractionResult.PASS);
+                        return;
+                    }
+                    if(world.isClientSide) {
+                        cir.setReturnValue(InteractionResult.SUCCESS);
+                        return;
+                    }
                     if(!player.isCreative()) heldItem.shrink(1);
                     KineticBlockEntity.switchToBlockState(world, pos, state.setValue(PART, BeltPart.PULLEY));
                     cir.setReturnValue(InteractionResult.SUCCESS);
