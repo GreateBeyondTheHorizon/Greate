@@ -1,2 +1,2 @@
-- Fix mixin crash
-- Fix duplicate crafting component
+- Fix shafts being consumed on belts when they shouldn't
+- Fix cable coating recipes in the Wire Coater
