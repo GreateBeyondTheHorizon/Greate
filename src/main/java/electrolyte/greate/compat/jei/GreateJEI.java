@@ -85,7 +85,7 @@ public class GreateJEI implements IModPlugin {
                     .addTypedRecipes(ModRecipeTypes.MILLING)
                     .catalysts(Millstones.MILLSTONES)
                     .doubleIconItem(Millstones.NEUTRONIUM_MILLSTONE.get(), AllItems.WHEAT_FLOUR.get())
-                    .emptyBackground(177, 68)
+                    .emptyBackground(177, 78)
                     .build("milling", TieredMillingCategory::new),
 
                 crushing = builder(TieredAbstractCrushingRecipe.class)
@@ -93,7 +93,7 @@ public class GreateJEI implements IModPlugin {
                         .addTypedRecipesExcluding(ModRecipeTypes.MILLING::getType, ModRecipeTypes.CRUSHING::getType)
                         .catalysts(CrushingWheels.CRUSHING_WHEELS)
                         .doubleIconItem(CrushingWheels.NEUTRONIUM_CRUSHING_WHEEL.get(), AllItems.CRUSHED_GOLD.get())
-                        .emptyBackground(177, 115)
+                        .emptyBackground(177, 125)
                         .build("crushing", TieredCrushingCategory::new),
 
                 washing = builder(TieredSplashingRecipe.class)

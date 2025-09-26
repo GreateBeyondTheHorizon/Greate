@@ -28,6 +28,7 @@ public class GreateLang {
         REGISTRATE.addRawLang("greate.recipe.assembly.pressing", "Process in %s or higher Press");
         REGISTRATE.addRawLang("greate.recipe.assembly.cutting", "Cut with %s or higher Saw");
         REGISTRATE.addRawLang("greate.jei.recipe_tier", "Recipe Tier: ");
+        REGISTRATE.addRawLang("greate.jei.byproducts", "Byproducts from §6HS§r+");
         REGISTRATE.addRawLang("greate.recipe.processing.extra_chance", "% extra chance per tier");
         REGISTRATE.addRawLang("config.greate.option.ULS", "ULS Settings");
         REGISTRATE.addRawLang("config.greate.option.LS", "LS Settings");
