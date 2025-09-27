@@ -84,6 +84,9 @@ public class GreateValues {
     }
 
     public static TieredProcessingRecipeFactory<TieredProcessingRecipe<?>> getFactory(ResourceLocation loc) {
+        for(String s : Greate.CONFIG.ignoredRecipeTypes) {
+            if(loc.toString().startsWith(s)) return null;
+        }
         if(loc.toString().startsWith(GTRecipeTypes.MACERATOR_RECIPES.registryName.toString()) || loc.toString().startsWith(AllRecipeTypes.MILLING.getId().toString())) return TieredMillingRecipe::new;
         else if(loc.toString().startsWith(AllRecipeTypes.CRUSHING.getId().toString())) return TieredCrushingRecipe::new;
         else if(loc.toString().startsWith(GTRecipeTypes.BENDER_RECIPES.registryName.toString()) || loc.toString().startsWith(AllRecipeTypes.PRESSING.getId().toString())) return TieredPressingRecipe::new;
