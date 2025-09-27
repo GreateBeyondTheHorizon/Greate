@@ -2,6 +2,8 @@ package electrolyte.greate.mixin;
 
 import com.google.gson.JsonElement;
 import com.gregtechceu.gtceu.GTCEu;
+import com.gregtechceu.gtceu.api.recipe.GTRecipe;
+import com.gregtechceu.gtceu.api.recipe.GTRecipeSerializer;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.fluids.potion.PotionMixingRecipes;
@@ -64,7 +66,8 @@ public class MixinRecipeManager {
                 if(factory != null) {
                     String type = jsonElement.getAsJsonObject().get("type").getAsString();
                     if(type.startsWith(GTCEu.MOD_ID)) {
-                        GreateRuntimeRecipes.convertGTRecipe(factory, resourceLocation, jsonElement, !type.startsWith(GTRecipeTypes.BENDER_RECIPES.registryName.toString()));
+                        GTRecipe recipe = GTRecipeSerializer.SERIALIZER.fromJson(resourceLocation, jsonElement.getAsJsonObject());
+                        GreateRuntimeRecipes.convertGTRecipe(factory, recipe, !type.startsWith(GTRecipeTypes.BENDER_RECIPES.registryName.toString()));
                     } else if(type.startsWith(Create.ID)) {
                         GreateRuntimeRecipes.convertCreateRecipe(factory, resourceLocation, jsonElement);
                     }

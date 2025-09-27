@@ -6,7 +6,7 @@ import com.gregtechceu.gtceu.api.capability.recipe.EURecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.FluidRecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
-import com.gregtechceu.gtceu.api.recipe.GTRecipeSerializer;
+import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.simibubi.create.content.kinetics.mixer.MixingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import electrolyte.greate.Greate;
@@ -32,18 +32,24 @@ public class GreateRuntimeRecipes {
         JSON_FILES.trim();
     };
 
-    public static void convertGTRecipe(TieredProcessingRecipeFactory<TieredProcessingRecipe<?>> factory, ResourceLocation recipeId, JsonElement recipeJson, boolean supportsDuration) {
-        GTRecipe recipe = GTRecipeSerializer.SERIALIZER.fromJson(recipeId, recipeJson.getAsJsonObject());
+    public static void convertGTRecipe(TieredProcessingRecipeFactory<TieredProcessingRecipe<?>> factory, GTRecipe recipe, boolean supportsDuration) {
         int recipeTier = GreateValues.convertGTEUToTier(recipe.getTickInputContents(EURecipeCapability.CAP));
-        new Builder<>(factory, recipe.getId())
-                .withItemIngredientsGT(recipe.getInputContents(ItemRecipeCapability.CAP))
-                .withFluidIngredientsGT(recipe.getInputContents(FluidRecipeCapability.CAP))
-                .withItemOutputsGT(recipe.getOutputContents(ItemRecipeCapability.CAP))
-                .withFluidOutputsGT(recipe.getOutputContents(FluidRecipeCapability.CAP))
-                .duration(supportsDuration ? recipe.duration : 0)
-                .recipeTier(recipeTier)
-                .recipeCircuit(TieredProcessingRecipe.getCircuitFromGTRecipe(recipe.getInputContents(ItemRecipeCapability.CAP)))
-                .build();
+        int recipeCircuit = TieredProcessingRecipe.getCircuitFromGTRecipe(recipe.getInputContents(ItemRecipeCapability.CAP));
+        TieredProcessingRecipeBuilder<TieredProcessingRecipe<?>> builder = new Builder<>(factory, recipe.getId())
+                    .withItemIngredientsGT(recipe.getInputContents(ItemRecipeCapability.CAP))
+                    .withItemOutputsGT(recipe.getOutputContents(ItemRecipeCapability.CAP))
+                    .recipeTier(recipeTier);
+        if(recipe.getType() == GTRecipeTypes.ORE_WASHER_RECIPES) {
+            if(recipeCircuit != 2) return;
+            builder.build();
+        } else {
+            builder
+                    .withFluidIngredientsGT(recipe.getInputContents(FluidRecipeCapability.CAP))
+                    .withFluidOutputsGT(recipe.getOutputContents(FluidRecipeCapability.CAP))
+                    .duration(supportsDuration ? recipe.duration : 0)
+                    .recipeCircuit(recipeCircuit)
+                    .build();
+        }
     }
 
     public static void convertCreateRecipe(TieredProcessingRecipeFactory<TieredProcessingRecipe<?>> factory, ResourceLocation recipeId, JsonElement recipeJson) {
