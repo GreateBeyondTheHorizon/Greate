@@ -1,2 +1,7 @@
-- Fix shafts being consumed on belts when they shouldn't
-- Fix cable coating recipes in the Wire Coater
+- Add byproducts tooltip to milling/crushing recipes
+- Add ability to diable Greate machine recipe inheritance for configured recipe types
+- Allow ore washing via tiered encased fans (ONLY CIRCUIT 2 RECIPES)
+- Fix belt casings z-fighting with shafts
+- Allow stripped rubber log/wood to be andesite/brass/copper encased
+- Add set create rose quartz to be preferred over GT rose quartz
+- Add compressor recipes to tiered mechanical presses
