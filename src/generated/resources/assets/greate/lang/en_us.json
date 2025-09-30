@@ -226,6 +226,7 @@
   "config.jade.plugin_greate.belt_icon": "Belt Icon",
   "config.jade.plugin_greate.recipe_duration": "Recipe Duration",
   "greate.gui.goggles.saw_contents": "Saw Contents:",
+  "greate.jei.byproducts": "Byproducts from §6HS§r+",
   "greate.jei.recipe_tier": "Recipe Tier: ",
   "greate.ponder.belt_casing.header": "Encasing Belts",
   "greate.ponder.belt_casing.text_1": "Brass or Andesite Casing can be used to decorate Mechanical Belts",
@@ -374,6 +375,5 @@
   "material.greate.rose_quartz": "Rose Quartz",
   "material.greate.shadow_steel": "Shadow Steel",
   "tagprefix.alloy": "%s Alloy",
-  "tagprefix.whisk": "%s Whisk",
-  "greate.jei.byproducts": "Byproducts from §6HS§r+"
+  "tagprefix.whisk": "%s Whisk"
 }

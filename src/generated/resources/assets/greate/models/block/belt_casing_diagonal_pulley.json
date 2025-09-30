@@ -1,0 +1,4 @@
+{
+  "parent": "create:block/belt_casing/diagonal_pulley",
+  "render_type": "minecraft:cutout"
+}

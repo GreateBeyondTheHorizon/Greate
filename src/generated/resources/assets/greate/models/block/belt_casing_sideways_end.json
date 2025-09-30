@@ -1,0 +1,4 @@
+{
+  "parent": "create:block/belt_casing/sideways_end",
+  "render_type": "minecraft:cutout"
+}

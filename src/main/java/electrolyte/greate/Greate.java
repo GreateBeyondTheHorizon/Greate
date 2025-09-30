@@ -81,10 +81,10 @@ public class Greate {
 
         if(!DatagenModLoader.isRunningDataGen()) { //needed due to using both create & gt registrate
             GreateRegistries.REGISTRATE.registerRegistrate();
+            FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(MachineDefinition.class, GreateRegistries::registerMachines);
         }
 
         FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(GTRecipeType.class, GreateRegistries::registerRecipeTypes);
-        FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(MachineDefinition.class, GreateRegistries::registerMachines);
 
         CREATIVE_TABS.register(eventBus);
         REGISTRATE.registerEventListeners(eventBus);

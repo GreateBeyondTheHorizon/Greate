@@ -1,0 +1,4 @@
+{
+  "parent": "create:block/belt_casing/horizontal_middle",
+  "render_type": "minecraft:cutout"
+}
