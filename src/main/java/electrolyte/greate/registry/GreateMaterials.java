@@ -17,8 +17,7 @@ import java.util.List;
 import static com.gregtechceu.gtceu.api.GTValues.M;
 import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags.*;
 import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialIconSet.*;
-import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.block;
-import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.ingot;
+import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.*;
 import static com.gregtechceu.gtceu.api.item.tool.GTToolType.BUZZSAW;
 import static com.gregtechceu.gtceu.common.data.GTElements.Ma;
 import static com.gregtechceu.gtceu.common.data.GTElements.Sp;
@@ -116,6 +115,7 @@ public class GreateMaterials {
 		alloy.setIgnored(WroughtIron, () -> AllItems.ANDESITE_ALLOY);
 		block.setIgnored(AndesiteAlloy, () -> AllBlocks.ANDESITE_ALLOY_BLOCK);
 		ingot.setIgnored(AndesiteAlloy, () -> AllItems.ANDESITE_ALLOY);
+		gem.setIgnored(RoseQuartz, () -> AllItems.ROSE_QUARTZ);
 	}
 
 	public static Material.Builder Builder(String id) {
