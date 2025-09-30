@@ -1,0 +1,21 @@
+{
+  "type": "create:item_application",
+  "ingredients": [
+    [
+      {
+        "tag": "forge:stripped_wood"
+      },
+      {
+        "item": "gtceu:stripped_rubber_wood"
+      }
+    ],
+    {
+      "tag": "forge:ingots/brass"
+    }
+  ],
+  "results": [
+    {
+      "item": "create:brass_casing"
+    }
+  ]
+}

@@ -18,6 +18,7 @@ import electrolyte.greate.content.kinetics.fan.processing.GreateFanProcessingTyp
 import electrolyte.greate.foundation.advancement.GreateAdvancements;
 import electrolyte.greate.foundation.data.GreateTagGen.GreateBlockTagGen;
 import electrolyte.greate.foundation.data.GreateTagGen.GreateItemTagGen;
+import electrolyte.greate.foundation.data.recipe.datagen.GreateItemApplicationRecipeGen;
 import electrolyte.greate.foundation.item.GreateKineticStats;
 import electrolyte.greate.infrastructure.config.GreateConfigs;
 import electrolyte.greate.infrastructure.config.GreateRecipeConfig;
@@ -127,6 +128,7 @@ public class Greate {
             GreateBlockTagGen blockTags = new GreateBlockTagGen(event.getGenerator().getPackOutput(), event.getLookupProvider(), Greate.MOD_ID, event.getExistingFileHelper());
             event.getGenerator().addProvider(true, blockTags);
             event.getGenerator().addProvider(true, new GreateItemTagGen(event.getGenerator().getPackOutput(), event.getLookupProvider(), blockTags.contentsGetter(), Greate.MOD_ID, event.getExistingFileHelper()));
+            event.getGenerator().addProvider(true, new GreateItemApplicationRecipeGen(event.getGenerator().getPackOutput(), Greate.MOD_ID));
         }
     }
 

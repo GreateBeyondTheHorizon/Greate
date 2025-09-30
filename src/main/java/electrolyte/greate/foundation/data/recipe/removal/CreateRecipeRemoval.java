@@ -50,6 +50,13 @@ public class CreateRecipeRemoval {
         recipe.accept(Create.asResource("deploying/cogwheel"));
         recipe.accept(Create.asResource("deploying/large_cogwheel"));
 
+        recipe.accept(Create.asResource("item_application/andesite_casing_from_log"));
+        recipe.accept(Create.asResource("item_application/andesite_casing_from_wood"));
+        recipe.accept(Create.asResource("item_application/brass_casing_from_log"));
+        recipe.accept(Create.asResource("item_application/brass_casing_from_wood"));
+        recipe.accept(Create.asResource("item_application/copper_casing_from_log"));
+        recipe.accept(Create.asResource("item_application/copper_casing_from_wood"));
+
         recipe.accept(Create.asResource("mechanical_crafting/crushing_wheel"));
 
         recipe.accept(Create.asResource("mixing/andesite_alloy"));
