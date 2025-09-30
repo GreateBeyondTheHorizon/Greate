@@ -93,6 +93,7 @@ public class GreateValues {
         else if(loc.toString().startsWith(GTRecipeTypes.MIXER_RECIPES.registryName.toString()) || loc.toString().startsWith(AllRecipeTypes.MIXING.getId().toString())) return TieredMixingRecipe::new;
         else if(loc.toString().startsWith(GTRecipeTypes.CUTTER_RECIPES.registryName.toString()) || loc.toString().startsWith(AllRecipeTypes.CUTTING.getId().toString())) return TieredCuttingRecipe::new;
         else if(loc.toString().startsWith(GTRecipeTypes.ORE_WASHER_RECIPES.registryName.toString()) || loc.toString().startsWith(AllRecipeTypes.SPLASHING.getId().toString())) return TieredSplashingRecipe::new;
+        else if(loc.toString().startsWith(GTRecipeTypes.COMPRESSOR_RECIPES.registryName.toString())) return TieredCompactingRecipe::new;
         else if(loc.toString().startsWith(AllRecipeTypes.HAUNTING.getId().toString())) return TieredHauntingRecipe::new;
         else if(loc.toString().startsWith(AllRecipeTypes.COMPACTING.getId().toString())) return TieredCompactingRecipe::new;
         return null;
