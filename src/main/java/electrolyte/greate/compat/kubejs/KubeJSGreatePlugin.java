@@ -6,6 +6,7 @@ import com.gregtechceu.gtceu.api.capability.recipe.FluidRecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
 import com.gregtechceu.gtceu.api.recipe.content.Content;
+import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.gregtechceu.gtceu.integration.kjs.recipe.GTRecipeSchema;
 import com.gregtechceu.gtceu.integration.kjs.recipe.GTRecipeSchema.GTRecipeJS;
 import com.gregtechceu.gtceu.integration.kjs.recipe.components.GTRecipeComponents;
@@ -78,11 +79,14 @@ public class KubeJSGreatePlugin extends KubeJSPlugin {
             if(r.getId().endsWith("_electric_only")) continue;
             if(r instanceof GTRecipeJS gtRecipeJS) {
                 TieredProcessingRecipeFactory<TieredProcessingRecipe<?>> factory = GreateValues.getFactory(gtRecipeJS.getType());
-                if(factory == null) continue;
+                if(factory == null)
+                    continue;
                 TieredProcessingRecipeBuilder<TieredProcessingRecipe<?>> builder = new TieredProcessingRecipeBuilder<>(factory, Greate.id("integration/" + gtRecipeJS.idWithoutType().toString().replace(':', '/')));
-                if(gtRecipeJS.getValue(GTRecipeSchema.DURATION) != null) {
-                    builder.duration(gtRecipeJS.getValue(GTRecipeSchema.DURATION).intValue());
-                } else builder.averageProcessingDuration();
+                if(!r.getType().toString().startsWith(GTRecipeTypes.BENDER_RECIPES.registryName.toString())) {
+                    if(gtRecipeJS.getValue(GTRecipeSchema.DURATION) != null) {
+                        builder.duration(gtRecipeJS.getValue(GTRecipeSchema.DURATION).intValue());
+                    } else builder.averageProcessingDuration();
+                }
                 if(gtRecipeJS.getValue(GTRecipeSchema.ALL_INPUTS) != null) {
                     Map<RecipeCapability<?>, List<Content>> inputs = gtRecipeJS.getValue(GTRecipeSchema.ALL_INPUTS).entrySet().stream()
                             .map(e -> Map.entry(e.getKey(), Arrays.stream(e.getValue())
