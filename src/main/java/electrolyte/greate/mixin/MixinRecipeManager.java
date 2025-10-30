@@ -1,6 +1,7 @@
 package electrolyte.greate.mixin;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
@@ -8,6 +9,7 @@ import com.gregtechceu.gtceu.api.recipe.GTRecipeSerializer;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.fluids.potion.PotionMixingRecipes;
+import com.simibubi.create.content.kinetics.mixer.MixingRecipe;
 import dev.latvian.mods.kubejs.recipe.RecipesEventJS;
 import electrolyte.greate.Greate;
 import electrolyte.greate.GreateValues;
@@ -34,7 +36,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Mixin(value = RecipeManager.class, priority = 1099)
 public class MixinRecipeManager {
@@ -56,38 +57,39 @@ public class MixinRecipeManager {
             }
         });
 
-
+        //the day this jank can be removed will be a glorious day!
         long currentTime = System.currentTimeMillis();
         Greate.LOGGER.info("Converting GT & Create recipes...");
         if(ModList.get().isLoaded("kubejs")) GreateKubeJSHelper.kubeStuff();
-        AtomicInteger recipeCount = new AtomicInteger();
-        pMap.forEach((resourceLocation, jsonElement) -> {
+        int recipeCount = 0;
+        for(Map.Entry<ResourceLocation, JsonElement> recipeEntry : pMap.entrySet()) {
+            ResourceLocation resourceLocation = recipeEntry.getKey();
+            JsonElement jsonElement = recipeEntry.getValue();
             try {
-                if(jsonElement.isJsonObject() && jsonElement.getAsJsonObject().has("type") &&
-                        (jsonElement.getAsJsonObject().get("type").getAsString().startsWith(Create.ID) ||
-                         jsonElement.getAsJsonObject().get("type").getAsString().startsWith(GTCEu.MOD_ID))) {
-                    if(CraftingHelper.processConditions(jsonElement.getAsJsonObject(), "conditions", this.context)) {
-                        TieredProcessingRecipeFactory<TieredProcessingRecipe<?>> factory = GreateValues.getFactory(resourceLocation);
-                        if(factory != null) {
-                            String type = jsonElement.getAsJsonObject().get("type").getAsString();
-                            if(type.startsWith(GTCEu.MOD_ID)) {
-                                GTRecipe recipe = GTRecipeSerializer.SERIALIZER.fromJson(resourceLocation, jsonElement.getAsJsonObject());
-                                GreateRuntimeRecipes.convertGTRecipe(factory, recipe, ! type.startsWith(GTRecipeTypes.BENDER_RECIPES.registryName.toString()));
-                            } else if(type.startsWith(Create.ID)) {
-                                GreateRuntimeRecipes.convertCreateRecipe(factory, resourceLocation, jsonElement);
-                            }
-                            recipeCount.getAndIncrement();
-                        }
+                if(!jsonElement.isJsonObject()) continue;
+                JsonObject recipeJson = jsonElement.getAsJsonObject();
+                if(!recipeJson.get("type").getAsString().startsWith(Create.ID) && !recipeJson.get("type").getAsString().startsWith(GTCEu.MOD_ID)) continue;
+                String type = jsonElement.getAsJsonObject().get("type").getAsString();
+                if(!CraftingHelper.processConditions(recipeJson, "conditions", this.context)) continue;
+                TieredProcessingRecipeFactory<TieredProcessingRecipe<?>> factory = GreateValues.getFactory(resourceLocation);
+                if(factory != null) {
+                    if(type.startsWith(GTCEu.MOD_ID)) {
+                        GTRecipe recipe = GTRecipeSerializer.SERIALIZER.fromJson(resourceLocation, recipeJson);
+                        GreateRuntimeRecipes.convertGTRecipe(factory, recipe, !type.startsWith(GTRecipeTypes.BENDER_RECIPES.registryName.toString()));
+                    } else if(type.startsWith(Create.ID)) {
+                        GreateRuntimeRecipes.convertCreateRecipe(factory, resourceLocation, jsonElement);
                     }
+                    recipeCount++;
                 }
             } catch (JsonSyntaxException e) {
-                Greate.LOGGER.error("Unable to parse recipe {}, will be skipped.", resourceLocation);
+                Greate.LOGGER.warn("Unable to parse recipe {}, it will be skipped. Check debug.log for erroring JSON.)", resourceLocation);
+                Greate.LOGGER.debug("Unable to parse recipe {}, erroring JSON is: {}", resourceLocation, jsonElement);
             }
-        });
-        PotionMixingRecipes.ALL.forEach(potionRecipe -> {
+        }
+        for(MixingRecipe potionRecipe : PotionMixingRecipes.ALL) {
             GreateRuntimeRecipes.convertPotionRecipe(potionRecipe);
-            recipeCount.getAndIncrement();
-        });
+            recipeCount++;
+        }
         Greate.LOGGER.info("Finished processing {} recipes in {} ms", recipeCount, System.currentTimeMillis() - currentTime);
         pMap.putAll(GreateRuntimeRecipes.JSON_FILES);
     }
