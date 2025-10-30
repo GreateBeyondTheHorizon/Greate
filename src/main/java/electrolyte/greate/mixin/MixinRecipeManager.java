@@ -61,16 +61,20 @@ public class MixinRecipeManager {
         if(ModList.get().isLoaded("kubejs")) GreateKubeJSHelper.kubeStuff();
         AtomicInteger recipeCount = new AtomicInteger();
         pMap.forEach((resourceLocation, jsonElement) -> {
+            Greate.LOGGER.debug("Attempting to parse {} [1]", resourceLocation);
             if(jsonElement.isJsonObject() && jsonElement.getAsJsonObject().has("type") &&
                     (jsonElement.getAsJsonObject().get("type").getAsString().startsWith(Create.ID) || jsonElement.getAsJsonObject().get("type").getAsString().startsWith(GTCEu.MOD_ID))) {
                 if(CraftingHelper.processConditions(jsonElement.getAsJsonObject(), "conditions", this.context)) {
+                    Greate.LOGGER.debug("Attempting to parse {} [2]", resourceLocation);
                     TieredProcessingRecipeFactory<TieredProcessingRecipe<?>> factory = GreateValues.getFactory(resourceLocation);
                     if(factory != null) {
                         String type = jsonElement.getAsJsonObject().get("type").getAsString();
                         if(type.startsWith(GTCEu.MOD_ID)) {
+                            Greate.LOGGER.debug("Attempting to parse {} [gtceu]", resourceLocation);
                             GTRecipe recipe = GTRecipeSerializer.SERIALIZER.fromJson(resourceLocation, jsonElement.getAsJsonObject());
                             GreateRuntimeRecipes.convertGTRecipe(factory, recipe, ! type.startsWith(GTRecipeTypes.BENDER_RECIPES.registryName.toString()));
                         } else if(type.startsWith(Create.ID)) {
+                            Greate.LOGGER.debug("Attempting to parse {} [create]", resourceLocation);
                             GreateRuntimeRecipes.convertCreateRecipe(factory, resourceLocation, jsonElement);
                         }
                         recipeCount.getAndIncrement();
