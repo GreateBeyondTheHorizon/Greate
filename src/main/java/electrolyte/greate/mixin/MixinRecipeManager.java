@@ -68,8 +68,9 @@ public class MixinRecipeManager {
             try {
                 if(!jsonElement.isJsonObject()) continue;
                 JsonObject recipeJson = jsonElement.getAsJsonObject();
-                if(!recipeJson.get("type").getAsString().startsWith(Create.ID) && !recipeJson.get("type").getAsString().startsWith(GTCEu.MOD_ID)) continue;
-                String type = jsonElement.getAsJsonObject().get("type").getAsString();
+                if(!recipeJson.has("type") || recipeJson.get("type").getAsString() == null) continue;
+                String type = recipeJson.get("type").getAsString();
+                if(!type.startsWith(Create.ID) && !type.startsWith(GTCEu.MOD_ID)) continue;
                 if(!CraftingHelper.processConditions(recipeJson, "conditions", this.context)) continue;
                 TieredProcessingRecipeFactory<TieredProcessingRecipe<?>> factory = GreateValues.getFactory(resourceLocation);
                 if(factory != null) {
