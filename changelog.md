@@ -1,3 +1,1 @@
-- Fix log spam for kubejs bending recipes
-- Handle broken recipes when trying to inherit them
-- Add Chinese Lang (闫茂源 & jmecn)
+- Add check for certain recipes to a fix crash
