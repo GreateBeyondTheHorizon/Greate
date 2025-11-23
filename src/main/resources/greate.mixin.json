@@ -13,6 +13,7 @@
     "MixinBeltFunnelBlock",
     "MixinBeltTunnelBlock",
     "MixinBlockEntityBehaviour",
+    "MixinBrassTunnelBlockEntity",
     "MixinChuteBlockEntity",
     "MixinCrushingWheelControllerBlockEntity",
     "MixinCStress",
@@ -22,6 +23,7 @@
     "MixinGirderEncasedShaftBlock",
     "MixinKineticBlockEntity",
     "MixinKineticNetwork",
+    "MixinMaterialChecklist",
     "MixinMillstoneBlockEntity",
     "MixinPumpFluidTransferBehaviour",
     "MixinRecipeManager",
@@ -30,7 +32,8 @@
     "MixinSequencedAssemblyCategory",
     "MixinSequencedAssemblyRecipe",
     "MixinSteamEngineBlock",
-    "MixinSteamEngineBlock$PlacementHelper"
+    "MixinSteamEngineBlock$PlacementHelper",
+    "MixinStockTickerBlockEntity"
   ],
   "client": [
     "MixinDeployerApplicationRecipe"
