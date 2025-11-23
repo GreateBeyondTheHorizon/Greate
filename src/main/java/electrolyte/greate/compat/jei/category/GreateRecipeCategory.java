@@ -2,37 +2,27 @@ package electrolyte.greate.compat.jei.category;
 
 import com.gregtechceu.gtceu.common.data.GTItems;
 import com.gregtechceu.gtceu.common.item.IntCircuitBehaviour;
-import com.simibubi.create.AllFluids;
-import com.simibubi.create.content.fluids.potion.PotionFluidHandler;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
-import com.simibubi.create.foundation.utility.CreateLang;
 import electrolyte.greate.Greate;
 import electrolyte.greate.GreateValues;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
-import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.drawable.IDrawable;
-import mezz.jei.api.gui.ingredient.IRecipeSlotTooltipCallback;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.createmod.catnip.lang.Lang;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 public abstract class GreateRecipeCategory<T extends Recipe<?>> implements IRecipeCategory<T> {
 
@@ -105,45 +95,6 @@ public abstract class GreateRecipeCategory<T extends Recipe<?>> implements IReci
         ItemStack circuitStack = new ItemStack(GTItems.PROGRAMMED_CIRCUIT);
         IntCircuitBehaviour.setCircuitConfiguration(circuitStack, recipe.getCircuitNumber());
         return circuitStack;
-    }
-
-    public static List<FluidStack> withImprovedVisibility(List<FluidStack> stacks) {
-        return stacks.stream().map(GreateRecipeCategory::withImprovedVisibility).collect(Collectors.toList());
-    }
-
-    public static FluidStack withImprovedVisibility(FluidStack stack) {
-        FluidStack display = stack.copy();
-        int displayedAmount = (int) (stack.getAmount() * .75f) + 250;
-        display.setAmount(displayedAmount);
-        return display;
-    }
-
-    public static IRecipeSlotTooltipCallback addFluidTooltip(int mbAmount) {
-        return (view, tooltip) -> {
-            Optional<FluidStack> displayed = view.getDisplayedIngredient(ForgeTypes.FLUID_STACK);
-            if (displayed.isEmpty()) return;
-
-            FluidStack fluidStack = displayed.get();
-
-            if (fluidStack.getFluid().isSame(AllFluids.POTION.get())) {
-                Component name = fluidStack.getDisplayName();
-                if (tooltip.isEmpty()) tooltip.add(0, name);
-                else tooltip.set(0, name);
-
-                ArrayList<Component> potionTooltip = new ArrayList<>();
-                PotionFluidHandler.addPotionTooltip(fluidStack, potionTooltip, 1);
-                tooltip.addAll(1, potionTooltip.stream().toList());
-            }
-
-            int amount = mbAmount == -1 ? fluidStack.getAmount() : mbAmount;
-            Component text = Component.literal(String.valueOf(amount)).append(CreateLang.translateDirect("generic.unit.millibuckets")).withStyle(ChatFormatting.GOLD);
-            if (tooltip.isEmpty()) tooltip.add(0, text);
-            else {
-                List<Component> siblings = tooltip.get(0).getSiblings();
-                siblings.add(Component.literal(" "));
-                siblings.add(text);
-            }
-        };
     }
 
     protected static IDrawable asDrawable(AllGuiTextures texture) {

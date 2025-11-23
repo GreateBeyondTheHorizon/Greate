@@ -7,7 +7,6 @@ import com.simibubi.create.foundation.gui.AllGuiTextures;
 import electrolyte.greate.compat.jei.category.animations.TieredAnimatedSaw;
 import electrolyte.greate.content.kinetics.saw.TieredCuttingRecipe;
 import electrolyte.greate.registry.Saws;
-import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.IFocusGroup;
@@ -32,10 +31,9 @@ public class TieredSawingCategory extends GreateRecipeCategory<TieredCuttingReci
 
         if(!recipe.getFluidIngredients().isEmpty()) {
             FluidIngredient ing = recipe.getFluidIngredients().get(0);
-            builder.addSlot(RecipeIngredientRole.INPUT, 28, 48)
-                    .setBackground(getRenderedSlot(), - 1, - 1)
-                    .addIngredients(ForgeTypes.FLUID_STACK, withImprovedVisibility(ing.getMatchingFluidStacks()))
-                    .addTooltipCallback(addFluidTooltip(ing.getRequiredAmount()));
+            int x = 28;
+            int y = 48;
+            CreateRecipeCategory.addFluidSlot(builder, x, y, ing);
         }
 
         List<ProcessingOutput> results = recipe.getRollableResults();

@@ -11,7 +11,6 @@ import com.simibubi.create.foundation.gui.AllGuiTextures;
 import com.simibubi.create.foundation.utility.CreateLang;
 import electrolyte.greate.content.processing.basin.TieredBasinRecipe;
 import electrolyte.greate.foundation.item.GreateItemHelper;
-import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
@@ -59,10 +58,9 @@ public class TieredBasinCategory extends GreateRecipeCategory<TieredBasinRecipe>
         }
 
         for(FluidIngredient ingredient : recipe.getFluidIngredients()) {
-            builder.addSlot(RecipeIngredientRole.INPUT, 17 + xOffset + (i % 3) * 19, 51 - (i / 3) * 19)
-                    .setBackground(getRenderedSlot(), -1, -1)
-                    .addIngredients(ForgeTypes.FLUID_STACK, withImprovedVisibility(ingredient.getMatchingFluidStacks()))
-                    .addTooltipCallback(addFluidTooltip(ingredient.getRequiredAmount()));
+            int x = 17 + xOffset + (i % 3) * 19;
+            int y = 51 - (i / 3) * 19;
+            CreateRecipeCategory.addFluidSlot(builder, x, y, ingredient);
             i++;
         }
 
@@ -82,10 +80,7 @@ public class TieredBasinCategory extends GreateRecipeCategory<TieredBasinRecipe>
         for(FluidStack fluidResult : recipe.getFluidResults()) {
             int xPosition = 142 - (size % 2 != 0 && i == size - 1 ? 0 : i % 2 == 0 ? 10 : -9);
             int yPosition = -19 * (i / 2) + 51;
-            builder.addSlot(RecipeIngredientRole.OUTPUT, xPosition, yPosition)
-                    .setBackground(getRenderedSlot(), -1, -1)
-                    .addIngredient(ForgeTypes.FLUID_STACK, withImprovedVisibility(fluidResult))
-                    .addTooltipCallback(addFluidTooltip(fluidResult.getAmount()));
+            CreateRecipeCategory.addFluidSlot(builder, xPosition, yPosition, fluidResult);
         }
 
         HeatCondition requiredHeat = recipe.getRequiredHeat();
