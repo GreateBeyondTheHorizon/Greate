@@ -3,6 +3,7 @@ package electrolyte.greate.content.kinetics.press;
 import com.mojang.math.Axis;
 import com.simibubi.create.content.kinetics.press.PressingBehaviour;
 import dev.engine_room.flywheel.api.instance.Instance;
+import dev.engine_room.flywheel.api.visual.DynamicVisual;
 import dev.engine_room.flywheel.api.visualization.VisualizationContext;
 import dev.engine_room.flywheel.lib.instance.InstanceTypes;
 import dev.engine_room.flywheel.lib.instance.OrientedInstance;
@@ -32,7 +33,7 @@ public class TieredMechanicalPressVisual extends TieredShaftVisual<TieredMechani
     }
 
     @Override
-    public void beginFrame(Context context) {
+    public void beginFrame(DynamicVisual.Context context) {
         transformModels(context.partialTick());
     }
 

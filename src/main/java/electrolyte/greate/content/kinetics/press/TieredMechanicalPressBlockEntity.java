@@ -78,10 +78,10 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
         ItemStack createdStack = ItemStack.EMPTY;
         pressingBehaviour.particleItems.add(stack);
         if(canProcessInBulk() || stack.getCount() == 1) {
-            TieredRecipeApplier.applyRecipeOn(itemEntity, recipe.get(), tier);
+            TieredRecipeApplier.applyRecipeOn(itemEntity, recipe.get(), tier, true);
             createdStack = itemEntity.getItem().copy();
         } else {
-            for(ItemStack result : TieredRecipeApplier.applyRecipeOn(level, ItemHandlerHelper.copyStackWithSize(stack, 1), recipe.get(), tier)) {
+            for(ItemStack result : TieredRecipeApplier.applyRecipeOn(level, ItemHandlerHelper.copyStackWithSize(stack, 1), recipe.get(), tier, true)) {
                 if(createdStack.isEmpty()) {
                     createdStack = result.copy();
                 }
@@ -110,7 +110,7 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
         if(simulate) return true;
         pressingBehaviour.particleItems.add(input.stack);
         List<ItemStack> outputStacks = TieredRecipeApplier.applyRecipeOn(level, canProcessInBulk() ?
-                input.stack : ItemHandlerHelper.copyStackWithSize(input.stack, 1), recipe.get(), tier);
+                input.stack : ItemHandlerHelper.copyStackWithSize(input.stack, 1), recipe.get(), tier, true);
         for(ItemStack stack : outputStacks) {
             if(!stack.isEmpty()) {
                 onItemPressed(stack);

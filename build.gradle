@@ -102,6 +102,11 @@ repositories {
             includeGroup 'com.gregtechceu.gtceu'
         }
     }
+    maven { url = "https://maven.terraformersmc.com/"
+        content {
+            includeGroup 'dev.emi'
+        }
+    }
     maven { url = 'https://maven.parchmentmc.org' }
     maven { url = 'https://maven.neoforged.net/releases' }
     maven { url = 'https://maven.quiltmc.org/repository/release/' }
@@ -122,6 +127,9 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}") { transitive = false }
     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}") { transitive = false }
     runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}") { transitive = false }
+
+    //compileOnly fg.deobf("dev.emi:emi-forge:${emi_version}+${minecraft_version}:api")
+    runtimeOnly fg.deobf("dev.emi:emi-forge:${emi_version}+${minecraft_version}")
 
     implementation fg.deobf("dev.architectury:architectury-forge:${architectury_version}")
     implementation fg.deobf("dev.latvian.mods:rhino-forge:${rhino_version}")
