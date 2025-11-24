@@ -1,3 +1,1 @@
-- Fix visual bug with fluids when TMRV is installed
-- Update to Create 6.0.8
-- Cleanup mixins & add missing mixins for various tooltips
+- Fix mixin crash
