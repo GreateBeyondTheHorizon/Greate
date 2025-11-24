@@ -23,7 +23,7 @@ public abstract class MixinDeployerBlockEntity extends KineticBlockEntity {
         super(typeIn, pos, state);
     }
 
-    @WrapOperation(method = "addToGoggleTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/chat/Component;translatable(Ljava/lang/String;)Lnet/minecraft/network/chat/MutableComponent;"), remap = false)
+    @WrapOperation(method = "addToGoggleTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/chat/Component;translatable(Ljava/lang/String;)Lnet/minecraft/network/chat/MutableComponent;"))
     private MutableComponent greate_addToGoggleTooltip(String pKey, Operation<MutableComponent> original) {
         return Component.translatable(heldItem.getHoverName().getString());
     }

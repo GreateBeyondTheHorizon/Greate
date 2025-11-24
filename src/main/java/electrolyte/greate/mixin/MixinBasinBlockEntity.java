@@ -41,7 +41,7 @@ public abstract class MixinBasinBlockEntity extends SmartBlockEntity {
         behaviours.add(outputTank);
     }
 
-    @WrapOperation(method = "addToGoggleTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;getDescriptionId()Ljava/lang/String;"), remap = false)
+    @WrapOperation(method = "addToGoggleTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;getDescriptionId()Ljava/lang/String;"))
     private String greate_addToGoggleTooltip(ItemStack instance, Operation<String> original) {
         return instance.getHoverName().getString();
     }

@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(MaterialChecklist.class)
 public class MixinMaterialChecklist {
 
-    @WrapOperation(method = "entry", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;getDescriptionId()Ljava/lang/String;"), remap = false)
+    @WrapOperation(method = "entry", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;getDescriptionId()Ljava/lang/String;"))
     private String greate_entry(ItemStack instance, Operation<String> original) {
         return instance.getHoverName().getString();
     }
