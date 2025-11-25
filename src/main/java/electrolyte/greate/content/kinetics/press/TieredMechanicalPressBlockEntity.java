@@ -76,7 +76,7 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
         if(simulate) return true;
 
         ItemStack createdStack = ItemStack.EMPTY;
-        pressingBehaviour.particleItems.add(stack);
+        pressingBehaviour.particleItems.add(stack.copyWithCount(1));
         if(canProcessInBulk() || stack.getCount() == 1) {
             TieredRecipeApplier.applyRecipeOn(itemEntity, recipe.get(), tier, true);
             createdStack = itemEntity.getItem().copy();
