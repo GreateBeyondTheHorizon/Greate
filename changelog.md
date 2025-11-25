@@ -1,1 +1,2 @@
-- Fix mixin crash
+- Fix crushing wheels applying recipes with wrong duration (Closes #95) (Also fixes normal crushing wheels not working)
+- Fix missing texture particle for certain pressing recipes
