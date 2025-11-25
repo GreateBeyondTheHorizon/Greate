@@ -10,6 +10,7 @@ import electrolyte.greate.foundation.recipe.TieredRecipeFinder;
 import electrolyte.greate.foundation.recipe.TieredRecipeHelper;
 import electrolyte.greate.registry.ModRecipeTypes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -75,5 +76,13 @@ public class TieredCrushingWheelControllerBlockEntity extends CrushingWheelContr
         }
         inventory.remainingTime = remainingTime;
         inventory.appliedRecipe = false;
+    }
+
+    public void intakeItems(ItemEntity itemEntity) {
+        inventory.clear();
+        inventory.setStackInSlot(0, itemEntity.getItem().copy());
+        itemInserted(inventory.getStackInSlot(0));
+        itemEntity.discard();
+        level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2 | 16);
     }
 }
