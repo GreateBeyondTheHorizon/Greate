@@ -30,7 +30,7 @@ public class GreateTagPrefixes {
 	public static TagPrefix shaft = new TagPrefix("shaft")
 			.defaultTagPath("shafts/%s")
 			.unformattedTagPath("shafts")
-			.itemTable(() -> Shafts.NEW_SHAFTS)
+			.itemTable(() -> Shafts.SHAFTS)
 			.materialAmount(M / 6)
 			.unificationEnabled(true)
 			.enableRecycling();
@@ -91,10 +91,13 @@ public class GreateTagPrefixes {
 			.unificationEnabled(true)
 			.enableRecycling();
 
+	public static TagPrefix belt = new TagPrefix("belt")
+			.itemTable(() -> Belts.BELTS);
+
 	public static TagPrefix beltConnector = new TagPrefix("belt_connector")
 			.defaultTagPath("belt_connectors/%s")
 			.unformattedTagPath("belt_connectors")
-			.itemTable(() -> Belts.NEW_BELT_CONNECTORS)
+			.itemTable(() -> Belts.BELT_CONNECTORS)
 			.materialAmount(M * 6)
 			.unificationEnabled(true)
 			.enableRecycling();

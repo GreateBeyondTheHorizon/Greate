@@ -36,7 +36,7 @@ public class Shafts {
     static ImmutableTable.Builder<TagPrefix, Material, BlockEntry<TieredPoweredShaftBlock>> POWERED_SHAFTS_BUILDER = ImmutableTable.builder();
     static ImmutableTable.Builder<TagPrefix, Material, BlockEntry<TieredEncasedShaftBlock>> ANDESITE_ENCASED_SHAFTS_BUILDER = ImmutableTable.builder();
     static ImmutableTable.Builder<TagPrefix, Material, BlockEntry<TieredEncasedShaftBlock>> BRASS_ENCASED_SHAFTS_BUILDER = ImmutableTable.builder();
-    public static Table<TagPrefix, Material, BlockEntry<TieredShaftBlock>> NEW_SHAFTS;
+    public static Table<TagPrefix, Material, BlockEntry<TieredShaftBlock>> SHAFTS;
     public static Table<TagPrefix, Material, BlockEntry<TieredPoweredShaftBlock>> POWERED_SHAFTS;
     public static Table<TagPrefix, Material, BlockEntry<TieredEncasedShaftBlock>> ANDESITE_ENCASED_SHAFTS;
     public static Table<TagPrefix, Material, BlockEntry<TieredEncasedShaftBlock>> BRASS_ENCASED_SHAFTS;
@@ -69,7 +69,7 @@ public class Shafts {
                     .register();
             SHAFTS_BUILDER.put(shaft, mat, shaftEntry);
         }
-        NEW_SHAFTS = SHAFTS_BUILDER.build();
+        SHAFTS = SHAFTS_BUILDER.build();
     }
 
     public static void generatePoweredShafts() {
@@ -83,7 +83,7 @@ public class Shafts {
                     .properties(p -> p.mapColor(MapColor.METAL))
                     .transform(TagGen.pickaxeOnly())
                     .blockstate(GreateBlockStateGen.tieredPoweredShaftProvider())
-                    .loot((l, b) -> l.dropOther(b, Objects.requireNonNull(NEW_SHAFTS.get(shaft, mat))))
+                    .loot((l, b) -> l.dropOther(b, Objects.requireNonNull(SHAFTS.get(shaft, mat))))
                     .onRegister(c -> c.setTier(tier))
                     .register();
             POWERED_SHAFTS_BUILDER.put(poweredShaft, mat, shaftEntry);
@@ -96,7 +96,7 @@ public class Shafts {
              if(!mat.hasProperty(GreatePropertyKeys.KINETIC)) continue;
              KineticProperty prop = mat.getProperty(GreatePropertyKeys.KINETIC);
              int tier = prop.getTier();
-             BlockEntry<TieredShaftBlock> shaftEntry = Objects.requireNonNull(NEW_SHAFTS.get(shaft, mat));
+             BlockEntry<TieredShaftBlock> shaftEntry = Objects.requireNonNull(SHAFTS.get(shaft, mat));
              var encasedShaftEntry = REGISTRATE
                      .block("andesite_encased_" + mat.getName() + "_shaft", p -> new TieredEncasedShaftBlock(p, mat, AllBlocks.ANDESITE_CASING::get))
                      .properties(p -> p.mapColor(MapColor.PODZOL))
@@ -115,7 +115,7 @@ public class Shafts {
              if(!mat.hasProperty(GreatePropertyKeys.KINETIC)) continue;
              KineticProperty prop = mat.getProperty(GreatePropertyKeys.KINETIC);
              int tier = prop.getTier();
-             BlockEntry<TieredShaftBlock> shaftEntry = Objects.requireNonNull(NEW_SHAFTS.get(shaft, mat));
+             BlockEntry<TieredShaftBlock> shaftEntry = Objects.requireNonNull(SHAFTS.get(shaft, mat));
              var encasedShaftEntry = REGISTRATE
                      .block("brass_encased_" + mat.getName() + "_shaft", p -> new TieredEncasedShaftBlock(p, mat, AllBlocks.BRASS_CASING::get))
                      .properties(p -> p.mapColor(MapColor.PODZOL))

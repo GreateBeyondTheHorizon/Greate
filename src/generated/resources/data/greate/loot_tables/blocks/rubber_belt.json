@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:air"
+          "name": "greate:rubber_belt_connector"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "greate:blocks/rubber_belt_andesite_alloy"
+  "random_sequence": "greate:blocks/rubber_belt"
 }

@@ -3,11 +3,10 @@ package electrolyte.greate.registry;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import electrolyte.greate.Greate;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
 import static electrolyte.greate.GreateValues.TM;
@@ -54,7 +53,7 @@ public class GreatePartialModels {
     }
 
     // Belt
-    public static final Map<Material, List<PartialModel>> NEW_BELT_MODELS = new HashMap<>();
+    public static final Object2ObjectOpenHashMap<Material, List<PartialModel>> BELT_MODELS = new Object2ObjectOpenHashMap<>();
     public static final PartialModel
             RUBBER_BELT_ANDESITE_PULLEY = beltPulley(Rubber, AndesiteAlloy),
             RUBBER_BELT_STEEL_PULLEY = beltPulley(Rubber, Steel),
@@ -149,9 +148,9 @@ public class GreatePartialModels {
     private static PartialModel belt(Material beltMaterial, BeltPart beltPart) {
         String beltpartName = beltPart.name().toLowerCase();
         PartialModel partialModel = materialBlock(beltMaterial, "_belt_" + beltpartName);
-        List<PartialModel> partialModels = NEW_BELT_MODELS.getOrDefault(beltMaterial, new ArrayList<>());
+        List<PartialModel> partialModels = BELT_MODELS.getOrDefault(beltMaterial, new ArrayList<>());
         partialModels.add(partialModel);
-        NEW_BELT_MODELS.put(beltMaterial, partialModels);
+        BELT_MODELS.put(beltMaterial, partialModels);
         return partialModel;
     }
 
@@ -160,10 +159,10 @@ public class GreatePartialModels {
     }
 
     private static PartialModel beltPulley(Material beltMaterial, Material pulleyMaterial) {
-        PartialModel partialModel = materialBlock(beltMaterial, "_belt_" + pulleyMaterial.getName() + "_pulley");
-        List<PartialModel> partialModels = NEW_BELT_MODELS.getOrDefault(beltMaterial, new ArrayList<>());
+        PartialModel partialModel = materialBlock(pulleyMaterial, "_belt_pulley");
+        List<PartialModel> partialModels = BELT_MODELS.getOrDefault(beltMaterial, new ArrayList<>());
         partialModels.add(partialModel);
-        NEW_BELT_MODELS.put(beltMaterial, partialModels);
+        BELT_MODELS.put(beltMaterial, partialModels);
         return partialModel;
     }
 

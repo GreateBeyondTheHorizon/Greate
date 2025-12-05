@@ -3,6 +3,6 @@
   "render_type": "minecraft:cutout",
   "textures": {
     "0": "greate:block/belt_overlay/empty",
-    "particle": "greate:block/polybenzimidazole/belt_diagonal"
+    "particle": "greate:block/polyethylene/belt_diagonal"
   }
 }

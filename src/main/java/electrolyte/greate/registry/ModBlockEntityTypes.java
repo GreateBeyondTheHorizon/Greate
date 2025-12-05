@@ -8,7 +8,6 @@ import electrolyte.greate.content.kinetics.base.TieredShaftRenderer;
 import electrolyte.greate.content.kinetics.base.TieredSingleAxisRotatingVisual;
 import electrolyte.greate.content.kinetics.belt.TieredBeltBlockEntity;
 import electrolyte.greate.content.kinetics.belt.TieredBeltRenderer;
-import electrolyte.greate.content.kinetics.belt.TieredBeltVisual;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingWheelBlockEntity;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingWheelControllerBlockEntity;
 import electrolyte.greate.content.kinetics.fan.TieredEncasedFanBlockEntity;
@@ -42,7 +41,7 @@ public class ModBlockEntityTypes {
     public static final BlockEntityEntry<TieredBracketedKineticBlockEntity> TIERED_BRACKETED_KINETIC = REGISTRATE
             .blockEntity("tiered_bracketed_kinetic", TieredBracketedKineticBlockEntity::new)
             .visual(() -> TieredBracketedKineticBlockEntityVisual::create, false)
-            .validBlocksDeferred(() -> new ArrayList<>(Shafts.NEW_SHAFTS.values()))
+            .validBlocksDeferred(() -> new ArrayList<>(Shafts.SHAFTS.values()))
             .validBlocksDeferred(() -> new ArrayList<>(Cogwheels.COGWHEELS.values()))
             .validBlocksDeferred(() -> new ArrayList<>(Cogwheels.LARGE_COGWHEELS.values()))
             .renderer(() -> TieredBracketedKineticBlockEntityRenderer::new)
@@ -107,8 +106,7 @@ public class ModBlockEntityTypes {
 
     public static final BlockEntityEntry<TieredBeltBlockEntity> TIERED_BELT = REGISTRATE
             .blockEntity("tiered_belt", TieredBeltBlockEntity::new)
-            .visual(() -> TieredBeltVisual::new, TieredBeltBlockEntity::shouldRenderNormally)
-            .validBlocks(Belts.BELTS)
+            .validBlocksDeferred(() -> new ArrayList<>(Belts.BELTS.values()))
             .renderer(() -> TieredBeltRenderer::new)
             .register();
 

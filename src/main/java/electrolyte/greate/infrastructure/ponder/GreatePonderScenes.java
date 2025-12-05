@@ -10,7 +10,7 @@ import electrolyte.greate.infrastructure.ponder.scenes.TieredFanScenes;
 import net.createmod.ponder.api.registration.PonderSceneRegistrationHelper;
 import net.minecraft.resources.ResourceLocation;
 
-import static electrolyte.greate.registry.Belts.NEW_BELT_CONNECTORS;
+import static electrolyte.greate.registry.Belts.BELT_CONNECTORS;
 import static electrolyte.greate.registry.Cogwheels.COGWHEELS;
 import static electrolyte.greate.registry.Cogwheels.LARGE_COGWHEELS;
 import static electrolyte.greate.registry.CrushingWheels.CRUSHING_WHEELS;
@@ -22,14 +22,14 @@ import static electrolyte.greate.registry.MechanicalPresses.MECHANICAL_PRESSES;
 import static electrolyte.greate.registry.Millstones.MILLSTONES;
 import static electrolyte.greate.registry.Pumps.MECHANICAL_PUMPS;
 import static electrolyte.greate.registry.Saws.SAWS;
-import static electrolyte.greate.registry.Shafts.NEW_SHAFTS;
+import static electrolyte.greate.registry.Shafts.SHAFTS;
 
 public class GreatePonderScenes {
 
     public static void register(PonderSceneRegistrationHelper<ResourceLocation> helper) {
         PonderSceneRegistrationHelper<ItemProviderEntry<?>> HELPER = helper.withKeyFunction(RegistryEntry::getId);
-        HELPER.forComponents(NEW_SHAFTS.values()).addStoryBoard(Create.asResource("shaft/relay"), KineticsScenes::shaftAsRelay, AllCreatePonderTags.KINETIC_RELAYS);
-        HELPER.forComponents(NEW_SHAFTS.values()).addStoryBoard(Create.asResource("shaft/encasing"), KineticsScenes::shaftsCanBeEncased);
+        HELPER.forComponents(SHAFTS.values()).addStoryBoard(Create.asResource("shaft/relay"), KineticsScenes::shaftAsRelay, AllCreatePonderTags.KINETIC_RELAYS);
+        HELPER.forComponents(SHAFTS.values()).addStoryBoard(Create.asResource("shaft/encasing"), KineticsScenes::shaftsCanBeEncased);
         HELPER.forComponents(COGWHEELS.values())
                 .addStoryBoard(Create.asResource("cog/small"), KineticsScenes::cogAsRelay, AllCreatePonderTags.KINETIC_RELAYS)
                 .addStoryBoard(Create.asResource("cog/speedup"), KineticsScenes::cogsSpeedUp)
@@ -38,7 +38,7 @@ public class GreatePonderScenes {
                 .addStoryBoard(Create.asResource("cog/speedup"), KineticsScenes::cogsSpeedUp)
                 .addStoryBoard(Create.asResource("cog/large"), KineticsScenes::largeCogAsRelay, AllCreatePonderTags.KINETIC_RELAYS)
                 .addStoryBoard(Create.asResource("cog/encasing"), KineticsScenes::cogwheelsCanBeEncased);
-        HELPER.forComponents(NEW_BELT_CONNECTORS.values())
+        HELPER.forComponents(BELT_CONNECTORS.values())
                 .addStoryBoard(Create.asResource("belt/connect"), BeltScenes::beltConnector, AllCreatePonderTags.KINETIC_RELAYS)
                 .addStoryBoard(Create.asResource("belt/directions"), BeltScenes::directions)
                 .addStoryBoard(Create.asResource("belt/transport"), BeltScenes::transport, AllCreatePonderTags.LOGISTICS)

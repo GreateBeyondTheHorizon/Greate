@@ -52,12 +52,12 @@ public class Girders {
                     .properties(p -> p.sound(SoundType.NETHERITE_BLOCK))
                     .transform(TagGen.pickaxeOnly())
                     .loot((p, b) -> p.add(b, p.createSingleItemTable(AllBlocks.METAL_GIRDER.get())
-                            .withPool(p.applyExplosionCondition(Objects.requireNonNull(Shafts.NEW_SHAFTS.get(shaft, mat)), LootPool.lootPool()
+                            .withPool(p.applyExplosionCondition(Objects.requireNonNull(Shafts.SHAFTS.get(shaft, mat)), LootPool.lootPool()
                                     .setRolls(ConstantValue.exactly(1.0F))
-                                    .add(LootItem.lootTableItem(Objects.requireNonNull(Shafts.NEW_SHAFTS.get(shaft, mat))))))))
+                                    .add(LootItem.lootTableItem(Objects.requireNonNull(Shafts.SHAFTS.get(shaft, mat))))))))
                     .onRegister(CreateRegistrate.blockModel(() -> ConnectedGirderModel::new))
                     .onRegister(c -> c.setTier(tier))
-                    .transform(GirderEncasingRegistry.addVariantTo(Shafts.NEW_SHAFTS.get(shaft, mat)))
+                    .transform(GirderEncasingRegistry.addVariantTo(Shafts.SHAFTS.get(shaft, mat)))
                     .register();
             GIRDERS_BUILDER.put(girderEncasedShaft, mat, girderEntry);
         }

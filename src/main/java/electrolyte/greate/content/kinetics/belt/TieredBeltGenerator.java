@@ -7,6 +7,7 @@ import com.simibubi.create.content.kinetics.belt.BeltPart;
 import com.simibubi.create.content.kinetics.belt.BeltSlope;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
+import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.resources.ResourceLocation;
@@ -16,7 +17,6 @@ import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.ModelFile.UncheckedModelFile;
 
-import static electrolyte.greate.GreateValues.TM;
 import static electrolyte.greate.foundation.data.GreateBlockStateGen.CUTOUT;
 import static electrolyte.greate.foundation.data.GreateBlockStateGen.CUTOUT_MIPPED;
 
@@ -25,10 +25,10 @@ public class TieredBeltGenerator extends BeltGenerator {
     @Override
     public <T extends Block> ModelFile getModel(DataGenContext<Block, T> ctx, RegistrateBlockstateProvider prov, BlockState state) {
         Boolean casing = state.getValue(BeltBlock.CASING);
-        String beltMaterial = ctx.getName().substring(0, ctx.getName().length() - TM[((TieredBeltBlock) ctx.get()).getTier()].getName().length() - 1);
+        String beltMaterial = ((TieredBeltBlock) ctx.get()).getBeltMaterial().getName();
 
         if (!casing)
-            return new UncheckedModelFile(prov.modLoc("block/" + beltMaterial + "_particle"));
+            return new UncheckedModelFile(prov.modLoc("block/" + beltMaterial + "_belt_particle"));
 
         BeltPart part = state.getValue(BeltBlock.PART);
         Direction direction = state.getValue(BeltBlock.HORIZONTAL_FACING);
@@ -64,8 +64,7 @@ public class TieredBeltGenerator extends BeltGenerator {
     }
 
     public <T extends TieredBeltBlock> void generateModel(DataGenContext<Block, T> c, RegistrateBlockstateProvider p) {
-        String shaftMaterial = TM[c.get().getTier()].getName();
-        String beltMaterial = c.getName().substring(0, (c.getName().length() - shaftMaterial.length()) - 6);
+        String beltMaterial = c.get().getBeltMaterial().getName();
 
         p.models().withExistingParent("belt_casing_diagonal_end", Create.asResource("block/belt_casing/diagonal_end"))
                 .renderType(CUTOUT_MIPPED);
@@ -94,9 +93,10 @@ public class TieredBeltGenerator extends BeltGenerator {
         p.models().withExistingParent("belt_casing_horizontal_pulley", Create.asResource("block/belt_casing/horizontal_pulley"))
                 .renderType(CUTOUT_MIPPED);
 
-        p.models().withExistingParent(c.getName() + "_pulley", Create.asResource("block/belt_pulley"))
-                .texture("0", p.modLoc("block/" + shaftMaterial + "/axis"))
-                .texture("1", p.modLoc("block/" + shaftMaterial + "/axis_top"));
+        c.get().getBeltMaterial().getProperty(GreatePropertyKeys.BELT).getValidShafts().forEach(shaftMaterial ->
+                p.models().withExistingParent(shaftMaterial.getName() + "_belt_pulley", Create.asResource("block/belt_pulley"))
+                        .texture("0", p.modLoc("block/" + shaftMaterial.getName() + "/axis"))
+                        .texture("1", p.modLoc("block/" + shaftMaterial.getName() + "/axis_top")));
 
         p.models().withExistingParent(beltMaterial + "_belt_diagonal_end", Create.asResource("block/belt/diagonal_end"))
                 .texture("0", p.modLoc("block/" + beltMaterial + "/belt_diagonal"))

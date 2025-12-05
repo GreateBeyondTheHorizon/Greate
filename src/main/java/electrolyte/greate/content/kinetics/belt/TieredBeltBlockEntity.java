@@ -1,5 +1,7 @@
 package electrolyte.greate.content.kinetics.belt;
 
+import com.gregtechceu.gtceu.api.GTCEuAPI;
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.simibubi.create.content.kinetics.belt.*;
 import com.simibubi.create.content.kinetics.belt.transport.BeltMovementHandler;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
@@ -20,6 +22,7 @@ import java.util.Optional;
 public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKineticBlockEntity {
 
     private int tier;
+    private Material shaftMaterial;
 
     public TieredBeltBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -29,7 +32,7 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
     @Override
     public void tick() {
         if(beltLength == 0) {
-            BeltBlock.initBelt(level, worldPosition);
+            TieredBeltBlock.initBelt(level, worldPosition);
         }
         super.tick();
         if(!(level.getBlockState(worldPosition).getBlock() instanceof TieredBeltBlock)) return;
@@ -61,6 +64,13 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
     @Override
     public void write(CompoundTag compound, boolean clientPacket) {
         compound.putInt("Tier", this.tier);
+        if(shaftMaterial != null) {
+            compound.putString("ShaftMaterial", this.shaftMaterial.toString());
+            TieredBeltBlock beltBlock = ((TieredBeltBlock) this.getBlockState().getBlock());
+            if(beltBlock.getShaftMaterial() == null) {
+                beltBlock.setShaftMaterial(this.shaftMaterial);
+            }
+        }
         super.write(compound, clientPacket);
     }
 
@@ -68,6 +78,7 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
     protected void read(CompoundTag compound, boolean clientPacket) {
         super.read(compound, clientPacket);
         this.tier = compound.getInt("Tier");
+        this.shaftMaterial = GTCEuAPI.materialManager.getMaterial(compound.getString("ShaftMaterial"));
         beltLength = compound.getInt("Length");
     }
 
@@ -105,6 +116,14 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
 
     public void setTier(int tier) {
         this.tier = tier;
+    }
+
+    public Material getShaftMaterial() {
+        return shaftMaterial;
+    }
+
+    public void setShaftMaterial(Material shaftMaterial) {
+        this.shaftMaterial = shaftMaterial;
     }
 
     @Override

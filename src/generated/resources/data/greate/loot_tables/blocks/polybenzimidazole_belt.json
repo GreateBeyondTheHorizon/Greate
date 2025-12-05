@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:air"
+          "name": "greate:polybenzimidazole_belt_connector"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "greate:blocks/silicone_rubber_belt_aluminium"
+  "random_sequence": "greate:blocks/polybenzimidazole_belt"
 }

@@ -7,14 +7,16 @@ import electrolyte.greate.Greate;
 import electrolyte.greate.registry.GreatePartialModels;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public interface IBeltRenderHelper {
 
-    default PartialModel getBeltPulleyModel(BlockState blockState) {
-        TieredBeltBlock tieredBeltBlock = (TieredBeltBlock) blockState.getBlock();
-        Material beltMaterial = tieredBeltBlock.getBeltMaterial();
-        ResourceLocation resourceLocation = Greate.id("block/" + ForgeRegistries.BLOCKS.getKey(blockState.getBlock()).getPath() + "_pulley");
-        return GreatePartialModels.NEW_BELT_MODELS.get(beltMaterial).stream().filter(p -> p.modelLocation().equals(resourceLocation)).findFirst().orElse(AllPartialModels.BELT_PULLEY);
+    default PartialModel getBeltPulleyModel(TieredBeltBlockEntity be, BlockState blockState) {
+        Material shaftMaterial = be.getShaftMaterial();
+        if(shaftMaterial == null)
+            shaftMaterial = ((TieredBeltBlock) blockState.getBlock()).getShaftMaterial();
+        if(shaftMaterial == null) return AllPartialModels.BELT_PULLEY;
+        Material beltMaterial = ((TieredBeltBlock) blockState.getBlock()).getBeltMaterial();
+        ResourceLocation resourceLocation = Greate.id("block/" + shaftMaterial.getName() + "_belt_pulley");
+        return GreatePartialModels.BELT_MODELS.get(beltMaterial).stream().filter(p -> p.modelLocation().equals(resourceLocation)).findFirst().orElse(AllPartialModels.BELT_PULLEY);
     }
 }

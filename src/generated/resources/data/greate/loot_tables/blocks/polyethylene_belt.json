@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:air"
+          "name": "greate:polyethylene_belt_connector"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "greate:blocks/polytetrafluoroethylene_belt_rhodium_plated_palladium"
+  "random_sequence": "greate:blocks/polyethylene_belt"
 }

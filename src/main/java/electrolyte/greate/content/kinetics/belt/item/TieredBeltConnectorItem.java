@@ -10,9 +10,9 @@ import com.simibubi.create.content.kinetics.simpleRelays.AbstractSimpleShaftBloc
 import com.simibubi.create.foundation.advancement.AllAdvancements;
 import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
 import com.tterrag.registrate.util.entry.BlockEntry;
-import electrolyte.greate.GreateValues;
 import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
 import electrolyte.greate.content.kinetics.belt.ITieredBelt;
+import electrolyte.greate.content.kinetics.belt.TieredBeltBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredBracketedKineticBlockEntity;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
 import electrolyte.greate.infrastructure.config.GConfigUtility;
@@ -31,7 +31,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
@@ -46,17 +46,16 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import static electrolyte.greate.registry.Belts.BELTS;
 import static electrolyte.greate.registry.GreateTagPrefixes.shaft;
-import static electrolyte.greate.registry.Shafts.NEW_SHAFTS;
+import static electrolyte.greate.registry.Shafts.SHAFTS;
 
-public class TieredBeltConnectorItem extends Item implements ITieredBelt {
+public class TieredBeltConnectorItem extends BlockItem implements ITieredBelt {
 
     private Material material;
     private final List<Material> validShafts;
 
-    public TieredBeltConnectorItem(Properties pProperties, Material material) {
-        super(pProperties);
+    public TieredBeltConnectorItem(Block pBlock, Properties pProperties, Material material) {
+        super(pBlock, pProperties);
         this.validShafts = material.getProperty(GreatePropertyKeys.BELT).getValidShafts();
         this.material = material;
     }
@@ -73,21 +72,20 @@ public class TieredBeltConnectorItem extends Item implements ITieredBelt {
         String beltLength = String.valueOf(GConfigUtility.getBeltLengthFromMaterial(material));
         MutableComponent beltLengthComponent = Component.translatable(beltLength).withStyle(ChatFormatting.BOLD).withStyle(Style.EMPTY.withColor(ChatFormatting.AQUA));
 
-        int s1RGB = GreateValues.TM[getValidShafts().get(0).get().getTier()].getMaterialRGB();
-        int s2RGB = GreateValues.TM[getValidShafts().get(1).get().getTier()].getMaterialRGB();
-        String shaft1_name = getValidShafts().get(0).get().getShaft().getName().getString();
-        String shaft2_name = getValidShafts().get(1).get().getShaft().getName().getString();
-        MutableComponent s1nComponent = Component.literal(shaft1_name).withStyle(Style.EMPTY.withColor(s1RGB));
-        MutableComponent s2nComponent = Component.literal(shaft2_name).withStyle(Style.EMPTY.withColor(s2RGB));
-
-        MutableComponent belt_maxlength = Component.translatable("greate.tooltip.belt_maxlength")
+        MutableComponent maxLength = Component.translatable("greate.tooltip.belt_maxlength")
                 .withStyle(Style.EMPTY.withColor(ChatFormatting.GRAY));
-        MutableComponent belt_usable = Component.translatable("greate.tooltip.belt_usable")
+        MutableComponent usableOn = Component.translatable("greate.tooltip.belt_usable")
                 .withStyle(Style.EMPTY.withColor(ChatFormatting.GRAY));
 
-
-        tooltip.add(belt_maxlength.append(beltLengthComponent));
-        tooltip.add(belt_usable.append(s1nComponent).append(" & ").append(s2nComponent));
+        tooltip.add(maxLength.append(beltLengthComponent));
+        MutableComponent shaftComponents = Component.empty();
+        for(BlockEntry<TieredShaftBlock> shaftBlock : getValidShafts()) {
+            if(!shaftComponents.getString().isEmpty()) shaftComponents.append(" & ");
+            int sRGB = shaftBlock.get().getMaterial().getMaterialRGB();
+            String shaftName = shaftBlock.get().getName().getString();
+            shaftComponents.append(Component.literal(shaftName).withStyle(Style.EMPTY.withColor(sRGB)));
+        }
+        tooltip.add(usableOn.append(shaftComponents));
     }
 
     @Nonnull
@@ -117,7 +115,7 @@ public class TieredBeltConnectorItem extends Item implements ITieredBelt {
         if(tag.contains("FirstPulley")) {
             if(!canConnect(level, firstPulley, pos, pContext.getItemInHand())) return InteractionResult.FAIL;
             if(firstPulley != null && !firstPulley.equals(pos)) {
-                createBelts(level, firstPulley, pos);
+                createBelts(level, firstPulley, pos, ((TieredShaftBlock) level.getBlockState(firstPulley).getBlock()).getMaterial());
                 AllAdvancements.BELT.awardTo(player);
                 if(!player.isCreative()) {
                     pContext.getItemInHand().shrink(1);
@@ -136,7 +134,7 @@ public class TieredBeltConnectorItem extends Item implements ITieredBelt {
         return InteractionResult.SUCCESS;
     }
 
-    public void createBelts(Level level, BlockPos start, BlockPos end) {
+    public void createBelts(Level level, BlockPos start, BlockPos end, Material shaftType) {
         level.playSound(null, BlockPos.containing(VecHelper.getCenterOf(start.offset(end)).scale(0.5F)), SoundEvents.WOOL_PLACE, SoundSource.BLOCKS, 0.5F, 1F);
         BeltSlope slope = getSlopeBetween(start, end);
         Direction facing = getFacingFromTo(start, end);
@@ -146,7 +144,6 @@ public class TieredBeltConnectorItem extends Item implements ITieredBelt {
         }
 
         List<BlockPos> beltsToCreate = getBeltChainBetween(start, end, slope, facing);
-        int tier = 0;
         boolean failed = false;
         for(BlockPos pos : beltsToCreate) {
             BlockState existingState = level.getBlockState(pos);
@@ -158,10 +155,7 @@ public class TieredBeltConnectorItem extends Item implements ITieredBelt {
             BeltPart part = pos.equals(start) ? BeltPart.START : pos.equals(end) ? BeltPart.END : BeltPart.MIDDLE;
             BlockState shaftState = level.getBlockState(pos);
             boolean pulley = shaftState.getBlock() instanceof TieredShaftBlock;
-            if(pulley) {
-                tier = ((TieredShaftBlock) shaftState.getBlock()).getTier();
-            }
-            BlockState state = BELTS[tier].getDefaultState();
+            BlockState state = Block.byItem(this).defaultBlockState();
             if(part == BeltPart.MIDDLE && pulley) part = BeltPart.PULLEY;
             if(pulley && shaftState.getValue(AbstractShaftBlock.AXIS) == Axis.Y) slope = BeltSlope.SIDEWAYS;
             if(!existingState.canBeReplaced()) level.destroyBlock(pos, false);
@@ -169,11 +163,12 @@ public class TieredBeltConnectorItem extends Item implements ITieredBelt {
                     .setValue(BeltBlock.SLOPE, slope)
                     .setValue(BeltBlock.PART, part)
                     .setValue(BeltBlock.HORIZONTAL_FACING, facing), pos));
+            ((TieredBeltBlock) level.getBlockState(pos).getBlock()).setShaftMaterial(shaftType);
         }
 
         if(!failed) return;
         for(BlockPos pos : beltsToCreate) {
-            BlockState state = BELTS[tier].getDefaultState();
+            BlockState state = Block.byItem(this).defaultBlockState();
             if(level.getBlockState(pos).getBlock() == state.getBlock()) level.destroyBlock(pos, false);
         }
     }
@@ -262,8 +257,7 @@ public class TieredBeltConnectorItem extends Item implements ITieredBelt {
 
     public static boolean validateAxis(Level level, BlockPos pos) {
         if(!level.isLoaded(pos)) return false;
-        if(!(level.getBlockState(pos).getBlock() instanceof TieredShaftBlock)) return false;
-        return true;
+        return level.getBlockState(pos).getBlock() instanceof TieredShaftBlock;
     }
 
     @Override
@@ -279,7 +273,7 @@ public class TieredBeltConnectorItem extends Item implements ITieredBelt {
     public List<BlockEntry<TieredShaftBlock>> getValidShafts() {
         ArrayList<BlockEntry<TieredShaftBlock>> list = new ArrayList<>();
         for(Material mat : validShafts) {
-            list.add(NEW_SHAFTS.get(shaft, mat));
+            list.add(SHAFTS.get(shaft, mat));
         }
         return list;
     }
