@@ -1,7 +1,7 @@
 package electrolyte.greate.content.kinetics.belt.item;
 
+import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
-import electrolyte.greate.infrastructure.config.GConfigUtility;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction.Axis;
@@ -60,7 +60,7 @@ public class TieredBeltConnectorHandler {
             if(!(level.getBlockState(selected).getBlock() instanceof TieredShaftBlock)) {
                 selected = selected.relative(((BlockHitResult) hitResult).getDirection());
             }
-            if(!selected.closerThan(first, GConfigUtility.getBeltLengthFromMaterial(tbci.getBeltMaterial()))) return;
+            if(!selected.closerThan(first, tbci.getBeltMaterial().getProperty(GreatePropertyKeys.BELT).getMaxLength())) return;
 
             boolean canConnect = TieredBeltConnectorItem.validateAxis(level, selected) && TieredBeltConnectorItem.canConnect(level, first, selected, heldStack);
             Vec3 start = Vec3.atLowerCornerOf(first);

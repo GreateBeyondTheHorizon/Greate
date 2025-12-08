@@ -1,9 +1,6 @@
 package electrolyte.greate.infrastructure.config;
 
-import com.gregtechceu.gtceu.api.data.chemical.material.Material;
-
 import static com.gregtechceu.gtceu.api.GTValues.*;
-import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
 
 
 public class GConfigUtility {
@@ -22,21 +19,6 @@ public class GConfigUtility {
             case UHV -> GreateConfigs.server().kinetics.tierValues.neutroniumMaxCapacity.get();
             default -> throw new IllegalStateException("Unexpected value: " + tier);
         };
-    }
-
-    public static int getBeltLengthFromMaterial(Material beltMaterial) {
-        if (beltMaterial == Rubber) {
-            return GreateConfigs.server().kinetics.beltValues.rubberMaxBeltLength.get();
-        } else if (beltMaterial == SiliconeRubber) {
-            return GreateConfigs.server().kinetics.beltValues.siliconeMaxBeltLength.get();
-        } else if (beltMaterial == Polyethylene) {
-            return GreateConfigs.server().kinetics.beltValues.polyethyleneMaxBeltLength.get();
-        } else if (beltMaterial == Polytetrafluoroethylene) {
-            return GreateConfigs.server().kinetics.beltValues.polytetrafluoroethyleneMaxBeltLength.get();
-        } else if (beltMaterial == Polybenzimidazole) {
-            return GreateConfigs.server().kinetics.beltValues.polybenzimidazoleMaxBeltLength.get();
-        }
-        throw new IllegalStateException("Unexpected value: " + beltMaterial);
     }
 
     public static double getPumpPressureFromTier(int tier) {

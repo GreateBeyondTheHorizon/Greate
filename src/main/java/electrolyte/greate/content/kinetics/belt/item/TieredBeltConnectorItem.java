@@ -15,7 +15,6 @@ import electrolyte.greate.content.kinetics.belt.ITieredBelt;
 import electrolyte.greate.content.kinetics.belt.TieredBeltBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredBracketedKineticBlockEntity;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
-import electrolyte.greate.infrastructure.config.GConfigUtility;
 import net.createmod.catnip.math.VecHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -69,7 +68,7 @@ public class TieredBeltConnectorItem extends BlockItem implements ITieredBelt {
     public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, world, tooltip, flag);
 
-        String beltLength = String.valueOf(GConfigUtility.getBeltLengthFromMaterial(material));
+        String beltLength = String.valueOf(material.getProperty(GreatePropertyKeys.BELT).getMaxLength());
         MutableComponent beltLengthComponent = Component.translatable(beltLength).withStyle(ChatFormatting.BOLD).withStyle(Style.EMPTY.withColor(ChatFormatting.AQUA));
 
         MutableComponent maxLength = Component.translatable("greate.tooltip.belt_maxlength")
@@ -105,7 +104,7 @@ public class TieredBeltConnectorItem extends BlockItem implements ITieredBelt {
         if(tag.contains("FirstPulley")) {
             firstPulley = NbtUtils.readBlockPos(tag.getCompound("FirstPulley"));
             if(!validateAxis(level, firstPulley) || !firstPulley.closerThan(pos,
-                    GConfigUtility.getBeltLengthFromMaterial(((TieredBeltConnectorItem) pContext.getItemInHand().getItem()).getBeltMaterial()) * 2)) {
+                    ((TieredBeltConnectorItem) pContext.getItemInHand().getItem()).getBeltMaterial().getProperty(GreatePropertyKeys.BELT).getMaxLength() * 2)) {
                 tag.remove("FirstPulley");
                 pContext.getItemInHand().setTag(tag);
             }
@@ -216,7 +215,7 @@ public class TieredBeltConnectorItem extends BlockItem implements ITieredBelt {
     public static boolean canConnect(Level level, BlockPos first, BlockPos second, ItemStack heldStack) {
         if(!level.isLoaded(first) || !level.isLoaded(second)) return false;
         if(!(heldStack.getItem() instanceof TieredBeltConnectorItem tbci)) return false;
-        if(!second.closerThan(first, GConfigUtility.getBeltLengthFromMaterial(tbci.getBeltMaterial()))) return false;
+        if(!second.closerThan(first, tbci.getBeltMaterial().getProperty(GreatePropertyKeys.BELT).getMaxLength())) return false;
         BlockPos diff = second.subtract(first);
         Axis shaftAxis = level.getBlockState(first).getValue(BlockStateProperties.AXIS);
         int x = diff.getX();

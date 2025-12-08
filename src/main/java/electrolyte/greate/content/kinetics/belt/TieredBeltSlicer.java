@@ -9,8 +9,8 @@ import com.simibubi.create.content.kinetics.belt.BeltSlicer.Feedback;
 import com.simibubi.create.content.kinetics.belt.transport.BeltInventory;
 import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
 import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
+import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
 import electrolyte.greate.content.kinetics.belt.item.TieredBeltConnectorItem;
-import electrolyte.greate.infrastructure.config.GConfigUtility;
 import electrolyte.greate.mixin.MixinBeltBlockEntityAccessor;
 import net.createmod.catnip.math.VecHelper;
 import net.minecraft.core.BlockPos;
@@ -42,7 +42,7 @@ public class TieredBeltSlicer {
             return InteractionResult.PASS;
         int beltLength = controllerBE.beltLength;
         Material beltMaterial = ((TieredBeltConnectorItem) player.getItemInHand(hand).getItem()).getBeltMaterial();
-        if(beltLength == GConfigUtility.getBeltLengthFromMaterial(beltMaterial))
+        if(beltLength == beltMaterial.getProperty(GreatePropertyKeys.BELT).getMaxLength())
             return InteractionResult.FAIL;
 
         BlockPos beltVector = BlockPos.containing(BeltHelper.getBeltVector(state));
@@ -67,7 +67,7 @@ public class TieredBeltSlicer {
             mergedController = BeltHelper.getControllerBE(level, next);
             if(mergedController == null)
                 return InteractionResult.FAIL;
-            if(mergedController.beltLength + beltLength > GConfigUtility.getBeltLengthFromMaterial(beltMaterial))
+            if(mergedController.beltLength + beltLength > beltMaterial.getProperty(GreatePropertyKeys.BELT).getMaxLength())
                 return InteractionResult.FAIL;
 
             mergedBeltLength = mergedController.beltLength;

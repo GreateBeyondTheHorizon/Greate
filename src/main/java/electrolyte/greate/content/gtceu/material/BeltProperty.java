@@ -4,6 +4,7 @@ import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.IMaterialProperty;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.MaterialProperties;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
+import com.simibubi.create.infrastructure.config.AllConfigs;
 
 import java.util.List;
 
@@ -12,9 +13,16 @@ import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlag
 public class BeltProperty implements IMaterialProperty {
 
     private List<Material> validShafts;
+    private int maxLength;
 
     public BeltProperty(List<Material> validShafts) {
         this.validShafts = validShafts;
+        this.maxLength = AllConfigs.server().kinetics.maxBeltLength.get();
+    }
+
+    public BeltProperty(List<Material> validShafts, int maxLength) {
+        this.validShafts = validShafts;
+        this.maxLength = maxLength;
     }
 
     @Override
@@ -23,6 +31,7 @@ public class BeltProperty implements IMaterialProperty {
         if(!materialProperties.getMaterial().hasFlag(GENERATE_PLATE)) {
             materialProperties.getMaterial().addFlags(GENERATE_PLATE);
         }
+        this.maxLength = Math.max(1, maxLength);
     }
 
     public List<Material> getValidShafts() {
@@ -31,5 +40,13 @@ public class BeltProperty implements IMaterialProperty {
 
     public void setValidShafts(List<Material> validShafts) {
         this.validShafts = validShafts;
+    }
+
+    public int getMaxLength() {
+        return maxLength;
+    }
+
+    public void setMaxLength(int maxLength) {
+        this.maxLength = maxLength;
     }
 }
