@@ -1,6 +1,7 @@
 package electrolyte.greate.mixin;
 
 import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
@@ -81,13 +82,14 @@ public abstract class MixinBeltBlock {
             boolean isConnector = heldItem.getItem() instanceof TieredBeltConnectorItem;
             boolean isShaft = Block.byItem(heldItem.getItem()) instanceof TieredShaftBlock;
             if(isConnector) {
-                if(((TieredBeltConnectorItem) heldItem.getItem()).getBeltMaterial() == ((TieredBeltBlock) world.getBlockState(pos).getBlock()).getBeltMaterial()) {
+                if(((TieredBeltConnectorItem) heldItem.getItem()).getBeltMaterial() == tbb.getBeltMaterial()) {
                     cir.setReturnValue(TieredBeltSlicer.useConnector(state, world, pos, player, handIn, hit, new Feedback()));
                     return;
                 }
             }
             if(isShaft) {
-                if(heldItem.is(ChemicalHelper.get(shaft, TM[tbb.getTier()]).getItem())) {
+                Material beltShaftMaterial = tbb.getShaftMaterial();
+                if(heldItem.is(ChemicalHelper.get(shaft, beltShaftMaterial).getItem())) {
                     if(state.getValue(PART) != BeltPart.MIDDLE) {
                         cir.setReturnValue(InteractionResult.PASS);
                         return;
