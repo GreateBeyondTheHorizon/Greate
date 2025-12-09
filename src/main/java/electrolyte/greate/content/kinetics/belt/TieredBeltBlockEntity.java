@@ -4,6 +4,7 @@ import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.simibubi.create.content.kinetics.belt.*;
 import com.simibubi.create.content.kinetics.belt.transport.BeltMovementHandler;
+import electrolyte.greate.GreateValues;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -14,19 +15,14 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKineticBlockEntity {
 
-    private int tier;
     private Material shaftMaterial;
 
     public TieredBeltBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
-        this.tier = ((TieredBeltBlock) state.getBlock()).getTier();
     }
 
     @Override
@@ -63,7 +59,6 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
 
     @Override
     public void write(CompoundTag compound, boolean clientPacket) {
-        compound.putInt("Tier", this.tier);
         if(shaftMaterial != null) {
             compound.putString("ShaftMaterial", this.shaftMaterial.toString());
             TieredBeltBlock beltBlock = ((TieredBeltBlock) this.getBlockState().getBlock());
@@ -77,7 +72,6 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
     @Override
     protected void read(CompoundTag compound, boolean clientPacket) {
         super.read(compound, clientPacket);
-        this.tier = compound.getInt("Tier");
         this.shaftMaterial = GTCEuAPI.materialManager.getMaterial(compound.getString("ShaftMaterial"));
         beltLength = compound.getInt("Length");
     }
@@ -110,14 +104,6 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
         return super.getBeltFacing();
     }
 
-    public int getTier() {
-        return tier;
-    }
-
-    public void setTier(int tier) {
-        this.tier = tier;
-    }
-
     public Material getShaftMaterial() {
         return shaftMaterial;
     }
@@ -129,7 +115,7 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
-        return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, this.getTier(), capacity, stress);
+        return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, Objects.requireNonNullElse(GreateValues.TIER_MATERIALS.get(getShaftMaterial()), 0), capacity, stress);
     }
 
     @Override

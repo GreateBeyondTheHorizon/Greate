@@ -30,7 +30,6 @@ import net.minecraft.world.phys.Vec3;
 import java.util.List;
 import java.util.Optional;
 
-import static electrolyte.greate.GreateValues.TM;
 import static electrolyte.greate.registry.GreateTagPrefixes.beltConnector;
 import static electrolyte.greate.registry.GreateTagPrefixes.shaft;
 
@@ -132,8 +131,7 @@ public class TieredBeltSlicer {
                 BeltBlockEntity segmentBE = BeltHelper.getSegmentBE(level, next);
                 KineticBlockEntity.switchToBlockState(level, next, state.setValue(BeltBlock.CASING, segmentBE != null && segmentBE.casing != CasingType.NONE).setValue(BeltBlock.PART, BeltPart.MIDDLE));
                 if(!creative) {
-                    int tier = ((TieredBeltBlockEntity) controllerBE).getTier();
-                    player.getInventory().placeItemBackInInventory(ChemicalHelper.get(shaft, TM[tier]).copyWithCount(2));
+                    player.getInventory().placeItemBackInInventory(ChemicalHelper.get(shaft, ((TieredBeltBlockEntity) controllerBE).getShaftMaterial()).copyWithCount(2));
                     player.getInventory().placeItemBackInInventory(ChemicalHelper.get(beltConnector, beltMaterial));
                 }
 

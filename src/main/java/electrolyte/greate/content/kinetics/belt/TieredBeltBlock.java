@@ -9,6 +9,7 @@ import com.simibubi.create.content.kinetics.belt.BeltPart;
 import com.simibubi.create.content.schematics.requirement.ItemRequirement;
 import com.simibubi.create.content.schematics.requirement.ItemRequirement.ItemUseType;
 import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
+import electrolyte.greate.GreateValues;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.foundation.client.models.BeltModel;
 import electrolyte.greate.registry.GreateSpriteShifts;
@@ -32,6 +33,7 @@ import net.minecraft.world.phys.HitResult;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static electrolyte.greate.registry.GreateTagPrefixes.beltConnector;
 import static electrolyte.greate.registry.GreateTagPrefixes.shaft;
@@ -39,7 +41,6 @@ import static net.minecraft.world.level.block.state.properties.BlockStatePropert
 
 public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredBelt {
 
-    private int tier;
     private Material beltMaterial;
     private Material shaftMaterial;
 
@@ -168,13 +169,11 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
 
     @Override
     public int getTier() {
-        return tier;
+        return Objects.requireNonNullElse(GreateValues.TIER_MATERIALS.get(getShaftMaterial()), 0);
     }
 
     @Override
-    public void setTier(int tier) {
-        this.tier = tier;
-    }
+    public void setTier(int tier) {}
 
     public void setupBeltModel(Material beltMaterial) {
         GreateSpriteShifts.populateMaps(beltMaterial);
