@@ -1,5 +1,6 @@
 package electrolyte.greate.content.kinetics.belt;
 
+import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.simibubi.create.AllBlocks;
@@ -9,6 +10,7 @@ import com.simibubi.create.content.schematics.requirement.ItemRequirement;
 import com.simibubi.create.content.schematics.requirement.ItemRequirement.ItemUseType;
 import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
+import electrolyte.greate.foundation.client.models.BeltModel;
 import electrolyte.greate.registry.GreateSpriteShifts;
 import electrolyte.greate.registry.ModBlockEntityTypes;
 import net.createmod.catnip.data.Iterate;
@@ -43,6 +45,9 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
 
     public TieredBeltBlock(Properties properties) {
         super(properties);
+        if(GTCEu.isClientSide()) {
+            BeltModel.create(this);
+        }
     }
 
     @Override

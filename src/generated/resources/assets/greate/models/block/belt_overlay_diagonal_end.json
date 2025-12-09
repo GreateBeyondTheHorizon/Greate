@@ -1,8 +1,0 @@
-{
-  "parent": "create:block/belt/diagonal_end",
-  "render_type": "minecraft:cutout",
-  "textures": {
-    "0": "greate:block/belt_overlay/empty",
-    "particle": "greate:block/polyethylene/belt_diagonal"
-  }
-}

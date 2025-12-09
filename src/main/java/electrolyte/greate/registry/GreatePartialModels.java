@@ -3,14 +3,8 @@ package electrolyte.greate.registry;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import electrolyte.greate.Greate;
-import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
 import static electrolyte.greate.GreateValues.TM;
-import static electrolyte.greate.registry.GreateMaterials.AndesiteAlloy;
 
 public class GreatePartialModels {
 
@@ -51,48 +45,6 @@ public class GreatePartialModels {
             MILLSTONE_INNER_MODELS[tier] = materialBlock(TM[tier], "_millstone_inner");
         }
     }
-
-    // Belt
-    public static final Object2ObjectOpenHashMap<Material, List<PartialModel>> BELT_MODELS = new Object2ObjectOpenHashMap<>();
-    public static final PartialModel
-            RUBBER_BELT_ANDESITE_PULLEY = beltPulley(Rubber, AndesiteAlloy),
-            RUBBER_BELT_STEEL_PULLEY = beltPulley(Rubber, Steel),
-            RUBBER_BELT_START = belt(Rubber, BeltPart.START), RUBBER_BELT_MIDDLE = belt(Rubber, BeltPart.MIDDLE), RUBBER_BELT_END = belt(Rubber, BeltPart.END),
-            RUBBER_BELT_START_BOTTOM = belt(Rubber, BeltPart.START_BOTTOM), RUBBER_BELT_MIDDLE_BOTTOM = belt(Rubber, BeltPart.MIDDLE_BOTTOM), RUBBER_BELT_END_BOTTOM = belt(Rubber, BeltPart.END_BOTTOM),
-            RUBBER_BELT_DIAGONAL_START = belt(Rubber, BeltPart.DIAGONAL_START), RUBBER_BELT_DIAGONAL_MIDDLE = belt(Rubber, BeltPart.DIAGONAL_MIDDLE), RUBBER_BELT_DIAGONAL_END = belt(Rubber, BeltPart.DIAGONAL_END),
-
-            SILICONE_RUBBER_BELT_ALUMINIUM_PULLEY = beltPulley(SiliconeRubber, Aluminium),
-            SILICONE_RUBBER_BELT_STAINLESS_STEEL_PULLEY = beltPulley(SiliconeRubber, StainlessSteel),
-            SILICONE_RUBBER_BELT_START = belt(SiliconeRubber, BeltPart.START), SILICONE_RUBBER_BELT_MIDDLE = belt(SiliconeRubber, BeltPart.MIDDLE), SILICONE_RUBBER_BELT_END = belt(SiliconeRubber, BeltPart.END),
-            SILICONE_RUBBER_BELT_START_BOTTOM = belt(SiliconeRubber, BeltPart.START_BOTTOM), SILICONE_RUBBER_BELT_MIDDLE_BOTTOM = belt(SiliconeRubber, BeltPart.MIDDLE_BOTTOM), SILICONE_RUBBER_BELT_END_BOTTOM = belt(SiliconeRubber, BeltPart.END_BOTTOM),
-            SILICONE_RUBBER_BELT_DIAGONAL_START = belt(SiliconeRubber, BeltPart.DIAGONAL_START), SILICONE_RUBBER_BELT_DIAGONAL_MIDDLE = belt(SiliconeRubber, BeltPart.DIAGONAL_MIDDLE), SILICONE_RUBBER_BELT_DIAGONAL_END = belt(SiliconeRubber, BeltPart.DIAGONAL_END),
-
-            POLYETHYLENE_BELT_TITANIUM_PULLEY = beltPulley(Polyethylene, Titanium),
-            POLYETHYLENE_BELT_TUNGSTENSTEEL_PULLEY = beltPulley(Polyethylene, TungstenSteel),
-            POLYETHYLENE_BELT_START = belt(Polyethylene, BeltPart.START), POLYETHYLENE_BELT_MIDDLE = belt(Polyethylene, BeltPart.MIDDLE), POLYETHYLENE_BELT_END = belt(Polyethylene, BeltPart.END),
-            POLYETHYLENE_BELT_START_BOTTOM = belt(Polyethylene, BeltPart.START_BOTTOM), POLYETHYLENE_BELT_MIDDLE_BOTTOM = belt(Polyethylene, BeltPart.MIDDLE_BOTTOM), POLYETHYLENE_BELT_END_BOTTOM = belt(Polyethylene, BeltPart.END_BOTTOM),
-            POLYETHYLENE_BELT_DIAGONAL_START = belt(Polyethylene, BeltPart.DIAGONAL_START), POLYETHYLENE_BELT_DIAGONAL_MIDDLE = belt(Polyethylene, BeltPart.DIAGONAL_MIDDLE), POLYETHYLENE_BELT_DIAGONAL_END = belt(Polyethylene, BeltPart.DIAGONAL_END),
-
-            POLYTETRAFLUOROETHYLENE_BELT_PALLADIUM_PULLEY = beltPulley(Polytetrafluoroethylene, RhodiumPlatedPalladium),
-            POLYTETRAFLUOROETHYLENE_BELT_NAQUADAH_PULLEY = beltPulley(Polytetrafluoroethylene, NaquadahAlloy),
-            POLYTETRAFLUOROETHYLENE_BELT_START = belt(Polytetrafluoroethylene, BeltPart.START), POLYTETRAFLUOROETHYLENE_BELT_MIDDLE = belt(Polytetrafluoroethylene, BeltPart.MIDDLE), POLYTETRAFLUOROETHYLENE_BELT_END = belt(Polytetrafluoroethylene, BeltPart.END),
-            POLYTETRAFLUOROETHYLENE_BELT_START_BOTTOM = belt(Polytetrafluoroethylene, BeltPart.START_BOTTOM), POLYTETRAFLUOROETHYLENE_BELT_MIDDLE_BOTTOM = belt(Polytetrafluoroethylene, BeltPart.MIDDLE_BOTTOM), POLYTETRAFLUOROETHYLENE_BELT_END_BOTTOM = belt(Polytetrafluoroethylene, BeltPart.END_BOTTOM),
-            POLYTETRAFLUOROETHYLENE_BELT_DIAGONAL_START = belt(Polytetrafluoroethylene, BeltPart.DIAGONAL_START), POLYTETRAFLUOROETHYLENE_BELT_DIAGONAL_MIDDLE = belt(Polytetrafluoroethylene, BeltPart.DIAGONAL_MIDDLE), POLYTETRAFLUOROETHYLENE_BELT_DIAGONAL_END = belt(Polytetrafluoroethylene, BeltPart.DIAGONAL_END),
-
-            POLYBENZIMIDAZOLE_BELT_DARMSTADTIUM_PULLEY = beltPulley(Polybenzimidazole, Darmstadtium),
-            POLYBENZIMIDAZOLE_BELT_NEUTRONIUM_PULLEY = beltPulley(Polybenzimidazole, Neutronium),
-            POLYBENZIMIDAZOLE_BELT_START = belt(Polybenzimidazole, BeltPart.START), POLYBENZIMIDAZOLE_BELT_MIDDLE = belt(Polybenzimidazole, BeltPart.MIDDLE), POLYBENZIMIDAZOLE_BELT_END = belt(Polybenzimidazole, BeltPart.END),
-            POLYBENZIMIDAZOLE_BELT_START_BOTTOM = belt(Polybenzimidazole, BeltPart.START_BOTTOM), POLYBENZIMIDAZOLE_BELT_MIDDLE_BOTTOM = belt(Polybenzimidazole, BeltPart.MIDDLE_BOTTOM), POLYBENZIMIDAZOLE_BELT_END_BOTTOM = belt(Polybenzimidazole, BeltPart.END_BOTTOM),
-            POLYBENZIMIDAZOLE_BELT_DIAGONAL_START = belt(Polybenzimidazole, BeltPart.DIAGONAL_START), POLYBENZIMIDAZOLE_BELT_DIAGONAL_MIDDLE = belt(Polybenzimidazole, BeltPart.DIAGONAL_MIDDLE), POLYBENZIMIDAZOLE_BELT_DIAGONAL_END = belt(Polybenzimidazole, BeltPart.DIAGONAL_END);
-    public static final PartialModel
-            BELT_OVERLAY_DIAGONAL_START = block("belt_overlay_diagonal_start"), BELT_OVERLAY_DIAGONAL_END = block("belt_overlay_diagonal_end"), BELT_OVERLAY_DIAGONAL_MIDDLE = block("belt_overlay_diagonal_middle"),
-            BELT_OVERLAY_START_BOTTOM = block("belt_overlay_start_bottom"), BELT_OVERLAY_END_BOTTOM = block("belt_overlay_end_bottom"), BELT_OVERLAY_MIDDLE_BOTTOM = block("belt_overlay_middle_bottom"),
-            BELT_OVERLAY_START = block("belt_overlay_start"), BELT_OVERLAY_END = block("belt_overlay_end"), BELT_OVERLAY_MIDDLE = block("belt_overlay_middle");
-
-    public static final PartialModel
-            BELT_CASING_DIAGONAL_START = beltCasing(BeltPart.DIAGONAL_START), BELT_CASING_DIAGONAL_END = beltCasing(BeltPart.DIAGONAL_END), BELT_CASING_DIAGONAL_MIDDLE = beltCasing(BeltPart.DIAGONAL_MIDDLE),
-            BELT_CASING_SIDEWAYS_START = beltCasing(BeltPart.SIDEWAYS_START), BELT_CASING_SIDEWAYS_END = beltCasing(BeltPart.SIDEWAYS_END), BELT_CASING_SIDEWAYS_MIDDLE = beltCasing(BeltPart.SIDEWAYS_MIDDLE), BELT_CASING_SIDEWAYS_PULLEY = beltCasing(BeltPart.SIDEWAYS_PULLEY),
-            BELT_CASING_HORIZONTAL_START = beltCasing(BeltPart.HORIZONTAL_START), BELT_CASING_HORIZONTAL_END = beltCasing(BeltPart.HORIZONTAL_END), BELT_CASING_HORIZONTAL_MIDDLE = beltCasing(BeltPart.HORIZONTAL_MIDDLE), BELT_CASING_HORIZONTAL_PULLEY = beltCasing(BeltPart.HORIZONTAL_PULLEY);
 
     // Mechanical Press
     public static final PartialModel[] MECHANICAL_PRESS_HEAD_MODELS = new PartialModel[10];
@@ -145,27 +97,6 @@ public class GreatePartialModels {
         }
     }
 
-    private static PartialModel belt(Material beltMaterial, BeltPart beltPart) {
-        String beltpartName = beltPart.name().toLowerCase();
-        PartialModel partialModel = materialBlock(beltMaterial, "_belt_" + beltpartName);
-        List<PartialModel> partialModels = BELT_MODELS.getOrDefault(beltMaterial, new ArrayList<>());
-        partialModels.add(partialModel);
-        BELT_MODELS.put(beltMaterial, partialModels);
-        return partialModel;
-    }
-
-    private static PartialModel beltCasing(BeltPart beltPart) {
-        return block("belt_casing_" + beltPart.name().toLowerCase());
-    }
-
-    private static PartialModel beltPulley(Material beltMaterial, Material pulleyMaterial) {
-        PartialModel partialModel = materialBlock(pulleyMaterial, "_belt_pulley");
-        List<PartialModel> partialModels = BELT_MODELS.getOrDefault(beltMaterial, new ArrayList<>());
-        partialModels.add(partialModel);
-        BELT_MODELS.put(beltMaterial, partialModels);
-        return partialModel;
-    }
-
     private static PartialModel materialBlock(String prefix, Material material, String postfix) {
         return block(prefix + material.getName() + postfix);
     }
@@ -179,25 +110,4 @@ public class GreatePartialModels {
     }
 
     public static void register() {}
-
-    public enum BeltPart {
-        PULLEY,
-        START,
-        END,
-        MIDDLE,
-        START_BOTTOM,
-        MIDDLE_BOTTOM,
-        END_BOTTOM,
-        DIAGONAL_START,
-        DIAGONAL_MIDDLE,
-        DIAGONAL_END,
-        SIDEWAYS_START,
-        SIDEWAYS_MIDDLE,
-        SIDEWAYS_END,
-        SIDEWAYS_PULLEY,
-        HORIZONTAL_END,
-        HORIZONTAL_MIDDLE,
-        HORIZONTAL_PULLEY,
-        HORIZONTAL_START
-    }
 }

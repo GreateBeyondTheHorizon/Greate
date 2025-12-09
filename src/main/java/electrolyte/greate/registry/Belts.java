@@ -10,15 +10,15 @@ import com.gregtechceu.gtceu.common.data.GTItems;
 import com.simibubi.create.AllDisplaySources;
 import com.simibubi.create.content.kinetics.belt.BeltModel;
 import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import electrolyte.greate.Greate;
+import electrolyte.greate.GreateRegistries;
 import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
 import electrolyte.greate.content.kinetics.belt.TieredBeltBlock;
-import electrolyte.greate.content.kinetics.belt.TieredBeltGenerator;
 import electrolyte.greate.content.kinetics.belt.item.TieredBeltConnectorItem;
 import electrolyte.greate.infrastructure.config.GStress;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.MapColor;
 
@@ -43,23 +43,22 @@ public class Belts {
     public static void generateBelts() {
         for(Material material : GTCEuAPI.materialManager.getRegisteredMaterials()) {
             if(material.hasProperty(GreatePropertyKeys.BELT)) {
-                var beltEntry = REGISTRATE
-                    .block(material.getName() + "_belt", TieredBeltBlock::new)
-                    .lang(toEnglishName(material.getName() + "_belt"))
-                    .properties(p -> p.sound(SoundType.WOOL))
-                    .properties(p -> p.strength(0.8F))
-                    .properties(p -> p.mapColor(MapColor.COLOR_GRAY))
-                    .transform(TagGen.axeOrPickaxe())
-                    .transform(GStress.setNoImpact())
-                    .transform(displaySource(AllDisplaySources.ITEM_NAMES))
-                    .blockstate(new TieredBeltGenerator()::generateModel)
-                    .onRegister(c -> c.setBeltMaterial(material))
-                    .onRegister(c -> c.setupBeltModel(material))
-                    .onRegister(CreateRegistrate.blockModel(() -> BeltModel::new))
-                    .register();
-                BELT_BUILDER.put(belt, material, beltEntry);
+                var gtBeltEntry = GreateRegistries.REGISTRATE
+                        .block(material.getName() + "_belt", TieredBeltBlock::new)
+                        .lang(toEnglishName(material.getName() + "_belt"))
+                        .properties(p -> p.sound(SoundType.WOOL))
+                        .properties(p -> p.strength(0.8F))
+                        .properties(p -> p.mapColor(MapColor.COLOR_GRAY))
+                        .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.MINEABLE_WITH_AXE)
+                        .transform(GStress.setNoImpact())
+                        .transform(displaySource(AllDisplaySources.ITEM_NAMES))
+                        .onRegister(c -> c.setBeltMaterial(material))
+                        .onRegister(c -> c.setupBeltModel(material))
+                        .onRegister(CreateRegistrate.blockModel(() -> BeltModel::new))
+                        .register();
+                BELT_BUILDER.put(belt, material, gtBeltEntry);
 
-                var beltConnectorEntry = REGISTRATE
+                var beltConnectorEntry = GreateRegistries.REGISTRATE
                 .item(material.getName() + "_belt_connector", p -> new TieredBeltConnectorItem(ChemicalHelper.getBlock(belt, material), p, material))
                 .transform(GTItems.unificationItem(beltConnector, material))
                 //.transform(p -> p.properties(b -> b.food(new FoodProperties.Builder().alwaysEat().nutrition(1).saturationMod(0.1F).effect(() -> new MobEffectInstance(MobEffects.POISON, 100, 0, true, true), 1.0F).build()))) TODO: disabled b/c quarktech armor auto eats

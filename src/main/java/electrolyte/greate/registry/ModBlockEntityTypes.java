@@ -36,6 +36,7 @@ import java.util.ArrayList;
 
 import static electrolyte.greate.Greate.REGISTRATE;
 
+@SuppressWarnings("unchecked")
 public class ModBlockEntityTypes {
 
     public static final BlockEntityEntry<TieredBracketedKineticBlockEntity> TIERED_BRACKETED_KINETIC = REGISTRATE

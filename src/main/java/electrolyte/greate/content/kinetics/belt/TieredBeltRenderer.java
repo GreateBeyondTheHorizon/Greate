@@ -1,6 +1,5 @@
 package electrolyte.greate.content.kinetics.belt;
 
-import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
@@ -8,7 +7,7 @@ import com.simibubi.create.content.kinetics.belt.*;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import dev.engine_room.flywheel.lib.transform.PoseTransformStack;
 import dev.engine_room.flywheel.lib.transform.TransformStack;
-import electrolyte.greate.registry.GreatePartialModels;
+import electrolyte.greate.Greate;
 import electrolyte.greate.registry.GreateSpriteShifts;
 import net.createmod.catnip.animation.AnimationTickHolder;
 import net.createmod.catnip.data.Iterate;
@@ -23,6 +22,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.Supplier;
 
@@ -136,35 +136,43 @@ public class TieredBeltRenderer extends BeltRenderer implements IBeltRenderHelpe
     }
 
     public static PartialModel getBeltPartial(TieredBeltBlock block, boolean diagonal, boolean start, boolean end, boolean bottom) {
-        Material beltMaterial = block.getBeltMaterial();
-        if (diagonal) {
-            if(start) return GreatePartialModels.BELT_MODELS.get(beltMaterial).get(8);
-            if(end) return GreatePartialModels.BELT_MODELS.get(beltMaterial).get(10);
-            return GreatePartialModels.BELT_MODELS.get(beltMaterial).get(9);
-        } else if (bottom) {
-            if(start) return GreatePartialModels.BELT_MODELS.get(beltMaterial).get(5);
-            if(end) return GreatePartialModels.BELT_MODELS.get(beltMaterial).get(7);
-            return GreatePartialModels.BELT_MODELS.get(beltMaterial).get(6);
+        String blockId = ForgeRegistries.BLOCKS.getKey(block).getPath();
+        String suffix = blockId + "/";
+        if(diagonal) {
+            suffix += "diagonal_";
+            if(start) suffix += "start";
+            else if(end) suffix += "end";
+            else suffix += "middle";
+        } else if(bottom) {
+            if(start) suffix += "start";
+            else if(end) suffix += "end";
+            else suffix += "middle";
+            suffix += "_bottom";
         } else {
-            if(start) return GreatePartialModels.BELT_MODELS.get(beltMaterial).get(2);
-            if(end) return GreatePartialModels.BELT_MODELS.get(beltMaterial).get(4);
-            return GreatePartialModels.BELT_MODELS.get(beltMaterial).get(3);
+            if(start) suffix += "start";
+            else if(end) suffix += "end";
+            else suffix += "middle";
         }
+        return PartialModel.of(Greate.id(suffix).withPrefix("block/"));
     }
 
     public static PartialModel getOverlayPartial(boolean diagonal, boolean start, boolean end, boolean bottom) {
+        String suffix = "block/belt_overlay/";
         if(diagonal) {
-            if(start) return GreatePartialModels.BELT_OVERLAY_DIAGONAL_START;
-            if(end) return GreatePartialModels.BELT_OVERLAY_DIAGONAL_END;
-            return GreatePartialModels.BELT_OVERLAY_DIAGONAL_MIDDLE;
-        } else if (bottom) {
-            if(start) return GreatePartialModels.BELT_OVERLAY_START_BOTTOM;
-            if(end) return GreatePartialModels.BELT_OVERLAY_END_BOTTOM;
-            return GreatePartialModels.BELT_OVERLAY_MIDDLE_BOTTOM;
+            suffix += "diagonal_";
+            if(start) suffix += "start";
+            else if(end) suffix += "end";
+            else suffix += "middle";
+        } else if(bottom) {
+            if(start) suffix += "start";
+            else if(end) suffix += "end";
+            else suffix += "middle";
+            suffix += "_bottom";
         } else {
-            if(start) return GreatePartialModels.BELT_OVERLAY_START;
-            if(end) return GreatePartialModels.BELT_OVERLAY_END;
-            return GreatePartialModels.BELT_OVERLAY_MIDDLE;
+            if(start) suffix += "start";
+            else if(end) suffix += "end";
+            else suffix += "middle";
         }
+        return PartialModel.of(Greate.id(suffix));
     }
 }

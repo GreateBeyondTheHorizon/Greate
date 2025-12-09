@@ -6,7 +6,6 @@ import electrolyte.greate.content.kinetics.belt.TieredBeltBlock;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.createmod.catnip.render.SpriteShiftEntry;
 import net.createmod.catnip.render.SpriteShifter;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -23,7 +22,7 @@ public class GreateSpriteShifts {
     public static final Object2ObjectOpenHashMap<TieredBeltBlock, List<SpriteShiftEntry>> BELT_SPRITES = new Object2ObjectOpenHashMap<>();
 
     public static void populateMaps(Material beltMaterial) {
-        TieredBeltBlock belt = (TieredBeltBlock) ForgeRegistries.BLOCKS.getValue(new ResourceLocation(Greate.MOD_ID,beltMaterial.getName() + "_belt"));
+        TieredBeltBlock belt = (TieredBeltBlock) ForgeRegistries.BLOCKS.getValue(Greate.id(beltMaterial.getName() + "_belt"));
         BELT_SPRITES.put(belt, List.of(
                 get(beltMaterial.getName() + "/belt", beltMaterial.getName() + "/belt_scroll"),
                 get(beltMaterial.getName() + "/belt_offset", beltMaterial.getName() + "/belt_scroll"),

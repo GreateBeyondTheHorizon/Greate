@@ -7,7 +7,6 @@ import com.simibubi.create.content.kinetics.belt.BeltPart;
 import com.simibubi.create.content.kinetics.belt.BeltSlope;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
-import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.resources.ResourceLocation;
@@ -63,40 +62,9 @@ public class TieredBeltGenerator extends BeltGenerator {
         return new UncheckedModelFile(location);
     }
 
-    public <T extends TieredBeltBlock> void generateModel(DataGenContext<Block, T> c, RegistrateBlockstateProvider p) {
-        String beltMaterial = c.get().getBeltMaterial().getName();
-
-        p.models().withExistingParent("belt_casing_diagonal_end", Create.asResource("block/belt_casing/diagonal_end"))
-                .renderType(CUTOUT_MIPPED);
-        p.models().withExistingParent("belt_casing_diagonal_middle", Create.asResource("block/belt_casing/diagonal_middle"))
-                .renderType(CUTOUT_MIPPED);
-        p.models().withExistingParent("belt_casing_diagonal_start", Create.asResource("block/belt_casing/diagonal_start"))
-                .renderType(CUTOUT_MIPPED);
-        p.models().withExistingParent("belt_casing_diagonal_pulley", Create.asResource("block/belt_casing/diagonal_pulley"))
-                .renderType(CUTOUT_MIPPED);
-
-        p.models().withExistingParent("belt_casing_sideways_start", Create.asResource("block/belt_casing/sideways_start"))
-                .renderType(CUTOUT_MIPPED);
-        p.models().withExistingParent("belt_casing_sideways_middle", Create.asResource("block/belt_casing/sideways_middle"))
-                .renderType(CUTOUT_MIPPED);
-        p.models().withExistingParent("belt_casing_sideways_end", Create.asResource("block/belt_casing/sideways_end"))
-                .renderType(CUTOUT_MIPPED);
-        p.models().withExistingParent("belt_casing_sideways_pulley", Create.asResource("block/belt_casing/sideways_pulley"))
-                .renderType(CUTOUT_MIPPED);
-
-        p.models().withExistingParent("belt_casing_horizontal_start", Create.asResource("block/belt_casing/horizontal_start"))
-                .renderType(CUTOUT_MIPPED);
-        p.models().withExistingParent("belt_casing_horizontal_middle", Create.asResource("block/belt_casing/horizontal_middle"))
-                .renderType(CUTOUT_MIPPED);
-        p.models().withExistingParent("belt_casing_horizontal_end", Create.asResource("block/belt_casing/horizontal_end"))
-                .renderType(CUTOUT_MIPPED);
-        p.models().withExistingParent("belt_casing_horizontal_pulley", Create.asResource("block/belt_casing/horizontal_pulley"))
-                .renderType(CUTOUT_MIPPED);
-
-        c.get().getBeltMaterial().getProperty(GreatePropertyKeys.BELT).getValidShafts().forEach(shaftMaterial ->
-                p.models().withExistingParent(shaftMaterial.getName() + "_belt_pulley", Create.asResource("block/belt_pulley"))
-                        .texture("0", p.modLoc("block/" + shaftMaterial.getName() + "/axis"))
-                        .texture("1", p.modLoc("block/" + shaftMaterial.getName() + "/axis_top")));
+    public <T extends Block> void generateModel(DataGenContext<Block, T> c, RegistrateBlockstateProvider p) {
+        TieredBeltBlock beltBlock = (TieredBeltBlock) c.get();
+        String beltMaterial = beltBlock.getBeltMaterial().getName();
 
         p.models().withExistingParent(beltMaterial + "_belt_diagonal_end", Create.asResource("block/belt/diagonal_end"))
                 .texture("0", p.modLoc("block/" + beltMaterial + "/belt_diagonal"))

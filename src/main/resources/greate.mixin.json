@@ -36,7 +36,8 @@
     "MixinStockTickerBlockEntity"
   ],
   "client": [
-    "MixinDeployerApplicationRecipe"
+    "MixinDeployerApplicationRecipe",
+    "MixinModelManager"
   ],
   "injectors": {
     "defaultRequire": 1
