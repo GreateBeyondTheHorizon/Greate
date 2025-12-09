@@ -44,8 +44,6 @@ public class GreateLang {
         REGISTRATE.addRawLang("config.greate.option.MILLSTONE_IMPACT", "Millstone Impact");
         REGISTRATE.addRawLang("config.greate.option.CRUSHING_WHEEL_IMPACT", "Crushing Wheel Impact");
         REGISTRATE.addRawLang("greate.gui.goggles.saw_contents", "Saw Contents:");
-        REGISTRATE.addRawLang("config.jade.plugin_greate.recipe_duration", "Recipe Duration");
-        REGISTRATE.addRawLang("config.jade.plugin_greate.belt_icon", "Belt Icon");
         REGISTRATE.addRawLang("material.greate.andesite_alloy", "Andesite Alloy");
         REGISTRATE.addRawLang("material.greate.rose_quartz", "Rose Quartz");
         REGISTRATE.addRawLang("material.greate.chromatic_compound", "Chromatic Compound");
@@ -58,6 +56,11 @@ public class GreateLang {
         //Greate GT-Addon
         REGISTRATE.addRawLang("block.greate.wire_coating_factory", "Wire Coating Factory");
         REGISTRATE.addRawLang("gtceu.wire_coating", "Wire Coating Factory");
+        REGISTRATE.addRawLang("item.greate.rubber_belt_connector", "Rubber Belt Connector");
+        REGISTRATE.addRawLang("item.greate.silicone_rubber_belt_connector", "Silicone Rubber Belt Connector");
+        REGISTRATE.addRawLang("item.greate.polyethylene_belt_connector", "Polyethylene Belt Connector");
+        REGISTRATE.addRawLang("item.greate.polytetrafluoroethylene_belt_connector", "Polytetrafluoroethylene Belt Connector");
+        REGISTRATE.addRawLang("item.greate.polybenzimidazole_belt_connector", "Polybenzimidazole Belt Connector");
     }
 
     public static void register() {}

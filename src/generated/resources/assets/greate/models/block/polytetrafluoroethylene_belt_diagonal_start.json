@@ -1,8 +1,0 @@
-{
-  "parent": "create:block/belt/diagonal_start",
-  "render_type": "minecraft:cutout_mipped",
-  "textures": {
-    "0": "greate:block/polytetrafluoroethylene/belt_diagonal",
-    "particle": "greate:block/polytetrafluoroethylene/belt_diagonal"
-  }
-}

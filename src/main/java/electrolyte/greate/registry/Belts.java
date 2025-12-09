@@ -12,6 +12,7 @@ import com.simibubi.create.content.kinetics.belt.BeltModel;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
+import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import electrolyte.greate.Greate;
 import electrolyte.greate.GreateRegistries;
 import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
@@ -23,14 +24,15 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.MapColor;
 
 import static com.simibubi.create.api.behaviour.display.DisplaySource.displaySource;
-import static com.tterrag.registrate.providers.RegistrateLangProvider.toEnglishName;
 import static electrolyte.greate.Greate.REGISTRATE;
 import static electrolyte.greate.registry.GreateTagPrefixes.belt;
 import static electrolyte.greate.registry.GreateTagPrefixes.beltConnector;
 
+@SuppressWarnings("unchecked")
 public class Belts {
     static ImmutableTable.Builder<TagPrefix, Material, BlockEntry<TieredBeltBlock>> BELT_BUILDER = ImmutableTable.builder();
     public static Table<TagPrefix, Material, BlockEntry<TieredBeltBlock>> BELTS;
+    public static BlockEntry<TieredBeltBlock>[] BELT_ENTRIES = new BlockEntry[0];
     static ImmutableTable.Builder<TagPrefix, Material, ItemEntry<TieredBeltConnectorItem>> BELT_CONNECTORS_BUILDER = ImmutableTable.builder();
     public static Table<TagPrefix, Material, ItemEntry<TieredBeltConnectorItem>> BELT_CONNECTORS;
 
@@ -45,7 +47,7 @@ public class Belts {
             if(material.hasProperty(GreatePropertyKeys.BELT)) {
                 var gtBeltEntry = GreateRegistries.REGISTRATE
                         .block(material.getName() + "_belt", TieredBeltBlock::new)
-                        .lang(toEnglishName(material.getName() + "_belt"))
+                        .blockstate(NonNullBiConsumer.noop())
                         .properties(p -> p.sound(SoundType.WOOL))
                         .properties(p -> p.strength(0.8F))
                         .properties(p -> p.mapColor(MapColor.COLOR_GRAY))
@@ -59,14 +61,16 @@ public class Belts {
                 BELT_BUILDER.put(belt, material, gtBeltEntry);
 
                 var beltConnectorEntry = GreateRegistries.REGISTRATE
-                .item(material.getName() + "_belt_connector", p -> new TieredBeltConnectorItem(ChemicalHelper.getBlock(belt, material), p, material))
-                .transform(GTItems.unificationItem(beltConnector, material))
-                //.transform(p -> p.properties(b -> b.food(new FoodProperties.Builder().alwaysEat().nutrition(1).saturationMod(0.1F).effect(() -> new MobEffectInstance(MobEffects.POISON, 100, 0, true, true), 1.0F).build()))) TODO: disabled b/c quarktech armor auto eats
-                .register();
+                        .item(material.getName() + "_belt_connector", p -> new TieredBeltConnectorItem(ChemicalHelper.getBlock(belt, material), p, material))
+                        .model(NonNullBiConsumer.noop())
+                        .transform(GTItems.unificationItem(beltConnector, material))
+                        //.transform(p -> p.properties(b -> b.food(new FoodProperties.Builder().alwaysEat().nutrition(1).saturationMod(0.1F).effect(() -> new MobEffectInstance(MobEffects.POISON, 100, 0, true, true), 1.0F).build()))) TODO: disabled b/c quarktech armor auto eats
+                        .register();
                 BELT_CONNECTORS_BUILDER.put(beltConnector, material, beltConnectorEntry);
             }
         }
         BELTS = BELT_BUILDER.build();
         BELT_CONNECTORS = BELT_CONNECTORS_BUILDER.build();
+        BELT_ENTRIES = BELTS.values().toArray(BlockEntry[]::new);
     }
 }

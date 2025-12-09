@@ -1,6 +1,7 @@
 package electrolyte.greate.mixin;
 
 import electrolyte.greate.Greate;
+import electrolyte.greate.foundation.client.models.BeltConnectorModel;
 import electrolyte.greate.foundation.client.models.BeltModel;
 import net.minecraft.client.resources.model.ModelManager;
 import net.minecraft.server.packs.resources.PreparableReloadListener.PreparationBarrier;
@@ -23,6 +24,7 @@ public class MixinModelManager {
         if(!ModLoader.isLoadingStateValid()) return;
         long startTime = System.currentTimeMillis();
         BeltModel.reinitModels();
+        BeltConnectorModel.reinitModels();
         Greate.LOGGER.info("Greate model loading took {}ms", System.currentTimeMillis() - startTime);
     }
 }

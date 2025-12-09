@@ -2,6 +2,7 @@ package electrolyte.greate.registry;
 
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
+import electrolyte.greate.GreateRegistries;
 import electrolyte.greate.content.fluids.pump.TieredPumpBlockEntity;
 import electrolyte.greate.content.fluids.pump.TieredPumpRenderer;
 import electrolyte.greate.content.kinetics.base.TieredShaftRenderer;
@@ -105,9 +106,9 @@ public class ModBlockEntityTypes {
             .validBlocks(CrushingWheels.CRUSHING_WHEEL_CONTROLLERS)
             .register();
 
-    public static final BlockEntityEntry<TieredBeltBlockEntity> TIERED_BELT = REGISTRATE
+    public static final BlockEntityEntry<TieredBeltBlockEntity> TIERED_BELT = GreateRegistries.REGISTRATE
             .blockEntity("tiered_belt", TieredBeltBlockEntity::new)
-            .validBlocksDeferred(() -> new ArrayList<>(Belts.BELTS.values()))
+            .validBlocks(Belts.BELT_ENTRIES)
             .renderer(() -> TieredBeltRenderer::new)
             .register();
 

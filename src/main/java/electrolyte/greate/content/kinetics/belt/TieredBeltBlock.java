@@ -64,6 +64,7 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
                 drops.removeIf(s -> s.is(AllBlocks.SHAFT.asItem()));
                 drops.add(ChemicalHelper.get(shaft, getShaftMaterial()));
             }
+            drops.add(ChemicalHelper.get(beltConnector, getBeltMaterial()));
         }
         return drops;
     }
