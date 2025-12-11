@@ -69,8 +69,18 @@ public class Greate {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Greate.MOD_ID);
     public static GreateRecipeConfig CONFIG;
 
+    //TODO: remove once migrated off of createregistrate
+    public static RegistryEntry<CreativeModeTab> GREATE_GT_TAB = GreateRegistries.REGISTRATE.defaultCreativeTab("greate_gt",
+            b -> b
+                    .title(Component.translatable("itemGroup.greate"))
+                    .icon(() -> new ItemStack(MILLSTONES[GTValues.UHV]))
+                    .displayItems(new GreateRegistrateDisplayItemsGenerator(true))
+                    .build())
+                .register();
+
     static {
         REGISTRATE.setTooltipModifierFactory(i -> new ItemDescription.Modifier(i, Palette.STANDARD_CREATE).andThen(TooltipModifier.mapNull(GreateKineticStats.create(i))));
+
     }
 
     public Greate() {
@@ -105,7 +115,7 @@ public class Greate {
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.greate"))
                     .icon(() -> new ItemStack(MILLSTONES[GTValues.UHV]))
-                    .displayItems(new GreateRegistrateDisplayItemsGenerator())
+                    .displayItems(new GreateRegistrateDisplayItemsGenerator(false))
                     .build());
 
     private void clientSetup(FMLClientSetupEvent event) {
@@ -132,14 +142,14 @@ public class Greate {
         }
     }
 
-    public static class GreateRegistrateDisplayItemsGenerator implements DisplayItemsGenerator {
+    public record GreateRegistrateDisplayItemsGenerator(boolean gt) implements DisplayItemsGenerator {
 
         @Override
         public void accept(ItemDisplayParameters itemDisplayParameters, Output output) {
             Predicate<Item> exclusionPredicate = excludedItems();
             List<Item> items = new LinkedList<>();
-            items.addAll(collectBlocks(exclusionPredicate));
-            items.addAll(collectItems(exclusionPredicate));
+            items.addAll(collectBlocks(gt, exclusionPredicate));
+            items.addAll(collectItems(gt, exclusionPredicate));
             for(Item item : items) {
                 output.accept(new ItemStack(item));
             }
@@ -154,24 +164,41 @@ public class Greate {
             return exclusions::contains;
         }
 
-        private List<Item> collectBlocks(Predicate<Item> exclusionPredicate) {
+        private List<Item> collectBlocks(boolean gt, Predicate<Item> exclusionPredicate) {
             List<Item> items = new ReferenceArrayList<>();
-            for(RegistryEntry<Block> entry : REGISTRATE.getAll(Registries.BLOCK)) {
-                if(!REGISTRATE.isInCreativeTab(entry, GREATE_TAB)) continue;
-                Item item = entry.get().asItem();
-                if(item == Items.AIR) continue;
-                if(!exclusionPredicate.test(item)) items.add(item);
+            if(!gt) {
+                for(RegistryEntry<Block> entry : REGISTRATE.getAll(Registries.BLOCK)) {
+                    if(!REGISTRATE.isInCreativeTab(entry, GREATE_TAB)) continue;
+                    Item item = entry.get().asItem();
+                    if(item == Items.AIR) continue;
+                    if(!exclusionPredicate.test(item)) items.add(item);
+                }
+            } else {
+                for(RegistryEntry<Block> entry : GreateRegistries.REGISTRATE.getAll(Registries.BLOCK)) {
+                    if(!GreateRegistries.REGISTRATE.isInCreativeTab(entry, GREATE_GT_TAB)) continue;
+                    Item item = entry.get().asItem();
+                    if(item == Items.AIR) continue;
+                    if(!exclusionPredicate.test(item)) items.add(item);
+                }
             }
             items = new ReferenceArrayList<>(new ReferenceLinkedOpenHashSet<>(items));
             return items;
         }
 
-        private List<Item> collectItems(Predicate<Item> exclusionPredicate) {
+        private List<Item> collectItems(boolean gt, Predicate<Item> exclusionPredicate) {
             List<Item> items = new ReferenceArrayList<>();
-            for(RegistryEntry<Item> entry : REGISTRATE.getAll(Registries.ITEM)) {
-                if(!REGISTRATE.isInCreativeTab(entry, GREATE_TAB)) continue;
-                if(entry.get() instanceof BlockItem) continue;
-                if(!exclusionPredicate.test(entry.get())) items.add(entry.get());
+            if(!gt) {
+                for(RegistryEntry<Item> entry : REGISTRATE.getAll(Registries.ITEM)) {
+                    if(!REGISTRATE.isInCreativeTab(entry, GREATE_TAB)) continue;
+                    if(entry.get() instanceof BlockItem) continue;
+                    if(!exclusionPredicate.test(entry.get())) items.add(entry.get());
+                }
+            } else {
+                for(RegistryEntry<Item> entry : GreateRegistries.REGISTRATE.getAll(Registries.ITEM)) {
+                    if(!GreateRegistries.REGISTRATE.isInCreativeTab(entry, GREATE_GT_TAB)) continue;
+                    if(entry.get() instanceof BlockItem) continue;
+                    if(!exclusionPredicate.test(entry.get())) items.add(entry.get());
+                }
             }
             items = new ReferenceArrayList<>(new ReferenceLinkedOpenHashSet<>(items));
             return items;

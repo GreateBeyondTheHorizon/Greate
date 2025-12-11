@@ -24,7 +24,6 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.MapColor;
 
 import static com.simibubi.create.api.behaviour.display.DisplaySource.displaySource;
-import static electrolyte.greate.Greate.REGISTRATE;
 import static electrolyte.greate.registry.GreateTagPrefixes.belt;
 import static electrolyte.greate.registry.GreateTagPrefixes.beltConnector;
 
@@ -37,7 +36,7 @@ public class Belts {
     public static Table<TagPrefix, Material, ItemEntry<TieredBeltConnectorItem>> BELT_CONNECTORS;
 
     public static void register() {
-        REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
+        GreateRegistries.REGISTRATE.creativeModeTab(() -> Greate.GREATE_GT_TAB);
 
         generateBelts();
     }

@@ -4,7 +4,6 @@ import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.IMaterialProperty;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.MaterialProperties;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
-import com.simibubi.create.infrastructure.config.AllConfigs;
 
 import java.util.List;
 
@@ -17,7 +16,7 @@ public class BeltProperty implements IMaterialProperty {
 
     public BeltProperty(List<Material> validShafts) {
         this.validShafts = validShafts;
-        this.maxLength = AllConfigs.server().kinetics.maxBeltLength.get();
+        this.maxLength = 20;
     }
 
     public BeltProperty(List<Material> validShafts, int maxLength) {

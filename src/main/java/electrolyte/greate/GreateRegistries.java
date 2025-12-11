@@ -1,7 +1,9 @@
 package electrolyte.greate;
 
+import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.GTCEuAPI.RegisterEvent;
 import com.gregtechceu.gtceu.api.data.chemical.material.event.MaterialEvent;
+import com.gregtechceu.gtceu.api.data.chemical.material.event.MaterialRegistryEvent;
 import com.gregtechceu.gtceu.api.data.chemical.material.event.PostMaterialEvent;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
@@ -20,6 +22,11 @@ public final class GreateRegistries {
 	@SubscribeEvent
 	public static void registerMaterials(MaterialEvent event) {
 		GreateMaterials.register();
+	}
+
+	@SubscribeEvent
+	public static void registerCustomMaterials(MaterialRegistryEvent event) {
+		GTCEuAPI.materialManager.createRegistry(Greate.MOD_ID);
 	}
 
 	@SubscribeEvent

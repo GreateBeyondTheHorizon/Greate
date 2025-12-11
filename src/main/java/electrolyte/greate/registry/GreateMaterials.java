@@ -106,11 +106,11 @@ public class GreateMaterials {
 		Darmstadtium.setProperty(PropertyKey.TOOL, ToolProperty.Builder.of(50.0F, 15.0F, 5120, 5, BUZZSAW).build());
 		RhodiumPlatedPalladium.setProperty(PropertyKey.TOOL, ToolProperty.Builder.of(35.0F, 10.0F, 2560, 4, BUZZSAW).build());
 
-		Rubber.setProperty(GreatePropertyKeys.BELT, new BeltProperty(new ArrayList<>(List.of(AndesiteAlloy, Steel)), 20));
-		SiliconeRubber.setProperty(GreatePropertyKeys.BELT, new BeltProperty(new ArrayList<>(List.of(Aluminium, StainlessSteel)), 20));
-		Polyethylene.setProperty(GreatePropertyKeys.BELT, new BeltProperty(new ArrayList<>(List.of(Titanium, TungstenSteel)), 20));
-		Polytetrafluoroethylene.setProperty(GreatePropertyKeys.BELT, new BeltProperty(new ArrayList<>(List.of(RhodiumPlatedPalladium, NaquadahAlloy)), 20));
-		Polybenzimidazole.setProperty(GreatePropertyKeys.BELT, new BeltProperty(new ArrayList<>(List.of(Darmstadtium, Neutronium)), 20));
+		Rubber.setProperty(GreatePropertyKeys.BELT, new BeltProperty(new ArrayList<>(List.of(AndesiteAlloy, Steel))));
+		SiliconeRubber.setProperty(GreatePropertyKeys.BELT, new BeltProperty(new ArrayList<>(List.of(Aluminium, StainlessSteel))));
+		Polyethylene.setProperty(GreatePropertyKeys.BELT, new BeltProperty(new ArrayList<>(List.of(Titanium, TungstenSteel))));
+		Polytetrafluoroethylene.setProperty(GreatePropertyKeys.BELT, new BeltProperty(new ArrayList<>(List.of(RhodiumPlatedPalladium, NaquadahAlloy))));
+		Polybenzimidazole.setProperty(GreatePropertyKeys.BELT, new BeltProperty(new ArrayList<>(List.of(Darmstadtium, Neutronium))));
 
 		alloy.addSecondaryMaterial(new MaterialStack(Andesite, M));
 		alloy.setIgnored(WroughtIron, () -> AllItems.ANDESITE_ALLOY);
