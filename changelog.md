@@ -1,2 +1,5 @@
-- Fix crushing wheels applying recipes with wrong duration (Closes #95) (Also fixes normal crushing wheels not working)
-- Fix missing texture particle for certain pressing recipes
+- Fix normal saws not performing recipes
+- Cleanup Belts
+  - Generate Belts based on BeltProperty
+  - Move maxLength config option to BeltProperty (default 20)
+- Move custom materials to Greate namespace instead of GT
