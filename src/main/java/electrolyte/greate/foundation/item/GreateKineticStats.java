@@ -5,8 +5,8 @@ import com.simibubi.create.content.kinetics.base.IRotate;
 import com.simibubi.create.foundation.item.KineticStats;
 import com.simibubi.create.foundation.item.TooltipModifier;
 import electrolyte.greate.GreateValues;
+import electrolyte.greate.content.kinetics.belt.TieredBeltBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
-import electrolyte.greate.infrastructure.config.GConfigUtility;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
@@ -20,13 +20,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class GreateKineticStats implements TooltipModifier {
-
-    private final Block block;
-
-    public GreateKineticStats(Block block) {
-        this.block = block;
-    }
+public record GreateKineticStats(Block block) implements TooltipModifier {
 
     @Nullable
     public static GreateKineticStats create(Item item) {
@@ -41,7 +35,7 @@ public class GreateKineticStats implements TooltipModifier {
     @Override
     public void modify(ItemTooltipEvent context) {
         List<Component> kineticStats = getKineticStats(block, context.getEntity());
-        if(!kineticStats.isEmpty()) {
+        if(! kineticStats.isEmpty()) {
             List<Component> tooltip = context.getToolTip();
             tooltip.add(CommonComponents.EMPTY);
             tooltip.addAll(kineticStats);
@@ -50,8 +44,9 @@ public class GreateKineticStats implements TooltipModifier {
 
     public static List<Component> getKineticStats(Block block, Player player) {
         List<Component> stats = KineticStats.getKineticStats(block, player);
+        if(block instanceof TieredBeltBlock) return stats;
         if(block instanceof ITieredBlock tb) {
-            stats.add(0, Component.translatable("greate.tooltip.max_capacity").append(Component.literal(String.valueOf(GConfigUtility.getMaxCapacityFromTier(tb.getTier()))).withStyle(Style.EMPTY.withColor(GTValues.VC[tb.getTier()])))
+            stats.add(0, Component.translatable("greate.tooltip.max_capacity").append(Component.literal(String.valueOf(GreateValues.getMaxCapacityFromMaterial(tb.getMaterial()))).withStyle(Style.EMPTY.withColor(GTValues.VC[tb.getTier()])))
                     .append(" (")
                     .append(Component.literal(GreateValues.SNF[tb.getTier()]))
                     .append(")").withStyle(ChatFormatting.GRAY));

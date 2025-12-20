@@ -1,8 +1,0 @@
-{
-  "parent": "create:block/shaft",
-  "textures": {
-    "0": "greate:block/darmstadtium/axis",
-    "1": "greate:block/darmstadtium/axis_top",
-    "particle": "greate:block/darmstadtium/axis"
-  }
-}

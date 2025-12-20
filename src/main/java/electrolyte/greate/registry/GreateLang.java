@@ -1,67 +1,51 @@
 package electrolyte.greate.registry;
 
-import static electrolyte.greate.Greate.REGISTRATE;
+import com.tterrag.registrate.providers.RegistrateLangProvider;
 
 public class GreateLang {
 
-    static {
-        REGISTRATE.addRawLang("itemGroup.greate", "Greate");
-        REGISTRATE.addRawLang("greate.tooltip.capacity", "Kinetic Capacity: ");
-        REGISTRATE.addRawLang("greate.tooltip.max_capacity", "Max Kinetic Capacity: ");
-        REGISTRATE.addRawLang("greate.tooltip.networkStatistics", "Network Stats: ");
-        REGISTRATE.addRawLang("greate.tooltip.circuit_number", "Circuit Number");
-        REGISTRATE.addRawLang("greate.tooltip.belt_maxlength", "Max Length: ");
-        REGISTRATE.addRawLang("greate.tooltip.belt_usable", "Usable on: ");
-        REGISTRATE.addRawLang("greate.recipe.milling", "Milling");
-        REGISTRATE.addRawLang("greate.recipe.crushing", "Crushing");
-        REGISTRATE.addRawLang("greate.recipe.pressing", "Pressing");
-        REGISTRATE.addRawLang("greate.recipe.mixing", "Mixing");
-        REGISTRATE.addRawLang("greate.recipe.sawing", "Sawing");
-        REGISTRATE.addRawLang("greate.recipe.packing", "Packing");
-        REGISTRATE.addRawLang("greate.recipe.fan_washing", "Bulk Washing");
-        REGISTRATE.addRawLang("greate.recipe.fan_haunting", "Bulk Haunting");
-        REGISTRATE.addRawLang("greate.recipe.block_cutting", "Block Cutting");
-        REGISTRATE.addRawLang("greate.recipe.wood_cutting", "Wood Cutting");
-        REGISTRATE.addRawLang("greate.recipe.automatic_shapeless", "Automated Shapeless Crafting");
-        REGISTRATE.addRawLang("greate.recipe.automatic_packing", "Automated Shaped Crafting");
-        REGISTRATE.addRawLang("greate.recipe.automatic_brewing", "Automated Brewing");
-        REGISTRATE.addRawLang("greate.recipe.assembly.pressing", "Process in %s or higher Press");
-        REGISTRATE.addRawLang("greate.recipe.assembly.cutting", "Cut with %s or higher Saw");
-        REGISTRATE.addRawLang("greate.jei.recipe_tier", "Recipe Tier: ");
-        REGISTRATE.addRawLang("greate.jei.byproducts", "Byproducts from §6HS§r+");
-        REGISTRATE.addRawLang("greate.recipe.processing.extra_chance", "% extra chance per tier");
-        REGISTRATE.addRawLang("config.greate.option.ULS", "ULS Settings");
-        REGISTRATE.addRawLang("config.greate.option.LS", "LS Settings");
-        REGISTRATE.addRawLang("config.greate.option.MS", "MS Settings");
-        REGISTRATE.addRawLang("config.greate.option.HS", "HS Settings");
-        REGISTRATE.addRawLang("config.greate.option.ES", "ES Settings");
-        REGISTRATE.addRawLang("config.greate.option.IS", "IS Settings");
-        REGISTRATE.addRawLang("config.greate.option.LUS", "LUS Settings");
-        REGISTRATE.addRawLang("config.greate.option.ZPM", "ZPM Settings");
-        REGISTRATE.addRawLang("config.greate.option.US", "US Settings");
-        REGISTRATE.addRawLang("config.greate.option.UHS", "UHS Settings");
-        REGISTRATE.addRawLang("config.greate.option.CAPACITY", "Tier Capacity");
-        REGISTRATE.addRawLang("config.greate.option.MILLSTONE_IMPACT", "Millstone Impact");
-        REGISTRATE.addRawLang("config.greate.option.CRUSHING_WHEEL_IMPACT", "Crushing Wheel Impact");
-        REGISTRATE.addRawLang("greate.gui.goggles.saw_contents", "Saw Contents:");
-        REGISTRATE.addRawLang("material.greate.andesite_alloy", "Andesite Alloy");
-        REGISTRATE.addRawLang("material.greate.rose_quartz", "Rose Quartz");
-        REGISTRATE.addRawLang("material.greate.chromatic_compound", "Chromatic Compound");
-        REGISTRATE.addRawLang("material.greate.refined_radiance", "Refined Radiance");
-        REGISTRATE.addRawLang("material.greate.shadow_steel", "Shadow Steel");
-        REGISTRATE.addRawLang("tagprefix.whisk", "%s Whisk");
-        REGISTRATE.addRawLang("tagprefix.alloy", "%s Alloy");
-        REGISTRATE.addRawLang("item.gtceu.naquadah_alloy_alloy", "Naquadah Alloy");
-
-        //Greate GT-Addon
-        REGISTRATE.addRawLang("block.greate.wire_coating_factory", "Wire Coating Factory");
-        REGISTRATE.addRawLang("gtceu.wire_coating", "Wire Coating Factory");
-        REGISTRATE.addRawLang("item.greate.rubber_belt_connector", "Rubber Belt Connector");
-        REGISTRATE.addRawLang("item.greate.silicone_rubber_belt_connector", "Silicone Rubber Belt Connector");
-        REGISTRATE.addRawLang("item.greate.polyethylene_belt_connector", "Polyethylene Belt Connector");
-        REGISTRATE.addRawLang("item.greate.polytetrafluoroethylene_belt_connector", "Polytetrafluoroethylene Belt Connector");
-        REGISTRATE.addRawLang("item.greate.polybenzimidazole_belt_connector", "Polybenzimidazole Belt Connector");
+    public static void register(RegistrateLangProvider provider) {
+        provider.add("itemGroup.greate", "Greate");
+        provider.add("greate.tooltip.capacity", "Kinetic Capacity: ");
+        provider.add("greate.tooltip.max_capacity", "Max Kinetic Capacity: ");
+        provider.add("greate.tooltip.networkStatistics", "Network Stats: ");
+        provider.add("greate.tooltip.circuit_number", "Circuit Number");
+        provider.add("greate.tooltip.belt_maxlength", "Max Length: ");
+        provider.add("greate.tooltip.belt_usable", "Usable on: ");
+        provider.add("greate.recipe.milling", "Milling");
+        provider.add("greate.recipe.crushing", "Crushing");
+        provider.add("greate.recipe.pressing", "Pressing");
+        provider.add("greate.recipe.mixing", "Mixing");
+        provider.add("greate.recipe.sawing", "Sawing");
+        provider.add("greate.recipe.packing", "Packing");
+        provider.add("greate.recipe.fan_washing", "Bulk Washing");
+        provider.add("greate.recipe.fan_haunting", "Bulk Haunting");
+        provider.add("greate.recipe.block_cutting", "Block Cutting");
+        provider.add("greate.recipe.wood_cutting", "Wood Cutting");
+        provider.add("greate.recipe.automatic_shapeless", "Automated Shapeless Crafting");
+        provider.add("greate.recipe.automatic_packing", "Automated Shaped Crafting");
+        provider.add("greate.recipe.automatic_brewing", "Automated Brewing");
+        provider.add("greate.recipe.assembly.pressing", "Process in %s or higher Press");
+        provider.add("greate.recipe.assembly.cutting", "Cut with %s or higher Saw");
+        provider.add("greate.jei.recipe_tier", "Recipe Tier: ");
+        provider.add("greate.jei.byproducts", "Byproducts from §6HS§r+");
+        provider.add("greate.recipe.processing.extra_chance", "% extra chance per tier");
+        provider.add("config.greate.option.ULS", "ULS Settings");
+        provider.add("config.greate.option.LS", "LS Settings");
+        provider.add("config.greate.option.MS", "MS Settings");
+        provider.add("config.greate.option.HS", "HS Settings");
+        provider.add("config.greate.option.ES", "ES Settings");
+        provider.add("config.greate.option.IS", "IS Settings");
+        provider.add("config.greate.option.LUS", "LUS Settings");
+        provider.add("config.greate.option.ZPM", "ZPM Settings");
+        provider.add("config.greate.option.US", "US Settings");
+        provider.add("config.greate.option.UHS", "UHS Settings");
+        provider.add("config.greate.option.CAPACITY", "Tier Capacity");
+        provider.add("config.greate.option.MILLSTONE_IMPACT", "Millstone Impact");
+        provider.add("config.greate.option.CRUSHING_WHEEL_IMPACT", "Crushing Wheel Impact");
+        provider.add("greate.gui.goggles.saw_contents", "Saw Contents:");
+        provider.add("tagprefix.whisk", "%s Whisk");
+        provider.add("tagprefix.alloy", "%s Alloy");
+        provider.add("item.gtceu.naquadah_alloy_alloy", "Naquadah Alloy");
     }
-
-    public static void register() {}
 }

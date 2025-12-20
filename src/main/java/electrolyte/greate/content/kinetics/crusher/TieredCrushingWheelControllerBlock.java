@@ -1,5 +1,6 @@
 package electrolyte.greate.content.kinetics.crusher;
 
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.simibubi.create.content.kinetics.crusher.CrushingWheelBlockEntity;
 import com.simibubi.create.content.kinetics.crusher.CrushingWheelControllerBlock;
 import com.simibubi.create.content.kinetics.crusher.CrushingWheelControllerBlockEntity;
@@ -22,10 +23,12 @@ import java.util.Map;
 public class TieredCrushingWheelControllerBlock extends CrushingWheelControllerBlock implements ITieredBlock {
 
     private int tier;
+    private TieredCrushingWheelBlock crushingWheelBlock;
     public static Map<Block, Block> MAP = new HashMap<>();
 
-    public TieredCrushingWheelControllerBlock(Properties properties, Block crushingWheel) {
+    public TieredCrushingWheelControllerBlock(Properties properties, TieredCrushingWheelBlock crushingWheel) {
         super(properties);
+        this.crushingWheelBlock = crushingWheel;
         MAP.put(crushingWheel, this);
     }
 
@@ -70,5 +73,10 @@ public class TieredCrushingWheelControllerBlock extends CrushingWheelControllerB
     @Override
     public void setTier(int tier) {
         this.tier = tier;
+    }
+
+    @Override
+    public Material getMaterial() {
+        return crushingWheelBlock.getMaterial();
     }
 }

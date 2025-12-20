@@ -21,6 +21,8 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
 import java.util.List;
 import java.util.Optional;
 
+import static electrolyte.greate.GreateValues.TM;
+
 public class TieredMillstoneBlockEntity extends MillstoneBlockEntity implements ITieredKineticBlockEntity {
     private TieredMillingRecipe lastRecipe;
     private int tier;
@@ -94,6 +96,11 @@ public class TieredMillstoneBlockEntity extends MillstoneBlockEntity implements 
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
-        return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, tier, capacity, stress);
+        return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, TM[tier], capacity, stress);
+    }
+
+    @Override
+    public boolean renderNormally() {
+        return false;
     }
 }

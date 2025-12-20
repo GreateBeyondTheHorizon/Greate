@@ -1,8 +1,0 @@
-{
-  "parent": "create:block/gearbox/item_vertical",
-  "textures": {
-    "0": "greate:block/titanium/axis",
-    "1": "greate:block/titanium/axis_top",
-    "particle": "greate:block/titanium/axis"
-  }
-}

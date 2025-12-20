@@ -5,6 +5,7 @@ import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import electrolyte.greate.Greate;
+import electrolyte.greate.GreateRegistries;
 import electrolyte.greate.content.kinetics.press.TieredMechanicalPressBlock;
 import electrolyte.greate.foundation.data.GreateBuilderTransformers;
 import electrolyte.greate.infrastructure.config.GStress;
@@ -12,7 +13,6 @@ import net.minecraft.world.level.material.MapColor;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
-import static electrolyte.greate.Greate.REGISTRATE;
 import static electrolyte.greate.registry.GreateMaterials.AndesiteAlloy;
 
 public class MechanicalPresses {
@@ -31,7 +31,7 @@ public class MechanicalPresses {
             NEUTRONIUM_MECHANICAL_PRESS;
 
     public static void register() {
-        REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
+        GreateRegistries.REGISTRATE.creativeModeTab(Greate.GREATE_TAB);
 
         MECHANICAL_PRESSES[ULV] = ANDESITE_MECHANICAL_PRESS = mechanicalPress(ULV, 1.0, AndesiteAlloy);
         MECHANICAL_PRESSES[LV] = STEEL_MECHANICAL_PRESS = mechanicalPress(LV, 2.0, Steel);
@@ -46,7 +46,7 @@ public class MechanicalPresses {
     }
 
     public static BlockEntry<TieredMechanicalPressBlock> mechanicalPress(int tier, double stressImpact, Material mat) {
-        return REGISTRATE.block(mat.getName() + "_mechanical_press", p -> new TieredMechanicalPressBlock(p, mat))
+        return GreateRegistries.REGISTRATE.block(mat.getName() + "_mechanical_press", p -> new TieredMechanicalPressBlock(p, mat))
                 .initialProperties(SharedProperties::stone)
                 .properties(p -> p.noOcclusion().mapColor(MapColor.PODZOL))
                 .transform(TagGen.axeOrPickaxe())

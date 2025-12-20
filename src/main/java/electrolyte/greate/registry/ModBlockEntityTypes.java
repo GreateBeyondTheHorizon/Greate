@@ -2,6 +2,9 @@ package electrolyte.greate.registry;
 
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
+import com.tterrag.registrate.util.entry.BlockEntry;
+import com.tterrag.registrate.util.nullness.NonNullSupplier;
+import dev.engine_room.flywheel.lib.visualization.SimpleBlockEntityVisualizer;
 import electrolyte.greate.GreateRegistries;
 import electrolyte.greate.content.fluids.pump.TieredPumpBlockEntity;
 import electrolyte.greate.content.fluids.pump.TieredPumpRenderer;
@@ -32,120 +35,180 @@ import electrolyte.greate.content.kinetics.simpleRelays.*;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedCogRenderer;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedCogVisual;
 import electrolyte.greate.content.kinetics.steamEngine.TieredPoweredShaftBlockEntity;
+import net.minecraft.world.level.block.Block;
 
-import java.util.ArrayList;
+import java.util.Collection;
 
-import static electrolyte.greate.Greate.REGISTRATE;
 
-@SuppressWarnings("unchecked")
 public class ModBlockEntityTypes {
 
-    public static final BlockEntityEntry<TieredBracketedKineticBlockEntity> TIERED_BRACKETED_KINETIC = REGISTRATE
+    public static final BlockEntityEntry<TieredBracketedKineticBlockEntity> TIERED_BRACKETED_KINETIC = GreateRegistries.REGISTRATE
             .blockEntity("tiered_bracketed_kinetic", TieredBracketedKineticBlockEntity::new)
-            .visual(() -> TieredBracketedKineticBlockEntityVisual::create, false)
-            .validBlocksDeferred(() -> new ArrayList<>(Shafts.SHAFTS.values()))
-            .validBlocksDeferred(() -> new ArrayList<>(Cogwheels.COGWHEELS.values()))
-            .validBlocksDeferred(() -> new ArrayList<>(Cogwheels.LARGE_COGWHEELS.values()))
             .renderer(() -> TieredBracketedKineticBlockEntityRenderer::new)
+            .validBlocks(getBlocks(Shafts.SHAFTS.values()))
+            .validBlocks(getBlocks(Cogwheels.COGWHEELS.values()))
+            .validBlocks(getBlocks(Cogwheels.LARGE_COGWHEELS.values()))
             .register();
-    public static final BlockEntityEntry<TieredKineticBlockEntity> TIERED_ENCASED_SHAFT = REGISTRATE
+    public static final BlockEntityEntry<TieredKineticBlockEntity> TIERED_ENCASED_SHAFT = GreateRegistries.REGISTRATE
             .blockEntity("tiered_encased_shaft", TieredKineticBlockEntity::new)
-            .visual(() -> TieredSingleAxisRotatingVisual::shaft, false)
-            .validBlocksDeferred(() -> new ArrayList<>(Shafts.ANDESITE_ENCASED_SHAFTS.values()))
-            .validBlocksDeferred(() -> new ArrayList<>(Shafts.BRASS_ENCASED_SHAFTS.values()))
-            .validBlocksDeferred(() -> new ArrayList<>(Girders.GIRDERS.values()))
             .renderer(() -> TieredShaftRenderer::new)
+            .validBlocks(getBlocks(Shafts.ANDESITE_ENCASED_SHAFTS.values()))
+            .validBlocks(getBlocks(Shafts.BRASS_ENCASED_SHAFTS.values()))
+            .validBlocks(getBlocks(Girders.GIRDERS.values()))
             .register();
 
-    public static final BlockEntityEntry<TieredSimpleKineticBlockEntity> TIERED_ENCASED_COGWHEEL = REGISTRATE
+    public static final BlockEntityEntry<TieredSimpleKineticBlockEntity> TIERED_ENCASED_COGWHEEL = GreateRegistries.REGISTRATE
             .blockEntity("tiered_encased_cogwheel", TieredSimpleKineticBlockEntity::new)
-            .visual(() -> TieredEncasedCogVisual::small, false)
-            .validBlocksDeferred(() -> new ArrayList<>(Cogwheels.ANDESITE_ENCASED_COGWHEELS.values()))
-            .validBlocksDeferred(() -> new ArrayList<>(Cogwheels.BRASS_ENCASED_COGWHEELS.values()))
             .renderer(() -> TieredEncasedCogRenderer::small)
+            .validBlocks(getBlocks(Cogwheels.ANDESITE_ENCASED_COGWHEELS.values()))
+            .validBlocks(getBlocks(Cogwheels.BRASS_ENCASED_COGWHEELS.values()))
             .register();
 
-    public static final BlockEntityEntry<TieredSimpleKineticBlockEntity> TIERED_ENCASED_LARGE_COGWHEEL = REGISTRATE
+    public static final BlockEntityEntry<TieredSimpleKineticBlockEntity> TIERED_ENCASED_LARGE_COGWHEEL = GreateRegistries.REGISTRATE
             .blockEntity("tiered_encased_large_cogwheel", TieredSimpleKineticBlockEntity::new)
-            .visual(() -> TieredEncasedCogVisual::large, false)
-            .validBlocksDeferred(() -> new ArrayList<>(Cogwheels.ANDESITE_ENCASED_LARGE_COGWHEELS.values()))
-            .validBlocksDeferred(() -> new ArrayList<>(Cogwheels.BRASS_ENCASED_LARGE_COGWHEELS.values()))
             .renderer(() -> TieredEncasedCogRenderer::large)
+            .validBlocks(getBlocks(Cogwheels.ANDESITE_ENCASED_LARGE_COGWHEELS.values()))
+            .validBlocks(getBlocks(Cogwheels.BRASS_ENCASED_LARGE_COGWHEELS.values()))
             .register();
 
-    public static final BlockEntityEntry<TieredGearboxBlockEntity> TIERED_GEARBOX = REGISTRATE
+    public static final BlockEntityEntry<TieredGearboxBlockEntity> TIERED_GEARBOX = GreateRegistries.REGISTRATE
             .blockEntity("tiered_gearbox", TieredGearboxBlockEntity::new)
-            .visual(() -> TieredGearboxVisual::new, false)
-            .validBlocksDeferred(() -> new ArrayList<>(Gearboxes.GEARBOXES.values()))
             .renderer(() -> TieredGearboxRenderer::new)
+            .validBlocks(getBlocks(Gearboxes.GEARBOXES.values()))
             .register();
 
-    public static final BlockEntityEntry<TieredPoweredShaftBlockEntity> TIERED_POWERED_SHAFT = REGISTRATE
+    public static final BlockEntityEntry<TieredPoweredShaftBlockEntity> TIERED_POWERED_SHAFT = GreateRegistries.REGISTRATE
             .blockEntity("tiered_powered_shaft", TieredPoweredShaftBlockEntity::new)
-            .visual(() -> TieredSingleAxisRotatingVisual::poweredShaft)
-            .validBlocksDeferred(() -> new ArrayList<>(Shafts.POWERED_SHAFTS.values()))
             .renderer(() -> KineticBlockEntityRenderer::new)
+            .validBlocks(getBlocks(Shafts.POWERED_SHAFTS.values()))
             .register();
 
-    public static final BlockEntityEntry<TieredMillstoneBlockEntity> TIERED_MILLSTONE = REGISTRATE
+    public static final BlockEntityEntry<TieredMillstoneBlockEntity> TIERED_MILLSTONE = GreateRegistries.REGISTRATE
             .blockEntity("tiered_millstone", TieredMillstoneBlockEntity::new)
-            .visual(() -> TieredSingleAxisRotatingVisual::millstoneCog, false)
             .validBlocks(Millstones.MILLSTONES)
             .renderer(() -> TieredMillstoneRenderer::new)
             .register();
 
-    public static final BlockEntityEntry<TieredCrushingWheelBlockEntity> TIERED_CRUSHING_WHEEL = REGISTRATE
+    public static final BlockEntityEntry<TieredCrushingWheelBlockEntity> TIERED_CRUSHING_WHEEL = GreateRegistries.REGISTRATE
             .blockEntity("tiered_crushing_wheel", TieredCrushingWheelBlockEntity::new)
-            .visual(() -> TieredSingleAxisRotatingVisual::crushingWheel, false)
             .validBlocks(CrushingWheels.CRUSHING_WHEELS)
             .renderer(() -> KineticBlockEntityRenderer::new)
             .register();
 
-    public static final BlockEntityEntry<TieredCrushingWheelControllerBlockEntity> TIERED_CRUSHING_WHEEL_CONTROLLER = REGISTRATE
+    public static final BlockEntityEntry<TieredCrushingWheelControllerBlockEntity> TIERED_CRUSHING_WHEEL_CONTROLLER = GreateRegistries.REGISTRATE
             .blockEntity("tiered_crushing_wheel_controller", TieredCrushingWheelControllerBlockEntity::new)
             .validBlocks(CrushingWheels.CRUSHING_WHEEL_CONTROLLERS)
             .register();
 
     public static final BlockEntityEntry<TieredBeltBlockEntity> TIERED_BELT = GreateRegistries.REGISTRATE
             .blockEntity("tiered_belt", TieredBeltBlockEntity::new)
-            .validBlocks(Belts.BELT_ENTRIES)
             .renderer(() -> TieredBeltRenderer::new)
+            .validBlocks(getBlocks(Belts.BELTS.values()))
             .register();
 
-    public static final BlockEntityEntry<TieredMechanicalPressBlockEntity> TIERED_MECHANICAL_PRESS = REGISTRATE
+
+
+    public static final BlockEntityEntry<TieredMechanicalPressBlockEntity> TIERED_MECHANICAL_PRESS = GreateRegistries.REGISTRATE
             .blockEntity("tiered_mechanical_press", TieredMechanicalPressBlockEntity::new)
-            .visual(() -> TieredMechanicalPressVisual::new)
             .validBlocks(MechanicalPresses.MECHANICAL_PRESSES)
             .renderer(() -> TieredMechanicalPressRenderer::new)
             .register();
 
-    public static final BlockEntityEntry<TieredMechanicalMixerBlockEntity> TIERED_MECHANICAL_MIXER = REGISTRATE
+    public static final BlockEntityEntry<TieredMechanicalMixerBlockEntity> TIERED_MECHANICAL_MIXER = GreateRegistries.REGISTRATE
             .blockEntity("tiered_mechanical_mixer", TieredMechanicalMixerBlockEntity::new)
-            .visual(() -> TieredMechanicalMixerVisual::new)
             .validBlocks(MechanicalMixers.MECHANICAL_MIXERS)
             .renderer(() -> TieredMechanicalMixerRenderer::new)
             .register();
 
-    public static final BlockEntityEntry<TieredPumpBlockEntity> TIERED_PUMP = REGISTRATE
+    public static final BlockEntityEntry<TieredPumpBlockEntity> TIERED_PUMP = GreateRegistries.REGISTRATE
             .blockEntity("tiered_mechanical_pump", TieredPumpBlockEntity::new)
-            .visual(() -> TieredSingleAxisRotatingVisual::pumpCog)
             .validBlocks(Pumps.MECHANICAL_PUMPS)
             .renderer(() -> TieredPumpRenderer::new)
             .register();
 
-    public static final BlockEntityEntry<TieredSawBlockEntity> TIERED_SAW = REGISTRATE
+    public static final BlockEntityEntry<TieredSawBlockEntity> TIERED_SAW = GreateRegistries.REGISTRATE
             .blockEntity("tiered_saw", TieredSawBlockEntity::new)
-            .visual(() -> TieredSawVisual::new)
             .validBlocks(Saws.SAWS)
             .renderer(() -> TieredSawRenderer::new)
             .register();
 
-    public static final BlockEntityEntry<TieredEncasedFanBlockEntity> TIERED_FAN = REGISTRATE
+    public static final BlockEntityEntry<TieredEncasedFanBlockEntity> TIERED_FAN = GreateRegistries.REGISTRATE
             .blockEntity("tiered_encased_fan", TieredEncasedFanBlockEntity::new)
-            .visual(() -> TieredEncasedFanVisual::new, false)
             .validBlocks(EncasedFans.FANS)
             .renderer(() -> TieredEncasedFanBlockRenderer::new)
             .register();
 
+    @SuppressWarnings("unchecked")
+    private static <T extends Block> NonNullSupplier<T>[] getBlocks(Collection<BlockEntry<T>> values) {
+        return values.stream().map(b -> (NonNullSupplier<T>) b).toArray(NonNullSupplier[]::new);
+    }
+
     public static void register() {}
+
+    public static void registerAllVisuals() {
+        SimpleBlockEntityVisualizer.builder(TIERED_BRACKETED_KINETIC.get())
+                .factory(TieredBracketedKineticBlockEntityVisual::create)
+                .skipVanillaRender(p -> !p.renderNormally())
+                .apply();
+
+        SimpleBlockEntityVisualizer.builder(TIERED_ENCASED_SHAFT.get())
+                .factory(TieredSingleAxisRotatingVisual::shaft)
+                .skipVanillaRender(p -> !p.renderNormally())
+                .apply();
+
+        SimpleBlockEntityVisualizer.builder(TIERED_ENCASED_COGWHEEL.get())
+                .factory(TieredEncasedCogVisual::small)
+                .skipVanillaRender(p -> !p.renderNormally())
+                .apply();
+
+        SimpleBlockEntityVisualizer.builder(TIERED_ENCASED_LARGE_COGWHEEL.get())
+                .factory(TieredEncasedCogVisual::large)
+                .skipVanillaRender(p -> !p.renderNormally())
+                .apply();
+
+        SimpleBlockEntityVisualizer.builder(TIERED_GEARBOX.get())
+                .factory(TieredGearboxVisual::new)
+                .skipVanillaRender(p -> !p.renderNormally())
+                .apply();
+
+        SimpleBlockEntityVisualizer.builder(TIERED_POWERED_SHAFT.get())
+                .factory(TieredSingleAxisRotatingVisual::poweredShaft)
+                .skipVanillaRender(p -> !p.renderNormally())
+                .apply();
+
+        SimpleBlockEntityVisualizer.builder(TIERED_MILLSTONE.get())
+                .factory(TieredSingleAxisRotatingVisual::millstoneCog)
+                .skipVanillaRender(p -> !p.renderNormally())
+                .apply();
+
+        SimpleBlockEntityVisualizer.builder(TIERED_CRUSHING_WHEEL.get())
+                .factory(TieredSingleAxisRotatingVisual::crushingWheel)
+                .skipVanillaRender(p -> !p.renderNormally())
+                .apply();
+
+        SimpleBlockEntityVisualizer.builder(TIERED_MECHANICAL_PRESS.get())
+                .factory(TieredMechanicalPressVisual::new)
+                .skipVanillaRender(p -> !p.renderNormally())
+                .apply();
+
+        SimpleBlockEntityVisualizer.builder(TIERED_MECHANICAL_MIXER.get())
+                .factory(TieredMechanicalMixerVisual::new)
+                .skipVanillaRender(p -> !p.renderNormally())
+                .apply();
+
+        SimpleBlockEntityVisualizer.builder(TIERED_PUMP.get())
+                .factory(TieredSingleAxisRotatingVisual::pumpCog)
+                .skipVanillaRender(p -> !p.renderNormally())
+                .apply();
+
+        SimpleBlockEntityVisualizer.builder(TIERED_SAW.get())
+                .factory(TieredSawVisual::new)
+                .skipVanillaRender(p -> !p.renderNormally())
+                .apply();
+
+        SimpleBlockEntityVisualizer.builder(TIERED_FAN.get())
+                .factory(TieredEncasedFanVisual::new)
+                .skipVanillaRender(p -> !p.renderNormally())
+                .apply();
+    }
 }

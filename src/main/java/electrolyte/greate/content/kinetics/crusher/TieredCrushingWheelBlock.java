@@ -1,5 +1,6 @@
 package electrolyte.greate.content.kinetics.crusher;
 
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.simibubi.create.content.kinetics.crusher.CrushingWheelBlock;
 import com.simibubi.create.content.kinetics.crusher.CrushingWheelBlockEntity;
 import com.simibubi.create.content.kinetics.crusher.CrushingWheelControllerBlock;
@@ -17,6 +18,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
 import static com.simibubi.create.content.kinetics.crusher.CrushingWheelControllerBlock.VALID;
+import static electrolyte.greate.GreateValues.TM;
 
 public class TieredCrushingWheelBlock extends CrushingWheelBlock implements ITieredBlock {
 
@@ -111,5 +113,10 @@ public class TieredCrushingWheelBlock extends CrushingWheelBlock implements ITie
     @Override
     public void setTier(int tier) {
         this.tier = tier;
+    }
+
+    @Override
+    public Material getMaterial() {
+        return TM[tier];
     }
 }

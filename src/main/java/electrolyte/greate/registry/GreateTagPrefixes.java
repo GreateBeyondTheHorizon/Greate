@@ -3,6 +3,7 @@ package electrolyte.greate.registry;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
 import electrolyte.greate.content.gtceu.material.GreateMaterialFlags;
 import electrolyte.greate.content.gtceu.material.GreateMaterialIconTypes;
+import net.minecraft.tags.BlockTags;
 
 import static com.gregtechceu.gtceu.api.GTValues.M;
 
@@ -31,26 +32,35 @@ public class GreateTagPrefixes {
 			.defaultTagPath("shafts/%s")
 			.unformattedTagPath("shafts")
 			.itemTable(() -> Shafts.SHAFTS)
+			.miningToolTag(BlockTags.MINEABLE_WITH_PICKAXE)
 			.materialAmount(M / 6)
 			.unificationEnabled(true)
 			.enableRecycling();
 
 	public static TagPrefix poweredShaft = new TagPrefix("powered_shaft")
-			.itemTable(() -> Shafts.POWERED_SHAFTS);
+			.itemTable(() -> Shafts.POWERED_SHAFTS)
+			.miningToolTag(BlockTags.MINEABLE_WITH_PICKAXE);
 
 	public static TagPrefix andesiteEncasedShaft = new TagPrefix("andesite_encased_shaft")
-			.itemTable(() -> Shafts.ANDESITE_ENCASED_SHAFTS);
+			.itemTable(() -> Shafts.ANDESITE_ENCASED_SHAFTS)
+			.miningToolTag(BlockTags.MINEABLE_WITH_PICKAXE)
+			.miningToolTag(BlockTags.MINEABLE_WITH_AXE);
 
 	public static TagPrefix brassEncasedShaft = new TagPrefix("brass_encased_shaft")
-			.itemTable(() -> Shafts.BRASS_ENCASED_SHAFTS);
+			.itemTable(() -> Shafts.BRASS_ENCASED_SHAFTS)
+			.miningToolTag(BlockTags.MINEABLE_WITH_PICKAXE)
+			.miningToolTag(BlockTags.MINEABLE_WITH_AXE);
 
 	public static TagPrefix girderEncasedShaft = new TagPrefix("girder_encased_shaft")
-			.itemTable(() -> Girders.GIRDERS);
+			.itemTable(() -> Girders.GIRDERS)
+			.miningToolTag(BlockTags.MINEABLE_WITH_PICKAXE);
 
 	public static TagPrefix cogwheel = new TagPrefix("cogwheel")
 			.defaultTagPath("cogwheels/%s")
 			.unformattedTagPath("cogwheels")
 			.itemTable(() -> Cogwheels.COGWHEELS)
+			.miningToolTag(BlockTags.MINEABLE_WITH_PICKAXE)
+			.miningToolTag(BlockTags.MINEABLE_WITH_AXE)
 			.materialAmount(M / 4)
 			.unificationEnabled(true)
 			.enableRecycling();
@@ -59,26 +69,38 @@ public class GreateTagPrefixes {
 			.defaultTagPath("large_cogwheels/%s")
 			.unformattedTagPath("large_cogwheels")
 			.itemTable(() -> Cogwheels.LARGE_COGWHEELS)
+			.miningToolTag(BlockTags.MINEABLE_WITH_PICKAXE)
+			.miningToolTag(BlockTags.MINEABLE_WITH_AXE)
 			.materialAmount(M / 4)
 			.unificationEnabled(true)
 			.enableRecycling();
 
 	public static TagPrefix andesiteEncasedCogwheel = new TagPrefix("andesite_encased_cogwheel")
-			.itemTable(() -> Cogwheels.ANDESITE_ENCASED_COGWHEELS);
+			.itemTable(() -> Cogwheels.ANDESITE_ENCASED_COGWHEELS)
+			.miningToolTag(BlockTags.MINEABLE_WITH_PICKAXE)
+			.miningToolTag(BlockTags.MINEABLE_WITH_AXE);
 
 	public static TagPrefix brassEncasedCogwheel = new TagPrefix("brass_encased_cogwheel")
-			.itemTable(() -> Cogwheels.BRASS_ENCASED_COGWHEELS);
+			.itemTable(() -> Cogwheels.BRASS_ENCASED_COGWHEELS)
+			.miningToolTag(BlockTags.MINEABLE_WITH_PICKAXE)
+			.miningToolTag(BlockTags.MINEABLE_WITH_AXE);
 
 	public static TagPrefix andesiteEncasedLargeCogwheel = new TagPrefix("andesite_encased_large_cogwheel")
-			.itemTable(() -> Cogwheels.ANDESITE_ENCASED_LARGE_COGWHEELS);
+			.itemTable(() -> Cogwheels.ANDESITE_ENCASED_LARGE_COGWHEELS)
+			.miningToolTag(BlockTags.MINEABLE_WITH_PICKAXE)
+			.miningToolTag(BlockTags.MINEABLE_WITH_AXE);
 
 	public static TagPrefix brassEncasedLargeCogwheel = new TagPrefix("brass_encased_large_cogwheel")
-			.itemTable(() -> Cogwheels.BRASS_ENCASED_LARGE_COGWHEELS);
+			.itemTable(() -> Cogwheels.BRASS_ENCASED_LARGE_COGWHEELS)
+			.miningToolTag(BlockTags.MINEABLE_WITH_PICKAXE)
+			.miningToolTag(BlockTags.MINEABLE_WITH_AXE);
 
 	public static TagPrefix gearbox = new TagPrefix("gearbox")
 			.defaultTagPath("gearboxes/%s")
 			.unformattedTagPath("gearboxes")
 			.itemTable(() -> Gearboxes.GEARBOXES)
+			.miningToolTag(BlockTags.MINEABLE_WITH_PICKAXE)
+			.miningToolTag(BlockTags.MINEABLE_WITH_AXE)
 			.materialAmount(M)
 			.unificationEnabled(true)
 			.enableRecycling();
@@ -92,7 +114,9 @@ public class GreateTagPrefixes {
 			.enableRecycling();
 
 	public static TagPrefix belt = new TagPrefix("belt")
-			.itemTable(() -> Belts.BELTS);
+			.itemTable(() -> Belts.BELTS)
+			.miningToolTag(BlockTags.MINEABLE_WITH_PICKAXE)
+			.miningToolTag(BlockTags.MINEABLE_WITH_AXE);
 
 	public static TagPrefix beltConnector = new TagPrefix("belt_connector")
 			.defaultTagPath("belt_connectors/%s")

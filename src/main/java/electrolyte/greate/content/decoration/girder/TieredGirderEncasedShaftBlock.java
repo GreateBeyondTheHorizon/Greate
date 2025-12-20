@@ -34,9 +34,11 @@ public class TieredGirderEncasedShaftBlock extends GirderEncasedShaftBlock imple
 
     private final Supplier<Block> shaftBlock;
     private int tier;
+    private Material material;
 
     public TieredGirderEncasedShaftBlock(Properties properties, Material material) {
         super(properties);
+        this.material = material;
         this.shaftBlock = () -> ChemicalHelper.getBlock(shaft, material);
     }
 
@@ -79,5 +81,10 @@ public class TieredGirderEncasedShaftBlock extends GirderEncasedShaftBlock imple
         KineticBlockEntity.switchToBlockState(level, pos, defaultBlockState()
                 .setValue(WATERLOGGED, state.getValue(WATERLOGGED))
                 .setValue(HORIZONTAL_AXIS, state.getValue(AXIS)));
+    }
+
+    @Override
+    public Material getMaterial() {
+        return material;
     }
 }

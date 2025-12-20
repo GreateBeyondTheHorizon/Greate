@@ -4,13 +4,13 @@ import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import electrolyte.greate.Greate;
+import electrolyte.greate.GreateRegistries;
 import electrolyte.greate.content.kinetics.mixer.TieredMechanicalMixerBlock;
 import electrolyte.greate.foundation.data.GreateBuilderTransformers;
 import electrolyte.greate.infrastructure.config.GStress;
 import net.minecraft.world.level.material.MapColor;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
-import static electrolyte.greate.Greate.REGISTRATE;
 import static electrolyte.greate.GreateValues.TM;
 
 public class MechanicalMixers {
@@ -29,7 +29,7 @@ public class MechanicalMixers {
             NEUTRONIUM_MECHANICAL_MIXER;
 
     public static void register() {
-        REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
+        GreateRegistries.REGISTRATE.creativeModeTab(Greate.GREATE_TAB);
 
         MECHANICAL_MIXERS[ULV] = ANDESITE_MECHANICAL_MIXER = mechanicalMixer(ULV, 0.5);
         MECHANICAL_MIXERS[LV] = STEEL_MECHANICAL_MIXER = mechanicalMixer(LV, 1.0);
@@ -44,7 +44,7 @@ public class MechanicalMixers {
     }
     
     public static BlockEntry<TieredMechanicalMixerBlock> mechanicalMixer(int tier, double stressImpact) {
-        return REGISTRATE.block(TM[tier].getName() + "_mechanical_mixer", TieredMechanicalMixerBlock::new)
+        return GreateRegistries.REGISTRATE.block(TM[tier].getName() + "_mechanical_mixer", TieredMechanicalMixerBlock::new)
                 .initialProperties(SharedProperties::stone)
                 .properties(p -> p.noOcclusion().mapColor(MapColor.STONE))
                 .transform(TagGen.axeOrPickaxe())

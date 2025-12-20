@@ -8,6 +8,7 @@ import com.simibubi.create.content.kinetics.simpleRelays.encased.EncasedCogwheel
 import dev.engine_room.flywheel.api.visualization.VisualizationManager;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredSimpleKineticBlockEntity;
+import electrolyte.greate.foundation.client.models.GreateModelUtils;
 import net.createmod.catnip.data.Iterate;
 import net.createmod.catnip.render.CachedBuffers;
 import net.createmod.catnip.render.SuperByteBuffer;
@@ -20,8 +21,6 @@ import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-
-import static electrolyte.greate.registry.GreatePartialModels.*;
 
 public class TieredEncasedCogRenderer extends KineticBlockEntityRenderer<TieredSimpleKineticBlockEntity> {
 
@@ -57,7 +56,7 @@ public class TieredEncasedCogRenderer extends KineticBlockEntityRenderer<TieredS
         for (Direction d : Iterate.directionsInAxis(getRotationAxisOf(be))) {
             if (!rotate.hasShaftTowards(be.getLevel(), be.getBlockPos(), blockState, d))
                 continue;
-            SuperByteBuffer shaft = CachedBuffers.partialFacing(SHAFT_HALF_MODELS[tier], be.getBlockState(), d);
+            SuperByteBuffer shaft = CachedBuffers.partialFacing(GreateModelUtils.getPartialModel(be.getBlockState().getBlock(), "/shaft_half"), be.getBlockState(), d);
             kineticRotationTransform(shaft, be, axis, angle, light);
             shaft.renderInto(ms, buffer.getBuffer(RenderType.solid()));
         }
@@ -65,8 +64,7 @@ public class TieredEncasedCogRenderer extends KineticBlockEntityRenderer<TieredS
 
     @Override
     protected SuperByteBuffer getRotatedModel(TieredSimpleKineticBlockEntity be, BlockState state) {
-        int tier = ((TieredEncasedCogwheelBlock) be.getBlockState().getBlock()).getTier();
-        PartialModel cogModel = large ? LARGE_COGWHEEL_SHAFTLESS_MODELS[tier] : COGWHEEL_SHAFTLESS_MODELS[tier];
+        PartialModel cogModel = large ? GreateModelUtils.getPartialModel(state.getBlock(), "/large_cogwheel_shaftless") : GreateModelUtils.getPartialModel(state.getBlock(), "/cogwheel_shaftless");
         return CachedBuffers.partialFacingVertical(cogModel, state, Direction.fromAxisAndDirection(state.getValue(EncasedCogwheelBlock.AXIS), AxisDirection.POSITIVE));
     }
 }

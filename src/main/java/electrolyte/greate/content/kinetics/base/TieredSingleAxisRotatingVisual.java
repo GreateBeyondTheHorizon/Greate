@@ -8,6 +8,7 @@ import dev.engine_room.flywheel.lib.model.Models;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import dev.engine_room.flywheel.lib.visualization.SimpleBlockEntityVisualizer;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
+import electrolyte.greate.foundation.client.models.GreateModelUtils;
 import net.minecraft.core.Direction;
 
 import static electrolyte.greate.registry.GreatePartialModels.*;
@@ -27,11 +28,11 @@ public class TieredSingleAxisRotatingVisual extends SingleAxisRotatingVisual<Kin
     }
 
     public static <T extends KineticBlockEntity> SingleAxisRotatingVisual<T> poweredShaft(VisualizationContext context, T blockEntity, float partialTick) {
-        return new SingleAxisRotatingVisual<>(context, blockEntity, partialTick, Models.partial(POWERED_SHAFT_MODELS[((ITieredBlock) blockEntity.getBlockState().getBlock()).getTier()]));
+        return new SingleAxisRotatingVisual<>(context, blockEntity, partialTick, Models.partial(GreateModelUtils.getPartialModel(blockEntity.getBlockState().getBlock(), "/powered_shaft")));
     }
 
     public static <T extends KineticBlockEntity> SingleAxisRotatingVisual<T> shaft(VisualizationContext context, T blockEntity, float partialTick) {
-        return new SingleAxisRotatingVisual<>(context, blockEntity, partialTick, Models.partial(SHAFT_MODELS[((ITieredBlock) blockEntity.getBlockState().getBlock()).getTier()]));
+        return new SingleAxisRotatingVisual<>(context, blockEntity, partialTick, Models.partial(GreateModelUtils.getPartialModel(blockEntity.getBlockState().getBlock(), "/shaft")));
     }
 
     public static <T extends KineticBlockEntity> SingleAxisRotatingVisual<T> pumpCog(VisualizationContext context, T blockEntity, float partialTick) {

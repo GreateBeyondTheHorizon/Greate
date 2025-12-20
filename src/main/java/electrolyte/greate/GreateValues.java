@@ -1,13 +1,14 @@
 package electrolyte.greate;
 
-import com.google.common.collect.HashBiMap;
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.recipe.content.Content;
 import com.gregtechceu.gtceu.api.recipe.ingredient.EnergyStack;
+import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.simibubi.create.AllRecipeTypes;
 import dev.latvian.mods.rhino.util.HideFromJS;
+import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingRecipe;
 import electrolyte.greate.content.kinetics.fan.processing.TieredHauntingRecipe;
 import electrolyte.greate.content.kinetics.fan.processing.TieredSplashingRecipe;
@@ -21,7 +22,6 @@ import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilde
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.List;
-import java.util.Map;
 
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
 import static electrolyte.greate.registry.GreateMaterials.AndesiteAlloy;
@@ -99,6 +99,12 @@ public class GreateValues {
         return null;
     }
 
+    public static float getMaxCapacityFromMaterial(Material material) {
+        if(material == null || material == GTMaterials.NULL) return Float.MAX_VALUE;
+        if(!material.hasProperty(GreatePropertyKeys.KINETIC)) return Float.MAX_VALUE;
+        return material.getProperty(GreatePropertyKeys.KINETIC).getMaxCapacity();
+    }
+
     /**
      * Tier materials
      * Based on GTMaterials.VOLTAGE_COMMON_MATERIALS, but uses AndesiteAlloy instead of WroughtIron in the first tier.
@@ -115,19 +121,6 @@ public class GreateValues {
             Darmstadtium,
             Neutronium,
     };
-
-    public static final HashBiMap<Material, Integer> TIER_MATERIALS = HashBiMap.create(Map.of(
-            AndesiteAlloy, 0,
-            Steel, 1,
-            Aluminium, 2,
-            StainlessSteel, 3,
-            Titanium, 4,
-            TungstenSteel, 5,
-            RhodiumPlatedPalladium, 6,
-            NaquadahAlloy, 7,
-            Darmstadtium, 8,
-            Neutronium, 9
-    ));
 
     /**
      * Belt materials

@@ -8,7 +8,7 @@ import dev.engine_room.flywheel.api.instance.Instance;
 import dev.engine_room.flywheel.api.instance.InstancerProvider;
 import dev.engine_room.flywheel.api.visualization.VisualizationContext;
 import dev.engine_room.flywheel.lib.model.Models;
-import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
+import electrolyte.greate.foundation.client.models.GreateModelUtils;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.world.level.block.state.BlockState;
@@ -16,9 +16,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
-
-import static electrolyte.greate.registry.GreatePartialModels.SHAFT_HALF_MODELS;
-import static electrolyte.greate.registry.GreatePartialModels.SHAFT_MODELS;
 
 public class TieredSawVisual extends KineticBlockEntityVisual<TieredSawBlockEntity> {
 
@@ -33,14 +30,13 @@ public class TieredSawVisual extends KineticBlockEntityVisual<TieredSawBlockEnti
     public static RotatingInstance shaft(InstancerProvider provider, BlockState state) {
         Direction facing = state.getValue(BlockStateProperties.FACING);
         Axis axis = facing.getAxis();
-        int tier = ((ITieredBlock) state.getBlock()).getTier();
         if(axis.isHorizontal()) {
             Direction align = facing.getOpposite();
-            return provider.instancer(AllInstanceTypes.ROTATING, Models.partial(SHAFT_HALF_MODELS[tier]))
+            return provider.instancer(AllInstanceTypes.ROTATING, Models.partial(GreateModelUtils.getPartialModel(state.getBlock(), "/shaft_half")))
                     .createInstance()
                     .rotateTo(0, 0, 1, align.getStepX(), align.getStepY(), align.getStepZ());
         } else {
-            return provider.instancer(AllInstanceTypes.ROTATING, Models.partial(SHAFT_MODELS[tier]))
+            return provider.instancer(AllInstanceTypes.ROTATING, Models.partial(GreateModelUtils.getPartialModel(state.getBlock(), "/shaft")))
                     .createInstance()
                     .rotateToFace(state.getValue(SawBlock.AXIS_ALONG_FIRST_COORDINATE) ? Axis.X : Axis.Z);
         }

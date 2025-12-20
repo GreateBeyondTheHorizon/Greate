@@ -14,6 +14,7 @@ import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTank
 import com.simibubi.create.foundation.virtualWorld.VirtualRenderWorld;
 import dev.engine_room.flywheel.api.visualization.VisualizationManager;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import electrolyte.greate.foundation.client.models.GreateModelUtils;
 import net.createmod.catnip.math.AngleHelper;
 import net.createmod.catnip.math.VecHelper;
 import net.createmod.catnip.platform.ForgeCatnipServices;
@@ -96,7 +97,7 @@ public class TieredSawRenderer extends SawRenderer {
     protected SuperByteBuffer getRotatedModel(KineticBlockEntity be) {
         BlockState state = be.getBlockState();
         if(state.getValue(FACING).getAxis().isHorizontal()) {
-            return CachedBuffers.partialFacing(SHAFT_HALF_MODELS[tier], state.rotate(be.getLevel(), be.getBlockPos(), Rotation.CLOCKWISE_180));
+            return CachedBuffers.partialFacing(GreateModelUtils.getPartialModel(be.getBlockState().getBlock(), "/shaft_half"), state.rotate(be.getLevel(), be.getBlockPos(), Rotation.CLOCKWISE_180));
         }
         return CachedBuffers.block(KineticBlockEntityRenderer.KINETIC_BLOCK, getRenderedBlockState(be));
     }
@@ -122,13 +123,13 @@ public class TieredSawRenderer extends SawRenderer {
         SuperByteBuffer buffer;
         SuperByteBuffer superBuffer;
         if (SawBlock.isHorizontal(state)) {
-            buffer = CachedBuffers.partial(SHAFT_HALF_MODELS[tier], state);
+            buffer = CachedBuffers.partial(GreateModelUtils.getPartialModel(state.getBlock(), "/shaft_half"), state);
             if (shouldAnimate)
                 superBuffer = CachedBuffers.partial(MECHANICAL_SAW_BLADE_HORIZONTAL_ACTIVE_MODELS[tier], state);
             else
                 superBuffer = CachedBuffers.partial(MECHANICAL_SAW_BLADE_HORIZONTAL_INACTIVE_MODELS[tier], state);
         } else {
-            buffer = CachedBuffers.partial(SHAFT_MODELS[tier], state);
+            buffer = CachedBuffers.partial(GreateModelUtils.getPartialModel(state.getBlock(), "/shaft"), state);
             if (shouldAnimate)
                 superBuffer = CachedBuffers.partial(MECHANICAL_SAW_BLADE_VERTICAL_ACTIVE_MODELS[tier], state);
             else

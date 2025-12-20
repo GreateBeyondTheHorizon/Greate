@@ -9,6 +9,8 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 
+import static electrolyte.greate.GreateValues.TM;
+
 public class TieredCrushingWheelBlockEntity extends CrushingWheelBlockEntity implements ITieredKineticBlockEntity {
 
     private int tier;
@@ -21,6 +23,11 @@ public class TieredCrushingWheelBlockEntity extends CrushingWheelBlockEntity imp
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
-        return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, tier, capacity, stress);
+        return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, TM[tier], capacity, stress);
+    }
+
+    @Override
+    public boolean renderNormally() {
+        return false;
     }
 }

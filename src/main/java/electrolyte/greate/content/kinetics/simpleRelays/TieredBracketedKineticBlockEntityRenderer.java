@@ -3,6 +3,7 @@ package electrolyte.greate.content.kinetics.simpleRelays;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import dev.engine_room.flywheel.api.visualization.VisualizationManager;
+import electrolyte.greate.foundation.client.models.GreateModelUtils;
 import net.createmod.catnip.render.CachedBuffers;
 import net.createmod.catnip.render.SuperByteBuffer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -13,8 +14,6 @@ import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.Direction.AxisDirection;
 
 import static com.simibubi.create.content.kinetics.simpleRelays.BracketedKineticBlockEntityRenderer.getAngleForLargeCogShaft;
-import static electrolyte.greate.registry.GreatePartialModels.COGWHEEL_SHAFT_MODELS;
-import static electrolyte.greate.registry.GreatePartialModels.LARGE_COGWHEEL_SHAFTLESS_MODELS;
 
 public class TieredBracketedKineticBlockEntityRenderer extends KineticBlockEntityRenderer<TieredBracketedKineticBlockEntity> {
     public TieredBracketedKineticBlockEntityRenderer(Context context) {
@@ -30,16 +29,18 @@ public class TieredBracketedKineticBlockEntityRenderer extends KineticBlockEntit
             return;
         }
 
-        int tier = ((TieredCogwheelBlock) be.getBlockState().getBlock()).getTier();
+        TieredCogwheelBlock cogwheelBlock = ((TieredCogwheelBlock) be.getBlockState().getBlock());
+        int tier = cogwheelBlock.getTier();
+        String material = cogwheelBlock.getMaterial().getName();
         Axis axis = getRotationAxisOf(be);
         Direction facing = Direction.fromAxisAndDirection(axis, AxisDirection.POSITIVE);
         renderRotatingBuffer(be,
-                CachedBuffers.partialFacingVertical(LARGE_COGWHEEL_SHAFTLESS_MODELS[tier], be.getBlockState(), facing),
+                CachedBuffers.partialFacingVertical(GreateModelUtils.getPartialModel(be.getBlockState().getBlock(), "/large_cogwheel_shaftless"), be.getBlockState(), facing),
                 ms, buffer.getBuffer(RenderType.solid()), light);
 
         float angle = getAngleForLargeCogShaft(be, axis);
         SuperByteBuffer shaft =
-                CachedBuffers.partialFacingVertical(COGWHEEL_SHAFT_MODELS[tier], be.getBlockState(), facing);
+                CachedBuffers.partialFacingVertical(GreateModelUtils.getPartialModel(be.getBlockState().getBlock(), "/shaft_half"), be.getBlockState(), facing);
         kineticRotationTransform(shaft, be, axis, angle, light);
         shaft.renderInto(ms, buffer.getBuffer(RenderType.solid()));
     }

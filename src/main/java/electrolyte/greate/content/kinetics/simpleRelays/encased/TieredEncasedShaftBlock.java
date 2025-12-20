@@ -29,9 +29,11 @@ public class TieredEncasedShaftBlock extends EncasedShaftBlock implements ITiere
 
     private final Supplier<Block> shaftType;
     private int tier;
+    private Material material;
 
     public TieredEncasedShaftBlock(Properties properties, Material material, Supplier<Block> casing) {
         super(properties, casing);
+        this.material = material;
         this.shaftType = () -> ChemicalHelper.getBlock(shaft, material);
     }
 
@@ -74,5 +76,10 @@ public class TieredEncasedShaftBlock extends EncasedShaftBlock implements ITiere
     @Override
     public void setTier(int tier) {
         this.tier = tier;
+    }
+
+    @Override
+    public Material getMaterial() {
+        return material;
     }
 }

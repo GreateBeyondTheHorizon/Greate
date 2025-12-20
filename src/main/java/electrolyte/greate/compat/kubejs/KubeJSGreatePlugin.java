@@ -137,7 +137,7 @@ public class KubeJSGreatePlugin extends KubeJSPlugin {
                     });
                 }
                 builder.build(b -> recipesByName.put(b.getId(), b.getType().fromJson(b.getId(), b.serializeRecipe())));
-            } else if(r instanceof ProcessingRecipeJS processingRecipeJS) {
+            } else if(ModList.get().isLoaded("kubejs_create") && r instanceof ProcessingRecipeJS processingRecipeJS) {
                 TieredProcessingRecipeFactory<TieredProcessingRecipe<?>> factory = GreateValues.getFactory(processingRecipeJS.getType());
                 if(factory == null) continue;
                 TieredProcessingRecipeBuilder<TieredProcessingRecipe<?>> builder = new TieredProcessingRecipeBuilder<>(factory, Greate.id("integration/" + processingRecipeJS.id.toString().replace(':', '/')));
@@ -178,7 +178,7 @@ public class KubeJSGreatePlugin extends KubeJSPlugin {
                 if(!itemResults.isEmpty()) builder.withItemOutputs(itemResults);
                 if(!fluidResults.isEmpty()) builder.withFluidOutputs(fluidResults);
                 builder.build( b -> recipesByName.put(b.getId(), b.getType().fromJson(b.getId(), b.serializeRecipe())));
-            }
+            } else Greate.LOGGER.warn("KubeJS Create not found, Create recipes will be skipped.");
         }
     }
 }

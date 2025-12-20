@@ -55,6 +55,8 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import static electrolyte.greate.GreateValues.TM;
+
 public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKineticBlockEntity {
 
     private int tier;
@@ -82,7 +84,7 @@ public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKinet
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
-        ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, tier, capacity, stress);
+        ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, TM[tier], capacity, stress);
         if(canProcess()) {
             IFluidHandler fluid = fluidCapability.orElse(new FluidTank(0));
             LangBuilder mb = CreateLang.translate("generic.unit.millibuckets");

@@ -9,6 +9,7 @@ import dev.engine_room.flywheel.api.visualization.VisualizationContext;
 import dev.engine_room.flywheel.lib.instance.AbstractInstance;
 import dev.engine_room.flywheel.lib.instance.FlatLit;
 import dev.engine_room.flywheel.lib.model.Models;
+import electrolyte.greate.foundation.client.models.GreateModelUtils;
 import net.createmod.catnip.data.Iterate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -20,8 +21,6 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import static electrolyte.greate.registry.GreatePartialModels.SHAFT_HALF_MODELS;
-
 public class TieredGearboxVisual extends KineticBlockEntityVisual<TieredGearboxBlockEntity> {
 
     protected final EnumMap<Direction, RotatingInstance> keys = new EnumMap<>(Direction.class);
@@ -29,11 +28,10 @@ public class TieredGearboxVisual extends KineticBlockEntityVisual<TieredGearboxB
 
     public TieredGearboxVisual(VisualizationContext context, TieredGearboxBlockEntity blockEntity, float partialTick) {
         super(context, blockEntity, partialTick);
-        int tier = ((TieredGearboxBlock) blockState.getBlock()).getTier();
         final Axis boxAxis = blockState.getValue(BlockStateProperties.AXIS);
         updateSourceFacing();
 
-        Instancer<RotatingInstance> instancer = instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.partial(SHAFT_HALF_MODELS[tier]));
+        Instancer<RotatingInstance> instancer = instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.partial(GreateModelUtils.getPartialModel(blockEntity.getBlockState().getBlock(), "/shaft_half")));
 
         for(Direction direction : Iterate.directions) {
             final Axis axis = direction.getAxis();

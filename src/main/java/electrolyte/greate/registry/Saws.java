@@ -6,6 +6,7 @@ import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import electrolyte.greate.Greate;
+import electrolyte.greate.GreateRegistries;
 import electrolyte.greate.content.kinetics.saw.TieredSawBlock;
 import electrolyte.greate.content.kinetics.saw.TieredSawGenerator;
 import electrolyte.greate.content.kinetics.saw.TieredSawMovementBehaviour;
@@ -16,7 +17,6 @@ import net.minecraft.world.level.material.MapColor;
 import static com.gregtechceu.gtceu.api.GTValues.*;
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
 import static com.simibubi.create.api.behaviour.movement.MovementBehaviour.movementBehaviour;
-import static electrolyte.greate.Greate.REGISTRATE;
 import static electrolyte.greate.registry.GreateMaterials.AndesiteAlloy;
 
 public class Saws {
@@ -35,7 +35,7 @@ public class Saws {
             NEUTRONIUM_SAW;
 
     public static void register() {
-        REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
+        GreateRegistries.REGISTRATE.creativeModeTab(Greate.GREATE_TAB);
 
         SAWS[ULV] = ANDESITE_SAW = saw(ULV, 1.0, AndesiteAlloy);
         SAWS[LV] = STEEL_SAW = saw(LV, 2.0, Steel);
@@ -50,7 +50,7 @@ public class Saws {
     }
 
     public static BlockEntry<TieredSawBlock> saw(int tier, double stressImpact, Material mat) {
-        return REGISTRATE
+        return GreateRegistries.REGISTRATE
                 .block(mat.getName() + "_mechanical_saw", p -> new TieredSawBlock(p, mat))
                 .initialProperties(SharedProperties::stone)
                 .properties(p -> p.mapColor(MapColor.PODZOL))

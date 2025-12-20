@@ -4,20 +4,18 @@ import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import electrolyte.greate.Greate;
+import electrolyte.greate.GreateRegistries;
 import electrolyte.greate.content.kinetics.fan.TieredEncasedFanBlock;
 import electrolyte.greate.foundation.data.GreateBuilderTransformers;
 import electrolyte.greate.infrastructure.config.GStress;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
-import static electrolyte.greate.Greate.REGISTRATE;
 import static electrolyte.greate.GreateValues.TM;
-import static electrolyte.greate.registry.GreatePartialModels.FAN_INNER_MODELS;
-import static electrolyte.greate.registry.GreatePartialModels.SHAFT_HALF_MODELS;
 
 public class EncasedFans {
 
     public static void register() {
-        REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
+        GreateRegistries.REGISTRATE.creativeModeTab(Greate.GREATE_TAB);
 
         FANS[ULV] = ANDESITE_ENCASED_FAN = fan(ULV, 0.5);
         FANS[LV] = STEEL_ENCASED_FAN = fan(LV, 1.0);
@@ -46,8 +44,8 @@ public class EncasedFans {
             NEUTRONIUM_ENCASED_FAN;
 
     public static BlockEntry<TieredEncasedFanBlock> fan(int tier, double stressImpact) {
-        return REGISTRATE
-                .block(TM[tier].getName() + "_encased_fan", p -> new TieredEncasedFanBlock(p, FAN_INNER_MODELS[tier], SHAFT_HALF_MODELS[tier]))
+        return GreateRegistries.REGISTRATE
+                .block(TM[tier].getName() + "_encased_fan", TieredEncasedFanBlock::new)
                 .initialProperties(SharedProperties::stone)
                 .transform(GreateBuilderTransformers.tieredEncasedFan())
                 .transform(TagGen.axeOrPickaxe())

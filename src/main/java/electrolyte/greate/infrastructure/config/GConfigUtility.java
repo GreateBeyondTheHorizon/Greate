@@ -5,22 +5,6 @@ import static com.gregtechceu.gtceu.api.GTValues.*;
 
 public class GConfigUtility {
 
-    public static int getMaxCapacityFromTier(int tier) {
-        return switch (tier) {
-            case ULV -> GreateConfigs.server().kinetics.tierValues.andesiteMaxCapacity.get();
-            case LV -> GreateConfigs.server().kinetics.tierValues.steelMaxCapacity.get();
-            case MV -> GreateConfigs.server().kinetics.tierValues.aluminiumMaxCapacity.get();
-            case HV -> GreateConfigs.server().kinetics.tierValues.stainlessSteelMaxCapacity.get();
-            case EV -> GreateConfigs.server().kinetics.tierValues.titaniumMaxCapacity.get();
-            case IV -> GreateConfigs.server().kinetics.tierValues.tungstensteelMaxCapacity.get();
-            case LuV -> GreateConfigs.server().kinetics.tierValues.palladiumMaxCapacity.get();
-            case ZPM -> GreateConfigs.server().kinetics.tierValues.naquadahMaxCapacity.get();
-            case UV -> GreateConfigs.server().kinetics.tierValues.darmstadtiumMaxCapacity.get();
-            case UHV -> GreateConfigs.server().kinetics.tierValues.neutroniumMaxCapacity.get();
-            default -> throw new IllegalStateException("Unexpected value: " + tier);
-        };
-    }
-
     public static double getPumpPressureFromTier(int tier) {
         return switch (tier) {
             case ULV -> GreateConfigs.server().kinetics.pumpValues.andesitePressure.get();

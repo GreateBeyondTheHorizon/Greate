@@ -95,6 +95,7 @@ public class TieredShaftBlock extends ShaftBlock implements ITieredBlock, ITiere
         return this;
     }
 
+    @Override
     public Material getMaterial() {
         return material;
     }

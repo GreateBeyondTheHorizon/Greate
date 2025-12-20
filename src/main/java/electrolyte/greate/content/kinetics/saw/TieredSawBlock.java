@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
+import static electrolyte.greate.GreateValues.TM;
 import static electrolyte.greate.registry.GreateTagPrefixes.shaft;
 
 public class TieredSawBlock extends SawBlock implements ITieredBlock, ITieredShaftBlock {
@@ -68,6 +69,11 @@ public class TieredSawBlock extends SawBlock implements ITieredBlock, ITieredSha
     @Override
     public Block getShaft() {
         return shaftBlock.get();
+    }
+
+    @Override
+    public Material getMaterial() {
+        return TM[tier];
     }
 
     @Override

@@ -88,6 +88,7 @@ public class TieredPoweredShaftBlock extends PoweredShaftBlock implements ITiere
         return shaftType.get();
     }
 
+    @Override
     public Material getMaterial() {
         return material;
     }

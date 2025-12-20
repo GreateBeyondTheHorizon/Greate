@@ -1,5 +1,6 @@
 package electrolyte.greate.foundation.client.models;
 
+import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.data.pack.GTDynamicResourcePack;
 import com.simibubi.create.Create;
@@ -31,6 +32,7 @@ public record BeltModel(TieredBeltBlock beltBlock) {
     public static final Set<ResourceLocation> MODEL_LOCATIONS = new HashSet<>();
 
     public static void create(TieredBeltBlock block) {
+        if(!GTCEu.isClientSide()) return;
         MODELS.add(new BeltModel(block));
     }
 
@@ -111,8 +113,8 @@ public record BeltModel(TieredBeltBlock beltBlock) {
                                     beltModel.with(VariantProperties.MODEL, !casing ? particleLocation : casingLocation.withSuffix("sideways_" + part.name().toLowerCase()));
                         }
                         return beltModel
-                                .with(VariantProperties.X_ROT, GreateModelUtils.getXRotation(direction, slope))
-                                .with(VariantProperties.Y_ROT, GreateModelUtils.getYRotation(direction, slope, casing));
+                                .with(VariantProperties.X_ROT, GreateModelUtils.getBeltXRotation(direction, slope))
+                                .with(VariantProperties.Y_ROT, GreateModelUtils.getBeltYRotation(direction, slope, casing));
                     });
             GTDynamicResourcePack.addBlockState(blockId, MultiVariantGenerator.multiVariant(model.beltBlock).with(dispatch));
         }

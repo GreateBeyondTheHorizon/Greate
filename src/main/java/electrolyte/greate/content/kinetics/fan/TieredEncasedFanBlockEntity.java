@@ -13,4 +13,9 @@ public class TieredEncasedFanBlockEntity extends EncasedFanBlockEntity implement
         super(type, pos, state);
         this.airCurrent = new TieredAirCurrent(this, ((TieredEncasedFanBlock) state.getBlock()).getTier());
     }
+
+    @Override
+    public boolean renderNormally() {
+        return false;
+    }
 }

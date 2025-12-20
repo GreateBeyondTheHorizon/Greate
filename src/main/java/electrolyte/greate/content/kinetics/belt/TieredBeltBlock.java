@@ -1,17 +1,16 @@
 package electrolyte.greate.content.kinetics.belt;
 
-import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
+import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.kinetics.belt.BeltBlock;
 import com.simibubi.create.content.kinetics.belt.BeltPart;
 import com.simibubi.create.content.schematics.requirement.ItemRequirement;
 import com.simibubi.create.content.schematics.requirement.ItemRequirement.ItemUseType;
 import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
-import electrolyte.greate.GreateValues;
+import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
-import electrolyte.greate.foundation.client.models.BeltModel;
 import electrolyte.greate.registry.GreateSpriteShifts;
 import electrolyte.greate.registry.ModBlockEntityTypes;
 import net.createmod.catnip.data.Iterate;
@@ -33,7 +32,6 @@ import net.minecraft.world.phys.HitResult;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static electrolyte.greate.registry.GreateTagPrefixes.beltConnector;
 import static electrolyte.greate.registry.GreateTagPrefixes.shaft;
@@ -46,9 +44,6 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
 
     public TieredBeltBlock(Properties properties) {
         super(properties);
-        if(GTCEu.isClientSide()) {
-            BeltModel.create(this);
-        }
     }
 
     @Override
@@ -65,7 +60,6 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
                 drops.removeIf(s -> s.is(AllBlocks.SHAFT.asItem()));
                 drops.add(ChemicalHelper.get(shaft, getShaftMaterial()));
             }
-            drops.add(ChemicalHelper.get(beltConnector, getBeltMaterial()));
         }
         return drops;
     }
@@ -169,7 +163,8 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
 
     @Override
     public int getTier() {
-        return Objects.requireNonNullElse(GreateValues.TIER_MATERIALS.get(getShaftMaterial()), 0);
+        if(getShaftMaterial() == null || getShaftMaterial() == GTMaterials.NULL) return 0;
+        return getShaftMaterial().getProperty(GreatePropertyKeys.KINETIC).getTier();
     }
 
     @Override
@@ -195,5 +190,10 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
 
     public void setShaftMaterial(Material shaftMaterial) {
         this.shaftMaterial = shaftMaterial;
+    }
+
+    @Override
+    public Material getMaterial() {
+        return shaftMaterial;
     }
 }

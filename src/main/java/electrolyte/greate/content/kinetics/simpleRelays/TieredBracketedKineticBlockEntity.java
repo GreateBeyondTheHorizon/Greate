@@ -20,7 +20,7 @@ public class TieredBracketedKineticBlockEntity extends BracketedKineticBlockEnti
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
-        return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, tier, capacity, stress);
+        return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, ((ITieredBlock) getBlockState().getBlock()).getMaterial(), capacity, stress);
     }
 
     @Override
@@ -31,5 +31,10 @@ public class TieredBracketedKineticBlockEntity extends BracketedKineticBlockEnti
 
     public int getTier() {
         return tier;
+    }
+
+    @Override
+    public boolean renderNormally() {
+        return false;
     }
 }

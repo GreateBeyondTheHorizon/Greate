@@ -1,8 +1,0 @@
-{
-  "parent": "create:block/shaft",
-  "textures": {
-    "0": "greate:block/steel/axis",
-    "1": "greate:block/steel/axis_top",
-    "particle": "greate:block/steel/axis"
-  }
-}

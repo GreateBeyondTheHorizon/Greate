@@ -5,6 +5,7 @@ import com.gregtechceu.gtceu.api.data.chemical.material.properties.IMaterialProp
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.MaterialProperties;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags.GENERATE_PLATE;
@@ -15,12 +16,12 @@ public class BeltProperty implements IMaterialProperty {
     private int maxLength;
 
     public BeltProperty(List<Material> validShafts) {
-        this.validShafts = validShafts;
+        this.validShafts = new ArrayList<>(validShafts);
         this.maxLength = 20;
     }
 
     public BeltProperty(List<Material> validShafts, int maxLength) {
-        this.validShafts = validShafts;
+        this.validShafts = new ArrayList<>(validShafts);
         this.maxLength = maxLength;
     }
 

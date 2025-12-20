@@ -1,6 +1,5 @@
 package electrolyte.greate.content.kinetics.belt.item;
 
-import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.belt.BeltBlock;
@@ -16,7 +15,6 @@ import electrolyte.greate.content.kinetics.belt.ITieredBelt;
 import electrolyte.greate.content.kinetics.belt.TieredBeltBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredBracketedKineticBlockEntity;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
-import electrolyte.greate.foundation.client.models.BeltConnectorModel;
 import net.createmod.catnip.math.VecHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -59,9 +57,6 @@ public class TieredBeltConnectorItem extends BlockItem implements ITieredBelt {
         super(pBlock, pProperties);
         this.validShafts = material.getProperty(GreatePropertyKeys.BELT).getValidShafts();
         this.material = material;
-        if(GTCEu.isClientSide()) {
-            BeltConnectorModel.create(this);
-        }
     }
 
     @Override

@@ -3,9 +3,9 @@ package electrolyte.greate.registry;
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
 import com.gregtechceu.gtceu.api.GTCEuAPI;
-import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
+import com.gregtechceu.gtceu.common.data.GTBlocks;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllSpriteShifts;
 import com.simibubi.create.content.decoration.encasing.EncasingRegistry;
@@ -14,22 +14,22 @@ import com.simibubi.create.content.kinetics.simpleRelays.CogwheelBlockItem;
 import com.simibubi.create.content.kinetics.simpleRelays.encased.EncasedCogCTBehaviour;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
-import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.util.entry.BlockEntry;
+import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import electrolyte.greate.Greate;
+import electrolyte.greate.GreateRegistries;
 import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
 import electrolyte.greate.content.gtceu.material.KineticProperty;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredCogwheelBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedCogwheelBlock;
-import electrolyte.greate.foundation.data.GreateBlockStateGen;
+import electrolyte.greate.foundation.client.models.CogwheelModel;
 import electrolyte.greate.infrastructure.config.GStress;
 import net.createmod.catnip.data.Couple;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.MapColor;
 
-import java.util.function.Supplier;
+import java.util.Objects;
 
-import static electrolyte.greate.Greate.REGISTRATE;
 import static electrolyte.greate.foundation.data.GreateBuilderTransformers.tieredEncasedCogwheel;
 import static electrolyte.greate.foundation.data.GreateBuilderTransformers.tieredEncasedLargeCogwheel;
 import static electrolyte.greate.registry.GreateTagPrefixes.*;
@@ -50,7 +50,7 @@ public class Cogwheels {
     public static Table<TagPrefix, Material, BlockEntry<TieredEncasedCogwheelBlock>> BRASS_ENCASED_LARGE_COGWHEELS;
 
     public static void register() {
-        REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
+        GreateRegistries.REGISTRATE.creativeModeTab(Greate.GREATE_TAB);
         generateCogwheels();
         generateLargeCogwheels();
         generateAndesiteEncasedCogwheels();
@@ -63,17 +63,18 @@ public class Cogwheels {
             if(!mat.hasProperty(GreatePropertyKeys.COGWHEEL)) continue;
             KineticProperty prop = mat.getProperty(GreatePropertyKeys.KINETIC);
             int tier = prop.getTier();
-            var cogwheelEntry = REGISTRATE
-                    .block(mat.getName() + "_cogwheel", TieredCogwheelBlock::small)
+            var cogwheelEntry = GreateRegistries.REGISTRATE
+                    .block(mat.getName() + "_cogwheel", p -> TieredCogwheelBlock.small(p, mat))
                     .initialProperties(SharedProperties::stone)
-                    .properties(p -> p.sound(SoundType.WOOD))
-                    .properties(p -> p.mapColor(MapColor.DIRT))
+                    .properties(p -> p.sound(SoundType.WOOD).mapColor(MapColor.DIRT).noLootTable())
                     .transform(GStress.setNoImpact())
-                    .transform(TagGen.axeOrPickaxe())
-                    .blockstate(GreateBlockStateGen.tieredCogwheelProvider(false))
+                    .transform(GTBlocks.unificationBlock(cogwheel, mat))
+                    .blockstate(NonNullBiConsumer.noop())
                     .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
                     .onRegister(c -> c.setTier(tier))
-                    .item(CogwheelBlockItem::new).build()
+                    .onRegister(CogwheelModel::create)
+                    .item(CogwheelBlockItem::new)
+                    .model(NonNullBiConsumer.noop()).build()
                     .register();
             COGWHEELS_BUILDER.put(cogwheel, mat, cogwheelEntry);
         }
@@ -86,17 +87,18 @@ public class Cogwheels {
             if(!mat.hasProperty(GreatePropertyKeys.COGWHEEL)) continue;
             KineticProperty prop = mat.getProperty(GreatePropertyKeys.KINETIC);
             int tier = prop.getTier();
-            var cogwheelEntry = REGISTRATE
-                    .block("large_" + mat.getName() + "_cogwheel", TieredCogwheelBlock::large)
+            var cogwheelEntry = GreateRegistries.REGISTRATE
+                    .block("large_" + mat.getName() + "_cogwheel", p -> TieredCogwheelBlock.large(p, mat))
                     .initialProperties(SharedProperties::stone)
-                    .properties(p -> p.sound(SoundType.WOOD))
-                    .properties(p -> p.mapColor(MapColor.DIRT))
+                    .properties(p -> p.sound(SoundType.WOOD).mapColor(MapColor.DIRT).noLootTable())
                     .transform(GStress.setNoImpact())
-                    .transform(TagGen.axeOrPickaxe())
-                    .blockstate(GreateBlockStateGen.tieredCogwheelProvider(true))
+                    .transform(GTBlocks.unificationBlock(largeCogwheel, mat))
+                    .blockstate(NonNullBiConsumer.noop())
                     .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
                     .onRegister(c -> c.setTier(tier))
-                    .item(CogwheelBlockItem::new).build()
+                    .onRegister(CogwheelModel::create)
+                    .item(CogwheelBlockItem::new)
+                    .model(NonNullBiConsumer.noop()).build()
                     .register();
             LARGE_COGWHEELS_BUILDER.put(largeCogwheel, mat, cogwheelEntry);
         }
@@ -109,27 +111,27 @@ public class Cogwheels {
             if(!mat.hasProperty(GreatePropertyKeys.COGWHEEL)) continue;
             KineticProperty prop = mat.getProperty(GreatePropertyKeys.KINETIC);
             int tier = prop.getTier();
-            Supplier<TieredCogwheelBlock> cogwheelSupplier = () -> (TieredCogwheelBlock) ChemicalHelper.getBlock(cogwheel, mat);
-            var cogwheelEntry = REGISTRATE
+            var cogwheelEntry = GreateRegistries.REGISTRATE
                     .block("andesite_encased_" + mat.getName() + "_cogwheel", p -> TieredEncasedCogwheelBlock.small(p, AllBlocks.ANDESITE_CASING::get, mat))
-                    .properties(p -> p.mapColor(MapColor.PODZOL))
-                    .transform(tieredEncasedCogwheel(cogwheelSupplier, () -> AllSpriteShifts.ANDESITE_CASING))
-                    .transform(EncasingRegistry.addVariantTo(cogwheelSupplier))
+                    .properties(p -> p.mapColor(MapColor.PODZOL).noLootTable())
+                    .transform(tieredEncasedCogwheel(() -> AllSpriteShifts.ANDESITE_CASING))
+                    .transform(EncasingRegistry.addVariantTo(Objects.requireNonNull(COGWHEELS.get(cogwheel, mat))))
+                    .transform(GTBlocks.unificationBlock(andesiteEncasedCogwheel, mat))
                     .onRegister(CreateRegistrate.connectedTextures(() -> new EncasedCogCTBehaviour(AllSpriteShifts.ANDESITE_CASING,
                             Couple.create(AllSpriteShifts.ANDESITE_ENCASED_COGWHEEL_SIDE, AllSpriteShifts.ANDESITE_ENCASED_COGWHEEL_OTHERSIDE))))
                     .onRegister(c -> c.setTier(tier))
-                    .transform(TagGen.axeOrPickaxe())
+                    .onRegister(CogwheelModel::create)
                     .register();
             ANDESITE_ENCASED_COGWHEELS_BUILDER.put(andesiteEncasedCogwheel, mat, cogwheelEntry);
 
-            Supplier<TieredCogwheelBlock> largeCogwheelSupplier = () -> (TieredCogwheelBlock) ChemicalHelper.getBlock(largeCogwheel, mat);
-             var largeCogwheelEntry = REGISTRATE
+            var largeCogwheelEntry = GreateRegistries.REGISTRATE
                      .block("andesite_encased_large_" + mat.getName() + "_cogwheel", p -> TieredEncasedCogwheelBlock.large(p, AllBlocks.ANDESITE_CASING::get, mat))
-                     .properties(p -> p.mapColor(MapColor.PODZOL))
-                     .transform(tieredEncasedLargeCogwheel(largeCogwheelSupplier, () -> AllSpriteShifts.ANDESITE_CASING))
-                     .transform(EncasingRegistry.addVariantTo(largeCogwheelSupplier))
-                     .transform(TagGen.axeOrPickaxe())
+                     .properties(p -> p.mapColor(MapColor.PODZOL).noLootTable())
+                     .transform(tieredEncasedLargeCogwheel(() -> AllSpriteShifts.ANDESITE_CASING))
+                     .transform(EncasingRegistry.addVariantTo(Objects.requireNonNull(LARGE_COGWHEELS.get(largeCogwheel, mat))))
+                     .transform(GTBlocks.unificationBlock(andesiteEncasedLargeCogwheel, mat))
                      .onRegister(c -> c.setTier(tier))
+                     .onRegister(CogwheelModel::create)
                      .register();
              ANDESITE_ENCASED_LARGE_COGWHEELS_BUILDER.put(andesiteEncasedLargeCogwheel, mat, largeCogwheelEntry);
         }
@@ -143,27 +145,27 @@ public class Cogwheels {
             if(!mat.hasProperty(GreatePropertyKeys.COGWHEEL)) continue;
             KineticProperty prop = mat.getProperty(GreatePropertyKeys.KINETIC);
             int tier = prop.getTier();
-            Supplier<TieredCogwheelBlock> cogwheelSupplier = () -> (TieredCogwheelBlock) ChemicalHelper.getBlock(cogwheel, mat);
-            var cogwheelEntry = REGISTRATE
+            var cogwheelEntry = GreateRegistries.REGISTRATE
                     .block("brass_encased_" + mat.getName() + "_cogwheel", p -> TieredEncasedCogwheelBlock.small(p, AllBlocks.BRASS_CASING::get, mat))
-                    .properties(p -> p.mapColor(MapColor.PODZOL))
-                    .transform(tieredEncasedCogwheel(cogwheelSupplier, () -> AllSpriteShifts.BRASS_CASING))
-                    .transform(EncasingRegistry.addVariantTo(cogwheelSupplier))
+                    .properties(p -> p.mapColor(MapColor.PODZOL).noLootTable())
+                    .transform(tieredEncasedCogwheel(() -> AllSpriteShifts.BRASS_CASING))
+                    .transform(EncasingRegistry.addVariantTo(Objects.requireNonNull(COGWHEELS.get(cogwheel, mat))))
+                    .transform(GTBlocks.unificationBlock(brassEncasedCogwheel, mat))
                     .onRegister(CreateRegistrate.connectedTextures(() -> new EncasedCogCTBehaviour(AllSpriteShifts.BRASS_CASING,
                             Couple.create(AllSpriteShifts.BRASS_ENCASED_COGWHEEL_SIDE, AllSpriteShifts.BRASS_ENCASED_COGWHEEL_OTHERSIDE))))
                     .onRegister(c -> c.setTier(tier))
-                    .transform(TagGen.axeOrPickaxe())
+                    .onRegister(CogwheelModel::create)
                     .register();
             BRASS_ENCASED_COGWHEELS_BUILDER.put(brassEncasedCogwheel, mat, cogwheelEntry);
 
-            Supplier<TieredCogwheelBlock> largeCogwheelSupplier = () -> (TieredCogwheelBlock) ChemicalHelper.getBlock(largeCogwheel, mat);
-             var largeCogwheelEntry = REGISTRATE
+            var largeCogwheelEntry = GreateRegistries.REGISTRATE
                      .block("brass_encased_large_" + mat.getName() + "_cogwheel", p -> TieredEncasedCogwheelBlock.large(p, AllBlocks.BRASS_CASING::get, mat))
-                     .properties(p -> p.mapColor(MapColor.PODZOL))
-                     .transform(tieredEncasedLargeCogwheel(largeCogwheelSupplier, () -> AllSpriteShifts.BRASS_CASING))
-                     .transform(EncasingRegistry.addVariantTo(largeCogwheelSupplier))
-                     .transform(TagGen.axeOrPickaxe())
+                     .properties(p -> p.mapColor(MapColor.PODZOL).noLootTable())
+                     .transform(tieredEncasedLargeCogwheel(() -> AllSpriteShifts.BRASS_CASING))
+                     .transform(EncasingRegistry.addVariantTo(Objects.requireNonNull(LARGE_COGWHEELS.get(largeCogwheel, mat))))
+                     .transform(GTBlocks.unificationBlock(brassEncasedLargeCogwheel, mat))
                      .onRegister(c -> c.setTier(tier))
+                     .onRegister(CogwheelModel::create)
                      .register();
              BRASS_ENCASED_LARGE_COGWHEELS_BUILDER.put(brassEncasedLargeCogwheel, mat, largeCogwheelEntry);
         }

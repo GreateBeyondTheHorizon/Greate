@@ -20,12 +20,17 @@ public class TieredSimpleKineticBlockEntity extends SimpleKineticBlockEntity imp
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
-        return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, tier, capacity, stress);
+        return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, ((ITieredBlock) getBlockState().getBlock()).getMaterial(), capacity, stress);
     }
 
     @Override
     public void updateFromNetwork(float maxStress, float currentStress, int networkSize) {
         super.updateFromNetwork(maxStress, currentStress, networkSize);
         notifyUpdate();
+    }
+
+    @Override
+    public boolean renderNormally() {
+        return false;
     }
 }

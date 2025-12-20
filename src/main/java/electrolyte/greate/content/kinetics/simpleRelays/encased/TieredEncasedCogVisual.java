@@ -12,6 +12,7 @@ import dev.engine_room.flywheel.api.visualization.VisualizationContext;
 import dev.engine_room.flywheel.lib.model.Models;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
+import electrolyte.greate.foundation.client.models.GreateModelUtils;
 import net.createmod.catnip.data.Iterate;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.AxisDirection;
@@ -19,8 +20,6 @@ import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
-
-import static electrolyte.greate.registry.GreatePartialModels.*;
 
 public class TieredEncasedCogVisual extends KineticBlockEntityVisual<KineticBlockEntity> {
 
@@ -59,7 +58,7 @@ public class TieredEncasedCogVisual extends KineticBlockEntityVisual<KineticBloc
         if(block instanceof IRotate def) {
             for(Direction d : Iterate.directionsInAxis(rotationAxis())) {
                 if(!def.hasShaftTowards(blockEntity.getLevel(), blockEntity.getBlockPos(), blockState, d)) continue;
-                RotatingInstance data = instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.partial(SHAFT_HALF_MODELS[tier])).createInstance();
+                RotatingInstance data = instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.partial(GreateModelUtils.getPartialModel(blockState.getBlock(), "/shaft_half"))).createInstance();
                 data.setup(blockEntity).setPosition(getVisualPosition()).rotateToFace(Direction.SOUTH, d).setChanged();
                 if(large) {
                     data.setRotationOffset(BracketedKineticBlockEntityRenderer.getShaftAngleOffset(rotationAxis(), pos));
@@ -96,7 +95,7 @@ public class TieredEncasedCogVisual extends KineticBlockEntityVisual<KineticBloc
     }
 
     protected Model getCogModel() {
-        PartialModel cogModel = large ? LARGE_COGWHEEL_SHAFTLESS_MODELS[tier] : COGWHEEL_SHAFTLESS_MODELS[tier];
+        PartialModel cogModel = large ? GreateModelUtils.getPartialModel(blockState.getBlock(), "/large_cogwheel_shaftless") : GreateModelUtils.getPartialModel(blockState.getBlock(), "/cogwheel_shaftless");
         return Models.partial(cogModel);
     }
 

@@ -4,6 +4,7 @@ import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import electrolyte.greate.Greate;
+import electrolyte.greate.GreateRegistries;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingWheelBlock;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingWheelControllerBlock;
 import electrolyte.greate.foundation.data.GreateBlockStateGen;
@@ -14,7 +15,6 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
-import static electrolyte.greate.Greate.REGISTRATE;
 import static electrolyte.greate.GreateValues.TM;
 
 public class CrushingWheels {
@@ -46,7 +46,7 @@ public class CrushingWheels {
             NEUTRONIUM_CRUSHING_WHEEL_CONTROLLER;
 
     public static void register() {
-        REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
+        GreateRegistries.REGISTRATE.creativeModeTab(Greate.GREATE_TAB);
 
         CRUSHING_WHEELS[ULV] = ANDESITE_CRUSHING_WHEEL = crushingWheel(ULV, 0.5);
         CRUSHING_WHEELS[LV] = STEEL_CRUSHING_WHEEL = crushingWheel(LV, 1.0);
@@ -72,7 +72,7 @@ public class CrushingWheels {
     }
 
     public static BlockEntry<TieredCrushingWheelBlock> crushingWheel(int tier, double stressImpact) {
-        return REGISTRATE
+        return GreateRegistries.REGISTRATE
                 .block(TM[tier].getName() + "_crushing_wheel", TieredCrushingWheelBlock::new)
                 .properties(p -> p.mapColor(MapColor.METAL))
                 .initialProperties(SharedProperties::stone)
@@ -85,7 +85,7 @@ public class CrushingWheels {
     }
 
     public static BlockEntry<TieredCrushingWheelControllerBlock> crushingWheelController(int tier) {
-        return REGISTRATE
+        return GreateRegistries.REGISTRATE
                 .block(TM[tier].getName() + "_crushing_wheel_controller", p -> new TieredCrushingWheelControllerBlock(p, CRUSHING_WHEELS[tier].get()))
                 .properties(p -> p.mapColor(MapColor.STONE))
                 .properties(p -> p.noOcclusion()

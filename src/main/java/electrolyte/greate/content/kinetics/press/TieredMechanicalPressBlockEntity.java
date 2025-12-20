@@ -42,6 +42,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+import static electrolyte.greate.GreateValues.TM;
+
 public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity implements ITieredKineticBlockEntity, ITieredProcessingRecipeHolder, ICircuitHolder {
 
     private int tier;
@@ -65,7 +67,7 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
-        return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, tier, capacity, stress);
+        return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, TM[tier], capacity, stress);
     }
 
     @Override

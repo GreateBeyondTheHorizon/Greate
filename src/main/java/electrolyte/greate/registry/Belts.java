@@ -6,6 +6,7 @@ import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
+import com.gregtechceu.gtceu.common.data.GTBlocks;
 import com.gregtechceu.gtceu.common.data.GTItems;
 import com.simibubi.create.AllDisplaySources;
 import com.simibubi.create.content.kinetics.belt.BeltModel;
@@ -18,8 +19,8 @@ import electrolyte.greate.GreateRegistries;
 import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
 import electrolyte.greate.content.kinetics.belt.TieredBeltBlock;
 import electrolyte.greate.content.kinetics.belt.item.TieredBeltConnectorItem;
+import electrolyte.greate.foundation.client.models.BeltConnectorModel;
 import electrolyte.greate.infrastructure.config.GStress;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.MapColor;
 
@@ -27,16 +28,14 @@ import static com.simibubi.create.api.behaviour.display.DisplaySource.displaySou
 import static electrolyte.greate.registry.GreateTagPrefixes.belt;
 import static electrolyte.greate.registry.GreateTagPrefixes.beltConnector;
 
-@SuppressWarnings("unchecked")
 public class Belts {
     static ImmutableTable.Builder<TagPrefix, Material, BlockEntry<TieredBeltBlock>> BELT_BUILDER = ImmutableTable.builder();
     public static Table<TagPrefix, Material, BlockEntry<TieredBeltBlock>> BELTS;
-    public static BlockEntry<TieredBeltBlock>[] BELT_ENTRIES = new BlockEntry[0];
     static ImmutableTable.Builder<TagPrefix, Material, ItemEntry<TieredBeltConnectorItem>> BELT_CONNECTORS_BUILDER = ImmutableTable.builder();
     public static Table<TagPrefix, Material, ItemEntry<TieredBeltConnectorItem>> BELT_CONNECTORS;
 
     public static void register() {
-        GreateRegistries.REGISTRATE.creativeModeTab(() -> Greate.GREATE_GT_TAB);
+        GreateRegistries.REGISTRATE.creativeModeTab(() -> Greate.GREATE_TAB);
 
         generateBelts();
     }
@@ -47,15 +46,14 @@ public class Belts {
                 var gtBeltEntry = GreateRegistries.REGISTRATE
                         .block(material.getName() + "_belt", TieredBeltBlock::new)
                         .blockstate(NonNullBiConsumer.noop())
-                        .properties(p -> p.sound(SoundType.WOOL))
-                        .properties(p -> p.strength(0.8F))
-                        .properties(p -> p.mapColor(MapColor.COLOR_GRAY))
-                        .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.MINEABLE_WITH_AXE)
+                        .properties(p -> p.sound(SoundType.WOOL).strength(0.8F).mapColor(MapColor.COLOR_GRAY).noLootTable())
                         .transform(GStress.setNoImpact())
                         .transform(displaySource(AllDisplaySources.ITEM_NAMES))
+                        .transform(GTBlocks.unificationBlock(belt, material))
                         .onRegister(c -> c.setBeltMaterial(material))
                         .onRegister(c -> c.setupBeltModel(material))
                         .onRegister(CreateRegistrate.blockModel(() -> BeltModel::new))
+                        .onRegister(electrolyte.greate.foundation.client.models.BeltModel::create)
                         .register();
                 BELT_BUILDER.put(belt, material, gtBeltEntry);
 
@@ -63,6 +61,7 @@ public class Belts {
                         .item(material.getName() + "_belt_connector", p -> new TieredBeltConnectorItem(ChemicalHelper.getBlock(belt, material), p, material))
                         .model(NonNullBiConsumer.noop())
                         .transform(GTItems.unificationItem(beltConnector, material))
+                        .onRegister(BeltConnectorModel::create)
                         //.transform(p -> p.properties(b -> b.food(new FoodProperties.Builder().alwaysEat().nutrition(1).saturationMod(0.1F).effect(() -> new MobEffectInstance(MobEffects.POISON, 100, 0, true, true), 1.0F).build()))) TODO: disabled b/c quarktech armor auto eats
                         .register();
                 BELT_CONNECTORS_BUILDER.put(beltConnector, material, beltConnectorEntry);
@@ -70,6 +69,5 @@ public class Belts {
         }
         BELTS = BELT_BUILDER.build();
         BELT_CONNECTORS = BELT_CONNECTORS_BUILDER.build();
-        BELT_ENTRIES = BELTS.values().toArray(BlockEntry[]::new);
     }
 }

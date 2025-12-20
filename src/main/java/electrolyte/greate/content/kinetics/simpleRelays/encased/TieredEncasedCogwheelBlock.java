@@ -30,18 +30,20 @@ public class TieredEncasedCogwheelBlock extends EncasedCogwheelBlock implements 
 
     private int tier;
     private final Supplier<Block> cogwheelBlock;
+    private Material material;
 
     public static TieredEncasedCogwheelBlock small(Properties properties, Supplier<Block> casing, Material mat) {
-        return new TieredEncasedCogwheelBlock(properties, false, casing, () -> ChemicalHelper.getBlock(cogwheel, mat));
+        return new TieredEncasedCogwheelBlock(properties, false, casing, () -> ChemicalHelper.getBlock(cogwheel, mat), mat);
     }
 
     public static TieredEncasedCogwheelBlock large(Properties properties, Supplier<Block> casing, Material mat) {
-        return new TieredEncasedCogwheelBlock(properties, true, casing, () -> ChemicalHelper.getBlock(largeCogwheel, mat));
+        return new TieredEncasedCogwheelBlock(properties, true, casing, () -> ChemicalHelper.getBlock(largeCogwheel, mat), mat);
     }
 
-    public TieredEncasedCogwheelBlock(Properties properties, boolean isLarge, Supplier<Block> casing, Supplier<Block> cogwheel) {
+    public TieredEncasedCogwheelBlock(Properties properties, boolean isLarge, Supplier<Block> casing, Supplier<Block> cogwheel, Material material) {
         super(properties, isLarge, casing);
         this.cogwheelBlock = cogwheel;
+        this.material = material;
     }
 
     @Override
@@ -84,5 +86,10 @@ public class TieredEncasedCogwheelBlock extends EncasedCogwheelBlock implements 
     @Override
     public void setTier(int tier) {
         this.tier = tier;
+    }
+
+    @Override
+    public Material getMaterial() {
+        return material;
     }
 }

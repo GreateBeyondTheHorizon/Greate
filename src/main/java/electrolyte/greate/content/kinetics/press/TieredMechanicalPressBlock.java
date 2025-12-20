@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 
 import java.util.function.Supplier;
 
+import static electrolyte.greate.GreateValues.TM;
 import static electrolyte.greate.registry.GreateTagPrefixes.shaft;
 
 public class TieredMechanicalPressBlock extends MechanicalPressBlock implements ITieredBlock, ITieredShaftBlock {
@@ -42,5 +43,10 @@ public class TieredMechanicalPressBlock extends MechanicalPressBlock implements 
     @Override
     public Block getShaft() {
         return shaftBlock.get();
+    }
+
+    @Override
+    public Material getMaterial() {
+        return TM[tier];
     }
 }

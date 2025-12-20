@@ -7,9 +7,9 @@ import com.gregtechceu.gtceu.api.data.chemical.material.event.MaterialRegistryEv
 import com.gregtechceu.gtceu.api.data.chemical.material.event.PostMaterialEvent;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
-import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
 import electrolyte.greate.content.gtceu.machines.GreateMultiblockMachines;
 import electrolyte.greate.content.gtceu.machines.GreateRecipeTypes;
+import electrolyte.greate.foundation.data.GreateRegistrate;
 import electrolyte.greate.registry.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Greate.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public final class GreateRegistries {
-	public static final GTRegistrate REGISTRATE = GTRegistrate.create(Greate.MOD_ID);
+	public static final GreateRegistrate REGISTRATE = GreateRegistrate.create(Greate.MOD_ID);
 
 	@SubscribeEvent
 	public static void registerMaterials(MaterialEvent event) {

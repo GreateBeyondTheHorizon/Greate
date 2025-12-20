@@ -3,6 +3,7 @@ package electrolyte.greate.registry;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import electrolyte.greate.Greate;
+import electrolyte.greate.GreateRegistries;
 import electrolyte.greate.content.fluids.pump.TieredPumpBlock;
 import electrolyte.greate.foundation.data.GreateBuilderTransformers;
 import electrolyte.greate.infrastructure.config.GStress;
@@ -10,7 +11,6 @@ import net.minecraft.world.level.material.MapColor;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
-import static electrolyte.greate.Greate.REGISTRATE;
 import static electrolyte.greate.GreateValues.TM;
 
 public class Pumps {
@@ -29,7 +29,7 @@ public class Pumps {
 			NEUTRONIUM_MECHANICAL_PUMP;
 
 	public static void register() {
-		REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
+		GreateRegistries.REGISTRATE.creativeModeTab(Greate.GREATE_TAB);
 
 		MECHANICAL_PUMPS[ULV] = ANDESITE_MECHANICAL_PUMP = pump(ULV, 0.5);
 		MECHANICAL_PUMPS[LV] = STEEL_MECHANICAL_PUMP = pump(LV, 1.0);
@@ -44,7 +44,7 @@ public class Pumps {
 	}
 
 	public static BlockEntry<TieredPumpBlock> pump(int tier, double pumpImpact) {
-		return REGISTRATE
+		return GreateRegistries.REGISTRATE
 				.block(TM[tier].getName() + "_mechanical_pump", TieredPumpBlock::new)
 				.initialProperties(SharedProperties::copperMetal)
 				.properties(p -> p.mapColor(MapColor.STONE))

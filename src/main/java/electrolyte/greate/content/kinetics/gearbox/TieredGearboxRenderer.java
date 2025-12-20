@@ -3,6 +3,7 @@ package electrolyte.greate.content.kinetics.gearbox;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import dev.engine_room.flywheel.api.visualization.VisualizationManager;
+import electrolyte.greate.foundation.client.models.GreateModelUtils;
 import net.createmod.catnip.animation.AnimationTickHolder;
 import net.createmod.catnip.data.Iterate;
 import net.createmod.catnip.render.CachedBuffers;
@@ -14,8 +15,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-
-import static electrolyte.greate.registry.GreatePartialModels.SHAFT_HALF_MODELS;
 
 public class TieredGearboxRenderer extends KineticBlockEntityRenderer<TieredGearboxBlockEntity> {
     public TieredGearboxRenderer(Context context) {
@@ -35,8 +34,7 @@ public class TieredGearboxRenderer extends KineticBlockEntityRenderer<TieredGear
             if (boxAxis == axis)
                 continue;
 
-            int tier = ((TieredGearboxBlock) be.getBlockState().getBlock()).getTier();
-            SuperByteBuffer shaft = CachedBuffers.partialFacing(SHAFT_HALF_MODELS[tier], be.getBlockState(), direction);
+            SuperByteBuffer shaft = CachedBuffers.partialFacing(GreateModelUtils.getPartialModel(be.getBlockState().getBlock(), "/shaft_half"), be.getBlockState(), direction);
             float offset = getRotationOffsetForPosition(be, pos, axis);
             float angle = (time * be.getSpeed() * 3f / 10) % 360;
 

@@ -59,4 +59,9 @@ public class TieredGearboxBlock extends GearboxBlock implements ITieredBlock {
     public void setTier(int tier) {
         this.tier = tier;
     }
+
+    @Override
+    public Material getMaterial() {
+        return material;
+    }
 }

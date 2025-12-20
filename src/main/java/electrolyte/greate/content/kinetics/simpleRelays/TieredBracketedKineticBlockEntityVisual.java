@@ -11,11 +11,10 @@ import dev.engine_room.flywheel.api.model.Model;
 import dev.engine_room.flywheel.api.visual.BlockEntityVisual;
 import dev.engine_room.flywheel.api.visualization.VisualizationContext;
 import dev.engine_room.flywheel.lib.model.Models;
+import electrolyte.greate.foundation.client.models.GreateModelUtils;
 import net.minecraft.core.Direction.Axis;
 
 import java.util.function.Consumer;
-
-import static electrolyte.greate.registry.GreatePartialModels.*;
 
 public class TieredBracketedKineticBlockEntityVisual {
     public static BlockEntityVisual<TieredBracketedKineticBlockEntity> create(VisualizationContext context, TieredBracketedKineticBlockEntity be, float partialTick) {
@@ -24,9 +23,9 @@ public class TieredBracketedKineticBlockEntityVisual {
         } else {
             Model model;
             if(ICogWheel.isSmallCog(be.getBlockState())) {
-                model = Models.partial(COGWHEEL_MODELS[be.getTier()]);
+                model = Models.partial(GreateModelUtils.getPartialModel(be.getBlockState().getBlock(), "/cogwheel"));
             } else {
-                model = Models.partial(SHAFT_MODELS[be.getTier()]);
+                model = Models.partial(GreateModelUtils.getPartialModel(be.getBlockState().getBlock(), "/shaft"));
             }
             return new SingleAxisRotatingVisual<>(context, be, partialTick, model);
         }
@@ -36,11 +35,11 @@ public class TieredBracketedKineticBlockEntityVisual {
 
         protected RotatingInstance additionalShaft;
         public TieredLargeCogVisual(VisualizationContext context, TieredBracketedKineticBlockEntity be, float partialTick) {
-            super(context, be, partialTick, Models.partial(LARGE_COGWHEEL_SHAFTLESS_MODELS[be.getTier()]));
+            super(context, be, partialTick, Models.partial(GreateModelUtils.getPartialModel(be.getBlockState().getBlock(), "/large_cogwheel_shaftless")));
 
             Axis axis = KineticBlockEntityRenderer.getRotationAxisOf(be);
 
-            additionalShaft = instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.partial(COGWHEEL_SHAFT_MODELS[be.getTier()])).createInstance();
+            additionalShaft = instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.partial(GreateModelUtils.getPartialModel(be.getBlockState().getBlock(), "/cogwheel_shaft"))).createInstance();
             additionalShaft.rotateToFace(axis)
                     .setup(be)
                     .setRotationOffset(BracketedKineticBlockEntityRenderer.getShaftAngleOffset(axis, pos))

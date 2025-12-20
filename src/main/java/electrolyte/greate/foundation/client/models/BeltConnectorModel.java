@@ -1,5 +1,6 @@
 package electrolyte.greate.foundation.client.models;
 
+import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.data.pack.GTDynamicResourcePack;
 import electrolyte.greate.Greate;
 import electrolyte.greate.content.kinetics.belt.item.TieredBeltConnectorItem;
@@ -14,6 +15,7 @@ public record BeltConnectorModel(TieredBeltConnectorItem beltConnectorItem) {
     private static final Set<BeltConnectorModel> MODELS = new HashSet<>();
 
     public static void create(TieredBeltConnectorItem beltItem) {
+        if(!GTCEu.isClientSide()) return;
         MODELS.add(new BeltConnectorModel(beltItem));
     }
 

@@ -4,13 +4,13 @@ import com.simibubi.create.foundation.data.SharedProperties;
 import com.simibubi.create.foundation.data.TagGen;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import electrolyte.greate.Greate;
+import electrolyte.greate.GreateRegistries;
 import electrolyte.greate.content.kinetics.millstone.TieredMillstoneBlock;
 import electrolyte.greate.foundation.data.GreateBuilderTransformers;
 import electrolyte.greate.infrastructure.config.GStress;
 import net.minecraft.world.level.material.MapColor;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
-import static electrolyte.greate.Greate.REGISTRATE;
 import static electrolyte.greate.GreateValues.TM;
 
 public class Millstones {
@@ -29,7 +29,7 @@ public class Millstones {
             NEUTRONIUM_MILLSTONE;
 
     public static void register() {
-        REGISTRATE.setCreativeTab(Greate.GREATE_TAB);
+        GreateRegistries.REGISTRATE.creativeModeTab(Greate.GREATE_TAB);
 
         MILLSTONES[ULV] = ANDESITE_MILLSTONE = millstone(ULV, 0.5);
         MILLSTONES[LV] = STEEL_MILLSTONE = millstone(LV, 1.0);
@@ -44,7 +44,7 @@ public class Millstones {
     }
 
     public static BlockEntry<TieredMillstoneBlock> millstone(int tier, double millstoneImpact) {
-        return REGISTRATE
+        return GreateRegistries.REGISTRATE
                 .block(TM[tier].getName() + "_millstone", TieredMillstoneBlock::new)
                 .initialProperties(SharedProperties::stone)
                 .properties(p -> p.mapColor(MapColor.METAL))

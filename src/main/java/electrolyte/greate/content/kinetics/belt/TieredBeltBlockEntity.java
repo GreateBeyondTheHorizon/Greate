@@ -2,6 +2,7 @@ package electrolyte.greate.content.kinetics.belt;
 
 import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
+import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.simibubi.create.content.kinetics.belt.*;
 import com.simibubi.create.content.kinetics.belt.transport.BeltMovementHandler;
 import electrolyte.greate.GreateValues;
@@ -12,10 +13,14 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
 
 public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKineticBlockEntity {
 
@@ -115,7 +120,9 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
-        return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, Objects.requireNonNullElse(GreateValues.TIER_MATERIALS.get(getShaftMaterial()), 0), capacity, stress);
+        Material shaftMaterial = getShaftMaterial();
+        if(shaftMaterial == null || shaftMaterial == GTMaterials.NULL) shaftMaterial = ((TieredBeltBlock) getBlockState().getBlock()).getShaftMaterial();
+        return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, shaftMaterial, capacity, stress);
     }
 
     @Override
@@ -124,4 +131,8 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
         notifyUpdate();
     }
 
+    @Override
+    public float getMaxCapacityFromBlock(Block block) {
+        return GreateValues.getMaxCapacityFromMaterial(shaftMaterial);
+    }
 }

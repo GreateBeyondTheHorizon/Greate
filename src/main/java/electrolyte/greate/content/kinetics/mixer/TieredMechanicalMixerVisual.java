@@ -11,11 +11,11 @@ import dev.engine_room.flywheel.lib.instance.InstanceTypes;
 import dev.engine_room.flywheel.lib.instance.OrientedInstance;
 import dev.engine_room.flywheel.lib.model.Models;
 import dev.engine_room.flywheel.lib.visual.SimpleDynamicVisual;
+import electrolyte.greate.foundation.client.models.GreateModelUtils;
 import net.minecraft.core.Direction.Axis;
 
 import java.util.function.Consumer;
 
-import static electrolyte.greate.registry.GreatePartialModels.COGWHEEL_SHAFTLESS_MODELS;
 import static electrolyte.greate.registry.GreatePartialModels.MECHANICAL_MIXER_HEAD_MODELS;
 
 public class TieredMechanicalMixerVisual extends SingleAxisRotatingVisual<TieredMechanicalMixerBlockEntity> implements SimpleDynamicVisual {
@@ -25,7 +25,7 @@ public class TieredMechanicalMixerVisual extends SingleAxisRotatingVisual<Tiered
     private final TieredMechanicalMixerBlockEntity mixer;
 
     public TieredMechanicalMixerVisual(VisualizationContext context, TieredMechanicalMixerBlockEntity blockEntity, float partialTick) {
-        super(context, blockEntity, partialTick, Models.partial(COGWHEEL_SHAFTLESS_MODELS[blockEntity.getTier()]));
+        super(context, blockEntity, partialTick, Models.partial(GreateModelUtils.getPartialModel(blockEntity.getBlockState().getBlock(), "/cogwheel_shaftless")));
         this.mixer = blockEntity;
         mixerHead = instancerProvider()
                 .instancer(AllInstanceTypes.ROTATING, Models.partial(MECHANICAL_MIXER_HEAD_MODELS[blockEntity.getTier()]))

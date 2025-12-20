@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import dev.engine_room.flywheel.api.visualization.VisualizationManager;
+import electrolyte.greate.foundation.client.models.GreateModelUtils;
 import net.createmod.catnip.animation.AnimationTickHolder;
 import net.createmod.catnip.render.CachedBuffers;
 import net.createmod.catnip.render.SuperByteBuffer;
@@ -14,7 +15,6 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider.Con
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
 
-import static electrolyte.greate.registry.GreatePartialModels.COGWHEEL_SHAFTLESS_MODELS;
 import static electrolyte.greate.registry.GreatePartialModels.MECHANICAL_MIXER_HEAD_MODELS;
 
 public class TieredMechanicalMixerRenderer extends KineticBlockEntityRenderer<TieredMechanicalMixerBlockEntity> {
@@ -34,7 +34,7 @@ public class TieredMechanicalMixerRenderer extends KineticBlockEntityRenderer<Ti
         TieredMechanicalMixerBlock mixerBlock = (TieredMechanicalMixerBlock) blockState.getBlock();
         int tier = mixerBlock.getTier();
         VertexConsumer vb = buffer.getBuffer(RenderType.solid());
-        SuperByteBuffer byteBuffer = CachedBuffers.partial(COGWHEEL_SHAFTLESS_MODELS[tier], blockState);
+        SuperByteBuffer byteBuffer = CachedBuffers.partial(GreateModelUtils.getPartialModel(blockState.getBlock(), "/cogwheel_shaftless"), blockState);
         standardKineticRotationTransform(byteBuffer, be, light).renderInto(ms, vb);
 
         float renderedHeadOffset = be.getRenderedHeadOffset(partialTicks);

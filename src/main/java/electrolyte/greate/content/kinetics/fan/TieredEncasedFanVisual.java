@@ -7,6 +7,7 @@ import com.simibubi.create.foundation.render.AllInstanceTypes;
 import dev.engine_room.flywheel.api.instance.Instance;
 import dev.engine_room.flywheel.api.visualization.VisualizationContext;
 import dev.engine_room.flywheel.lib.model.Models;
+import electrolyte.greate.foundation.client.models.GreateModelUtils;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
@@ -14,7 +15,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.Consumer;
 
 import static electrolyte.greate.registry.GreatePartialModels.FAN_INNER_MODELS;
-import static electrolyte.greate.registry.GreatePartialModels.SHAFT_HALF_MODELS;
 
 public class TieredEncasedFanVisual extends KineticBlockEntityVisual<TieredEncasedFanBlockEntity> {
 
@@ -27,8 +27,9 @@ public class TieredEncasedFanVisual extends KineticBlockEntityVisual<TieredEncas
         super(context, blockEntity, partialTick);
         dir = blockState.getValue(EncasedFanBlock.FACING);
         opposite = dir.getOpposite();
-        int tier = ((TieredEncasedFanBlock) blockState.getBlock()).getTier();
-        halfShaft = instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.partial(SHAFT_HALF_MODELS[tier])).createInstance();
+        TieredEncasedFanBlock encasedFanBlock = (TieredEncasedFanBlock) blockState.getBlock();
+        int tier = encasedFanBlock.getTier();
+        halfShaft = instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.partial(GreateModelUtils.getPartialModel(blockState.getBlock(), "/shaft_half"))).createInstance();
         fanInner = instancerProvider().instancer(AllInstanceTypes.ROTATING, Models.partial(FAN_INNER_MODELS[tier])).createInstance();
 
         halfShaft.setup(blockEntity)
