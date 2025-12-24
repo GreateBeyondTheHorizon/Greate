@@ -66,6 +66,18 @@ public class CreateRecipeRemoval {
     }
 
     public static void disableConfigurableCreateRecipes(Consumer<ResourceLocation> recipe) {
+        recipe.accept(Create.asResource("crafting/materials/brass_ingot_from_decompacting"));
+        recipe.accept(Create.asResource("crafting/materials/brass_nugget_from_decompacting"));
+        recipe.accept(Create.asResource("crafting/materials/brass_block_from_compacting"));
+        recipe.accept(Create.asResource("crafting/materials/brass_ingot_from_compacting"));
+        recipe.accept(Create.asResource("crafting/materials/copper_nugget"));
+        recipe.accept(Create.asResource("crafting/materials/copper_ingot"));
+        recipe.accept(Create.asResource("crafting/materials/zinc_ingot_from_decompacting"));
+        recipe.accept(Create.asResource("crafting/materials/zinc_nugget_from_decompacting"));
+        recipe.accept(Create.asResource("crafting/materials/zinc_block_from_compacting"));
+        recipe.accept(Create.asResource("crafting/materials/zinc_ingot_from_compacting"));
+
+
         recipe.accept(Create.asResource("crafting/kinetics/analog_lever"));
         recipe.accept(Create.asResource("crafting/kinetics/basin"));
         recipe.accept(Create.asResource("crafting/kinetics/brass_hand"));
