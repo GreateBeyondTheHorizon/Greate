@@ -3,6 +3,7 @@ package electrolyte.greate.infrastructure.config;
 import dev.toma.configuration.config.Config;
 import dev.toma.configuration.config.Configurable;
 import dev.toma.configuration.config.Configurable.Comment;
+import dev.toma.configuration.config.Configurable.Range;
 import dev.toma.configuration.config.Configurable.Synchronized;
 import electrolyte.greate.Greate;
 
@@ -18,6 +19,12 @@ public class GreateRecipeConfig {
     @Synchronized
     @Comment({"Enable/Disable harder recipes for various Create blocks & items."})
     public boolean enableHardCreateRecipes = false;
+
+    @Configurable
+    @Synchronized
+    @Range(min = 0)
+    @Comment({"Multiplier used for calculating how many ticks should initially be removed in fan processing recipes, based on how fast the fan is spinning."})
+    public final float fanSpeedMultiplier = 0.75f;
 
     @Configurable
     @Synchronized

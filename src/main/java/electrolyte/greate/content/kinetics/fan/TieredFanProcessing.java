@@ -6,10 +6,10 @@ import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
 import com.simibubi.create.content.kinetics.fan.processing.AllFanProcessingTypes;
 import com.simibubi.create.content.kinetics.fan.processing.FanProcessingType;
 import com.simibubi.create.infrastructure.config.AllConfigs;
+import electrolyte.greate.Greate;
 import electrolyte.greate.content.kinetics.fan.processing.GreateFanProcessingTypes;
 import electrolyte.greate.content.kinetics.fan.processing.GreateFanProcessingTypes.TieredHauntingType;
 import electrolyte.greate.content.kinetics.fan.processing.GreateFanProcessingTypes.TieredSplashingType;
-import electrolyte.greate.infrastructure.config.GreateConfigs;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -141,7 +141,7 @@ public class TieredFanProcessing {
 
     private static int getProcessingTime(int entityCount, float speed) {
         int timeModifierForStackSize = ((entityCount - 1) / 16) + 1;
-        int timeModifierForSpeed = (int) Math.max(0, speed * GreateConfigs.server().kinetics.fanSpeedMultiplier.get());
+        int timeModifierForSpeed = (int) Math.max(0, speed * Greate.CONFIG.fanSpeedMultiplier);
         return Math.max(1, ((AllConfigs.server().kinetics.fanProcessingTime.get() - timeModifierForSpeed) * timeModifierForStackSize) + 1);
     }
 }
