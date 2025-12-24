@@ -9,21 +9,10 @@ import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
 public class KineticProperty implements IMaterialProperty {
 
     private int tier;
-    private float impact;
-    private float generatedCapacity;
     private float maxCapacity;
-
-    public KineticProperty(int tier, float impact, float generatedCapacity, float maxCapacity) {
-        this.tier = tier;
-        this.impact = impact;
-        this.generatedCapacity = generatedCapacity;
-        this.maxCapacity = maxCapacity;
-    }
 
     public KineticProperty(int tier, int maxCapacity) {
         this.tier = tier;
-        this.impact = 0;
-        this.generatedCapacity = 0;
         this.maxCapacity = maxCapacity;
     }
 
@@ -44,22 +33,6 @@ public class KineticProperty implements IMaterialProperty {
 
     public void setTier(int tier) {
         this.tier = tier;
-    }
-
-    public float getImpact() {
-        return impact;
-    }
-
-    public void setImpact(float impact) {
-        this.impact = impact;
-    }
-
-    public float getGeneratedCapacity() {
-        return generatedCapacity;
-    }
-
-    public void setGeneratedCapacity(float generatedCapacity) {
-        this.generatedCapacity = generatedCapacity;
     }
 
     public float getMaxCapacity() {
