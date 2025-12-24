@@ -28,6 +28,11 @@ public class GreateRecipeConfig {
 
     @Configurable
     @Synchronized
+    @Comment({"Should certain Create items that have a GTCEu counterpart be used in recipes?", "If false, GTCEu items will be used instead."})
+    public boolean useCreateItemsInRecipes = true;
+
+    @Configurable
+    @Synchronized
     @Comment({"Recipe types that should not be copied to Greate machines. Ex. 'gtceu:macerator' for macerator recipes"})
     public String[] ignoredRecipeTypes = {};
 }

@@ -116,6 +116,27 @@ public class GreateMaterials {
 		block.setIgnored(AndesiteAlloy, () -> AllBlocks.ANDESITE_ALLOY_BLOCK);
 		ingot.setIgnored(AndesiteAlloy, () -> AllItems.ANDESITE_ALLOY);
 		gem.setIgnored(RoseQuartz, () -> AllItems.ROSE_QUARTZ);
+
+		if(Greate.CONFIG.useCreateItemsInRecipes) {
+			block.setIgnored(Brass, () -> AllBlocks.BRASS_BLOCK);
+			block.setIgnored(Zinc, () -> AllBlocks.ZINC_BLOCK);
+
+			dust.setIgnored(Netherrack, () -> AllItems.CINDER_FLOUR);
+			dust.setIgnored(Obsidian, () -> AllItems.POWDERED_OBSIDIAN);
+			dust.setIgnored(Wheat, () -> AllItems.WHEAT_FLOUR);
+
+			ingot.setIgnored(Brass, () -> AllItems.BRASS_INGOT);
+			ingot.setIgnored(Zinc, () -> AllItems.ZINC_INGOT);
+
+			nugget.setIgnored(Brass, () -> AllItems.BRASS_NUGGET);
+			nugget.setIgnored(Copper, () -> AllItems.COPPER_NUGGET);
+			nugget.setIgnored(Zinc, () -> AllItems.ZINC_NUGGET);
+
+			plate.setIgnored(Brass, () -> AllItems.BRASS_SHEET);
+			plate.setIgnored(Copper, () -> AllItems.COPPER_SHEET);
+			plate.setIgnored(Iron, () -> AllItems.IRON_SHEET);
+			plate.setIgnored(Gold, () -> AllItems.GOLDEN_SHEET);
+		}
 	}
 
 	public static Material.Builder Builder(String id) {
