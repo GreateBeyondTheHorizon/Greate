@@ -4,9 +4,11 @@ import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.simibubi.create.AllTags.AllItemTags;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.belt.BeltBlock;
 import com.simibubi.create.content.kinetics.belt.BeltPart;
+import com.simibubi.create.content.kinetics.belt.BeltSlicer;
 import com.simibubi.create.content.kinetics.belt.BeltSlicer.Feedback;
 import com.simibubi.create.content.kinetics.crusher.CrushingWheelControllerBlock;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -78,18 +80,26 @@ public abstract class MixinBeltBlock {
     @Inject(method = "use", at = @At(value = "RETURN", ordinal = 14), cancellable = true)
     private void greate_use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir) {
         if(state.getBlock() instanceof TieredBeltBlock tbb) {
-            ItemStack heldItem = player.getItemInHand(handIn);
-            boolean isConnector = heldItem.getItem() instanceof TieredBeltConnectorItem;
-            boolean isShaft = Block.byItem(heldItem.getItem()) instanceof TieredShaftBlock;
+            ItemStack mainHandStack = player.getItemInHand(InteractionHand.MAIN_HAND);
+            ItemStack offHandStack = player.getItemInHand(InteractionHand.OFF_HAND);
+            boolean isConnector = mainHandStack.getItem() instanceof TieredBeltConnectorItem;
+            boolean isShaft = Block.byItem(mainHandStack.getItem()) instanceof TieredShaftBlock;
+            boolean isModdedWrench = mainHandStack.is(AllItemTags.WRENCH.tag) ||
+                //idk why gt wrenches do this
+                (handIn == InteractionHand.OFF_HAND && offHandStack.is(AllItemTags.WRENCH.tag));
             if(isConnector) {
-                if(((TieredBeltConnectorItem) heldItem.getItem()).getBeltMaterial() == tbb.getBeltMaterial()) {
+                if(((TieredBeltConnectorItem) mainHandStack.getItem()).getBeltMaterial() == tbb.getBeltMaterial()) {
                     cir.setReturnValue(TieredBeltSlicer.useConnector(state, world, pos, player, handIn, hit, new Feedback()));
                     return;
                 }
             }
+            if(isModdedWrench) {
+                cir.setReturnValue(BeltSlicer.useWrench(state, world, pos, player, handIn, hit, new Feedback()));
+                return;
+            }
             if(isShaft) {
                 Material beltShaftMaterial = tbb.getShaftMaterial();
-                if(heldItem.is(ChemicalHelper.get(shaft, beltShaftMaterial).getItem())) {
+                if(mainHandStack.is(ChemicalHelper.get(shaft, beltShaftMaterial).getItem())) {
                     if(state.getValue(PART) != BeltPart.MIDDLE) {
                         cir.setReturnValue(InteractionResult.PASS);
                         return;
@@ -98,7 +108,7 @@ public abstract class MixinBeltBlock {
                         cir.setReturnValue(InteractionResult.SUCCESS);
                         return;
                     }
-                    if(!player.isCreative()) heldItem.shrink(1);
+                    if(!player.isCreative()) mainHandStack.shrink(1);
                     KineticBlockEntity.switchToBlockState(world, pos, state.setValue(PART, BeltPart.PULLEY));
                     cir.setReturnValue(InteractionResult.SUCCESS);
                 }
