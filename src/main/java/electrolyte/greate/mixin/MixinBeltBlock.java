@@ -32,7 +32,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import static com.simibubi.create.content.kinetics.belt.BeltBlock.PART;
-import static electrolyte.greate.GreateValues.TM;
 import static electrolyte.greate.registry.GreateTagPrefixes.shaft;
 
 @Mixin(BeltBlock.class)
@@ -119,7 +118,7 @@ public abstract class MixinBeltBlock {
     @Inject(method = "onWrenched", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Inventory;placeItemBackInInventory(Lnet/minecraft/world/item/ItemStack;)V"), cancellable = true)
     private void greate_onWrenched(BlockState state, UseOnContext context, CallbackInfoReturnable<InteractionResult> cir) {
         if(state.getBlock() instanceof TieredBeltBlock tbb) {
-            context.getPlayer().getInventory().placeItemBackInInventory(ChemicalHelper.get(shaft, TM[tbb.getTier()]));
+            context.getPlayer().getInventory().placeItemBackInInventory(ChemicalHelper.get(shaft, tbb.getShaftMaterial()));
             cir.setReturnValue(InteractionResult.SUCCESS);
         }
     }
