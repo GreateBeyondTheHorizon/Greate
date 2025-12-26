@@ -83,7 +83,7 @@ public class TieredShaftBlock extends ShaftBlock implements ITieredBlock, ITiere
         if (resultGirderEncase.consumesAction()) return resultGirderEncase;
 
         IPlacementHelper helper = PlacementHelpers.get(placementHelperId);
-        if (Block.byItem(heldItem.getItem()) == pState.getBlock())
+        if (helper.matchesItem(heldItem))
             return helper.getOffset(pPlayer, pLevel, pState, pPos, pHit)
                     .placeInWorld(pLevel, (BlockItem) heldItem.getItem(), pPlayer, pHand, pHit);
 
