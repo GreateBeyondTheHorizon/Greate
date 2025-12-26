@@ -2,12 +2,13 @@ package electrolyte.greate.content.kinetics.simpleRelays;
 
 import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.content.decoration.girder.GirderEncasedShaftBlock;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.simpleRelays.AbstractSimpleShaftBlock;
 import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
 import com.simibubi.create.content.kinetics.steamEngine.PoweredShaftBlock;
 import com.simibubi.create.foundation.placement.PoleHelper;
-import electrolyte.greate.content.decoration.encasing.IGirderEncasableBlock;
 import electrolyte.greate.content.kinetics.steamEngine.TieredPoweredShaftBlock;
 import electrolyte.greate.registry.ModBlockEntityTypes;
 import net.createmod.catnip.placement.IPlacementHelper;
@@ -29,9 +30,10 @@ import net.minecraft.world.phys.BlockHitResult;
 
 import java.util.function.Predicate;
 
+import static electrolyte.greate.registry.GreateTagPrefixes.girderEncasedShaft;
 import static electrolyte.greate.registry.GreateTagPrefixes.poweredShaft;
 
-public class TieredShaftBlock extends ShaftBlock implements ITieredBlock, ITieredShaftBlock, IGirderEncasableBlock {
+public class TieredShaftBlock extends ShaftBlock implements ITieredBlock, ITieredShaftBlock {
 
     public static final int placementHelperId = PlacementHelpers.register(new PlacementHelper());
     private int tier;
@@ -78,9 +80,18 @@ public class TieredShaftBlock extends ShaftBlock implements ITieredBlock, ITiere
 
         ItemStack heldItem = pPlayer.getItemInHand(pHand);
         InteractionResult resultEncase = tryEncase(pState, pLevel, pPos, heldItem, pPlayer, pHand, pHit);
-        InteractionResult resultGirderEncase = tryGirderEncase(pState, pLevel, pPos, heldItem, pPlayer, pHand, pHit);
         if (resultEncase.consumesAction()) return resultEncase;
-        if (resultGirderEncase.consumesAction()) return resultGirderEncase;
+
+        if(AllBlocks.METAL_GIRDER.isIn(heldItem) && pState.getValue(AXIS) != Axis.Y) {
+            KineticBlockEntity.switchToBlockState(pLevel, pPos, ChemicalHelper.getBlock(girderEncasedShaft, getMaterial()).defaultBlockState()
+                    .setValue(WATERLOGGED, pState.getValue(WATERLOGGED))
+                    .setValue(GirderEncasedShaftBlock.HORIZONTAL_AXIS, pState.getValue(AXIS) == Axis.Z ? Axis.Z : Axis.X));
+            if(!pLevel.isClientSide && !pPlayer.isCreative()) {
+                heldItem.shrink(1);
+                if(heldItem.isEmpty()) pPlayer.setItemInHand(pHand, ItemStack.EMPTY);
+            }
+            return InteractionResult.SUCCESS;
+        }
 
         IPlacementHelper helper = PlacementHelpers.get(placementHelperId);
         if (helper.matchesItem(heldItem))

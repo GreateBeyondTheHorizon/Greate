@@ -1,9 +1,9 @@
 package electrolyte.greate.mixin;
 
+import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
 import com.simibubi.create.content.decoration.girder.GirderBlock;
 import com.simibubi.create.content.decoration.girder.GirderEncasedShaftBlock;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
-import electrolyte.greate.content.decoration.encasing.GirderEncasingRegistry;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction.Axis;
@@ -22,9 +22,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.List;
-
 import static com.simibubi.create.content.decoration.girder.GirderBlock.*;
+import static electrolyte.greate.registry.GreateTagPrefixes.girderEncasedShaft;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.WATERLOGGED;
 
 @Mixin(GirderBlock.class)
@@ -33,21 +32,15 @@ public class MixinGirderBlock {
     @Inject(method = "use", at = @At("RETURN"), cancellable = true)
     private void greate_use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit, CallbackInfoReturnable<InteractionResult> cir) {
         if(Block.byItem(pPlayer.getItemInHand(pHand).getItem()) instanceof TieredShaftBlock tsb) {
-            List<Block> variant = GirderEncasingRegistry.get(tsb);
-            for(Block block : variant) {
-                KineticBlockEntity.switchToBlockState(pLevel, pPos, block.defaultBlockState()
-                        .setValue(WATERLOGGED, pState.getValue(WATERLOGGED))
-                        .setValue(TOP, pState.getValue(TOP))
-                        .setValue(BOTTOM, pState.getValue(BOTTOM))
-                        .setValue(GirderEncasedShaftBlock.HORIZONTAL_AXIS, pState.getValue(X) || pHit.getDirection().getAxis() == Axis.Z ? Axis.Z : Axis.X));
-                pLevel.playSound(null, pPos, SoundEvents.NETHERITE_BLOCK_HIT, SoundSource.BLOCKS, 0.5f, 1.25f);
-                if (!pLevel.isClientSide && !pPlayer.isCreative()) {
-                    pPlayer.getItemInHand(pHand).shrink(1);
-                    if (pPlayer.getItemInHand(pHand).isEmpty()) {
-                        pPlayer.setItemInHand(pHand, ItemStack.EMPTY);
-                    }
-                }
-                cir.setReturnValue(InteractionResult.SUCCESS);
+            KineticBlockEntity.switchToBlockState(pLevel, pPos, ChemicalHelper.getBlock(girderEncasedShaft, tsb.getMaterial()).defaultBlockState()
+                    .setValue(WATERLOGGED, pState.getValue(WATERLOGGED))
+                    .setValue(TOP, pState.getValue(TOP))
+                    .setValue(BOTTOM, pState.getValue(BOTTOM))
+                    .setValue(GirderEncasedShaftBlock.HORIZONTAL_AXIS, pState.getValue(X) || pHit.getDirection().getAxis() == Axis.Z ? Axis.Z : Axis.X));
+            pLevel.playSound(null, pPos, SoundEvents.NETHERITE_BLOCK_HIT, SoundSource.BLOCKS, 0.5f, 1.25f);
+            if (!pLevel.isClientSide && !pPlayer.isCreative()) {
+                pPlayer.getItemInHand(pHand).shrink(1);
+                if (pPlayer.getItemInHand(pHand).isEmpty()) pPlayer.setItemInHand(pHand, ItemStack.EMPTY);
             }
             cir.setReturnValue(InteractionResult.SUCCESS);
         }

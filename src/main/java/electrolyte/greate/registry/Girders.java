@@ -13,7 +13,6 @@ import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import electrolyte.greate.Greate;
 import electrolyte.greate.GreateRegistries;
-import electrolyte.greate.content.decoration.encasing.GirderEncasingRegistry;
 import electrolyte.greate.content.decoration.girder.TieredGirderEncasedShaftBlock;
 import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
 import electrolyte.greate.content.gtceu.material.KineticProperty;
@@ -22,7 +21,6 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.MapColor;
 
 import static electrolyte.greate.registry.GreateTagPrefixes.girderEncasedShaft;
-import static electrolyte.greate.registry.GreateTagPrefixes.shaft;
 
 public class Girders {
 
@@ -47,7 +45,6 @@ public class Girders {
                     .onRegister(CreateRegistrate.blockModel(() -> ConnectedGirderModel::new))
                     .onRegister(c -> c.setTier(tier))
                     .onRegister(ShaftModel::create)
-                    .transform(GirderEncasingRegistry.addVariantTo(Shafts.SHAFTS.get(shaft, mat)))
                     .transform(GTBlocks.unificationBlock(girderEncasedShaft, mat))
                     .register();
             GIRDERS_BUILDER.put(girderEncasedShaft, mat, girderEntry);
