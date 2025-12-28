@@ -26,6 +26,7 @@ jobs:
     - name: Setup Gradle & Build
       uses: gradle/actions/setup-gradle@v5
       with:
+          gradle-version: '8.6'
           cache-disabled: true
     - run: gradle build -PversionSuffix=-testing
     - name: Upload Testing Build
