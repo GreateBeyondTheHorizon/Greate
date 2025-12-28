@@ -36,4 +36,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with: 
         name: greate-${{ steps.version.outputs.greate_version }}
-        path: build/libs/*[0-9].jar
+        path: build/libs/*.jar
