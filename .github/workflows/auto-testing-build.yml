@@ -17,6 +17,9 @@ jobs:
         distribution: 'temurin'
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
+    - name: Append -testing to version
+      run: |
+        sed -i 's/^greate_version=\(.*\)/greate_version=\1-testing/' gradle.properties
     - name: Get Version
       uses: BrycensRanch/read-properties-action@v1
       id: version
@@ -28,9 +31,9 @@ jobs:
       with:
           gradle-version: '8.6'
           cache-disabled: true
-    - run: gradle build -PversionSuffix=-testing
+    - run: gradle build
     - name: Upload Testing Build
       uses: actions/upload-artifact@v4
       with: 
-        name: greate-${{ steps.version.outputs.greate_version }}-testing
+        name: greate-${{ steps.version.outputs.greate_version }}
         path: build/libs/*[0-9].jar
