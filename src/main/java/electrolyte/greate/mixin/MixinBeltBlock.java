@@ -2,6 +2,7 @@ package electrolyte.greate.mixin;
 
 import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
+import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.simibubi.create.AllTags.AllItemTags;
@@ -13,6 +14,7 @@ import com.simibubi.create.content.kinetics.belt.BeltSlicer.Feedback;
 import com.simibubi.create.content.kinetics.crusher.CrushingWheelControllerBlock;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import electrolyte.greate.content.kinetics.belt.TieredBeltBlock;
+import electrolyte.greate.content.kinetics.belt.TieredBeltBlockEntity;
 import electrolyte.greate.content.kinetics.belt.TieredBeltSlicer;
 import electrolyte.greate.content.kinetics.belt.item.TieredBeltConnectorItem;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
@@ -97,7 +99,8 @@ public abstract class MixinBeltBlock {
                 return;
             }
             if(isShaft) {
-                Material beltShaftMaterial = tbb.getShaftMaterial();
+                Material beltShaftMaterial = ((TieredBeltBlockEntity) world.getBlockEntity(pos)).getShaftMaterial();
+                if(beltShaftMaterial == null || beltShaftMaterial == GTMaterials.NULL) beltShaftMaterial = tbb.getShaftMaterial();
                 if(mainHandStack.is(ChemicalHelper.get(shaft, beltShaftMaterial).getItem())) {
                     if(state.getValue(PART) != BeltPart.MIDDLE) {
                         cir.setReturnValue(InteractionResult.PASS);

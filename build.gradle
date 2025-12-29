@@ -41,6 +41,7 @@ minecraft {
 
         server {
             property 'forge.enabledGameTestNamespaces', 'greate'
+            arg '--nogui'
         }
 
         gameTestServer {
