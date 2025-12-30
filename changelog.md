@@ -7,3 +7,4 @@
 - Fix belts crashing on servers
 - Fix large cogwheel shafts being invisible when backend is `flywheel:off`
 - Any crafting table recipes added/changed by Greate will use the Greate namespace
+- Create uk_ua.json (StarmanMine142)
