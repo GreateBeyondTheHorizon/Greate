@@ -1,5 +1,9 @@
-- Fix normal saws not performing recipes
-- Cleanup Belts
-  - Generate Belts based on BeltProperty
-  - Move maxLength config option to BeltProperty (default 20)
-- Move custom materials to Greate namespace instead of GT
+- Refactor shafts/cogwheels/girders/gearboxes to support custom materials
+- Disable brass/copper/zinc nugget/ingot/block compacting/decompacting crafting table recipes if `hardRecipes` is enabled
+- `fanProcessingMultiplier` config option is now in `greate-recipes.yaml`
+- Create items can be used as input/outputs in recipes instead of GT counterparts (configurable)
+- Allow modded wrenches to shrink belts
+- Update TieredShaftBlock placement assist to support placement assisting cog blocks (gmfCoding)
+- Fix belts crashing on servers
+- Fix large cogwheel shafts being invisible when backend is `flywheel:off`
+- Any crafting table recipes added/changed by Greate will use the Greate namespace
