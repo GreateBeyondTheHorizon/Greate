@@ -143,17 +143,17 @@ public class GreateCraftingTableRecipes {
                     'A', new MaterialEntry(alloy, WroughtIron)); //special case for andesite alloy (from create)
 
         if(ConfigHolder.INSTANCE.recipes.hardToolArmorRecipes) {
-            VanillaRecipeHelper.addShapedRecipe(provider, AllItems.COPPER_DIVING_HELMET.getId(), AllItems.COPPER_DIVING_HELMET.asStack(),
+            VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllItems.COPPER_DIVING_HELMET.getId().getPath()), AllItems.COPPER_DIVING_HELMET.asStack(),
                     "PPP", "PGP",
                     'P', new MaterialEntry(plate, Copper),
                     'G', Tags.Items.GLASS);
-            VanillaRecipeHelper.addShapedRecipe(provider, AllItems.COPPER_BACKTANK.getId(), AllItems.COPPER_BACKTANK.asStack(),
+            VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllItems.COPPER_BACKTANK.getId().getPath()), AllItems.COPPER_BACKTANK.asStack(),
                     "ASA", "CBC", "wCf",
                     'A', new MaterialEntry(plate, AndesiteAlloy),
                     'S', SHAFT.get(LV),
                     'C', new MaterialEntry(plate, Copper),
                     'B', Blocks.COPPER_BLOCK);
-            VanillaRecipeHelper.addShapedRecipe(provider, AllItems.COPPER_DIVING_HELMET.getId(), AllItems.COPPER_DIVING_HELMET.asStack(),
+            VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllItems.COPPER_DIVING_HELMET.getId().getPath()), AllItems.COPPER_DIVING_HELMET.asStack(),
                     "P P", "P P", "AhA",
                     'P', new MaterialEntry(plate, Copper),
                     'A', new MaterialEntry(plate, AndesiteAlloy));
@@ -178,7 +178,7 @@ public class GreateCraftingTableRecipes {
                 'S', AllBlocks.SPOUT.asStack());
 
         //GT Components
-        VanillaRecipeHelper.addShapedRecipe(provider, AllItems.ELECTRON_TUBE.getId(), AllItems.ELECTRON_TUBE.asStack(),
+        VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllItems.ELECTRON_TUBE.getId().getPath()), AllItems.ELECTRON_TUBE.asStack(),
                 " G ", " R ", "SSS",
                 'G', GTItems.GLASS_TUBE,
                 'R', AllItems.POLISHED_ROSE_QUARTZ,
@@ -187,21 +187,21 @@ public class GreateCraftingTableRecipes {
 
     public static void registerMaterialRecipes(Consumer<FinishedRecipe> provider, Material material) {
         if(material.hasFlag(GreateMaterialFlags.GENERATE_ALLOY)) {
-            VanillaRecipeHelper.addShapedRecipe(provider, material.getName() + "_alloy", ChemicalHelper.get(alloy, material),
+            VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(material.getName() + "_alloy"), ChemicalHelper.get(alloy, material),
                     "NA", "AN", "fh",
                     'N', new MaterialEntry(plate, material),
                     'A', new ItemStack(Blocks.ANDESITE));
         }
 
         if(material.hasFlag(GreateMaterialFlags.GENERATE_WHISK)) {
-            VanillaRecipeHelper.addShapedRecipe(provider, material.getName() + "_whisk", ChemicalHelper.get(whisk, material),
+            VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(material.getName() + "_whisk"), ChemicalHelper.get(whisk, material),
                     "fId", "PIP", "PPP",
                     'I', new MaterialEntry(ingot, material),
                     'P', new MaterialEntry(plate, material));
         }
 
         if(material.hasProperty(GreatePropertyKeys.BELT)) {
-            VanillaRecipeHelper.addShapedRecipe(provider, true, material.getName() + "_belt_connector", ChemicalHelper.get(beltConnector, material),
+            VanillaRecipeHelper.addShapedRecipe(provider, true, Greate.id(material.getName() + "_belt_connector"), ChemicalHelper.get(beltConnector, material),
                     "PPP", "PPP", "f h",
                     'P', new MaterialEntry(plate, material));
         }
@@ -210,7 +210,7 @@ public class GreateCraftingTableRecipes {
         if(!material.hasProperty(GreatePropertyKeys.KINETIC)) return;
 
         if(!material.getName().equals(AndesiteAlloy.getName())) { //special case, since wrought iron is 'andesite alloy'
-            VanillaRecipeHelper.addShapedRecipe(provider, material.getName() + "_shaft", ChemicalHelper.get(shaft, material).copyWithCount(4),
+            VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(material.getName() + "_shaft"), ChemicalHelper.get(shaft, material).copyWithCount(4),
                     "s ", " A",
                     'A', ChemicalHelper.get(alloy, material));
         }
@@ -218,35 +218,35 @@ public class GreateCraftingTableRecipes {
         if(material.hasProperty(GreatePropertyKeys.COGWHEEL)) {
             CogwheelProperty prop = material.getProperty(GreatePropertyKeys.COGWHEEL);
             Material previousTierMaterial = prop.getPreviousMaterial();
-            VanillaRecipeHelper.addShapedRecipe(provider, true,material.getName() + "_cogwheel", ChemicalHelper.get(cogwheel, material),
+            VanillaRecipeHelper.addShapedRecipe(provider, true, Greate.id(material.getName() + "_cogwheel"), ChemicalHelper.get(cogwheel, material),
                     "SP", "f ",
                     'S', new MaterialEntry(shaft, material),
                     'P', new MaterialEntry(plate, previousTierMaterial));
 
-            VanillaRecipeHelper.addShapedRecipe(provider, true,material.getName() + "_large_cogwheel", ChemicalHelper.get(largeCogwheel, material),
+            VanillaRecipeHelper.addShapedRecipe(provider, true, Greate.id(material.getName() + "_large_cogwheel"), ChemicalHelper.get(largeCogwheel, material),
                     "SP", "Pf",
                     'S', new MaterialEntry(shaft, material),
                     'P', new MaterialEntry(plate, previousTierMaterial));
 
-            VanillaRecipeHelper.addShapedRecipe(provider,material.getName() + "_large_cogwheel_from_little", ChemicalHelper.get(largeCogwheel, material),
+            VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(material.getName() + "_large_cogwheel_from_little"), ChemicalHelper.get(largeCogwheel, material),
                     "CP", "f ",
                     'C', new MaterialEntry(cogwheel, material),
                     'P', new MaterialEntry(plate, previousTierMaterial));
 
-            VanillaRecipeHelper.addShapedRecipe(provider, true, material.getName() + "_gearbox", ChemicalHelper.get(gearbox, material),
+            VanillaRecipeHelper.addShapedRecipe(provider, true, Greate.id(material.getName() + "_gearbox"), ChemicalHelper.get(gearbox, material),
                     " S ", "SCS", "wSh",
                     'S', new MaterialEntry(shaft, material),
                     'C', AllBlocks.ANDESITE_CASING);
 
-            VanillaRecipeHelper.addShapedRecipe(provider, true, material.getName() + "_vertical_gearbox", ChemicalHelper.get(verticalGearbox, material),
+            VanillaRecipeHelper.addShapedRecipe(provider, true, Greate.id(material.getName() + "_vertical_gearbox"), ChemicalHelper.get(verticalGearbox, material),
                     "S S", "wCh", "S S",
                     'S', new MaterialEntry(shaft, material),
                     'C', AllBlocks.ANDESITE_CASING);
 
-            VanillaRecipeHelper.addShapelessRecipe(provider, material.getName() + "_gearbox_from_conversion", ChemicalHelper.get(gearbox, material),
+            VanillaRecipeHelper.addShapelessRecipe(provider, Greate.id(material.getName() + "_gearbox_from_conversion"), ChemicalHelper.get(gearbox, material),
                     ChemicalHelper.get(verticalGearbox, material));
 
-            VanillaRecipeHelper.addShapelessRecipe(provider, material.getName() + "_vertical_gearbox_from_conversion", ChemicalHelper.get(verticalGearbox, material),
+            VanillaRecipeHelper.addShapelessRecipe(provider, Greate.id(material.getName() + "_vertical_gearbox_from_conversion"), ChemicalHelper.get(verticalGearbox, material),
                     ChemicalHelper.get(gearbox, material));
         }
     }
