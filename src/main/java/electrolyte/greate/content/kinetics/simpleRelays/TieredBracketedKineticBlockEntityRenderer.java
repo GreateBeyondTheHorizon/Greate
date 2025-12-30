@@ -29,9 +29,6 @@ public class TieredBracketedKineticBlockEntityRenderer extends KineticBlockEntit
             return;
         }
 
-        TieredCogwheelBlock cogwheelBlock = ((TieredCogwheelBlock) be.getBlockState().getBlock());
-        int tier = cogwheelBlock.getTier();
-        String material = cogwheelBlock.getMaterial().getName();
         Axis axis = getRotationAxisOf(be);
         Direction facing = Direction.fromAxisAndDirection(axis, AxisDirection.POSITIVE);
         renderRotatingBuffer(be,
@@ -40,7 +37,7 @@ public class TieredBracketedKineticBlockEntityRenderer extends KineticBlockEntit
 
         float angle = getAngleForLargeCogShaft(be, axis);
         SuperByteBuffer shaft =
-                CachedBuffers.partialFacingVertical(GreateModelUtils.getPartialModel(be.getBlockState().getBlock(), "/shaft_half"), be.getBlockState(), facing);
+                CachedBuffers.partialFacingVertical(GreateModelUtils.getPartialModel(be.getBlockState().getBlock(), "/cogwheel_shaft"), be.getBlockState(), facing);
         kineticRotationTransform(shaft, be, axis, angle, light);
         shaft.renderInto(ms, buffer.getBuffer(RenderType.solid()));
     }
