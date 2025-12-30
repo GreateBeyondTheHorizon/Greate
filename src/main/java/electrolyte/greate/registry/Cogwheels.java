@@ -5,7 +5,7 @@ import com.google.common.collect.Table;
 import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
-import com.gregtechceu.gtceu.common.data.GTBlocks;
+import com.gregtechceu.gtceu.common.data.GTItems;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllSpriteShifts;
 import com.simibubi.create.content.decoration.encasing.EncasingRegistry;
@@ -68,12 +68,12 @@ public class Cogwheels {
                     .initialProperties(SharedProperties::stone)
                     .properties(p -> p.sound(SoundType.WOOD).mapColor(MapColor.DIRT).noLootTable())
                     .transform(GStress.setNoImpact())
-                    .transform(GTBlocks.unificationBlock(cogwheel, mat))
                     .blockstate(NonNullBiConsumer.noop())
                     .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
                     .onRegister(c -> c.setTier(tier))
                     .onRegister(CogwheelModel::create)
                     .item(CogwheelBlockItem::new)
+                    .transform(GTItems.unificationItem(cogwheel, mat))
                     .model(NonNullBiConsumer.noop()).build()
                     .register();
             COGWHEELS_BUILDER.put(cogwheel, mat, cogwheelEntry);
@@ -92,12 +92,12 @@ public class Cogwheels {
                     .initialProperties(SharedProperties::stone)
                     .properties(p -> p.sound(SoundType.WOOD).mapColor(MapColor.DIRT).noLootTable())
                     .transform(GStress.setNoImpact())
-                    .transform(GTBlocks.unificationBlock(largeCogwheel, mat))
                     .blockstate(NonNullBiConsumer.noop())
                     .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
                     .onRegister(c -> c.setTier(tier))
                     .onRegister(CogwheelModel::create)
                     .item(CogwheelBlockItem::new)
+                    .transform(GTItems.unificationItem(largeCogwheel, mat))
                     .model(NonNullBiConsumer.noop()).build()
                     .register();
             LARGE_COGWHEELS_BUILDER.put(largeCogwheel, mat, cogwheelEntry);
@@ -113,10 +113,9 @@ public class Cogwheels {
             int tier = prop.getTier();
             var cogwheelEntry = GreateRegistries.REGISTRATE
                     .block("andesite_encased_" + mat.getName() + "_cogwheel", p -> TieredEncasedCogwheelBlock.small(p, AllBlocks.ANDESITE_CASING::get, mat))
-                    .properties(p -> p.mapColor(MapColor.PODZOL).noLootTable())
+                    .properties(p -> p.mapColor(MapColor.PODZOL))
                     .transform(tieredEncasedCogwheel(() -> AllSpriteShifts.ANDESITE_CASING))
                     .transform(EncasingRegistry.addVariantTo(Objects.requireNonNull(COGWHEELS.get(cogwheel, mat))))
-                    .transform(GTBlocks.unificationBlock(andesiteEncasedCogwheel, mat))
                     .onRegister(CreateRegistrate.connectedTextures(() -> new EncasedCogCTBehaviour(AllSpriteShifts.ANDESITE_CASING,
                             Couple.create(AllSpriteShifts.ANDESITE_ENCASED_COGWHEEL_SIDE, AllSpriteShifts.ANDESITE_ENCASED_COGWHEEL_OTHERSIDE))))
                     .onRegister(c -> c.setTier(tier))
@@ -126,10 +125,9 @@ public class Cogwheels {
 
             var largeCogwheelEntry = GreateRegistries.REGISTRATE
                      .block("andesite_encased_large_" + mat.getName() + "_cogwheel", p -> TieredEncasedCogwheelBlock.large(p, AllBlocks.ANDESITE_CASING::get, mat))
-                     .properties(p -> p.mapColor(MapColor.PODZOL).noLootTable())
+                     .properties(p -> p.mapColor(MapColor.PODZOL))
                      .transform(tieredEncasedLargeCogwheel(() -> AllSpriteShifts.ANDESITE_CASING))
                      .transform(EncasingRegistry.addVariantTo(Objects.requireNonNull(LARGE_COGWHEELS.get(largeCogwheel, mat))))
-                     .transform(GTBlocks.unificationBlock(andesiteEncasedLargeCogwheel, mat))
                      .onRegister(c -> c.setTier(tier))
                      .onRegister(CogwheelModel::create)
                      .register();
@@ -147,10 +145,9 @@ public class Cogwheels {
             int tier = prop.getTier();
             var cogwheelEntry = GreateRegistries.REGISTRATE
                     .block("brass_encased_" + mat.getName() + "_cogwheel", p -> TieredEncasedCogwheelBlock.small(p, AllBlocks.BRASS_CASING::get, mat))
-                    .properties(p -> p.mapColor(MapColor.PODZOL).noLootTable())
+                    .properties(p -> p.mapColor(MapColor.PODZOL))
                     .transform(tieredEncasedCogwheel(() -> AllSpriteShifts.BRASS_CASING))
                     .transform(EncasingRegistry.addVariantTo(Objects.requireNonNull(COGWHEELS.get(cogwheel, mat))))
-                    .transform(GTBlocks.unificationBlock(brassEncasedCogwheel, mat))
                     .onRegister(CreateRegistrate.connectedTextures(() -> new EncasedCogCTBehaviour(AllSpriteShifts.BRASS_CASING,
                             Couple.create(AllSpriteShifts.BRASS_ENCASED_COGWHEEL_SIDE, AllSpriteShifts.BRASS_ENCASED_COGWHEEL_OTHERSIDE))))
                     .onRegister(c -> c.setTier(tier))
@@ -160,10 +157,9 @@ public class Cogwheels {
 
             var largeCogwheelEntry = GreateRegistries.REGISTRATE
                      .block("brass_encased_large_" + mat.getName() + "_cogwheel", p -> TieredEncasedCogwheelBlock.large(p, AllBlocks.BRASS_CASING::get, mat))
-                     .properties(p -> p.mapColor(MapColor.PODZOL).noLootTable())
+                     .properties(p -> p.mapColor(MapColor.PODZOL))
                      .transform(tieredEncasedLargeCogwheel(() -> AllSpriteShifts.BRASS_CASING))
                      .transform(EncasingRegistry.addVariantTo(Objects.requireNonNull(LARGE_COGWHEELS.get(largeCogwheel, mat))))
-                     .transform(GTBlocks.unificationBlock(brassEncasedLargeCogwheel, mat))
                      .onRegister(c -> c.setTier(tier))
                      .onRegister(CogwheelModel::create)
                      .register();

@@ -6,7 +6,6 @@ import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
-import com.gregtechceu.gtceu.common.data.GTBlocks;
 import com.gregtechceu.gtceu.common.data.GTItems;
 import com.simibubi.create.AllDisplaySources;
 import com.simibubi.create.content.kinetics.belt.BeltModel;
@@ -49,7 +48,6 @@ public class Belts {
                         .properties(p -> p.sound(SoundType.WOOL).strength(0.8F).mapColor(MapColor.COLOR_GRAY).noLootTable())
                         .transform(GStress.setNoImpact())
                         .transform(displaySource(AllDisplaySources.ITEM_NAMES))
-                        .transform(GTBlocks.unificationBlock(belt, material))
                         .onRegister(c -> c.setBeltMaterial(material))
                         .onRegister(c -> c.setupBeltModel(material))
                         .onRegister(CreateRegistrate.blockModel(() -> BeltModel::new))

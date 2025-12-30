@@ -7,17 +7,23 @@ import com.gregtechceu.gtceu.api.data.chemical.material.event.MaterialRegistryEv
 import com.gregtechceu.gtceu.api.data.chemical.material.event.PostMaterialEvent;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
+import com.simibubi.create.foundation.item.ItemDescription;
+import com.simibubi.create.foundation.item.TooltipModifier;
 import electrolyte.greate.content.gtceu.machines.GreateMultiblockMachines;
 import electrolyte.greate.content.gtceu.machines.GreateRecipeTypes;
 import electrolyte.greate.foundation.data.GreateRegistrate;
+import electrolyte.greate.foundation.item.GreateKineticStats;
 import electrolyte.greate.registry.*;
+import net.createmod.catnip.lang.FontHelper.Palette;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Greate.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public final class GreateRegistries {
-	public static final GreateRegistrate REGISTRATE = GreateRegistrate.create(Greate.MOD_ID);
+	public static final GreateRegistrate REGISTRATE = GreateRegistrate.create(Greate.MOD_ID)
+			.setTooltipModifierFactory(i ->
+					new ItemDescription.Modifier(i, Palette.STANDARD_CREATE).andThen(TooltipModifier.mapNull(GreateKineticStats.create(i))));
 
 	@SubscribeEvent
 	public static void registerMaterials(MaterialEvent event) {

@@ -22,7 +22,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 @EventBusSubscriber(modid = Greate.MOD_ID, value = Dist.CLIENT, bus = Bus.FORGE)
-public class GreateForgeClientEvents {
+class GreateForgeClientEvents {
 
     @SubscribeEvent
     public static void onClientTick(ClientTickEvent event) {

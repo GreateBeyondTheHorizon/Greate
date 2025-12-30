@@ -5,7 +5,7 @@ import com.google.common.collect.Table;
 import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
-import com.gregtechceu.gtceu.common.data.GTBlocks;
+import com.gregtechceu.gtceu.common.data.GTItems;
 import com.simibubi.create.AllSpriteShifts;
 import com.simibubi.create.content.decoration.encasing.EncasedCTBehaviour;
 import com.simibubi.create.content.kinetics.gearbox.GearboxBlock;
@@ -53,13 +53,13 @@ public class Gearboxes {
                     .initialProperties(SharedProperties::stone)
                     .properties(p -> p.noOcclusion().mapColor(MapColor.PODZOL).pushReaction(PushReaction.PUSH_ONLY).noLootTable())
                     .transform(GStress.setNoImpact())
-                    .transform(GTBlocks.unificationBlock(gearbox, mat))
                     .onRegister(CreateRegistrate.connectedTextures(() -> new EncasedCTBehaviour(AllSpriteShifts.ANDESITE_CASING)))
                     .onRegister(CreateRegistrate.casingConnectivity((block, c) -> c.make(block, AllSpriteShifts.ANDESITE_CASING,
                             (s, f) -> f.getAxis() == s.getValue(GearboxBlock.AXIS))))
                     .onRegister(c -> c.setTier(tier))
                     .onRegister(GearboxModel::create)
                     .item()
+                    .transform(GTItems.unificationItem(gearbox, mat))
                     .model(NonNullBiConsumer.noop()).build()
                     .register();
             GEARBOXES_BUILDER.put(gearbox, mat, gearboxEntry);

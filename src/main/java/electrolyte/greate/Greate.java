@@ -5,8 +5,6 @@ import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.utils.FormattingUtil;
 import com.mojang.logging.LogUtils;
-import com.simibubi.create.foundation.item.ItemDescription;
-import com.simibubi.create.foundation.item.TooltipModifier;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
@@ -18,7 +16,6 @@ import electrolyte.greate.foundation.advancement.GreateAdvancements;
 import electrolyte.greate.foundation.data.GreateTagGen.GreateBlockTagGen;
 import electrolyte.greate.foundation.data.GreateTagGen.GreateItemTagGen;
 import electrolyte.greate.foundation.data.recipe.datagen.GreateItemApplicationRecipeGen;
-import electrolyte.greate.foundation.item.GreateKineticStats;
 import electrolyte.greate.infrastructure.config.GreateConfigs;
 import electrolyte.greate.infrastructure.config.GreateRecipeConfig;
 import electrolyte.greate.infrastructure.ponder.GreatePonderPlugin;
@@ -27,7 +24,6 @@ import electrolyte.greate.registry.ModRecipeTypes;
 import it.unimi.dsi.fastutil.objects.ReferenceArrayList;
 import it.unimi.dsi.fastutil.objects.ReferenceLinkedOpenHashSet;
 import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet;
-import net.createmod.catnip.lang.FontHelper.Palette;
 import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -67,10 +63,6 @@ public class Greate {
                     .displayItems(new GreateRegistrateDisplayItemsGenerator())
                     .build())
                 .register();
-
-    static {
-        GreateRegistries.REGISTRATE.setTooltipModifierFactory(i -> new ItemDescription.Modifier(i, Palette.STANDARD_CREATE).andThen(TooltipModifier.mapNull(GreateKineticStats.create(i))));
-    }
 
     public Greate() {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();

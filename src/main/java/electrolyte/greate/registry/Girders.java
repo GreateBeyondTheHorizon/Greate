@@ -5,7 +5,6 @@ import com.google.common.collect.Table;
 import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
-import com.gregtechceu.gtceu.common.data.GTBlocks;
 import com.simibubi.create.content.decoration.girder.ConnectedGirderModel;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
@@ -45,7 +44,6 @@ public class Girders {
                     .onRegister(CreateRegistrate.blockModel(() -> ConnectedGirderModel::new))
                     .onRegister(c -> c.setTier(tier))
                     .onRegister(ShaftModel::create)
-                    .transform(GTBlocks.unificationBlock(girderEncasedShaft, mat))
                     .register();
             GIRDERS_BUILDER.put(girderEncasedShaft, mat, girderEntry);
         }

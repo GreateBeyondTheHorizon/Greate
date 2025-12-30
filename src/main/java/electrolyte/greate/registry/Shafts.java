@@ -5,7 +5,7 @@ import com.google.common.collect.Table;
 import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
-import com.gregtechceu.gtceu.common.data.GTBlocks;
+import com.gregtechceu.gtceu.common.data.GTItems;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllSpriteShifts;
 import com.simibubi.create.content.decoration.encasing.EncasingRegistry;
@@ -59,13 +59,13 @@ public class Shafts {
                     .initialProperties(SharedProperties::stone)
                     .properties(p -> p.mapColor(MapColor.METAL).noLootTable())
                     .transform(GStress.setNoImpact())
-                    .transform(GTBlocks.unificationBlock(shaft, mat))
                     .blockstate(NonNullBiConsumer.noop())
                     .onRegister(CreateRegistrate.blockModel(() -> BracketedKineticBlockModel::new))
                     .onRegister(c -> c.setTier(tier))
                     .onRegister(ShaftModel::create)
                     .simpleItem()
                     .item()
+                    .transform(GTItems.unificationItem(shaft, mat))
                     .model(NonNullBiConsumer.noop())
                     .build()
                     .register();
@@ -84,7 +84,6 @@ public class Shafts {
                     .initialProperties(SharedProperties::stone)
                     .properties(p -> p.mapColor(MapColor.METAL).noLootTable())
                     .blockstate(NonNullBiConsumer.noop())
-                    .transform(GTBlocks.unificationBlock(poweredShaft, mat))
                     .onRegister(c -> c.setTier(tier))
                     .onRegister(ShaftModel::create)
                     .register();
@@ -103,7 +102,6 @@ public class Shafts {
                      .properties(p -> p.mapColor(MapColor.PODZOL))
                      .transform(GreateBuilderTransformers.tieredEncasedShaft(() -> AllSpriteShifts.ANDESITE_CASING))
                      .transform(EncasingRegistry.addVariantTo(Objects.requireNonNull(SHAFTS.get(shaft, mat))))
-                     .transform(GTBlocks.unificationBlock(andesiteEncasedShaft, mat))
                      .onRegister(c -> c.setTier(tier))
                      .onRegister(ShaftModel::create)
                      .register();
@@ -122,7 +120,6 @@ public class Shafts {
                      .properties(p -> p.mapColor(MapColor.PODZOL))
                      .transform(GreateBuilderTransformers.tieredEncasedShaft(() -> AllSpriteShifts.BRASS_CASING))
                      .transform(EncasingRegistry.addVariantTo(Objects.requireNonNull(SHAFTS.get(shaft, mat))))
-                     .transform(GTBlocks.unificationBlock(brassEncasedShaft, mat))
                      .onRegister(c -> c.setTier(tier))
                      .onRegister(ShaftModel::create)
                      .register();

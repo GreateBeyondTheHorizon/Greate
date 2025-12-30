@@ -32,8 +32,9 @@ public class GreateRegistrate extends GTRegistrate {
         return new GreateRegistrate(modId);
     }
 
-    public void setTooltipModifierFactory(Function<Item, TooltipModifier> factory) {
+    public GreateRegistrate setTooltipModifierFactory(Function<Item, TooltipModifier> factory) {
 		currentTooltipModifierFactory = factory;
+		return this;
     }
 
     @Override
