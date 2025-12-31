@@ -1,6 +1,5 @@
 package electrolyte.greate.mixin;
 
-import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
 import com.simibubi.create.content.kinetics.steamEngine.PoweredShaftBlock;
@@ -8,6 +7,7 @@ import com.simibubi.create.content.kinetics.steamEngine.SteamEngineBlock;
 import com.simibubi.create.foundation.utility.BlockHelper;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
 import electrolyte.greate.registry.GreateTagPrefixes;
+import electrolyte.greate.registry.Shafts;
 import net.createmod.catnip.placement.PlacementOffset;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -38,7 +38,7 @@ public abstract class MixinSteamEngineBlock$PlacementHelper {
     @Inject(method = "getOffset", at = @At("HEAD"), remap = false, cancellable = true)
     private void greate_getOffset(Player player, Level world, BlockState state, BlockPos pos, BlockHitResult ray, CallbackInfoReturnable<PlacementOffset> cir) {
         Block shaftType = Block.byItem(player.getMainHandItem().getItem());
-        if (shaftType instanceof TieredShaftBlock) {
+        if (shaftType instanceof TieredShaftBlock tsb) {
             BlockPos shaftPos = SteamEngineBlock.getShaftPos(state, pos);
             BlockState shaft = shaftType.defaultBlockState();
             for (Direction dir : Direction.orderedByNearest(player)) {
@@ -53,9 +53,9 @@ public abstract class MixinSteamEngineBlock$PlacementHelper {
             }
             Axis axis = shaft.getValue(ShaftBlock.AXIS);
             cir.setReturnValue(PlacementOffset.success(shaftPos, s -> {
-                Material mat = ChemicalHelper.getMaterialEntry(shaftType).material();
+                Material mat = tsb.getMaterial();
                 return BlockHelper.copyProperties(s,
-                        (world.isClientSide ? ChemicalHelper.getBlock(GreateTagPrefixes.shaft, mat) : ChemicalHelper.getBlock(GreateTagPrefixes.poweredShaft, mat)).defaultBlockState())
+                        (world.isClientSide ? Shafts.SHAFTS.get(GreateTagPrefixes.shaft, mat).get() : Shafts.POWERED_SHAFTS.get(GreateTagPrefixes.poweredShaft, mat).get()).defaultBlockState())
                         .setValue(PoweredShaftBlock.AXIS, axis);
             }));
         }
