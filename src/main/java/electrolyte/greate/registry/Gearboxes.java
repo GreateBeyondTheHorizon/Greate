@@ -73,6 +73,7 @@ public class Gearboxes {
             if(!mat.hasProperty(GreatePropertyKeys.COGWHEEL)) continue;
             var gearboxEntry = GreateRegistries.REGISTRATE
                     .item(mat.getName() + "_vertical_gearbox", p -> new TieredVerticalGearboxItem(p, mat))
+                    .transform(GTItems.unificationItem(verticalGearbox, mat))
                     .model(NonNullBiConsumer.noop())
                     .register();
             VERTICAL_GEARBOXES_BUILDER.put(verticalGearbox, mat, gearboxEntry);
