@@ -1,1 +1,3 @@
-- Fix crash with MixinSteamEngineBlock#PlacementHelper
+- Fix wrong cogwheel model rotation when backend is 'flywheel:off'
+- Fix crash with powered shafts
+- Gave vertical gearbox items unification entries
