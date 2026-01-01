@@ -11,6 +11,7 @@ import com.simibubi.create.content.kinetics.steamEngine.PoweredShaftBlock;
 import com.simibubi.create.foundation.placement.PoleHelper;
 import electrolyte.greate.content.kinetics.steamEngine.TieredPoweredShaftBlock;
 import electrolyte.greate.registry.ModBlockEntityTypes;
+import electrolyte.greate.registry.Shafts;
 import net.createmod.catnip.placement.IPlacementHelper;
 import net.createmod.catnip.placement.PlacementHelpers;
 import net.createmod.catnip.placement.PlacementOffset;
@@ -131,11 +132,14 @@ public class TieredShaftBlock extends ShaftBlock implements ITieredBlock, ITiere
         @Override
         public PlacementOffset getOffset(Player player, Level world, BlockState state, BlockPos pos, BlockHitResult ray) {
             PlacementOffset offset = super.getOffset(player, world, state, pos, ray);
-            ItemStack shaft = player.getMainHandItem();
+            Block shaftBlock;
+            if(Block.byItem(player.getMainHandItem().getItem()) instanceof TieredShaftBlock tsb) {
+                shaftBlock = Shafts.POWERED_SHAFTS.get(poweredShaft, tsb.getMaterial()).get();
+            } else shaftBlock = AllBlocks.POWERED_SHAFT.get();
             if (offset.isSuccessful())
                 offset.withTransform(offset.getTransform()
                         .andThen(stateForPlacement -> PoweredShaftBlock.stillValid(stateForPlacement, world, offset.getBlockPos()) ?
-                                ChemicalHelper.getBlock(poweredShaft, ChemicalHelper.getMaterialEntry(shaft.getItem()).material()).defaultBlockState()
+                                shaftBlock.defaultBlockState()
                                         .setValue(PoweredShaftBlock.AXIS, stateForPlacement.getValue(ShaftBlock.AXIS))
                                         .setValue(WATERLOGGED, stateForPlacement.getValue(WATERLOGGED))
                                 : stateForPlacement));

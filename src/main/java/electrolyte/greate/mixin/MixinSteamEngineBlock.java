@@ -13,7 +13,6 @@ import com.simibubi.create.content.kinetics.steamEngine.SteamEngineBlockEntity;
 import com.simibubi.create.foundation.block.IBE;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
-import electrolyte.greate.content.kinetics.steamEngine.TieredPoweredShaftBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
@@ -78,11 +77,8 @@ public abstract class MixinSteamEngineBlock extends FaceAttachedHorizontalDirect
         }
     }
 
-    @Inject(method = "onRemove", at = @At("TAIL"))
-    private void greate_onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving, CallbackInfo ci) {
-        BlockPos shaftPos = getShaftPos(pState, pPos);
-        BlockState shaftState = pLevel.getBlockState(shaftPos);
-        if(!(shaftState.getBlock() instanceof TieredPoweredShaftBlock tpsb)) return;
-        pLevel.scheduleTick(shaftPos, tpsb, 1);
+    @WrapOperation(method = "onRemove", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z"))
+    private boolean greate_onRemove(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
+        return state.getBlock() instanceof PoweredShaftBlock;
     }
 }
