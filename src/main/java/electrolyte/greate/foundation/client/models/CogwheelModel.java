@@ -71,7 +71,7 @@ public record CogwheelModel(Block cogweelBlock) {
                 .generate(axis -> {
                     Variant cogModel = Variant.variant();
                     return cogModel.with(VariantProperties.MODEL, modelId.withSuffix(cogwheelSuffix))
-                            .with(VariantProperties.X_ROT, axis == Axis.X ? Rotation.R90 : Rotation.R0)
+                            .with(VariantProperties.X_ROT, axis == Axis.X ? Rotation.R90 : axis == Axis.Z ? Rotation.R90 : Rotation.R0)
                             .with(VariantProperties.Y_ROT, axis == Axis.X ? Rotation.R90 : axis == Axis.Z ? Rotation.R180 : Rotation.R0);
                 });
         GTDynamicResourcePack.addBlockState(blockId, MultiVariantGenerator.multiVariant(model.cogweelBlock).with(dispatch));
