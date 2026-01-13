@@ -1,5 +1,6 @@
 package electrolyte.greate.foundation.data.recipe.machine;
 
+import com.gregtechceu.gtceu.common.data.GTRecipeCategories;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllTags.AllItemTags;
 import com.simibubi.create.Create;
@@ -23,6 +24,7 @@ public class GreateChemicalBathRecipes {
             String dyeName = color.getName();
             CHEMICAL_BATH_RECIPES
                     .recipeBuilder(Greate.id(dyeName + "_seat"))
+                    .category(GTRecipeCategories.CHEM_DYES)
                     .inputItems(AllItemTags.SEATS.tag)
                     .inputFluids(CHEMICAL_DYES[color.ordinal()].getFluid(L))
                     .outputItems(new ItemStack(BuiltInRegistries.ITEM.get(Create.asResource(dyeName + "_seat"))))
@@ -32,6 +34,7 @@ public class GreateChemicalBathRecipes {
 
             CHEMICAL_BATH_RECIPES
                     .recipeBuilder(Greate.id(dyeName + "_valve_handle"))
+                    .category(GTRecipeCategories.CHEM_DYES)
                     .inputItems(AllBlocks.COPPER_VALVE_HANDLE.asStack())
                     .inputFluids(CHEMICAL_DYES[color.ordinal()].getFluid(L))
                     .outputItems(new ItemStack(BuiltInRegistries.ITEM.get(Create.asResource(dyeName + "_valve_handle"))))
@@ -42,6 +45,7 @@ public class GreateChemicalBathRecipes {
 
         CHEMICAL_BATH_RECIPES
                 .recipeBuilder(Greate.id("decolor_seat"))
+                .category(GTRecipeCategories.CHEM_DYES)
                 .inputItems(AllItemTags.SEATS.tag)
                 .inputFluids(Chlorine.getFluid(20))
                 .outputItems(AllBlocks.SEATS.get(DyeColor.WHITE))
@@ -51,6 +55,7 @@ public class GreateChemicalBathRecipes {
 
         CHEMICAL_BATH_RECIPES
                 .recipeBuilder(Greate.id("decolor_valve_handle"))
+                .category(GTRecipeCategories.CHEM_DYES)
                 .inputItems(AllItemTags.VALVE_HANDLES.tag)
                 .inputFluids(Chlorine.getFluid(20))
                 .outputItems(AllBlocks.COPPER_VALVE_HANDLE)
