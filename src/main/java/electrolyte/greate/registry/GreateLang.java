@@ -47,5 +47,6 @@ public class GreateLang {
         provider.add("tagprefix.whisk", "%s Whisk");
         provider.add("tagprefix.alloy", "%s Alloy");
         provider.add("item.gtceu.naquadah_alloy_alloy", "Naquadah Alloy");
+        provider.add("gtceu.wire_coating", "Wire Coating");
     }
 }
