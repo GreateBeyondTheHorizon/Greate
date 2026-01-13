@@ -1,3 +1,2 @@
-- Fix wrong cogwheel model rotation when backend is 'flywheel:off'
-- Fix crash with powered shafts
-- Gave vertical gearbox items unification entries
+- Fix missing lang entry for wire coating category
+- Fix chemical bath dyeing recipes not being in the correct category
