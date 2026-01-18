@@ -19,6 +19,7 @@ import com.simibubi.create.foundation.recipe.RecipeFinder;
 import com.simibubi.create.foundation.utility.CreateLang;
 import com.simibubi.create.infrastructure.config.AllConfigs;
 import electrolyte.greate.Greate;
+import electrolyte.greate.compat.createfactorylogistics.CreateFactoryLogisticsCompat;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
@@ -44,8 +45,10 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
+import ru.zznty.create_factory_logistics.logistics.composite.CompositePackageItem;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -146,8 +149,9 @@ public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKinet
         ItemStack input = inventory.getStackInSlot(0);
         List<ItemStack> list = new ArrayList<>();
         if(PackageItem.isPackage(input)) {
+            boolean isCompositePackage = ModList.get().isLoaded("create_factory_logistics") && CreateFactoryLogisticsCompat.isCompositePackage(input);
             inventory.clear();
-            ItemStackHandler results = PackageItem.getContents(input);
+            ItemStackHandler results = isCompositePackage ? CreateFactoryLogisticsCompat.getPackageContents(input) : PackageItem.getContents(input);
             for(int i = 0; i < results.getSlots(); i++) {
                 ItemStack stack = results.getStackInSlot(i);
                 if(!stack.isEmpty()) {
@@ -156,6 +160,16 @@ public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKinet
             }
             for(int slot = 0; slot < list.size() && slot + 1 < inventory.getSlots(); slot++) {
                 inventory.setStackInSlot(slot + 1, list.get(slot));
+            }
+            if(isCompositePackage) {
+                for(ItemStack child : CompositePackageItem.getChildren(input)) {
+                    for(int i = 1; i < inventory.getSlots() - 1; i++) {
+                        if(inventory.getStackInSlot(i).isEmpty()) {
+                            inventory.setStackInSlot(i, child);
+                            break;
+                        }
+                    }
+                }
             }
             return;
         }
