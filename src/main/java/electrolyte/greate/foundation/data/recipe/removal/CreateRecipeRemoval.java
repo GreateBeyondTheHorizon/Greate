@@ -84,6 +84,7 @@ public class CreateRecipeRemoval {
         recipe.accept(Create.asResource("crafting/kinetics/chute"));
         recipe.accept(Create.asResource("crafting/kinetics/deployer"));
         recipe.accept(Create.asResource("crafting/kinetics/depot"));
+        recipe.accept(Create.asResource("crafting/kinetics/fluid_tank"));
         recipe.accept(Create.asResource("crafting/kinetics/item_vault"));
         recipe.accept(Create.asResource("crafting/kinetics/spout"));
 
