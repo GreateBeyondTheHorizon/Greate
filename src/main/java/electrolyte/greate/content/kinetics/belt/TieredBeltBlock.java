@@ -22,6 +22,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LevelEvent;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -87,8 +88,8 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBlock, ITieredB
 
             pLevel.removeBlockEntity(currentPos);
             BlockState shaftState = ChemicalHelper.getBlock(shaft, getShaftMaterial()).defaultBlockState().setValue(AXIS, getRotationAxis(currentState));
-            pLevel.setBlock(currentPos, ProperWaterloggedBlock.withWater(pLevel, hasPulley ? shaftState : Blocks.AIR.defaultBlockState(), currentPos), 3);
-            pLevel.levelEvent(2001, currentPos, Block.getId(currentState));
+            pLevel.setBlock(currentPos, ProperWaterloggedBlock.withWater(pLevel, hasPulley ? shaftState : Blocks.AIR.defaultBlockState(), currentPos), Block.UPDATE_ALL);
+            pLevel.levelEvent(LevelEvent.PARTICLES_DESTROY_BLOCK, currentPos, Block.getId(currentState));
         }
     }
 
