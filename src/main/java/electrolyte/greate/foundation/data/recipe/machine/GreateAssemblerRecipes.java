@@ -49,6 +49,7 @@ public class GreateAssemblerRecipes {
                 .circuitMeta(11)
                 .duration(20 * 40)
                 .EUt(2)
+                .addMaterialInfo(true)
                 .save(provider);
 
         ASSEMBLER_RECIPES
@@ -99,6 +100,7 @@ public class GreateAssemblerRecipes {
                 .circuitMeta(17)
                 .duration(20 * 20)
                 .EUt(VA[ULV])
+                .addMaterialInfo(true)
                 .save(provider);
 
         ASSEMBLER_RECIPES
@@ -121,6 +123,7 @@ public class GreateAssemblerRecipes {
                 .circuitMeta(1)
                 .duration(20 * 20)
                 .EUt(VA[ULV])
+                .addMaterialInfo(true)
                 .save(provider);
 
         ASSEMBLER_RECIPES
@@ -143,6 +146,7 @@ public class GreateAssemblerRecipes {
                 .circuitMeta(1)
                 .duration(20 * 20)
                 .EUt(VA[ULV])
+                .addMaterialInfo(true)
                 .save(provider);
     }
 }

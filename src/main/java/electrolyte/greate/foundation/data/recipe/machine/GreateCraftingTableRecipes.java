@@ -333,20 +333,20 @@ public class GreateCraftingTableRecipes {
                 'P', new MaterialEntry(plate, Iron),
                 'G', new MaterialEntry(gearSmall, Iron),
                 'C', Ingredient.of(Tags.Items.CHESTS_WOODEN));
-        VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllBlocks.BASIN.getId().getPath()), AllBlocks.BASIN.asStack(),
+        VanillaRecipeHelper.addShapedRecipe(provider, true, Greate.id(AllBlocks.BASIN.getId().getPath()), AllBlocks.BASIN.asStack(),
                 "AhA", "AAA",
                 'A', new MaterialEntry(plate, AndesiteAlloy));
-        VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllItems.BRASS_HAND.getId().getPath()), AllItems.BRASS_HAND.asStack(),
+        VanillaRecipeHelper.addShapedRecipe(provider, true, Greate.id(AllItems.BRASS_HAND.getId().getPath()), AllItems.BRASS_HAND.asStack(),
                 " A ", "PPP", "hPf",
                 'A', new MaterialEntry(plate, AndesiteAlloy),
                 'P', new MaterialEntry(plate, Brass));
-        VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllBlocks.DEPLOYER.getId().getPath()), AllBlocks.DEPLOYER.asStack(),
+        VanillaRecipeHelper.addShapedRecipe(provider, true, Greate.id(AllBlocks.DEPLOYER.getId().getPath()), AllBlocks.DEPLOYER.asStack(),
                 " C ", "SRS", "hAf",
                 'C', AllItems.ELECTRON_TUBE,
                 'R', AllItems.BRASS_HAND,
                 'S', SHAFT.get(ULV),
                 'A', AllBlocks.ANDESITE_CASING);
-        VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllBlocks.DEPOT.getId().getPath()), AllBlocks.DEPOT.asStack(),
+        VanillaRecipeHelper.addShapedRecipe(provider, true, Greate.id(AllBlocks.DEPOT.getId().getPath()), AllBlocks.DEPOT.asStack(),
                 " A ", "hCf",
                 'A', new MaterialEntry(plate, AndesiteAlloy),
                 'C', AllBlocks.ANDESITE_CASING);
@@ -354,55 +354,55 @@ public class GreateCraftingTableRecipes {
                 " C ", "hPf",
                 'C', PUMP.get(ULV),
                 'P', AllBlocks.COPPER_CASING);
-        VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllBlocks.MECHANICAL_CRAFTER.getId().getPath()), new ItemStack(AllBlocks.MECHANICAL_CRAFTER.asItem(), 3),
+        VanillaRecipeHelper.addShapedRecipe(provider, true, Greate.id(AllBlocks.MECHANICAL_CRAFTER.getId().getPath()), new ItemStack(AllBlocks.MECHANICAL_CRAFTER.asItem(), 3),
                 " C ", "EAE", "wRh",
                 'C', AllItems.ELECTRON_TUBE,
                 'R', Blocks.CRAFTING_TABLE,
                 'E', COGWHEEL.get(ULV),
                 'A', AllBlocks.BRASS_CASING);
-        VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllBlocks.WEIGHTED_EJECTOR.getId().getPath()), AllBlocks.WEIGHTED_EJECTOR.asStack(),
+        VanillaRecipeHelper.addShapedRecipe(provider, true, Greate.id(AllBlocks.WEIGHTED_EJECTOR.getId().getPath()), AllBlocks.WEIGHTED_EJECTOR.asStack(),
                 " G ", " D ", "wCf",
                 'G', new MaterialEntry(plate, Gold),
                 'D', AllBlocks.DEPOT,
                 'C', COGWHEEL.get(LV));
-        VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllBlocks.GANTRY_CARRIAGE.getId().getPath()), AllBlocks.GANTRY_CARRIAGE.asStack(),
+        VanillaRecipeHelper.addShapedRecipe(provider, true, Greate.id(AllBlocks.GANTRY_CARRIAGE.getId().getPath()), AllBlocks.GANTRY_CARRIAGE.asStack(),
                 " S ", " O ", "wCf",
                 'S', ItemTags.WOODEN_SLABS,
                 'O', AllBlocks.ANDESITE_CASING,
                 'C', COGWHEEL.get(LV));
-        VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllBlocks.TURNTABLE.getId().getPath()), AllBlocks.TURNTABLE.asStack(),
+        VanillaRecipeHelper.addShapedRecipe(provider, true, Greate.id(AllBlocks.TURNTABLE.getId().getPath()), AllBlocks.TURNTABLE.asStack(),
                 " S ", "wHf",
                 'S', ItemTags.WOODEN_SLABS,
                 'H', SHAFT.get(LV));
-        VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllBlocks.WATER_WHEEL.getId().getPath()), AllBlocks.WATER_WHEEL.asStack(),
+        VanillaRecipeHelper.addShapedRecipe(provider, true, Greate.id(AllBlocks.WATER_WHEEL.getId().getPath()), AllBlocks.WATER_WHEEL.asStack(),
                 "BBB", "BSB", "BBB",
                 'B', new MaterialEntry(plate, Wood),
                 'S', SHAFT.get(ULV));
-        VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllBlocks.LARGE_WATER_WHEEL.getId().getPath()), AllBlocks.LARGE_WATER_WHEEL.asStack(),
+        VanillaRecipeHelper.addShapedRecipe(provider, true, Greate.id(AllBlocks.LARGE_WATER_WHEEL.getId().getPath()), AllBlocks.LARGE_WATER_WHEEL.asStack(),
                 "PPP", "PWP", "PPP",
                 'P', new MaterialEntry(plate, Wood),
                 'W', SHAFT.get(LV));
-        VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllBlocks.WINDMILL_BEARING.getId().getPath()), AllBlocks.WINDMILL_BEARING.asStack(),
+        VanillaRecipeHelper.addShapedRecipe(provider, true, Greate.id(AllBlocks.WINDMILL_BEARING.getId().getPath()), AllBlocks.WINDMILL_BEARING.asStack(),
                 " S ", " T ", "wHf",
                 'S', ItemTags.WOODEN_SLABS,
                 'T', Tags.Items.STONE,
                 'H', SHAFT.get(MV));
-        VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllBlocks.MECHANICAL_BEARING.getId().getPath()), AllBlocks.MECHANICAL_BEARING.asStack(),
+        VanillaRecipeHelper.addShapedRecipe(provider, true, Greate.id(AllBlocks.MECHANICAL_BEARING.getId().getPath()), AllBlocks.MECHANICAL_BEARING.asStack(),
                 " S ", " C ", "wHf",
                 'S', ItemTags.WOODEN_SLABS,
                 'C', AllBlocks.ANDESITE_CASING,
                 'H', SHAFT.get(LV));
-        VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllBlocks.ANALOG_LEVER.getId().getPath()), AllBlocks.ANALOG_LEVER.asStack(),
+        VanillaRecipeHelper.addShapedRecipe(provider, true, Greate.id(AllBlocks.ANALOG_LEVER.getId().getPath()), AllBlocks.ANALOG_LEVER.asStack(),
                 " B ", " S ", " C ",
                 'B', Blocks.STONE_BUTTON,
                 'S', Tags.Items.RODS_WOODEN,
                 'C', AllBlocks.ANDESITE_CASING);
-        VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllItems.TRANSMITTER.getId().getPath()), AllItems.TRANSMITTER.asStack(),
+        VanillaRecipeHelper.addShapedRecipe(provider, true, Greate.id(AllItems.TRANSMITTER.getId().getPath()), AllItems.TRANSMITTER.asStack(),
                 " E ", "CCC", "wRh",
                 'E', AllItems.ELECTRON_TUBE,
                 'R', Items.REDSTONE,
                 'C', new MaterialEntry(plate, Copper));
-        VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllBlocks.DISPLAY_LINK.getId().getPath()), AllBlocks.DISPLAY_LINK.asStack(),
+        VanillaRecipeHelper.addShapedRecipe(provider, true, Greate.id(AllBlocks.DISPLAY_LINK.getId().getPath()), AllBlocks.DISPLAY_LINK.asStack(),
                 " E ", "wCh",
                 'E', AllItems.TRANSMITTER,
                 'C', AllBlocks.BRASS_CASING);
@@ -426,7 +426,7 @@ public class GreateCraftingTableRecipes {
                 'S', new MaterialEntry(screw, WroughtIron),
                 'P', new MaterialEntry(plate, Iron),
                 'B', GTMachines.WOODEN_CRATE.asStack());
-        VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllBlocks.CHAIN_CONVEYOR.getId().getPath()), new ItemStack(AllBlocks.CHAIN_CONVEYOR.asItem(), 2),
+        VanillaRecipeHelper.addShapedRecipe(provider, true, Greate.id(AllBlocks.CHAIN_CONVEYOR.getId().getPath()), new ItemStack(AllBlocks.CHAIN_CONVEYOR.asItem(), 2),
                 " A ", "ACA", "wAh",
                 'A', AllBlocks.ANDESITE_CASING,
                 'C', LARGE_COGWHEEL.get(LV));
