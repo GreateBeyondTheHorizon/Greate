@@ -22,15 +22,28 @@ public class GreateChemicalBathRecipes {
     public static void register(Consumer<FinishedRecipe> provider) {
         for(DyeColor color : DyeColor.values()) {
             String dyeName = color.getName();
-            CHEMICAL_BATH_RECIPES
-                    .recipeBuilder(Greate.id(dyeName + "_seat"))
-                    .category(GTRecipeCategories.CHEM_DYES)
-                    .inputItems(AllItemTags.SEATS.tag)
-                    .inputFluids(CHEMICAL_DYES[color.ordinal()].getFluid(L))
-                    .outputItems(new ItemStack(BuiltInRegistries.ITEM.get(Create.asResource(dyeName + "_seat"))))
-                    .duration(20)
-                    .EUt(VA[LV])
-                    .save(provider);
+
+            if(color != DyeColor.WHITE) {
+                CHEMICAL_BATH_RECIPES
+                        .recipeBuilder(Greate.id(dyeName + "_seat"))
+                        .category(GTRecipeCategories.CHEM_DYES)
+                        .inputItems(AllItemTags.SEATS.tag)
+                        .inputFluids(CHEMICAL_DYES[color.ordinal()].getFluid(L))
+                        .outputItems(new ItemStack(BuiltInRegistries.ITEM.get(Create.asResource(dyeName + "_seat"))))
+                        .duration(20)
+                        .EUt(VA[LV])
+                        .save(provider);
+
+                CHEMICAL_BATH_RECIPES
+                        .recipeBuilder(Greate.id(dyeName + "_postbox"))
+                        .category(GTRecipeCategories.CHEM_DYES)
+                        .inputItems(AllItemTags.POSTBOXES.tag)
+                        .inputFluids(CHEMICAL_DYES[color.ordinal()].getFluid(L))
+                        .outputItems(new ItemStack(BuiltInRegistries.ITEM.get(Create.asResource(dyeName + "_postbox"))))
+                        .duration(20)
+                        .EUt(VA[LV])
+                        .save(provider);
+            }
 
             CHEMICAL_BATH_RECIPES
                     .recipeBuilder(Greate.id(dyeName + "_valve_handle"))
@@ -49,6 +62,16 @@ public class GreateChemicalBathRecipes {
                 .inputItems(AllItemTags.SEATS.tag)
                 .inputFluids(Chlorine.getFluid(20))
                 .outputItems(AllBlocks.SEATS.get(DyeColor.WHITE))
+                .duration(400)
+                .EUt(2)
+                .save(provider);
+
+        CHEMICAL_BATH_RECIPES
+                .recipeBuilder(Greate.id("decolor_postbox"))
+                .category(GTRecipeCategories.CHEM_DYES)
+                .inputItems(AllItemTags.POSTBOXES.tag)
+                .inputFluids(Chlorine.getFluid(20))
+                .outputItems(AllBlocks.PACKAGE_POSTBOXES.get(DyeColor.WHITE))
                 .duration(400)
                 .EUt(2)
                 .save(provider);
