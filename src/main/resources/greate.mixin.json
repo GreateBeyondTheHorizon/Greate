@@ -33,7 +33,8 @@
     "MixinSequencedAssemblyRecipe",
     "MixinSteamEngineBlock",
     "MixinSteamEngineBlock$PlacementHelper",
-    "MixinStockTickerBlockEntity"
+    "MixinStockTickerBlockEntity",
+    "MixinWoodMachineRecipesAccessor"
   ],
   "client": [
     "MixinDeployerApplicationRecipe",

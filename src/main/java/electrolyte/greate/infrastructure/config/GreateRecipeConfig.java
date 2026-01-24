@@ -33,6 +33,11 @@ public class GreateRecipeConfig {
 
     @Configurable
     @Synchronized
+    @Comment({"Should recipes from create that conflict with GTCEu recipes be enabled?", "[WARNING]: This will not cover every single recipe conflict, only common conflicts (like components (plates/sheets)), or ore processing conflicts."})
+    public boolean disableConflictingRecipes = false;
+
+    @Configurable
+    @Synchronized
     @Comment({"Recipe types that should not be copied to Greate machines. Ex. 'gtceu:macerator' for macerator recipes"})
     public String[] ignoredRecipeTypes = {};
 }

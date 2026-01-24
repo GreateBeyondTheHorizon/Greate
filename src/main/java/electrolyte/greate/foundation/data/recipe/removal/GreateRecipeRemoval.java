@@ -8,8 +8,7 @@ import java.util.function.Consumer;
 
 import static electrolyte.greate.foundation.data.recipe.removal.ConfigurableRecipeRemoval.disableArmorToolRecipes;
 import static electrolyte.greate.foundation.data.recipe.removal.ConfigurableRecipeRemoval.disableDyeRecipes;
-import static electrolyte.greate.foundation.data.recipe.removal.CreateRecipeRemoval.disableConfigurableCreateRecipes;
-import static electrolyte.greate.foundation.data.recipe.removal.CreateRecipeRemoval.disableCreateRecipes;
+import static electrolyte.greate.foundation.data.recipe.removal.CreateRecipeRemoval.*;
 import static electrolyte.greate.foundation.data.recipe.removal.GTRecipeRemoval.disableGTRecipes;
 
 public class GreateRecipeRemoval {
@@ -18,6 +17,7 @@ public class GreateRecipeRemoval {
         if(ConfigHolder.INSTANCE.recipes.hardDyeRecipes) disableDyeRecipes(recipe);
         if(ConfigHolder.INSTANCE.recipes.hardToolArmorRecipes) disableArmorToolRecipes(recipe);
         if(Greate.CONFIG.enableHardCreateRecipes) disableConfigurableCreateRecipes(recipe);
+        if(Greate.CONFIG.disableConflictingRecipes) disableConflictingCreateRecipes(recipe);
         disableCreateRecipes(recipe);
         disableGTRecipes(recipe);
     }

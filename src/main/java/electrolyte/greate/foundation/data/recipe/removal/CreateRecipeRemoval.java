@@ -1,7 +1,9 @@
 package electrolyte.greate.foundation.data.recipe.removal;
 
 import com.simibubi.create.Create;
+import electrolyte.greate.mixin.MixinWoodMachineRecipesAccessor;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.Consumer;
 
@@ -96,5 +98,67 @@ public class CreateRecipeRemoval {
 
         recipe.accept(Create.asResource("crafting/materials/electron_tube"));
         recipe.accept(Create.asResource("crafting/materials/transmitter"));
+    }
+
+    public static void disableConflictingCreateRecipes(Consumer<ResourceLocation> recipe) {
+        recipe.accept(Create.asResource("crushing/amethyst_block"));
+        recipe.accept(Create.asResource("crushing/blaze_rod"));
+        recipe.accept(Create.asResource("crushing/copper_ore"));
+        recipe.accept(Create.asResource("crushing/deepslate_copper_ore"));
+        recipe.accept(Create.asResource("crushing/deepslate_gold_ore"));
+        recipe.accept(Create.asResource("crushing/deepslate_iron_ore"));
+        recipe.accept(Create.asResource("crushing/diamond_horse_armor"));
+        recipe.accept(Create.asResource("crushing/diorite"));
+        recipe.accept(Create.asResource("crushing/diorite_recycling"));
+        recipe.accept(Create.asResource("crushing/gold_ore"));
+        recipe.accept(Create.asResource("crushing/golden_horse_armor"));
+        recipe.accept(Create.asResource("crushing/gravel"));
+        recipe.accept(Create.asResource("crushing/iron_horse_armor"));
+        recipe.accept(Create.asResource("crushing/iron_ore"));
+        recipe.accept(Create.asResource("crushing/lead_ore"));
+        recipe.accept(Create.asResource("crushing/netherrack"));
+        recipe.accept(Create.asResource("crushing/nickel_ore"));
+        recipe.accept(Create.asResource("crushing/obsidian"));
+        recipe.accept(Create.asResource("crushing/platinum_ore"));
+        recipe.accept(Create.asResource("crushing/raw_copper"));
+        recipe.accept(Create.asResource("crushing/raw_gold"));
+        recipe.accept(Create.asResource("crushing/raw_iron"));
+        recipe.accept(Create.asResource("crushing/raw_lead"));
+        recipe.accept(Create.asResource("crushing/raw_nickel"));
+        recipe.accept(Create.asResource("crushing/raw_platinum"));
+        recipe.accept(Create.asResource("crushing/raw_silver"));
+        recipe.accept(Create.asResource("crushing/raw_tin"));
+        recipe.accept(Create.asResource("crushing/silver_ore"));
+        recipe.accept(Create.asResource("crushing/tin_ore"));
+
+        recipe.accept(Create.asResource("pressing/copper_ingot"));
+        recipe.accept(Create.asResource("pressing/iron_ingot"));
+        recipe.accept(Create.asResource("pressing/gold_ingot"));
+        recipe.accept(Create.asResource("pressing/brass_ingot"));
+
+        recipe.accept(Create.asResource("milling/sandstone"));
+        recipe.accept(Create.asResource("milling/charcoal"));
+        recipe.accept(Create.asResource("milling/sugar_cane"));
+        recipe.accept(Create.asResource("milling/bone"));
+        recipe.accept(Create.asResource("milling/clay"));
+        recipe.accept(Create.asResource("milling/lapis_lazuli"));
+        recipe.accept(Create.asResource("milling/coal"));
+        recipe.accept(Create.asResource("milling/gravel"));
+        recipe.accept(Create.asResource("milling/calcite"));
+        recipe.accept(Create.asResource("milling/wheat"));
+        recipe.accept(Create.asResource("milling/terracotta"));
+
+        for(var entry : MixinWoodMachineRecipesAccessor.getDefaultEntries()) {
+            ResourceLocation log = ForgeRegistries.ITEMS.getKey(entry.log);
+            ResourceLocation strippedLog = ForgeRegistries.ITEMS.getKey(entry.strippedLog);
+            ResourceLocation wood = ForgeRegistries.ITEMS.getKey(entry.wood);
+            ResourceLocation strippedWood = ForgeRegistries.ITEMS.getKey(entry.strippedWood);
+            recipe.accept(Create.asResource(String.format("cutting/runtime_generated/compat/%s/%s_to_%s", strippedLog.getNamespace(), strippedLog.getPath(), strippedLog.getPath().replace("stripped_", "").replace("log", "planks"))));
+            recipe.accept(Create.asResource(String.format("cutting/runtime_generated/compat/%s/%s_to_%s", strippedWood.getNamespace(), strippedWood.getPath(), strippedWood.getPath().replace("stripped_", "").replace("wood", "planks"))));
+            recipe.accept(Create.asResource(String.format("cutting/runtime_generated/compat/%s/%s_to_%s", wood.getNamespace(), wood.getPath().replace("wood", "planks"), wood.getPath().replace("wood", "button"))));
+            recipe.accept(Create.asResource(String.format("cutting/runtime_generated/compat/%s/%s_to_%s", wood.getNamespace(), wood.getPath().replace("wood", "planks"), wood.getPath().replace("wood", "slab"))));
+            recipe.accept(Create.asResource(String.format("cutting/runtime_generated/compat/%s/%s_to_stripped_%s", log.getNamespace(), log.getPath(), log.getPath())));
+            recipe.accept(Create.asResource(String.format("cutting/runtime_generated/compat/%s/%s_to_stripped_%s", wood.getNamespace(), wood.getPath(), wood.getPath())));
+        }
     }
 }
