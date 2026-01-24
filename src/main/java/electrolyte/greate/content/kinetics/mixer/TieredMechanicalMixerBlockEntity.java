@@ -15,6 +15,7 @@ import electrolyte.greate.Greate;
 import electrolyte.greate.content.kinetics.base.ICircuitHolder;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import electrolyte.greate.content.processing.basin.TieredBasinRecipe;
+import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import electrolyte.greate.registry.ModRecipeTypes;
 import net.createmod.catnip.lang.Lang;
 import net.createmod.catnip.math.VecHelper;
@@ -127,17 +128,23 @@ public class TieredMechanicalMixerBlockEntity extends MechanicalMixerBlockEntity
     @Override
     protected List<Recipe<?>> getMatchingRecipes() {
         List<Recipe<?>> matchingRecipes = new ArrayList<>();
-        if (getBasin().map(BasinBlockEntity::isEmpty)
-                .orElse(true))
+        if (getBasin().map(BasinBlockEntity::isEmpty).orElse(true))
             return matchingRecipes;
 
         List<Recipe<?>> recipes = RecipeFinder.get(getRecipeCacheKey(), level, this::matchStaticFilters);
         matchingRecipes = recipes.stream()
                 .filter(this::matchBasinRecipe)
-                .sorted((r1, r2) -> r2.getIngredients()
-                        .size()
-                        - r1.getIngredients()
-                        .size())
+                .sorted((r1, r2) -> r2.getIngredients().size() - r1.getIngredients().size())
+                .sorted((r1, r2) -> {
+                    boolean processingRecipe1 = r1 instanceof TieredProcessingRecipe<?>;
+                    boolean processingRecipe2 = r2 instanceof TieredProcessingRecipe<?>;
+                    if(processingRecipe2 && !processingRecipe1) {
+                        return 1;
+                    } else if(processingRecipe1 && !processingRecipe2) {
+                        return -1;
+                    }
+                    return 0;
+                })
                 .collect(Collectors.toList());
 
         if (!AllConfigs.server().recipes.allowBrewingInMixer.get())
@@ -174,7 +181,8 @@ public class TieredMechanicalMixerBlockEntity extends MechanicalMixerBlockEntity
     }
 
     @Override
-    protected <C extends Container> boolean matchBasinRecipe(Recipe<C> recipe) {
+    protected <
+        C extends Container> boolean matchBasinRecipe(Recipe<C> recipe) {
         if(recipe == null) return false;
         Optional<BasinBlockEntity> basin = getBasin();
         return basin.filter(basinBlockEntity -> TieredBasinRecipe.match(basinBlockEntity, recipe, this.tier)).isPresent();

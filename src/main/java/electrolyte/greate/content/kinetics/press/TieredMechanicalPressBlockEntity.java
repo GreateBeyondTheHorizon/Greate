@@ -173,29 +173,6 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
         return targetCircuit.getValue();
     }
 
-    /*@Override
-    protected boolean updateBasin() {
-        if (!isSpeedRequirementFulfilled())
-            return true;
-        if (getSpeed() == 0)
-            return true;
-        if (isRunning())
-            return true;
-        if (level == null || level.isClientSide)
-            return true;
-        Optional<BasinBlockEntity> basin = getBasin();
-        if (!basin.filter(BasinBlockEntity::canContinueProcessing).isPresent())
-            return true;
-
-        List<Recipe<?>> recipes = getMatchingRecipes();
-        if (recipes.isEmpty())
-            return true;
-        currentRecipe = recipes.get(0);
-        startProcessingBasin();
-        sendData();
-        return true;
-    }*/
-
     @Override
     protected void applyBasinRecipe() {
         if (currentRecipe == null) return;
