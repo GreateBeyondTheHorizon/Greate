@@ -20,7 +20,7 @@ public class GreateAddon implements IGTAddon {
 
 	@Override
 	public void initializeAddon() {
-		Greate.LOGGER.info("Greate GT addon initialized!");
+		Greate.LOGGER.info("Greate GTCEu addon initialized!");
 	}
 
 	@Override

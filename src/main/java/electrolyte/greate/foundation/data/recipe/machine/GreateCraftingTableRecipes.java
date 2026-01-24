@@ -177,7 +177,7 @@ public class GreateCraftingTableRecipes {
                 'P', ELECTRIC_PUMP_IV.asStack(),
                 'S', AllBlocks.SPOUT.asStack());
 
-        //GT Components
+        //GTCEu Components
         VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllItems.ELECTRON_TUBE.getId().getPath()), AllItems.ELECTRON_TUBE.asStack(),
                 " G ", " R ", "SSS",
                 'G', GTItems.GLASS_TUBE,

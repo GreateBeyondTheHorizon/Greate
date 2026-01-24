@@ -86,7 +86,7 @@ public abstract class MixinBeltBlock {
             boolean isConnector = mainHandStack.getItem() instanceof TieredBeltConnectorItem;
             boolean isShaft = Block.byItem(mainHandStack.getItem()) instanceof TieredShaftBlock;
             boolean isModdedWrench = mainHandStack.is(AllItemTags.WRENCH.tag) ||
-                //idk why gt wrenches do this
+                //idk why gtceu wrenches do this
                 (handIn == InteractionHand.OFF_HAND && offHandStack.is(AllItemTags.WRENCH.tag));
             if(isConnector) {
                 if(((TieredBeltConnectorItem) mainHandStack.getItem()).getBeltMaterial() == tbb.getBeltMaterial()) {

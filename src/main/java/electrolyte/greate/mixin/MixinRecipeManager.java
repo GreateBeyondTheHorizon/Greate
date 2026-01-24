@@ -59,7 +59,7 @@ public class MixinRecipeManager {
 
         //the day this jank can be removed will be a glorious day!
         long currentTime = System.currentTimeMillis();
-        Greate.LOGGER.info("Converting GT & Create recipes...");
+        Greate.LOGGER.info("Converting GTCEu & Create recipes...");
         if(ModList.get().isLoaded("kubejs")) GreateKubeJSHelper.kubeStuff();
         int recipeCount = 0;
         for(Map.Entry<ResourceLocation, JsonElement> recipeEntry : pMap.entrySet()) {
