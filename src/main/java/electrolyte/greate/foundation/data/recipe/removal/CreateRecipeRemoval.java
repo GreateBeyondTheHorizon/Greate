@@ -59,6 +59,9 @@ public class CreateRecipeRemoval {
 
         recipe.accept(Create.asResource("mechanical_crafting/crushing_wheel"));
 
+        recipe.accept(Create.asResource("milling/andesite"));
+        recipe.accept(Create.asResource("milling/granite"));
+
         recipe.accept(Create.asResource("mixing/andesite_alloy"));
         recipe.accept(Create.asResource("mixing/andesite_alloy_from_zinc"));
         recipe.accept(Create.asResource("mixing/brass_ingot"));
