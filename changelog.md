@@ -1,2 +1,9 @@
-- Fix missing lang entry for wire coating category
-- Fix chemical bath dyeing recipes not being in the correct category
+- Remove regular fluid tank recipe if `enableHardCreateRecipes` is enabled
+- Fix saws not working with composite packages
+- Add decomp recipes for various Create components
+- Fix dyeing recipes not appearing in the proper JEI category
+- Add hardmode postbox dyeing recipes
+- Remove Create brass recipe and match it to GTCEu instead
+- Remove conflicting Create recipes (configurable, disabled by default)
+- Make mixing recipes prefer recipes with circuits over non-circuit recipes
+- Fix addon recipes not getting converted
