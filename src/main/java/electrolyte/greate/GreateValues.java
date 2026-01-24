@@ -85,17 +85,17 @@ public class GreateValues {
     @HideFromJS
     public static TieredProcessingRecipeFactory<TieredProcessingRecipe<?>> getFactory(ResourceLocation loc) {
         for(String s : Greate.CONFIG.ignoredRecipeTypes) {
-            if(loc.toString().startsWith(s)) return null;
+            if(loc.equals(new ResourceLocation(s))) return null;
         }
-        if(loc.toString().startsWith(GTRecipeTypes.MACERATOR_RECIPES.registryName.toString()) || loc.toString().startsWith(AllRecipeTypes.MILLING.getId().toString())) return TieredMillingRecipe::new;
-        else if(loc.toString().startsWith(AllRecipeTypes.CRUSHING.getId().toString())) return TieredCrushingRecipe::new;
-        else if(loc.toString().startsWith(GTRecipeTypes.BENDER_RECIPES.registryName.toString()) || loc.toString().startsWith(AllRecipeTypes.PRESSING.getId().toString())) return TieredPressingRecipe::new;
-        else if(loc.toString().startsWith(GTRecipeTypes.MIXER_RECIPES.registryName.toString()) || loc.toString().startsWith(AllRecipeTypes.MIXING.getId().toString())) return TieredMixingRecipe::new;
-        else if(loc.toString().startsWith(GTRecipeTypes.CUTTER_RECIPES.registryName.toString()) || loc.toString().startsWith(AllRecipeTypes.CUTTING.getId().toString())) return TieredCuttingRecipe::new;
-        else if(loc.toString().startsWith(GTRecipeTypes.ORE_WASHER_RECIPES.registryName.toString()) || loc.toString().startsWith(AllRecipeTypes.SPLASHING.getId().toString())) return TieredSplashingRecipe::new;
-        else if(loc.toString().startsWith(GTRecipeTypes.COMPRESSOR_RECIPES.registryName.toString())) return TieredCompactingRecipe::new;
-        else if(loc.toString().startsWith(AllRecipeTypes.HAUNTING.getId().toString())) return TieredHauntingRecipe::new;
-        else if(loc.toString().startsWith(AllRecipeTypes.COMPACTING.getId().toString())) return TieredCompactingRecipe::new;
+        if(loc.equals(GTRecipeTypes.MACERATOR_RECIPES.registryName) || loc.equals(AllRecipeTypes.MILLING.getId())) return TieredMillingRecipe::new;
+        else if(loc.equals(AllRecipeTypes.CRUSHING.getId())) return TieredCrushingRecipe::new;
+        else if(loc.equals(GTRecipeTypes.BENDER_RECIPES.registryName) || loc.equals(AllRecipeTypes.PRESSING.getId())) return TieredPressingRecipe::new;
+        else if(loc.equals(GTRecipeTypes.MIXER_RECIPES.registryName) || loc.equals(AllRecipeTypes.MIXING.getId())) return TieredMixingRecipe::new;
+        else if(loc.equals(GTRecipeTypes.CUTTER_RECIPES.registryName) || loc.equals(AllRecipeTypes.CUTTING.getId())) return TieredCuttingRecipe::new;
+        else if(loc.equals(GTRecipeTypes.ORE_WASHER_RECIPES.registryName) || loc.equals(AllRecipeTypes.SPLASHING.getId())) return TieredSplashingRecipe::new;
+        else if(loc.equals(GTRecipeTypes.COMPRESSOR_RECIPES.registryName)) return TieredCompactingRecipe::new;
+        else if(loc.equals(AllRecipeTypes.HAUNTING.getId())) return TieredHauntingRecipe::new;
+        else if(loc.equals(AllRecipeTypes.COMPACTING.getId())) return TieredCompactingRecipe::new;
         return null;
     }
 
