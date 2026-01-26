@@ -1,5 +1,6 @@
 package electrolyte.greate.foundation.data.recipe.removal;
 
+import com.gregtechceu.gtceu.GTCEu;
 import com.simibubi.create.Create;
 import electrolyte.greate.mixin.MixinWoodMachineRecipesAccessor;
 import net.minecraft.resources.ResourceLocation;
@@ -149,16 +150,36 @@ public class CreateRecipeRemoval {
         recipe.accept(Create.asResource("milling/terracotta"));
 
         for(var entry : MixinWoodMachineRecipesAccessor.getDefaultEntries()) {
+            ResourceLocation air = new ResourceLocation("air");
             ResourceLocation log = ForgeRegistries.ITEMS.getKey(entry.log);
+            ResourceLocation planks = ForgeRegistries.ITEMS.getKey(entry.planks);
             ResourceLocation strippedLog = ForgeRegistries.ITEMS.getKey(entry.strippedLog);
             ResourceLocation wood = ForgeRegistries.ITEMS.getKey(entry.wood);
+            ResourceLocation button = ForgeRegistries.ITEMS.getKey(entry.button);
+            ResourceLocation slab = ForgeRegistries.ITEMS.getKey(entry.slab);
             ResourceLocation strippedWood = ForgeRegistries.ITEMS.getKey(entry.strippedWood);
-            recipe.accept(Create.asResource(String.format("cutting/runtime_generated/compat/%s/%s_to_%s", strippedLog.getNamespace(), strippedLog.getPath(), strippedLog.getPath().replace("stripped_", "").replace("log", "planks"))));
-            recipe.accept(Create.asResource(String.format("cutting/runtime_generated/compat/%s/%s_to_%s", strippedWood.getNamespace(), strippedWood.getPath(), strippedWood.getPath().replace("stripped_", "").replace("wood", "planks"))));
-            recipe.accept(Create.asResource(String.format("cutting/runtime_generated/compat/%s/%s_to_%s", wood.getNamespace(), wood.getPath().replace("wood", "planks"), wood.getPath().replace("wood", "button"))));
-            recipe.accept(Create.asResource(String.format("cutting/runtime_generated/compat/%s/%s_to_%s", wood.getNamespace(), wood.getPath().replace("wood", "planks"), wood.getPath().replace("wood", "slab"))));
-            recipe.accept(Create.asResource(String.format("cutting/runtime_generated/compat/%s/%s_to_stripped_%s", log.getNamespace(), log.getPath(), log.getPath())));
-            recipe.accept(Create.asResource(String.format("cutting/runtime_generated/compat/%s/%s_to_stripped_%s", wood.getNamespace(), wood.getPath(), wood.getPath())));
+
+            if(!strippedLog.equals(air)) {
+                recipe.accept(Create.asResource(String.format("cutting/runtime_generated/compat/%s/%s_to_%s", strippedLog.getNamespace(), strippedLog.getPath(), planks.getPath())));
+            }
+            if(!strippedWood.equals(air) && !planks.equals(air)) {
+                recipe.accept(Create.asResource(String.format("cutting/runtime_generated/compat/%s/%s_to_%s", strippedWood.getNamespace(), strippedWood.getPath(), planks.getPath())));
+            }
+            if(!wood.equals(air) && !strippedWood.equals(air)) {
+                recipe.accept(Create.asResource(String.format("cutting/runtime_generated/compat/%s/%s_to_%s", wood.getNamespace(), wood.getPath(), strippedWood.getPath())));
+            }
+            if(!planks.equals(air)) {
+                if(planks.getNamespace().equals(GTCEu.MOD_ID) && planks.getPath().contains("treated_wood")) continue; //no default recipe for treated wood buttons/slabs on the saw
+                if(!button.equals(air)) {
+                    recipe.accept(Create.asResource(String.format("cutting/runtime_generated/compat/%s/%s_to_%s", planks.getNamespace(), planks.getPath(), button.getPath())));
+                }
+                if(!slab.equals(air)) {
+                    recipe.accept(Create.asResource(String.format("cutting/runtime_generated/compat/%s/%s_to_%s", planks.getNamespace(), planks.getPath(), slab.getPath())));
+                }
+            }
+            if(!log.equals(air) && !strippedLog.equals(air)) {
+                recipe.accept(Create.asResource(String.format("cutting/runtime_generated/compat/%s/%s_to_%s", log.getNamespace(), log.getPath(), strippedLog.getPath())));
+            }
         }
     }
 }
