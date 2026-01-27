@@ -10,6 +10,7 @@ import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.gregtechceu.gtceu.integration.kjs.recipe.GTRecipeSchema;
 import com.gregtechceu.gtceu.integration.kjs.recipe.GTRecipeSchema.GTRecipeJS;
 import com.gregtechceu.gtceu.integration.kjs.recipe.components.GTRecipeComponents;
+import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.processing.recipe.HeatCondition;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.foundation.fluid.FluidIngredient;
@@ -35,6 +36,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.ModList;
 
@@ -54,7 +56,8 @@ public class KubeJSGreatePlugin extends KubeJSPlugin {
                 ModRecipeTypes.PRESSING, TieredProcessingRecipeSchema.PROCESSING_WITH_CIRCUIT,
                 ModRecipeTypes.COMPACTING, TieredProcessingRecipeSchema.PROCESSING_WITH_CIRCUIT,
                 ModRecipeTypes.MIXING, TieredProcessingRecipeSchema.PROCESSING_WITH_CIRCUIT,
-                ModRecipeTypes.BASIN, TieredProcessingRecipeSchema.PROCESSING_WITH_CIRCUIT
+                ModRecipeTypes.BASIN, TieredProcessingRecipeSchema.PROCESSING_WITH_CIRCUIT,
+                ModRecipeTypes.SPLASHING, TieredProcessingRecipeSchema.PROCESSING_WITH_CIRCUIT
         );
         for(ModRecipeTypes recipeType : ModRecipeTypes.values()) {
             if(recipeType.getSerializer() instanceof TieredProcessingRecipeSerializer<?>) {
@@ -157,6 +160,10 @@ public class KubeJSGreatePlugin extends KubeJSPlugin {
                 });
                 if(!itemIngredients.isEmpty()) builder.withItemIngredients(itemIngredients);
                 if(!fluidIngredients.isEmpty()) builder.withFluidIngredients(fluidIngredients);
+                //special case with splashing, use water if unspecified to mimic default create
+                else if(r.getType().equals(AllRecipeTypes.SPLASHING.getId())) {
+                    builder.withFluidIngredients(FluidIngredient.fromFluid(Fluids.WATER, 1));
+                }
 
                 JsonArray resultArr = processingRecipeJS.json.get("results").getAsJsonArray();
                 NonNullList<ProcessingOutput> itemResults = NonNullList.create();

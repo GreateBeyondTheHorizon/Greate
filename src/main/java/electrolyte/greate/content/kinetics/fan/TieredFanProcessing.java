@@ -15,13 +15,16 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TieredFanProcessing {
 
-    public static boolean canProcess(ItemEntity entity, FanProcessingType type, int machineTier) {
+    public static boolean canProcess(ItemEntity entity, FanProcessingType type, int machineTier, BlockEntity be) {
+        if(!(be instanceof TieredEncasedFanBlockEntity tefbe)) return false;
+        if(!Greate.CONFIG.processItemEntitiesWithFan) return false;
         if(entity.getPersistentData().contains("CreateData")) {
             CompoundTag compound = entity.getPersistentData().getCompound("CreateData");
             if(compound.contains("Processing")) {
@@ -34,7 +37,7 @@ public class TieredFanProcessing {
                     if(type instanceof TieredHauntingType th) {
                         return th.canProcess(entity.getItem(), entity.level(), machineTier);
                     } else if(type instanceof TieredSplashingType ts) {
-                        return ts.canProcess(entity.getItem(), entity.level(), machineTier);
+                        return ts.canProcess(entity.getItem(), entity.level(), machineTier, tefbe);
                     } else return false;
                 }
                 else if (processing.getInt("Time") >= 0) return true;
@@ -44,18 +47,18 @@ public class TieredFanProcessing {
         if(type instanceof TieredHauntingType th) {
             return th.canProcess(entity.getItem(), entity.level(), machineTier);
         } else if(type instanceof TieredSplashingType ts) {
-            return ts.canProcess(entity.getItem(), entity.level(), machineTier);
+            return ts.canProcess(entity.getItem(), entity.level(), machineTier, tefbe);
         }
         return type.canProcess(entity.getItem(), entity.level());
     }
 
-    public static boolean applyProcessing(float speed, ItemEntity entity, FanProcessingType type, int machineTier) {
+    public static boolean applyProcessing(float speed, ItemEntity entity, FanProcessingType type, int machineTier, TieredEncasedFanBlockEntity fanBE) {
         if(decrementProcessingTime(speed, entity, type) != 0) return false;
         List<ItemStack> stacks;
         if(type instanceof TieredHauntingType th) {
-            stacks = th.process(entity.getItem(), entity.level(), machineTier);
+            stacks = th.process(entity.getItem(), entity.level(), machineTier, fanBE);
         } else if(type instanceof TieredSplashingType ts) {
-            stacks = ts.process(entity.getItem(), entity.level(), machineTier);
+            stacks = ts.process(entity.getItem(), entity.level(), machineTier, fanBE);
         } else {
             stacks = type.process(entity.getItem(), entity.level());
         }
@@ -73,7 +76,7 @@ public class TieredFanProcessing {
         return true;
     }
 
-    public static TransportedResult applyProcessing(float speed, TransportedItemStack transported, Level level, FanProcessingType type, int machineTier) {
+    public static TransportedResult applyProcessing(float speed, TransportedItemStack transported, Level level, FanProcessingType type, int machineTier, TieredEncasedFanBlockEntity fanBE) {
         TransportedResult ignore = TransportedResult.doNothing();
         if(transported.processedBy != type) {
             transported.processedBy = type;
@@ -83,7 +86,7 @@ public class TieredFanProcessing {
                     transported.processingTime = -1;
                 }
             } else if(type instanceof TieredSplashingType tst) {
-                if(!tst.canProcess(transported.stack, level, machineTier)) {
+                if(!tst.canProcess(transported.stack, level, machineTier, fanBE)) {
                     transported.processingTime = -1;
                 }
             } else if(!type.canProcess(transported.stack, level)) {
@@ -96,9 +99,9 @@ public class TieredFanProcessing {
 
         List<ItemStack> stacks;
         if(type instanceof TieredHauntingType th) {
-            stacks = th.process(transported.stack, level, machineTier);
+            stacks = th.process(transported.stack, level, machineTier, fanBE);
         } else if(type instanceof TieredSplashingType ts) {
-            stacks = ts.process(transported.stack, level, machineTier);
+            stacks = ts.process(transported.stack, level, machineTier, fanBE);
         } else {
             stacks = type.process(transported.stack, level);
         }
@@ -109,6 +112,10 @@ public class TieredFanProcessing {
             TransportedItemStack newTransported = transported.getSimilar();
             newTransported.stack = additional.copy();
             transportedItemStacks.add(newTransported);
+        }
+        if(type instanceof TieredSplashingType) {
+            transported.stack = transported.stack.copyWithCount(transported.stack.getCount() - stacks.get(0).getCount());
+            return TransportedResult.convertToAndLeaveHeld(transportedItemStacks, transported);
         }
         return TransportedResult.convertTo(transportedItemStacks);
     }

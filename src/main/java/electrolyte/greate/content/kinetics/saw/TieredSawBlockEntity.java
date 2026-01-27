@@ -16,9 +16,7 @@ import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
 import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.recipe.RecipeConditions;
 import com.simibubi.create.foundation.recipe.RecipeFinder;
-import com.simibubi.create.foundation.utility.CreateLang;
 import com.simibubi.create.infrastructure.config.AllConfigs;
-import electrolyte.greate.Greate;
 import electrolyte.greate.compat.createfactorylogistics.CreateFactoryLogisticsCompat;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
@@ -26,9 +24,6 @@ import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import electrolyte.greate.foundation.data.recipe.TieredRecipeConditions;
 import electrolyte.greate.mixin.MixinSawBlockEntityAccessor;
 import electrolyte.greate.registry.ModRecipeTypes;
-import net.createmod.catnip.lang.Lang;
-import net.createmod.catnip.lang.LangBuilder;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -41,10 +36,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
@@ -89,19 +82,7 @@ public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKinet
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
         ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, TM[tier], capacity, stress);
         if(canProcess()) {
-            IFluidHandler fluid = fluidCapability.orElse(new FluidTank(0));
-            LangBuilder mb = CreateLang.translate("generic.unit.millibuckets");
-            FluidStack fluidStack = fluid.getFluidInTank(0);
-            if(!fluidStack.isEmpty()) {
-                Lang.builder(Greate.MOD_ID).translate("gui.goggles.saw_contents").style(ChatFormatting.GRAY).forGoggles(tooltip);
-                CreateLang.text("")
-                        .add(CreateLang.fluidName(fluidStack)
-                                .add(CreateLang.text(" ")).style(ChatFormatting.GRAY)
-                                .add(CreateLang.number(fluidStack.getAmount()).add(mb).style(ChatFormatting.BLUE)))
-                        .forGoggles(tooltip, 1);
-            } else {
-                tooltip.remove(0);
-            }
+            containedFluidTooltip(tooltip, isPlayerSneaking, fluidCapability);
         }
         return true;
     }

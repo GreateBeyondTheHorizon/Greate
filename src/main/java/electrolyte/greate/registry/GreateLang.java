@@ -43,7 +43,6 @@ public class GreateLang {
         provider.add("config.greate.option.CAPACITY", "Tier Capacity");
         provider.add("config.greate.option.MILLSTONE_IMPACT", "Millstone Impact");
         provider.add("config.greate.option.CRUSHING_WHEEL_IMPACT", "Crushing Wheel Impact");
-        provider.add("greate.gui.goggles.saw_contents", "Saw Contents:");
         provider.add("tagprefix.whisk", "%s Whisk");
         provider.add("tagprefix.alloy", "%s Alloy");
         provider.add("item.gtceu.naquadah_alloy_alloy", "Naquadah Alloy");

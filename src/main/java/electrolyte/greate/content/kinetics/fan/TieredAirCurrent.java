@@ -8,8 +8,12 @@ import com.simibubi.create.content.kinetics.fan.EncasedFanBlockEntity;
 import com.simibubi.create.content.kinetics.fan.IAirCurrentSource;
 import com.simibubi.create.content.kinetics.fan.processing.FanProcessingType;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
+import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import electrolyte.greate.mixin.MixinAirCurrentInvoker;
+import net.createmod.catnip.data.Iterate;
 import net.createmod.catnip.math.VecHelper;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -23,6 +27,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
 
@@ -48,7 +53,7 @@ public class TieredAirCurrent extends AirCurrent {
                     processingType.spawnProcessingParticles(level, handler.getWorldPositionOf(transported));
                     return TransportedResult.doNothing();
                 }
-                TransportedResult applyProcessing = TieredFanProcessing.applyProcessing(source.getSpeed(), transported, level, processingType, machineTier);
+                TransportedResult applyProcessing = TieredFanProcessing.applyProcessing(source.getSpeed(), transported, level, processingType, machineTier, (TieredEncasedFanBlockEntity) level.getBlockEntity(getAirCurrentPos()));
                 if(!applyProcessing.doesNothing() && source instanceof EncasedFanBlockEntity fan)
                     fan.award(AllAdvancements.FAN_PROCESSING);
                 return applyProcessing;
@@ -95,8 +100,8 @@ public class TieredAirCurrent extends AirCurrent {
                     processingType.spawnProcessingParticles(level, entity.position());
                     continue;
                 }
-                if(TieredFanProcessing.canProcess(itemEntity, processingType, machineTier))
-                    if(TieredFanProcessing.applyProcessing(source.getSpeed(), itemEntity, processingType, machineTier)
+                if(TieredFanProcessing.canProcess(itemEntity, processingType, machineTier, level.getBlockEntity(getAirCurrentPos())))
+                    if(TieredFanProcessing.applyProcessing(source.getSpeed(), itemEntity, processingType, machineTier, (TieredEncasedFanBlockEntity) level.getBlockEntity(getAirCurrentPos()))
                             && source instanceof EncasedFanBlockEntity fan)
                         fan.award(AllAdvancements.FAN_PROCESSING);
                 continue;
@@ -105,6 +110,33 @@ public class TieredAirCurrent extends AirCurrent {
             if(level != null)
                 processingType.affectEntity(entity, level);
         }
+    }
+
+    @Override
+    public void findAffectedHandlers() {
+		Level world = source.getAirCurrentWorld();
+		BlockPos start = source.getAirCurrentPos();
+		affectedItemHandlers.clear();
+		int limit = ((MixinAirCurrentInvoker) this).callGetLimit();
+		for (int i = 0; i <= limit; i++) {
+			FanProcessingType segmentType = getTypeAt(i - 1);
+			for (int offset : Iterate.zeroAndOne) {
+				BlockPos pos = start.relative(direction, i).below(offset);
+				TransportedItemStackHandlerBehaviour behaviour =
+					BlockEntityBehaviour.get(world, pos, TransportedItemStackHandlerBehaviour.TYPE);
+				if (behaviour != null) {
+					FanProcessingType type = FanProcessingType.getAt(world, pos);
+					if (type == null)
+						type = segmentType;
+					affectedItemHandlers.add(Pair.of(behaviour, type));
+				}
+				if (direction.getAxis().isVertical()) break;
+			}
+		}
+	}
+
+    private @NotNull BlockPos getAirCurrentPos() {
+        return source.getAirCurrentPos();
     }
 
     @OnlyIn(Dist.CLIENT)

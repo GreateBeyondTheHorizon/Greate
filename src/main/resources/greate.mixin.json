@@ -4,6 +4,8 @@
   "minVersion": "0.8",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "MixinAirCurrent",
+    "MixinAirCurrentInvoker",
     "MixinAllArmInteractionPointTypes$BeltType",
     "MixinAssemblyOperatorBlockItem",
     "MixinBasinBlockEntity",

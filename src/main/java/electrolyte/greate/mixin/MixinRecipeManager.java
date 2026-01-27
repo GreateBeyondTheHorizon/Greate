@@ -76,9 +76,11 @@ public class MixinRecipeManager {
                 if(factory != null) {
                     if(type.startsWith(GTCEu.MOD_ID)) {
                         GTRecipe recipe = GTRecipeSerializer.SERIALIZER.fromJson(resourceLocation, recipeJson);
-                        GreateRuntimeRecipes.convertGTRecipe(factory, recipe, !type.startsWith(GTRecipeTypes.BENDER_RECIPES.registryName.toString()));
+                        GreateRuntimeRecipes.convertGTRecipe(factory, recipe,
+                                !type.equals(GTRecipeTypes.BENDER_RECIPES.registryName.toString()) &&
+                                        !type.equals(GTRecipeTypes.ORE_WASHER_RECIPES.registryName.toString()));
                     } else if(type.startsWith(Create.ID)) {
-                        GreateRuntimeRecipes.convertCreateRecipe(factory, resourceLocation, jsonElement);
+                        GreateRuntimeRecipes.convertCreateRecipe(factory, resourceLocation, jsonElement, type);
                     }
                     recipeCount++;
                 }

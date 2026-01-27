@@ -27,6 +27,11 @@ public class TieredSplashingRecipe extends TieredProcessingRecipe<TieredSplashin
     }
 
     @Override
+    protected int getMaxFluidInputCount() {
+        return 1;
+    }
+
+    @Override
     public boolean matches(TieredSplashingWrapper container, Level level) {
         if(container.isEmpty()) return false;
         return ingredients.get(0).test(container.getItem(0));

@@ -8,10 +8,8 @@ import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.compat.jei.category.animations.AnimatedKinetics;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
-import com.simibubi.create.foundation.utility.CreateLang;
-import com.tterrag.registrate.util.entry.BlockEntry;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
-import electrolyte.greate.content.kinetics.fan.TieredEncasedFanBlock;
+import electrolyte.greate.content.kinetics.fan.processing.TieredSplashingRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
@@ -25,7 +23,6 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
-import java.util.function.Supplier;
 
 import static com.simibubi.create.compat.jei.category.CreateRecipeCategory.getResultItem;
 import static electrolyte.greate.registry.EncasedFans.FANS;
@@ -38,10 +35,6 @@ public abstract class TieredProcessingViaFanCategory<T extends Recipe<?>> extend
 
     public TieredProcessingViaFanCategory(Info<T> info) {
         super(info);
-    }
-
-    public static Supplier<ItemStack> getFan(BlockEntry<TieredEncasedFanBlock> fan, String name) {
-        return () -> fan.asStack().setHoverName(CreateLang.translateDirect("recipe." + name + ".fan").withStyle(s -> s.withItalic(false)));
     }
 
     @Override
@@ -131,6 +124,15 @@ public abstract class TieredProcessingViaFanCategory<T extends Recipe<?>> extend
                         .addItemStack(output.getStack());
                 baseBuilder.addRichTooltipCallback(CreateRecipeCategory.addStochasticTooltip(output));
                 i++;
+            }
+            if(recipe instanceof TieredSplashingRecipe tsr) {
+                ItemStack circuitStack = getCircuitStack(tsr);
+                if(!circuitStack.isEmpty()) {
+                    builder.addSlot(RecipeIngredientRole.RENDER_ONLY, getBackground().getWidth() / 2 - 52, 13)
+                            .setBackground(getRenderedSlot(), -1, -1)
+                            .addItemStack(circuitStack);
+                }
+                CreateRecipeCategory.addFluidSlot(builder, getBackground().getWidth() / 2 + 15, 13, tsr.getFluidIngredients().get(0));
             }
         }
 

@@ -1,19 +1,34 @@
 package electrolyte.greate.content.kinetics.fan.processing;
 
+import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
+import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.simibubi.create.api.registry.CreateBuiltInRegistries;
 import com.simibubi.create.content.kinetics.fan.processing.AllFanProcessingTypes.HauntingType;
 import com.simibubi.create.content.kinetics.fan.processing.AllFanProcessingTypes.SplashingType;
 import com.simibubi.create.content.kinetics.fan.processing.FanProcessingType;
 import electrolyte.greate.Greate;
+import electrolyte.greate.content.kinetics.fan.TieredEncasedFanBlockEntity;
 import electrolyte.greate.content.kinetics.fan.processing.TieredHauntingRecipe.TieredHauntingWrapper;
 import electrolyte.greate.content.kinetics.fan.processing.TieredSplashingRecipe.TieredSplashingWrapper;
 import electrolyte.greate.foundation.recipe.TieredRecipeApplier;
 import electrolyte.greate.registry.ModRecipeTypes;
 import it.unimi.dsi.fastutil.objects.Object2ReferenceOpenHashMap;
+import net.createmod.catnip.theme.Color;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 
 import java.util.List;
 import java.util.Map;
@@ -69,7 +84,7 @@ public class GreateFanProcessingTypes {
         }
 
         @Nullable
-        public List<ItemStack> process(ItemStack stack, Level level, int machineTier) {
+        public List<ItemStack> process(ItemStack stack, Level level, int machineTier, TieredEncasedFanBlockEntity fanBE) {
             List<ItemStack> result = super.process(stack, level);
             if(result != null) return result;
             TIERED_HAUNTING_WRAPPER.setItem(0, stack);
@@ -80,6 +95,9 @@ public class GreateFanProcessingTypes {
     }
 
     public static class TieredSplashingType extends SplashingType {
+
+        private int color = 0xEEEEEE;
+
         private static final TieredSplashingWrapper TIERED_SPLASHING_WRAPPER = new TieredSplashingWrapper();
 
         @Override
@@ -87,21 +105,64 @@ public class GreateFanProcessingTypes {
             return 450;
         }
 
-        public boolean canProcess(ItemStack stack, Level level, int machineTier) {
+        @Override
+        public boolean isValidAt(Level level, BlockPos pos) {
+            BlockEntity fanBE = level.getBlockEntity(pos);
+            if(fanBE instanceof TieredEncasedFanBlockEntity fan) {
+                IFluidHandler handler = fan.getCapability(ForgeCapabilities.FLUID_HANDLER).orElse(null);
+                if(handler != null) {
+                    FluidStack fluid = handler.getFluidInTank(0);
+                    Material material = ChemicalHelper.getMaterial(fluid.getFluid());
+                    if(material != GTMaterials.NULL)
+                        color = material.getMaterialARGB();
+                    return fluid.getAmount() > 0;
+                }
+            }
+            return false;
+        }
+
+        public boolean canProcess(ItemStack stack, Level level, int machineTier, TieredEncasedFanBlockEntity fanBE) {
             if(super.canProcess(stack, level)) return true;
             TIERED_SPLASHING_WRAPPER.setItem(0, stack);
             Optional<TieredSplashingRecipe> tieredRecipe = ModRecipeTypes.SPLASHING.find(TIERED_SPLASHING_WRAPPER, level, machineTier);
-            return tieredRecipe.isPresent();
+            if(!tieredRecipe.isPresent()) return false;
+            if(tieredRecipe.get().getCircuitNumber() != fanBE.getTargetCircuit().getValue()) return false;
+            IFluidHandler handler = fanBE.getCapability(ForgeCapabilities.FLUID_HANDLER).orElse(null);
+            if(handler == null) return false;
+            FluidStack fluidInTank = handler.getFluidInTank(0);
+            if(tieredRecipe.get().getFluidIngredients().isEmpty()) return false;
+            return tieredRecipe.get().getFluidIngredients().get(0).test(fluidInTank);
         }
 
         @Nullable
-        public List<ItemStack> process(ItemStack stack, Level level, int machineTier) {
+        public List<ItemStack> process(ItemStack stack, Level level, int machineTier, TieredEncasedFanBlockEntity fanBE) {
             List<ItemStack> result = super.process(stack, level);
             if(result != null) return result;
             TIERED_SPLASHING_WRAPPER.setItem(0, stack);
             Optional<TieredSplashingRecipe> tieredRecipe = ModRecipeTypes.SPLASHING.find(TIERED_SPLASHING_WRAPPER, level, machineTier);
             return tieredRecipe.map(tieredSplashingRecipe ->
-                    TieredRecipeApplier.applyRecipeOn(level, stack, tieredSplashingRecipe, machineTier, true)).orElse(null);
+                    TieredRecipeApplier.applyRecipeOn(level, stack, tieredSplashingRecipe, machineTier, true, fanBE)).orElse(null);
+        }
+
+        @Override
+        public void morphAirFlow(AirFlowParticleAccess particleAccess, RandomSource random) {
+            particleAccess.setColor(color);
+            particleAccess.setAlpha(1f);
+			if (random.nextFloat() < 1 / 32f)
+				particleAccess.spawnExtraParticle(ParticleTypes.BUBBLE, .125f);
+			if (random.nextFloat() < 1 / 32f)
+				particleAccess.spawnExtraParticle(ParticleTypes.BUBBLE_POP, .125f);
+        }
+
+        @Override
+        public void spawnProcessingParticles(Level level, Vec3 pos) {
+            if (level.random.nextInt(8) != 0) return;
+			Vector3f color3f = new Color(color).asVectorF();
+			level.addParticle(new DustParticleOptions(color3f, 1), pos.x + (level.random.nextFloat() - .5f) * .5f,
+				pos.y + .5f, pos.z + (level.random.nextFloat() - .5f) * .5f, 0, 1 / 8f, 0);
+			level.addParticle(ParticleTypes.SPIT, pos.x + (level.random.nextFloat() - .5f) * .5f, pos.y + .5f,
+				pos.z + (level.random.nextFloat() - .5f) * .5f, 0, 1 / 8f, 0);
+
         }
     }
 }
