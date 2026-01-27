@@ -96,7 +96,8 @@ public class GreateFanProcessingTypes {
 
     public static class TieredSplashingType extends SplashingType {
 
-        private int color = 0xEEEEEE;
+        private int primaryColor = 0xEEEEEE;
+        private int secondaryColor = 0xff000000;
 
         private static final TieredSplashingWrapper TIERED_SPLASHING_WRAPPER = new TieredSplashingWrapper();
 
@@ -113,8 +114,12 @@ public class GreateFanProcessingTypes {
                 if(handler != null) {
                     FluidStack fluid = handler.getFluidInTank(0);
                     Material material = ChemicalHelper.getMaterial(fluid.getFluid());
-                    if(material != GTMaterials.NULL)
-                        color = material.getMaterialARGB();
+                    if(material != GTMaterials.NULL) {
+                        primaryColor = material.getMaterialARGB();
+                        if(material.getMaterialSecondaryARGB() != 0xff000000) {
+                            secondaryColor = material.getMaterialSecondaryARGB();
+                        }
+                    }
                     return fluid.getAmount() > 0;
                 }
             }
@@ -146,6 +151,7 @@ public class GreateFanProcessingTypes {
 
         @Override
         public void morphAirFlow(AirFlowParticleAccess particleAccess, RandomSource random) {
+            int color = secondaryColor != 0xff000000 ? Color.mixColors(primaryColor, secondaryColor, random.nextFloat()) : primaryColor;
             particleAccess.setColor(color);
             particleAccess.setAlpha(1f);
 			if (random.nextFloat() < 1 / 32f)
@@ -157,6 +163,7 @@ public class GreateFanProcessingTypes {
         @Override
         public void spawnProcessingParticles(Level level, Vec3 pos) {
             if (level.random.nextInt(8) != 0) return;
+            int color = secondaryColor != 0xff000000 ? Color.mixColors(primaryColor, secondaryColor, level.random.nextFloat()) : primaryColor;
 			Vector3f color3f = new Color(color).asVectorF();
 			level.addParticle(new DustParticleOptions(color3f, 1), pos.x + (level.random.nextFloat() - .5f) * .5f,
 				pos.y + .5f, pos.z + (level.random.nextFloat() - .5f) * .5f, 0, 1 / 8f, 0);
