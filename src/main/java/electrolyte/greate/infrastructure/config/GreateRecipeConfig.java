@@ -28,12 +28,12 @@ public class GreateRecipeConfig {
 
     @Configurable
     @Synchronized
-    @Comment({"Should certain Create items that have a GTCEu counterpart also be used in recipes?", "If false, GTCEu items will be only be used."})
+    @Comment({"Should certain Create items that have a GTCEu counterpart also be used in recipes?", "If false, GTCEu items will only be used."})
     public boolean useCreateItemsInRecipes = true;
 
     @Configurable
     @Synchronized
-    @Comment({"Should recipes from create that conflict with GTCEu recipes be enabled?", "[WARNING]: This will not cover every single recipe conflict, only common conflicts (like components (plates/sheets)), or ore processing conflicts."})
+    @Comment({"Should recipes from create that conflict with GTCEu recipes be disabled?", "[WARNING]: This will not cover every single recipe conflict, only common conflicts (like components (plates/sheets)), or ore processing conflicts."})
     public boolean disableConflictingRecipes = false;
 
 
