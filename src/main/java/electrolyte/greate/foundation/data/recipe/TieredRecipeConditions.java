@@ -23,8 +23,8 @@ public class TieredRecipeConditions {
 
     public static Predicate<Recipe<?>> firstIngredientCountMatches(ItemStack stack) {
         return r -> {
-            if(r instanceof TieredProcessingRecipe<?>) {
-                return (r.getIngredients().get(0).getItems()[0].getCount() <= stack.getCount());
+            if(r instanceof TieredProcessingRecipe<?> tpr) {
+                return (tpr.getIngredients().get(0).getItems().length > 0 && tpr.getIngredients().get(0).getItems()[0].getCount() <= stack.getCount());
             }
             return true;
         };
