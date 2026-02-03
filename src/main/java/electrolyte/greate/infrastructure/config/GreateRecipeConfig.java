@@ -44,6 +44,11 @@ public class GreateRecipeConfig {
 
     @Configurable
     @Synchronized
+    @Comment({"Should recipes that cannot be removed be logged?"})
+    public boolean logUnremovableRecipes = true;
+
+    @Configurable
+    @Synchronized
     @Comment({"Recipe types that should not be copied to Greate machines. Ex. 'gtceu:macerator' for macerator recipes"})
     public String[] ignoredRecipeTypes = {};
 }
