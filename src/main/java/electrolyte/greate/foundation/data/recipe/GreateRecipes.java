@@ -17,8 +17,10 @@ public class GreateRecipes {
 
         GreateAssemblerRecipes.register(provider);
         GreateChemicalBathRecipes.register(provider);
+        GreateCompressorRecipes.register(provider);
         GreateCraftingTableRecipes.register(provider);
         GreateCuttingMachineRecipes.register(provider);
+        GreateForgeHammerRecipes.register(provider);
         GreateMechanicalMixingRecipes.register(provider);
         GreateMechanicalCraftingRecipes.register(provider);
         GreateSequencedAssemblyRecipes.register(provider);

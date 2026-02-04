@@ -122,13 +122,22 @@ public class CreateRecipeRemoval {
         recipe.accept(Create.asResource("crushing/obsidian"));
         recipe.accept(Create.asResource("crushing/platinum_ore"));
         recipe.accept(Create.asResource("crushing/raw_copper"));
+        recipe.accept(Create.asResource("crushing/raw_copper_block"));
         recipe.accept(Create.asResource("crushing/raw_gold"));
+        recipe.accept(Create.asResource("crushing/raw_gold_block"));
         recipe.accept(Create.asResource("crushing/raw_iron"));
+        recipe.accept(Create.asResource("crushing/raw_iron_block"));
         recipe.accept(Create.asResource("crushing/raw_lead"));
+        recipe.accept(Create.asResource("crushing/raw_lead_block"));
         recipe.accept(Create.asResource("crushing/raw_nickel"));
+        recipe.accept(Create.asResource("crushing/raw_nickel_block"));
         recipe.accept(Create.asResource("crushing/raw_platinum"));
+        recipe.accept(Create.asResource("crushing/raw_platinum_block"));
         recipe.accept(Create.asResource("crushing/raw_silver"));
+        recipe.accept(Create.asResource("crushing/raw_silver_block"));
         recipe.accept(Create.asResource("crushing/raw_tin"));
+        recipe.accept(Create.asResource("crushing/raw_tin_block"));
+        recipe.accept(Create.asResource("crushing/raw_zinc_block"));
         recipe.accept(Create.asResource("crushing/silver_ore"));
         recipe.accept(Create.asResource("crushing/tin_ore"));
 

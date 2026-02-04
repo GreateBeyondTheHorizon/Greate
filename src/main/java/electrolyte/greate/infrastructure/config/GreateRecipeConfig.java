@@ -28,7 +28,7 @@ public class GreateRecipeConfig {
 
     @Configurable
     @Synchronized
-    @Comment({"Should certain Create items that have a GTCEu counterpart also be used in recipes?", "If false, GTCEu items will only be used."})
+    @Comment({"Should certain Create items that have a GTCEu counterpart also be used in recipes?", "If false, GTCEu items will only be used.", "REQUIRES MINECRAFT RESTART"})
     public boolean useCreateItemsInRecipes = true;
 
     @Configurable

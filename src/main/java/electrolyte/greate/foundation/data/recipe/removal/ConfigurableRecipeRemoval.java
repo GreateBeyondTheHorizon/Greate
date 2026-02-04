@@ -27,6 +27,19 @@ public class ConfigurableRecipeRemoval {
         recipe.accept(Create.asResource("crafting/appliances/copper_diving_boots"));
     }
 
+    public static void disableCompressionRecipes(Consumer<ResourceLocation> recipe) {
+        recipe.accept(Create.asResource("crafting/materials/raw_zinc"));
+        recipe.accept(Create.asResource("crafting/materials/raw_zinc_block"));
+        recipe.accept(new ResourceLocation("crafting/materials/raw_zinc_block"));
+        recipe.accept(new ResourceLocation("raw_copper"));
+        recipe.accept(new ResourceLocation("raw_copper_block"));
+        recipe.accept(new ResourceLocation("raw_gold"));
+        recipe.accept(new ResourceLocation("raw_gold_block"));
+        recipe.accept(new ResourceLocation("raw_iron"));
+        recipe.accept(new ResourceLocation("raw_iron_block"));
+        recipe.accept(new ResourceLocation("raw_iron_block"));
+    }
+
     public static void disableGlassRecipes(Consumer<ResourceLocation> recipe) {
         recipe.accept(Create.asResource("tiled_glass_pane"));
         recipe.accept(Create.asResource("framed_glass_pane"));

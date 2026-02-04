@@ -16,6 +16,7 @@ public class GreateRecipeRemoval {
         if(ConfigHolder.INSTANCE.recipes.hardDyeRecipes) disableDyeRecipes(recipe);
         if(ConfigHolder.INSTANCE.recipes.hardToolArmorRecipes) disableArmorToolRecipes(recipe);
         if(ConfigHolder.INSTANCE.recipes.hardGlassRecipes) disableGlassRecipes(recipe);
+        if(ConfigHolder.INSTANCE.recipes.disableManualCompression) disableCompressionRecipes(recipe);
         if(Greate.CONFIG.enableHardCreateRecipes) disableConfigurableCreateRecipes(recipe);
         if(Greate.CONFIG.disableConflictingRecipes) disableConflictingCreateRecipes(recipe);
         disableCreateRecipes(recipe);
