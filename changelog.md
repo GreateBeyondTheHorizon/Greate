@@ -1,9 +1,9 @@
-- Remove regular fluid tank recipe if `enableHardCreateRecipes` is enabled
-- Fix saws not working with composite packages
-- Add decomp recipes for various Create components
-- Fix dyeing recipes not appearing in the proper JEI category
-- Add hardmode postbox dyeing recipes
-- Remove Create brass recipe and match it to GTCEu instead
-- Remove conflicting Create recipes (configurable, disabled by default)
-- Make mixing recipes prefer recipes with circuits over non-circuit recipes
-- Fix addon recipes not getting converted
+- Better checking for removing wood recipes
+- Custom splashing implementation (you can now specify a fluid to use & consume!)
+- Add ability to remove warning when recipes cannot be removed
+- Fix crash when checking for ingredient counts
+- Add rubber and treated wood windows & panes
+- Create hard glass recipes for create window panes
+- Removed more conflicting recipes
+- Added compression/forge hammer recipe for raw zinc
+- Update create raw material textures to reflect GTCEu material colors
