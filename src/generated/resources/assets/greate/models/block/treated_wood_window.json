@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "gtceu:block/treated_wood_planks",
+    "side": "greate:block/palettes/treated_wood_window"
+  }
+}

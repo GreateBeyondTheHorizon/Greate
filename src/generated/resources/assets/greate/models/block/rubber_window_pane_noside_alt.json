@@ -1,0 +1,7 @@
+{
+  "parent": "create:block/connected_glass_pane/noside_alt",
+  "textures": {
+    "edge": "gtceu:block/rubber_planks",
+    "pane": "greate:block/palettes/rubber_window"
+  }
+}

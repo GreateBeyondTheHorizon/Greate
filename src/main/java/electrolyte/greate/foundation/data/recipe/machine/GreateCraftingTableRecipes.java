@@ -5,17 +5,23 @@ import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.chemical.material.stack.MaterialEntry;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
+import com.gregtechceu.gtceu.common.data.GTBlocks;
 import com.gregtechceu.gtceu.common.data.GTItems;
 import com.gregtechceu.gtceu.common.data.GTMachines;
 import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.gregtechceu.gtceu.config.ConfigHolder;
 import com.gregtechceu.gtceu.data.recipe.VanillaRecipeHelper;
+import com.gregtechceu.gtceu.data.recipe.WoodTypeEntry;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
+import com.simibubi.create.Create;
+import com.simibubi.create.content.decoration.palettes.AllPaletteBlocks;
 import electrolyte.greate.Greate;
 import electrolyte.greate.content.gtceu.material.CogwheelProperty;
 import electrolyte.greate.content.gtceu.material.GreateMaterialFlags;
 import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
+import electrolyte.greate.mixin.MixinWoodMachineRecipesAccessor;
+import electrolyte.greate.registry.Windows;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.DyeColor;
@@ -24,6 +30,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.Consumer;
 
@@ -50,6 +57,8 @@ import static electrolyte.greate.registry.Saws.SAWS;
 public class GreateCraftingTableRecipes {
 
     public static void register(Consumer<FinishedRecipe> provider) {
+        registerCreateRecipes(provider);
+        registerGTConfigRecipes(provider);
         for (int tier = 0; tier < TM.length; tier++) {
             Material tierMaterial = TM[tier];
 
@@ -170,6 +179,16 @@ public class GreateCraftingTableRecipes {
                     'O', CONVEYOR.get(UHV));
         }
 
+        VanillaRecipeHelper.addShapedRecipe(provider, Greate.id("rubber_window"), Windows.RUBBER_WINDOW.asStack(2),
+                " # ", "#X#",
+                '#', GTBlocks.RUBBER_PLANK.asStack(),
+                'X', Ingredient.of(Tags.Items.GLASS_COLORLESS));
+
+        VanillaRecipeHelper.addShapedRecipe(provider, Greate.id("treated_wood_window"), Windows.TREATED_WOOD_WINDOW.asStack(2),
+                " # ", "#X#",
+                '#', GTBlocks.TREATED_WOOD_PLANK.asStack(),
+                'X', Ingredient.of(Tags.Items.GLASS_COLORLESS));
+
         VanillaRecipeHelper.addShapedRecipe(provider, true, Greate.id("wire_coating_factory"), WIRE_COATING_FACTORY.asStack(),
                 "WCW", "PSP", "WCW",
                 'W', CASING_WATERTIGHT,
@@ -183,6 +202,55 @@ public class GreateCraftingTableRecipes {
                 'G', GTItems.GLASS_TUBE,
                 'R', AllItems.POLISHED_ROSE_QUARTZ,
                 'S', new MaterialEntry(wireGtSingle, Steel));
+    }
+
+    public static void registerGTConfigRecipes(Consumer<FinishedRecipe> provider) {
+        if(ConfigHolder.INSTANCE.recipes.hardGlassRecipes) {
+            VanillaRecipeHelper.addShapedRecipe(provider, Greate.id("rubber_pane"), Windows.RUBBER_GLASS_PANE.asStack(2),
+                    "s#",
+                    '#', Windows.RUBBER_WINDOW.asStack());
+            VanillaRecipeHelper.addShapedRecipe(provider, Greate.id("treated_wood_pane"), Windows.TREATED_WOOD_PANE.asStack(2),
+                    "s#",
+                    '#', Windows.TREATED_WOOD_WINDOW.asStack());
+
+            VanillaRecipeHelper.addShapedRecipe(provider, Greate.id("tiled_glass_pane"), AllPaletteBlocks.TILED_GLASS_PANE.asStack(2),
+                    "s#",
+                    '#', AllPaletteBlocks.TILED_GLASS.asStack());
+            VanillaRecipeHelper.addShapedRecipe(provider, Greate.id("framed_glass_pane"), AllPaletteBlocks.FRAMED_GLASS_PANE.asStack(2),
+                    "s#",
+                    '#', AllPaletteBlocks.FRAMED_GLASS.asStack());
+            VanillaRecipeHelper.addShapedRecipe(provider, Greate.id("horizontal_framed_glass_pane"), AllPaletteBlocks.HORIZONTAL_FRAMED_GLASS_PANE.asStack(2),
+                    "s#",
+                    '#', AllPaletteBlocks.HORIZONTAL_FRAMED_GLASS.asStack());
+            VanillaRecipeHelper.addShapedRecipe(provider, Greate.id("vertical_framed_glass_pane"), AllPaletteBlocks.VERTICAL_FRAMED_GLASS_PANE.asStack(2),
+                    "s#",
+                    '#', AllPaletteBlocks.VERTICAL_FRAMED_GLASS.asStack());
+
+            VanillaRecipeHelper.addShapedRecipe(provider, Greate.id("ornate_iron_window_pane"), AllPaletteBlocks.ORNATE_IRON_WINDOW_PANE.asStack(2),
+                    "s#",
+                    '#', AllPaletteBlocks.ORNATE_IRON_WINDOW.asStack());
+            VanillaRecipeHelper.addShapedRecipe(provider, Greate.id("industrial_iron_window_pane"), AllPaletteBlocks.INDUSTRIAL_IRON_WINDOW_PANE.asStack(2),
+                    "s#",
+                    '#', AllPaletteBlocks.INDUSTRIAL_IRON_WINDOW.asStack());
+            VanillaRecipeHelper.addShapedRecipe(provider, Greate.id("weathered_iron_window_pane"), AllPaletteBlocks.WEATHERED_IRON_WINDOW_PANE.asStack(2),
+                    "s#",
+                    '#', AllPaletteBlocks.WEATHERED_IRON_WINDOW.asStack());
+
+            for(WoodTypeEntry woodType : MixinWoodMachineRecipesAccessor.getDefaultEntries()) {
+                if(GTBlocks.TREATED_WOOD_TYPE.name().contains(woodType.woodName) || GTBlocks.RUBBER_TYPE.name().contains(woodType.woodName)) continue;
+
+                VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(woodType.woodName + "_window_pane"), new ItemStack(ForgeRegistries.BLOCKS.getValue(Create.asResource(woodType.woodName + "_window_pane")), 2),
+                    "s#",
+                    '#', ForgeRegistries.BLOCKS.getValue(Create.asResource(woodType.woodName + "_window")).asItem());
+            }
+        } else {
+            VanillaRecipeHelper.addShapedRecipe(provider, Greate.id("rubber_pane"), Windows.RUBBER_GLASS_PANE.asStack(16),
+                    "###", "###",
+                    '#', Windows.RUBBER_WINDOW.asStack());
+            VanillaRecipeHelper.addShapedRecipe(provider, Greate.id("treated_wood_pane"), Windows.TREATED_WOOD_PANE.asStack(16),
+                    "###", "###",
+                    '#', Windows.TREATED_WOOD_WINDOW.asStack());
+        }
     }
 
     public static void registerMaterialRecipes(Consumer<FinishedRecipe> provider, Material material) {

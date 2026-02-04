@@ -1,0 +1,7 @@
+{
+  "parent": "create:block/connected_glass_pane/noside_alt",
+  "textures": {
+    "edge": "gtceu:block/treated_wood_planks",
+    "pane": "greate:block/palettes/treated_wood_window"
+  }
+}
