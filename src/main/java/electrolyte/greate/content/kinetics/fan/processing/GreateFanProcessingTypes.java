@@ -127,7 +127,7 @@ public class GreateFanProcessingTypes {
             TIERED_SPLASHING_WRAPPER.setItem(0, stack);
             Optional<TieredSplashingRecipe> tieredRecipe = ModRecipeTypes.SPLASHING.find(TIERED_SPLASHING_WRAPPER, level, machineTier);
             if(!tieredRecipe.isPresent()) return false;
-            if(tieredRecipe.get().getCircuitNumber() != fanBE.getTargetCircuit().getValue()) return false;
+            if(tieredRecipe.get().getCircuitNumber() != -1 && tieredRecipe.get().getCircuitNumber() != fanBE.getTargetCircuit().getValue()) return false;
             IFluidHandler handler = fanBE.getCapability(ForgeCapabilities.FLUID_HANDLER).orElse(null);
             if(handler == null) return false;
             FluidStack fluidInTank = handler.getFluidInTank(0);
