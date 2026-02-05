@@ -13,7 +13,7 @@ public class GreateForgeHammerRecipes {
 
     public static void register(Consumer<FinishedRecipe> provider) {
         FORGE_HAMMER_RECIPES.recipeBuilder("decompress_zinc_to_raw_ore")
-                .category(GTRecipeCategories.ORE_CRUSHING)
+                .category(GTRecipeCategories.ORE_FORGING)
                 .inputItems(AllBlocks.RAW_ZINC_BLOCK.asStack())
                 .outputItems(AllItems.RAW_ZINC, 9)
                 .duration(20 * 15)
