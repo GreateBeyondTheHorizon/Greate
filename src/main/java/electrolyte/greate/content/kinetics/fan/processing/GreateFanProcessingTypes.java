@@ -147,7 +147,6 @@ public class GreateFanProcessingTypes {
 
         @Override
         public void morphAirFlow(AirFlowParticleAccess particleAccess, RandomSource random) {
-
             particleAccess.setColor(getColor(random));
             particleAccess.setAlpha(1f);
 			if (random.nextFloat() < 1 / 32f)
