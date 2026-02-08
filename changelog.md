@@ -1,2 +1,2 @@
-- Fix wrong category for zinc forge hammer recipe
-- Fix recipe without a circuit not working with encased fans
+- Update to GTCEu 7.5.0
+- Fix missing tag error for wheat dust when `useCreateItemsInRecipes` is enabled
