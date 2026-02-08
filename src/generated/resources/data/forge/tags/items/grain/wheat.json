@@ -1,0 +1,9 @@
+{
+  "replace": true,
+  "values": [
+    {
+      "id": "gtceu:wheat_dust",
+      "required": false
+    }
+  ]
+}

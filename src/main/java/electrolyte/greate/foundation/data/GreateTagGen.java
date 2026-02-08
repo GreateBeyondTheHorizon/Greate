@@ -1,5 +1,7 @@
 package electrolyte.greate.foundation.data;
 
+import com.gregtechceu.gtceu.GTCEu;
+import com.gregtechceu.gtceu.data.recipe.CustomTags;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import net.minecraft.core.HolderLookup.Provider;
@@ -58,6 +60,10 @@ public class GreateTagGen {
                     .add(AllItems.PROPELLER.asItem())
                     .add(AllItems.VERTICAL_GEARBOX.asItem())
                     .add(AllBlocks.SHAFT.asItem());
+
+            this.tag(CustomTags.WHEAT_GRAINS)
+                    .addOptional(GTCEu.id("wheat_dust"))
+                    .replace(true);
         }
     }
 }

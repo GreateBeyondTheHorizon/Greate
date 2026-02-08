@@ -24,7 +24,7 @@ description="Create Gregified"
 [[dependencies.greate]]
     modId="gtceu"
     mandatory=true
-    versionRange="[7.0.2,)"
+    versionRange="[7.5.0,)"
     ordering="AFTER"
     side="BOTH"
 
