@@ -1,2 +1,3 @@
-- Update to GTCEu 7.5.0
-- Fix missing tag error for wheat dust when `useCreateItemsInRecipes` is enabled
+- Fix certain splashing fan recipes not working
+- Move circuit selection on fans down 1px 
+- Fix wrong fluid colors on splashing particles when fans have different fluids
