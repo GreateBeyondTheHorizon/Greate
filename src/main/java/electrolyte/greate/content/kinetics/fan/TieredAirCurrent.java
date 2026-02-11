@@ -9,6 +9,7 @@ import com.simibubi.create.content.kinetics.fan.IAirCurrentSource;
 import com.simibubi.create.content.kinetics.fan.processing.FanProcessingType;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import electrolyte.greate.content.kinetics.fan.processing.GreateFanProcessingTypes.TieredSplashingType;
 import electrolyte.greate.mixin.MixinAirCurrentInvoker;
 import net.createmod.catnip.data.Iterate;
 import net.createmod.catnip.math.VecHelper;
@@ -47,10 +48,11 @@ public class TieredAirCurrent extends AirCurrent {
             Level level = handler.getWorld();
             FanProcessingType processingType = pair.getRight();
             if(processingType == null) continue;
-
             handler.handleProcessingOnAllItems(transported -> {
                 if(level.isClientSide) {
-                    processingType.spawnProcessingParticles(level, handler.getWorldPositionOf(transported));
+                    if(processingType instanceof TieredSplashingType tst) {
+                        tst.spawnProcessingParticles(level, handler.getWorldPositionOf(transported), (TieredEncasedFanBlockEntity) level.getBlockEntity(source.getAirCurrentPos()));
+                    } else processingType.spawnProcessingParticles(level, handler.getWorldPositionOf(transported));
                     return TransportedResult.doNothing();
                 }
                 TransportedResult applyProcessing = TieredFanProcessing.applyProcessing(source.getSpeed(), transported, level, processingType, machineTier, (TieredEncasedFanBlockEntity) level.getBlockEntity(getAirCurrentPos()));
@@ -97,7 +99,9 @@ public class TieredAirCurrent extends AirCurrent {
 
             if(entity instanceof ItemEntity itemEntity) {
                 if(level != null && level.isClientSide) {
-                    processingType.spawnProcessingParticles(level, entity.position());
+                    if(processingType instanceof TieredSplashingType tst) {
+                        tst.spawnProcessingParticles(level, entity.position(), (TieredEncasedFanBlockEntity) level.getBlockEntity(source.getAirCurrentPos()));
+                    } else processingType.spawnProcessingParticles(level, entity.position());
                     continue;
                 }
                 if(TieredFanProcessing.canProcess(itemEntity, processingType, machineTier, level.getBlockEntity(getAirCurrentPos())))

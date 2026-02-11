@@ -39,6 +39,7 @@
     "MixinWoodMachineRecipesAccessor"
   ],
   "client": [
+    "MixinAirFlowParticle",
     "MixinDeployerApplicationRecipe",
     "MixinModelManager"
   ],
