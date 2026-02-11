@@ -86,7 +86,7 @@ public class TieredEncasedFanBlockEntity extends EncasedFanBlockEntity implement
     private class CircuitValueBoxTransform extends ValueBoxTransform.Sided {
         @Override
         protected Vec3 getSouthLocation() {
-            return VecHelper.voxelSpace(8, 9f, 15.5f);
+            return VecHelper.voxelSpace(8, 8f, 15.5f);
         }
 
         @Override
