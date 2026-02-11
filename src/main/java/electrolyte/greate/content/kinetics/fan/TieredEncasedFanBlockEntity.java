@@ -21,6 +21,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -102,5 +103,14 @@ public class TieredEncasedFanBlockEntity extends EncasedFanBlockEntity implement
 
     public ScrollValueBehaviour getTargetCircuit() {
         return targetCircuit;
+    }
+
+    @Nullable
+    public FluidStack getFluidInTank() {
+        IFluidHandler handler = this.getCapability(ForgeCapabilities.FLUID_HANDLER).orElse(null);
+        if(handler != null) {
+            return handler.getFluidInTank(0);
+        }
+        return null;
     }
 }

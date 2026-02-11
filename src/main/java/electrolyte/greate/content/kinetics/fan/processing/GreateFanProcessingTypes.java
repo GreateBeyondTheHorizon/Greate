@@ -7,10 +7,12 @@ import com.simibubi.create.api.registry.CreateBuiltInRegistries;
 import com.simibubi.create.content.kinetics.fan.processing.AllFanProcessingTypes.HauntingType;
 import com.simibubi.create.content.kinetics.fan.processing.AllFanProcessingTypes.SplashingType;
 import com.simibubi.create.content.kinetics.fan.processing.FanProcessingType;
+import com.simibubi.create.foundation.recipe.RecipeFinder;
 import electrolyte.greate.Greate;
 import electrolyte.greate.content.kinetics.fan.TieredEncasedFanBlockEntity;
 import electrolyte.greate.content.kinetics.fan.processing.TieredHauntingRecipe.TieredHauntingWrapper;
 import electrolyte.greate.content.kinetics.fan.processing.TieredSplashingRecipe.TieredSplashingWrapper;
+import electrolyte.greate.foundation.data.recipe.TieredRecipeConditions;
 import electrolyte.greate.foundation.recipe.TieredRecipeApplier;
 import electrolyte.greate.registry.ModRecipeTypes;
 import it.unimi.dsi.fastutil.objects.Object2ReferenceOpenHashMap;
@@ -21,12 +23,11 @@ import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
@@ -97,8 +98,8 @@ public class GreateFanProcessingTypes {
     public static class TieredSplashingType extends SplashingType {
 
         private Material fluidMaterial = GTMaterials.NULL;
-
         private static final TieredSplashingWrapper TIERED_SPLASHING_WRAPPER = new TieredSplashingWrapper();
+        private static final Object SPLASHING_RECIPE_CACHE_KEY = new Object();
 
         @Override
         public int getPriority() {
@@ -109,13 +110,10 @@ public class GreateFanProcessingTypes {
         public boolean isValidAt(Level level, BlockPos pos) {
             BlockEntity fanBE = level.getBlockEntity(pos);
             if(fanBE instanceof TieredEncasedFanBlockEntity fan) {
-                IFluidHandler handler = fan.getCapability(ForgeCapabilities.FLUID_HANDLER).orElse(null);
-                if(handler != null) {
-                    FluidStack fluid = handler.getFluidInTank(0);
+                FluidStack fluid = fan.getFluidInTank();
+                if(fluid != null) {
                     Material material = ChemicalHelper.getMaterial(fluid.getFluid());
-                    if(!material.isNull()) {
-                        fluidMaterial = material;
-                    }
+                    if(!material.isNull()) fluidMaterial = material;
                     return fluid.getAmount() > 0;
                 }
             }
@@ -125,14 +123,15 @@ public class GreateFanProcessingTypes {
         public boolean canProcess(ItemStack stack, Level level, int machineTier, TieredEncasedFanBlockEntity fanBE) {
             if(super.canProcess(stack, level)) return true;
             TIERED_SPLASHING_WRAPPER.setItem(0, stack);
-            Optional<TieredSplashingRecipe> tieredRecipe = ModRecipeTypes.SPLASHING.find(TIERED_SPLASHING_WRAPPER, level, machineTier);
-            if(!tieredRecipe.isPresent()) return false;
-            if(tieredRecipe.get().getCircuitNumber() != -1 && tieredRecipe.get().getCircuitNumber() != fanBE.getTargetCircuit().getValue()) return false;
-            IFluidHandler handler = fanBE.getCapability(ForgeCapabilities.FLUID_HANDLER).orElse(null);
-            if(handler == null) return false;
-            FluidStack fluidInTank = handler.getFluidInTank(0);
-            if(tieredRecipe.get().getFluidIngredients().isEmpty()) return false;
-            return tieredRecipe.get().getFluidIngredients().get(0).test(fluidInTank);
+            List<Recipe<?>> recipes = RecipeFinder.get(SPLASHING_RECIPE_CACHE_KEY, level, p -> p.getType() == ModRecipeTypes.SPLASHING.getType());
+            List<Recipe<?>> validRecipes = recipes.stream()
+                    .filter(TieredRecipeConditions.firstIngredientMatches(TIERED_SPLASHING_WRAPPER.getItem(0)))
+                    .filter(TieredRecipeConditions.firstIngredientCountMatches(TIERED_SPLASHING_WRAPPER.getItem(0)))
+                    .filter(TieredRecipeConditions.firstFluidMatches(fanBE.getFluidInTank()))
+                    .filter(TieredRecipeConditions.isEqualOrAboveTier(machineTier))
+                    .filter(TieredRecipeConditions.circuitMatches(fanBE.getTargetCircuit().getValue()))
+                    .toList();
+            return !validRecipes.isEmpty();
         }
 
         @Nullable
@@ -140,8 +139,15 @@ public class GreateFanProcessingTypes {
             List<ItemStack> result = super.process(stack, level);
             if(result != null) return result;
             TIERED_SPLASHING_WRAPPER.setItem(0, stack);
-            Optional<TieredSplashingRecipe> tieredRecipe = ModRecipeTypes.SPLASHING.find(TIERED_SPLASHING_WRAPPER, level, machineTier);
-            return tieredRecipe.map(tieredSplashingRecipe ->
+            List<Recipe<?>> recipes = RecipeFinder.get(SPLASHING_RECIPE_CACHE_KEY, level, p -> p.getType() == ModRecipeTypes.SPLASHING.getType());
+            List<Recipe<?>> validRecipes = recipes.stream()
+                    .filter(TieredRecipeConditions.firstIngredientMatches(TIERED_SPLASHING_WRAPPER.getItem(0)))
+                    .filter(TieredRecipeConditions.firstIngredientCountMatches(TIERED_SPLASHING_WRAPPER.getItem(0)))
+                    .filter(TieredRecipeConditions.firstFluidMatches(fanBE.getFluidInTank()))
+                    .filter(TieredRecipeConditions.isEqualOrAboveTier(machineTier))
+                    .filter(TieredRecipeConditions.circuitMatches(fanBE.getTargetCircuit().getValue()))
+                    .toList();
+            return Optional.of(validRecipes.get(0)).map(tieredSplashingRecipe ->
                     TieredRecipeApplier.applyRecipeOn(level, stack, tieredSplashingRecipe, machineTier, true, fanBE)).orElse(null);
         }
 
