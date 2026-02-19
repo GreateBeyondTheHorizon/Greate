@@ -1,3 +1,3 @@
-- Fix certain splashing fan recipes not working
-- Move circuit selection on fans down 1px 
-- Fix wrong fluid colors on splashing particles when fans have different fluids
+- Fix recipe removal logging
+- Fix fan & basin related crashes
+- Make saws use proper sawblades
