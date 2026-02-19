@@ -116,6 +116,7 @@ public class GreateFanProcessingTypes {
 
         public boolean canProcess(ItemStack stack, Level level, int machineTier, TieredEncasedFanBlockEntity fanBE) {
             if(super.canProcess(stack, level)) return true;
+            if(fanBE == null) return false;
             TIERED_SPLASHING_WRAPPER.setItem(0, stack);
             List<Recipe<?>> recipes = RecipeFinder.get(SPLASHING_RECIPE_CACHE_KEY, level, p -> p.getType() == ModRecipeTypes.SPLASHING.getType());
             List<Recipe<?>> validRecipes = recipes.stream()
@@ -132,6 +133,7 @@ public class GreateFanProcessingTypes {
         public List<ItemStack> process(ItemStack stack, Level level, int machineTier, TieredEncasedFanBlockEntity fanBE) {
             List<ItemStack> result = super.process(stack, level);
             if(result != null) return result;
+            if(fanBE == null) return null;
             TIERED_SPLASHING_WRAPPER.setItem(0, stack);
             List<Recipe<?>> recipes = RecipeFinder.get(SPLASHING_RECIPE_CACHE_KEY, level, p -> p.getType() == ModRecipeTypes.SPLASHING.getType());
             Optional<Recipe<?>> validRecipe = recipes.stream()
@@ -172,7 +174,7 @@ public class GreateFanProcessingTypes {
 
         private int getColor(RandomSource random, TieredEncasedFanBlockEntity fanBE) {
             int color = Color.mixColors(0x4499FF, 0x2277FF, random.nextFloat());
-            if(fanBE.getFluidInTank() != null) {
+            if(fanBE != null && fanBE.getFluidInTank() != null) {
                 Material fluidMaterial = ChemicalHelper.getMaterial(fanBE.getFluidInTank().getFluid());
                 if(!fluidMaterial.isNull()) {
                     if(fluidMaterial.getMaterialSecondaryRGB() != -1) {
