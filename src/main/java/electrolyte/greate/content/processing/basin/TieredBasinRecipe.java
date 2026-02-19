@@ -113,6 +113,7 @@ public class TieredBasinRecipe extends TieredProcessingRecipe<Container> {
             int[] extractedFluidsFromTank = new int[availableFluids.getTanks()];
 
             Ingredients: for(Ingredient ingredient : ingredients) {
+                if(ingredient.getItems().length == 0) return false;
                 int amountRequired = ingredient.getItems()[0].getCount();
                 for(int slot = 0; slot < availableItems.getSlots(); slot++) {
                     if(simulate && availableItems.getStackInSlot(slot).getCount() <= extractedItemsFromSlot[slot]) {
