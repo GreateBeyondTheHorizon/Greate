@@ -1,8 +1,6 @@
 package electrolyte.greate.registry;
 
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
-import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
-import com.gregtechceu.gtceu.api.data.chemical.material.properties.ToolProperty;
 import com.gregtechceu.gtceu.api.data.chemical.material.stack.MaterialStack;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
@@ -18,7 +16,6 @@ import static com.gregtechceu.gtceu.api.GTValues.M;
 import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags.*;
 import static com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialIconSet.*;
 import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.*;
-import static com.gregtechceu.gtceu.api.item.tool.GTToolType.BUZZSAW;
 import static com.gregtechceu.gtceu.common.data.GTElements.Ma;
 import static com.gregtechceu.gtceu.common.data.GTElements.Sp;
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
@@ -39,7 +36,6 @@ public class GreateMaterials {
 				.ingot().fluid()
 				.appendFlags(STD_METAL, GENERATE_BOLT_SCREW, GENERATE_ROTOR)
 				.color(0xDADBCA).secondaryColor(0xABC7B5).iconSet(DULL)
-				.toolStats(ToolProperty.Builder.of(1, 1, 64, 0, BUZZSAW).build())
 				.components(Andesite, 1, WroughtIron, 1)
 				.buildAndRegister();
 		RoseQuartz = Builder("rose_quartz")
@@ -65,8 +61,6 @@ public class GreateMaterials {
 				.appendFlags(EXT2_METAL)
 				.buildAndRegister()
 				.setFormula(ChromaticCompound.getChemicalFormula() + Sp.symbol());
-
-		WroughtIron.addFlags(GENERATE_ROTOR);
 
 		AndesiteAlloy.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(0, 8));
 		Steel.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(1, 32));
@@ -101,9 +95,6 @@ public class GreateMaterials {
 		NaquadahAlloy.addFlags(GENERATE_WHISK, GENERATE_ALLOY);
 		Darmstadtium.addFlags(GENERATE_WHISK, GENERATE_ALLOY);
 		Neutronium.addFlags(GENERATE_ROTOR, GENERATE_WHISK, GENERATE_ALLOY);
-
-		Darmstadtium.setProperty(PropertyKey.TOOL, ToolProperty.Builder.of(50.0F, 15.0F, 5120, 5, BUZZSAW).build());
-		RhodiumPlatedPalladium.setProperty(PropertyKey.TOOL, ToolProperty.Builder.of(35.0F, 10.0F, 2560, 4, BUZZSAW).build());
 
 		Rubber.setProperty(GreatePropertyKeys.BELT, new BeltProperty(List.of(AndesiteAlloy, Steel)));
 		SiliconeRubber.setProperty(GreatePropertyKeys.BELT, new BeltProperty(List.of(Aluminium, StainlessSteel)));

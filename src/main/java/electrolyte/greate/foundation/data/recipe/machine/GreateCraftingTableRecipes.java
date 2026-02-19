@@ -101,7 +101,7 @@ public class GreateCraftingTableRecipes {
                     VanillaRecipeHelper.addShapedRecipe(provider, true, SAWS[tier].getId(), SAWS[tier].asStack(),
                             "GSG", "MCM", "OHO",
                             'G', CIRCUIT.get(tier),
-                            'S', new MaterialEntry(toolHeadBuzzSaw, tierMaterial),
+                            'S', SAWBLADE.get(tier),
                             'M', MOTOR.get(tier),
                             'C', CASING.get(tier),
                             'H', SHAFT.get(tier),
@@ -114,7 +114,7 @@ public class GreateCraftingTableRecipes {
         VanillaRecipeHelper.addShapedRecipe(provider, true, SAWS[0].getId(), SAWS[0].asStack(),
                 "GSG", "OCO", "MHM",
                 'G', new MaterialEntry(TagPrefix.pipeSmallFluid, GTMaterials.TinAlloy),
-                'S', new MaterialEntry(toolHeadBuzzSaw, AndesiteAlloy),
+                'S', SAWBLADE.get(ULV),
                 'M', new MaterialEntry(plate, WroughtIron),
                 'C', CASING.get(ULV), 'H', SHAFT.get(ULV),
                 'O', new MaterialEntry(plate, AndesiteAlloy));

@@ -1,9 +1,11 @@
 package electrolyte.greate.foundation.data.recipe;
 
 import com.gregtechceu.gtceu.data.recipe.CraftingComponent;
+import com.gregtechceu.gtceu.data.recipe.GTCraftingComponents;
 import com.simibubi.create.AllItems;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
+import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.toolHeadBuzzSaw;
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
 import static electrolyte.greate.registry.GreateMaterials.AndesiteAlloy;
 import static electrolyte.greate.registry.GreateTagPrefixes.*;
@@ -104,5 +106,7 @@ public class GreateCraftingComponents {
                 .add(ZPM, MECHANICAL_PUMPS[ZPM].asStack())
                 .add(UV, MECHANICAL_PUMPS[UV].asStack())
                 .add(UHV, MECHANICAL_PUMPS[UHV].asStack());
+
+        GTCraftingComponents.SAWBLADE.add(UHV, toolHeadBuzzSaw, Neutronium);
     }
 }
