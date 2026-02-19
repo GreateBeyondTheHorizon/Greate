@@ -134,15 +134,15 @@ public class GreateFanProcessingTypes {
             if(result != null) return result;
             TIERED_SPLASHING_WRAPPER.setItem(0, stack);
             List<Recipe<?>> recipes = RecipeFinder.get(SPLASHING_RECIPE_CACHE_KEY, level, p -> p.getType() == ModRecipeTypes.SPLASHING.getType());
-            List<Recipe<?>> validRecipes = recipes.stream()
+            Optional<Recipe<?>> validRecipe = recipes.stream()
                     .filter(TieredRecipeConditions.firstIngredientMatches(TIERED_SPLASHING_WRAPPER.getItem(0)))
                     .filter(TieredRecipeConditions.firstIngredientCountMatches(TIERED_SPLASHING_WRAPPER.getItem(0)))
                     .filter(TieredRecipeConditions.firstFluidMatches(fanBE.getFluidInTank()))
                     .filter(TieredRecipeConditions.isEqualOrAboveTier(machineTier))
                     .filter(TieredRecipeConditions.circuitMatches(fanBE.getTargetCircuit().getValue()))
-                    .toList();
-            return Optional.of(validRecipes.get(0)).map(tieredSplashingRecipe ->
-                    TieredRecipeApplier.applyRecipeOn(level, stack, tieredSplashingRecipe, machineTier, true, fanBE)).orElse(null);
+                    .findFirst();
+            return validRecipe.map(recipe ->
+                    TieredRecipeApplier.applyRecipeOn(level, stack, recipe, machineTier, true, fanBE)).orElse(null);
         }
 
         @Override
