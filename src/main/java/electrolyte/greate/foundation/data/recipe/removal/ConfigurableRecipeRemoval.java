@@ -30,13 +30,11 @@ public class ConfigurableRecipeRemoval {
     public static void disableCompressionRecipes(Consumer<ResourceLocation> recipe) {
         recipe.accept(Create.asResource("crafting/materials/raw_zinc"));
         recipe.accept(Create.asResource("crafting/materials/raw_zinc_block"));
-        recipe.accept(new ResourceLocation("crafting/materials/raw_zinc_block"));
         recipe.accept(new ResourceLocation("raw_copper"));
         recipe.accept(new ResourceLocation("raw_copper_block"));
         recipe.accept(new ResourceLocation("raw_gold"));
         recipe.accept(new ResourceLocation("raw_gold_block"));
         recipe.accept(new ResourceLocation("raw_iron"));
-        recipe.accept(new ResourceLocation("raw_iron_block"));
         recipe.accept(new ResourceLocation("raw_iron_block"));
     }
 
@@ -51,7 +49,7 @@ public class ConfigurableRecipeRemoval {
         recipe.accept(Create.asResource("weathered_iron_window_pane"));
 
         for(WoodTypeEntry woodType : MixinWoodMachineRecipesAccessor.getDefaultEntries()) {
-            if(woodType.woodName.equals(GTBlocks.TREATED_WOOD_TYPE.name()) || woodType.woodName.equals(GTBlocks.RUBBER_TYPE.name())) continue;
+            if(GTBlocks.TREATED_WOOD_TYPE.name().contains(woodType.woodName) || GTBlocks.RUBBER_TYPE.name().contains(woodType.woodName)) continue;
             recipe.accept(Create.asResource(woodType.woodName + "_window_pane"));
         }
     }
