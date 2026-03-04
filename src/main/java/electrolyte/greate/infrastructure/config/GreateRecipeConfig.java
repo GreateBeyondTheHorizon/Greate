@@ -24,7 +24,7 @@ public class GreateRecipeConfig {
     @Synchronized
     @Range(min = 0)
     @Comment({"Multiplier used for calculating how many ticks should initially be removed in fan processing recipes, based on how fast the fan is spinning."})
-    public final float fanSpeedMultiplier = 0.75f;
+    public float fanSpeedMultiplier = 0.75f;
 
     @Configurable
     @Synchronized
