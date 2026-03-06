@@ -105,6 +105,10 @@ public class TieredEncasedFanBlockEntity extends EncasedFanBlockEntity implement
         return targetCircuit;
     }
 
+    public int getTier() {
+        return tier;
+    }
+
     @Nullable
     public FluidStack getFluidInTank() {
         IFluidHandler handler = this.getCapability(ForgeCapabilities.FLUID_HANDLER).orElse(null);

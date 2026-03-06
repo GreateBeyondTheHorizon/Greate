@@ -5,20 +5,30 @@ import com.simibubi.create.content.kinetics.belt.behaviour.TransportedItemStackH
 import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
 import com.simibubi.create.content.kinetics.fan.processing.AllFanProcessingTypes;
 import com.simibubi.create.content.kinetics.fan.processing.FanProcessingType;
+import com.simibubi.create.foundation.recipe.RecipeFinder;
 import com.simibubi.create.infrastructure.config.AllConfigs;
 import electrolyte.greate.Greate;
 import electrolyte.greate.content.kinetics.fan.processing.GreateFanProcessingTypes;
 import electrolyte.greate.content.kinetics.fan.processing.GreateFanProcessingTypes.TieredHauntingType;
 import electrolyte.greate.content.kinetics.fan.processing.GreateFanProcessingTypes.TieredSplashingType;
+import electrolyte.greate.content.kinetics.fan.processing.TieredSplashingRecipe;
+import electrolyte.greate.foundation.data.recipe.TieredRecipeConditions;
+import electrolyte.greate.registry.ModRecipeTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import static electrolyte.greate.content.kinetics.fan.processing.GreateFanProcessingTypes.TieredSplashingType.SPLASHING_RECIPE_CACHE_KEY;
 
 public class TieredFanProcessing {
 
@@ -53,7 +63,8 @@ public class TieredFanProcessing {
     }
 
     public static boolean applyProcessing(float speed, ItemEntity entity, FanProcessingType type, int machineTier, TieredEncasedFanBlockEntity fanBE) {
-        if(decrementProcessingTime(speed, entity, type) != 0) return false;
+        int maxItemsProcessed = getMaxItemsProcessedCount(type, fanBE, entity.getItem());
+        if(decrementProcessingTime(speed, entity, type, maxItemsProcessed) != 0) return false;
         List<ItemStack> stacks;
         if(type instanceof TieredHauntingType th) {
             stacks = th.process(entity.getItem(), entity.level(), machineTier, fanBE);
@@ -67,7 +78,8 @@ public class TieredFanProcessing {
             entity.discard();
             return false;
         }
-        entity.setItem(stacks.remove(0));
+        int remainder = entity.getItem().getCount() - maxItemsProcessed;
+        entity.setItem(entity.getItem().copyWithCount(remainder));
         for(ItemStack additional : stacks) {
             ItemEntity entityIn = new ItemEntity(entity.level(), entity.getX(), entity.getY(), entity.getZ(), additional);
             entityIn.setDeltaMovement(entityIn.getDeltaMovement());
@@ -80,7 +92,8 @@ public class TieredFanProcessing {
         TransportedResult ignore = TransportedResult.doNothing();
         if(transported.processedBy != type) {
             transported.processedBy = type;
-            transported.processingTime = getProcessingTime(transported.stack.getCount(), speed);
+            int maxItemsProcessed = getMaxItemsProcessedCount(type, fanBE, transported.stack);
+            transported.processingTime = getProcessingTime(maxItemsProcessed, speed);
             if(type instanceof TieredHauntingType tht) {
                 if(!tht.canProcess(transported.stack, level, machineTier)) {
                     transported.processingTime = -1;
@@ -120,7 +133,7 @@ public class TieredFanProcessing {
         return TransportedResult.convertTo(transportedItemStacks);
     }
 
-    private static int decrementProcessingTime(float speed, ItemEntity entity, FanProcessingType type) {
+    private static int decrementProcessingTime(float speed, ItemEntity entity, FanProcessingType type, int maxItemsProcessed) {
         CompoundTag nbt = entity.getPersistentData();
 
         if (!nbt.contains("CreateData"))
@@ -137,7 +150,7 @@ public class TieredFanProcessing {
                 throw new IllegalArgumentException("Could not get id for FanProcessingType " + type + "!");
             }
             processing.putString("Type", key.toString());
-            int processingTime = getProcessingTime(entity.getItem().getCount(), speed);
+            int processingTime = getProcessingTime(maxItemsProcessed, speed);
             processing.putInt("Time", processingTime);
         }
 
@@ -150,5 +163,29 @@ public class TieredFanProcessing {
         int timeModifierForStackSize = ((entityCount - 1) / 16) + 1;
         int timeModifierForSpeed = (int) Math.max(0, speed * Greate.CONFIG.fanSpeedMultiplier);
         return Math.max(1, ((AllConfigs.server().kinetics.fanProcessingTime.get() - timeModifierForSpeed) * timeModifierForStackSize) + 1);
+    }
+
+    private static int getMaxItemsProcessedCount(FanProcessingType type, TieredEncasedFanBlockEntity fanBE, ItemStack stack) {
+        int maxItemsProcessedCount = stack.getCount();
+        if(type == GreateFanProcessingTypes.TIERED_SPLASHING) {
+            if(fanBE != null && fanBE.getFluidInTank() != null) {
+                int fluidAmountInTank = fanBE.getFluidInTank().getAmount();
+                if(fluidAmountInTank == 0) return 0;
+                RecipeWrapper wrapper = new RecipeWrapper(new ItemStackHandler(1));
+                wrapper.setItem(0, stack);
+                List<Recipe<?>> recipes = RecipeFinder.get(SPLASHING_RECIPE_CACHE_KEY, fanBE.getLevel(), p -> p.getType() == ModRecipeTypes.SPLASHING.getType());
+                Optional<Recipe<?>> validRecipe = recipes.stream()
+                        .filter(TieredRecipeConditions.firstIngredientMatches(wrapper.getItem(0)))
+                        .filter(TieredRecipeConditions.firstIngredientCountMatches(wrapper.getItem(0)))
+                        .filter(TieredRecipeConditions.firstFluidMatches(fanBE.getFluidInTank()))
+                        .filter(TieredRecipeConditions.isEqualOrAboveTier(fanBE.getTier()))
+                        .filter(TieredRecipeConditions.circuitMatches(fanBE.getTargetCircuit().getValue()))
+                        .findFirst();
+                int requiredAmount = ((TieredSplashingRecipe) validRecipe.get()).getFluidIngredients().get(0).getRequiredAmount();
+                int fanMaxItemsProcessed = fluidAmountInTank / requiredAmount;
+                maxItemsProcessedCount = Math.min(stack.getCount(), fanMaxItemsProcessed);
+            }
+        }
+        return maxItemsProcessedCount;
     }
 }

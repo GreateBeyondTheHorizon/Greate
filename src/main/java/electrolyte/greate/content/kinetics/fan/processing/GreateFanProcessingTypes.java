@@ -97,7 +97,7 @@ public class GreateFanProcessingTypes {
     public static class TieredSplashingType extends SplashingType {
 
         private static final TieredSplashingWrapper TIERED_SPLASHING_WRAPPER = new TieredSplashingWrapper();
-        private static final Object SPLASHING_RECIPE_CACHE_KEY = new Object();
+        public static final Object SPLASHING_RECIPE_CACHE_KEY = new Object();
 
         @Override
         public int getPriority() {
