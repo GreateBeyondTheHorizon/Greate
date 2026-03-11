@@ -181,6 +181,7 @@ public class TieredFanProcessing {
                         .filter(TieredRecipeConditions.isEqualOrAboveTier(fanBE.getTier()))
                         .filter(TieredRecipeConditions.circuitMatches(fanBE.getTargetCircuit().getValue()))
                         .findFirst();
+                if(validRecipe.isEmpty()) return 0;
                 int requiredAmount = ((TieredSplashingRecipe) validRecipe.get()).getFluidIngredients().get(0).getRequiredAmount();
                 int fanMaxItemsProcessed = fluidAmountInTank / requiredAmount;
                 maxItemsProcessedCount = Math.min(stack.getCount(), fanMaxItemsProcessed);
