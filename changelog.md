@@ -1,3 +1,1 @@
-- Fix fans voiding input item entities when there is not enough fluid in the fan to process the entire stack
-- Fix fan multiplier not applying when set to something other than the default
-- Fix item processing time calculation on fans when the entire stack cannot be processed at once
+- Fix another fan related crash
