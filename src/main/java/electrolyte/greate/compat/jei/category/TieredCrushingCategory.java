@@ -7,6 +7,7 @@ import com.simibubi.create.foundation.gui.AllGuiTextures;
 import electrolyte.greate.Greate;
 import electrolyte.greate.compat.jei.category.animations.TieredAnimatedCrushingWheels;
 import electrolyte.greate.content.kinetics.crusher.TieredAbstractCrushingRecipe;
+import electrolyte.greate.content.kinetics.millstone.TieredMillingRecipe;
 import electrolyte.greate.registry.CrushingWheels;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
@@ -17,6 +18,7 @@ import net.createmod.catnip.lang.Lang;
 import net.createmod.catnip.layout.LayoutHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
@@ -45,6 +47,16 @@ public class TieredCrushingCategory extends GreateRecipeCategory<TieredAbstractC
                     .addItemStack(entry.output().getStack());
             baseBuilder.addRichTooltipCallback(CreateRecipeCategory.addStochasticTooltip(entry.output));
         });
+    }
+
+    @Override
+    public ResourceLocation getRegistryName(TieredAbstractCrushingRecipe recipe) {
+        ResourceLocation id = super.getRegistryName(recipe);
+        if (id != null && recipe instanceof TieredMillingRecipe) {
+            return ResourceLocation.fromNamespaceAndPath(id.getNamespace(),
+                    "crushing" + id.getPath().substring("milling".length()));
+        }
+        return id;
     }
 
     private List<LayoutEntry> layoutOutput(ProcessingRecipe<?> recipe) {
