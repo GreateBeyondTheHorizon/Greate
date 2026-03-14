@@ -11,10 +11,16 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.StonecutterRecipe;
+import electrolyte.greate.mixin.MixinDifferenceIngredientAccessor;
+import net.minecraftforge.common.crafting.DifferenceIngredient;
+import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,8 +63,8 @@ public class TieredBlockCuttingCategory extends GreateRecipeCategory<TieredConde
 
         List<ItemStack> outputs = new ArrayList<>();
 
-        public TieredCondensedBlockCuttingRecipe(Ingredient ingredient) {
-            super(new ResourceLocation(""), "", ingredient, ItemStack.EMPTY);
+        public TieredCondensedBlockCuttingRecipe(ResourceLocation id, Ingredient ingredient) {
+            super(id, "", ingredient, ItemStack.EMPTY);
         }
 
         public void addOutput(ItemStack stack) {
@@ -98,16 +104,56 @@ public class TieredBlockCuttingCategory extends GreateRecipeCategory<TieredConde
         Recipes: for(Recipe<?> recipe : stoneCuttingRecipes) {
             Ingredient ingredient = recipe.getIngredients().get(0);
             for(TieredCondensedBlockCuttingRecipe tieredCondensedRecipe : condensedRecipes) {
-                if(ItemHelper.matchIngredients(ingredient, tieredCondensedRecipe.getIngredients().get(0))) {
+                if(matchIngredients(ingredient, tieredCondensedRecipe.getIngredients().get(0))) {
                     tieredCondensedRecipe.addOutput(getResultItem(recipe));
                     continue Recipes;
                 }
             }
 
-            TieredCondensedBlockCuttingRecipe tcbcr = new TieredCondensedBlockCuttingRecipe(ingredient);
+            String tagName = getTagName(ingredient);
+            String idPath;
+            if (tagName != null) {
+                idPath = "block_cutting/" + tagName.replace(':', '/');
+            } else {
+                ResourceLocation inputId = ForgeRegistries.ITEMS.getKey(ingredient.getItems()[0].getItem());
+                idPath = "block_cutting/" + inputId.getNamespace() + "/" + inputId.getPath();
+            }
+
+            ResourceLocation recipeId = ResourceLocation.fromNamespaceAndPath("greate", idPath);
+            TieredCondensedBlockCuttingRecipe tcbcr = new TieredCondensedBlockCuttingRecipe(recipeId, ingredient);
             tcbcr.addOutput(getResultItem(recipe));
             condensedRecipes.add(tcbcr);
         }
         return condensedRecipes;
+    }
+
+    /**
+     * Condense recipes based on input items, input tags, or DifferenceIngredient base tags.
+     */
+    private static boolean matchIngredients(Ingredient a, Ingredient b) {
+        if (ItemHelper.matchIngredients(a, b)) return true;
+        var tagA = getTag(a);
+        var tagB = getTag(b);
+        if (tagA != null && tagB != null)
+            return tagA.equals(tagB);
+        return false;
+    }
+
+    /**
+     * Get tag for an Ingredient.
+     * For DifferenceIngredient, get the base tag.
+     */
+    private static @Nullable TagKey<Item> getTag(Ingredient ingredient) {
+        if (ingredient instanceof DifferenceIngredient diff)
+            return getTag(((MixinDifferenceIngredientAccessor) diff).getBase());
+        Ingredient.Value[] values = ingredient.values;
+        if (values.length == 1 && values[0] instanceof Ingredient.TagValue tagValue)
+            return tagValue.tag;
+        return null;
+    }
+
+    private static @Nullable String getTagName(Ingredient ingredient) {
+        var tag = getTag(ingredient);
+        return tag != null ? tag.location().toString() : null;
     }
 }
