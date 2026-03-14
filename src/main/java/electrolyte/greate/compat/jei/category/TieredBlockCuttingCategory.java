@@ -17,7 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.StonecutterRecipe;
-import electrolyte.greate.mixin.DifferenceIngredientAccessor;
+import electrolyte.greate.mixin.MixinDifferenceIngredientAccessor;
 import net.minecraftforge.common.crafting.DifferenceIngredient;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
@@ -145,7 +145,7 @@ public class TieredBlockCuttingCategory extends GreateRecipeCategory<TieredConde
      */
     private static @Nullable TagKey<Item> getTag(Ingredient ingredient) {
         if (ingredient instanceof DifferenceIngredient diff)
-            return getTag(((DifferenceIngredientAccessor) diff).getBase());
+            return getTag(((MixinDifferenceIngredientAccessor) diff).getBase());
         Ingredient.Value[] values = ingredient.values;
         if (values.length == 1 && values[0] instanceof Ingredient.TagValue tagValue)
             return tagValue.tag;
