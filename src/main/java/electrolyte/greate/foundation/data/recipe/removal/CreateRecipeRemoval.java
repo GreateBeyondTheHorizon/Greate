@@ -159,7 +159,7 @@ public class CreateRecipeRemoval {
         recipe.accept(Create.asResource("milling/terracotta"));
 
         for(var entry : MixinWoodMachineRecipesAccessor.getDefaultEntries()) {
-            ResourceLocation air = new ResourceLocation("air");
+            ResourceLocation air = ResourceLocation.parse("air");
             ResourceLocation log = ForgeRegistries.ITEMS.getKey(entry.log);
             ResourceLocation planks = ForgeRegistries.ITEMS.getKey(entry.planks);
             ResourceLocation strippedLog = ForgeRegistries.ITEMS.getKey(entry.strippedLog);

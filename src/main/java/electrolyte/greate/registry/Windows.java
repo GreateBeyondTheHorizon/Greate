@@ -21,7 +21,7 @@ import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import electrolyte.greate.Greate;
-import net.minecraft.client.renderer.RenderType;
+import electrolyte.greate.foundation.data.GreateBlockStateGen;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.BlockItem;
@@ -50,28 +50,26 @@ public class Windows {
     public static void register() {}
 
     public static BlockEntry<WindowBlock> woodenWindowBlock(WoodType woodType, Supplier<Block> planksBlock) {
-		return woodenWindowBlock(woodType, planksBlock, () -> RenderType::cutoutMipped, false);
+		return woodenWindowBlock(woodType, planksBlock, false);
 	}
 
-    public static BlockEntry<WindowBlock> woodenWindowBlock(WoodType woodType, Supplier<Block> planksBlock,
-                                                            Supplier<Supplier<RenderType>> renderType, boolean translucent) {
+    public static BlockEntry<WindowBlock> woodenWindowBlock(WoodType woodType, Supplier<Block> planksBlock, boolean translucent) {
 		String woodName = woodType.name().split(":")[1];
 		String name = woodName + "_window";
 		NonNullFunction<String, ResourceLocation> end_texture =
 			$ -> GTCEu.id("block/" + woodName + "_planks");
 		NonNullFunction<String, ResourceLocation> side_texture = n -> Greate.id("block/palettes/" + n);
-		return windowBlock(name, () -> GreateSpriteShifts.getWoodenSpriteShift(GTCEu.id(woodName + "_planks")), renderType,
-			translucent, end_texture, side_texture, () -> planksBlock.get().defaultMapColor()).register();
+		return windowBlock(name, () -> GreateSpriteShifts.getWoodenSpriteShift(GTCEu.id(woodName + "_planks")),
+				translucent, end_texture, side_texture, () -> planksBlock.get().defaultMapColor()).register();
 	}
 
 	public static BlockBuilder<WindowBlock, GTRegistrate> windowBlock(String name,
 																	  Supplier<CTSpriteShiftEntry> ct,
-																	  Supplier<Supplier<RenderType>> renderType, boolean translucent,
+																	  boolean translucent,
 																	  NonNullFunction<String, ResourceLocation> endTexture, NonNullFunction<String, ResourceLocation> sideTexture,
 																	  Supplier<MapColor> color) {
 		return REGISTRATE.block(name, p -> new WindowBlock(p, translucent))
 			.onRegister(CreateRegistrate.connectedTextures(() -> new HorizontalCTBehaviour(ct.get())))
-			.addLayer(renderType)
 			.initialProperties(() -> Blocks.GLASS)
 			.properties(p -> p.mapColor(color.get())
                     .isValidSpawn((blockState, blockGetter, pos, entityType) -> false)
@@ -80,29 +78,23 @@ public class Windows {
                     .isViewBlocking((blockState, blockGetter, pos) -> false))
 			.loot(RegistrateBlockLootTables::dropWhenSilkTouch)
 			.blockstate((c, p) -> p.simpleBlock(c.get(), p.models()
-				.cubeColumn(c.getName(), sideTexture.apply(c.getName()), endTexture.apply(c.getName()))))
+				.cubeColumn(c.getName(), sideTexture.apply(c.getName()), endTexture.apply(c.getName())).renderType(GreateBlockStateGen.CUTOUT_MIPPED)))
 			.tag(BlockTags.IMPERMEABLE)
 			.simpleItem();
 	}
 
-	public static BlockEntry<ConnectedGlassPaneBlock> woodenWindowPane(WoodType woodType,
-																	   Supplier<? extends Block> parent) {
-		return woodenWindowPane(woodType, parent, () -> RenderType::cutoutMipped);
-	}
-
-	public static BlockEntry<ConnectedGlassPaneBlock> woodenWindowPane(WoodType woodType,
-																	   Supplier<? extends Block> parent, Supplier<Supplier<RenderType>> renderType) {
+	public static BlockEntry<ConnectedGlassPaneBlock> woodenWindowPane(WoodType woodType, Supplier<? extends Block> parent) {
 		String woodName = woodType.name().split(":")[1];
 		String name = woodName + "_window";
 		ResourceLocation topTexture = GTCEu.id("block/" + woodName + "_planks");
 		ResourceLocation sideTexture = Greate.id("block/palettes/" + name);
 		return connectedGlassPane(name, parent, () -> GreateSpriteShifts.getWoodenSpriteShift(GTCEu.id(woodName + "_planks")), sideTexture,
-			sideTexture, topTexture, renderType).register();
+			sideTexture, topTexture).register();
 	}
 
 	private static BlockBuilder<ConnectedGlassPaneBlock, GTRegistrate> connectedGlassPane(String name,
 																							  Supplier<? extends Block> parent, Supplier<CTSpriteShiftEntry> ctshift, ResourceLocation sideTexture,
-																							  ResourceLocation itemSideTexture, ResourceLocation topTexture, Supplier<Supplier<RenderType>> renderType) {
+																							  ResourceLocation itemSideTexture, ResourceLocation topTexture) {
 		NonNullConsumer<? super ConnectedGlassPaneBlock> connectedTextures = CreateRegistrate.connectedTextures(() -> new GlassPaneCTBehaviour(ctshift.get()));
 		String CGPparents = "block/connected_glass_pane/";
 		String prefix = name + "_pane_";
@@ -118,27 +110,24 @@ public class Windows {
 			(c, p) -> p.paneBlock(c.get(), post.apply(p), side.apply(p), sideAlt.apply(p), noSide.apply(p),
 				noSideAlt.apply(p));
 
-		return glassPane(name, parent, itemSideTexture, topTexture, ConnectedGlassPaneBlock::new, renderType,
-			connectedTextures, stateProvider);
+		return glassPane(name, parent, itemSideTexture, topTexture, ConnectedGlassPaneBlock::new,
+				connectedTextures, stateProvider);
 	}
 
-	private static Function<RegistrateBlockstateProvider, ModelFile> getPaneModelProvider(String CGPparents,
-																						  String prefix, String partial, ResourceLocation sideTexture, ResourceLocation topTexture) {
+	private static Function<RegistrateBlockstateProvider, ModelFile> getPaneModelProvider(String CGPparents, String prefix, String partial, ResourceLocation sideTexture, ResourceLocation topTexture) {
 		return p -> p.models()
 			.withExistingParent(prefix + partial, Create.asResource(CGPparents + partial))
 			.texture("pane", sideTexture)
-			.texture("edge", topTexture);
+			.texture("edge", topTexture).renderType(GreateBlockStateGen.CUTOUT_MIPPED);
 	}
 
 	private static <G extends GlassPaneBlock> BlockBuilder<G, GTRegistrate> glassPane(String name,
 																						  Supplier<? extends Block> parent, ResourceLocation sideTexture, ResourceLocation topTexture,
-																						  NonNullFunction<Properties, G> factory, Supplier<Supplier<RenderType>> renderType,
-																						  NonNullConsumer<? super G> connectedTextures,
+																						  NonNullFunction<Properties, G> factory, NonNullConsumer<? super G> connectedTextures,
 																						  NonNullBiConsumer<DataGenContext<Block, G>, RegistrateBlockstateProvider> stateProvider) {
 		name += "_pane";
 		ItemBuilder<BlockItem, BlockBuilder<G, GTRegistrate>> itemBuilder = REGISTRATE.block(name, factory)
 			.onRegister(connectedTextures)
-			.addLayer(renderType)
 			.initialProperties(() -> Blocks.GLASS_PANE)
 			.properties(p -> p.mapColor(parent.get().defaultMapColor()))
 			.blockstate(stateProvider)

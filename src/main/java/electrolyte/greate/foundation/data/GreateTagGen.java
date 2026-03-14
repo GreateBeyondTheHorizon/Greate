@@ -19,7 +19,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class GreateTagGen {
 
-    private static final TagKey<Item> HIDE_FROM_RECIPE_VIEWERS = ForgeRegistries.ITEMS.tags().createTagKey(new ResourceLocation("c", "hidden_from_recipe_viewers"));
+    private static final TagKey<Item> HIDE_FROM_RECIPE_VIEWERS = ForgeRegistries.ITEMS.tags().createTagKey(ResourceLocation.fromNamespaceAndPath("c", "hidden_from_recipe_viewers"));
 
     public static class GreateBlockTagGen extends BlockTagsProvider {
 

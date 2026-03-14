@@ -72,7 +72,7 @@ public class MixinRecipeManager {
                 String type = recipeJson.get("type").getAsString();
                 if(!type.startsWith(Create.ID) && !type.startsWith(GTCEu.MOD_ID)) continue;
                 if(!CraftingHelper.processConditions(recipeJson, "conditions", this.context)) continue;
-                TieredProcessingRecipeFactory<TieredProcessingRecipe<?>> factory = GreateValues.getFactory(new ResourceLocation(type));
+                TieredProcessingRecipeFactory<TieredProcessingRecipe<?>> factory = GreateValues.getFactory(ResourceLocation.parse(type));
                 if(factory != null) {
                     if(type.startsWith(GTCEu.MOD_ID)) {
                         GTRecipe recipe = GTRecipeSerializer.SERIALIZER.fromJson(resourceLocation, recipeJson);

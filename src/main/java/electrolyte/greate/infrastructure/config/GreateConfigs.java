@@ -52,7 +52,7 @@ public class GreateConfigs {
     }
 
     public static void register(ModLoadingContext context) {
-        if(context.getActiveNamespace().equals(Greate.MOD_ID)) {
+        if(context.getContainer().getNamespace().equals(Greate.MOD_ID)) {
             //CLIENT = register(GClient::new, Type.CLIENT);
             SERVER = register(GServer::new, Type.SERVER);
             for(Entry<Type, ConfigBase> pair : CONFIGS.entrySet()) {

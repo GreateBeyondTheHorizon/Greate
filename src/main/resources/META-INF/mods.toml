@@ -31,7 +31,7 @@ description="Create Gregified"
 [[dependencies.greate]]
     modId="forge"
     mandatory=true
-    versionRange="[47.1.0,)"
+    versionRange="[47.3.10,)"
     ordering="NONE"
     side="BOTH"
 

@@ -35,8 +35,6 @@ import net.minecraft.world.item.CreativeModeTab.Output;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -64,25 +62,24 @@ public class Greate {
                     .build())
                 .register();
 
-    public Greate() {
-        IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+    public Greate(FMLJavaModLoadingContext context) {
         MinecraftForge.EVENT_BUS.register(this);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::gatherData);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onRegister);
+        context.getModEventBus().addListener(this::gatherData);
+        context.getModEventBus().addListener(this::onRegister);
 
         GreateRegistries.REGISTRATE.registerRegistrate();
-        FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(MachineDefinition.class, GreateRegistries::registerMachines);
-        FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(GTRecipeType.class, GreateRegistries::registerRecipeTypes);
+        context.getModEventBus().addGenericListener(MachineDefinition.class, GreateRegistries::registerMachines);
+        context.getModEventBus().addGenericListener(GTRecipeType.class, GreateRegistries::registerRecipeTypes);
 
-        ModRecipeTypes.register(eventBus);
+        ModRecipeTypes.register(context.getModEventBus());
 
-        GreateRegistries.REGISTRATE.addRegisterCallback(ForgeRegistries.BLOCKS.getRegistryKey(), () -> GreateConfigs.register(ModLoadingContext.get()));
+        GreateRegistries.REGISTRATE.addRegisterCallback(ForgeRegistries.BLOCKS.getRegistryKey(), () -> GreateConfigs.register(context));
         ConfigHolder<GreateRecipeConfig> configHolder = Configuration.registerConfig(GreateRecipeConfig.class, ConfigFormats.yaml());
         CONFIG = configHolder.getConfigInstance();
     }
 
     public static ResourceLocation id(String path) {
-        return new ResourceLocation(MOD_ID, FormattingUtil.toLowerCaseUnderscore(path));
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, FormattingUtil.toLowerCaseUnderscore(path));
     }
 
     private void onRegister(RegisterEvent event) {

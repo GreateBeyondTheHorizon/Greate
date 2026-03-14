@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(ChuteBlockEntity.class)
 public abstract class MixinChuteBlockEntity extends SmartBlockEntity implements IHaveGoggleInformation {
 
-    @Shadow ItemStack item;
+    @Shadow(remap = false) ItemStack item;
 
     public MixinChuteBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);

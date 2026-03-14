@@ -336,7 +336,7 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
             if (!(recipeType.getSerializer() instanceof TieredProcessingRecipeSerializer))
                 throw new IllegalStateException("Cannot datagen ProcessingRecipe of type: " + typeId);
 
-            this.id = new ResourceLocation(recipe.getId().getNamespace(),
+            this.id = ResourceLocation.fromNamespaceAndPath(recipe.getId().getNamespace(),
                     typeId.getPath() + "/" + recipe.getId().getPath());
             this.serializer = (TieredProcessingRecipeSerializer<S>) recipe.getSerializer();
         }

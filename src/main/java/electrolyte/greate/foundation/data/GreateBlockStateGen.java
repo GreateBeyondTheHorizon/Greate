@@ -15,8 +15,8 @@ import net.minecraftforge.client.model.generators.loaders.ObjModelBuilder;
 
 public class GreateBlockStateGen {
 
-    public static final ResourceLocation CUTOUT_MIPPED = new ResourceLocation("cutout_mipped");
-    public static final ResourceLocation CUTOUT = new ResourceLocation("cutout");
+    public static final ResourceLocation CUTOUT_MIPPED = ResourceLocation.parse("cutout_mipped");
+    public static final ResourceLocation CUTOUT = ResourceLocation.parse("cutout");
 
     public static <T extends Block> NonNullBiConsumer<DataGenContext<Block, T>, RegistrateBlockstateProvider> tieredMillstoneProvider() {
         return (c, p) -> p.getVariantBuilder(c.getEntry()).forAllStates(state -> ConfiguredModel.builder()

@@ -85,7 +85,7 @@ public class GreateValues {
     @HideFromJS
     public static TieredProcessingRecipeFactory<TieredProcessingRecipe<?>> getFactory(ResourceLocation loc) {
         for(String s : Greate.CONFIG.ignoredRecipeTypes) {
-            if(loc.equals(new ResourceLocation(s))) return null;
+            if(loc.equals(ResourceLocation.parse(s))) return null;
         }
         if(loc.equals(GTRecipeTypes.MACERATOR_RECIPES.registryName) || loc.equals(AllRecipeTypes.MILLING.getId())) return TieredMillingRecipe::new;
         else if(loc.equals(AllRecipeTypes.CRUSHING.getId())) return TieredCrushingRecipe::new;

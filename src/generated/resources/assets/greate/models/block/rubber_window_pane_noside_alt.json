@@ -1,5 +1,6 @@
 {
   "parent": "create:block/connected_glass_pane/noside_alt",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "edge": "gtceu:block/rubber_planks",
     "pane": "greate:block/palettes/rubber_window"

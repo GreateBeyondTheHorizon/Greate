@@ -117,7 +117,7 @@ public enum ModRecipeTypes implements IRecipeTypeInfo {
 	}
 
 	public static final Set<ResourceLocation> RECIPE_DENY_SET =
-		ImmutableSet.of(new ResourceLocation("occultism", "spirit_trade"), new ResourceLocation("occultism", "ritual"));
+		ImmutableSet.of(ResourceLocation.fromNamespaceAndPath("occultism", "spirit_trade"), ResourceLocation.fromNamespaceAndPath("occultism", "ritual"));
 
 	public static boolean shouldIgnoreInAutomation(Recipe<?> recipe) {
 		RecipeSerializer<?> serializer = recipe.getSerializer();

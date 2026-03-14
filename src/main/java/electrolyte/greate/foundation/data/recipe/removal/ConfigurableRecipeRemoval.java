@@ -30,12 +30,12 @@ public class ConfigurableRecipeRemoval {
     public static void disableCompressionRecipes(Consumer<ResourceLocation> recipe) {
         recipe.accept(Create.asResource("crafting/materials/raw_zinc"));
         recipe.accept(Create.asResource("crafting/materials/raw_zinc_block"));
-        recipe.accept(new ResourceLocation("raw_copper"));
-        recipe.accept(new ResourceLocation("raw_copper_block"));
-        recipe.accept(new ResourceLocation("raw_gold"));
-        recipe.accept(new ResourceLocation("raw_gold_block"));
-        recipe.accept(new ResourceLocation("raw_iron"));
-        recipe.accept(new ResourceLocation("raw_iron_block"));
+        recipe.accept(ResourceLocation.parse("raw_copper"));
+        recipe.accept(ResourceLocation.parse("raw_copper_block"));
+        recipe.accept(ResourceLocation.parse("raw_gold"));
+        recipe.accept(ResourceLocation.parse("raw_gold_block"));
+        recipe.accept(ResourceLocation.parse("raw_iron"));
+        recipe.accept(ResourceLocation.parse("raw_iron_block"));
     }
 
     public static void disableGlassRecipes(Consumer<ResourceLocation> recipe) {

@@ -136,7 +136,7 @@ dependencies {
     runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}") { transitive = false }
 
     //compileOnly fg.deobf("dev.emi:emi-forge:${emi_version}+${minecraft_version}:api")
-    //runtimeOnly fg.deobf("dev.emi:emi-forge:${emi_version}+${minecraft_version}")
+    runtimeOnly fg.deobf("dev.emi:emi-forge:${emi_version}+${minecraft_version}")
 
     implementation fg.deobf("dev.architectury:architectury-forge:${architectury_version}")
     implementation fg.deobf("dev.latvian.mods:rhino-forge:${rhino_version}")

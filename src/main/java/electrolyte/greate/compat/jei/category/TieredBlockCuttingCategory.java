@@ -2,8 +2,10 @@ package electrolyte.greate.compat.jei.category;
 
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import com.simibubi.create.foundation.item.ItemHelper;
+import electrolyte.greate.Greate;
 import electrolyte.greate.compat.jei.category.TieredBlockCuttingCategory.TieredCondensedBlockCuttingRecipe;
 import electrolyte.greate.compat.jei.category.animations.TieredAnimatedSaw;
+import electrolyte.greate.mixin.MixinDifferenceIngredientAccessor;
 import electrolyte.greate.registry.Saws;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
@@ -17,7 +19,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.StonecutterRecipe;
-import electrolyte.greate.mixin.MixinDifferenceIngredientAccessor;
 import net.minecraftforge.common.crafting.DifferenceIngredient;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
@@ -119,7 +120,7 @@ public class TieredBlockCuttingCategory extends GreateRecipeCategory<TieredConde
                 idPath = "block_cutting/" + inputId.getNamespace() + "/" + inputId.getPath();
             }
 
-            ResourceLocation recipeId = ResourceLocation.fromNamespaceAndPath("greate", idPath);
+            ResourceLocation recipeId = Greate.id(idPath);
             TieredCondensedBlockCuttingRecipe tcbcr = new TieredCondensedBlockCuttingRecipe(recipeId, ingredient);
             tcbcr.addOutput(getResultItem(recipe));
             condensedRecipes.add(tcbcr);

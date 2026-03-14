@@ -11,10 +11,9 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(CrushingWheelControllerBlockEntity.class)
 public abstract class MixinCrushingWheelControllerBlockEntity {
 
-    @Shadow private void applyRecipe() { throw new IllegalStateException("Mixin did not apply!"); }
+    @Shadow(remap = false) private void applyRecipe() { throw new IllegalStateException("Mixin did not apply!"); }
 
-    @Shadow
-    protected abstract void intakeItem(ItemEntity itemEntity);
+    @Shadow(remap = false) protected abstract void intakeItem(ItemEntity itemEntity);
 
     @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/kinetics/crusher/CrushingWheelControllerBlockEntity;applyRecipe()V"), remap = false)
     private void greate_tick(CrushingWheelControllerBlockEntity cwbe) {

@@ -9,11 +9,9 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 @Mixin(AirCurrent.class)
 public abstract class MixinAirCurrent {
 
-    @Shadow
-    protected abstract int getLimit();
+    @Shadow(remap = false) protected abstract int getLimit();
 
-    @Shadow
-    public boolean pushing;
+    @Shadow(remap = false) public boolean pushing;
 
     @ModifyVariable(method = "rebuild", at = @At(value = "STORE"), remap = false, name = "searchStart")
     private int rebuild(int x) {

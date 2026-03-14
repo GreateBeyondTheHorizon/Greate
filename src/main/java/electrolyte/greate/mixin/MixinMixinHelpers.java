@@ -31,9 +31,7 @@ import java.util.Objects;
 @Mixin(MixinHelpers.class)
 public class MixinMixinHelpers {
 
-    @Shadow
-    @Final
-    private static VanillaBlockLoot BLOCK_LOOT;
+    @Shadow(remap = false) @Final private static VanillaBlockLoot BLOCK_LOOT;
 
     @Inject(method = "generateGTDynamicLoot", at = @At("RETURN"), remap = false)
     private static void greate_generateGTDynamicLoot(Map<ResourceLocation, LootTable> lootTables, CallbackInfo ci) {
@@ -71,7 +69,7 @@ public class MixinMixinHelpers {
     @Unique
     private static <B extends Block> void greate_generateCustomMaterialBlockLootTables(Map<ResourceLocation, LootTable> lootTables, TagPrefix tagPrefix, Map<Material, BlockEntry<B>> map, @Nullable Block firstEntry) {
         map.forEach((material, blockEntry) -> {
-            ResourceLocation lootTableId = new ResourceLocation(blockEntry.getId().getNamespace(), "blocks/" + blockEntry.getId().getPath());
+            ResourceLocation lootTableId = ResourceLocation.fromNamespaceAndPath(blockEntry.getId().getNamespace(), "blocks/" + blockEntry.getId().getPath());
             ((BlockBehaviourAccessor) blockEntry.get()).setDrops(lootTableId);
             LootTable.Builder builder;
             if(firstEntry != null) {

@@ -88,7 +88,7 @@ public record CogwheelModel(Block cogweelBlock) {
                 Map.of("casing", Create.asResource("block/" + encasingSuffix + "_casing"),
                         "particle", Create.asResource("block/" + encasingSuffix + "_casing"),
                         "4", Create.asResource("block/" + gearbox),
-                        "1", new ResourceLocation("block/stripped_" + wood + "_log_top"),
+                        "1", ResourceLocation.parse("block/stripped_" + wood + "_log_top"),
                         "side", Create.asResource("block/" + encasingSuffix + encasedSuffix))));
         MODEL_LOCATIONS.add(modelId.withSuffix(encasingSuffix + "_encased_" + cogwheelSuffix));
 
@@ -97,7 +97,7 @@ public record CogwheelModel(Block cogweelBlock) {
                 Map.of("casing", Create.asResource("block/" + encasingSuffix + "_casing"),
                         "particle", Create.asResource("block/" + encasingSuffix + "_casing"),
                         "4", Create.asResource("block/" + gearbox),
-                        "1", new ResourceLocation("block/stripped_" + wood + "_log_top"),
+                        "1", ResourceLocation.parse("block/stripped_" + wood + "_log_top"),
                         "side", Create.asResource("block/" + encasingSuffix + encasedSuffix))));
         MODEL_LOCATIONS.add(modelId.withSuffix(encasingSuffix + "_encased_" + cogwheelSuffix + "_top"));
 
@@ -106,7 +106,7 @@ public record CogwheelModel(Block cogweelBlock) {
                 Map.of("casing", Create.asResource("block/" + encasingSuffix + "_casing"),
                         "particle", Create.asResource("block/" + encasingSuffix + "_casing"),
                         "4", Create.asResource("block/" + gearbox),
-                        "1", new ResourceLocation("block/stripped_" + wood + "_log_top"),
+                        "1", ResourceLocation.parse("block/stripped_" + wood + "_log_top"),
                         "side", Create.asResource("block/" + encasingSuffix + encasedSuffix))));
         MODEL_LOCATIONS.add(modelId.withSuffix(encasingSuffix + "_encased_" + cogwheelSuffix + "_bottom"));
 
@@ -115,7 +115,7 @@ public record CogwheelModel(Block cogweelBlock) {
                 Map.of("casing", Create.asResource("block/" + encasingSuffix + "_casing"),
                         "particle", Create.asResource("block/" + encasingSuffix + "_casing"),
                         "4", Create.asResource("block/" + gearbox),
-                        "1", new ResourceLocation("block/stripped_" + wood + "_log_top"),
+                        "1", ResourceLocation.parse("block/stripped_" + wood + "_log_top"),
                         "side", Create.asResource("block/" + encasingSuffix + encasedSuffix))));
         MODEL_LOCATIONS.add(modelId.withSuffix(encasingSuffix + "_encased_" + cogwheelSuffix + "_top_bottom"));
 

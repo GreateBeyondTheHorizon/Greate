@@ -22,7 +22,7 @@ public record BeltConnectorModel(TieredBeltConnectorItem beltConnectorItem) {
     public static void reinitModels() {
         for(BeltConnectorModel model : MODELS) {
             ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(model.beltConnectorItem);
-            GTDynamicResourcePack.addItemModel(itemId, new ExtendedDelegatedModel(new ResourceLocation("item/generated"),
+            GTDynamicResourcePack.addItemModel(itemId, new ExtendedDelegatedModel(ResourceLocation.parse("item/generated"),
                     Map.of("layer0", Greate.id("item/" + itemId.getPath()))));
         }
     }
