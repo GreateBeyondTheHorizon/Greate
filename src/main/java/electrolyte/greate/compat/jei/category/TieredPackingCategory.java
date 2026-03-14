@@ -12,7 +12,9 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -80,5 +82,18 @@ public class TieredPackingCategory extends TieredBasinCategory {
             heater.withHeat(requiredHeat.visualizeAsBlazeBurner()).draw(graphics, getBackground().getWidth() / 2 + 3, 55);
         }
         new TieredAnimatedMechanicalPress(MechanicalPresses.MECHANICAL_PRESSES[recipe.getRecipeTier()].get(), true).draw(graphics, getBackground().getWidth() / 2 + 3, 34);
+    }
+
+    @Override
+    public @Nullable ResourceLocation getRegistryName(TieredBasinRecipe recipe) {
+        ResourceLocation id = super.getRegistryName(recipe);
+        if(id != null) {
+            if(id.getPath().contains("shaped")) {
+                return ResourceLocation.fromNamespaceAndPath(id.getNamespace(), id.getPath().replace("shaped", "automatic_packing"));
+            } else {
+                return ResourceLocation.fromNamespaceAndPath(id.getNamespace(), "automatic_packing/" + id.getPath());
+            }
+        }
+        return null;
     }
 }

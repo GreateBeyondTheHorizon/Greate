@@ -53,8 +53,7 @@ public class TieredCrushingCategory extends GreateRecipeCategory<TieredAbstractC
     public ResourceLocation getRegistryName(TieredAbstractCrushingRecipe recipe) {
         ResourceLocation id = super.getRegistryName(recipe);
         if (id != null && recipe instanceof TieredMillingRecipe) {
-            return ResourceLocation.fromNamespaceAndPath(id.getNamespace(),
-                    "crushing" + id.getPath().substring("milling".length()));
+            return ResourceLocation.fromNamespaceAndPath(id.getNamespace(), id.getPath().replace("milling", "crushing"));
         }
         return id;
     }
