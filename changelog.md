@@ -1,3 +1,1 @@
-- Make certain recipe IDs unique to stop EMI log spam
-- Collapse certain BlockCutting recipes
-- Bump min forge version to 47.3.10
+- Fix fans voiding items on belts
