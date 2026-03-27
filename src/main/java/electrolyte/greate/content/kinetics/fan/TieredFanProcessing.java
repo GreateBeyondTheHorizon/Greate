@@ -128,7 +128,7 @@ public class TieredFanProcessing {
         }
         if(type instanceof TieredSplashingType) {
             transported.stack = transported.stack.copyWithCount(transported.stack.getCount() - stacks.get(0).getCount());
-            return TransportedResult.convertToAndLeaveHeld(transportedItemStacks, transported);
+            return TransportedResult.convertToAndLeaveHeld(transportedItemStacks, transported.copy());
         }
         return TransportedResult.convertTo(transportedItemStacks);
     }
