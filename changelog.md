@@ -1,1 +1,2 @@
-- Fix fans voiding items on belts
+- Fix crushing wheels & millstones always processing one item at a time regardless of what the recipe input count is
+- Crushing wheels will now always output items that either do not have a recipe, or any remainder items in an input stack (eg. odd # of items are put in, but recipe requires an even # of items)
