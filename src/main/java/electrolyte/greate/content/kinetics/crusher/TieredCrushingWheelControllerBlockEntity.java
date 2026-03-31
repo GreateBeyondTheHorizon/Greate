@@ -43,26 +43,31 @@ public class TieredCrushingWheelControllerBlockEntity extends CrushingWheelContr
         return TieredRecipeFinder.findRecipe(CRUSHING_RECIPES_CACHE_KEY, level, wrapper,
                 RecipeConditions.isOfType(ModRecipeTypes.CRUSHING.getType(), ModRecipeTypes.MILLING.getType())
                         .and(TieredRecipeConditions.firstIngredientMatches(wrapper.getItem(0))),
-                TieredRecipeConditions.isEqualOrAboveTier(tier));
+                TieredRecipeConditions.isEqualOrAboveTier(tier)
+                        .and(TieredRecipeConditions.firstIngredientCountMatches(wrapper.getItem(0))));
     }
 
     public void applyValidRecipe() {
         Optional<Recipe<?>> recipe = findValidRecipe();
         List<ItemStack> list = new ArrayList<>();
         if(recipe.isPresent()) {
-            int rolls = inventory.getStackInSlot(0).getCount();
-            inventory.clear();
+            int itemsPerRecipe = recipe.get().getIngredients().get(0).getItems()[0].getCount();
+            int rolls = inventory.getStackInSlot(0).getCount() / itemsPerRecipe;
+            ItemStack remainderStack = inventory.getStackInSlot(0).copyWithCount(inventory.getStackInSlot(0).getCount() - (itemsPerRecipe * rolls));
+            inventory.setStackInSlot(0, ItemStack.EMPTY);
             for(int roll = 0; roll < rolls; roll++) {
                 List<ItemStack> rolledResults = TieredRecipeHelper.INSTANCE.getItemResults(recipe.get(), tier);
                 for(ItemStack stack : rolledResults) {
                     ItemHelper.addToList(stack, list);
                 }
             }
+            if(!remainderStack.isEmpty()) ItemHelper.addToList(remainderStack, list);
             for(int slot = 0; slot < list.size() && slot + 1 < inventory.getSlots(); slot++) {
                 inventory.setStackInSlot(slot + 1, list.get(slot));
             }
         } else {
-            inventory.clear();
+            inventory.setStackInSlot(1, inventory.getStackInSlot(0));
+            inventory.setStackInSlot(0, ItemStack.EMPTY);
         }
     }
 

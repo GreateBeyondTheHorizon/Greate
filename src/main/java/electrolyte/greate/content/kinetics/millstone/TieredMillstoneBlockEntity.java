@@ -63,7 +63,9 @@ public class TieredMillstoneBlockEntity extends MillstoneBlockEntity implements 
         }
 
         ItemStack stackInSlot = inputInv.getStackInSlot(0);
-        stackInSlot.shrink(1);
+        int itemsPerRecipe = lastRecipe.getIngredients().get(0).getItems()[0].getCount();
+        if(stackInSlot.getCount() < itemsPerRecipe) return;
+        stackInSlot.shrink(itemsPerRecipe);
         inputInv.setStackInSlot(0, stackInSlot);
         List<ItemStack> results = TieredRecipeHelper.INSTANCE.getItemResults(lastRecipe, tier);
         results.forEach(stack -> ItemHandlerHelper.insertItemStacked(outputInv, stack, false));
@@ -90,7 +92,8 @@ public class TieredMillstoneBlockEntity extends MillstoneBlockEntity implements 
         return TieredRecipeFinder.findRecipe(MILLING_RECIPE_CACHE_KEY, level, wrapper,
                 RecipeConditions.isOfType(ModRecipeTypes.MILLING.getType())
                         .and(TieredRecipeConditions.firstIngredientMatches(wrapper.getItem(0))),
-                TieredRecipeConditions.isEqualOrAboveTier(tier));
+                TieredRecipeConditions.isEqualOrAboveTier(tier)
+                        .and(TieredRecipeConditions.firstIngredientCountMatches(wrapper.getItem(0))));
     }
 
     @Override
