@@ -3,7 +3,7 @@ package electrolyte.greate;
 import com.gregtechceu.gtceu.api.addon.GTAddon;
 import com.gregtechceu.gtceu.api.addon.IGTAddon;
 import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
-import electrolyte.greate.content.gtceu.machines.GreateRecipeTypes;
+import electrolyte.greate.compat.gtceu.machine.GreateRecipeTypes;
 import electrolyte.greate.foundation.data.recipe.GreateCraftingComponents;
 import electrolyte.greate.foundation.data.recipe.GreateRecipes;
 import electrolyte.greate.registry.GreateTagPrefixes;

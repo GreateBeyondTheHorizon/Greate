@@ -1,8 +1,8 @@
 package electrolyte.greate.registry;
 
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
-import electrolyte.greate.content.gtceu.material.GreateMaterialFlags;
-import electrolyte.greate.content.gtceu.material.GreateMaterialIconTypes;
+import electrolyte.greate.compat.gtceu.material.GreateMaterialFlags;
+import electrolyte.greate.compat.gtceu.material.GreateMaterialIconTypes;
 
 import static com.gregtechceu.gtceu.api.GTValues.M;
 

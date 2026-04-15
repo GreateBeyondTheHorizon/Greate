@@ -15,9 +15,13 @@ import net.minecraftforge.common.ForgeConfigSpec.Builder;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.DoubleSupplier;
+
+import static com.gregtechceu.gtceu.api.GTValues.VN;
+import static electrolyte.greate.GreateValues.TM;
 
 public class GStress extends ConfigBase {
 
@@ -31,7 +35,11 @@ public class GStress extends ConfigBase {
     public void registerAll(Builder builder) {
         builder.comment("." + Comments.su + Comments.impact).push("impact");
         DEFAULT_IMPACTS.forEach((id, value) -> {
-            for(Material material : GreateValues.TM) {
+            //TODO:fix
+            if(Arrays.stream(VN).anyMatch(s -> s.toLowerCase().equals(id.getPath().substring(0, id.getPath().indexOf("_"))))) {
+                this.impacts.put(id, builder.define(id.getPath(), value));
+            }
+            for(Material material : TM) {
                 if(id.getPath().contains(material.getName()) && DEFAULT_IMPACTS.containsKey(id)) {
                     builder.push(material.getName());
                     this.impacts.put(id, builder.define(id.getPath(), value));
@@ -42,7 +50,7 @@ public class GStress extends ConfigBase {
         builder.pop();
         builder.comment("." + Comments.su + Comments.capacity).push("capacity");
         DEFAULT_CAPACITIES.forEach((id, value) -> {
-            for(Material material : GreateValues.TM) {
+            for(Material material : TM) {
                 if(id.getPath().contains(material.getName()) && DEFAULT_CAPACITIES.containsKey(id)) {
                     builder.push(material.getName());
                     this.capacities.put(id, builder.define(id.getPath(), value));

@@ -6,8 +6,8 @@ import com.simibubi.create.content.kinetics.deployer.DeployerApplicationRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
 import electrolyte.greate.Greate;
-import electrolyte.greate.content.gtceu.material.CogwheelProperty;
-import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
+import electrolyte.greate.compat.gtceu.material.CogwheelProperty;
+import electrolyte.greate.compat.gtceu.material.GreatePropertyKeys;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 

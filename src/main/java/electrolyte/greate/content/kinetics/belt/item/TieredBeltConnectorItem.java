@@ -10,7 +10,7 @@ import com.simibubi.create.content.kinetics.simpleRelays.AbstractSimpleShaftBloc
 import com.simibubi.create.foundation.advancement.AllAdvancements;
 import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
 import com.tterrag.registrate.util.entry.BlockEntry;
-import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
+import electrolyte.greate.compat.gtceu.material.GreatePropertyKeys;
 import electrolyte.greate.content.kinetics.belt.ITieredBelt;
 import electrolyte.greate.content.kinetics.belt.TieredBeltBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredBracketedKineticBlockEntity;

@@ -8,7 +8,7 @@ import com.simibubi.create.content.kinetics.belt.BeltBlock;
 import com.simibubi.create.content.kinetics.belt.BeltPart;
 import com.simibubi.create.content.kinetics.belt.BeltSlope;
 import electrolyte.greate.Greate;
-import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
+import electrolyte.greate.compat.gtceu.material.GreatePropertyKeys;
 import electrolyte.greate.content.kinetics.belt.TieredBeltBlock;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.client.renderer.RenderType;

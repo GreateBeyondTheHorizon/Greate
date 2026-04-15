@@ -9,7 +9,7 @@ import com.simibubi.create.content.kinetics.belt.BeltPart;
 import com.simibubi.create.content.schematics.requirement.ItemRequirement;
 import com.simibubi.create.content.schematics.requirement.ItemRequirement.ItemUseType;
 import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
-import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
+import electrolyte.greate.compat.gtceu.material.GreatePropertyKeys;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.registry.GreateSpriteShifts;
 import electrolyte.greate.registry.ModBlockEntityTypes;

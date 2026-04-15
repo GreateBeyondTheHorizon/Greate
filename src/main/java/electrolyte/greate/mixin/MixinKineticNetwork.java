@@ -1,9 +1,16 @@
 package electrolyte.greate.mixin;
 
+import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.simibubi.create.content.kinetics.KineticNetwork;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
+import electrolyte.greate.compat.gtceu.machine.kinetic.trait.KineticMachineTrait;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -79,5 +86,15 @@ public abstract class MixinKineticNetwork {
     private float greate_calculateCapacity(float original) {
         greate_updateMaxCapacity();
         return Math.min(original, greate_currentMaxCapacity);
+    }
+
+    @WrapOperation(method = "calculateStress", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;"), remap = false)
+    private BlockEntity greate_calculateStress(Level level, BlockPos pPos, Operation<BlockEntity> original) {
+        if(level.getBlockEntity(pPos) instanceof MetaMachine mm) {
+            if(mm.getTraitHolder().getTraitOptional(KineticMachineTrait.TYPE).isPresent()) {
+                return mm.getTraitHolder().getTrait(KineticMachineTrait.TYPE).getKineticBlockEntity();
+            }
+        }
+        return original.call(level, pPos);
     }
 }

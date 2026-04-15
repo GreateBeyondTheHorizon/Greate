@@ -5,10 +5,10 @@ import com.gregtechceu.gtceu.api.data.chemical.material.stack.MaterialStack;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import electrolyte.greate.Greate;
-import electrolyte.greate.content.gtceu.material.BeltProperty;
-import electrolyte.greate.content.gtceu.material.CogwheelProperty;
-import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
-import electrolyte.greate.content.gtceu.material.KineticProperty;
+import electrolyte.greate.compat.gtceu.material.BeltProperty;
+import electrolyte.greate.compat.gtceu.material.CogwheelProperty;
+import electrolyte.greate.compat.gtceu.material.GreatePropertyKeys;
+import electrolyte.greate.compat.gtceu.material.KineticProperty;
 
 import java.util.List;
 
@@ -19,8 +19,8 @@ import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.*;
 import static com.gregtechceu.gtceu.common.data.GTElements.Ma;
 import static com.gregtechceu.gtceu.common.data.GTElements.Sp;
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
-import static electrolyte.greate.content.gtceu.material.GreateMaterialFlags.GENERATE_ALLOY;
-import static electrolyte.greate.content.gtceu.material.GreateMaterialFlags.GENERATE_WHISK;
+import static electrolyte.greate.compat.gtceu.material.GreateMaterialFlags.GENERATE_ALLOY;
+import static electrolyte.greate.compat.gtceu.material.GreateMaterialFlags.GENERATE_WHISK;
 import static electrolyte.greate.registry.GreateTagPrefixes.alloy;
 
 public class GreateMaterials {

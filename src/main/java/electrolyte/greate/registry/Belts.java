@@ -15,7 +15,7 @@ import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import electrolyte.greate.Greate;
 import electrolyte.greate.GreateRegistries;
-import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
+import electrolyte.greate.compat.gtceu.material.GreatePropertyKeys;
 import electrolyte.greate.content.kinetics.belt.TieredBeltBlock;
 import electrolyte.greate.content.kinetics.belt.item.TieredBeltConnectorItem;
 import electrolyte.greate.foundation.client.models.BeltConnectorModel;

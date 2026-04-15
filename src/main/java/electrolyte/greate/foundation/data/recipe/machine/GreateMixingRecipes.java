@@ -2,7 +2,7 @@ package electrolyte.greate.foundation.data.recipe.machine;
 
 import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
-import electrolyte.greate.content.gtceu.material.GreateMaterialFlags;
+import electrolyte.greate.compat.gtceu.material.GreateMaterialFlags;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.world.level.block.Blocks;
 

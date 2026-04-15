@@ -9,7 +9,7 @@ import com.simibubi.create.content.kinetics.belt.BeltSlicer.Feedback;
 import com.simibubi.create.content.kinetics.belt.transport.BeltInventory;
 import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
 import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
-import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
+import electrolyte.greate.compat.gtceu.material.GreatePropertyKeys;
 import electrolyte.greate.content.kinetics.belt.item.TieredBeltConnectorItem;
 import electrolyte.greate.mixin.MixinBeltBlockEntityAccessor;
 import net.createmod.catnip.math.VecHelper;

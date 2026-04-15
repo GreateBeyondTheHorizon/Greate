@@ -4,7 +4,7 @@ import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.simibubi.create.foundation.utility.CreateLang;
 import electrolyte.greate.Greate;
 import electrolyte.greate.GreateValues;
-import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
+import electrolyte.greate.compat.gtceu.material.GreatePropertyKeys;
 import net.createmod.catnip.lang.Lang;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;

@@ -2,15 +2,19 @@ package electrolyte.greate;
 
 import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.GTCEuAPI.RegisterEvent;
+import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
 import com.gregtechceu.gtceu.api.data.chemical.material.event.MaterialEvent;
 import com.gregtechceu.gtceu.api.data.chemical.material.event.MaterialRegistryEvent;
 import com.gregtechceu.gtceu.api.data.chemical.material.event.PostMaterialEvent;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
+import com.gregtechceu.gtceu.api.registry.GTRegistries;
 import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.item.TooltipModifier;
-import electrolyte.greate.content.gtceu.machines.GreateMultiblockMachines;
-import electrolyte.greate.content.gtceu.machines.GreateRecipeTypes;
+import electrolyte.greate.compat.gtceu.common.data.machines.GreateMachines;
+import electrolyte.greate.compat.gtceu.machine.GreateMultiblockMachines;
+import electrolyte.greate.compat.gtceu.machine.GreateRecipeTypes;
+import electrolyte.greate.compat.gtceu.recipe.StressRecipeCapability;
 import electrolyte.greate.foundation.data.GreateRegistrate;
 import electrolyte.greate.foundation.item.GreateKineticStats;
 import electrolyte.greate.registry.*;
@@ -56,10 +60,16 @@ public final class GreateRegistries {
 	@SubscribeEvent
 	public static void registerMachines(RegisterEvent<ResourceLocation, MachineDefinition> event) {
 		GreateMultiblockMachines.register();
+		GreateMachines.register();
 	}
 
 	@SubscribeEvent
 	public static void registerRecipeTypes(RegisterEvent<ResourceLocation, GTRecipeType> event) {
 		GreateRecipeTypes.register();
+	}
+
+	@SubscribeEvent
+	public static void registerRecipeCapabilities(RegisterEvent<ResourceLocation, RecipeCapability<?>> event) {
+		GTRegistries.RECIPE_CAPABILITIES.register(StressRecipeCapability.CAP.name, StressRecipeCapability.CAP);
 	}
 }

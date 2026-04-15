@@ -8,7 +8,7 @@ import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.simibubi.create.AllRecipeTypes;
 import dev.latvian.mods.rhino.util.HideFromJS;
-import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
+import electrolyte.greate.compat.gtceu.material.GreatePropertyKeys;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingRecipe;
 import electrolyte.greate.content.kinetics.fan.processing.TieredHauntingRecipe;
 import electrolyte.greate.content.kinetics.fan.processing.TieredSplashingRecipe;
@@ -32,7 +32,23 @@ public class GreateValues {
     /**
      * The short names for the stress tiers
      */
-    public static final String[] SN = new String[]{"ULS", "LS", "MS", "HS", "ES", "IS", "LuS", "ZPMS", "US", "UHS"};
+    public static final String[] SN = new String[]{
+            "ULS",
+            "LS",
+            "MS",
+            "HS",
+            "ES",
+            "IS",
+            "LuS",
+            "ZPM",
+            "US",
+            "UHS",
+            "UES",
+            "UIS",
+            "UXS",
+            "OpS",
+            "MAX"
+    };
 
     /**
      * The short names for the stress tiers, formatted for text
@@ -45,9 +61,14 @@ public class GreateValues {
             DARK_PURPLE + "ES",
             BLUE + "IS",
             LIGHT_PURPLE + "LuS",
-            RED + "ZPMS",
+            RED + "ZPM",
             DARK_AQUA + "US",
             DARK_RED + "UHS",
+            GREEN + "UES",
+            DARK_GREEN + "UIS",
+            YELLOW + "UXS",
+            BLUE.toString() + BOLD + "OpS",
+            RED.toString() + BOLD + "MAX"
     };
 
     /**

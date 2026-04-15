@@ -117,6 +117,24 @@ repositories {
             includeGroup 'ru.zznty'
         }
     }
+
+    //todo: remove
+    maven {
+        name "Modmaven"
+        url "https://modmaven.dev/"
+        // For Gradle 5.1 and above, limit it to just AE2
+        content {
+            includeGroup 'appeng'
+        }
+    }
+
+    maven {
+    name = 'GuideME Snapshots'
+    url = 'https://central.sonatype.com/repository/maven-snapshots/'
+    content {
+        includeModule('org.appliedenergistics', 'guideme')
+    }
+}
 }
 
 dependencies {
@@ -154,6 +172,13 @@ dependencies {
 
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:${mixin_extras_version}"))
     implementation fg.deobf("io.github.llamalad7:mixinextras-forge:${mixin_extras_version}")
+
+    //TODO: remove when gt fixes
+    runtimeOnly fg.deobf("appeng:appliedenergistics2-forge:15.4.10")
+    runtimeOnly fg.deobf("org.appliedenergistics:guideme:20.1.14")
+
+    compileOnly 'org.projectlombok:lombok:1.18.36'
+    annotationProcessor 'org.projectlombok:lombok:1.18.36'
 }
 
 mixin {

@@ -1,6 +1,6 @@
 package electrolyte.greate.content.kinetics.belt.item;
 
-import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
+import electrolyte.greate.compat.gtceu.material.GreatePropertyKeys;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
