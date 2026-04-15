@@ -5,6 +5,7 @@ import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.capability.recipe.IRecipeHandler;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
+import com.gregtechceu.gtceu.api.machine.feature.IOverclockMachine;
 import com.gregtechceu.gtceu.api.machine.feature.IRecipeLogicMachine;
 import com.gregtechceu.gtceu.api.machine.trait.*;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
@@ -23,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-public class TieredKineticWorkableMachine extends TieredKineticMachine implements IRecipeLogicMachine {
+public class TieredKineticWorkableMachine extends TieredKineticMachine implements IRecipeLogicMachine, IOverclockMachine {
 
     @Getter
     @SaveField
@@ -35,6 +36,10 @@ public class TieredKineticWorkableMachine extends TieredKineticMachine implement
     @Setter
     @SaveField
     public int activeRecipeType;
+
+    @Getter
+    @SaveField
+    protected int overclockTier;
 
     @Getter
     protected final CleanroomReceiverTrait cleanroomReceiverTrait;
@@ -53,6 +58,7 @@ public class TieredKineticWorkableMachine extends TieredKineticMachine implement
         super(info, tier, io);
         this.recipeTypes = this.getDefinition().getRecipeTypes();
         this.activeRecipeType = 0;
+        this.overclockTier = getMaxOverclockTier();
         this.cleanroomReceiverTrait = attachTrait(new CleanroomReceiverTrait());
         this.recipeLogic = attachTrait(recipeLogic);
         this.capabilitiesProxy = new EnumMap<>(IO.class);
@@ -114,5 +120,23 @@ public class TieredKineticWorkableMachine extends TieredKineticMachine implement
         super.onMachineDestroyed();
         importItems.dropInventoryInWorld();
         exportItems.dropInventoryInWorld();
+    }
+
+    @Override
+    public void setOverclockTier(int tier) {
+        if(!isRemote() && tier >= getMinOverclockTier() && tier <= getMaxOverclockTier()) {
+            this.overclockTier = tier;
+            this.recipeLogic.markLastRecipeDirty();
+        }
+    }
+
+    @Override
+    public int getMaxOverclockTier() {
+        return getTier();
+    }
+
+    @Override
+    public int getMinOverclockTier() {
+        return 0;
     }
 }

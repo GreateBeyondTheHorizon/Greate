@@ -1,3 +1,6 @@
 {
-  "parent": "greate:block/machine/hv_millstone"
+  "parent": "create:block/millstone/item",
+  "textures": {
+    "5": "greate:block/stainless_steel/millstone"
+  }
 }

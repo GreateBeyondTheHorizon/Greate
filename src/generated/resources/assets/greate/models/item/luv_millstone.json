@@ -1,3 +1,6 @@
 {
-  "parent": "greate:block/machine/luv_millstone"
+  "parent": "create:block/millstone/item",
+  "textures": {
+    "5": "greate:block/rhodium_plated_palladium/millstone"
+  }
 }

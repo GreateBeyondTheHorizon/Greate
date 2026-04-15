@@ -50,6 +50,7 @@ public class GreateMachines {
                             b.transform(GStress.setImpact(0.5 * (tier + 1)))) //TODO: change
                     .model(GreateMachineModels.createMillstoneModel()
                             .andThen(b -> b.addDynamicRenderer(GreateDynamicRenderHelper::createMillstoneCogRender)))
+                    .itemBuilder(b -> b.model(GreateMachineModels.tieredMillstoneItemModel(tier)))
                     .tier(tier)
                     .recipeType(recipeType)
                     .hasBER(true);

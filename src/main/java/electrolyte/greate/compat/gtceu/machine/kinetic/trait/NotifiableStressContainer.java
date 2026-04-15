@@ -12,6 +12,8 @@ import electrolyte.greate.compat.gtceu.machine.kinetic.ITieredKineticMachine;
 import electrolyte.greate.compat.gtceu.machine.kinetic.TieredKineticMachine;
 import electrolyte.greate.compat.gtceu.machine.kinetic.TieredKineticWorkableMachine;
 import electrolyte.greate.compat.gtceu.recipe.StressRecipeCapability;
+import electrolyte.greate.mixin.MixinKineticBlockEntity;
+import electrolyte.greate.mixin.MixinKineticBlockEntityAccessor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
@@ -42,8 +44,8 @@ public class NotifiableStressContainer extends NotifiableRecipeHandlerTrait<Floa
         super.onMachineLoad();
         if(getMachine() instanceof TieredKineticMachine tkm) {
             tkm.subscribeServerTick(() -> {
-                float speed = tkm.getTraitHolder().getTrait(KineticMachineTrait.TYPE).getKineticBlockEntity().getSpeed();
-                if(speed != lastOutputStress) lastOutputStress = speed;
+                float impact = ((MixinKineticBlockEntityAccessor) tkm.getTraitHolder().getTrait(KineticMachineTrait.TYPE).getKineticBlockEntity()).getStress();
+                if(impact != lastOutputStress) lastOutputStress = impact;
             });
         }
     }

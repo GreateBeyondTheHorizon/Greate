@@ -1,0 +1,6 @@
+{
+  "parent": "create:block/millstone/item",
+  "textures": {
+    "5": "greate:block/neutronium/millstone"
+  }
+}
