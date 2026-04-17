@@ -76,7 +76,7 @@ public class TieredMillstoneMachineBlock extends TieredKineticMachineBlock imple
 
     @Override
     public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if(!player.getItemInHand(hand).isEmpty()) return InteractionResult.PASS;
+        if(!player.getItemInHand(hand).isEmpty()) return super.use(state, world, pos, player, hand, hit);
         if(world.isClientSide) return InteractionResult.SUCCESS;
 
         withBlockEntityDo(world, pos, millstone -> {
@@ -97,7 +97,6 @@ public class TieredMillstoneMachineBlock extends TieredKineticMachineBlock imple
                 }
             }
             millstone.setChanged();
-            //millstone.getKineticBlockEntity().sendData();
         });
         return InteractionResult.SUCCESS;
     }
