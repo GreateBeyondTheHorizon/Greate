@@ -55,10 +55,20 @@ public class NotifiableStressContainer extends NotifiableRecipeHandlerTrait<Floa
         float remaining = left.stream().reduce(0F, Float::sum);
         if(io == IO.IN) {
             float extracted = Math.min(remaining, lastOutputStress);
+            if(getMachine() instanceof TieredKineticMachine tkm) {
+                if(tkm.getTraitHolder().getTrait(KineticMachineTrait.TYPE).getKineticBlockEntity().getSpeed() == 0) {
+                    extracted = 0;
+                }
+            }
             if(!simulate) updateStress(extracted);
             remaining -= extracted;
         } else if(io == IO.OUT) {
             float inserted = Math.min(remaining, lastOutputStress);
+            if(getMachine() instanceof TieredKineticMachine tkm) {
+                if(tkm.getTraitHolder().getTrait(KineticMachineTrait.TYPE).getKineticBlockEntity().getSpeed() == 0) {
+                    inserted = 0;
+                }
+            }
             if(!simulate) updateCapacity(inserted);
             remaining -= inserted;
         }
