@@ -2,30 +2,48 @@ package electrolyte.greate.compat.xei.widgets;
 
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
+import com.gregtechceu.gtceu.api.gui.GuiTextures;
+import com.gregtechceu.gtceu.api.gui.widget.PredicatedButtonWidget;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
+import com.gregtechceu.gtceu.api.recipe.RecipeCondition;
 import com.gregtechceu.gtceu.api.recipe.RecipeHelper;
 import com.gregtechceu.gtceu.api.recipe.content.Content;
+import com.gregtechceu.gtceu.common.recipe.condition.DimensionCondition;
 import com.gregtechceu.gtceu.utils.FormattingUtil;
+import com.lowdragmc.lowdraglib.gui.texture.GuiTextureGroup;
+import com.lowdragmc.lowdraglib.gui.texture.IGuiTexture;
+import com.lowdragmc.lowdraglib.gui.texture.TextTexture;
 import com.lowdragmc.lowdraglib.gui.widget.LabelWidget;
 import com.lowdragmc.lowdraglib.gui.widget.SlotWidget;
 import com.lowdragmc.lowdraglib.gui.widget.WidgetGroup;
 import com.lowdragmc.lowdraglib.jei.IngredientIO;
 import com.lowdragmc.lowdraglib.misc.ItemStackTransfer;
+import net.minecraft.client.Minecraft;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.items.ItemStackHandler;
 import org.apache.commons.lang3.mutable.MutableInt;
 
+import java.util.function.Function;
+
+import static com.gregtechceu.gtceu.integration.xei.widgets.GTRecipeWidget.LINE_HEIGHT;
+
 public class MillstoneWidget extends WidgetGroup {
 
+    private GTRecipe recipe;
+
     public MillstoneWidget(GTRecipe recipe) {
-        super(0, 0, 176, 80);
+        super(0, 0, 176, 100);
+        this.recipe = recipe;
         setClientSideWidget();
-        setRecipe(recipe);
+        setRecipe();
+        addCopyIdButton();
     }
 
-    public void setRecipe(GTRecipe recipe) {
+    public void setRecipe() {
         WidgetGroup inputGroup = new WidgetGroup();
         recipe.getInputContents(ItemRecipeCapability.CAP).forEach(content -> {
             if(content.getContent() instanceof ItemStack stack) {
@@ -43,6 +61,7 @@ public class MillstoneWidget extends WidgetGroup {
             }
         });
 
+        //todo: fix output placement
         int i = 0;
         WidgetGroup outputGroup = new WidgetGroup();
         ItemStackHandler handler = new ItemStackHandler(recipe.getOutputContents(ItemRecipeCapability.CAP).size());
@@ -63,7 +82,7 @@ public class MillstoneWidget extends WidgetGroup {
         }
         this.addWidgets(inputGroup);
         this.addWidget(outputGroup);
-        this.addWidget(new LabelWidget(3, 60, Component.translatable("gtceu.recipe.duration", FormattingUtil.formatNumbers(recipe.duration / 20f))));
+        this.addWidget(new LabelWidget(1, 60, Component.translatable("gtceu.recipe.duration", FormattingUtil.formatNumbers(recipe.duration / 20f))));
 
         WidgetGroup capGroup = new WidgetGroup();
         int yOffset = 10 + capGroup.getSize().height;
@@ -81,5 +100,30 @@ public class MillstoneWidget extends WidgetGroup {
             capability.getKey().addXEIInfo(capGroup, 2, recipe, capability.getValue(), true, false, yOff);
         }
         this.addWidgets(capGroup);
+
+        yOffset += LINE_HEIGHT;
+        int xOffset = 1;
+        for (RecipeCondition condition : recipe.conditions) {
+            if (condition.getTooltips() == null) continue;
+            if (condition instanceof DimensionCondition dimCondition) {
+                addWidget(dimCondition
+                        .setupDimensionMarkers(recipe.recipeType.getRecipeUI().getJEISize().width - xOffset - 44,
+                                recipe.recipeType.getRecipeUI().getJEISize().height - 32)
+                        .setBackgroundTexture(IGuiTexture.EMPTY));
+            } else addWidget(new LabelWidget(3 - xOffset, yOffset += LINE_HEIGHT, condition.getTooltips().getString()));
+        }
+        for (Function<CompoundTag, String> dataInfo : recipe.recipeType.getDataInfos()) {
+            addWidget(new LabelWidget(3 - xOffset, yOffset += LINE_HEIGHT, dataInfo.apply(recipe.data)));
+        }
+    }
+
+    private void addCopyIdButton() {
+        int x = getSize().width - 19;
+        int y = getSize().height - 30;
+        this.addWidget(
+                new PredicatedButtonWidget(x, y, 15, 15, new GuiTextureGroup(GuiTextures.BUTTON, new TextTexture("ID")),
+                        cd -> Minecraft.getInstance().keyboardHandler.setClipboard(recipe.id.toString()),
+                        () -> ! FMLLoader.isProduction(), !FMLLoader.isProduction())
+                        .setHoverTooltips("click to copy: " + recipe.id));
     }
 }

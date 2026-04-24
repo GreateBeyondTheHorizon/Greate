@@ -25,6 +25,8 @@
     "MixinFluidPropagator",
     "MixinGirderBlock",
     "MixinGirderEncasedShaftBlock",
+    "MixinGTEMIPlugin",
+    "MixinGTRecipeEMICategory",
     "MixinKineticBlockEntity",
     "MixinKineticBlockEntityAccessor",
     "MixinKineticNetwork",
