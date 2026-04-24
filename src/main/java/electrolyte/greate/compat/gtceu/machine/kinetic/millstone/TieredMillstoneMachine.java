@@ -3,8 +3,6 @@ package electrolyte.greate.compat.gtceu.machine.kinetic.millstone;
 import com.gregtechceu.gtceu.api.blockentity.BlockEntityCreationInfo;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.machine.trait.RecipeHandlerList;
-import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
-import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import electrolyte.greate.compat.gtceu.machine.kinetic.StressRecipeHandler;
 import electrolyte.greate.compat.gtceu.machine.kinetic.TieredKineticWorkableMachine;
 import net.minecraft.MethodsReturnNonnullByDefault;
@@ -23,10 +21,5 @@ public class TieredMillstoneMachine extends TieredKineticWorkableMachine {
     public void onLoad() {
         super.onLoad();
         this.addHandlerList(RecipeHandlerList.of(IO.IN, new StressRecipeHandler(stressContainer, 1.0F))); //todo: support custom conversion rates
-    }
-
-    @Override
-    public GTRecipeType getRecipeType() {
-        return GTRecipeTypes.MACERATOR_RECIPES;
     }
 }

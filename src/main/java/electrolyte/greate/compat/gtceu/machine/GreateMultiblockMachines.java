@@ -15,7 +15,7 @@ import static com.gregtechceu.gtceu.api.pattern.Predicates.*;
 import static com.gregtechceu.gtceu.common.data.GCYMBlocks.CASING_WATERTIGHT;
 import static com.gregtechceu.gtceu.common.data.GTBlocks.*;
 import static electrolyte.greate.GreateRegistries.REGISTRATE;
-import static electrolyte.greate.compat.gtceu.machine.GreateRecipeTypes.WIRE_COATING_RECIPES;
+import static electrolyte.greate.compat.gtceu.common.data.GreateRecipeTypes.WIRE_COATING_RECIPES;
 
 public class GreateMultiblockMachines {
 

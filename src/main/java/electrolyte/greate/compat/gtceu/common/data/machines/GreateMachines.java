@@ -5,14 +5,13 @@ import com.gregtechceu.gtceu.api.blockentity.BlockEntityCreationInfo;
 import com.gregtechceu.gtceu.api.data.RotationState;
 import com.gregtechceu.gtceu.api.item.MetaMachineItem;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
-import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.registry.registrate.MachineBuilder;
-import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.gregtechceu.gtceu.common.data.machines.GTMachineUtils;
 import electrolyte.greate.GreateRegistries;
 import electrolyte.greate.compat.gtceu.client.data.models.GreateMachineModels;
 import electrolyte.greate.compat.gtceu.client.renderer.machine.GreateDynamicRenderHelper;
+import electrolyte.greate.compat.gtceu.common.data.GreateRecipeTypes;
 import electrolyte.greate.compat.gtceu.machine.kinetic.millstone.TieredMillstoneMachine;
 import electrolyte.greate.compat.gtceu.machine.kinetic.millstone.TieredMillstoneMachineBlock;
 import electrolyte.greate.infrastructure.config.GStress;
@@ -30,7 +29,7 @@ public class GreateMachines {
                     .langValue(GTValues.VNF[tier] + " Millstone")
                     .rotationState(RotationState.NON_Y_AXIS)
                     .register(),
-            GTRecipeTypes.MACERATOR_RECIPES,
+            GreateRecipeTypes.KINETIC_MACERATOR_TEST,
             GTMachineUtils.ALL_TIERS);
 
     public static MachineDefinition[] registerMillstoneMachines(String name,

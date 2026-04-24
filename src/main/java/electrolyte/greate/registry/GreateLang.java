@@ -47,5 +47,10 @@ public class GreateLang {
         provider.add("tagprefix.alloy", "%s Alloy");
         provider.add("item.gtceu.naquadah_alloy_alloy", "Naquadah Alloy");
         provider.add("gtceu.wire_coating", "Wire Coating");
+
+        provider.add("greate.recipe.stress_input", "Usage %s su/tick (%s)");
+        provider.add("greate.recipe.rpm_input", "Usage >= %s RPM");
+        provider.add("greate.recipe.stress_output", "Outputs %s su/tick (%s)");
+        provider.add("greate.recipe.rpm_output", "Outputs %s RPM");
     }
 }

@@ -104,6 +104,16 @@ public class GreateValues {
     }
 
     @HideFromJS
+    public static int convertStressToTier(List<Content> content) {
+        if(content.isEmpty()) return GTValues.ULV;
+        float stress = (float) content.get(0).getContent();
+        for(int i = 0; i < GTValues.V.length; i++) {
+            if(stress <= GTValues.V[i]) return GTValues.ALL_TIERS[i];
+        }
+        return GTValues.MAX;
+    }
+
+    @HideFromJS
     public static TieredProcessingRecipeFactory<TieredProcessingRecipe<?>> getFactory(ResourceLocation loc) {
         for(String s : Greate.CONFIG.ignoredRecipeTypes) {
             if(loc.equals(ResourceLocation.parse(s))) return null;

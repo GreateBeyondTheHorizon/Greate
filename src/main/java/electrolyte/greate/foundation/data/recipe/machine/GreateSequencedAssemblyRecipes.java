@@ -28,7 +28,7 @@ import java.util.function.Consumer;
 import static com.gregtechceu.gtceu.api.GTValues.*;
 import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.*;
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
-import static electrolyte.greate.compat.gtceu.machine.GreateRecipeTypes.WIRE_COATING_RECIPES;
+import static electrolyte.greate.compat.gtceu.common.data.GreateRecipeTypes.WIRE_COATING_RECIPES;
 import static electrolyte.greate.registry.GreateMaterials.AndesiteAlloy;
 import static electrolyte.greate.registry.GreateTagPrefixes.*;
 

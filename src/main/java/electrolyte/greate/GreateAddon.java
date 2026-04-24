@@ -2,8 +2,9 @@ package electrolyte.greate;
 
 import com.gregtechceu.gtceu.api.addon.GTAddon;
 import com.gregtechceu.gtceu.api.addon.IGTAddon;
+import com.gregtechceu.gtceu.api.registry.GTRegistries;
 import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
-import electrolyte.greate.compat.gtceu.machine.GreateRecipeTypes;
+import electrolyte.greate.compat.gtceu.capability.recipe.StressRecipeCapability;
 import electrolyte.greate.foundation.data.recipe.GreateCraftingComponents;
 import electrolyte.greate.foundation.data.recipe.GreateRecipes;
 import electrolyte.greate.registry.GreateTagPrefixes;
@@ -30,7 +31,7 @@ public class GreateAddon implements IGTAddon {
 
 	@Override
 	public void addRecipes(Consumer<FinishedRecipe> provider) {
-		GreateRecipeTypes.register();
+		//GreateRecipeTypes.register();
 		GreateCraftingComponents.register();
 		GreateRecipes.register(provider);
 	}
@@ -38,5 +39,10 @@ public class GreateAddon implements IGTAddon {
 	@Override
 	public void registerTagPrefixes() {
 		GreateTagPrefixes.register();
+	}
+
+	@Override
+	public void registerRecipeCapabilities() {
+		GTRegistries.RECIPE_CAPABILITIES.register(StressRecipeCapability.STRESS_CAPABILITY.name, StressRecipeCapability.STRESS_CAPABILITY);
 	}
 }

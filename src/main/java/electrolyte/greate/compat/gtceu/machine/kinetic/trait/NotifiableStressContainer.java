@@ -2,20 +2,13 @@ package electrolyte.greate.compat.gtceu.machine.kinetic.trait;
 
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
-import com.gregtechceu.gtceu.api.machine.MetaMachine;
-import com.gregtechceu.gtceu.api.machine.TickableSubscription;
 import com.gregtechceu.gtceu.api.machine.trait.MachineTraitType;
 import com.gregtechceu.gtceu.api.machine.trait.NotifiableRecipeHandlerTrait;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
-import com.simibubi.create.content.kinetics.KineticNetwork;
+import electrolyte.greate.compat.gtceu.capability.recipe.StressRecipeCapability;
 import electrolyte.greate.compat.gtceu.machine.kinetic.ITieredKineticMachine;
 import electrolyte.greate.compat.gtceu.machine.kinetic.TieredKineticMachine;
-import electrolyte.greate.compat.gtceu.machine.kinetic.TieredKineticWorkableMachine;
-import electrolyte.greate.compat.gtceu.recipe.StressRecipeCapability;
-import electrolyte.greate.mixin.MixinKineticBlockEntity;
 import electrolyte.greate.mixin.MixinKineticBlockEntityAccessor;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
@@ -87,7 +80,7 @@ public class NotifiableStressContainer extends NotifiableRecipeHandlerTrait<Floa
 
     @Override
     public RecipeCapability<Float> getCapability() {
-        return StressRecipeCapability.CAP;
+        return StressRecipeCapability.STRESS_CAPABILITY;
     }
 
     @Override

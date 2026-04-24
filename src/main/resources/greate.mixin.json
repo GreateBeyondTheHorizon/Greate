@@ -21,6 +21,7 @@
     "MixinCStress",
     "MixinDeployerBlockEntity",
     "MixinDifferenceIngredientAccessor",
+    "MixinDirectBeltInputBehaviour",
     "MixinFluidPropagator",
     "MixinGirderBlock",
     "MixinGirderEncasedShaftBlock",
