@@ -35,6 +35,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 @Mixin(value = RecipeManager.class, priority = 1099)
@@ -62,9 +64,11 @@ public class MixinRecipeManager {
         Greate.LOGGER.info("Converting GTCEu & Create recipes...");
         if(ModList.get().isLoaded("kubejs")) GreateKubeJSHelper.kubeStuff();
         int recipeCount = 0;
+        List<String> ignoredModIds = Arrays.asList(Greate.CONFIG.ignoredModIds);
         for(Map.Entry<ResourceLocation, JsonElement> recipeEntry : pMap.entrySet()) {
             ResourceLocation resourceLocation = recipeEntry.getKey();
             JsonElement jsonElement = recipeEntry.getValue();
+            if(ignoredModIds.contains(resourceLocation.getNamespace())) continue;
             try {
                 if(!jsonElement.isJsonObject()) continue;
                 JsonObject recipeJson = jsonElement.getAsJsonObject();
