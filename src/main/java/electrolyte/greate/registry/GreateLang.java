@@ -47,5 +47,15 @@ public class GreateLang {
         provider.add("tagprefix.alloy", "%s Alloy");
         provider.add("item.gtceu.naquadah_alloy_alloy", "Naquadah Alloy");
         provider.add("gtceu.wire_coating", "Wire Coating");
+        provider.add("config.screen.greate", "Greate Recipe Config");
+        provider.add("config.greate.option.enableGTWireCoatingRecipes", "Enable GTCEu Wire Coating Recipes");
+        provider.add("config.greate.option.enableHardCreateRecipes", "Enable Hard Create Recipes");
+        provider.add("config.greate.option.fanSpeedMultiplier", "Encased Fan Speed Multiplier");
+        provider.add("config.greate.option.useCreateItemsInRecipes", "Use Create Items in Recipes");
+        provider.add("config.greate.option.disableConflictingRecipes", "Disable Conflicting Recipes");
+        provider.add("config.greate.option.processItemEntitiesWithFan", "Process Item Entities With Encased Fan");
+        provider.add("config.greate.option.logUnremovableRecipes", "Log Unremovable Recipes");
+        provider.add("config.greate.option.ignoredRecipeTypes", "Ignored Recipe Types");
+        provider.add("config.greate.option.ignoredModIds", "Ignored Mod Ids");
     }
 }
