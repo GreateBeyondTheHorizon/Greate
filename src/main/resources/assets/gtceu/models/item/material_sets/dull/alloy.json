@@ -1,6 +1,8 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "gtceu:item/material_sets/dull/alloy"
+    "layer0": "gtceu:item/material_sets/dull/alloy",
+    "layer1": "gtceu:item/material_sets/dull/alloy_secondary",
+    "layer2": "gtceu:item/material_sets/dull/alloy_overlay"
   }
 }

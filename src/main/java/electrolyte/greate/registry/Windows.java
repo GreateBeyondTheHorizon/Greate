@@ -21,7 +21,7 @@ import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import electrolyte.greate.Greate;
-import electrolyte.greate.foundation.data.GreateBlockStateGen;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.BlockItem;
@@ -50,7 +50,7 @@ public class Windows {
     public static void register() {}
 
     public static BlockEntry<WindowBlock> woodenWindowBlock(WoodType woodType, Supplier<Block> planksBlock) {
-		return woodenWindowBlock(woodType, planksBlock, false);
+		return woodenWindowBlock(woodType, planksBlock, true);
 	}
 
     public static BlockEntry<WindowBlock> woodenWindowBlock(WoodType woodType, Supplier<Block> planksBlock, boolean translucent) {
@@ -78,7 +78,7 @@ public class Windows {
                     .isViewBlocking((blockState, blockGetter, pos) -> false))
 			.loot(RegistrateBlockLootTables::dropWhenSilkTouch)
 			.blockstate((c, p) -> p.simpleBlock(c.get(), p.models()
-				.cubeColumn(c.getName(), sideTexture.apply(c.getName()), endTexture.apply(c.getName())).renderType(GreateBlockStateGen.CUTOUT_MIPPED)))
+				.cubeColumn(c.getName(), sideTexture.apply(c.getName()), endTexture.apply(c.getName())).renderType(RenderType.translucent().name)))
 			.tag(BlockTags.IMPERMEABLE)
 			.simpleItem();
 	}
@@ -117,8 +117,8 @@ public class Windows {
 	private static Function<RegistrateBlockstateProvider, ModelFile> getPaneModelProvider(String CGPparents, String prefix, String partial, ResourceLocation sideTexture, ResourceLocation topTexture) {
 		return p -> p.models()
 			.withExistingParent(prefix + partial, Create.asResource(CGPparents + partial))
-			.texture("pane", sideTexture)
-			.texture("edge", topTexture).renderType(GreateBlockStateGen.CUTOUT_MIPPED);
+			.texture("pane", sideTexture).renderType(RenderType.cutoutMipped().name)
+			.texture("edge", topTexture).renderType(RenderType.translucent().name);
 	}
 
 	private static <G extends GlassPaneBlock> BlockBuilder<G, GTRegistrate> glassPane(String name,
@@ -137,7 +137,7 @@ public class Windows {
 		itemBuilder.tag(Tags.Items.GLASS_PANES);
 
 		BlockBuilder<G, GTRegistrate> blockBuilder = itemBuilder
-			.model((c, p) -> p.generated(c, sideTexture))
+			.model((c, p) -> p.generated(c, sideTexture).renderType(RenderType.translucent().name))
 			.build();
 
 		blockBuilder.tag(Tags.Blocks.GLASS_PANES);
