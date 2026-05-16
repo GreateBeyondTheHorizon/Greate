@@ -51,4 +51,9 @@ public class GreateRecipeConfig {
     @Synchronized
     @Comment({"Recipe types that should not be copied to Greate machines. Ex. 'gtceu:macerator' for macerator recipes"})
     public String[] ignoredRecipeTypes = {};
+
+    @Configurable
+    @Synchronized
+    @Comment({"Mod IDs for recipe IDs that should not be copied to Greate machines. Ex. 'create' for all Create recipes"})
+    public String[] ignoredModIds = {};
 }
