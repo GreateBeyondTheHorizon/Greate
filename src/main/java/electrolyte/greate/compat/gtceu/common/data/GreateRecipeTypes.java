@@ -1,7 +1,6 @@
 package electrolyte.greate.compat.gtceu.common.data;
 
 import com.gregtechceu.gtceu.api.GTValues;
-import com.gregtechceu.gtceu.api.capability.recipe.EURecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.gui.GuiTextures;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
@@ -41,7 +40,6 @@ public class GreateRecipeTypes {
                 GTRecipeBuilder copiedRecipe = KINETIC_MACERATOR_TEST
                         .copyFrom(gtRecipeBuilder)
                         .input(StressRecipeCapability.STRESS_CAPABILITY, (float) euT);
-                copiedRecipe.tickInput.remove(EURecipeCapability.CAP);
                 copiedRecipe.save(finishedRecipeConsumer);
             });
     }

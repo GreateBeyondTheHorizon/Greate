@@ -187,7 +187,7 @@ public class GreateCraftingTableRecipes {
         VanillaRecipeHelper.addShapedRecipe(provider, Greate.id("treated_wood_window"), Windows.TREATED_WOOD_WINDOW.asStack(2),
                 " # ", "#X#",
                 '#', GTBlocks.TREATED_WOOD_PLANK.asStack(),
-                'X', Ingredient.of(Tags.Items.GLASS_COLORLESS));
+                'X', GTBlocks.CASING_TEMPERED_GLASS.asStack());
 
         VanillaRecipeHelper.addShapedRecipe(provider, true, Greate.id("wire_coating_factory"), WIRE_COATING_FACTORY.asStack(),
                 "WCW", "PSP", "WCW",

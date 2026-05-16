@@ -1,6 +1,6 @@
 {
   "parent": "create:block/connected_glass_pane/noside_alt",
-  "render_type": "minecraft:cutout_mipped",
+  "render_type": "minecraft:translucent",
   "textures": {
     "edge": "gtceu:block/treated_wood_planks",
     "pane": "greate:block/palettes/treated_wood_window"

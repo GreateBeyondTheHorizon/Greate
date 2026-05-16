@@ -1,5 +1,6 @@
 package electrolyte.greate.compat.xei.widgets;
 
+import com.gregtechceu.gtceu.api.capability.recipe.EURecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.gui.GuiTextures;
@@ -91,6 +92,7 @@ public class MillstoneWidget extends WidgetGroup {
             capability.getKey().addXEIInfo(capGroup, 2, recipe, capability.getValue(), false, true, yOff);
         }
         for (var capability : recipe.tickInputs.entrySet()) {
+            if(capability instanceof EURecipeCapability) continue;
             capability.getKey().addXEIInfo(capGroup, 2, recipe, capability.getValue(), true, true, yOff);
         }
         for (var capability : recipe.outputs.entrySet()) {
