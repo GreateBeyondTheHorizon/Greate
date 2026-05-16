@@ -22,8 +22,6 @@ public class KineticProperty implements IMaterialProperty {
         Material mat = materialProperties.getMaterial();
         if(!mat.hasFlag(MaterialFlags.GENERATE_PLATE)) {
             mat.addFlags(MaterialFlags.GENERATE_PLATE);
-        } if(!mat.hasFlag(GreateMaterialFlags.GENERATE_ALLOY)) {
-            mat.addFlags(GreateMaterialFlags.GENERATE_ALLOY);
         }
     }
 
