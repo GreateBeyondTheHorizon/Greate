@@ -32,6 +32,8 @@ import static electrolyte.greate.content.kinetics.fan.processing.GreateFanProces
 
 public class TieredFanProcessing {
 
+    private static int cooldown = 0;
+
     public static boolean canProcess(ItemEntity entity, FanProcessingType type, int machineTier, BlockEntity be) {
         if(!(be instanceof TieredEncasedFanBlockEntity tefbe)) return false;
         if(!Greate.CONFIG.processItemEntitiesWithFan) return false;
@@ -90,9 +92,10 @@ public class TieredFanProcessing {
 
     public static TransportedResult applyProcessing(float speed, TransportedItemStack transported, Level level, FanProcessingType type, int machineTier, TieredEncasedFanBlockEntity fanBE) {
         TransportedResult ignore = TransportedResult.doNothing();
+        int maxItemsProcessed = -1;
         if(transported.processedBy != type) {
             transported.processedBy = type;
-            int maxItemsProcessed = getMaxItemsProcessedCount(type, fanBE, transported.stack);
+            maxItemsProcessed = getMaxItemsProcessedCount(type, fanBE, transported.stack);
             transported.processingTime = getProcessingTime(maxItemsProcessed, speed);
             if(type instanceof TieredHauntingType tht) {
                 if(!tht.canProcess(transported.stack, level, machineTier)) {
@@ -107,7 +110,13 @@ public class TieredFanProcessing {
             }
             return ignore;
         }
-        if(transported.processingTime == -1) return ignore;
+        if(transported.processingTime == -1 && type instanceof TieredSplashingType) {
+            cooldown++;
+            if(cooldown > 20) {
+                transported.processingTime = getProcessingTime(maxItemsProcessed, speed);
+                cooldown = 0;
+            } else return ignore;
+        } else if(transported.processingTime == -1) return ignore;
         if(transported.processingTime-- > 0) return ignore;
 
         List<ItemStack> stacks;
