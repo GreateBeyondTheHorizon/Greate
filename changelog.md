@@ -1,2 +1,6 @@
-- Fix crushing wheels & millstones always processing one item at a time regardless of what the recipe input count is
-- Crushing wheels will now always output items that either do not have a recipe, or any remainder items in an input stack (eg. odd # of items are put in, but recipe requires an even # of items)
+- Update treated wood window & pane textures, and update alloy textures (Chubbachoo)
+- Remove duplicate andesite alloy
+- Allow recipes of a specific mod id to not be inherited
+- Localize recipe config
+- Change tank size of tiered encased fans to mimic ore washer
+- Allow tiered encased fans to process the same stack multiple times
