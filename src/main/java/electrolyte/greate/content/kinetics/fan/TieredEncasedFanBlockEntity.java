@@ -1,5 +1,6 @@
 package electrolyte.greate.content.kinetics.fan;
 
+import com.gregtechceu.gtceu.common.data.machines.GTMachineUtils;
 import com.simibubi.create.content.kinetics.fan.EncasedFanBlockEntity;
 import com.simibubi.create.content.kinetics.fan.IAirCurrentSource;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
@@ -47,7 +48,8 @@ public class TieredEncasedFanBlockEntity extends EncasedFanBlockEntity implement
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         super.addBehaviours(behaviours);
-        inputTank = new SmartFluidTankBehaviour(SmartFluidTankBehaviour.INPUT, this, 1, 16000, false);
+        Integer tankSize = GTMachineUtils.defaultTankSizeFunction.apply(((ITieredBlock) this.getBlockState().getBlock()).getTier());
+        inputTank = new SmartFluidTankBehaviour(SmartFluidTankBehaviour.INPUT, this, 1, tankSize, false);
         behaviours.add(inputTank);
 
         fluidCapability = LazyOptional.of(() -> {
