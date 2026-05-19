@@ -7,12 +7,16 @@ import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeSerializer;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
+import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.fluids.potion.PotionMixingRecipes;
 import com.simibubi.create.content.kinetics.mixer.MixingRecipe;
+import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
+import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder.ProcessingRecipeFactory;
 import dev.latvian.mods.kubejs.recipe.RecipesEventJS;
 import electrolyte.greate.Greate;
 import electrolyte.greate.GreateValues;
+import electrolyte.greate.compat.gtceu.common.data.GreateRecipeTypes;
 import electrolyte.greate.compat.kubejs.GreateKubeJSHelper;
 import electrolyte.greate.compat.kubejs.KubeJSGreatePlugin;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
@@ -88,6 +92,12 @@ public class MixinRecipeManager {
                     }
                     recipeCount++;
                 }
+
+                ProcessingRecipeFactory<ProcessingRecipe<?>> createFactory = GreateValues.getCreateFactory(ResourceLocation.parse(type));
+                if(createFactory != null && type.equals(AllRecipeTypes.MILLING.getType().toString())) {
+                    GreateRuntimeRecipes.convertCreateToGT(createFactory, GreateRecipeTypes.MILLSTONE, resourceLocation, jsonElement);
+                }
+                //recipeCount++;
             } catch (JsonSyntaxException e) {
                 Greate.LOGGER.warn("Unable to parse recipe {}, it will be skipped. Check debug.log for erroring JSON.)", resourceLocation);
                 Greate.LOGGER.debug("Unable to parse recipe {}, erroring JSON is: {}", resourceLocation, jsonElement);

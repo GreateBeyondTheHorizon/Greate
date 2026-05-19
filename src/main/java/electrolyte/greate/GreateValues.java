@@ -7,6 +7,9 @@ import com.gregtechceu.gtceu.api.recipe.ingredient.EnergyStack;
 import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.simibubi.create.AllRecipeTypes;
+import com.simibubi.create.content.kinetics.millstone.MillingRecipe;
+import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
+import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder.ProcessingRecipeFactory;
 import dev.latvian.mods.rhino.util.HideFromJS;
 import electrolyte.greate.compat.gtceu.material.GreatePropertyKeys;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingRecipe;
@@ -127,6 +130,15 @@ public class GreateValues {
         else if(loc.equals(GTRecipeTypes.COMPRESSOR_RECIPES.registryName)) return TieredCompactingRecipe::new;
         else if(loc.equals(AllRecipeTypes.HAUNTING.getId())) return TieredHauntingRecipe::new;
         else if(loc.equals(AllRecipeTypes.COMPACTING.getId())) return TieredCompactingRecipe::new;
+        return null;
+    }
+
+    @HideFromJS
+    public static ProcessingRecipeFactory<ProcessingRecipe<?>> getCreateFactory(ResourceLocation loc) {
+        for(String s : Greate.CONFIG.ignoredRecipeTypes) {
+            if(loc.equals(ResourceLocation.parse(s))) return null;
+        }
+        if(loc.equals(AllRecipeTypes.MILLING.getId())) return MillingRecipe::new;
         return null;
     }
 
