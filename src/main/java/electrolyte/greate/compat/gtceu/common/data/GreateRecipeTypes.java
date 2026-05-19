@@ -26,7 +26,7 @@ public class GreateRecipeTypes {
             .setProgressBar(GuiTextures.PROGRESS_BAR_WIREMILL, FillDirection.LEFT_TO_RIGHT)
             .setSound(GTSoundEntries.CHEMICAL);
 
-    public static final GTRecipeType KINETIC_MACERATOR_TEST = GTRecipeTypes.register("kinetic_macerator_test", KINETIC)
+    public static final GTRecipeType MILLSTONE = GTRecipeTypes.register("millstone", KINETIC)
             .setMaxIOSize(1, 4, 0, 0)
             .setEUIO(IO.NONE)
             .addCustomRecipeLogic(MaceratorLogic.INSTANCE)
@@ -37,7 +37,7 @@ public class GreateRecipeTypes {
         GTRecipeTypes.MACERATOR_RECIPES
             .onRecipeBuild((gtRecipeBuilder, finishedRecipeConsumer) -> {
                 long euT = gtRecipeBuilder.buildRawRecipe().getInputEUt().voltage();
-                GTRecipeBuilder copiedRecipe = KINETIC_MACERATOR_TEST
+                GTRecipeBuilder copiedRecipe = MILLSTONE
                         .copyFrom(gtRecipeBuilder)
                         .input(StressRecipeCapability.STRESS_CAPABILITY, (float) euT);
                 copiedRecipe.save(finishedRecipeConsumer);

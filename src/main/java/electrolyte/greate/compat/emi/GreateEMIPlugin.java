@@ -17,7 +17,7 @@ public class GreateEMIPlugin implements EmiPlugin {
         registry.addCategory(MillstoneEmiRecipe.MILLSTONE_CATEGORY);
         Arrays.stream(GreateMachines.MILLSTONES).forEach(millstone ->
                 registry.addWorkstation(MillstoneEmiRecipe.MILLSTONE_CATEGORY, EmiStack.of(millstone.asStack())));
-        GreateRecipeTypes.KINETIC_MACERATOR_TEST.getRecipesInCategory(GreateRecipeTypes.KINETIC_MACERATOR_TEST.getCategory()).stream()
+        GreateRecipeTypes.MILLSTONE.getRecipesInCategory(GreateRecipeTypes.MILLSTONE.getCategory()).stream()
                 .map(MillstoneEmiRecipe::new)
                 .forEach(registry::addRecipe);
     }

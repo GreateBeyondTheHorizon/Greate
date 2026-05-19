@@ -34,7 +34,6 @@ public class GreateAddon implements IGTAddon {
 
 	@Override
 	public void addRecipes(Consumer<FinishedRecipe> provider) {
-		//GreateRecipeTypes.register();
 		GreateCraftingComponents.register();
 		GreateRecipes.register(provider);
 	}

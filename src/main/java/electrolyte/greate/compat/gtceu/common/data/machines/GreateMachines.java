@@ -29,7 +29,7 @@ public class GreateMachines {
                     .langValue(GTValues.VNF[tier] + " Millstone")
                     .rotationState(RotationState.NON_Y_AXIS)
                     .register(),
-            GreateRecipeTypes.KINETIC_MACERATOR_TEST,
+            GreateRecipeTypes.MILLSTONE,
             GTMachineUtils.ALL_TIERS);
 
     public static MachineDefinition[] registerMillstoneMachines(String name,
