@@ -27,6 +27,7 @@
     "MixinGirderEncasedShaftBlock",
     "MixinGTEMIPlugin",
     "MixinGTRecipeEMICategory",
+    "MixinKineticBlock",
     "MixinKineticBlockEntity",
     "MixinKineticBlockEntityAccessor",
     "MixinKineticNetwork",
