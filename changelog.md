@@ -1,6 +1,1 @@
-- Update treated wood window & pane textures, and update alloy textures (Chubbachoo)
-- Remove duplicate andesite alloy
-- Allow recipes of a specific mod id to not be inherited
-- Localize recipe config
-- Change tank size of tiered encased fans to mimic ore washer
-- Allow tiered encased fans to process the same stack multiple times
+- Fix crash with tiered encased fan
