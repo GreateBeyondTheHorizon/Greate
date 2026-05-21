@@ -92,11 +92,10 @@ public class TieredFanProcessing {
 
     public static TransportedResult applyProcessing(float speed, TransportedItemStack transported, Level level, FanProcessingType type, int machineTier, TieredEncasedFanBlockEntity fanBE) {
         TransportedResult ignore = TransportedResult.doNothing();
-        int maxItemsProcessed = -1;
+        int maxItemsProcessed = 0;
         if(transported.processedBy != type) {
             transported.processedBy = type;
-            maxItemsProcessed = getMaxItemsProcessedCount(type, fanBE, transported.stack);
-            transported.processingTime = getProcessingTime(maxItemsProcessed, speed);
+            transported.processingTime = getProcessingTime(transported.stack.getCount(), speed);
             if(type instanceof TieredHauntingType tht) {
                 if(!tht.canProcess(transported.stack, level, machineTier)) {
                     transported.processingTime = -1;
@@ -113,7 +112,7 @@ public class TieredFanProcessing {
         if(transported.processingTime == -1 && type instanceof TieredSplashingType) {
             cooldown++;
             if(cooldown > 20) {
-                transported.processingTime = getProcessingTime(maxItemsProcessed, speed);
+                transported.processingTime = getProcessingTime(getMaxItemsProcessedCount(type, fanBE, transported.stack), speed);
                 cooldown = 0;
             } else return ignore;
         } else if(transported.processingTime == -1) return ignore;
@@ -123,6 +122,7 @@ public class TieredFanProcessing {
         if(type instanceof TieredHauntingType th) {
             stacks = th.process(transported.stack, level, machineTier, fanBE);
         } else if(type instanceof TieredSplashingType ts) {
+            maxItemsProcessed = getMaxItemsProcessedCount(type, fanBE, transported.stack);
             stacks = ts.process(transported.stack, level, machineTier, fanBE);
         } else {
             stacks = type.process(transported.stack, level);
@@ -136,7 +136,7 @@ public class TieredFanProcessing {
             transportedItemStacks.add(newTransported);
         }
         if(type instanceof TieredSplashingType) {
-            transported.stack = transported.stack.copyWithCount(transported.stack.getCount() - stacks.get(0).getCount());
+            transported.stack = transported.stack.copyWithCount(transported.stack.getCount() - maxItemsProcessed);
             return TransportedResult.convertToAndLeaveHeld(transportedItemStacks, transported.copy());
         }
         return TransportedResult.convertTo(transportedItemStacks);
