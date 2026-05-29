@@ -63,12 +63,12 @@ public class TieredShaftBlock extends ShaftBlock implements ITieredBlock, ITiere
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         BlockState stateForPlacement = super.getStateForPlacement(context);
-        return pickShaftType(stateForPlacement, context.getLevel(), context.getClickedPos());
+        return pickShaftType(stateForPlacement, context.getLevel(), context.getClickedPos(), material);
     }
 
-    public BlockState pickShaftType(BlockState stateForPlacement, Level level, BlockPos offsetPos) {
+    public static BlockState pickShaftType(BlockState stateForPlacement, Level level, BlockPos offsetPos, Material shaftMaterial) {
         return PoweredShaftBlock.stillValid(stateForPlacement, level, offsetPos) ?
-                ChemicalHelper.getBlock(poweredShaft, material).defaultBlockState()
+                ChemicalHelper.getBlock(poweredShaft, shaftMaterial).defaultBlockState()
                         .setValue(PoweredShaftBlock.AXIS, stateForPlacement.getValue(ShaftBlock.AXIS))
                         .setValue(WATERLOGGED, stateForPlacement.getValue(WATERLOGGED))
                 : stateForPlacement;
