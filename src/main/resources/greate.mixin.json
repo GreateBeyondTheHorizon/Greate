@@ -17,6 +17,7 @@
     "MixinBlockEntityBehaviour",
     "MixinBrassTunnelBlockEntity",
     "MixinChuteBlockEntity",
+    "MixinContraption",
     "MixinCrushingWheelControllerBlockEntity",
     "MixinCStress",
     "MixinDeployerBlockEntity",
