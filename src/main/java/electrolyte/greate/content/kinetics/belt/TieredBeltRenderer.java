@@ -1,7 +1,10 @@
 package electrolyte.greate.content.kinetics.belt;
 
+import com.gregtechceu.gtceu.api.data.chemical.material.Material;
+import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.simibubi.create.content.kinetics.belt.*;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
@@ -26,7 +29,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.Supplier;
 
-public class TieredBeltRenderer extends BeltRenderer implements IBeltRenderHelper {
+public class TieredBeltRenderer extends BeltRenderer {
 
     public TieredBeltRenderer(Context context) {
         super(context);
@@ -116,10 +119,16 @@ public class TieredBeltRenderer extends BeltRenderer implements IBeltRenderHelpe
                 return stack;
             };
 
-            SuperByteBuffer superBuffer = CachedBuffers.partialDirectional(getBeltPulleyModel((TieredBeltBlockEntity) be, blockState), blockState, dir, matrixStackSupplier);
+            SuperByteBuffer superBuffer = CachedBuffers.partialDirectional(getBeltPulleyModel((TieredBeltBlockEntity) be), blockState, dir, matrixStackSupplier);
             KineticBlockEntityRenderer.standardKineticRotationTransform(superBuffer, be, light).renderInto(ms, vb);
         }
         renderItems(be, partialTicks, ms, buffer, light, overlay);
+    }
+
+    public static PartialModel getBeltPulleyModel(TieredBeltBlockEntity be) {
+        Material shaftMaterial = be.getShaftMaterial();
+        if(shaftMaterial == null || shaftMaterial == GTMaterials.NULL) return AllPartialModels.BELT_PULLEY;
+        return PartialModel.of(Greate.id("block/" + shaftMaterial.getName() + "/belt_pulley"));
     }
 
     public static SpriteShiftEntry getSpriteShiftEntry(TieredBeltBlock block, boolean diagonal, boolean bottom) {

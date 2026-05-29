@@ -1,4 +1,4 @@
-package electrolyte.greate.mixin;
+package electrolyte.greate.mixin.belt;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;

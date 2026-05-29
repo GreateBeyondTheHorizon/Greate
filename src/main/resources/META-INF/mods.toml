@@ -15,6 +15,13 @@ authors="Electrolyte"
 description="Create Gregified"
 
 [[dependencies.greate]]
+    modId="create_repair"
+    mandatory=true
+    versionRange="[1.0.0,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.greate]]
     modId="create"
     mandatory=true
     versionRange="[6.0.8,)"

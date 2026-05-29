@@ -106,8 +106,6 @@ public class ModBlockEntityTypes {
             .validBlocks(getBlocks(Belts.BELTS.values()))
             .register();
 
-
-
     public static final BlockEntityEntry<TieredMechanicalPressBlockEntity> TIERED_MECHANICAL_PRESS = GreateRegistries.REGISTRATE
             .blockEntity("tiered_mechanical_press", TieredMechanicalPressBlockEntity::new)
             .validBlocks(MechanicalPresses.MECHANICAL_PRESSES)
