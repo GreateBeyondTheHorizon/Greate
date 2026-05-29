@@ -1,5 +1,6 @@
 package electrolyte.greate.content.kinetics.belt.item;
 
+import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.belt.BeltBlock;
@@ -12,15 +13,16 @@ import com.simibubi.create.foundation.block.ProperWaterloggedBlock;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
 import electrolyte.greate.content.kinetics.belt.ITieredBelt;
-import electrolyte.greate.content.kinetics.belt.TieredBeltBlock;
+import electrolyte.greate.content.kinetics.belt.TieredBeltBlockEntity;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredBracketedKineticBlockEntity;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredShaftBlock;
+import electrolyte.greate.mixin.belt.MixinBeltConnectorItemAccessor;
+import electrolyte.greate.registry.GreateTagPrefixes;
 import net.createmod.catnip.math.VecHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
-import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
@@ -42,7 +44,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import static electrolyte.greate.registry.GreateTagPrefixes.shaft;
@@ -114,7 +115,7 @@ public class TieredBeltConnectorItem extends BlockItem implements ITieredBelt {
         if(tag.contains("FirstPulley")) {
             if(!canConnect(level, firstPulley, pos, pContext.getItemInHand())) return InteractionResult.FAIL;
             if(firstPulley != null && !firstPulley.equals(pos)) {
-                createBelts(level, firstPulley, pos, ((TieredShaftBlock) level.getBlockState(firstPulley).getBlock()).getMaterial());
+                createBelts(level, firstPulley, pos, ((TieredShaftBlock) level.getBlockState(firstPulley).getBlock()).getMaterial(), getBeltMaterial());
                 AllAdvancements.BELT.awardTo(player);
                 if(!player.isCreative()) {
                     pContext.getItemInHand().shrink(1);
@@ -133,16 +134,16 @@ public class TieredBeltConnectorItem extends BlockItem implements ITieredBelt {
         return InteractionResult.SUCCESS;
     }
 
-    public void createBelts(Level level, BlockPos start, BlockPos end, Material shaftType) {
+    public static void createBelts(Level level, BlockPos start, BlockPos end, Material shaftType, Material beltMaterial) {
         level.playSound(null, BlockPos.containing(VecHelper.getCenterOf(start.offset(end)).scale(0.5F)), SoundEvents.WOOL_PLACE, SoundSource.BLOCKS, 0.5F, 1F);
-        BeltSlope slope = getSlopeBetween(start, end);
-        Direction facing = getFacingFromTo(start, end);
+        BeltSlope slope = MixinBeltConnectorItemAccessor.getSlopeBetween(start, end);
+        Direction facing = MixinBeltConnectorItemAccessor.getFacingFromTo(start, end);
         BlockPos diff = end.subtract(start);
         if(diff.getX() == diff.getZ()) {
             facing = Direction.get(facing.getAxisDirection(), level.getBlockState(start).getValue(BlockStateProperties.AXIS) == Axis.X ? Axis.Z : Axis.X);
         }
 
-        List<BlockPos> beltsToCreate = getBeltChainBetween(start, end, slope, facing);
+        List<BlockPos> beltsToCreate = MixinBeltConnectorItemAccessor.getBeltChainBetween(start, end, slope, facing);
         boolean failed = false;
         for(BlockPos pos : beltsToCreate) {
             BlockState existingState = level.getBlockState(pos);
@@ -154,7 +155,7 @@ public class TieredBeltConnectorItem extends BlockItem implements ITieredBelt {
             BeltPart part = pos.equals(start) ? BeltPart.START : pos.equals(end) ? BeltPart.END : BeltPart.MIDDLE;
             BlockState shaftState = level.getBlockState(pos);
             boolean pulley = shaftState.getBlock() instanceof TieredShaftBlock;
-            BlockState state = Block.byItem(this).defaultBlockState();
+            BlockState state = ChemicalHelper.getBlock(GreateTagPrefixes.belt, beltMaterial).defaultBlockState();
             if(part == BeltPart.MIDDLE && pulley) part = BeltPart.PULLEY;
             if(pulley && shaftState.getValue(AbstractShaftBlock.AXIS) == Axis.Y) slope = BeltSlope.SIDEWAYS;
             if(!existingState.canBeReplaced()) level.destroyBlock(pos, false);
@@ -162,54 +163,18 @@ public class TieredBeltConnectorItem extends BlockItem implements ITieredBelt {
                     .setValue(BeltBlock.SLOPE, slope)
                     .setValue(BeltBlock.PART, part)
                     .setValue(BeltBlock.HORIZONTAL_FACING, facing), pos));
-            ((TieredBeltBlock) level.getBlockState(pos).getBlock()).setShaftMaterial(shaftType);
+            TieredBeltBlockEntity be = (TieredBeltBlockEntity) level.getBlockEntity(pos);
+            CompoundTag tag = new CompoundTag();
+            tag.putString("ShaftMaterial", shaftType.toString());
+            be.load(tag);
+            be.notifyUpdate();
         }
 
         if(!failed) return;
         for(BlockPos pos : beltsToCreate) {
-            BlockState state = Block.byItem(this).defaultBlockState();
+            BlockState state = ChemicalHelper.getBlock(GreateTagPrefixes.belt, beltMaterial).defaultBlockState();
             if(level.getBlockState(pos).getBlock() == state.getBlock()) level.destroyBlock(pos, false);
         }
-    }
-
-    private static Direction getFacingFromTo(BlockPos start, BlockPos end) {
-        Axis beltAxis = start.getX() == end.getX() ? Axis.Z : Axis.X;
-        BlockPos diff = end.subtract(start);
-        AxisDirection dir;
-        if(diff.getX() == 0 && diff.getZ() == 0) {
-            dir = diff.getY() > 0 ? AxisDirection.POSITIVE : AxisDirection.NEGATIVE;
-        } else {
-            dir = beltAxis.choose(diff.getX(), 0, diff.getZ()) > 0 ? AxisDirection.POSITIVE : AxisDirection.NEGATIVE;
-        }
-        return Direction.get(dir, beltAxis);
-    }
-
-    private static BeltSlope getSlopeBetween(BlockPos start, BlockPos end) {
-        BlockPos diff = end.subtract(start);
-        if(diff.getY() != 0) {
-            if(diff.getZ() != 0 || diff.getX() != 0) {
-                return diff.getY() > 0 ? BeltSlope.UPWARD : BeltSlope.DOWNWARD;
-            }
-            return BeltSlope.VERTICAL;
-        }
-        return BeltSlope.HORIZONTAL;
-    }
-
-    private static List<BlockPos> getBeltChainBetween(BlockPos start, BlockPos end, BeltSlope slope, Direction dir) {
-        List<BlockPos> positions = new LinkedList<>();
-        int limit = 1000;
-        BlockPos current = start;
-        do {
-            positions.add(current);
-            if(slope == BeltSlope.VERTICAL) {
-                current = current.above(dir.getAxisDirection() == AxisDirection.POSITIVE ? 1 : -1);
-                continue;
-            }
-            current = current.relative(dir);
-            if(slope != BeltSlope.HORIZONTAL) current = current.above(slope == BeltSlope.UPWARD ? 1 : -1);
-        } while(!current.equals(end) && limit-- > 0);
-        positions.add(end);
-        return positions;
     }
 
     public static boolean canConnect(Level level, BlockPos first, BlockPos second, ItemStack heldStack) {

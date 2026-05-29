@@ -5,6 +5,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.simibubi.create.content.contraptions.Contraption;
+import com.simibubi.create.content.kinetics.belt.BeltBlock;
 import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
 import com.simibubi.create.content.kinetics.steamEngine.PoweredShaftBlock;
 import com.simibubi.create.foundation.utility.BlockHelper;
@@ -69,5 +70,10 @@ public class MixinContraption {
             return ModBlockEntityTypes.TIERED_BRACKETED_KINETIC.create(pos, state);
         }
         return original.call(instance, pos, state);
+    }
+
+    @WrapOperation(method = "moveBlock", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z", ordinal = 0), remap = false)
+    private boolean greate_moveBlock(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
+        return state.getBlock() instanceof BeltBlock;
     }
 }
