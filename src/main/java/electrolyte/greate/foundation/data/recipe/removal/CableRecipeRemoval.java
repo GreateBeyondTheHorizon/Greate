@@ -1,12 +1,12 @@
 package electrolyte.greate.foundation.data.recipe.removal;
 
 import com.gregtechceu.gtceu.GTCEu;
-import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.WireProperties;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
+import com.gregtechceu.gtceu.api.registry.GTRegistries;
 import com.gregtechceu.gtceu.utils.GTUtil;
 import net.minecraft.resources.ResourceLocation;
 
@@ -18,7 +18,7 @@ import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.*;
 public class CableRecipeRemoval {
 
     public static void disableCableRecipes(Consumer<ResourceLocation> provider) {
-        for(Material material : GTCEuAPI.materialManager.getRegisteredMaterials()) {
+        for(Material material : GTRegistries.MATERIALS.values()) {
             if(material.hasFlag(MaterialFlags.NO_UNIFICATION)) continue;
             WireProperties property = material.getProperty(PropertyKey.WIRE);
             if(property != null) {

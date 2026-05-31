@@ -2,10 +2,10 @@ package electrolyte.greate.registry;
 
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
-import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
+import com.gregtechceu.gtceu.api.registry.GTRegistries;
 import com.gregtechceu.gtceu.common.data.GTItems;
 import com.simibubi.create.AllDisplaySources;
 import com.simibubi.create.content.kinetics.belt.BeltModel;
@@ -40,7 +40,7 @@ public class Belts {
     }
 
     public static void generateBelts() {
-        for(Material material : GTCEuAPI.materialManager.getRegisteredMaterials()) {
+        for(Material material : GTRegistries.MATERIALS.values()) {
             if(material.hasProperty(GreatePropertyKeys.BELT)) {
                 var gtBeltEntry = GreateRegistries.REGISTRATE
                         .block(material.getName() + "_belt", TieredBeltBlock::new)

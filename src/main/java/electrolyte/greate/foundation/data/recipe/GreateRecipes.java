@@ -1,8 +1,8 @@
 package electrolyte.greate.foundation.data.recipe;
 
-import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlags;
+import com.gregtechceu.gtceu.api.registry.GTRegistries;
 import electrolyte.greate.Greate;
 import electrolyte.greate.foundation.data.recipe.machine.*;
 import net.minecraft.data.recipes.FinishedRecipe;
@@ -25,7 +25,7 @@ public class GreateRecipes {
         GreateMechanicalCraftingRecipes.register(provider);
         GreateSequencedAssemblyRecipes.register(provider);
 
-        for(Material material : GTCEuAPI.materialManager.getRegisteredMaterials()) {
+        for(Material material : GTRegistries.MATERIALS.values()) {
             if(material.hasFlag(MaterialFlags.NO_UNIFICATION)) continue;
             GreateCraftingTableRecipes.registerMaterialRecipes(provider, material);
             GreateCuttingMachineRecipes.registerMaterialRecipes(provider, material);

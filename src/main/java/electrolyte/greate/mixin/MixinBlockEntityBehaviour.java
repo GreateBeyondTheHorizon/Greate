@@ -7,7 +7,6 @@ import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour
 import electrolyte.greate.compat.gtceu.machine.kinetic.TieredKineticMachine;
 import electrolyte.greate.compat.gtceu.machine.kinetic.trait.KineticMachineTrait;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import org.spongepowered.asm.mixin.Mixin;

@@ -74,7 +74,8 @@ public class Greate {
             DynamicRenderManager.register(Greate.id("millstone_cog"), MillstoneCogRender.TYPE);
         }
 
-        GreateRegistries.REGISTRATE.registerRegistrate();
+        GreateRegistries.REGISTRATE.registerEventListeners(context.getModEventBus());
+
         context.getModEventBus().addGenericListener(MachineDefinition.class, GreateRegistries::registerMachines);
         context.getModEventBus().addGenericListener(GTRecipeType.class, GreateRegistries::registerRecipeTypes);
 

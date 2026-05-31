@@ -2,9 +2,9 @@ package electrolyte.greate.registry;
 
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
-import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
+import com.gregtechceu.gtceu.api.registry.GTRegistries;
 import com.gregtechceu.gtceu.common.data.GTItems;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllSpriteShifts;
@@ -50,7 +50,7 @@ public class Shafts {
     }
 
     public static void generateShafts() {
-        for(Material mat : GTCEuAPI.materialManager.getRegisteredMaterials()) {
+        for(Material mat : GTRegistries.MATERIALS.values()) {
             if(!mat.hasProperty(GreatePropertyKeys.KINETIC)) continue;
             KineticProperty prop = mat.getProperty(GreatePropertyKeys.KINETIC);
             int tier = prop.getTier();
@@ -75,7 +75,7 @@ public class Shafts {
     }
 
     public static void generatePoweredShafts() {
-        for(Material mat : GTCEuAPI.materialManager.getRegisteredMaterials()) {
+        for(Material mat : GTRegistries.MATERIALS.values()) {
             if(!mat.hasProperty(GreatePropertyKeys.KINETIC)) continue;
             KineticProperty prop = mat.getProperty(GreatePropertyKeys.KINETIC);
             int tier = prop.getTier();
@@ -93,7 +93,7 @@ public class Shafts {
     }
 
     public static void generateAndesiteEncasedShafts() {
-        for(Material mat : GTCEuAPI.materialManager.getRegisteredMaterials()) {
+        for(Material mat : GTRegistries.MATERIALS.values()) {
              if(!mat.hasProperty(GreatePropertyKeys.KINETIC)) continue;
              KineticProperty prop = mat.getProperty(GreatePropertyKeys.KINETIC);
              int tier = prop.getTier();
@@ -111,7 +111,7 @@ public class Shafts {
     }
 
     public static void generateBrassEncasedShafts() {
-        for(Material mat : GTCEuAPI.materialManager.getRegisteredMaterials()) {
+        for(Material mat : GTRegistries.MATERIALS.values()) {
              if(!mat.hasProperty(GreatePropertyKeys.KINETIC)) continue;
              KineticProperty prop = mat.getProperty(GreatePropertyKeys.KINETIC);
              int tier = prop.getTier();

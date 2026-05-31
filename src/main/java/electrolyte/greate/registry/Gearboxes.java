@@ -2,9 +2,9 @@ package electrolyte.greate.registry;
 
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
-import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
+import com.gregtechceu.gtceu.api.registry.GTRegistries;
 import com.gregtechceu.gtceu.common.data.GTItems;
 import com.simibubi.create.AllSpriteShifts;
 import com.simibubi.create.content.decoration.encasing.EncasedCTBehaviour;
@@ -42,7 +42,7 @@ public class Gearboxes {
     }
 
     public static void generateGearboxes() {
-        for(Material mat : GTCEuAPI.materialManager.getRegisteredMaterials()) {
+        for(Material mat : GTRegistries.MATERIALS.values()) {
             if(!mat.hasProperty(GreatePropertyKeys.KINETIC)) continue;
             if(!mat.hasProperty(GreatePropertyKeys.COGWHEEL)) continue;
             KineticProperty prop = mat.getProperty(GreatePropertyKeys.KINETIC);
@@ -68,7 +68,7 @@ public class Gearboxes {
     }
 
     public static void generateVerticalGearboxes() {
-        for(Material mat : GTCEuAPI.materialManager.getRegisteredMaterials()) {
+        for(Material mat : GTRegistries.MATERIALS.values()) {
             if(!mat.hasProperty(GreatePropertyKeys.KINETIC)) continue;
             if(!mat.hasProperty(GreatePropertyKeys.COGWHEEL)) continue;
             var gearboxEntry = GreateRegistries.REGISTRATE

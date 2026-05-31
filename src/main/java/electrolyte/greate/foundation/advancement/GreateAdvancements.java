@@ -1,9 +1,7 @@
 package electrolyte.greate.foundation.advancement;
 
 import com.google.common.collect.Sets;
-import com.simibubi.create.AllItems;
 import electrolyte.greate.foundation.advancement.GreateAdvancement.Builder;
-import electrolyte.greate.registry.Belts;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
@@ -20,9 +18,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
-
-import static electrolyte.greate.foundation.advancement.GreateAdvancement.TaskType.SECRET_NOISY;
-import static electrolyte.greate.foundation.advancement.GreateAdvancement.TaskType.SILENT;
 
 public class GreateAdvancements implements DataProvider {
 

@@ -1,16 +1,12 @@
 package electrolyte.greate.mixin;
 
 import com.gregtechceu.gtceu.api.block.MetaMachineBlock;
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
 import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
-import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import electrolyte.greate.compat.gtceu.machine.kinetic.TieredKineticWorkableMachine;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
@@ -23,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(DirectBeltInputBehaviour.class)
 public abstract class MixinDirectBeltInputBehaviour extends MixinBlockEntityBehaviour {
 
-    @Inject(method = "Lcom/simibubi/create/content/kinetics/belt/behaviour/DirectBeltInputBehaviour;defaultInsertionCallback(Lcom/simibubi/create/content/kinetics/belt/transport/TransportedItemStack;Lnet/minecraft/core/Direction;Z)Lnet/minecraft/world/item/ItemStack;", at = @At(value = "RETURN", ordinal = 0), remap = false, cancellable = true)
+    @Inject(method = "defaultInsertionCallback(Lcom/simibubi/create/content/kinetics/belt/transport/TransportedItemStack;Lnet/minecraft/core/Direction;Z)Lnet/minecraft/world/item/ItemStack;", at = @At(value = "RETURN", ordinal = 0), remap = false, cancellable = true)
     private void greate_defaultInsertionCallback(TransportedItemStack inserted, Direction side, boolean simulate, CallbackInfoReturnable<ItemStack> cir) {
         if(blockEntity.getBlockState().getBlock() instanceof MetaMachineBlock mmb) {
             BlockEntity be = blockEntity.getLevel().getBlockEntity(blockEntity.getBlockPos());

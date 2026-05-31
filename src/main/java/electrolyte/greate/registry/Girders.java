@@ -2,9 +2,9 @@ package electrolyte.greate.registry;
 
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
-import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
+import com.gregtechceu.gtceu.api.registry.GTRegistries;
 import com.simibubi.create.content.decoration.girder.ConnectedGirderModel;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
@@ -12,9 +12,9 @@ import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import electrolyte.greate.Greate;
 import electrolyte.greate.GreateRegistries;
-import electrolyte.greate.content.decoration.girder.TieredGirderEncasedShaftBlock;
 import electrolyte.greate.compat.gtceu.material.GreatePropertyKeys;
 import electrolyte.greate.compat.gtceu.material.KineticProperty;
+import electrolyte.greate.content.decoration.girder.TieredGirderEncasedShaftBlock;
 import electrolyte.greate.foundation.client.models.ShaftModel;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.MapColor;
@@ -32,7 +32,7 @@ public class Girders {
     }
 
     public static void generateGirders() {
-        for(Material mat : GTCEuAPI.materialManager.getRegisteredMaterials()) {
+        for(Material mat : GTRegistries.MATERIALS.values()) {
             if(!mat.hasProperty(GreatePropertyKeys.KINETIC)) continue;
             KineticProperty prop = mat.getProperty(GreatePropertyKeys.KINETIC);
             int tier = prop.getTier();

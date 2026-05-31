@@ -10,7 +10,7 @@ import com.simibubi.create.content.kinetics.belt.BeltSlicer;
 import com.simibubi.create.content.kinetics.belt.BeltSlicer.Feedback;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
-import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
+import electrolyte.greate.compat.gtceu.material.GreatePropertyKeys;
 import electrolyte.greate.content.kinetics.belt.TieredBeltBlock;
 import electrolyte.greate.content.kinetics.belt.TieredBeltBlockEntity;
 import electrolyte.greate.content.kinetics.belt.item.TieredBeltConnectorItem;

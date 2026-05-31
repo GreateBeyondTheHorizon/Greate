@@ -1,7 +1,7 @@
 package electrolyte.greate.content.kinetics.belt;
 
-import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
+import com.gregtechceu.gtceu.api.registry.GTRegistries;
 import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.simibubi.create.content.kinetics.belt.BeltBlockEntity;
 import electrolyte.greate.GreateValues;
@@ -39,7 +39,7 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
     protected void read(CompoundTag compound, boolean clientPacket) {
         super.read(compound, clientPacket);
         if(compound.contains("ShaftMaterial")) this.shaftMaterial =
-                GTCEuAPI.materialManager.getMaterial(compound.getString("ShaftMaterial"));
+                GTRegistries.MATERIALS.get(compound.getString("ShaftMaterial"));
     }
 
     public Material getShaftMaterial() {
