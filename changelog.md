@@ -1,1 +1,3 @@
-- Fix crash with tiered encased fan
+- Fix tiered powered shafts not being replaced properly on contraptions
+- Add various mixins to fix belt bugs
+- Create Repair is now required
