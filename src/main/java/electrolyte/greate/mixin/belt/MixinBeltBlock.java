@@ -35,7 +35,7 @@ public abstract class MixinBeltBlock {
         return state.getBlock() instanceof BeltBlock;
     }
 
-    @WrapOperation(method = "updateEntityAfterFallOn", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z", ordinal = 0), remap = false)
+    @WrapOperation(method = "updateEntityAfterFallOn", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z", ordinal = 0, remap = false))
     private static boolean greate_updateEntityAfterFallOn(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
         return state.getBlock() instanceof BeltBlock;
     }
@@ -55,7 +55,7 @@ public abstract class MixinBeltBlock {
         return state.getBlock() instanceof BeltBlock;
     }
 
-    @WrapOperation(method = "use", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/ItemEntry;isIn(Lnet/minecraft/world/item/ItemStack;)Z", ordinal = 0), remap = false)
+    @WrapOperation(method = "use", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/ItemEntry;isIn(Lnet/minecraft/world/item/ItemStack;)Z", ordinal = 0, remap = false))
     private boolean greate_use(ItemEntry<?> instance, ItemStack itemStack, Operation<Boolean> original, @Local(argsOnly = true) Player player, @Local(argsOnly = true) InteractionHand hand) {
         ItemStack mainHandStack = player.getItemInHand(InteractionHand.MAIN_HAND);
         ItemStack offHandStack = player.getItemInHand(InteractionHand.OFF_HAND);
@@ -64,7 +64,7 @@ public abstract class MixinBeltBlock {
                 (hand == InteractionHand.OFF_HAND && offHandStack.is(AllItemTags.WRENCH.tag));
     }
 
-    @WrapOperation(method = "use", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/ItemEntry;isIn(Lnet/minecraft/world/item/ItemStack;)Z", ordinal = 1), remap = false)
+    @WrapOperation(method = "use", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/ItemEntry;isIn(Lnet/minecraft/world/item/ItemStack;)Z", ordinal = 1, remap = false))
     private boolean greate_use(ItemEntry<?> instance, ItemStack itemStack, Operation<Boolean> original, @Local(argsOnly = true) BlockState state, @Local(argsOnly = true) Player player) {
         if(state.getBlock() instanceof TieredBeltBlock tbb) {
             ItemStack mainHandStack = player.getItemInHand(InteractionHand.MAIN_HAND);
@@ -73,7 +73,7 @@ public abstract class MixinBeltBlock {
         } else return original.call(instance, itemStack);
     }
 
-    @WrapOperation(method = "use", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;isIn(Lnet/minecraft/world/item/ItemStack;)Z", ordinal = 0), remap = false)
+    @WrapOperation(method = "use", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;isIn(Lnet/minecraft/world/item/ItemStack;)Z", ordinal = 0, remap = false))
     private boolean greate_use(BlockEntry<?> instance, ItemStack itemStack, Operation<Boolean> original, @Local(argsOnly = true) Level level, @Local(argsOnly = true) BlockPos pos, @Local(argsOnly = true) Player player) {
         if(level.getBlockEntity(pos) instanceof TieredBeltBlockEntity tbbe) {
             ItemStack mainHandStack = player.getItemInHand(InteractionHand.MAIN_HAND);
@@ -83,7 +83,7 @@ public abstract class MixinBeltBlock {
         } else return original.call(instance, itemStack);
     }
 
-    @WrapOperation(method = "onWrenched", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Inventory;placeItemBackInInventory(Lnet/minecraft/world/item/ItemStack;)V"))
+    @WrapOperation(method = "onWrenched", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Inventory;placeItemBackInInventory(Lnet/minecraft/world/item/ItemStack;)V", remap = true), remap = false)
     private void greate_onWrenched(Inventory inventory, ItemStack pStack, Operation<Void> original, @Local(name = "world") Level world, @Local(argsOnly = true) UseOnContext context) {
         if(world.getBlockEntity(context.getClickedPos()) instanceof TieredBeltBlockEntity tbbe) {
             inventory.placeItemBackInInventory(ChemicalHelper.get(shaft, tbbe.getShaftMaterial()));

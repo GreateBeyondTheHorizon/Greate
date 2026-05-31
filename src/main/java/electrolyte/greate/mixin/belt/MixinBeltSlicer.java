@@ -33,7 +33,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(BeltSlicer.class)
 public class MixinBeltSlicer {
 
-    @Inject(method = "useWrench", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;removeBlockEntity(Lnet/minecraft/core/BlockPos;)V"))
+    @Inject(method = "useWrench", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;removeBlockEntity(Lnet/minecraft/core/BlockPos;)V", remap = true), remap = false)
     private static void greate_useWrench(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit, Feedback feedBack, CallbackInfoReturnable<InteractionResult> cir) {
         if(world.getBlockEntity(pos) instanceof TieredBeltBlockEntity tbbe) {
             player.getInventory().placeItemBackInInventory(
@@ -41,7 +41,7 @@ public class MixinBeltSlicer {
         }
     }
 
-    @WrapOperation(method = "useWrench", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Inventory;placeItemBackInInventory(Lnet/minecraft/world/item/ItemStack;)V"), remap = false)
+    @WrapOperation(method = "useWrench", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Inventory;placeItemBackInInventory(Lnet/minecraft/world/item/ItemStack;)V", remap = true), remap = false)
     private static void greate_useWrench(Inventory instance, ItemStack pStack, Operation<Void> original, @Local(argsOnly = true) BlockState state) {
         if(!(state.getBlock() instanceof TieredBeltBlock)) original.call(instance, pStack);
     }
@@ -51,7 +51,7 @@ public class MixinBeltSlicer {
         return state.getBlock() instanceof BeltBlock;
     }
 
-    @WrapOperation(method = "useWrench", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/ItemEntry;isIn(Lnet/minecraft/world/item/ItemStack;)Z"), remap=false)
+    @WrapOperation(method = "useWrench", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/ItemEntry;isIn(Lnet/minecraft/world/item/ItemStack;)Z"), remap = false)
     private static boolean greate_useWrench(ItemEntry<?> instance, ItemStack itemStack, Operation<Boolean> original, @Local(argsOnly = true) BlockState blockState) {
         if(blockState.getBlock() instanceof TieredBeltBlock tbb) {
             ItemStack beltConnector = ChemicalHelper.get(GreateTagPrefixes.beltConnector, tbb.getBeltMaterial());
@@ -80,14 +80,14 @@ public class MixinBeltSlicer {
         return state.getBlock() instanceof BeltBlock;
     }
 
-    @WrapOperation(method = "useConnector", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Inventory;placeItemBackInInventory(Lnet/minecraft/world/item/ItemStack;)V", ordinal = 0), remap = false)
+    @WrapOperation(method = "useConnector", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Inventory;placeItemBackInInventory(Lnet/minecraft/world/item/ItemStack;)V", ordinal = 0, remap = true), remap = false)
     private static void greate_useConnector(Inventory instance, ItemStack pStack, Operation<Void> original, @Local(name = "mergedController") BeltBlockEntity mergedController) {
         if(mergedController instanceof TieredBeltBlockEntity tbbe) {
             instance.placeItemBackInInventory(ChemicalHelper.get(GreateTagPrefixes.shaft, tbbe.getShaftMaterial()).copyWithCount(2));
         } else original.call(instance, pStack);
     }
 
-    @WrapOperation(method = "useConnector", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Inventory;placeItemBackInInventory(Lnet/minecraft/world/item/ItemStack;)V", ordinal = 1), remap = false)
+    @WrapOperation(method = "useConnector", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Inventory;placeItemBackInInventory(Lnet/minecraft/world/item/ItemStack;)V", ordinal = 1, remap = true), remap = false)
     private static void greate_useConnector(Inventory instance, ItemStack pStack, Operation<Void> original, @Local(argsOnly = true) BlockState state) {
         if(state.getBlock() instanceof TieredBeltBlock tbb) {
             instance.placeItemBackInInventory(ChemicalHelper.get(GreateTagPrefixes.beltConnector, tbb.getBeltMaterial()));
