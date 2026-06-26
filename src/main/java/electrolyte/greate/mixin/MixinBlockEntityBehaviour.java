@@ -4,7 +4,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.simibubi.create.foundation.blockEntity.SmartBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
-import electrolyte.greate.compat.gtceu.machine.kinetic.TieredKineticMachine;
+import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredKineticMachine;
 import electrolyte.greate.compat.gtceu.machine.kinetic.trait.KineticMachineTrait;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;

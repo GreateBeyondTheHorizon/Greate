@@ -1,7 +1,7 @@
 package electrolyte.greate.compat.emi;
 
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
-import com.lowdragmc.lowdraglib.emi.ModularEmiRecipe;
+import com.gregtechceu.gtceu.integration.recipeviewer.emi.recipe.GTEmiRecipe;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.EmiStack;
@@ -11,24 +11,22 @@ import electrolyte.greate.GreateValues;
 import electrolyte.greate.compat.gtceu.capability.recipe.StressRecipeCapability;
 import electrolyte.greate.compat.gtceu.common.data.machines.GreateMachines;
 import electrolyte.greate.compat.jei.category.animations.TieredAnimatedMillstone;
-import electrolyte.greate.compat.xei.widgets.MillstoneWidget;
 import electrolyte.greate.registry.Millstones;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
 import static com.gregtechceu.gtceu.api.GTValues.UHV;
 
-public class MillstoneEmiRecipe extends ModularEmiRecipe<MillstoneWidget> {
+public class MillstoneEmiRecipe extends GTEmiRecipe {
 
     private final GTRecipe recipe;
-
-    public MillstoneEmiRecipe(GTRecipe recipe) {
-        super(() -> new MillstoneWidget(recipe));
-        this.recipe = recipe;
-    }
-
     public static final EmiRecipeCategory MILLSTONE_CATEGORY = new EmiRecipeCategory(Greate.id("milling"),
             EmiStack.of(GreateMachines.MILLSTONES[UHV].asStack()));
+
+    public MillstoneEmiRecipe(GTRecipe recipe) {
+        super(recipe, MILLSTONE_CATEGORY);
+        this.recipe = recipe;
+    }
 
     @Override
     public EmiRecipeCategory getCategory() {

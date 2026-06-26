@@ -5,11 +5,11 @@ import com.gregtechceu.gtceu.api.machine.trait.NotifiableItemStackHandler;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.kinetics.simpleRelays.ICogWheel;
 import com.simibubi.create.foundation.block.IBE;
-import electrolyte.greate.compat.gtceu.machine.kinetic.TieredKineticMachineBlock;
+import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredKineticMachineBlock;
+import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredKineticWorkableMachine;
 import net.createmod.catnip.data.Iterate;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction.Axis;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -18,6 +18,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
@@ -25,6 +27,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -34,11 +37,6 @@ public class TieredMillstoneMachineBlock extends TieredKineticMachineBlock imple
 
     public TieredMillstoneMachineBlock(Properties properties, MachineDefinition definition) {
         super(Properties.copy(AllBlocks.MILLSTONE.get()), definition, AllBlocks.MILLSTONE.get());
-    }
-
-    @Override
-    public Axis getRotationAxis(BlockState state) {
-        return this.kineticBlock.getRotationAxis(state);
     }
 
     @Override
@@ -86,7 +84,7 @@ public class TieredMillstoneMachineBlock extends TieredKineticMachineBlock imple
         if(!(pEntity instanceof ItemEntity itemEntity)) return;
         if(!pEntity.isAlive()) return;
 
-        TieredMillstoneMachine millstone = null;
+        TieredKineticWorkableMachine millstone = null;
         for(BlockPos pos : Iterate.hereAndBelow(pEntity.blockPosition())) {
             if(millstone == null) millstone = getBlockEntity(pLevel, pos);
         }
@@ -98,5 +96,10 @@ public class TieredMillstoneMachineBlock extends TieredKineticMachineBlock imple
                 .insertItem(0, itemEntity.getItem(), false);
         if(remainder.isEmpty()) itemEntity.discard();
         if(remainder.getCount() < itemEntity.getItem().getCount()) itemEntity.setItem(remainder);
+    }
+
+    @Override
+    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
+        return super.getTicker(level, state, blockEntityType);
     }
 }

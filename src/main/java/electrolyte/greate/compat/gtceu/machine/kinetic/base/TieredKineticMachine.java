@@ -1,4 +1,4 @@
-package electrolyte.greate.compat.gtceu.machine.kinetic;
+package electrolyte.greate.compat.gtceu.machine.kinetic.base;
 
 import com.gregtechceu.gtceu.api.blockentity.BlockEntityCreationInfo;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
@@ -9,6 +9,7 @@ import com.gregtechceu.gtceu.api.sync_system.annotations.SyncToClient;
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import electrolyte.greate.compat.gtceu.machine.kinetic.trait.KineticMachineTrait;
 import electrolyte.greate.compat.gtceu.machine.kinetic.trait.NotifiableStressContainer;
+import electrolyte.greate.content.kinetics.simpleRelays.TieredKineticBlockEntity;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.network.chat.Component;
 
@@ -29,11 +30,11 @@ public class TieredKineticMachine extends MetaMachine implements ITieredMachine,
     public final KineticMachineTrait kineticMachineTrait;
 
 
-    public TieredKineticMachine(BlockEntityCreationInfo info, int tier, IO io) {
+    public TieredKineticMachine(BlockEntityCreationInfo info, int tier, IO io, TieredKineticBlockEntity kineticBE) {
         super(info);
         this.tier = tier;
         this.stressContainer = attachTrait(new NotifiableStressContainer(io));
-        this.kineticMachineTrait = attachTrait(new KineticMachineTrait());
+        this.kineticMachineTrait = attachTrait(new KineticMachineTrait(kineticBE));
     }
 
     @Override
@@ -45,6 +46,14 @@ public class TieredKineticMachine extends MetaMachine implements ITieredMachine,
     @Override
     public int getTier() {
         return tier;
+    }
+
+    public float getSpeed() {
+        return kineticMachineTrait.getKineticBlockEntity().getSpeed();
+    }
+
+    public void notifyUpdate() {
+        kineticMachineTrait.getKineticBlockEntity().notifyUpdate();
     }
 
     @Override

@@ -63,13 +63,13 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
     public TieredProcessingRecipeBuilder<T> withItemIngredientsGT(List<Content> ingredients) {
         NonNullList<Ingredient> nonNullList = NonNullList.create();
         for(Content c : ingredients) {
-            if((Ingredient) c.getContent() instanceof SizedIngredient sizedIng) {
+            if((Ingredient) c.content() instanceof SizedIngredient sizedIng) {
                 if(sizedIng.getInner() instanceof IntCircuitIngredient) {
                     continue;
                 }
             }
-            if(c.getContent() instanceof IntCircuitIngredient) continue;
-            nonNullList.add((Ingredient) c.getContent());
+            if(c.content() instanceof IntCircuitIngredient) continue;
+            nonNullList.add((Ingredient) c.content());
         }
         return withItemIngredients(nonNullList);
     }
@@ -96,9 +96,9 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
     public TieredProcessingRecipeBuilder<T> withItemOutputsGT(List<Content> list) {
         NonNullList<ProcessingOutput> nonNullList = NonNullList.create();
         for(Content c : list) {
-            ItemStack[] items = ((Ingredient) c.content).getItems();
+            ItemStack[] items = ((Ingredient) c.content()).getItems();
             for (ItemStack item : items) {
-                nonNullList.add(new ProcessingOutput(item, (float) c.chance / 10000));
+                nonNullList.add(new ProcessingOutput(item, (float) c.chance() / 10000));
             }
         }
         return withItemOutputs(nonNullList);
@@ -116,7 +116,7 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
     public TieredProcessingRecipeBuilder<T> withFluidIngredientsGT(List<Content> ingredients) {
         NonNullList<FluidIngredient> nonNullList = NonNullList.create();
         for(Content c : ingredients) {
-            com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient ingredient = (com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient) c.getContent();
+            com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient ingredient = (com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient) c.content();
             for(com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient.Value value : ingredient.values) {
                 if(value instanceof TagValue tag) {
                     nonNullList.add(FluidIngredient.fromTag(tag.tag(), ingredient.getAmount()));
@@ -140,7 +140,7 @@ public class TieredProcessingRecipeBuilder<T extends TieredProcessingRecipe<?>> 
     public TieredProcessingRecipeBuilder<T> withFluidOutputsGT(List<Content> list) {
         NonNullList<FluidStack> nonNullList = NonNullList.create();
         for(Content c : list) {
-            FluidStack[] fluids = ((com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient) c.content).getStacks();
+            FluidStack[] fluids = ((com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient) c.content()).getStacks();
             for (FluidStack fluid : fluids) {
                 nonNullList.add(new FluidStack(fluid.getFluid(), fluid.getAmount()));
             }

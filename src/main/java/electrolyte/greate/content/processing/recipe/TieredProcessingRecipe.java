@@ -92,9 +92,9 @@ public abstract class TieredProcessingRecipe<T extends Container> extends Proces
     public static int getCircuitFromGTRecipe(List<Content> inputContents) {
         int circuitNumber = -1;
         for(Content c : inputContents) {
-            if(((Ingredient) c.getContent()).getItems().length == 0) continue;
-            if(((Ingredient) c.getContent()).getItems()[0].is(GTItems.PROGRAMMED_CIRCUIT.asItem())) {
-                ItemStack circuit = ((Ingredient) c.getContent()).getItems()[0];
+            if(((Ingredient) c.content()).getItems().length == 0) continue;
+            if(((Ingredient) c.content()).getItems()[0].is(GTItems.PROGRAMMED_CIRCUIT.asItem())) {
+                ItemStack circuit = ((Ingredient) c.content()).getItems()[0];
                 circuitNumber = IntCircuitBehaviour.getCircuitConfiguration(circuit);
                 break;
             }

@@ -1,4 +1,4 @@
-package electrolyte.greate.compat.gtceu.machine.kinetic;
+package electrolyte.greate.compat.gtceu.machine.kinetic.base;
 
 import com.gregtechceu.gtceu.api.block.MetaMachineBlock;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
@@ -9,6 +9,7 @@ import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Direction.Axis;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -34,6 +35,11 @@ public abstract class TieredKineticMachineBlock extends MetaMachineBlock impleme
     public TieredKineticMachineBlock(Properties properties, MachineDefinition definition, KineticBlock kineticBlock) {
         super(properties, definition);
         this.kineticBlock = kineticBlock;
+    }
+
+    @Override
+    public Axis getRotationAxis(BlockState state) {
+        return kineticBlock.getRotationAxis(state);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package electrolyte.greate.compat.gtceu.machine.kinetic;
+package electrolyte.greate.compat.gtceu.machine.kinetic.millstone;
 
 import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
 import com.simibubi.create.foundation.advancement.AllAdvancements;

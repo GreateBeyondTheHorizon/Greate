@@ -45,7 +45,7 @@ public class GreateAddon implements IGTAddon {
 
 	@Override
 	public void registerRecipeCapabilities() {
-		GTRegistries.RECIPE_CAPABILITIES.register(StressRecipeCapability.STRESS_CAPABILITY.name, StressRecipeCapability.STRESS_CAPABILITY);
+		GTRegistries.RECIPE_CAPABILITIES.register(StressRecipeCapability.STRESS_CAPABILITY.id, StressRecipeCapability.STRESS_CAPABILITY);
 	}
 
 	@Override

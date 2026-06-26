@@ -1,7 +1,7 @@
 package electrolyte.greate.mixin;
 
 import com.gregtechceu.gtceu.api.recipe.category.GTRecipeCategory;
-import com.gregtechceu.gtceu.integration.emi.GTEMIPlugin;
+import com.gregtechceu.gtceu.integration.recipeviewer.emi.GTEMIPlugin;
 import electrolyte.greate.compat.gtceu.common.data.GreateRecipeTypes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

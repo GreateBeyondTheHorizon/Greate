@@ -1,4 +1,4 @@
-package electrolyte.greate.compat.gtceu.machine.kinetic;
+package electrolyte.greate.compat.gtceu.machine.kinetic.base;
 
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import net.minecraft.resources.ResourceLocation;

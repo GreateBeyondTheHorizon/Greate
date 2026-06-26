@@ -6,8 +6,8 @@ import com.gregtechceu.gtceu.api.machine.trait.MachineTraitType;
 import com.gregtechceu.gtceu.api.machine.trait.NotifiableRecipeHandlerTrait;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import electrolyte.greate.compat.gtceu.capability.recipe.StressRecipeCapability;
-import electrolyte.greate.compat.gtceu.machine.kinetic.ITieredKineticMachine;
-import electrolyte.greate.compat.gtceu.machine.kinetic.TieredKineticMachine;
+import electrolyte.greate.compat.gtceu.machine.kinetic.base.ITieredKineticMachine;
+import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredKineticMachine;
 import electrolyte.greate.mixin.MixinKineticBlockEntityAccessor;
 import org.jetbrains.annotations.NotNull;
 
@@ -65,7 +65,7 @@ public class NotifiableStressContainer extends NotifiableRecipeHandlerTrait<Floa
             if(!simulate) updateCapacity(inserted);
             remaining -= inserted;
         }
-        return remaining <= 0 ? null : Collections.singletonList(remaining);
+        return remaining <= 0 ? List.of() : Collections.singletonList(remaining);
     }
 
     @Override

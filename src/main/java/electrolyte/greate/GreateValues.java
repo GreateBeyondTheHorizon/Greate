@@ -98,7 +98,7 @@ public class GreateValues {
     @HideFromJS
     public static int convertGTEUToTier(List<Content> content) {
         if (content.isEmpty()) return GTValues.ULV;
-        long eut = ((EnergyStack) content.get(0).getContent()).voltage();
+        long eut = ((EnergyStack) content.get(0).content()).voltage();
         for (int i = 0; i < GTValues.V.length; i++) {
             long voltage = GTValues.V[i];
             if (eut <= voltage) return GTValues.ALL_TIERS[i];
@@ -109,7 +109,7 @@ public class GreateValues {
     @HideFromJS
     public static int convertStressToTier(List<Content> content) {
         if(content.isEmpty()) return GTValues.ULV;
-        float stress = (float) content.get(0).getContent();
+        float stress = (float) content.get(0).content();
         for(int i = 0; i < GTValues.V.length; i++) {
             if(stress <= GTValues.V[i]) return GTValues.ALL_TIERS[i];
         }

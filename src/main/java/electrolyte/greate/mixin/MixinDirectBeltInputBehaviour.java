@@ -3,7 +3,7 @@ package electrolyte.greate.mixin;
 import com.gregtechceu.gtceu.api.block.MetaMachineBlock;
 import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
 import com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack;
-import electrolyte.greate.compat.gtceu.machine.kinetic.TieredKineticWorkableMachine;
+import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredKineticWorkableMachine;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;

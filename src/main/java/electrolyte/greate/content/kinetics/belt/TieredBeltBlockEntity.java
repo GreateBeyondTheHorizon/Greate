@@ -6,6 +6,8 @@ import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.simibubi.create.content.kinetics.belt.BeltBlockEntity;
 import electrolyte.greate.GreateValues;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
+import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -17,6 +19,8 @@ import java.util.List;
 
 public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKineticBlockEntity {
 
+    @Getter
+    @Setter
     private Material shaftMaterial;
 
     public TieredBeltBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
@@ -40,14 +44,6 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
         super.read(compound, clientPacket);
         if(compound.contains("ShaftMaterial")) this.shaftMaterial =
                 GTRegistries.MATERIALS.get(compound.getString("ShaftMaterial"));
-    }
-
-    public Material getShaftMaterial() {
-        return shaftMaterial;
-    }
-
-    public void setShaftMaterial(Material shaftMaterial) {
-        this.shaftMaterial = shaftMaterial;
     }
 
     @Override

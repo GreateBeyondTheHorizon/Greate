@@ -58,8 +58,8 @@ public class GreateLang {
         provider.add("config.greate.option.ignoredRecipeTypes", "Ignored Recipe Types");
         provider.add("config.greate.option.ignoredModIds", "Ignored Mod Ids");
 
-        provider.add("greate.recipe.stress_input", "Usage %s su/tick (%s§r)");
-        provider.add("greate.recipe.rpm_input", "Usage >= %s RPM");
+        provider.add("greate.recipe.stress_input", "Uses %s su/tick");
+        provider.add("greate.recipe.rpm_input", "Usage: >= %s RPM");
         provider.add("greate.recipe.stress_output", "Outputs %s su/tick (%s§r)");
         provider.add("greate.recipe.rpm_output", "Outputs %s RPM");
 

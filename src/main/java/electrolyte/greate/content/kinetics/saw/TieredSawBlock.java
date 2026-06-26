@@ -32,6 +32,7 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -39,6 +40,8 @@ import java.util.function.Supplier;
 import static electrolyte.greate.GreateValues.TM;
 import static electrolyte.greate.registry.GreateTagPrefixes.shaft;
 
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public class TieredSawBlock extends SawBlock implements ITieredBlock, ITieredShaftBlock {
 
     private int tier;
@@ -121,7 +124,7 @@ public class TieredSawBlock extends SawBlock implements ITieredBlock, ITieredSha
         });
     }
 
-    @MethodsReturnNonnullByDefault
+
     private static class PlacementHelper implements IPlacementHelper {
         @Override
         public Predicate<ItemStack> getItemPredicate() {

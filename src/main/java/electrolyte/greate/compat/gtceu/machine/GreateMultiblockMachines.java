@@ -4,14 +4,14 @@ import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.data.RotationState;
 import com.gregtechceu.gtceu.api.machine.MultiblockMachineDefinition;
 import com.gregtechceu.gtceu.api.machine.multiblock.CoilWorkableElectricMultiblockMachine;
-import com.gregtechceu.gtceu.api.pattern.FactoryBlockPattern;
-import com.gregtechceu.gtceu.api.pattern.Predicates;
+import com.gregtechceu.gtceu.api.multiblock.Predicates;
+import com.gregtechceu.gtceu.api.multiblock.pattern.MultiblockPatternBuilder;
 import com.gregtechceu.gtceu.api.recipe.OverclockingLogic;
 import com.gregtechceu.gtceu.common.data.GTRecipeModifiers;
 import com.simibubi.create.AllBlocks;
 import net.minecraft.network.chat.Component;
 
-import static com.gregtechceu.gtceu.api.pattern.Predicates.*;
+import static com.gregtechceu.gtceu.api.multiblock.Predicates.*;
 import static com.gregtechceu.gtceu.common.data.GCYMBlocks.CASING_WATERTIGHT;
 import static com.gregtechceu.gtceu.common.data.GTBlocks.*;
 import static electrolyte.greate.GreateRegistries.REGISTRATE;
@@ -32,12 +32,12 @@ public class GreateMultiblockMachines {
             .recipeModifiers(GTRecipeModifiers.PARALLEL_HATCH,
                     GTRecipeModifiers.ELECTRIC_OVERCLOCK.apply(OverclockingLogic.NON_PERFECT_OVERCLOCK_SUBTICK))
             .appearanceBlock(CASING_WATERTIGHT)
-            .pattern(d -> FactoryBlockPattern.start()
-                    .aisle("XXXXX", "XXGXX", "XXGXX", "XXGXX", "XXXXX")
-                    .aisle("XXXXX", "XA#AX", "XA#AX", "XA#AX", "XXXXX")
-                    .aisle("XXXXX", "G#D#G", "G###G", "G#P#G", "XXXXX")
-                    .aisle("XXXXX", "XA#AX", "XA#AX", "XA#AX", "XXXXX")
-                    .aisle("XXSXX", "XXGXX", "XXGXX", "XXGXX", "XXXXX")
+            .pattern(d -> MultiblockPatternBuilder.start()
+                    .slice("XXXXX", "XXGXX", "XXGXX", "XXGXX", "XXXXX")
+                    .slice("XXXXX", "XA#AX", "XA#AX", "XA#AX", "XXXXX")
+                    .slice("XXXXX", "G#D#G", "G###G", "G#P#G", "XXXXX")
+                    .slice("XXXXX", "XA#AX", "XA#AX", "XA#AX", "XXXXX")
+                    .slice("XXSXX", "XXGXX", "XXGXX", "XXGXX", "XXXXX")
                     .where('S', controller(blocks(d.get())))
                     .where('X', blocks(CASING_WATERTIGHT.get()).setMinGlobalLimited(70)
                             .or(autoAbilities(d.getRecipeTypes()))

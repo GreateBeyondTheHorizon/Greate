@@ -1,18 +1,22 @@
-package electrolyte.greate.compat.gtceu.machine.kinetic;
+package electrolyte.greate.compat.gtceu.machine.kinetic.base;
 
 import com.gregtechceu.gtceu.api.blockentity.BlockEntityCreationInfo;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.capability.recipe.IRecipeHandler;
-import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
 import com.gregtechceu.gtceu.api.machine.feature.IOverclockMachine;
 import com.gregtechceu.gtceu.api.machine.feature.IRecipeLogicMachine;
-import com.gregtechceu.gtceu.api.machine.trait.*;
+import com.gregtechceu.gtceu.api.machine.trait.IRecipeHandlerTrait;
+import com.gregtechceu.gtceu.api.machine.trait.MachineTrait;
+import com.gregtechceu.gtceu.api.machine.trait.RecipeHandlerList;
+import com.gregtechceu.gtceu.api.machine.trait.RecipeLogic;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.sync_system.annotations.SaveField;
 import com.gregtechceu.gtceu.api.sync_system.annotations.SyncToClient;
 import com.gregtechceu.gtceu.common.machine.trait.CleanroomReceiverTrait;
 import com.gregtechceu.gtceu.utils.ISubscription;
+import electrolyte.greate.compat.gtceu.machine.kinetic.StressRecipeHandler;
+import electrolyte.greate.content.kinetics.simpleRelays.TieredKineticBlockEntity;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
@@ -42,18 +46,16 @@ public class TieredKineticWorkableMachine extends TieredKineticMachine implement
     @Getter
     protected final CleanroomReceiverTrait cleanroomReceiverTrait;
 
-    @SaveField
-    @SyncToClient
-    public final NotifiableItemStackHandler importItems, exportItems;
-
     @Getter
     protected final Map<IO, List<RecipeHandlerList>> capabilitiesProxy;
     @Getter
     protected final Map<IO, Map<RecipeCapability<?>, List<IRecipeHandler<?>>>> capabilitiesFlat;
     protected final List<ISubscription> traitSubscriptions;
 
-    public TieredKineticWorkableMachine(BlockEntityCreationInfo info, int tier, RecipeLogic recipeLogic, IO io) {
-        super(info, tier, io);
+    private double stressConversionRate = 1.0;
+
+    private TieredKineticWorkableMachine(BlockEntityCreationInfo info, int tier, RecipeLogic recipeLogic, IO io, TieredKineticBlockEntity kineticBE) {
+        super(info, tier, io, kineticBE);
         this.recipeTypes = this.getDefinition().getRecipeTypes();
         this.activeRecipeType = 0;
         this.overclockTier = getMaxOverclockTier();
@@ -62,21 +64,26 @@ public class TieredKineticWorkableMachine extends TieredKineticMachine implement
         this.capabilitiesProxy = new EnumMap<>(IO.class);
         this.capabilitiesFlat = new EnumMap<>(IO.class);
         this.traitSubscriptions = new ArrayList<>();
-        this.importItems = attachTrait(new NotifiableItemStackHandler(getRecipeType().getMaxInputs(ItemRecipeCapability.CAP), IO.IN));
-        this.exportItems = attachTrait(new NotifiableItemStackHandler(getRecipeType().getMaxOutputs(ItemRecipeCapability.CAP), IO.OUT));
     }
 
-    public TieredKineticWorkableMachine(BlockEntityCreationInfo info, int tier, IO io) {
-        this(info, tier, new RecipeLogic(), io);
+    public TieredKineticWorkableMachine(BlockEntityCreationInfo info, int tier, IO io, TieredKineticBlockEntity kineticBE) {
+        this(info, tier, new RecipeLogic(), io, kineticBE);
     }
 
-    public TieredKineticWorkableMachine(BlockEntityCreationInfo info, int tier) {
-        this(info, tier, new RecipeLogic(), IO.IN);
+    public TieredKineticWorkableMachine(BlockEntityCreationInfo info, int tier, double stressConversionRate, TieredKineticBlockEntity kineticBE) {
+        this(info, tier, IO.IN, kineticBE);
+        this.stressConversionRate = stressConversionRate;
+    }
+
+    public TieredKineticWorkableMachine(BlockEntityCreationInfo info, int tier, TieredKineticBlockEntity kineticBE) {
+        this(info, tier, IO.IN, kineticBE);
     }
 
     @Override
     public void onLoad() {
         super.onLoad();
+        this.addHandlerList(RecipeHandlerList.of(IO.IN, new StressRecipeHandler(stressContainer, stressConversionRate)));
+
         Map<IO, List<IRecipeHandler<?>>> ioTraits = new EnumMap<>(IO.class);
         for(MachineTrait trait : getAllTraits()) {
             if(trait instanceof IRecipeHandlerTrait<?> handlerTrait) {
@@ -111,13 +118,6 @@ public class TieredKineticWorkableMachine extends TieredKineticMachine implement
         if(this.recipeLogic != null) {
             this.recipeLogic.updateSound();
         }
-    }
-
-    @Override
-    public void onMachineDestroyed() {
-        super.onMachineDestroyed();
-        importItems.dropInventoryInWorld();
-        exportItems.dropInventoryInWorld();
     }
 
     @Override

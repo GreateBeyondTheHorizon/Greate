@@ -11,6 +11,7 @@ import com.gregtechceu.gtceu.common.data.machines.GTMachineUtils;
 import electrolyte.greate.GreateRegistries;
 import electrolyte.greate.compat.gtceu.client.data.models.GreateMachineModels;
 import electrolyte.greate.compat.gtceu.client.renderer.machine.GreateDynamicRenderHelper;
+import electrolyte.greate.compat.gtceu.common.data.GreateRecipeModifiers;
 import electrolyte.greate.compat.gtceu.common.data.GreateRecipeTypes;
 import electrolyte.greate.compat.gtceu.machine.kinetic.millstone.TieredMillstoneMachine;
 import electrolyte.greate.compat.gtceu.machine.kinetic.millstone.TieredMillstoneMachineBlock;

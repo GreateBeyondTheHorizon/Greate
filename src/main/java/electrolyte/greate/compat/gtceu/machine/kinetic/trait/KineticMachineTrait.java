@@ -6,7 +6,6 @@ import com.gregtechceu.gtceu.api.machine.trait.MachineTraitType;
 import com.gregtechceu.gtceu.api.sync_system.annotations.SyncToClient;
 import com.simibubi.create.content.kinetics.RotationPropagator;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
-import electrolyte.greate.compat.gtceu.machine.kinetic.TieredMillstoneMachineBlockEntity;
 import lombok.Getter;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.server.TickTask;
@@ -22,6 +21,10 @@ public class KineticMachineTrait extends MachineTrait {
     private KineticBlockEntity kineticBlockEntity;
     private TickableSubscription kineticsSub;
 
+    public KineticMachineTrait(KineticBlockEntity kineticBlockEntity) {
+        this.kineticBlockEntity = kineticBlockEntity;
+    }
+
     @Override
     public MachineTraitType<?> getTraitType() {
         return TYPE;
@@ -30,7 +33,6 @@ public class KineticMachineTrait extends MachineTrait {
     @Override
     public void onMachineLoad() {
         super.onMachineLoad();
-        kineticBlockEntity = createKineticBlockEntity();
         kineticBlockEntity.setLevel(getLevel());
         kineticBlockEntity.initialize();
 
@@ -55,10 +57,6 @@ public class KineticMachineTrait extends MachineTrait {
     public void onMachineDestroyed() {
         this.getKineticBlockEntity().remove();
         super.onMachineDestroyed();
-    }
-
-    protected TieredMillstoneMachineBlockEntity createKineticBlockEntity() {
-        return new TieredMillstoneMachineBlockEntity(getMachine().getDefinition().getBlockEntityType(), getBlockPos(), getMachine().getBlockState());
     }
 
     public void updateKineticsSubscription() {
