@@ -43,7 +43,7 @@ public class MillstoneEmiRecipe extends GTEmiRecipe {
         super.addWidgets(widgets);
 
         widgets.addDrawable(38, 30, 16, 16, (graphics, mouseX, mouseY, delta) -> {
-            int recipeTier = GreateValues.convertStressToTier(recipe.getInputContents(StressRecipeCapability.STRESS_CAPABILITY));
+            int recipeTier = GreateValues.convertStressToTier(recipe.getTickInputContents(StressRecipeCapability.STRESS_CAPABILITY));
             new TieredAnimatedMillstone(Millstones.MILLSTONES[recipeTier].get()).draw(graphics, 0,0);
         });
 
