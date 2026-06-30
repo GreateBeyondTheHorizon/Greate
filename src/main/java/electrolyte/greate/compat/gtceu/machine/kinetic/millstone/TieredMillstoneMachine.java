@@ -6,6 +6,7 @@ import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.machine.trait.NotifiableItemStackHandler;
 import com.gregtechceu.gtceu.api.sync_system.annotations.SaveField;
 import com.gregtechceu.gtceu.api.sync_system.annotations.SyncToClient;
+import com.simibubi.create.foundation.advancement.AllAdvancements;
 import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredKineticWorkableMachine;
 
 public class TieredMillstoneMachine extends TieredKineticWorkableMachine {
@@ -25,5 +26,10 @@ public class TieredMillstoneMachine extends TieredKineticWorkableMachine {
         super.onMachineDestroyed();
         importItems.dropInventoryInWorld();
         exportItems.dropInventoryInWorld();
+    }
+
+    @Override
+    public void afterWorking() {
+        this.kineticMachineTrait.getKineticBlockEntity().award(AllAdvancements.MILLSTONE);
     }
 }
