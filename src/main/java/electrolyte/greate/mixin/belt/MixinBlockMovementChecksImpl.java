@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public class MixinBlockMovementChecksImpl {
 
     @WrapOperation(method = "isMovementAllowedFallback", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z"), remap = false)
-    private static boolean greate_isMovementAllowedFallback(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
+    private static boolean greate$isMovementAllowedFallback(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
         return state.getBlock() instanceof BeltBlock;
     }
 }

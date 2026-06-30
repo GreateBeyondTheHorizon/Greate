@@ -34,7 +34,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MixinBeltSlicer {
 
     @Inject(method = "useWrench", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;removeBlockEntity(Lnet/minecraft/core/BlockPos;)V", remap = true), remap = false)
-    private static void greate_useWrench(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit, Feedback feedBack, CallbackInfoReturnable<InteractionResult> cir) {
+    private static void greate$useWrench(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit, Feedback feedBack, CallbackInfoReturnable<InteractionResult> cir) {
         if(world.getBlockEntity(pos) instanceof TieredBeltBlockEntity tbbe) {
             player.getInventory().placeItemBackInInventory(
                     ChemicalHelper.get(GreateTagPrefixes.shaft, tbbe.getShaftMaterial()));
@@ -42,17 +42,17 @@ public class MixinBeltSlicer {
     }
 
     @WrapOperation(method = "useWrench", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Inventory;placeItemBackInInventory(Lnet/minecraft/world/item/ItemStack;)V", remap = true), remap = false)
-    private static void greate_useWrench(Inventory instance, ItemStack pStack, Operation<Void> original, @Local(argsOnly = true) BlockState state) {
+    private static void greate$useWrench(Inventory instance, ItemStack pStack, Operation<Void> original, @Local(argsOnly = true) BlockState state) {
         if(!(state.getBlock() instanceof TieredBeltBlock)) original.call(instance, pStack);
     }
 
     @WrapOperation(method = "useWrench", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z"), remap = false)
-    private static boolean greate_useWrench(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
+    private static boolean greate$useWrench(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
         return state.getBlock() instanceof BeltBlock;
     }
 
     @WrapOperation(method = "useWrench", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/ItemEntry;isIn(Lnet/minecraft/world/item/ItemStack;)Z"), remap = false)
-    private static boolean greate_useWrench(ItemEntry<?> instance, ItemStack itemStack, Operation<Boolean> original, @Local(argsOnly = true) BlockState blockState) {
+    private static boolean greate$useWrench(ItemEntry<?> instance, ItemStack itemStack, Operation<Boolean> original, @Local(argsOnly = true) BlockState blockState) {
         if(blockState.getBlock() instanceof TieredBeltBlock tbb) {
             ItemStack beltConnector = ChemicalHelper.get(GreateTagPrefixes.beltConnector, tbb.getBeltMaterial());
             return itemStack.is(beltConnector.getItem());
@@ -60,7 +60,7 @@ public class MixinBeltSlicer {
     }
 
     @WrapOperation(method = "useWrench", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;isIn(Lnet/minecraft/world/item/ItemStack;)Z"), remap = false)
-    private static boolean greate_useWrench(BlockEntry<?> instance, ItemStack itemStack, Operation<Boolean> original, @Local(argsOnly = true) Level level, @Local(argsOnly = true) BlockPos pos) {
+    private static boolean greate$useWrench(BlockEntry<?> instance, ItemStack itemStack, Operation<Boolean> original, @Local(argsOnly = true) Level level, @Local(argsOnly = true) BlockPos pos) {
         if(level.getBlockEntity(pos) instanceof TieredBeltBlockEntity tbbe) {
             ItemStack shaftStack = ChemicalHelper.get(GreateTagPrefixes.shaft, tbbe.getShaftMaterial());
             return itemStack.is(shaftStack.getItem());
@@ -69,33 +69,33 @@ public class MixinBeltSlicer {
     }
 
     @WrapOperation(method = "useConnector", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/kinetics/belt/item/BeltConnectorItem;maxLength()Ljava/lang/Integer;"), remap = false)
-    private static Integer greate_useConnector(Operation<Integer> original, @Local(name = "controllerBE") BeltBlockEntity controllerBE, @Local(argsOnly = true) Player player, @Local(argsOnly = true) InteractionHand hand) {
+    private static Integer greate$useConnector(Operation<Integer> original, @Local(name = "controllerBE") BeltBlockEntity controllerBE, @Local(argsOnly = true) Player player, @Local(argsOnly = true) InteractionHand hand) {
         if(controllerBE instanceof TieredBeltBlockEntity && player.getItemInHand(hand).getItem() instanceof TieredBeltConnectorItem tbci) {
             return tbci.getBeltMaterial().getProperty(GreatePropertyKeys.BELT).getMaxLength();
         } else return original.call();
     }
 
     @WrapOperation(method = "useConnector", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z"), remap = false)
-    private static boolean greate_useConnector(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
+    private static boolean greate$useConnector(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
         return state.getBlock() instanceof BeltBlock;
     }
 
     @WrapOperation(method = "useConnector", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Inventory;placeItemBackInInventory(Lnet/minecraft/world/item/ItemStack;)V", ordinal = 0, remap = true), remap = false)
-    private static void greate_useConnector(Inventory instance, ItemStack pStack, Operation<Void> original, @Local(name = "mergedController") BeltBlockEntity mergedController) {
+    private static void greate$useConnector(Inventory instance, ItemStack pStack, Operation<Void> original, @Local(name = "mergedController") BeltBlockEntity mergedController) {
         if(mergedController instanceof TieredBeltBlockEntity tbbe) {
             instance.placeItemBackInInventory(ChemicalHelper.get(GreateTagPrefixes.shaft, tbbe.getShaftMaterial()).copyWithCount(2));
         } else original.call(instance, pStack);
     }
 
     @WrapOperation(method = "useConnector", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Inventory;placeItemBackInInventory(Lnet/minecraft/world/item/ItemStack;)V", ordinal = 1, remap = true), remap = false)
-    private static void greate_useConnector(Inventory instance, ItemStack pStack, Operation<Void> original, @Local(argsOnly = true) BlockState state) {
+    private static void greate$useConnector(Inventory instance, ItemStack pStack, Operation<Void> original, @Local(argsOnly = true) BlockState state) {
         if(state.getBlock() instanceof TieredBeltBlock tbb) {
             instance.placeItemBackInInventory(ChemicalHelper.get(GreateTagPrefixes.beltConnector, tbb.getBeltMaterial()));
         } else original.call(instance, pStack);
     }
 
     @Inject(method = "useConnector", at = @At(value = "FIELD", target = "Lcom/simibubi/create/content/kinetics/belt/BeltBlockEntity;color:Ljava/util/Optional;", opcode = Opcodes.PUTFIELD), remap = false)
-    private static void greate_useConnector(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit, Feedback feedBack, CallbackInfoReturnable<InteractionResult> cir, @Local(name = "controllerBE") BeltBlockEntity controllerBE, @Local(name = "segmentBE", ordinal = 2) BeltBlockEntity segmentBE) {
+    private static void greate$useConnector(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit, Feedback feedBack, CallbackInfoReturnable<InteractionResult> cir, @Local(name = "controllerBE") BeltBlockEntity controllerBE, @Local(name = "segmentBE", ordinal = 2) BeltBlockEntity segmentBE) {
         if(controllerBE instanceof TieredBeltBlockEntity tbbe) {
             ((TieredBeltBlockEntity) segmentBE).setShaftMaterial(tbbe.getShaftMaterial());
         }
@@ -103,7 +103,7 @@ public class MixinBeltSlicer {
 
 
     @WrapOperation(method = "tickHoveringInformation", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z"), remap = false)
-    private static boolean greate_tickHoveringInformation(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
+    private static boolean greate$tickHoveringInformation(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
         return state.getBlock() instanceof BeltBlock;
     }
 }

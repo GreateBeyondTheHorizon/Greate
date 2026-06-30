@@ -32,7 +32,7 @@ public abstract class MixinMillstoneBlockEntity extends KineticBlockEntity {
     }
 
     @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/kinetics/millstone/MillingRecipe;matches(Lnet/minecraftforge/items/wrapper/RecipeWrapper;Lnet/minecraft/world/level/Level;)Z"), remap = false)
-    private boolean greate_tick(MillingRecipe instance, RecipeWrapper inv, Level worldIn) {
+    private boolean greate$tick(MillingRecipe instance, RecipeWrapper inv, Level worldIn) {
         if(((MillstoneBlockEntity) (Object) this) instanceof TieredMillstoneBlockEntity tmbe) {
             tmbe.setupRecipe();
             return false;
@@ -41,7 +41,7 @@ public abstract class MixinMillstoneBlockEntity extends KineticBlockEntity {
     }
 
     @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/kinetics/millstone/MillstoneBlockEntity;process()V"), remap = false)
-    private void greate_process(MillstoneBlockEntity millstone) {
+    private void greate$process(MillstoneBlockEntity millstone) {
         if(millstone instanceof TieredMillstoneBlockEntity tmbe) {
             tmbe.processRecipe();
         } else {
@@ -50,7 +50,7 @@ public abstract class MixinMillstoneBlockEntity extends KineticBlockEntity {
     }
 
     @Redirect(method = "canProcess", at = @At(value = "INVOKE", target = "Ljava/util/Optional;isPresent()Z"), remap = false)
-    private boolean greate_canProcess(Optional<MillingRecipe> instance, ItemStack stack) {
+    private boolean greate$canProcess(Optional<MillingRecipe> instance, ItemStack stack) {
         if(((MillstoneBlockEntity) (Object) this) instanceof TieredMillstoneBlockEntity tmbe) {
             return tmbe.canProcess(stack);
         }

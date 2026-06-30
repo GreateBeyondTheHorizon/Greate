@@ -29,12 +29,12 @@ import org.spongepowered.asm.mixin.injection.At;
 public class MixinContraption {
 
     @WrapOperation(method = "addBlocksToWorld", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z"), remap = false)
-    private boolean greate_addBlocksToWorld(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
+    private boolean greate$addBlocksToWorld(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
         return state.getBlock() instanceof ShaftBlock;
     }
 
     @WrapOperation(method = "addBlocksToWorld", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/kinetics/simpleRelays/ShaftBlock;pickCorrectShaftType(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;"), remap = false)
-    private BlockState greate_addBlocksToWorld(BlockState stateForPlacement, Level level, BlockPos pos, Operation<BlockState> original) {
+    private BlockState greate$addBlocksToWorld(BlockState stateForPlacement, Level level, BlockPos pos, Operation<BlockState> original) {
         if(stateForPlacement.getBlock() instanceof TieredShaftBlock tsb) {
             return TieredShaftBlock.pickShaftType(stateForPlacement, level, pos, tsb.getMaterial());
         }
@@ -42,22 +42,22 @@ public class MixinContraption {
     }
 
     @WrapOperation(method = "removeBlocksFromWorld", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;is(Ljava/lang/Object;)Z"), remap = false)
-    private boolean greate_removeBlocksFromWorld(BlockEntry<?> instance, Object o, Operation<Boolean> original, @Local(name = "blockIn") Block blockIn) {
+    private boolean greate$removeBlocksFromWorld(BlockEntry<?> instance, Object o, Operation<Boolean> original, @Local(name = "blockIn") Block blockIn) {
         return blockIn instanceof PoweredShaftBlock;
     }
 
     @WrapOperation(method = "removeBlocksFromWorld", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z"), remap = false)
-    private boolean greate_removeBlocksFromWorld(BlockEntry<?> instance, BlockState state, Operation<Boolean> original, @Local(name = "block") StructureBlockInfo block) {
+    private boolean greate$removeBlocksFromWorld(BlockEntry<?> instance, BlockState state, Operation<Boolean> original, @Local(name = "block") StructureBlockInfo block) {
         return block.state().getBlock() instanceof ShaftBlock;
     }
 
     @WrapOperation(method = "capture", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z", ordinal = 1), remap = false)
-    private boolean greate_capture(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
+    private boolean greate$capture(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
         return state.getBlock() instanceof PoweredShaftBlock;
     }
 
     @WrapOperation(method = "capture", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/foundation/utility/BlockHelper;copyProperties(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/block/state/BlockState;"), remap = false)
-    private BlockState greate_capture(BlockState fromState, BlockState toState, Operation<BlockState> original) {
+    private BlockState greate$capture(BlockState fromState, BlockState toState, Operation<BlockState> original) {
         if(fromState.getBlock() instanceof TieredPoweredShaftBlock tpsb) {
             return BlockHelper.copyProperties(fromState, ChemicalHelper.getBlock(GreateTagPrefixes.shaft, tpsb.getMaterial()).defaultBlockState());
         }
@@ -65,7 +65,7 @@ public class MixinContraption {
     }
 
     @WrapOperation(method = "capture", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntityEntry;create(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/block/entity/BlockEntity;"), remap = false)
-    private BlockEntity greate_capture(BlockEntityEntry<?> instance, BlockPos pos, BlockState state, Operation<BlockEntity> original, @Local(name = "blockEntity") BlockEntity blockEntity) {
+    private BlockEntity greate$capture(BlockEntityEntry<?> instance, BlockPos pos, BlockState state, Operation<BlockEntity> original, @Local(name = "blockEntity") BlockEntity blockEntity) {
         if(blockEntity instanceof TieredPoweredShaftBlockEntity) {
             return ModBlockEntityTypes.TIERED_BRACKETED_KINETIC.create(pos, state);
         }
@@ -73,7 +73,7 @@ public class MixinContraption {
     }
 
     @WrapOperation(method = "moveBlock", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z", ordinal = 0), remap = false)
-    private boolean greate_moveBlock(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
+    private boolean greate$moveBlock(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
         return state.getBlock() instanceof BeltBlock;
     }
 }

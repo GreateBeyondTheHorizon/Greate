@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public class MixinKineticBlockEntity {
 
     @WrapOperation(method = "validateKinetics", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;"), remap = false)
-    private BlockEntity greate_validateKinetics(Level level, BlockPos pPos, Operation<BlockEntity> original) {
+    private BlockEntity greate$validateKinetics(Level level, BlockPos pPos, Operation<BlockEntity> original) {
         if(level.getBlockEntity(pPos) instanceof MetaMachine mm) {
             if(mm.getTraitHolder().getTraitOptional(KineticMachineTrait.TYPE).isPresent()) {
                 return mm.getTraitHolder().getTrait(KineticMachineTrait.TYPE).getKineticBlockEntity();
@@ -25,7 +25,7 @@ public class MixinKineticBlockEntity {
     }
 
     @WrapOperation(method = "setSource", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;"))
-    private BlockEntity greate_setSource(Level level, BlockPos pPos, Operation<BlockEntity> original) {
+    private BlockEntity greate$setSource(Level level, BlockPos pPos, Operation<BlockEntity> original) {
         if(level.getBlockEntity(pPos) instanceof MetaMachine mm) {
             if(mm.getTraitHolder().getTraitOptional(KineticMachineTrait.TYPE).isPresent()) {
                 return mm.getTraitHolder().getTrait(KineticMachineTrait.TYPE).getKineticBlockEntity();
@@ -35,7 +35,7 @@ public class MixinKineticBlockEntity {
     }
 
     @WrapOperation(method = "switchToBlockState", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;"))
-    private static BlockEntity greate_switchToBlockState(Level level, BlockPos pPos, Operation<BlockEntity> original) {
+    private static BlockEntity greate$switchToBlockState(Level level, BlockPos pPos, Operation<BlockEntity> original) {
         if(level.getBlockEntity(pPos) instanceof MetaMachine mm) {
             if(mm.getTraitHolder().getTraitOptional(KineticMachineTrait.TYPE).isPresent()) {
                 return mm.getTraitHolder().getTrait(KineticMachineTrait.TYPE).getKineticBlockEntity();

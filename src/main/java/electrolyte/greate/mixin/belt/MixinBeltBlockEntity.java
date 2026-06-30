@@ -13,12 +13,12 @@ import org.spongepowered.asm.mixin.injection.At;
 public class MixinBeltBlockEntity {
 
     @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z"), remap = false)
-    private boolean greate_tick(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
+    private boolean greate$tick(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
         return state.getBlock() instanceof BeltBlock;
     }
 
     @WrapOperation(method = "hasPulley", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z"), remap = false)
-    private boolean greate_hasPulley(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
+    private boolean greate$hasPulley(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
         return state.getBlock() instanceof BeltBlock;
     }
 }

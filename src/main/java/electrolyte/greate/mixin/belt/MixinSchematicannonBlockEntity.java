@@ -30,25 +30,25 @@ import org.spongepowered.asm.mixin.injection.At;
 public class MixinSchematicannonBlockEntity {
 
     @WrapOperation(method = "shouldIgnoreBlockState", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z"), remap = false)
-    private boolean greate_shouldIgnoreBlockState(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
+    private boolean greate$shouldIgnoreBlockState(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
         return state.getBlock() instanceof BeltBlock;
     }
 
     @WrapOperation(method = "launchBlockOrBelt", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z"), remap = false)
-    private boolean greate_launchBlockOrBelt(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
+    private boolean greate$launchBlockOrBelt(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
         return state.getBlock() instanceof BeltBlock;
     }
 
     @WrapOperation(method = "launchBlockOrBelt", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/schematics/cannon/SchematicannonBlockEntity;stripBeltIfNotLast(Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/world/level/block/state/BlockState;"), remap = false)
-    private BlockState greate_launchBlockOrBelt(BlockState blockState, Operation<BlockState> original, @Local(argsOnly = true) BlockEntity blockEntity) {
+    private BlockState greate$launchBlockOrBelt(BlockState blockState, Operation<BlockState> original, @Local(argsOnly = true) BlockEntity blockEntity) {
         if(blockState.getBlock() instanceof TieredBeltBlock) {
-            return greate_stripBeltIfNotLast(blockState, blockEntity);
+            return greate$stripBeltIfNotLast(blockState, blockEntity);
         }
         return original.call(blockState);
     }
 
     @Unique
-    private static BlockState greate_stripBeltIfNotLast(BlockState blockState, BlockEntity blockEntity) {
+    private static BlockState greate$stripBeltIfNotLast(BlockState blockState, BlockEntity blockEntity) {
         BeltPart part = blockState.getValue(BeltBlock.PART);
         if (part == BeltPart.MIDDLE)
             return Blocks.AIR.defaultBlockState();
@@ -76,7 +76,7 @@ public class MixinSchematicannonBlockEntity {
     }
 
     @WrapOperation(method = "launchBelt", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/ItemEntry;asStack()Lnet/minecraft/world/item/ItemStack;"), remap = false)
-    private ItemStack greate_launchBelt(ItemEntry<?> instance, Operation<ItemStack> original, @Local(argsOnly = true) BlockState state) {
+    private ItemStack greate$launchBelt(ItemEntry<?> instance, Operation<ItemStack> original, @Local(argsOnly = true) BlockState state) {
         if(state.getBlock() instanceof TieredBeltBlock tbb) {
             return ChemicalHelper.get(GreateTagPrefixes.beltConnector, tbb.getBeltMaterial());
         }

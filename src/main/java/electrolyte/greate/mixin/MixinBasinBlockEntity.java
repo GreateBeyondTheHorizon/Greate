@@ -32,7 +32,7 @@ public abstract class MixinBasinBlockEntity extends SmartBlockEntity {
     }
 
     @Inject(method = "addBehaviours", at = @At("RETURN"), remap = false)
-    private void greate_addBehaviors(List<BlockEntityBehaviour> behaviours, CallbackInfo ci) {
+    private void greate$addBehaviors(List<BlockEntityBehaviour> behaviours, CallbackInfo ci) {
         behaviours.remove(inputTank);
         behaviours.remove(outputTank);
         inputTank = new SmartFluidTankBehaviour(SmartFluidTankBehaviour.INPUT, this, 2, 16000, true).whenFluidUpdates(() -> contentsChanged = true);
@@ -42,7 +42,7 @@ public abstract class MixinBasinBlockEntity extends SmartBlockEntity {
     }
 
     @WrapOperation(method = "addToGoggleTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;getDescriptionId()Ljava/lang/String;"))
-    private String greate_addToGoggleTooltip(ItemStack instance, Operation<String> original) {
+    private String greate$addToGoggleTooltip(ItemStack instance, Operation<String> original) {
         return instance.getHoverName().getString();
     }
 }

@@ -30,7 +30,7 @@ import static net.minecraft.world.level.block.state.properties.BlockStatePropert
 public class MixinGirderBlock {
 
     @Inject(method = "use", at = @At("RETURN"), cancellable = true)
-    private void greate_use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit, CallbackInfoReturnable<InteractionResult> cir) {
+    private void greate$use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit, CallbackInfoReturnable<InteractionResult> cir) {
         if(Block.byItem(pPlayer.getItemInHand(pHand).getItem()) instanceof TieredShaftBlock tsb) {
             KineticBlockEntity.switchToBlockState(pLevel, pPos, ChemicalHelper.getBlock(girderEncasedShaft, tsb.getMaterial()).defaultBlockState()
                     .setValue(WATERLOGGED, pState.getValue(WATERLOGGED))

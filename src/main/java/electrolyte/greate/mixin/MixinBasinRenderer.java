@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MixinBasinRenderer {
 
     @Inject(method = "renderFluids", at = @At("HEAD"), remap = false, cancellable = true)
-    protected void greate_renderFluids(BasinBlockEntity basin, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay, CallbackInfoReturnable<Float> cir) {
+    protected void greate$renderFluids(BasinBlockEntity basin, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay, CallbackInfoReturnable<Float> cir) {
         SmartFluidTankBehaviour inputFluids = basin.getBehaviour(SmartFluidTankBehaviour.INPUT);
         SmartFluidTankBehaviour outputFluids = basin.getBehaviour(SmartFluidTankBehaviour.OUTPUT);
         SmartFluidTankBehaviour[] tanks = { inputFluids, outputFluids };

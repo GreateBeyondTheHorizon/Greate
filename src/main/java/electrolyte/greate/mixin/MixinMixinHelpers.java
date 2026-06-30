@@ -34,22 +34,22 @@ public class MixinMixinHelpers {
     @Shadow(remap = false) @Final private static VanillaBlockLoot BLOCK_LOOT;
 
     @Inject(method = "generateGTDynamicLoot", at = @At("RETURN"), remap = false)
-    private static void greate_generateGTDynamicLoot(Map<ResourceLocation, LootTable> lootTables, CallbackInfo ci) {
+    private static void greate$generateGTDynamicLoot(Map<ResourceLocation, LootTable> lootTables, CallbackInfo ci) {
         Belts.BELTS.rowMap().forEach((tagPrefix, materialBlockEntryMap) ->
                 MixinHelpers.addMaterialBlockLootTables(lootTables, tagPrefix, materialBlockEntryMap));
 
         Cogwheels.COGWHEELS.rowMap().forEach((tagPrefix, materialBlockEntryMap) ->
                 MixinHelpers.addMaterialBlockLootTables(lootTables, tagPrefix, materialBlockEntryMap));
         Cogwheels.ANDESITE_ENCASED_COGWHEELS.rowMap().forEach((tagPrefix, materialBlockEntryMap) ->
-                greate_generateCustomMaterialBlockLootTables(lootTables, GreateTagPrefixes.cogwheel, materialBlockEntryMap));
+                greate$generateCustomMaterialBlockLootTables(lootTables, GreateTagPrefixes.cogwheel, materialBlockEntryMap));
         Cogwheels.BRASS_ENCASED_COGWHEELS.rowMap().forEach((tagPrefix, materialBlockEntryMap) ->
-                greate_generateCustomMaterialBlockLootTables(lootTables, GreateTagPrefixes.cogwheel, materialBlockEntryMap));
+                greate$generateCustomMaterialBlockLootTables(lootTables, GreateTagPrefixes.cogwheel, materialBlockEntryMap));
         Cogwheels.LARGE_COGWHEELS.rowMap().forEach((tagPrefix, materialBlockEntryMap) ->
                 MixinHelpers.addMaterialBlockLootTables(lootTables, tagPrefix, materialBlockEntryMap));
         Cogwheels.ANDESITE_ENCASED_LARGE_COGWHEELS.rowMap().forEach((tagPrefix, materialBlockEntryMap) ->
-                greate_generateCustomMaterialBlockLootTables(lootTables, GreateTagPrefixes.largeCogwheel, materialBlockEntryMap));
+                greate$generateCustomMaterialBlockLootTables(lootTables, GreateTagPrefixes.largeCogwheel, materialBlockEntryMap));
         Cogwheels.BRASS_ENCASED_LARGE_COGWHEELS.rowMap().forEach((tagPrefix, materialBlockEntryMap) ->
-                greate_generateCustomMaterialBlockLootTables(lootTables, GreateTagPrefixes.largeCogwheel, materialBlockEntryMap));
+                greate$generateCustomMaterialBlockLootTables(lootTables, GreateTagPrefixes.largeCogwheel, materialBlockEntryMap));
 
         Gearboxes.GEARBOXES.rowMap().forEach((tagPrefix, materialBlockEntryMap) ->
                 MixinHelpers.addMaterialBlockLootTables(lootTables, tagPrefix, materialBlockEntryMap));
@@ -57,17 +57,17 @@ public class MixinMixinHelpers {
         Shafts.SHAFTS.rowMap().forEach((tagPrefix, materialBlockEntryMap) ->
                 MixinHelpers.addMaterialBlockLootTables(lootTables, tagPrefix, materialBlockEntryMap));
         Shafts.POWERED_SHAFTS.rowMap().forEach((tagPrefix, materialBlockEntryMap) ->
-                greate_generateCustomMaterialBlockLootTables(lootTables, GreateTagPrefixes.shaft, materialBlockEntryMap));
+                greate$generateCustomMaterialBlockLootTables(lootTables, GreateTagPrefixes.shaft, materialBlockEntryMap));
         Shafts.ANDESITE_ENCASED_SHAFTS.rowMap().forEach((tagPrefix, materialBlockEntryMap) ->
-                greate_generateCustomMaterialBlockLootTables(lootTables, GreateTagPrefixes.shaft, materialBlockEntryMap));
+                greate$generateCustomMaterialBlockLootTables(lootTables, GreateTagPrefixes.shaft, materialBlockEntryMap));
         Shafts.BRASS_ENCASED_SHAFTS.rowMap().forEach((tagPrefix, materialBlockEntryMap) ->
-                greate_generateCustomMaterialBlockLootTables(lootTables, GreateTagPrefixes.shaft, materialBlockEntryMap));
+                greate$generateCustomMaterialBlockLootTables(lootTables, GreateTagPrefixes.shaft, materialBlockEntryMap));
         Girders.GIRDERS.rowMap().forEach((tagPrefix, materialBlockEntryMap) ->
-                greate_generateCustomMaterialBlockLootTables(lootTables, GreateTagPrefixes.shaft, materialBlockEntryMap, AllBlocks.METAL_GIRDER.get()));
+                greate$generateCustomMaterialBlockLootTables(lootTables, GreateTagPrefixes.shaft, materialBlockEntryMap, AllBlocks.METAL_GIRDER.get()));
     }
 
     @Unique
-    private static <B extends Block> void greate_generateCustomMaterialBlockLootTables(Map<ResourceLocation, LootTable> lootTables, TagPrefix tagPrefix, Map<Material, BlockEntry<B>> map, @Nullable Block firstEntry) {
+    private static <B extends Block> void greate$generateCustomMaterialBlockLootTables(Map<ResourceLocation, LootTable> lootTables, TagPrefix tagPrefix, Map<Material, BlockEntry<B>> map, @Nullable Block firstEntry) {
         map.forEach((material, blockEntry) -> {
             ResourceLocation lootTableId = ResourceLocation.fromNamespaceAndPath(blockEntry.getId().getNamespace(), "blocks/" + blockEntry.getId().getPath());
             ((BlockBehaviourAccessor) blockEntry.get()).setDrops(lootTableId);
@@ -87,7 +87,7 @@ public class MixinMixinHelpers {
     }
 
     @Unique
-    private static <B extends Block> void greate_generateCustomMaterialBlockLootTables(Map<ResourceLocation, LootTable> lootTables, TagPrefix tagPrefix, Map<Material, BlockEntry<B>> map) {
-        greate_generateCustomMaterialBlockLootTables(lootTables, tagPrefix, map, null);
+    private static <B extends Block> void greate$generateCustomMaterialBlockLootTables(Map<ResourceLocation, LootTable> lootTables, TagPrefix tagPrefix, Map<Material, BlockEntry<B>> map) {
+        greate$generateCustomMaterialBlockLootTables(lootTables, tagPrefix, map, null);
     }
 }

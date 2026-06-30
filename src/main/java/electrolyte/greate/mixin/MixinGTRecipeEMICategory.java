@@ -11,13 +11,13 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public class MixinGTRecipeEMICategory {
 
     @Redirect(method = "registerDisplays", at = @At(value = "INVOKE", target = "Lcom/gregtechceu/gtceu/api/recipe/category/GTRecipeCategory;shouldRegisterDisplays()Z"), remap = false)
-    private static boolean greate_shouldRegisterDisplays(GTRecipeCategory cat) {
+    private static boolean greate$shouldRegisterDisplays(GTRecipeCategory cat) {
         if(cat == GreateRecipeTypes.MILLSTONE.getCategory()) return false;
         return cat.shouldRegisterDisplays();
     }
 
     @Redirect(method = "registerWorkStations", at = @At(value = "INVOKE", target = "Lcom/gregtechceu/gtceu/api/recipe/category/GTRecipeCategory;isXEIVisible()Z"), remap = false)
-    private static boolean greate_isXEIVisible(GTRecipeCategory cat) {
+    private static boolean greate$isXEIVisible(GTRecipeCategory cat) {
         if(cat == GreateRecipeTypes.MILLSTONE.getCategory()) return false;
         return cat.shouldRegisterDisplays();
     }

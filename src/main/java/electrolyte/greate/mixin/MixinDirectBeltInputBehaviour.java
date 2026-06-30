@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class MixinDirectBeltInputBehaviour extends MixinBlockEntityBehaviour {
 
     @Inject(method = "defaultInsertionCallback(Lcom/simibubi/create/content/kinetics/belt/transport/TransportedItemStack;Lnet/minecraft/core/Direction;Z)Lnet/minecraft/world/item/ItemStack;", at = @At(value = "RETURN", ordinal = 0), remap = false, cancellable = true)
-    private void greate_defaultInsertionCallback(TransportedItemStack inserted, Direction side, boolean simulate, CallbackInfoReturnable<ItemStack> cir) {
+    private void greate$defaultInsertionCallback(TransportedItemStack inserted, Direction side, boolean simulate, CallbackInfoReturnable<ItemStack> cir) {
         if(blockEntity.getBlockState().getBlock() instanceof MetaMachineBlock mmb) {
             BlockEntity be = blockEntity.getLevel().getBlockEntity(blockEntity.getBlockPos());
             if(!(be instanceof TieredKineticWorkableMachine tkwm)) return;

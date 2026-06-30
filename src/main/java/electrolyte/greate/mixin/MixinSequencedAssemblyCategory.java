@@ -31,7 +31,7 @@ public abstract class MixinSequencedAssemblyCategory extends CreateRecipeCategor
     }
 
     @Inject(method = "getTooltipStrings(Lcom/simibubi/create/content/processing/sequenced/SequencedAssemblyRecipe;Lmezz/jei/api/gui/ingredient/IRecipeSlotsView;DD)Ljava/util/List;", at = @At("HEAD"), remap = false, cancellable = true)
-    private void greate_getTooltipStrings(SequencedAssemblyRecipe recipe, IRecipeSlotsView iRecipeSlotsView, double mouseX, double mouseY, CallbackInfoReturnable<List<Component>> cir) {
+    private void greate$getTooltipStrings(SequencedAssemblyRecipe recipe, IRecipeSlotsView iRecipeSlotsView, double mouseX, double mouseY, CallbackInfoReturnable<List<Component>> cir) {
         if(!ModList.get().isLoaded("emi")) return;
         List<Component> tooltip = new ArrayList<>();
 

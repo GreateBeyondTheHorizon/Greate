@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public class MixinKineticBlock {
 
     @WrapOperation(method = "onPlace", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;"), remap = false)
-    private BlockEntity greate_onPlace(Level level, BlockPos pPos, Operation<BlockEntity> original) {
+    private BlockEntity greate$onPlace(Level level, BlockPos pPos, Operation<BlockEntity> original) {
         if(level.getBlockEntity(pPos) instanceof MetaMachine mm) {
             if(mm.getTraitHolder().getTraitOptional(KineticMachineTrait.TYPE).isPresent()) {
                 return mm.getTraitHolder().getTrait(KineticMachineTrait.TYPE).getKineticBlockEntity();
@@ -26,7 +26,7 @@ public class MixinKineticBlock {
     }
 
     @WrapOperation(method = "updateIndirectNeighbourShapes", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/LevelAccessor;getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;"), remap = false)
-    private BlockEntity greate_updateIndirectNeighbourShapes(LevelAccessor level, BlockPos pos, Operation<BlockEntity> original) {
+    private BlockEntity greate$updateIndirectNeighbourShapes(LevelAccessor level, BlockPos pos, Operation<BlockEntity> original) {
         if(level.getBlockEntity(pos) instanceof MetaMachine mm) {
             if(mm.getTraitHolder().getTraitOptional(KineticMachineTrait.TYPE).isPresent()) {
                 return mm.getTraitHolder().getTrait(KineticMachineTrait.TYPE).getKineticBlockEntity();
@@ -35,7 +35,7 @@ public class MixinKineticBlock {
         return original.call(level, pos);
     }
     @WrapOperation(method = "setPlacedBy", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;"), remap = false)
-    private BlockEntity greate_setPlacedBy(Level level, BlockPos pPos, Operation<BlockEntity> original) {
+    private BlockEntity greate$setPlacedBy(Level level, BlockPos pPos, Operation<BlockEntity> original) {
         if(level.getBlockEntity(pPos) instanceof MetaMachine mm) {
             if(mm.getTraitHolder().getTraitOptional(KineticMachineTrait.TYPE).isPresent()) {
                 return mm.getTraitHolder().getTrait(KineticMachineTrait.TYPE).getKineticBlockEntity();

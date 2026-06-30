@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 public class MixinGirderEncasedShaftBlock {
 
     @Inject(method = "onWrenched", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Inventory;placeItemBackInInventory(Lnet/minecraft/world/item/ItemStack;)V"), locals = LocalCapture.CAPTURE_FAILHARD, cancellable = true)
-    private void greate_onWrenched(BlockState state, UseOnContext context, CallbackInfoReturnable<InteractionResult> cir, InteractionResult arg1) {
+    private void greate$onWrenched(BlockState state, UseOnContext context, CallbackInfoReturnable<InteractionResult> cir, InteractionResult arg1) {
         if(state.getBlock() instanceof TieredGirderEncasedShaftBlock tgesb) {
             context.getPlayer().getInventory().placeItemBackInInventory(new ItemStack(tgesb.getShaft()));
             cir.setReturnValue(arg1);

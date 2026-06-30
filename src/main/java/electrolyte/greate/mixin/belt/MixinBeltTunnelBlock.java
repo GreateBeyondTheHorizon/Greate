@@ -13,17 +13,17 @@ import org.spongepowered.asm.mixin.injection.At;
 public class MixinBeltTunnelBlock {
 
     @WrapOperation(method = "isValidPositionForPlacement", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z"), remap = false)
-    private static boolean greate_isValidPositionForPlacement(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
+    private static boolean greate$isValidPositionForPlacement(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
         return state.getBlock() instanceof BeltBlock;
     }
 
     @WrapOperation(method = "getTunnelState", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z"), remap = false)
-    private static boolean greate_getTunnelState(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
+    private static boolean greate$getTunnelState(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
         return state.getBlock() instanceof BeltBlock;
     }
 
     @WrapOperation(method = "hasValidOutput", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z"), remap = false)
-    private static boolean greate_hasValidOutput(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
+    private static boolean greate$hasValidOutput(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
         return state.getBlock() instanceof BeltBlock;
     }
 }

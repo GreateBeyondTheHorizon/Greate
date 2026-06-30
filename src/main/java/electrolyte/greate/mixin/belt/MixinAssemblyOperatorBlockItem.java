@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public class MixinAssemblyOperatorBlockItem {
 
     @WrapOperation(method = "operatesOn", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z"), remap = false)
-    private boolean greate_operatesOn(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
+    private boolean greate$operatesOn(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
         return state.getBlock() instanceof BeltBlock;
     }
 }

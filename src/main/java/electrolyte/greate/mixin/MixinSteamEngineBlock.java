@@ -52,17 +52,17 @@ public abstract class MixinSteamEngineBlock extends FaceAttachedHorizontalDirect
     }
 
     @WrapOperation(method = "isShaftValid", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z", ordinal = 0), remap = false)
-    private static boolean greate_isShaftValid(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
+    private static boolean greate$isShaftValid(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
         return state.getBlock() instanceof ShaftBlock;
     }
 
     @WrapOperation(method = "isShaftValid", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z", ordinal = 1), remap = false)
-    private static boolean greate_isPoweredShaftValid(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
+    private static boolean greate$isPoweredShaftValid(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
         return state.getBlock() instanceof PoweredShaftBlock;
     }
 
     @Inject(method = "onPlace", at = @At("HEAD"), cancellable = true)
-    private void greate_onPlace(BlockState pState, Level pLevel, BlockPos pPos, BlockState pOldState, boolean pIsMoving, CallbackInfo ci) {
+    private void greate$onPlace(BlockState pState, Level pLevel, BlockPos pPos, BlockState pOldState, boolean pIsMoving, CallbackInfo ci) {
         FluidTankBlock.updateBoilerState(pState, pLevel, pPos.relative(getFacing(pState).getOpposite()));
         BlockPos shaftPos = getShaftPos(pState, pPos);
         BlockState shaftState = pLevel.getBlockState(shaftPos);
@@ -78,7 +78,7 @@ public abstract class MixinSteamEngineBlock extends FaceAttachedHorizontalDirect
     }
 
     @WrapOperation(method = "onRemove", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z"))
-    private boolean greate_onRemove(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
+    private boolean greate$onRemove(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
         return state.getBlock() instanceof PoweredShaftBlock;
     }
 }

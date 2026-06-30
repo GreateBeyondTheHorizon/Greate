@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public abstract class MixinAllArmInteractionPointTypes$BeltType {
 
     @WrapOperation(method = "canCreatePoint", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z"), remap = false)
-    private boolean greate_canCreatePoint(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
+    private boolean greate$canCreatePoint(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
         return state.getBlock() instanceof BeltBlock;
     }
 }

@@ -1,4 +1,4 @@
-package electrolyte.greate.mixin;
+package electrolyte.greate.mixin.itemname;
 
 import com.google.gson.JsonParseException;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
@@ -24,7 +24,7 @@ public abstract class MixinSequencedAssemblyRecipe<T extends ProcessingRecipe<?>
     @Shadow(remap = false) private T wrapped;
 
     @Inject(method = "writeToBuffer", at = @At(value = "HEAD"), remap = false, cancellable = true)
-    private void greate_writeToBuffer(FriendlyByteBuf buffer, CallbackInfo ci) {
+    private void greate$writeToBuffer(FriendlyByteBuf buffer, CallbackInfo ci) {
         if(wrapped.getSerializer() instanceof ProcessingRecipeSerializer<?>) {
             ProcessingRecipeSerializer<T> serializer = (ProcessingRecipeSerializer<T>) wrapped.getSerializer();
             buffer.writeResourceLocation(CatnipServices.REGISTRIES.getKeyOrThrow(serializer));
@@ -40,7 +40,7 @@ public abstract class MixinSequencedAssemblyRecipe<T extends ProcessingRecipe<?>
     }
 
     @Inject(method = "readFromBuffer", at = @At("HEAD"), remap = false, cancellable = true)
-    private static void greate_readFromBuffer(FriendlyByteBuf buffer, CallbackInfoReturnable<SequencedRecipe<?>> cir) {
+    private static void greate$readFromBuffer(FriendlyByteBuf buffer, CallbackInfoReturnable<SequencedRecipe<?>> cir) {
         ResourceLocation loc = buffer.readResourceLocation();
         ResourceLocation loc1 = buffer.readResourceLocation();
         RecipeSerializer<?> serializer = ForgeRegistries.RECIPE_SERIALIZERS.getValue(loc);

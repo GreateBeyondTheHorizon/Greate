@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public class MixinBeltFunnelBlock {
 
     @WrapOperation(method = "getShapeForPosition", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z"), remap = false)
-    private static boolean greate_getShapeForPosition(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
+    private static boolean greate$getShapeForPosition(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
         return state.getBlock() instanceof BeltBlock;
     }
 }

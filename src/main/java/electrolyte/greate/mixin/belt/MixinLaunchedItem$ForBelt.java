@@ -26,7 +26,7 @@ public abstract class MixinLaunchedItem$ForBelt extends ForBlockState {
     }
 
     @WrapOperation(method = "place", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;getDefaultState()Lnet/minecraft/world/level/block/state/BlockState;"), remap = false)
-    private BlockState greate_place(BlockEntry<?> instance, Operation<BlockState> original, @Local(argsOnly = true) Level level, @Local(name = "axis") Axis axis, @Local(name = "i") int i, @Local(name = "offset") BlockPos offset) {
+    private BlockState greate$place(BlockEntry<?> instance, Operation<BlockState> original, @Local(argsOnly = true) Level level, @Local(name = "axis") Axis axis, @Local(name = "i") int i, @Local(name = "offset") BlockPos offset) {
         if(state.getBlock() instanceof TieredBeltBlock) {
             BlockPos end = target.offset(offset.getX() * i, offset.getY() * i, offset.getZ() * i);
             BlockState shaftState = level.getBlockState(target);
@@ -37,7 +37,7 @@ public abstract class MixinLaunchedItem$ForBelt extends ForBlockState {
     }
 
     @WrapOperation(method = "place", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/kinetics/belt/item/BeltConnectorItem;createBelts(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;)V"), remap = false)
-    private void greate_place(Level world, BlockPos start, BlockPos end, Operation<Void> original) {
+    private void greate$place(Level world, BlockPos start, BlockPos end, Operation<Void> original) {
         if(state.getBlock() instanceof TieredBeltBlock tbb) {
             TieredBeltConnectorItem.createBelts(world, target, end,
                     ((TieredShaftBlock) world.getBlockState(target).getBlock()).getMaterial(), tbb.getBeltMaterial());

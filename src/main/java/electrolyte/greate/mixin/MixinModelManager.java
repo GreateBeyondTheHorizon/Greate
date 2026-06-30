@@ -19,7 +19,7 @@ import java.util.concurrent.Executor;
 public class MixinModelManager {
 
     @Inject(method = "reload", at = @At("HEAD"))
-    private void greate_reload(PreparationBarrier pPreparationBarrier, ResourceManager pResourceManager, ProfilerFiller pPreparationsProfiler, ProfilerFiller pReloadProfiler, Executor pBackgroundExecutor, Executor pGameExecutor, CallbackInfoReturnable<CompletableFuture<Void>> cir) {
+    private void greate$reload(PreparationBarrier pPreparationBarrier, ResourceManager pResourceManager, ProfilerFiller pPreparationsProfiler, ProfilerFiller pReloadProfiler, Executor pBackgroundExecutor, Executor pGameExecutor, CallbackInfoReturnable<CompletableFuture<Void>> cir) {
         if(!ModLoader.isLoadingStateValid()) return;
         long startTime = System.currentTimeMillis();
         BeltModel.reinitModels();

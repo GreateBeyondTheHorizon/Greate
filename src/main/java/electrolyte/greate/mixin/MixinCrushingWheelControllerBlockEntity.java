@@ -16,13 +16,13 @@ public abstract class MixinCrushingWheelControllerBlockEntity {
     @Shadow(remap = false) protected abstract void intakeItem(ItemEntity itemEntity);
 
     @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/kinetics/crusher/CrushingWheelControllerBlockEntity;applyRecipe()V"), remap = false)
-    private void greate_tick(CrushingWheelControllerBlockEntity cwbe) {
+    private void greate$tick(CrushingWheelControllerBlockEntity cwbe) {
         if(cwbe instanceof TieredCrushingWheelControllerBlockEntity tcwbe) tcwbe.applyValidRecipe();
         else applyRecipe();
     }
 
     @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/kinetics/crusher/CrushingWheelControllerBlockEntity;intakeItem(Lnet/minecraft/world/entity/item/ItemEntity;)V"), remap = false)
-    private void greate_intakeItem(CrushingWheelControllerBlockEntity cwbe, ItemEntity itemEntity) {
+    private void greate$intakeItem(CrushingWheelControllerBlockEntity cwbe, ItemEntity itemEntity) {
         if(cwbe instanceof TieredCrushingWheelControllerBlockEntity tcwbe) tcwbe.intakeItems(itemEntity);
         else intakeItem(itemEntity);
     }

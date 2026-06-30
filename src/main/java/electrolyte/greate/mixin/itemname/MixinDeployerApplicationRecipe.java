@@ -1,4 +1,4 @@
-package electrolyte.greate.mixin;
+package electrolyte.greate.mixin.itemname;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -21,7 +21,7 @@ public abstract class MixinDeployerApplicationRecipe extends ItemApplicationReci
     }
 
     @WrapOperation(method = "getDescriptionForAssembly", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/chat/Component;translatable(Ljava/lang/String;)Lnet/minecraft/network/chat/MutableComponent;"))
-    private MutableComponent greate_getDescriptionForAssembly(String pKey, Operation<MutableComponent> original) {
+    private MutableComponent greate$getDescriptionForAssembly(String pKey, Operation<MutableComponent> original) {
         ItemStack[] matchingStacks = ingredients.get(1).getItems();
         return Component.translatable(matchingStacks[0].getHoverName().getString());
     }

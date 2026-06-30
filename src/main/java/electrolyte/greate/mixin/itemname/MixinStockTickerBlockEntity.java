@@ -1,4 +1,4 @@
-package electrolyte.greate.mixin;
+package electrolyte.greate.mixin.itemname;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public class MixinStockTickerBlockEntity {
 
     @WrapOperation(method = "addToTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;getDescriptionId()Ljava/lang/String;"))
-    private String greate_addToTooltip(ItemStack instance, Operation<String> original) {
+    private String greate$addToTooltip(ItemStack instance, Operation<String> original) {
         return instance.getHoverName().getString();
     }
 }

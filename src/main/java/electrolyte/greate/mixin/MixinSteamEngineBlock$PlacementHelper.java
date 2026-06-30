@@ -31,12 +31,12 @@ import static com.simibubi.create.content.kinetics.steamEngine.SteamEngineBlock.
 public abstract class MixinSteamEngineBlock$PlacementHelper {
 
     @Inject(method = "getItemPredicate", at = @At("HEAD"), remap = false, cancellable = true)
-    private void greate_getItemPredicate(CallbackInfoReturnable<Predicate<ItemStack>> cir) {
+    private void greate$getItemPredicate(CallbackInfoReturnable<Predicate<ItemStack>> cir) {
         cir.setReturnValue(i -> Block.byItem(i.getItem()) instanceof ShaftBlock);
     }
 
     @Inject(method = "getOffset", at = @At("HEAD"), remap = false, cancellable = true)
-    private void greate_getOffset(Player player, Level world, BlockState state, BlockPos pos, BlockHitResult ray, CallbackInfoReturnable<PlacementOffset> cir) {
+    private void greate$getOffset(Player player, Level world, BlockState state, BlockPos pos, BlockHitResult ray, CallbackInfoReturnable<PlacementOffset> cir) {
         Block shaftType = Block.byItem(player.getMainHandItem().getItem());
         if (shaftType instanceof TieredShaftBlock tsb) {
             BlockPos shaftPos = SteamEngineBlock.getShaftPos(state, pos);

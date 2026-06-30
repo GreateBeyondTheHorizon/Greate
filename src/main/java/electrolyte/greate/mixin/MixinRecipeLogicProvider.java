@@ -25,7 +25,7 @@ public abstract class MixinRecipeLogicProvider extends MachineTraitProvider<Reci
     }
 
     @Inject(method = "addTooltip(Lnet/minecraft/nbt/CompoundTag;Lsnownee/jade/api/ITooltip;Lnet/minecraft/world/entity/player/Player;Lsnownee/jade/api/BlockAccessor;Lnet/minecraft/world/level/block/entity/BlockEntity;Lsnownee/jade/api/config/IPluginConfig;)V", at = @At("HEAD"), remap = false, cancellable = true)
-    private void greate_addTooltip(CompoundTag capData, ITooltip tooltip, Player player, BlockAccessor block, BlockEntity blockEntity, IPluginConfig config, CallbackInfo ci) {
+    private void greate$addTooltip(CompoundTag capData, ITooltip tooltip, Player player, BlockAccessor block, BlockEntity blockEntity, IPluginConfig config, CallbackInfo ci) {
         if(block.getBlockState().getBlock() instanceof TieredKineticMachineBlock) {
             ci.cancel();
             return;

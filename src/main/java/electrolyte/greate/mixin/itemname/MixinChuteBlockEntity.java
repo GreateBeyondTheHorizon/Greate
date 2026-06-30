@@ -1,4 +1,4 @@
-package electrolyte.greate.mixin;
+package electrolyte.greate.mixin.itemname;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -27,17 +27,17 @@ public abstract class MixinChuteBlockEntity extends SmartBlockEntity implements 
     }
 
     @WrapOperation(method = "calculatePull", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z"), remap = false)
-    private boolean greate_calculatePull(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
+    private boolean greate$calculatePull(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
         return state.getBlock() instanceof EncasedFanBlock;
     }
 
     @WrapOperation(method = "calculatePush", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z"), remap = false)
-    private boolean greate_calculatePush(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
+    private boolean greate$calculatePush(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
         return state.getBlock() instanceof EncasedFanBlock;
     }
 
     @WrapOperation(method = "addToGoggleTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/chat/Component;translatable(Ljava/lang/String;)Lnet/minecraft/network/chat/MutableComponent;"))
-    private MutableComponent greate_addToGoggleTooltip(String pKey, Operation<MutableComponent> original) {
+    private MutableComponent greate$addToGoggleTooltip(String pKey, Operation<MutableComponent> original) {
         return Component.translatable(item.getHoverName().getString());
     }
 }
