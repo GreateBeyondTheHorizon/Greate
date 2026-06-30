@@ -123,7 +123,9 @@ public class GreateRuntimeRecipes {
 
         private void assembleComponents() {
             builder.duration(recipe.getProcessingDuration());
+            builder.perTick(true);
             builder.input(StressRecipeCapability.STRESS_CAPABILITY, 2.0f);
+            builder.perTick(false);
             for(Ingredient ing : recipe.getIngredients()) {
                 builder.inputItems(ing);
             }
@@ -133,7 +135,7 @@ public class GreateRuntimeRecipes {
             }
             for(ProcessingOutput result : recipe.getRollableResults()) {
                 if(result.getChance() == 1.0) builder.outputItems(result.getStack());
-                else builder.chancedOutput(result.getStack(), (int) (result.getChance() * 10000.0f), 0);
+                else builder.chancedOutput(result.getStack(), (int) (result.getChance() * 10000.0f));
             }
             for(FluidStack result : recipe.getFluidResults()) {
                 builder.outputFluids(result);

@@ -21,12 +21,4 @@ public class StressRecipeCapability extends RecipeCapability<Float> {
     public Float copyWithModifier(Float content, ContentModifier modifier) {
         return modifier.apply(content);
     }
-
-    /*@Override
-    public void addXEIInfo(WidgetGroup group, int xOffset, GTRecipe recipe, List<Content> contents, boolean perTick, boolean isInput, MutableInt yOffset) {
-        String key = isInput ? "input" : "output";
-        float stress = (float) contents.stream().map(Content::getContent).mapToDouble(StressRecipeCapability.STRESS_CAPABILITY::of).sum();
-        int recipeTier = GreateValues.convertStressToTier(contents);
-        group.addWidget(new LabelWidget(3 - xOffset, yOffset.addAndGet(10), LocalizationUtils.format("greate.recipe.stress_" + key, stress, GreateValues.SNF[recipeTier])));
-    }*/
 }

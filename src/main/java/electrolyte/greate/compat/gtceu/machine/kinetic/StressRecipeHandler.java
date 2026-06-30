@@ -24,7 +24,7 @@ public class StressRecipeHandler implements IRecipeHandler<EnergyStack> {
     }
 
     @Override
-    public List<EnergyStack> handleRecipeInner(IO io, GTRecipe gtRecipe, List<EnergyStack> left, boolean simulate) {
+    public @NotNull List<EnergyStack> handleRecipeInner(IO io, GTRecipe gtRecipe, List<EnergyStack> left, boolean simulate) {
         for(var it = left.listIterator(); it.hasNext();) {
             EnergyStack stack = it.next();
             if(stack.isEmpty()) {
@@ -38,7 +38,7 @@ public class StressRecipeHandler implements IRecipeHandler<EnergyStack> {
                 var list = new ArrayList<Float>();
                 list.add(totalStress);
                 var leftStress = stressContainer.handleRecipeInner(io, gtRecipe, list, simulate);
-                if(leftStress == null || leftStress.isEmpty()) {
+                if(leftStress.isEmpty()) {
                     it.remove();
                 } else {
                     totalEU = (long) (leftStress.get(0) / conversionRate);
@@ -46,7 +46,7 @@ public class StressRecipeHandler implements IRecipeHandler<EnergyStack> {
                 }
             }
         }
-        return left.isEmpty() ? null : left;
+        return left;
     }
 
     @Override

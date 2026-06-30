@@ -44,7 +44,7 @@ public class NotifiableStressContainer extends NotifiableRecipeHandlerTrait<Floa
     }
 
     @Override
-    public List<Float> handleRecipeInner(IO io, GTRecipe gtRecipe, List<Float> left, boolean simulate) {
+    public @NotNull List<Float> handleRecipeInner(IO io, GTRecipe gtRecipe, List<Float> left, boolean simulate) {
         float remaining = left.stream().reduce(0F, Float::sum);
         if(io == IO.IN) {
             float extracted = Math.min(remaining, lastOutputStress);
@@ -65,7 +65,7 @@ public class NotifiableStressContainer extends NotifiableRecipeHandlerTrait<Floa
             if(!simulate) updateCapacity(inserted);
             remaining -= inserted;
         }
-        return remaining <= 0 ? List.of() : Collections.singletonList(remaining);
+        return remaining <= 0 ? Collections.emptyList() : Collections.singletonList(remaining);
     }
 
     @Override
