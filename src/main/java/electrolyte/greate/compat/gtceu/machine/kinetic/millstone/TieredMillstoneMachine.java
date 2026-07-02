@@ -16,7 +16,7 @@ public class TieredMillstoneMachine extends TieredKineticWorkableMachine {
     public final NotifiableItemStackHandler importItems, exportItems;
 
     public TieredMillstoneMachine(BlockEntityCreationInfo info, int tier) {
-        super(info, tier, IO.IN, new TieredMillstoneMachineBlockEntity(info.type(), info.pos(), info.state()));
+        super(info, tier, new TieredMillstoneMachineBlockEntity(info.type(), info.pos(), info.state()));
         this.importItems = attachTrait(new NotifiableItemStackHandler(getRecipeType().getMaxInputs(ItemRecipeCapability.CAP), IO.IN));
         this.exportItems = attachTrait(new NotifiableItemStackHandler(getRecipeType().getMaxOutputs(ItemRecipeCapability.CAP), IO.OUT));
     }
