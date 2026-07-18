@@ -3,10 +3,9 @@ package electrolyte.greate.compat.gtceu.machine.kinetic.trait;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
 import com.gregtechceu.gtceu.api.machine.trait.MachineTraitType;
-import com.gregtechceu.gtceu.api.machine.trait.NotifiableRecipeHandlerTrait;
+import com.gregtechceu.gtceu.api.machine.trait.notifiable.NotifiableRecipeHandlerTrait;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import electrolyte.greate.compat.gtceu.capability.recipe.StressRecipeCapability;
-import electrolyte.greate.compat.gtceu.machine.kinetic.base.ITieredKineticMachine;
 import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredKineticMachine;
 import electrolyte.greate.mixin.MixinKineticBlockEntityAccessor;
 import org.jetbrains.annotations.NotNull;
@@ -14,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.List;
 
-public class NotifiableStressContainer extends NotifiableRecipeHandlerTrait<Float> implements ITieredKineticMachine {
+public class NotifiableStressContainer extends NotifiableRecipeHandlerTrait<Float> /*implements ITieredKineticMachine*/ {
 
     public static final MachineTraitType<NotifiableStressContainer> TYPE = new MachineTraitType<>(NotifiableStressContainer.class);
     protected IO handlerIO;
@@ -53,7 +52,7 @@ public class NotifiableStressContainer extends NotifiableRecipeHandlerTrait<Floa
                     extracted = 0;
                 }
             }
-            if(!simulate) updateStress(extracted);
+            //if(!simulate) updateStress(extracted);
             remaining -= extracted;
         } else if(io == IO.OUT) {
             float inserted = Math.min(remaining, lastOutputStress);
@@ -62,7 +61,7 @@ public class NotifiableStressContainer extends NotifiableRecipeHandlerTrait<Floa
                     inserted = 0;
                 }
             }
-            if(!simulate) updateCapacity(inserted);
+            //if(!simulate) updateCapacity(inserted);
             remaining -= inserted;
         }
         return remaining <= 0 ? Collections.emptyList() : Collections.singletonList(remaining);
@@ -88,7 +87,7 @@ public class NotifiableStressContainer extends NotifiableRecipeHandlerTrait<Floa
         return TYPE;
     }
 
-    @Override
+    /*@Override
     public void updateStress(float newStress) {
         //KineticNetwork network = this.getKineticHolder().getKineticBlockEntity().getOrCreateNetwork();
         //network.updateStressFor(this.getKineticHolder().getKineticBlockEntity(), newStress);
@@ -101,4 +100,5 @@ public class NotifiableStressContainer extends NotifiableRecipeHandlerTrait<Floa
         //network.updateCapacityFor(this.getKineticHolder().getKineticBlockEntity(), newCapacity);
         notifyListeners();
     }
+     */
 }

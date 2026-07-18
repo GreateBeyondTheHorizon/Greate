@@ -34,8 +34,8 @@ public class GreateMachines {
             GTMachineUtils.ALL_TIERS);
 
     public static MachineDefinition[] registerMillstoneMachines(String name,
-                                                                BiFunction<BlockEntityCreationInfo, Integer, TieredMillstoneMachine> factory,
-                                                                BiFunction<Integer, MachineBuilder<MachineDefinition, ?>, MachineDefinition> builder,
+                                                                BiFunction<BlockEntityCreationInfo, Integer, TieredKineticWorkableMachine> factory,
+                                                                BiFunction<Integer, MachineBuilder<MachineDefinition, TieredKineticWorkableMachine, ?>, MachineDefinition> builder,
                                                                 GTRecipeType recipeType,
                                                                 int[] tiers) {
         MachineDefinition[] definitions = new MachineDefinition[GTValues.TIER_COUNT];
@@ -49,6 +49,16 @@ public class GreateMachines {
                     .blockBuilder(b ->
                             b.transform(GStress.setImpact(0.5 * (tier + 1)))) //TODO: change
                     .model(GreateMachineModels.createMillstoneModel()
+                            .andThen(b -> b.addDynamicRenderer(GreateDynamicRenderHelper::createMillstoneCogRender)))
+                    .itemBuilder(b -> b.model(GreateMachineModels.tieredMillstoneItemModel(tier)))
+                    .tier(tier)
+                    .recipeType(recipeType)
+                    .hasBER(true);
+            definitions[tier] = builder.apply(tier, register);
+        }
+        return definitions;
+    }
+
                             .andThen(b -> b.addDynamicRenderer(GreateDynamicRenderHelper::createMillstoneCogRender)))
                     .itemBuilder(b -> b.model(GreateMachineModels.tieredMillstoneItemModel(tier)))
                     .tier(tier)

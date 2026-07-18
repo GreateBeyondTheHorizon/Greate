@@ -1,7 +1,7 @@
 package electrolyte.greate.mixin;
 
 import com.gregtechceu.gtceu.api.machine.trait.MachineTraitType;
-import com.gregtechceu.gtceu.api.machine.trait.RecipeLogic;
+import com.gregtechceu.gtceu.api.machine.trait.recipe.RecipeLogic;
 import com.gregtechceu.gtceu.integration.jade.provider.MachineTraitProvider;
 import com.gregtechceu.gtceu.integration.jade.provider.RecipeLogicProvider;
 import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredKineticMachineBlock;

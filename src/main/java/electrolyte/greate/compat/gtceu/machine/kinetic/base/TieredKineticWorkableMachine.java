@@ -6,16 +6,17 @@ import com.gregtechceu.gtceu.api.capability.recipe.IRecipeHandler;
 import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
 import com.gregtechceu.gtceu.api.machine.feature.IOverclockMachine;
 import com.gregtechceu.gtceu.api.machine.feature.IRecipeLogicMachine;
-import com.gregtechceu.gtceu.api.machine.trait.IRecipeHandlerTrait;
 import com.gregtechceu.gtceu.api.machine.trait.MachineTrait;
-import com.gregtechceu.gtceu.api.machine.trait.RecipeHandlerList;
-import com.gregtechceu.gtceu.api.machine.trait.RecipeLogic;
+import com.gregtechceu.gtceu.api.machine.trait.recipe.IRecipeHandlerTrait;
+import com.gregtechceu.gtceu.api.machine.trait.recipe.RecipeHandlerList;
+import com.gregtechceu.gtceu.api.machine.trait.recipe.RecipeLogic;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.sync_system.annotations.SaveField;
 import com.gregtechceu.gtceu.api.sync_system.annotations.SyncToClient;
 import com.gregtechceu.gtceu.common.machine.trait.CleanroomReceiverTrait;
 import com.gregtechceu.gtceu.utils.ISubscription;
 import electrolyte.greate.compat.gtceu.machine.kinetic.StressRecipeHandler;
+import electrolyte.greate.compat.gtceu.machine.kinetic.millstone.KineticMachineRecipeLogic;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredKineticBlockEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -67,7 +68,7 @@ public class TieredKineticWorkableMachine extends TieredKineticMachine implement
     }
 
     public TieredKineticWorkableMachine(BlockEntityCreationInfo info, int tier, IO io, TieredKineticBlockEntity kineticBE) {
-        this(info, tier, new RecipeLogic(), io, kineticBE);
+        this(info, tier, new KineticMachineRecipeLogic(), io, kineticBE);
     }
 
     public TieredKineticWorkableMachine(BlockEntityCreationInfo info, int tier, double stressConversionRate, TieredKineticBlockEntity kineticBE) {
