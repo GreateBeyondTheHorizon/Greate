@@ -21,6 +21,7 @@ import electrolyte.greate.compat.gtceu.machine.kinetic.millstone.TieredMillstone
 import electrolyte.greate.compat.gtceu.machine.kinetic.saw.TieredSawMachine;
 import electrolyte.greate.compat.gtceu.machine.kinetic.saw.TieredSawMachineBlock;
 import electrolyte.greate.infrastructure.config.GStress;
+import net.minecraft.core.Direction;
 
 import java.util.Locale;
 import java.util.function.BiFunction;
@@ -44,7 +45,7 @@ public class GreateMachines {
             (tier, builder) -> builder
                     .langValue(GTValues.VNF[tier] + " Mechanical Saw")
                     .rotationState(RotationState.NONE)
-                    .modelProperty(SawBlock.FACING)
+                    .modelProperty(SawBlock.FACING, Direction.UP)
                     .modelProperty(SawBlock.FLIPPED)
                     .modelProperty(DirectionalAxisKineticBlock.AXIS_ALONG_FIRST_COORDINATE)
                     .register(),

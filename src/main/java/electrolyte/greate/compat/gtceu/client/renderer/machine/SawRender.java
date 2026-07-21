@@ -64,7 +64,7 @@ public class SawRender extends DynamicRender<TieredSawMachine, SawRender> {
         tier = ((ITieredBlock) be.getBlockState().getBlock()).getTier();
         renderBlade(machine, ms, bufferSource, light);
         renderItems(machine, partialTicks, ms, bufferSource, light, overlay, machine.importItems, machine.exportItems);
-        if(be.getBlockState().getValue(FACING) == Direction.UP) {
+        if(machine.getRenderState().getValue(FACING) == Direction.UP) {
             renderFluid(machine, partialTicks, ms, bufferSource, light);
         }
         FilteringRenderer.renderOnBlockEntity(be, partialTicks, ms, bufferSource, light, overlay);
@@ -107,7 +107,7 @@ public class SawRender extends DynamicRender<TieredSawMachine, SawRender> {
     }
 
     private void renderFluid(TieredSawMachine be, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int light) {
-        FluidStack renderedFluid = be.importTank.getFluidInTank(0);
+        FluidStack renderedFluid = be.getContainedFluid();
         if(renderedFluid.isEmpty()) return;
 
         final float xMin = 7 / 16f;

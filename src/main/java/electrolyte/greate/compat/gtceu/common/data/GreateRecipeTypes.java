@@ -43,6 +43,9 @@ public class GreateRecipeTypes {
             .addCustomRecipeLogic(MaceratorLogic.INSTANCE)
             .setSound(GTSoundEntries.MACERATOR)  //todo:change
             .UI(uiBuilder -> uiBuilder
+                    .setItemSlotOverlay(IO.OUT, 1, GTGuiTextures.DUST_OVERLAY)
+                    .setItemSlotOverlay(IO.OUT, 2, GTGuiTextures.DUST_OVERLAY)
+                    .setItemSlotOverlay(IO.OUT, 3, GTGuiTextures.DUST_OVERLAY)
                     .setRecipeViewerLayoutCapabilityLayoutBuilder(StressRecipeCapability.STRESS_CAPABILITY, GreateRecipeViewerCapabilityLayoutBuilder.STRESS)
                     .setCapabilityContentBuilder(StressRecipeCapability.STRESS_CAPABILITY, GreateCapabilityContentBuilder.STRESS)
                     .setProgressBarSupplier((layout, value, machine) -> new ParentWidget<>().size(layout.getProgressBar().progressSize()))
@@ -64,29 +67,60 @@ public class GreateRecipeTypes {
 
                         widget.child(slotGroupWidget);
                     })
-                    .addRecipeUIModifier((recipe, widget) -> {
-                        widget.textComponents.paddingTop(25);
-                    })
-                    .addRecipeUIModifier(RecipeUIModifier
-                        .textLine(Text.lang("gtceu.recipe.byproduct_tier", GreateValues.SNF[GTValues.HV]))));
+                    .addRecipeUIModifier((recipe, widget) -> widget.textComponents.paddingTop(25))
+                    .addRecipeUIModifier(RecipeUIModifier.textLine(Text.lang("gtceu.recipe.byproduct_tier", GreateValues.SNF[GTValues.HV]))));
 
     public static final GTRecipeType SAW = GTRecipeTypes.register("saw", KINETIC)
-            .setMaxIOSize(1, 4, 1, 0)
-            .setEUIO(IO.IN)
-            .setSound(GTSoundEntries.CUT);
+            .setMaxIOSize(1, 2, 1, 0)
+            .setMaxSize(IO.IN, StressRecipeCapability.STRESS_CAPABILITY, 1)
+            .setEUIO(IO.NONE)
+            .setSound(GTSoundEntries.CUT)
+            .UI(uiBuilder -> uiBuilder
+                    .setItemSlotOverlay(IO.OUT, 1, GTGuiTextures.DUST_OVERLAY)
+                    .setRecipeViewerLayoutCapabilityLayoutBuilder(StressRecipeCapability.STRESS_CAPABILITY, GreateRecipeViewerCapabilityLayoutBuilder.STRESS)
+                    .setCapabilityContentBuilder(StressRecipeCapability.STRESS_CAPABILITY, GreateCapabilityContentBuilder.STRESS)
+                    .setProgressBarSupplier((layout, value, machine) -> new ParentWidget<>().size(layout.getProgressBar().progressSize()))
+                    .setRecipeViewerLayoutCapabilityLayoutBuilder(
+                    ItemRecipeCapability.CAP, (layout, widget, io) -> {
+                        if(layout.getRecipeType().getMaxSlots(ItemRecipeCapability.CAP, io) == 0)
+                            return;
+
+                        var slotGroupWidget = SlotGroupWidget.builder()
+                                .matrix(layout.capabilityInfo(ItemRecipeCapability.CAP).getRecipeViewerGrid(io))
+                                .key('s', i -> RecipeViewerSlotWidget.create()
+                                        .value(ItemStackList.of(ItemStack.EMPTY))
+                                        .background(GuiTextures.SLOT_ITEM,
+                                                layout.capabilityInfo(ItemRecipeCapability.CAP).getOverlay(io, i))
+                                        .name(GTRecipeViewerWidget.capabilityWidgetName(ItemRecipeCapability.CAP, io, i)))
+                                .build()
+                                .coverChildren(18, 18)
+                                .pos(io == IO.IN ? 5 : 90, 5);
+
+                        widget.child(slotGroupWidget);
+                        //TODO: fix fluid slot
+                    })
+                    .addRecipeUIModifier((recipe, widget) -> widget.textComponents.paddingTop(25)));
 
 
 
     public static void register() {
-        GTRecipeTypes.MACERATOR_RECIPES
-            .onRecipeBuild((gtRecipeBuilder, finishedRecipeConsumer) -> {
-                long euT = gtRecipeBuilder.buildRawRecipe().getInputEUt().voltage();
-                GTRecipeBuilder copiedRecipe = MILLSTONE
-                        .copyFrom(gtRecipeBuilder)
-                        .perTick(true)
-                        .input(StressRecipeCapability.STRESS_CAPABILITY, (float) euT)
-                        .perTick(false);
-                copiedRecipe.save(finishedRecipeConsumer);
-            });
+        GTRecipeTypes.MACERATOR_RECIPES.onRecipeBuild((gtRecipeBuilder, finishedRecipeConsumer) -> {
+            long euT = gtRecipeBuilder.buildRawRecipe().getInputEUt().voltage();
+            GTRecipeBuilder copiedRecipe = MILLSTONE
+                    .copyFrom(gtRecipeBuilder)
+                    .perTick(true)
+                    .input(StressRecipeCapability.STRESS_CAPABILITY, (float) euT)
+                    .perTick(false);
+            copiedRecipe.save(finishedRecipeConsumer);
+        });
+        GTRecipeTypes.CUTTER_RECIPES.onRecipeBuild((gtRecipeBuilder, finishedRecipeConsumer) -> {
+            long euT = gtRecipeBuilder.buildRawRecipe().getInputEUt().voltage();
+            GTRecipeBuilder copiedRecipe = SAW
+                    .copyFrom(gtRecipeBuilder)
+                    .perTick(true)
+                    .input(StressRecipeCapability.STRESS_CAPABILITY, (float) euT)
+                    .perTick(false);
+            copiedRecipe.save(finishedRecipeConsumer);
+        });
     }
 }

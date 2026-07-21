@@ -5,14 +5,12 @@ import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.machine.trait.notifiable.NotifiableItemStackHandler;
 import com.gregtechceu.gtceu.api.sync_system.annotations.SaveField;
-import com.gregtechceu.gtceu.api.sync_system.annotations.SyncToClient;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
 import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredKineticWorkableMachine;
 
 public class TieredMillstoneMachine extends TieredKineticWorkableMachine {
 
     @SaveField
-    @SyncToClient
     public final NotifiableItemStackHandler importItems, exportItems;
 
     public TieredMillstoneMachine(BlockEntityCreationInfo info, int tier) {

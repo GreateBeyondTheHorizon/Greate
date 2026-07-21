@@ -11,31 +11,37 @@ import com.gregtechceu.gtceu.api.sync_system.annotations.SyncToClient;
 import com.gregtechceu.gtceu.api.transfer.fluid.CustomFluidTank;
 import com.gregtechceu.gtceu.client.model.machine.MachineRenderState;
 import com.gregtechceu.gtceu.common.data.machines.GTMachineUtils;
+import com.gregtechceu.gtceu.utils.ISubscription;
 import com.simibubi.create.content.kinetics.saw.SawBlock;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
 import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredKineticWorkableMachine;
+import lombok.Getter;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 
 public class TieredSawMachine extends TieredKineticWorkableMachine {
 
     @SaveField
-    @SyncToClient
     public final NotifiableItemStackHandler importItems, exportItems;
 
     @SaveField
     public final NotifiableFluidTank importTank;
 
-    //todo: check quantumtankmachine for updating fluid in sawrender
     @SaveField
     @SyncToClient
-    public FluidStack containedFluid;
+    @Getter
+    private FluidStack containedFluid;
 
+    @Nullable
+    protected ISubscription exportFluidSubs;
+
+    //todo: add bucket clicking io and sponge clearing
     public TieredSawMachine(BlockEntityCreationInfo info, int tier) {
         super(info, tier, new TieredSawMachineBlockEntity(info.type(), info.pos(), info.state()));
         boolean canRunRecipes = getBlockState().getValue(SawBlock.FACING) == Direction.UP;
@@ -52,6 +58,35 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
                         GTMachineUtils.defaultTankSizeFunction.apply(this.getTier()),
                         IO.IN, IO.IN)) :
                 attachTrait(new NotifiableFluidTank(Collections.singletonList(EMPTY_TANK), IO.NONE));
+        this.containedFluid = FluidStack.EMPTY;
+    }
+
+    @Override
+    public void onLoad() {
+        super.onLoad();
+        this.updateStoredFluidFromCache();
+        this.exportFluidSubs = this.importTank.addChangedListener(this::onFluidChanged);
+    }
+
+    @Override
+    public void onUnload() {
+        super.onUnload();
+        if(this.exportFluidSubs != null) {
+            this.exportFluidSubs.unsubscribe();
+            this.exportFluidSubs = null;
+        }
+    }
+
+    private void onFluidChanged() {
+        if(!this.isRemote()) {
+            this.syncDataHolder.markClientSyncFieldDirty("containedFluid");
+            this.updateStoredFluidFromCache();
+        }
+    }
+
+    private void updateStoredFluidFromCache() {
+        FluidStack cachedFluid = this.importTank.getFluidInTank(0);
+        this.containedFluid = cachedFluid.isEmpty() ? FluidStack.EMPTY : cachedFluid;
     }
 
     @Override

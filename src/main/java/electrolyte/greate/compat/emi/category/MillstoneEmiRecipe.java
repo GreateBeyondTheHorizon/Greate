@@ -1,4 +1,4 @@
-package electrolyte.greate.compat.emi;
+package electrolyte.greate.compat.emi.category;
 
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.integration.recipeviewer.emi.recipe.GTEmiRecipe;
