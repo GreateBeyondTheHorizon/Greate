@@ -29,6 +29,7 @@ public class GreateMachines {
             (tier, builder) -> builder
                     .langValue(GTValues.VNF[tier] + " Millstone")
                     .rotationState(RotationState.NON_Y_AXIS)
+                    .recipeModifier(GreateRecipeModifiers::stressRequired)
                     .register(),
             GreateRecipeTypes.MILLSTONE,
             GTMachineUtils.ALL_TIERS);
