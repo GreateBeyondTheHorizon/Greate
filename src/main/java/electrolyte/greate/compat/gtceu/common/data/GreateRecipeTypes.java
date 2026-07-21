@@ -70,6 +70,13 @@ public class GreateRecipeTypes {
                     .addRecipeUIModifier(RecipeUIModifier
                         .textLine(Text.lang("gtceu.recipe.byproduct_tier", GreateValues.SNF[GTValues.HV]))));
 
+    public static final GTRecipeType SAW = GTRecipeTypes.register("saw", KINETIC)
+            .setMaxIOSize(1, 4, 1, 0)
+            .setEUIO(IO.IN)
+            .setSound(GTSoundEntries.CUT);
+
+
+
     public static void register() {
         GTRecipeTypes.MACERATOR_RECIPES
             .onRecipeBuild((gtRecipeBuilder, finishedRecipeConsumer) -> {

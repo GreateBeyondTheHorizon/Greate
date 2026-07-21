@@ -13,6 +13,7 @@ import dev.toma.configuration.Configuration;
 import dev.toma.configuration.config.ConfigHolder;
 import dev.toma.configuration.config.format.ConfigFormats;
 import electrolyte.greate.compat.gtceu.client.renderer.machine.MillstoneCogRender;
+import electrolyte.greate.compat.gtceu.client.renderer.machine.SawRender;
 import electrolyte.greate.content.kinetics.fan.processing.GreateFanProcessingTypes;
 import electrolyte.greate.foundation.advancement.GreateAdvancements;
 import electrolyte.greate.foundation.data.GreateTagGen.GreateBlockTagGen;
@@ -72,6 +73,7 @@ public class Greate {
 
         if(FMLLoader.getDist().isClient()) {
             DynamicRenderManager.register(Greate.id("millstone_cog"), MillstoneCogRender.TYPE);
+            DynamicRenderManager.register(Greate.id("mechanical_saw_blade"), SawRender.TYPE);
         }
 
         GreateRegistries.REGISTRATE.registerEventListeners(context.getModEventBus());

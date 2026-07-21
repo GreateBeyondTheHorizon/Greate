@@ -153,13 +153,16 @@ dependencies {
     implementation fg.deobf("dev.latvian.mods:kubejs-create-forge:${kubejs_create_version}") { transitive = false }
 
     implementation fg.deobf("brachy.modularui:modularui-mc${minecraft_version}:${mui_version}") { transitive = false }
-    implementation fg.deobf("com.gregtechceu.gtceu:gtceu-${minecraft_version}:${gregtech_version}:slim") { transitive = false }
+    implementation fg.deobf("com.gregtechceu.gtceu:gtceu-${minecraft_version}:${gregtech_version}:slim") {
+        transitive = false
+        changing = true
+    }
     implementation fg.deobf("dev.toma.configuration:configuration-${minecraft_version}:${configuration_version}-forge") { transitive = false  }
 
-    runtimeOnly fg.deobf("curse.maven:jade-324717:${jade_version}")
+    implementation fg.deobf("curse.maven:jade-324717:${jade_version}")
     runtimeOnly fg.deobf("curse.maven:spark-361579:${spark_version}")
     runtimeOnly fg.deobf("curse.maven:create-repair-1477958:8034105")
-    runtimeOnly(fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}+${minecraft_version}"))
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}+${minecraft_version}")
 
     compileOnly fg.deobf("ru.zznty:create_factory_logistics-${minecraft_version}:1.4.7")
 
@@ -210,5 +213,11 @@ idea {
     module {
         downloadSources = true
         downloadJavadoc = true
+    }
+}
+
+configurations.all {
+    resolutionStrategy {
+        cacheChangingModulesFor 0, 'seconds'
     }
 }

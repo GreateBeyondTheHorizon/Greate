@@ -8,22 +8,7 @@
   "loader": "gtceu:machine",
   "machine": "greate:iv_millstone",
   "variants": {
-    "recipe_logic_status=idle": {
-      "model": {
-        "parent": "create:block/millstone/block"
-      }
-    },
-    "recipe_logic_status=suspend": {
-      "model": {
-        "parent": "create:block/millstone/block"
-      }
-    },
-    "recipe_logic_status=waiting": {
-      "model": {
-        "parent": "create:block/millstone/block"
-      }
-    },
-    "recipe_logic_status=working": {
+    "": {
       "model": {
         "parent": "create:block/millstone/block"
       }

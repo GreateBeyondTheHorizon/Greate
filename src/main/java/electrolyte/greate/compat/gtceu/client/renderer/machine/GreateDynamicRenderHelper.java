@@ -7,4 +7,8 @@ public class GreateDynamicRenderHelper {
     public static DynamicRender<?, ?> createMillstoneCogRender() {
         return new MillstoneCogRender();
     }
+
+    public static DynamicRender<?, ?> createSawRender() {
+        return new SawRender();
+    }
 }
