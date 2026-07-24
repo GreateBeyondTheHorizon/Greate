@@ -1,7 +1,6 @@
 package electrolyte.greate.compat.gtceu.client.renderer.machine;
 
 import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
-import com.gregtechceu.gtceu.api.machine.trait.notifiable.NotifiableItemStackHandler;
 import com.gregtechceu.gtceu.client.renderer.machine.DynamicRender;
 import com.gregtechceu.gtceu.client.renderer.machine.DynamicRenderType;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -63,7 +62,7 @@ public class SawRender extends DynamicRender<TieredSawMachine, SawRender> {
         KineticBlockEntity be = machine.getTraitHolder().getTrait(KineticMachineTrait.TYPE).getKineticBlockEntity();
         tier = ((ITieredBlock) be.getBlockState().getBlock()).getTier();
         renderBlade(machine, ms, bufferSource, light);
-        renderItems(machine, partialTicks, ms, bufferSource, light, overlay, machine.importItems, machine.exportItems);
+        renderItems(machine, partialTicks, ms, bufferSource, light, overlay);
         if(machine.getRenderState().getValue(FACING) == Direction.UP) {
             renderFluid(machine, partialTicks, ms, bufferSource, light);
         }
@@ -144,19 +143,19 @@ public class SawRender extends DynamicRender<TieredSawMachine, SawRender> {
 			.getBlock()).getRotationAxis(be.getBlockState());
     }
 
-    private void renderItems(TieredSawMachine be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light,
-                             int overlay, NotifiableItemStackHandler importItems, NotifiableItemStackHandler exportItems) {
-		if (be.getBlockState().getValue(SawBlock.FACING) != Direction.UP) return;
-		if (importItems.isEmpty() || exportItems.isEmpty()) return;
+    private void renderItems(TieredSawMachine be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
+		if(be.getRenderState().getValue(SawBlock.FACING) != Direction.UP) return;
+		if(be.getRenderedImportStack().isEmpty()) return;
+        if(be.getRenderedExportStacks().isEmpty()) return;
+        if(!be.getRecipeLogic().isActive()) return;
 
-		boolean alongZ = !be.getBlockState()
-			.getValue(AXIS_ALONG_FIRST_COORDINATE);
+		boolean alongZ = !be.getBlockState().getValue(AXIS_ALONG_FIRST_COORDINATE);
 
         float offset = getOffset(be, partialTicks, alongZ);
 
         int outputs = 0;
-		for (int i = 1; i < be.exportItems.getSlots(); i++)
-			if (!be.exportItems.getStackInSlot(i).isEmpty())
+		for (int i = 1; i < be.getRenderedExportStacks().size(); i++)
+			if (!be.getRenderedExportStacks().get(i).isEmpty())
 				outputs++;
 
 		ms.pushPose();
@@ -166,13 +165,12 @@ public class SawRender extends DynamicRender<TieredSawMachine, SawRender> {
 		ms.translate(alongZ ? -1 : 0, 0, 0);
 
 		int renderedI = 0;
-		for (int i = 0; i < be.exportItems.getSlots(); i++) {
-			ItemStack stack = be.exportItems.getStackInSlot(i);
+		for (int i = 0; i < 1; i++) {
+			ItemStack stack = be.getRenderedImportStack();
 			if (stack.isEmpty())
 				continue;
 
-			ItemRenderer itemRenderer = Minecraft.getInstance()
-				.getItemRenderer();
+			ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
 			BakedModel modelWithOverrides = itemRenderer.getModel(stack, be.getLevel(), null, 0);
 			boolean blockItem = modelWithOverrides.isGui3d();
 
@@ -205,20 +203,21 @@ public class SawRender extends DynamicRender<TieredSawMachine, SawRender> {
 	}
 
     private static float getOffset(TieredSawMachine be, float partialTicks, boolean alongZ) {
-        float duration = be.getRecipeLogic().getDuration();
-        boolean moving = duration != 0;
-        float offset = moving ? be.getRecipeLogic().getProgress() / duration : 0;
+        float progress = be.getRecipeLogic().getProgress();
+        int duration = be.getRecipeLogic().getLastRecipe().duration;
+        boolean moving = duration != 0 && progress != 0;
+        float offset = moving ? (progress / duration) * 0.5f : 0.5f;
         float processingSpeed = Mth.clamp(Math.abs(be.getSpeed()) / 32, 1, 128);
-        if (moving) {
-            offset = Mth.clamp(offset + ((- partialTicks + .5f) * processingSpeed) / duration, 0.125f, 1f);
-            /*if (! be.inventory.appliedRecipe) //todo: fix (probably check recipe type)
-                offset += 1;*/
+        /*if (moving) {
+            offset = Mth.clamp(offset + ((- partialTicks + .5f) * processingSpeed) / progress, 0.125f, 1f);
+            *//*if (! be.inventory.appliedRecipe) //todo: fix (probably check recipe type)
+                offset += 1;*//*
             offset /= 2;
-        }
+        }*/
 
         if (be.getSpeed() == 0)
             offset = .5f;
-        if (be.getSpeed() < 0 ^ alongZ)
+        if (be.getSpeed() > 0 ^ alongZ)
             offset = 1 - offset;
         return offset;
     }

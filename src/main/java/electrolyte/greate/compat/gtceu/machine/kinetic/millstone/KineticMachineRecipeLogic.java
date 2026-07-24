@@ -5,8 +5,16 @@ import com.gregtechceu.gtceu.api.machine.trait.recipe.RecipeLogic;
 import com.gregtechceu.gtceu.api.recipe.ActionResult;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.RecipeHelper;
+import com.gregtechceu.gtceu.api.sync_system.annotations.SyncToClient;
+import lombok.Getter;
+import lombok.experimental.Accessors;
 
 public class KineticMachineRecipeLogic extends RecipeLogic {
+
+    @Accessors(fluent = true)
+    @Getter
+    @SyncToClient
+    private boolean postEffects = true;
 
     @Override
     public void setupRecipe(GTRecipe recipe) {
@@ -49,9 +57,13 @@ public class KineticMachineRecipeLogic extends RecipeLogic {
         if(this.lastRecipe != null) {
             ActionResult result = this.handleRecipeIO(this.lastRecipe, IO.IN);
             if(!result.isSuccess()) {
+                this.postEffects = false;
+                this.syncDataHolder.markClientSyncFieldDirty("postEffects");
                 this.interruptRecipe();
                 return;
             }
+            this.postEffects = true;
+            this.syncDataHolder.markClientSyncFieldDirty("postEffects");
         }
         super.onRecipeFinish();
     }
