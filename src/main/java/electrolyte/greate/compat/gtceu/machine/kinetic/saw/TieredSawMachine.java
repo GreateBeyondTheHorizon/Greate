@@ -21,6 +21,7 @@ import electrolyte.greate.compat.gtceu.machine.kinetic.millstone.KineticMachineR
 import lombok.Getter;
 import net.createmod.catnip.math.VecHelper;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
@@ -38,9 +39,7 @@ import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class TieredSawMachine extends TieredKineticWorkableMachine {
 
@@ -62,7 +61,7 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
     @SaveField
     @SyncToClient
     @Getter
-    private List<ItemStack> renderedExportStacks;
+    private NonNullList<ItemStack> renderedExportStacks;
 
     @Nullable
     protected ISubscription importFluidSub;
@@ -96,7 +95,7 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
                 attachTrait(new NotifiableFluidTank(Collections.singletonList(EMPTY_TANK), IO.NONE));
         this.containedFluid = FluidStack.EMPTY;
         this.renderedImportStack = ItemStack.EMPTY;
-        this.renderedExportStacks = List.of(ItemStack.EMPTY);
+        this.renderedExportStacks = NonNullList.of(ItemStack.EMPTY);
     }
 
     @Override
@@ -157,7 +156,7 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
     }
 
     private void updateStoredExportItemFromCache() {
-        List<ItemStack> cachedExportStack = new ArrayList<>();
+        NonNullList<ItemStack> cachedExportStack = NonNullList.create();
         for(int i = 0; i < this.exportItems.getSlots(); i++) {
             if(!this.exportItems.getStackInSlot(i).isEmpty()) {
                 cachedExportStack.add(this.exportItems.getStackInSlot(i));

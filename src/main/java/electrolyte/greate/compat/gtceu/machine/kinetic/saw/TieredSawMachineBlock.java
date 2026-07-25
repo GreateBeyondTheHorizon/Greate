@@ -1,8 +1,10 @@
 package electrolyte.greate.compat.gtceu.machine.kinetic.saw;
 
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
+import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.gregtechceu.gtceu.api.machine.trait.notifiable.NotifiableItemStackHandler;
 import com.simibubi.create.AllBlocks;
+import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.drill.DrillBlock;
 import com.simibubi.create.content.kinetics.saw.SawBlock;
 import com.simibubi.create.foundation.block.IBE;
@@ -26,6 +28,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -88,6 +91,21 @@ public class TieredSawMachineBlock extends TieredDirectionalAxisKineticMachineBl
     @Override
     public BlockEntityType<? extends TieredSawMachine> getBlockEntityType() {
         return (BlockEntityType<? extends TieredSawMachine>) this.getDefinition().getBlockEntityType();
+    }
+
+    @Override
+    public BlockState updateAfterWrenched(BlockState newState, UseOnContext context) {
+        MetaMachine machine = MetaMachine.getMachine(context.getLevel(), context.getClickedPos());
+        if (machine instanceof TieredSawMachine sawMachine) {
+            KineticBlockEntity kbe = sawMachine.kineticMachineTrait.getKineticBlockEntity();
+            BlockState kbeState = kbe.getBlockState()
+                    .setValue(FACING, newState.getValue(FACING))
+                    .setValue(FLIPPED, newState.getValue(FLIPPED))
+                    .setValue(AXIS_ALONG_FIRST_COORDINATE, newState.getValue(AXIS_ALONG_FIRST_COORDINATE));
+            kbe.setBlockState(kbeState);
+            KineticBlockEntity.switchToBlockState(kbe.getLevel(), kbe.getBlockPos(), kbeState);
+        }
+        return super.updateAfterWrenched(newState, context);
     }
 
     @Override

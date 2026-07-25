@@ -6,6 +6,7 @@ import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.simibubi.create.content.kinetics.base.IRotate;
 import com.simibubi.create.content.kinetics.base.KineticBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
+import lombok.Getter;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -30,6 +31,7 @@ import static electrolyte.greate.GreateValues.TM;
 @MethodsReturnNonnullByDefault
 public abstract class TieredKineticMachineBlock extends MetaMachineBlock implements ITieredBlock, IRotate {
 
+    @Getter
     protected final KineticBlock kineticBlock;
 
     public TieredKineticMachineBlock(Properties properties, MachineDefinition definition, KineticBlock kineticBlock) {

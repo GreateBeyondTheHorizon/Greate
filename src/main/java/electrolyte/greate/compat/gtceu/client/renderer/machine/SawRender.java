@@ -4,7 +4,6 @@ import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
 import com.gregtechceu.gtceu.client.renderer.machine.DynamicRender;
 import com.gregtechceu.gtceu.client.renderer.machine.DynamicRenderType;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
 import com.mojang.serialization.Codec;
 import com.simibubi.create.content.kinetics.base.IRotate;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
@@ -64,7 +63,7 @@ public class SawRender extends DynamicRender<TieredSawMachine, SawRender> {
         renderBlade(machine, ms, bufferSource, light);
         renderItems(machine, partialTicks, ms, bufferSource, light, overlay);
         if(machine.getRenderState().getValue(FACING) == Direction.UP) {
-            renderFluid(machine, partialTicks, ms, bufferSource, light);
+            renderFluid(machine, ms, bufferSource, light);
         }
         FilteringRenderer.renderOnBlockEntity(be, partialTicks, ms, bufferSource, light, overlay);
 
@@ -105,7 +104,7 @@ public class SawRender extends DynamicRender<TieredSawMachine, SawRender> {
                 .renderInto(poseStack, bufferSource.getBuffer(RenderType.cutoutMipped()));
     }
 
-    private void renderFluid(TieredSawMachine be, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int light) {
+    private void renderFluid(TieredSawMachine be, PoseStack poseStack, MultiBufferSource bufferSource, int light) {
         FluidStack renderedFluid = be.getContainedFluid();
         if(renderedFluid.isEmpty()) return;
 
@@ -145,8 +144,9 @@ public class SawRender extends DynamicRender<TieredSawMachine, SawRender> {
 
     private void renderItems(TieredSawMachine be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
 		if(be.getRenderState().getValue(SawBlock.FACING) != Direction.UP) return;
+        if(be.getSpeed() == 0) return;
 		if(be.getRenderedImportStack().isEmpty()) return;
-        if(be.getRenderedExportStacks().isEmpty()) return;
+        //if(be.getRenderedExportStacks().isEmpty()) return;
         if(!be.getRecipeLogic().isActive()) return;
 
 		boolean alongZ = !be.getBlockState().getValue(AXIS_ALONG_FIRST_COORDINATE);
@@ -160,7 +160,7 @@ public class SawRender extends DynamicRender<TieredSawMachine, SawRender> {
 
 		ms.pushPose();
 		if (alongZ)
-			ms.mulPose(Axis.YP.rotationDegrees(90));
+			ms.mulPose(com.mojang.math.Axis.YP.rotationDegrees(90));
 		ms.translate(outputs <= 1 ? .5 : .25, 0, offset);
 		ms.translate(alongZ ? -1 : 0, 0, 0);
 
@@ -191,7 +191,7 @@ public class SawRender extends DynamicRender<TieredSawMachine, SawRender> {
 				ms.scale(.5f, .5f, .5f);
 
 			if (!box)
-				ms.mulPose(Axis.XP.rotationDegrees(90));
+				ms.mulPose(com.mojang.math.Axis.XP.rotationDegrees(90));
 
 			itemRenderer.render(stack, ItemDisplayContext.FIXED, false, ms, buffer, light, overlay, modelWithOverrides);
 			renderedI++;
