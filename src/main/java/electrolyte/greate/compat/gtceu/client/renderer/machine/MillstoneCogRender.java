@@ -31,7 +31,7 @@ public class MillstoneCogRender extends DynamicRender<TieredKineticMachine, Mill
 
     @Override
     public void render(TieredKineticMachine machine, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int packedOverlay) {
-        KineticBlockEntity be = machine.getTraitHolder().getTrait(KineticMachineTrait.TYPE).getKineticBlockEntity();
+        KineticBlockEntity be = machine.getTraitHolder().getTrait(KineticMachineTrait.class).getKineticBlockEntity();
         KineticBlockEntityRenderer.renderRotatingBuffer(be,
                 CachedBuffers.partial(MILLSTONE_INNER_MODELS[machine.getTier()], be.getBlockState()),
                 poseStack, buffer.getBuffer(RenderType.solid()), packedLight);

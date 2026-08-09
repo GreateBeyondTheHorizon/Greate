@@ -20,7 +20,7 @@ public class GreateRecipeModifiers {
             return RecipeModifier.nullWrongType(TieredKineticMachine.class, machine);
         }
         float stressRequired = (float) recipe.getTickInputContents(StressRecipeCapability.STRESS_CAPABILITY).get(0).content();
-        float currentStress = ((MixinKineticBlockEntityAccessor) tkm.getTrait(KineticMachineTrait.TYPE).getKineticBlockEntity()).getStress();
+        float currentStress = ((MixinKineticBlockEntityAccessor) tkm.getTrait(KineticMachineTrait.class).getKineticBlockEntity()).getStress();
         if(currentStress < stressRequired) {
             return ModifierFunction.cancel(Component.literal("Stress too low. Required: " + stressRequired));
         }

@@ -31,12 +31,15 @@ public class KineticMachineRecipeLogic extends RecipeLogic {
         if(this.lastRecipe != null && !recipe.equals(this.lastRecipe)) {
             this.chanceCaches.clear();
         }
-        this.failureReasonMap.clear();
+        lastUnrolledRecipe = recipe.copy();
+        syncDataHolder.markClientSyncFieldDirty("lastDisplayedRecipe");
+        GTRecipe runningRecipe = RecipeHelper.doPrerolls(recipe, chanceCaches);
+        clearFailureReason();
         this.recipeDirty = false;
-        this.lastRecipe = recipe;
+        this.lastRecipe = runningRecipe;
         this.setStatus(Status.WORKING);
         this.progress = 0;
-        this.duration = recipe.duration;
+        this.duration = runningRecipe.duration;
         this.isActive = true;
         this.syncDataHolder.resyncAllFields();
     }

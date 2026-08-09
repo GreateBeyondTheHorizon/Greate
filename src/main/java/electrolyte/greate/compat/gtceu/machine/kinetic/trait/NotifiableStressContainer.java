@@ -2,7 +2,6 @@ package electrolyte.greate.compat.gtceu.machine.kinetic.trait;
 
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
-import com.gregtechceu.gtceu.api.machine.trait.MachineTraitType;
 import com.gregtechceu.gtceu.api.machine.trait.notifiable.NotifiableRecipeHandlerTrait;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import electrolyte.greate.compat.gtceu.capability.recipe.StressRecipeCapability;
@@ -15,7 +14,6 @@ import java.util.List;
 
 public class NotifiableStressContainer extends NotifiableRecipeHandlerTrait<Float> /*implements ITieredKineticMachine*/ {
 
-    public static final MachineTraitType<NotifiableStressContainer> TYPE = new MachineTraitType<>(NotifiableStressContainer.class);
     protected IO handlerIO;
     protected long lastTimeStamp;
     private float currentOutputStress, lastOutputStress;
@@ -36,7 +34,7 @@ public class NotifiableStressContainer extends NotifiableRecipeHandlerTrait<Floa
         super.onMachineLoad();
         if(getMachine() instanceof TieredKineticMachine tkm) {
             tkm.subscribeServerTick(() -> {
-                float impact = ((MixinKineticBlockEntityAccessor) tkm.getTraitHolder().getTrait(KineticMachineTrait.TYPE).getKineticBlockEntity()).getStress();
+                float impact = ((MixinKineticBlockEntityAccessor) tkm.getTraitHolder().getTrait(KineticMachineTrait.class).getKineticBlockEntity()).getStress();
                 if(impact != lastOutputStress) lastOutputStress = impact;
             });
         }
@@ -48,7 +46,7 @@ public class NotifiableStressContainer extends NotifiableRecipeHandlerTrait<Floa
         if(io == IO.IN) {
             float extracted = Math.min(remaining, lastOutputStress);
             if(getMachine() instanceof TieredKineticMachine tkm) {
-                if(tkm.getTraitHolder().getTrait(KineticMachineTrait.TYPE).getKineticBlockEntity().getSpeed() == 0) {
+                if(tkm.getTraitHolder().getTrait(KineticMachineTrait.class).getKineticBlockEntity().getSpeed() == 0) {
                     extracted = 0;
                 }
             }
@@ -57,7 +55,7 @@ public class NotifiableStressContainer extends NotifiableRecipeHandlerTrait<Floa
         } else if(io == IO.OUT) {
             float inserted = Math.min(remaining, lastOutputStress);
             if(getMachine() instanceof TieredKineticMachine tkm) {
-                if(tkm.getTraitHolder().getTrait(KineticMachineTrait.TYPE).getKineticBlockEntity().getSpeed() == 0) {
+                if(tkm.getTraitHolder().getTrait(KineticMachineTrait.class).getKineticBlockEntity().getSpeed() == 0) {
                     inserted = 0;
                 }
             }
@@ -80,11 +78,6 @@ public class NotifiableStressContainer extends NotifiableRecipeHandlerTrait<Floa
     @Override
     public RecipeCapability<Float> getCapability() {
         return StressRecipeCapability.STRESS_CAPABILITY;
-    }
-
-    @Override
-    public MachineTraitType<?> getTraitType() {
-        return TYPE;
     }
 
     /*@Override

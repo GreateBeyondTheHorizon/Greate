@@ -58,7 +58,7 @@ public class SawRender extends DynamicRender<TieredSawMachine, SawRender> {
 
     @Override
     public void render(TieredSawMachine machine, float partialTicks, PoseStack ms, MultiBufferSource bufferSource, int light, int overlay) {
-        KineticBlockEntity be = machine.getTraitHolder().getTrait(KineticMachineTrait.TYPE).getKineticBlockEntity();
+        KineticBlockEntity be = machine.getTraitHolder().getTrait(KineticMachineTrait.class).getKineticBlockEntity();
         tier = ((ITieredBlock) be.getBlockState().getBlock()).getTier();
         renderBlade(machine, ms, bufferSource, light);
         renderItems(machine, partialTicks, ms, bufferSource, light, overlay);

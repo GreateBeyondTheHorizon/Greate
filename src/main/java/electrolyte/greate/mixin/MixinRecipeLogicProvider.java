@@ -1,6 +1,5 @@
 package electrolyte.greate.mixin;
 
-import com.gregtechceu.gtceu.api.machine.trait.MachineTraitType;
 import com.gregtechceu.gtceu.api.machine.trait.recipe.RecipeLogic;
 import com.gregtechceu.gtceu.integration.jade.provider.MachineTraitProvider;
 import com.gregtechceu.gtceu.integration.jade.provider.RecipeLogicProvider;
@@ -19,8 +18,7 @@ import snownee.jade.api.config.IPluginConfig;
 
 @Mixin(RecipeLogicProvider.class)
 public abstract class MixinRecipeLogicProvider extends MachineTraitProvider<RecipeLogic, CompoundTag> {
-
-    protected MixinRecipeLogicProvider(ResourceLocation uid, MachineTraitType<RecipeLogic> type) {
+    protected MixinRecipeLogicProvider(ResourceLocation uid, Class<RecipeLogic> type) {
         super(uid, type);
     }
 

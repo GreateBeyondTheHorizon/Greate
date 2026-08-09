@@ -21,8 +21,8 @@ public class MixinKineticBlockEntity {
     @WrapOperation(method = "validateKinetics", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;"), remap = false)
     private BlockEntity greate$validateKinetics(Level level, BlockPos pPos, Operation<BlockEntity> original) {
         if(level.getBlockEntity(pPos) instanceof MetaMachine mm) {
-            if(mm.getTraitHolder().getTraitOptional(KineticMachineTrait.TYPE).isPresent()) {
-                return mm.getTraitHolder().getTrait(KineticMachineTrait.TYPE).getKineticBlockEntity();
+            if(mm.getTraitHolder().getTraitOptional(KineticMachineTrait.class).isPresent()) {
+                return mm.getTraitHolder().getTrait(KineticMachineTrait.class).getKineticBlockEntity();
             }
         }
         return original.call(level, pPos);
@@ -31,8 +31,8 @@ public class MixinKineticBlockEntity {
     @WrapOperation(method = "setSource", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;"))
     private BlockEntity greate$setSource(Level level, BlockPos pPos, Operation<BlockEntity> original) {
         if(level.getBlockEntity(pPos) instanceof MetaMachine mm) {
-            if(mm.getTraitHolder().getTraitOptional(KineticMachineTrait.TYPE).isPresent()) {
-                return mm.getTraitHolder().getTrait(KineticMachineTrait.TYPE).getKineticBlockEntity();
+            if(mm.getTraitHolder().getTraitOptional(KineticMachineTrait.class).isPresent()) {
+                return mm.getTraitHolder().getTrait(KineticMachineTrait.class).getKineticBlockEntity();
             }
         }
         return original.call(level, pPos);
@@ -41,8 +41,8 @@ public class MixinKineticBlockEntity {
     @WrapOperation(method = "switchToBlockState", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;"))
     private static BlockEntity greate$switchToBlockState(Level level, BlockPos pPos, Operation<BlockEntity> original) {
         if(level.getBlockEntity(pPos) instanceof MetaMachine mm) {
-            if(mm.getTraitHolder().getTraitOptional(KineticMachineTrait.TYPE).isPresent()) {
-                return mm.getTraitHolder().getTrait(KineticMachineTrait.TYPE).getKineticBlockEntity();
+            if(mm.getTraitHolder().getTraitOptional(KineticMachineTrait.class).isPresent()) {
+                return mm.getTraitHolder().getTrait(KineticMachineTrait.class).getKineticBlockEntity();
             }
         }
         return original.call(level, pPos);

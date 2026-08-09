@@ -18,8 +18,8 @@ public class MixinKineticBlock {
     @WrapOperation(method = "onPlace", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;"), remap = false)
     private BlockEntity greate$onPlace(Level level, BlockPos pPos, Operation<BlockEntity> original) {
         if(level.getBlockEntity(pPos) instanceof MetaMachine mm) {
-            if(mm.getTraitHolder().getTraitOptional(KineticMachineTrait.TYPE).isPresent()) {
-                return mm.getTraitHolder().getTrait(KineticMachineTrait.TYPE).getKineticBlockEntity();
+            if(mm.getTraitHolder().getTraitOptional(KineticMachineTrait.class).isPresent()) {
+                return mm.getTraitHolder().getTrait(KineticMachineTrait.class).getKineticBlockEntity();
             }
         }
         return original.call(level, pPos);
@@ -28,8 +28,8 @@ public class MixinKineticBlock {
     @WrapOperation(method = "updateIndirectNeighbourShapes", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/LevelAccessor;getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;"), remap = false)
     private BlockEntity greate$updateIndirectNeighbourShapes(LevelAccessor level, BlockPos pos, Operation<BlockEntity> original) {
         if(level.getBlockEntity(pos) instanceof MetaMachine mm) {
-            if(mm.getTraitHolder().getTraitOptional(KineticMachineTrait.TYPE).isPresent()) {
-                return mm.getTraitHolder().getTrait(KineticMachineTrait.TYPE).getKineticBlockEntity();
+            if(mm.getTraitHolder().getTraitOptional(KineticMachineTrait.class).isPresent()) {
+                return mm.getTraitHolder().getTrait(KineticMachineTrait.class).getKineticBlockEntity();
             }
         }
         return original.call(level, pos);
@@ -37,8 +37,8 @@ public class MixinKineticBlock {
     @WrapOperation(method = "setPlacedBy", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;"), remap = false)
     private BlockEntity greate$setPlacedBy(Level level, BlockPos pPos, Operation<BlockEntity> original) {
         if(level.getBlockEntity(pPos) instanceof MetaMachine mm) {
-            if(mm.getTraitHolder().getTraitOptional(KineticMachineTrait.TYPE).isPresent()) {
-                return mm.getTraitHolder().getTrait(KineticMachineTrait.TYPE).getKineticBlockEntity();
+            if(mm.getTraitHolder().getTraitOptional(KineticMachineTrait.class).isPresent()) {
+                return mm.getTraitHolder().getTrait(KineticMachineTrait.class).getKineticBlockEntity();
             }
         }
         return original.call(level, pPos);

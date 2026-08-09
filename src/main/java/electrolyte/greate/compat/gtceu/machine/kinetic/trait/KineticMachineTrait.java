@@ -2,7 +2,6 @@ package electrolyte.greate.compat.gtceu.machine.kinetic.trait;
 
 import com.gregtechceu.gtceu.api.machine.TickableSubscription;
 import com.gregtechceu.gtceu.api.machine.trait.MachineTrait;
-import com.gregtechceu.gtceu.api.machine.trait.MachineTraitType;
 import com.gregtechceu.gtceu.api.sync_system.annotations.SyncToClient;
 import com.simibubi.create.content.kinetics.RotationPropagator;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
@@ -14,8 +13,6 @@ import net.minecraft.server.level.ServerLevel;
 @MethodsReturnNonnullByDefault
 public class KineticMachineTrait extends MachineTrait {
 
-    public static final MachineTraitType<KineticMachineTrait> TYPE = new MachineTraitType<>(KineticMachineTrait.class);
-
     @SyncToClient
     @Getter
     private KineticBlockEntity kineticBlockEntity;
@@ -23,11 +20,6 @@ public class KineticMachineTrait extends MachineTrait {
 
     public KineticMachineTrait(KineticBlockEntity kineticBlockEntity) {
         this.kineticBlockEntity = kineticBlockEntity;
-    }
-
-    @Override
-    public MachineTraitType<?> getTraitType() {
-        return TYPE;
     }
 
     @Override
