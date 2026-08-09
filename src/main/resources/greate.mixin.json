@@ -23,6 +23,7 @@
     "MixinKineticBlock",
     "MixinKineticBlockEntity",
     "MixinKineticBlockEntityAccessor",
+    "MixinKineticEffectHandler",
     "MixinKineticNetwork",
     "MixinMillstoneBlockEntity",
     "MixinMixinHelpers",
