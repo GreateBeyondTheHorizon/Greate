@@ -7,6 +7,8 @@ import com.gregtechceu.gtceu.api.machine.feature.ITieredMachine;
 import com.gregtechceu.gtceu.api.sync_system.annotations.SaveField;
 import com.gregtechceu.gtceu.api.sync_system.annotations.SyncToClient;
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
+import com.simibubi.create.foundation.blockEntity.behaviour.BehaviourType;
+import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import electrolyte.greate.compat.gtceu.machine.kinetic.trait.KineticMachineTrait;
 import electrolyte.greate.compat.gtceu.machine.kinetic.trait.NotifiableStressContainer;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredKineticBlockEntity;
@@ -50,6 +52,14 @@ public class TieredKineticMachine extends MetaMachine implements ITieredMachine,
 
     public float getSpeed() {
         return kineticMachineTrait.getKineticBlockEntity().getSpeed();
+    }
+
+    public <T extends BlockEntityBehaviour> T getBehaviour(BehaviourType<T> behaviourType) {
+        return kineticMachineTrait.getKineticBlockEntity().getBehaviour(behaviourType);
+    }
+
+    public boolean isVirtual() {
+        return kineticMachineTrait.getKineticBlockEntity().isVirtual();
     }
 
     public void notifyUpdate() {

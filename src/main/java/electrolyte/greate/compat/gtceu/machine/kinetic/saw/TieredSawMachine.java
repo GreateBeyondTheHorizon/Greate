@@ -4,6 +4,7 @@ import com.gregtechceu.gtceu.api.blockentity.BlockEntityCreationInfo;
 import com.gregtechceu.gtceu.api.capability.recipe.FluidRecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
+import com.gregtechceu.gtceu.api.machine.TickableSubscription;
 import com.gregtechceu.gtceu.api.machine.trait.notifiable.NotifiableFluidTank;
 import com.gregtechceu.gtceu.api.machine.trait.notifiable.NotifiableItemStackHandler;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
@@ -14,19 +15,24 @@ import com.gregtechceu.gtceu.client.model.machine.MachineRenderState;
 import com.gregtechceu.gtceu.common.data.machines.GTMachineUtils;
 import com.gregtechceu.gtceu.utils.ISubscription;
 import com.simibubi.create.AllSoundEvents;
+import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
 import com.simibubi.create.content.kinetics.saw.SawBlock;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
+import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredKineticWorkableMachine;
 import electrolyte.greate.compat.gtceu.machine.kinetic.millstone.KineticMachineRecipeLogic;
 import lombok.Getter;
 import net.createmod.catnip.math.VecHelper;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.TickTask;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -58,10 +64,6 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
     @SyncToClient
     @Getter
     private ItemStack renderedImportStack;
-    @SaveField
-    @SyncToClient
-    @Getter
-    private NonNullList<ItemStack> renderedExportStacks;
 
     @Nullable
     protected ISubscription importFluidSub;
@@ -74,6 +76,8 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
     private ItemStack playEvent = ItemStack.EMPTY;
     @SyncToClient
     private boolean shouldPlaySound = false;
+
+    private TickableSubscription autoOutputSub;
 
     private final boolean canRunRecipes = getBlockState().getValue(SawBlock.FACING) == Direction.UP;
 
@@ -95,7 +99,6 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
                 attachTrait(new NotifiableFluidTank(Collections.singletonList(EMPTY_TANK), IO.NONE));
         this.containedFluid = FluidStack.EMPTY;
         this.renderedImportStack = ItemStack.EMPTY;
-        this.renderedExportStacks = NonNullList.of(ItemStack.EMPTY);
     }
 
     @Override
@@ -104,7 +107,10 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
         this.updateStoredFluidFromCache();
         this.importFluidSub = this.importTank.addChangedListener(this::onFluidChanged);
         this.importItemSub = this.importItems.addChangedListener(this::onImportItemChanged);
-        this.exportItemSub = this.exportItems.addChangedListener(this::onExportItemChanged);
+
+        if(getLevel() instanceof ServerLevel serverLevel) {
+            serverLevel.getServer().tell(new TickTask(0, this::updateAutoOutputSubscription));
+        }
     }
 
     @Override
@@ -118,10 +124,67 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
             this.importItemSub.unsubscribe();
             this.importItemSub = null;
         }
-        if(this.exportItemSub != null) {
-            this.exportItemSub.unsubscribe();
-            this.exportItemSub = null;
+        if(this.autoOutputSub != null) {
+            this.autoOutputSub.unsubscribe();
+            this.autoOutputSub = null;
         }
+    }
+
+    private void updateAutoOutputSubscription() {
+        autoOutputSub = subscribeServerTick(autoOutputSub, () -> {
+            if(!canRunRecipes) return;
+            if(getSpeed() == 0) return;
+            if(exportItems.isEmpty()) return;
+            Vec3 itemMovement = getItemMovementVec();
+            Direction movementFacing = Direction.getNearest(itemMovement.x, itemMovement.y, itemMovement.z);
+            //run one a second
+            for(int slot = 0; slot < exportItems.getSize(); slot++) {
+                ItemStack stack = exportItems.getStackInSlot(slot);
+                if(stack.isEmpty()) continue;
+                ItemStack tryExportingToBeltFunnel = getBehaviour(DirectBeltInputBehaviour.TYPE)
+                        .tryExportingToBeltFunnel(stack, movementFacing.getOpposite(), false);
+                if(tryExportingToBeltFunnel != null) {
+                    if(tryExportingToBeltFunnel.getCount() != stack.getCount()) {
+                        exportItems.setStackInSlot(slot, tryExportingToBeltFunnel);
+                        notifyUpdate();
+                        return;
+                    }
+                    if(!tryExportingToBeltFunnel.isEmpty()) return;
+                }
+            }
+            BlockPos nextPos = worldPosition.offset(BlockPos.containing(itemMovement));
+            DirectBeltInputBehaviour behaviour = BlockEntityBehaviour.get(level, nextPos, DirectBeltInputBehaviour.TYPE);
+            if(behaviour != null) {
+                boolean changed = false;
+                if(!behaviour.canInsertFromSide(movementFacing)) return;
+                if(level.isClientSide && !isVirtual()) return;
+                for(int slot = 0; slot < exportItems.getSize(); slot++) {
+                    ItemStack stack = exportItems.getStackInSlot(slot);
+                    if(stack.isEmpty()) continue;
+                    ItemStack remainder = behaviour.handleInsertion(stack, movementFacing, false);
+                    if(remainder.equals(stack, false)) continue;
+                    exportItems.setStackInSlot(slot, remainder);
+                    changed = true;
+                }
+                if(changed) {
+                    setChanged();
+                }
+                return;
+            }
+
+            Vec3 outPos = VecHelper.getCenterOf(worldPosition)
+                    .add(itemMovement.scale(0.5f)).add(0, 0.5, 0);
+            Vec3 outMotion = itemMovement.scale(0.0625f).add(0, 0.125, 0);
+            for(int slot = 0; slot < exportItems.getSize(); slot++) {
+                ItemStack stack = exportItems.getStackInSlot(slot);
+                if(stack.isEmpty()) continue;
+                ItemEntity entityIn = new ItemEntity(level, outPos.x, outPos.y, outPos.z, stack);
+                entityIn.setDeltaMovement(outMotion);
+                level.addFreshEntity(entityIn);
+                exportItems.setStackInSlot(slot, ItemStack.EMPTY);
+            }
+            level.updateNeighbourForOutputSignal(worldPosition, getBlockState().getBlock());
+        });
     }
 
     private void onFluidChanged() {
@@ -138,13 +201,6 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
         }
     }
 
-    private void onExportItemChanged() {
-        if(!this.isRemote()) {
-            this.syncDataHolder.markClientSyncFieldDirty("renderedExportStacks");
-            this.updateStoredExportItemFromCache();
-        }
-    }
-
     private void updateStoredFluidFromCache() {
         FluidStack cachedFluid = this.importTank.getFluidInTank(0);
         this.containedFluid = cachedFluid.isEmpty() ? FluidStack.EMPTY : cachedFluid;
@@ -153,16 +209,6 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
     private void updateStoredImportItemFromCache() {
         ItemStack cachedStack = this.importItems.getStackInSlot(0);
         this.renderedImportStack = cachedStack.isEmpty() ? ItemStack.EMPTY : this.importItems.getStackInSlot(0);
-    }
-
-    private void updateStoredExportItemFromCache() {
-        NonNullList<ItemStack> cachedExportStack = NonNullList.create();
-        for(int i = 0; i < this.exportItems.getSlots(); i++) {
-            if(!this.exportItems.getStackInSlot(i).isEmpty()) {
-                cachedExportStack.add(this.exportItems.getStackInSlot(i));
-            }
-        }
-        this.renderedExportStacks = cachedExportStack;
     }
 
     @Override

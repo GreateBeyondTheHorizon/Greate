@@ -4,6 +4,7 @@ import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
 import com.gregtechceu.gtceu.client.renderer.machine.DynamicRender;
 import com.gregtechceu.gtceu.client.renderer.machine.DynamicRenderType;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import com.mojang.serialization.Codec;
 import com.simibubi.create.content.kinetics.base.IRotate;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
@@ -12,7 +13,6 @@ import com.simibubi.create.content.kinetics.saw.SawBlock;
 import com.simibubi.create.content.logistics.box.PackageItem;
 import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringRenderer;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
-import dev.engine_room.flywheel.lib.transform.TransformStack;
 import electrolyte.greate.compat.gtceu.machine.kinetic.saw.TieredSawMachine;
 import electrolyte.greate.compat.gtceu.machine.kinetic.trait.KineticMachineTrait;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
@@ -146,58 +146,38 @@ public class SawRender extends DynamicRender<TieredSawMachine, SawRender> {
 		if(be.getRenderState().getValue(SawBlock.FACING) != Direction.UP) return;
         if(be.getSpeed() == 0) return;
 		if(be.getRenderedImportStack().isEmpty()) return;
-        //if(be.getRenderedExportStacks().isEmpty()) return;
         if(!be.getRecipeLogic().isActive()) return;
 
 		boolean alongZ = !be.getBlockState().getValue(AXIS_ALONG_FIRST_COORDINATE);
 
         float offset = getOffset(be, partialTicks, alongZ);
 
-        int outputs = 0;
-		for (int i = 1; i < be.getRenderedExportStacks().size(); i++)
-			if (!be.getRenderedExportStacks().get(i).isEmpty())
-				outputs++;
-
 		ms.pushPose();
-		if (alongZ)
-			ms.mulPose(com.mojang.math.Axis.YP.rotationDegrees(90));
-		ms.translate(outputs <= 1 ? .5 : .25, 0, offset);
+		if (alongZ) ms.mulPose(Axis.YP.rotationDegrees(90));
+		ms.translate(0.5, 0, offset);
 		ms.translate(alongZ ? -1 : 0, 0, 0);
 
-		int renderedI = 0;
-		for (int i = 0; i < 1; i++) {
-			ItemStack stack = be.getRenderedImportStack();
-			if (stack.isEmpty())
-				continue;
 
-			ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
-			BakedModel modelWithOverrides = itemRenderer.getModel(stack, be.getLevel(), null, 0);
-			boolean blockItem = modelWithOverrides.isGui3d();
+        ItemStack stack = be.getRenderedImportStack();
+        if (stack.isEmpty()) return;
 
-			ms.pushPose();
-			ms.translate(0, blockItem ? .925f : 13f / 16f, 0);
+        ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
+        BakedModel modelWithOverrides = itemRenderer.getModel(stack, be.getLevel(), null, 0);
+        boolean blockItem = modelWithOverrides.isGui3d();
 
-			if (i > 0 && outputs > 1) {
-				ms.translate((0.5 / (outputs - 1)) * renderedI, 0, 0);
-				TransformStack.of(ms)
-					.nudge(i * 133);
-			}
+        ms.pushPose();
+        ms.translate(0, blockItem ? .925f : 13f / 16f, 0);
 
-			boolean box = PackageItem.isPackage(stack);
-			if (box) {
-				ms.translate(0, 4 / 16f, 0);
-				ms.scale(1.5f, 1.5f, 1.5f);
-			} else
-				ms.scale(.5f, .5f, .5f);
+        boolean box = PackageItem.isPackage(stack);
+        if (box) {
+            ms.translate(0, 4 / 16f, 0);
+            ms.scale(1.5f, 1.5f, 1.5f);
+        } else ms.scale(.5f, .5f, .5f);
 
-			if (!box)
-				ms.mulPose(com.mojang.math.Axis.XP.rotationDegrees(90));
+        if (!box) ms.mulPose(Axis.XP.rotationDegrees(90));
 
-			itemRenderer.render(stack, ItemDisplayContext.FIXED, false, ms, buffer, light, overlay, modelWithOverrides);
-			renderedI++;
-
-			ms.popPose();
-		}
+        itemRenderer.render(stack, ItemDisplayContext.FIXED, false, ms, buffer, light, overlay, modelWithOverrides);
+        ms.popPose();
 
 		ms.popPose();
 	}
@@ -206,7 +186,7 @@ public class SawRender extends DynamicRender<TieredSawMachine, SawRender> {
         float progress = be.getRecipeLogic().getProgress();
         int duration = be.getRecipeLogic().getLastRecipe().duration;
         boolean moving = duration != 0 && progress != 0;
-        float offset = moving ? (progress / duration) * 0.5f : 0.5f;
+        float offset = moving ? (progress / duration) : 1.0f;
         float processingSpeed = Mth.clamp(Math.abs(be.getSpeed()) / 32, 1, 128);
         /*if (moving) {
             offset = Mth.clamp(offset + ((- partialTicks + .5f) * processingSpeed) / progress, 0.125f, 1f);
@@ -215,10 +195,8 @@ public class SawRender extends DynamicRender<TieredSawMachine, SawRender> {
             offset /= 2;
         }*/
 
-        if (be.getSpeed() == 0)
-            offset = .5f;
-        if (be.getSpeed() > 0 ^ alongZ)
-            offset = 1 - offset;
+        if (be.getSpeed() == 0) offset = .5f;
+        if (be.getSpeed() > 0 ^ alongZ) offset = 1 - offset;
         return offset;
     }
 }
