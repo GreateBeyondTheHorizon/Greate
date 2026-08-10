@@ -28,7 +28,6 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
-import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Rotation;
@@ -184,16 +183,9 @@ public class SawRender extends DynamicRender<TieredSawMachine, SawRender> {
 
     private static float getOffset(TieredSawMachine be, float partialTicks, boolean alongZ) {
         float progress = be.getRecipeLogic().getProgress();
-        int duration = be.getRecipeLogic().getLastRecipe().duration;
+        int duration = be.getRecipeLogic().getLastRecipe() != null ? be.getRecipeLogic().getLastRecipe().duration : 0;
         boolean moving = duration != 0 && progress != 0;
         float offset = moving ? (progress / duration) : 1.0f;
-        float processingSpeed = Mth.clamp(Math.abs(be.getSpeed()) / 32, 1, 128);
-        /*if (moving) {
-            offset = Mth.clamp(offset + ((- partialTicks + .5f) * processingSpeed) / progress, 0.125f, 1f);
-            *//*if (! be.inventory.appliedRecipe) //todo: fix (probably check recipe type)
-                offset += 1;*//*
-            offset /= 2;
-        }*/
 
         if (be.getSpeed() == 0) offset = .5f;
         if (be.getSpeed() > 0 ^ alongZ) offset = 1 - offset;

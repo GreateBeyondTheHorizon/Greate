@@ -7,22 +7,26 @@ import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.machine.TickableSubscription;
 import com.gregtechceu.gtceu.api.machine.trait.notifiable.NotifiableFluidTank;
 import com.gregtechceu.gtceu.api.machine.trait.notifiable.NotifiableItemStackHandler;
+import com.gregtechceu.gtceu.api.machine.trait.recipe.RecipeLogic.Status;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.sync_system.annotations.SaveField;
 import com.gregtechceu.gtceu.api.sync_system.annotations.SyncToClient;
-import com.gregtechceu.gtceu.api.transfer.fluid.CustomFluidTank;
 import com.gregtechceu.gtceu.client.model.machine.MachineRenderState;
 import com.gregtechceu.gtceu.common.data.machines.GTMachineUtils;
+import com.gregtechceu.gtceu.utils.ExtendedUseOnContext;
 import com.gregtechceu.gtceu.utils.ISubscription;
 import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
 import com.simibubi.create.content.kinetics.saw.SawBlock;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import com.simibubi.create.foundation.mixin.accessor.UseOnContextAccessor;
 import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredKineticWorkableMachine;
 import electrolyte.greate.compat.gtceu.machine.kinetic.millstone.KineticMachineRecipeLogic;
 import lombok.Getter;
 import net.createmod.catnip.math.VecHelper;
+import net.createmod.catnip.placement.IPlacementHelper;
+import net.createmod.catnip.placement.PlacementHelpers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -31,29 +35,36 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.TickTask;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Collections;
 
 public class TieredSawMachine extends TieredKineticWorkableMachine {
 
     @SaveField
-    public final NotifiableItemStackHandler importItems, exportItems;
+    private final NotifiableItemStackHandler importItems, exportItems;
 
     @SaveField
-    public final NotifiableFluidTank importTank;
+    private final NotifiableFluidTank importTank;
 
     @SaveField
     @SyncToClient
@@ -69,8 +80,6 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
     protected ISubscription importFluidSub;
     @Nullable
     protected ISubscription importItemSub;
-    @Nullable
-    protected ISubscription exportItemSub;
 
     @SyncToClient
     private ItemStack playEvent = ItemStack.EMPTY;
@@ -79,24 +88,13 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
 
     private TickableSubscription autoOutputSub;
 
-    private final boolean canRunRecipes = getBlockState().getValue(SawBlock.FACING) == Direction.UP;
-
-    //todo: add bucket clicking io and sponge clearing
     public TieredSawMachine(BlockEntityCreationInfo info, int tier) {
         super(info, tier, new TieredSawMachineBlockEntity(info.type(), info.pos(), info.state()));
-        this.importItems = canRunRecipes ?
-                attachTrait(new NotifiableItemStackHandler(getRecipeType().getMaxInputs(ItemRecipeCapability.CAP), IO.IN)) :
-                attachTrait(new NotifiableItemStackHandler(getRecipeType().getMaxInputs(ItemRecipeCapability.CAP), IO.NONE));
-        this.exportItems = canRunRecipes ?
-                attachTrait(new NotifiableItemStackHandler(getRecipeType().getMaxOutputs(ItemRecipeCapability.CAP), IO.OUT)) :
-                attachTrait(new NotifiableItemStackHandler(getRecipeType().getMaxOutputs(ItemRecipeCapability.CAP), IO.NONE));
-        CustomFluidTank EMPTY_TANK = new CustomFluidTank(GTMachineUtils.defaultTankSizeFunction.apply(this.getTier()),
-                p -> p.getFluid().equals(Fluids.EMPTY));
-        this.importTank = canRunRecipes ?
-                attachTrait(new NotifiableFluidTank(getRecipeType().getMaxInputs(FluidRecipeCapability.CAP),
+        this.importItems = attachTrait(new NotifiableItemStackHandler(getRecipeType().getMaxInputs(ItemRecipeCapability.CAP), IO.IN));
+        this.exportItems = attachTrait(new NotifiableItemStackHandler(getRecipeType().getMaxOutputs(ItemRecipeCapability.CAP), IO.OUT));
+        this.importTank = attachTrait(new NotifiableFluidTank(getRecipeType().getMaxInputs(FluidRecipeCapability.CAP),
                         GTMachineUtils.defaultTankSizeFunction.apply(this.getTier()),
-                        IO.IN, IO.IN)) :
-                attachTrait(new NotifiableFluidTank(Collections.singletonList(EMPTY_TANK), IO.NONE));
+                        IO.IN, IO.BOTH));
         this.containedFluid = FluidStack.EMPTY;
         this.renderedImportStack = ItemStack.EMPTY;
     }
@@ -132,12 +130,11 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
 
     private void updateAutoOutputSubscription() {
         autoOutputSub = subscribeServerTick(autoOutputSub, () -> {
-            if(!canRunRecipes) return;
+            if(!canRunRecipes()) return;
             if(getSpeed() == 0) return;
             if(exportItems.isEmpty()) return;
             Vec3 itemMovement = getItemMovementVec();
             Direction movementFacing = Direction.getNearest(itemMovement.x, itemMovement.y, itemMovement.z);
-            //run one a second
             for(int slot = 0; slot < exportItems.getSize(); slot++) {
                 ItemStack stack = exportItems.getStackInSlot(slot);
                 if(stack.isEmpty()) continue;
@@ -185,6 +182,63 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
             }
             level.updateNeighbourForOutputSignal(worldPosition, getBlockState().getBlock());
         });
+    }
+
+    @Override
+    public InteractionResult onUseWithItem(ExtendedUseOnContext context) {
+        if(!canRunRecipes()) return InteractionResult.PASS;
+        if (FluidUtil.getFluidHandler(context.getItemInHand()).isPresent()) {
+            if (isRemote()) {
+                return InteractionResult.SUCCESS;
+            }
+            if (FluidUtil.interactWithFluidHandler(context.getPlayer(), context.getHand(), importTank)) {
+                return InteractionResult.CONSUME;
+            }
+            return InteractionResult.PASS;
+        }
+        if(context.getItemInHand().is(Items.SPONGE) &&
+                !this.importTank.drain(Integer.MAX_VALUE, FluidAction.EXECUTE).isEmpty()) {
+            context.getLevel().playSound(null, context.getClickedPos(), SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS);
+            return InteractionResult.SUCCESS;
+        }
+        return super.onUseWithItem(context);
+    }
+
+    @Override
+    public InteractionResult onUse(ExtendedUseOnContext context) {
+        Player player = context.getPlayer();
+        InteractionHand hand = context.getHand();
+        Level world = context.getLevel();
+        BlockPos pos = context.getClickedPos();
+        BlockState state = world.getBlockState(pos);
+        BlockHitResult hit = ((UseOnContextAccessor) context).create$getHitResult();
+        ItemStack heldItem = player.getItemInHand(hand);
+        IPlacementHelper placementHelper = PlacementHelpers.get(TieredSawMachineBlock.PLACEMENT_HELPER_ID);
+        if(!player.isShiftKeyDown() && player.mayBuild()) {
+            if(placementHelper.matchesItem(heldItem) && placementHelper.getOffset(player, world, state, pos, hit)
+                    .placeInWorld(world, (BlockItem) heldItem.getItem(), player, hand, hit).consumesAction()) {
+                return InteractionResult.SUCCESS;
+            }
+        }
+        if(player.isSpectator() || !heldItem.isEmpty() || !canRunRecipes()) return InteractionResult.PASS;
+
+        boolean emptyOutput = true;
+        NotifiableItemStackHandler inv = this.exportItems;
+        for(int slot = 0; slot < inv.getSlots(); slot++) {
+            ItemStack heldItemStack = inv.getStackInSlot(slot);
+            if(!heldItemStack.isEmpty()) emptyOutput = false;
+            player.getInventory().placeItemBackInInventory(heldItemStack);
+            inv.setStackInSlot(slot, ItemStack.EMPTY);
+        }
+
+        if(emptyOutput) {
+            inv = this.importItems;
+            for(int slot = 0; slot < inv.getSlots(); slot++) {
+                player.getInventory().placeItemBackInInventory(inv.getStackInSlot(slot));
+                inv.setStackInSlot(slot, ItemStack.EMPTY);
+            }
+        }
+        return InteractionResult.SUCCESS;
     }
 
     private void onFluidChanged() {
@@ -235,7 +289,18 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
     }
 
     @Override
+    public boolean onWorking() {
+        if(!canRunRecipes()) {
+            this.recipeLogic.resetRecipeLogic();
+            this.recipeLogic.setStatus(Status.SUSPEND);
+            return false;
+        }
+        return super.onWorking();
+    }
+
+    @Override
     public boolean beforeWorking(@Nullable GTRecipe recipe) {
+        if(!canRunRecipes()) return false;
         this.playEvent = renderedImportStack;
         this.getSyncDataHolder().markClientSyncFieldDirty("playEvent");
         return super.beforeWorking(recipe);
@@ -251,7 +316,7 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
 
     @Override
     public void clientTick() {
-        if(getSpeed() == 0 || !canRunRecipes) return;
+        if(getSpeed() == 0 || !canRunRecipes()) return;
         if(!renderedImportStack.isEmpty() && this.getRecipeLogic().isActive()) {
             spawnParticles(renderedImportStack);
         }
@@ -273,6 +338,10 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
             return;
 		}
         super.clientTick();
+    }
+
+    public boolean canRunRecipes() {
+        return getBlockState().getValue(SawBlock.FACING) == Direction.UP;
     }
 
     protected void spawnParticles(ItemStack stack) {

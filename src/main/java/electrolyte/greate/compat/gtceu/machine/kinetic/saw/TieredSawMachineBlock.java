@@ -2,11 +2,10 @@ package electrolyte.greate.compat.gtceu.machine.kinetic.saw;
 
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.gregtechceu.gtceu.api.machine.MetaMachine;
-import com.gregtechceu.gtceu.api.machine.trait.notifiable.NotifiableItemStackHandler;
+import com.gregtechceu.gtceu.api.machine.trait.recipe.RecipeLogic.Status;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.drill.DrillBlock;
-import com.simibubi.create.content.kinetics.saw.SawBlock;
 import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.damageTypes.CreateDamageSources;
 import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredDirectionalAxisKineticMachineBlock;
@@ -20,8 +19,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.Direction.AxisDirection;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -58,7 +55,7 @@ import static com.simibubi.create.content.kinetics.saw.SawBlock.FLIPPED;
 @ParametersAreNonnullByDefault
 public class TieredSawMachineBlock extends TieredDirectionalAxisKineticMachineBlock implements IBE<TieredSawMachine> {
 
-    private static final int PLACEMENT_HELPER_ID = PlacementHelpers.register(new PlacementHelper());
+    public static final int PLACEMENT_HELPER_ID = PlacementHelpers.register(new PlacementHelper());
 
     public TieredSawMachineBlock(Properties properties, MachineDefinition definition) {
         super(Properties.copy(AllBlocks.MECHANICAL_SAW.get()), definition, AllBlocks.MECHANICAL_SAW.get());
@@ -104,47 +101,12 @@ public class TieredSawMachineBlock extends TieredDirectionalAxisKineticMachineBl
                     .setValue(AXIS_ALONG_FIRST_COORDINATE, newState.getValue(AXIS_ALONG_FIRST_COORDINATE));
             kbe.setBlockState(kbeState);
             KineticBlockEntity.switchToBlockState(kbe.getLevel(), kbe.getBlockPos(), kbeState);
+            if(newState.getValue(FACING) != Direction.UP) {
+                sawMachine.getRecipeLogic().setProgress(0);
+                sawMachine.getRecipeLogic().setStatus(Status.SUSPEND);
+            } else sawMachine.getRecipeLogic().setStatus(Status.IDLE);
         }
         return super.updateAfterWrenched(newState, context);
-    }
-
-    @Override
-    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        ItemStack heldItem = player.getItemInHand(hand);
-        IPlacementHelper placementHelper = PlacementHelpers.get(PLACEMENT_HELPER_ID);
-        if(!player.isShiftKeyDown() && player.mayBuild()) {
-            if(placementHelper.matchesItem(heldItem) && placementHelper.getOffset(player, world, state, pos, hit)
-                    .placeInWorld(world, (BlockItem) heldItem.getItem(), player, hand, hit).consumesAction()) {
-                return InteractionResult.SUCCESS;
-            }
-        }
-        if(player.isSpectator() || !player.getItemInHand(hand).isEmpty()) {
-            return InteractionResult.PASS;
-        }
-        if(state.getOptionalValue(SawBlock.FACING).orElse(Direction.WEST) != Direction.UP) {
-            return InteractionResult.PASS;
-        }
-
-        withBlockEntityDo(world, pos, be -> {
-            boolean emptyOutput = true;
-            NotifiableItemStackHandler inv = be.exportItems;
-            for(int slot = 0; slot < inv.getSlots(); slot++) {
-                ItemStack heldItemStack = inv.getStackInSlot(slot);
-                if(!heldItemStack.isEmpty()) emptyOutput = false;
-                player.getInventory().placeItemBackInInventory(heldItemStack);
-                inv.setStackInSlot(slot, ItemStack.EMPTY);
-            }
-
-            if(emptyOutput) {
-                inv = be.importItems;
-                for(int slot = 0; slot < inv.getSlots(); slot++) {
-                    player.getInventory().placeItemBackInInventory(inv.getStackInSlot(slot));
-                    inv.setStackInSlot(slot, ItemStack.EMPTY);
-                }
-            }
-            be.notifyUpdate();
-        });
-        return InteractionResult.SUCCESS;
     }
 
     @Override
