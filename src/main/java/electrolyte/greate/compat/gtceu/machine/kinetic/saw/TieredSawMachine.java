@@ -18,8 +18,10 @@ import com.gregtechceu.gtceu.utils.ISubscription;
 import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
 import com.simibubi.create.content.kinetics.saw.SawBlock;
+import com.simibubi.create.content.logistics.box.PackageItem;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.mixin.accessor.UseOnContextAccessor;
 import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredKineticWorkableMachine;
 import electrolyte.greate.compat.gtceu.machine.kinetic.millstone.KineticMachineRecipeLogic;
@@ -37,6 +39,7 @@ import net.minecraft.server.TickTask;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -55,8 +58,12 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler.FluidAction;
+import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TieredSawMachine extends TieredKineticWorkableMachine {
 
@@ -87,6 +94,23 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
     private boolean shouldPlaySound = false;
 
     private TickableSubscription autoOutputSub;
+    private TickableSubscription nonGTRecipeSub;
+
+    @SyncToClient
+    @SaveField
+    @Getter
+    private boolean appliedRecipe = false;
+
+    @SyncToClient
+    @SaveField
+    @Getter
+    private int remainingTime = -1;
+
+    @SyncToClient
+    @SaveField
+    @Getter
+    private int recipeDuration = 20;
+
 
     public TieredSawMachine(BlockEntityCreationInfo info, int tier) {
         super(info, tier, new TieredSawMachineBlockEntity(info.type(), info.pos(), info.state()));
@@ -108,6 +132,7 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
 
         if(getLevel() instanceof ServerLevel serverLevel) {
             serverLevel.getServer().tell(new TickTask(0, this::updateAutoOutputSubscription));
+            serverLevel.getServer().tell(new TickTask(0, this::updateNonGTRecipeSubscription));
         }
     }
 
@@ -125,6 +150,10 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
         if(this.autoOutputSub != null) {
             this.autoOutputSub.unsubscribe();
             this.autoOutputSub = null;
+        }
+        if(this.nonGTRecipeSub != null) {
+            this.nonGTRecipeSub.unsubscribe();
+            this.nonGTRecipeSub = null;
         }
     }
 
@@ -182,6 +211,67 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
             }
             level.updateNeighbourForOutputSignal(worldPosition, getBlockState().getBlock());
         });
+    }
+
+    private void updateNonGTRecipeSubscription() {
+        nonGTRecipeSub = subscribeServerTick(nonGTRecipeSub, () -> {
+            this.syncDataHolder.markClientSyncFieldDirty("recipeDuration");
+            this.syncDataHolder.markClientSyncFieldDirty("remainingTime");
+            if(!canRunRecipes()) return;
+            if(getSpeed() == 0) return;
+            if(importItems.isEmpty()) return;
+            if(this.getRecipeLogic().isActive()) return;
+            if(!hasNonGTRecipe(importItems.getStackInSlot(0))) return;
+
+            float processingSpeed = Mth.clamp(Math.abs(getSpeed()) / 24, 1, 128);
+            this.remainingTime -= processingSpeed;
+            if(remainingTime > 0) {
+                spawnParticles(importItems.getStackInSlot(0));
+                return;
+            }
+            if(remainingTime < 0 && !appliedRecipe) {
+                playEvent = importItems.getStackInSlot(0);
+                this.syncDataHolder.markClientSyncFieldDirty("playEvent");
+                this.
+                recipeDuration = 20;
+                remainingTime = 20;
+                return;
+            }
+            if(!appliedRecipe) {
+                applyNonGTRecipe();
+                appliedRecipe = true;
+            }
+            remainingTime = -1;
+            appliedRecipe = false;
+            recipeDuration = 20;
+        });
+    }
+
+    private boolean hasNonGTRecipe(ItemStack stack) {
+        if(PackageItem.isPackage(stack)) return true;
+        //todo: sequenced assembly
+        return false;
+    }
+
+    private void applyNonGTRecipe() {
+        ItemStack input = importItems.getStackInSlot(0);
+        List<ItemStack> list = new ArrayList<>();
+        if(PackageItem.isPackage(input)) {
+            importItems.setStackInSlot(0, ItemStack.EMPTY);
+            ItemStackHandler results = PackageItem.getContents(input);
+            for(int slot = 0; slot < results.getSlots(); slot++) {
+                ItemStack result = results.getStackInSlot(slot);
+                if(!result.isEmpty()) ItemHelper.addToList(result, list);
+            }
+            for(int slot = 0; slot < list.size() && slot < exportItems.getSlots(); slot++) {
+                exportItems.setStackInSlot(slot, list.get(slot));
+            }
+            shouldPlaySound = true;
+            this.syncDataHolder.markClientSyncFieldDirty("shouldPlaySound");
+            ((KineticMachineRecipeLogic) this.getRecipeLogic()).postEffects(true);
+            return;
+        }
+        //todo: sequenced assembly recipes
     }
 
     @Override
@@ -317,7 +407,7 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
     @Override
     public void clientTick() {
         if(getSpeed() == 0 || !canRunRecipes()) return;
-        if(!renderedImportStack.isEmpty() && this.getRecipeLogic().isActive()) {
+        if(!renderedImportStack.isEmpty()) {
             spawnParticles(renderedImportStack);
         }
 		if(shouldPlaySound && ((KineticMachineRecipeLogic) this.getRecipeLogic()).postEffects()) {
@@ -345,9 +435,6 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
     }
 
     protected void spawnParticles(ItemStack stack) {
-		if (stack == null || stack.isEmpty())
-			return;
-
 		ParticleOptions particleData = null;
 		float speed = 1;
 		if (stack.getItem() instanceof BlockItem)
@@ -361,11 +448,13 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
 		RandomSource r = level.random;
 		Vec3 vec = getItemMovementVec();
 		Vec3 pos = VecHelper.getCenterOf(this.worldPosition);
-		float offset = this.getRecipeLogic().getProgress() != 0 ? ((float) this.getRecipeLogic().getProgress() / this.getRecipeLogic().getLastRecipe().duration) - 1.0f : 0;
-		offset = -offset;
+        float duration = this.getRecipeLogic().getLastRecipe() == null ? recipeDuration : this.getRecipeLogic().getLastRecipe().duration;
+		float offset = this.getRecipeLogic().getProgress() != 0 ? ((float) this.getRecipeLogic().getProgress() / duration) - 1.0f : ((float) remainingTime / duration) - 1.0f;
         offset /= 2;
-		/*if (inventory.appliedRecipe)
-			offset -= .5f;*/
+		if (appliedRecipe) {
+            offset = -offset;
+			offset -= .5f;
+        }
 		level.addParticle(particleData, pos.x() + -vec.x * offset, pos.y() + .45f, pos.z() + -vec.z * offset,
 			-vec.x * speed, r.nextFloat() * speed, -vec.z * speed);
 	}

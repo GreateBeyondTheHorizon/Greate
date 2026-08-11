@@ -7,12 +7,14 @@ import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.RecipeHelper;
 import com.gregtechceu.gtceu.api.sync_system.annotations.SyncToClient;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
 public class KineticMachineRecipeLogic extends RecipeLogic {
 
     @Accessors(fluent = true)
     @Getter
+    @Setter
     @SyncToClient
     private boolean postEffects = true;
 

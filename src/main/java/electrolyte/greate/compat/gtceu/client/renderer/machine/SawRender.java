@@ -145,7 +145,6 @@ public class SawRender extends DynamicRender<TieredSawMachine, SawRender> {
 		if(be.getRenderState().getValue(SawBlock.FACING) != Direction.UP) return;
         if(be.getSpeed() == 0) return;
 		if(be.getRenderedImportStack().isEmpty()) return;
-        if(!be.getRecipeLogic().isActive()) return;
 
 		boolean alongZ = !be.getBlockState().getValue(AXIS_ALONG_FIRST_COORDINATE);
 
@@ -182,8 +181,8 @@ public class SawRender extends DynamicRender<TieredSawMachine, SawRender> {
 	}
 
     private static float getOffset(TieredSawMachine be, float partialTicks, boolean alongZ) {
-        float progress = be.getRecipeLogic().getProgress();
-        int duration = be.getRecipeLogic().getLastRecipe() != null ? be.getRecipeLogic().getLastRecipe().duration : 0;
+        float progress = be.getRecipeLogic().getLastRecipe() != null ? be.getRecipeLogic().getProgress() : be.getRecipeDuration() - be.getRemainingTime();
+        int duration = be.getRecipeLogic().getLastRecipe() != null ? be.getRecipeLogic().getLastRecipe().duration : be.getRecipeDuration();
         boolean moving = duration != 0 && progress != 0;
         float offset = moving ? (progress / duration) : 1.0f;
 
