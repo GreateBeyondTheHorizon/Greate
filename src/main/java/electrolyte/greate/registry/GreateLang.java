@@ -63,6 +63,12 @@ public class GreateLang {
         provider.add("greate.recipe.stress_output", "Outputs %s su/tick (%s§r)");
         provider.add("greate.recipe.rpm_output", "Outputs %s RPM");
 
+        provider.add("material.greate.andesite_alloy", "Andesite Alloy");
+        provider.add("material.greate.rose_quartz", "Rose Quartz");
+        provider.add("material.greate.chromatic_compound", "Chromatic Compound");
+        provider.add("material.greate.shadow_steel", "Shadow Steel");
+        provider.add("material.greate.refined_radiance", "Refined Radiance");
+
         provider.add("emi.category.greate.milling", "Milling");
         provider.add("emi.category.greate.cutting", "Sawing");
     }
