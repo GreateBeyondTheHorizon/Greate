@@ -64,6 +64,6 @@ public class GreateLang {
         provider.add("greate.recipe.rpm_output", "Outputs %s RPM");
 
         provider.add("emi.category.greate.milling", "Milling");
-        provider.add("emi.category.greate.sawing", "Sawing");
+        provider.add("emi.category.greate.cutting", "Sawing");
     }
 }
