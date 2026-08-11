@@ -3,25 +3,32 @@ package electrolyte.greate.compat.gtceu.common.data;
 import brachy.modularui.api.drawable.Text;
 import brachy.modularui.drawable.GuiTextures;
 import brachy.modularui.integration.recipeviewer.RecipeViewerSlotWidget;
+import brachy.modularui.integration.recipeviewer.entry.fluid.FluidStackList;
 import brachy.modularui.integration.recipeviewer.entry.item.ItemStackList;
 import brachy.modularui.widget.ParentWidget;
 import brachy.modularui.widgets.SlotGroupWidget;
 import com.gregtechceu.gtceu.api.GTValues;
+import com.gregtechceu.gtceu.api.capability.recipe.FluidRecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.recipe.gui.GTRecipeViewerWidget;
 import com.gregtechceu.gtceu.api.recipe.gui.RecipeUIModifier;
+import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.gregtechceu.gtceu.common.data.GTSoundEntries;
 import com.gregtechceu.gtceu.common.machine.trait.customlogic.MaceratorLogic;
 import com.gregtechceu.gtceu.common.mui.GTGuiTextures;
 import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
+import com.gregtechceu.gtceu.utils.GTMath;
 import electrolyte.greate.GreateValues;
 import electrolyte.greate.compat.gtceu.api.recipe.gui.GreateCapabilityContentBuilder;
 import electrolyte.greate.compat.gtceu.api.recipe.gui.GreateRecipeViewerCapabilityLayoutBuilder;
 import electrolyte.greate.compat.gtceu.capability.recipe.StressRecipeCapability;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
+
+import java.util.Collections;
 
 import static com.gregtechceu.gtceu.common.data.GTRecipeTypes.ELECTRIC;
 
@@ -76,14 +83,15 @@ public class GreateRecipeTypes {
             .setEUIO(IO.NONE)
             .setSound(GTSoundEntries.CUT)
             .UI(uiBuilder -> uiBuilder
+                    .setItemSlotOverlay(IO.IN, 0, GTGuiTextures.SAWBLADE_OVERLAY)
+                    .setItemSlotOverlay(IO.OUT, 0, GTGuiTextures.CUTTER_OVERLAY)
                     .setItemSlotOverlay(IO.OUT, 1, GTGuiTextures.DUST_OVERLAY)
                     .setRecipeViewerLayoutCapabilityLayoutBuilder(StressRecipeCapability.STRESS_CAPABILITY, GreateRecipeViewerCapabilityLayoutBuilder.STRESS)
                     .setCapabilityContentBuilder(StressRecipeCapability.STRESS_CAPABILITY, GreateCapabilityContentBuilder.STRESS)
                     .setProgressBarSupplier((layout, value, machine) -> new ParentWidget<>().size(layout.getProgressBar().progressSize()))
                     .setRecipeViewerLayoutCapabilityLayoutBuilder(
                     ItemRecipeCapability.CAP, (layout, widget, io) -> {
-                        if(layout.getRecipeType().getMaxSlots(ItemRecipeCapability.CAP, io) == 0)
-                            return;
+                        if(layout.getRecipeType().getMaxSlots(ItemRecipeCapability.CAP, io) == 0) return;
 
                         var slotGroupWidget = SlotGroupWidget.builder()
                                 .matrix(layout.capabilityInfo(ItemRecipeCapability.CAP).getRecipeViewerGrid(io))
@@ -97,30 +105,67 @@ public class GreateRecipeTypes {
                                 .pos(io == IO.IN ? 5 : 90, 5);
 
                         widget.child(slotGroupWidget);
-                        //TODO: fix fluid slot
                     })
+                    .setRecipeViewerLayoutCapabilityLayoutBuilder(
+                            FluidRecipeCapability.CAP, (layout, widget, io) -> {
+                                if(layout.getRecipeType().getMaxSlots(FluidRecipeCapability.CAP, io) == 0) return;
+
+                                var slotGroupWidget = SlotGroupWidget.builder()
+                                        .matrix(layout.capabilityInfo(FluidRecipeCapability.CAP).getRecipeViewerGrid(io))
+                                        .key('s', i -> RecipeViewerSlotWidget.create()
+                                                .value(FluidStackList.of(FluidStack.EMPTY))
+                                                .background(GuiTextures.SLOT_FLUID,
+                                                        layout.capabilityInfo(FluidRecipeCapability.CAP).getOverlay(io, i))
+                                                .name(GTRecipeViewerWidget.capabilityWidgetName(FluidRecipeCapability.CAP, io, i)))
+                                        .build()
+                                        .coverChildren(18, 18)
+                                        .pos(io == IO.IN ? 5 : 90, 25);
+
+                                widget.child(slotGroupWidget);
+                            })
                     .addRecipeUIModifier((recipe, widget) -> widget.textComponents.paddingTop(25)));
 
 
 
     public static void register() {
-        GTRecipeTypes.MACERATOR_RECIPES.onRecipeBuild((gtRecipeBuilder, finishedRecipeConsumer) -> {
-            long euT = gtRecipeBuilder.buildRawRecipe().getInputEUt().voltage();
+        GTRecipeTypes.MACERATOR_RECIPES.onRecipeBuild((gtRecipeBuilder, provider) -> {
             GTRecipeBuilder copiedRecipe = MILLSTONE
                     .copyFrom(gtRecipeBuilder)
                     .perTick(true)
-                    .input(StressRecipeCapability.STRESS_CAPABILITY, (float) euT)
+                    .input(StressRecipeCapability.STRESS_CAPABILITY, (float) gtRecipeBuilder.EUt().voltage())
                     .perTick(false);
-            copiedRecipe.save(finishedRecipeConsumer);
+            copiedRecipe.save(provider);
         });
-        GTRecipeTypes.CUTTER_RECIPES.onRecipeBuild((gtRecipeBuilder, finishedRecipeConsumer) -> {
-            long euT = gtRecipeBuilder.buildRawRecipe().getInputEUt().voltage();
-            GTRecipeBuilder copiedRecipe = SAW
-                    .copyFrom(gtRecipeBuilder)
-                    .perTick(true)
-                    .input(StressRecipeCapability.STRESS_CAPABILITY, (float) euT)
-                    .perTick(false);
-            copiedRecipe.save(finishedRecipeConsumer);
+        //todo: figure out why this breaks normal cutting recipes and re-add them manually
+        GTRecipeTypes.CUTTER_RECIPES.onRecipeBuild((gtRecipeBuilder, provider) -> {
+            if (gtRecipeBuilder.input.getOrDefault(FluidRecipeCapability.CAP, Collections.emptyList()).isEmpty() &&
+                    gtRecipeBuilder.tickInput.getOrDefault(FluidRecipeCapability.CAP, Collections.emptyList()).isEmpty()) {
+                SAW.copyFrom(gtRecipeBuilder).id(gtRecipeBuilder.id.withSuffix("_water"))
+                        .inputFluids(GTMaterials.Water.getFluid((int) GTMath.clamp(
+                                gtRecipeBuilder.duration * gtRecipeBuilder.EUt().getTotalEU() / 320, 4, 1000)))
+                        .duration(gtRecipeBuilder.duration * 2)
+                        .perTick(true)
+                        .input(StressRecipeCapability.STRESS_CAPABILITY, (float) gtRecipeBuilder.EUt().voltage())
+                        .perTick(false)
+                        .save(provider);
+
+                SAW.copyFrom(gtRecipeBuilder).id(gtRecipeBuilder.id.withSuffix("_distilled_water"))
+                        .inputFluids(GTMaterials.DistilledWater.getFluid((int) GTMath.clamp(
+                                gtRecipeBuilder.duration * gtRecipeBuilder.EUt().getTotalEU() / 426, 3, 750)))
+                        .duration((int) (gtRecipeBuilder.duration * 1.5))
+                        .perTick(true)
+                        .input(StressRecipeCapability.STRESS_CAPABILITY, (float) gtRecipeBuilder.EUt().voltage())
+                        .perTick(false)
+                        .save(provider);
+
+                SAW.copyFrom(gtRecipeBuilder)
+                        .inputFluids(GTMaterials.Lubricant.getFluid((int) GTMath.clamp(
+                        gtRecipeBuilder.duration * gtRecipeBuilder.EUt().getTotalEU() / 1280, 1, 250)))
+                        .perTick(true)
+                        .input(StressRecipeCapability.STRESS_CAPABILITY, (float) gtRecipeBuilder.EUt().voltage())
+                        .perTick(false)
+                        .save(provider);
+            }
         });
     }
 }
