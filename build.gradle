@@ -161,7 +161,7 @@ dependencies {
 
     implementation fg.deobf("curse.maven:jade-324717:${jade_version}")
     runtimeOnly fg.deobf("curse.maven:spark-361579:${spark_version}")
-    runtimeOnly fg.deobf("curse.maven:create-repair-1477958:8034105")
+    runtimeOnly fg.deobf("curse.maven:create-repair-1477958:${create_repair_version}")
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}+${minecraft_version}")
 
     compileOnly fg.deobf("ru.zznty:create_factory_logistics-${minecraft_version}:1.4.7")
