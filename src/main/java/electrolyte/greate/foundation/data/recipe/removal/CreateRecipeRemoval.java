@@ -11,6 +11,8 @@ import java.util.function.Consumer;
 public class CreateRecipeRemoval {
 
     public static void disableCreateRecipes(Consumer<ResourceLocation> recipe) {
+        recipe.accept(Create.asResource("crafting/appliances/chain_from_zinc"));
+
         recipe.accept(Create.asResource("crafting/curiosities/brown_toolbox"));
 
         recipe.accept(Create.asResource("crafting/kinetics/belt_connector"));
