@@ -4,12 +4,18 @@ import com.simibubi.create.content.fluids.FluidPropagator;
 import com.simibubi.create.content.fluids.FluidTransportBehaviour;
 import com.simibubi.create.content.fluids.pump.PumpBlock;
 import com.simibubi.create.content.fluids.pump.PumpBlockEntity;
+import com.simibubi.create.foundation.utility.CreateLang;
+import electrolyte.greate.Greate;
+import electrolyte.greate.GreateValues;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import electrolyte.greate.infrastructure.config.GConfigUtility;
 import net.createmod.catnip.data.Pair;
+import net.createmod.catnip.lang.Lang;
 import net.createmod.catnip.math.BlockFace;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -75,7 +81,6 @@ public class TieredPumpBlockEntity extends PumpBlockEntity implements ITieredKin
 				FluidTransportBehaviour pipe = FluidPropagator.getPipe(level, currentPos);
 				if (pipe == null)
 					continue;
-
 				for (Direction face : FluidPropagator.getPipeConnections(currentState, pipe)) {
 					BlockFace blockFace = new BlockFace(currentPos, face);
 					BlockPos connectedPos = blockFace.getConnectedPos();
@@ -181,5 +186,18 @@ public class TieredPumpBlockEntity extends PumpBlockEntity implements ITieredKin
 			return false;
 		Direction front = blockState.getValue(PumpBlock.FACING);
 		return side == front;
+	}
+
+	@Override
+	public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
+		ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, GreateValues.TM[this.getTier()], this.capacity, this.stress);
+		double basePressure = GConfigUtility.getPumpPressureFromTier(tier);
+		float pressure = (float) (basePressure * Math.abs(getSpeed()));
+		Lang.builder(Greate.MOD_ID).translate("tooltip.pump_pressure").style(ChatFormatting.GRAY).forGoggles(tooltip);
+		Lang.builder(Greate.MOD_ID).space().translate("tooltip.pump_transfer").style(ChatFormatting.DARK_GRAY)
+				.add(CreateLang.number(pressure).style(ChatFormatting.AQUA))
+				.add(CreateLang.text("mB/t").style(ChatFormatting.AQUA))
+				.forGoggles(tooltip);
+		return true;
 	}
 }
