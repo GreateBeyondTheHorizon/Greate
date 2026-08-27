@@ -18,9 +18,11 @@ import electrolyte.greate.content.kinetics.simpleRelays.ITieredProcessingRecipeH
 import electrolyte.greate.content.processing.basin.TieredBasinRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import electrolyte.greate.foundation.data.recipe.TieredRecipeConditions;
+import electrolyte.greate.foundation.item.GreateItemHelper;
 import electrolyte.greate.foundation.recipe.TieredRecipeApplier;
 import electrolyte.greate.foundation.recipe.TieredRecipeFinder;
 import electrolyte.greate.registry.ModRecipeTypes;
+import net.createmod.catnip.data.Pair;
 import net.createmod.catnip.lang.Lang;
 import net.createmod.catnip.math.VecHelper;
 import net.minecraft.core.BlockPos;
@@ -30,6 +32,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -37,6 +40,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
+import org.apache.commons.lang3.mutable.MutableInt;
 
 import java.util.List;
 import java.util.Optional;
@@ -75,6 +79,8 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
         ItemStack stack = itemEntity.getItem();
         Optional<? extends Recipe<?>> recipe = getValidRecipe(stack);
         if(recipe.isEmpty()) return false;
+        List<Pair<Ingredient, MutableInt>> condensedIngredients = GreateItemHelper.condenseIngredients(recipe.get().getIngredients());
+        if(itemEntity.getItem().getCount() < condensedIngredients.get(0).getSecond().getValue()) return false;
         if(simulate) return true;
 
         ItemStack createdStack = ItemStack.EMPTY;
@@ -93,7 +99,7 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
                 level.addFreshEntity(createdEntityStack);
             }
             if(recipe.get() instanceof TieredProcessingRecipe<?>) {
-                stack.shrink(recipe.get().getIngredients().get(0).getItems()[0].getCount());
+                stack.shrink(condensedIngredients.get(0).getSecond().getValue());
             } else {
                 stack.shrink(1);
             }
@@ -109,6 +115,8 @@ public class TieredMechanicalPressBlockEntity extends MechanicalPressBlockEntity
     public boolean tryProcessOnBelt(TransportedItemStack input, List<ItemStack> outputList, boolean simulate) {
         Optional<? extends Recipe<?>> recipe = getValidRecipe(input.stack);
         if(recipe.isEmpty()) return false;
+        List<Pair<Ingredient, MutableInt>> condensedIngredients = GreateItemHelper.condenseIngredients(recipe.get().getIngredients());
+        if(input.stack.getCount() < condensedIngredients.get(0).getSecond().getValue()) return false;
         if(simulate) return true;
         pressingBehaviour.particleItems.add(input.stack);
         List<ItemStack> outputStacks = TieredRecipeApplier.applyRecipeOn(level, canProcessInBulk() ?

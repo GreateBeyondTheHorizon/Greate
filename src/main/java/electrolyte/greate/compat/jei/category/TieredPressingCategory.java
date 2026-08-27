@@ -5,16 +5,21 @@ import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import electrolyte.greate.compat.jei.category.animations.TieredAnimatedMechanicalPress;
 import electrolyte.greate.content.kinetics.press.TieredPressingRecipe;
+import electrolyte.greate.foundation.item.GreateItemHelper;
 import electrolyte.greate.registry.MechanicalPresses;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
+import net.createmod.catnip.data.Pair;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import org.apache.commons.lang3.mutable.MutableInt;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.ArrayList;
 import java.util.List;
 
 @ParametersAreNonnullByDefault
@@ -26,9 +31,17 @@ public class TieredPressingCategory extends GreateRecipeCategory<TieredPressingR
 
     @Override
     public void setRecipe(IRecipeLayoutBuilder builder, TieredPressingRecipe recipe, IFocusGroup focuses) {
+        List<Pair<Ingredient, MutableInt>> condensedIngredients = GreateItemHelper.condenseIngredients(recipe.getIngredients());
+        List<ItemStack> stacks = new ArrayList<>();
+        for(ItemStack stack : condensedIngredients.get(0).getFirst().getItems()) {
+            ItemStack copy = stack.copy();
+            copy.setCount(condensedIngredients.get(0).getSecond().getValue());
+            stacks.add(copy);
+        }
+
         builder.addSlot(RecipeIngredientRole.INPUT, 27, 51)
                 .setBackground(getRenderedSlot(), -1, -1)
-                .addIngredients(recipe.getIngredients().get(0));
+                .addItemStacks(stacks);
 
         List<ProcessingOutput> results = recipe.getRollableResults();
         int i = 0;
