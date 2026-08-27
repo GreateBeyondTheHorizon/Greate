@@ -36,7 +36,7 @@ public interface ITieredKineticBlockEntity {
             Lang.builder(Greate.MOD_ID).translate("tooltip.capacity").style(ChatFormatting.GRAY).forGoggles(tooltip);
             Lang.builder(Greate.MOD_ID).add(CreateLang.number(GreateValues.getMaxCapacityFromMaterial(material)).style(ChatFormatting.AQUA).space().add(CreateLang.text("su")).space().add(CreateLang.text("at current shaft tier").style(ChatFormatting.DARK_GRAY))).forGoggles(tooltip, 1);
             Lang.builder(Greate.MOD_ID).translate("tooltip.networkStatistics").style(ChatFormatting.GRAY).forGoggles(tooltip);
-            CreateLang.number(stress).style(ChatFormatting.AQUA).add(CreateLang.text("su")).space().add(CreateLang.text("consumed").style(ChatFormatting.DARK_GRAY)).space().add(CreateLang.text("/").style(ChatFormatting.AQUA)).space().add(CreateLang.number(capacity).style(ChatFormatting.AQUA)).add(CreateLang.text("su").space().add(CreateLang.text("generated").style(ChatFormatting.DARK_GRAY))).forGoggles(tooltip, 1);
+            CreateLang.number(stress).style(ChatFormatting.AQUA).add(CreateLang.text("su")).space().add(CreateLang.text("consumed").style(ChatFormatting.DARK_GRAY)).space().add(CreateLang.text("/").style(ChatFormatting.DARK_GRAY)).space().add(CreateLang.number(capacity).style(ChatFormatting.AQUA)).add(CreateLang.text("su").space().add(CreateLang.text("generated").style(ChatFormatting.DARK_GRAY))).forGoggles(tooltip, 1);
             return true;
         }
         return false;

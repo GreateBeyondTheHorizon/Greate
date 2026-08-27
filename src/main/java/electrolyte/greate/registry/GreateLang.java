@@ -12,6 +12,8 @@ public class GreateLang {
         provider.add("greate.tooltip.circuit_number", "Circuit Number");
         provider.add("greate.tooltip.belt_maxlength", "Max Length: ");
         provider.add("greate.tooltip.belt_usable", "Usable on: ");
+        provider.add("greate.tooltip.pump_pressure", "Pump Pressure: ");
+        provider.add("greate.tooltip.pump_transfer", "Transferring ");
         provider.add("greate.recipe.milling", "Milling");
         provider.add("greate.recipe.crushing", "Crushing");
         provider.add("greate.recipe.pressing", "Pressing");
