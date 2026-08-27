@@ -29,7 +29,7 @@ public class TieredPressingRecipe extends TieredProcessingRecipe<RecipeWrapper> 
 
     @Override
     protected int getMaxInputCount() {
-        return 1;
+        return 64;
     }
 
     @Override

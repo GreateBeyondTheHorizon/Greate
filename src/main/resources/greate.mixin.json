@@ -40,6 +40,7 @@
     "belt.MixinBeltConnectorItemAccessor",
     "belt.MixinBeltFunnelBlock",
     "belt.MixinBeltMovementHandler",
+    "belt.MixinBeltPressingCallbacks",
     "belt.MixinBeltSlicer",
     "belt.MixinBeltTunnelBlock",
     "belt.MixinBeltTunnelBlockEntity",
