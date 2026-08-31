@@ -19,7 +19,7 @@ import java.util.List;
 @Mixin(BeltPressingCallbacks.class)
 public class MixinBeltPressingCallbacks {
 
-    @WrapOperation(method = "whenItemHeld", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;shrink(I)V"), remap = false)
+    @WrapOperation(method = "whenItemHeld", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;shrink(I)V", remap = true), remap = false)
     private static void greate$whenItemHeld(ItemStack stack, int pDecrement, Operation<Void> original, @Local(argsOnly = true) PressingBehaviour pressingBehaviour) {
         if(pressingBehaviour.blockEntity instanceof TieredMechanicalPressBlockEntity tmpbe) {
             if(tmpbe.getRecipe() != null) {
