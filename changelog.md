@@ -1,5 +1,1 @@
-- Remove chain from zinc recipe
-- Fix mechanical presses not being placed correctly on belts, depots, and weighted ejectors
-- Fix mechanical presses not working correctly with multiple inputs in KJS recipes
-- Fix crash when placing saws next to two kinetic sources with different rotation directions
-- Add tooltips to kinetic pumps to show mB/t
+- Fix crash with belts and mechanical presses
