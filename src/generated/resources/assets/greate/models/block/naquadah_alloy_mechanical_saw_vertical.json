@@ -1,4 +1,7 @@
 {
   "parent": "create:block/mechanical_saw/vertical",
-  "render_type": "minecraft:cutout_mipped"
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "andesite_casing_short": "greate:block/saw_side"
+  }
 }

@@ -12,6 +12,7 @@ import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
@@ -46,6 +47,13 @@ public class TieredSawingCategory extends GreateRecipeCategory<TieredCuttingReci
                     .addItemStack(output.getStack())
                     .addRichTooltipCallback(CreateRecipeCategory.addStochasticTooltip(output));
             i++;
+        }
+
+        ItemStack circuitStack = getCircuitStack(recipe);
+        if(!circuitStack.isEmpty()) {
+            builder.addSlot(RecipeIngredientRole.RENDER_ONLY, getBackground().getWidth() / 2 + 11, 5)
+                    .setBackground(getRenderedSlot(), -1, -1)
+                    .addItemStack(circuitStack);
         }
     }
 
