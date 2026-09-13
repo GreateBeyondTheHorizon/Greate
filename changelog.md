@@ -1,1 +1,2 @@
-- Fix crash with belts and mechanical presses
+- Fix NPE with certain block cutting recipes
+- Add recipe type selection (via screwdriver) & circuit selection to tiered mechanical saws
