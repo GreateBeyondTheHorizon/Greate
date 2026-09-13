@@ -102,6 +102,7 @@ public class TieredBlockCuttingCategory extends GreateRecipeCategory<TieredConde
 
     public static List<TieredCondensedBlockCuttingRecipe> condenseRecipes(List<Recipe<?>> stoneCuttingRecipes) {
         List<TieredCondensedBlockCuttingRecipe> condensedRecipes = new ArrayList<>();
+        int uniqueId = 0;
         Recipes: for(Recipe<?> recipe : stoneCuttingRecipes) {
             Ingredient ingredient = recipe.getIngredients().get(0);
             for(TieredCondensedBlockCuttingRecipe tieredCondensedRecipe : condensedRecipes) {
@@ -116,7 +117,12 @@ public class TieredBlockCuttingCategory extends GreateRecipeCategory<TieredConde
             if (tagName != null) {
                 idPath = "block_cutting/" + tagName.replace(':', '/');
             } else {
-                ResourceLocation inputId = ForgeRegistries.ITEMS.getKey(ingredient.getItems()[0].getItem());
+                ResourceLocation inputId = ResourceLocation.fromNamespaceAndPath(Greate.MOD_ID, "");
+                //Fixes #151
+                if(ingredient.getItems().length == 0) {
+                    inputId.withPath(String.valueOf(uniqueId));
+                    uniqueId++;
+                } else inputId = ForgeRegistries.ITEMS.getKey(ingredient.getItems()[0].getItem());
                 idPath = "block_cutting/" + inputId.getNamespace() + "/" + inputId.getPath();
             }
 
