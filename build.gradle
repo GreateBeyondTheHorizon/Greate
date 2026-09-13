@@ -149,7 +149,7 @@ dependencies {
     implementation fg.deobf("com.gregtechceu.gtceu:gtceu-${minecraft_version}:${gregtech_version}:slim") { transitive = false }
     implementation fg.deobf("dev.toma.configuration:configuration-forge-${minecraft_version}:${configuration_version}")
 
-    runtimeOnly fg.deobf("curse.maven:jade-324717:${jade_version}")
+    implementation fg.deobf("curse.maven:jade-324717:${jade_version}")
     runtimeOnly fg.deobf("curse.maven:spark-361579:${spark_version}")
     runtimeOnly fg.deobf("curse.maven:create-repair-1477958:${create_repair_version}")
 

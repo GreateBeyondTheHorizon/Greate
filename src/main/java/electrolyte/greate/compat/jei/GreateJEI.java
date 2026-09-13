@@ -179,7 +179,7 @@ public class GreateJEI implements IModPlugin {
 
                 blockCutting = builder(TieredCondensedBlockCuttingRecipe.class)
                         .enableWhen(c -> c.allowStonecuttingOnSaw)
-                        .addRecipes(() -> TieredBlockCuttingCategory.condenseRecipes(getTypedRecipesExcluding(RecipeType.STONECUTTING, Predicates.or(AllRecipeTypes::shouldIgnoreInAutomation, ModRecipeTypes::shouldIgnoreInAutomation))))
+                        .addRecipes(() -> TieredBlockCuttingCategory.condenseRecipes(getTypedRecipesExcluding(RecipeType.STONECUTTING, Predicates.or(ModRecipeTypes::shouldIgnoreInAutomation))))
                         .catalysts(Saws.SAWS)
                         .doubleIconItem(Saws.NEUTRONIUM_SAW.get(), Items.STONE_BRICK_STAIRS)
                         .emptyBackground(177, 70)

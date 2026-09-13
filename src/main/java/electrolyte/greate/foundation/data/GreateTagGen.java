@@ -4,6 +4,7 @@ import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.data.recipe.CustomTags;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
+import electrolyte.greate.Greate;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
@@ -20,6 +21,7 @@ import java.util.concurrent.CompletableFuture;
 public class GreateTagGen {
 
     private static final TagKey<Item> HIDE_FROM_RECIPE_VIEWERS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", "hidden_from_recipe_viewers"));
+    public static final TagKey<Item> MECHANICAL_SAWS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Greate.MOD_ID, "mechanical_saws"));
 
     public static class GreateBlockTagGen extends BlockTagsProvider {
 

@@ -3,6 +3,7 @@ package electrolyte.greate.content.kinetics.saw;
 import com.google.common.collect.ImmutableList;
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.kinetics.saw.CuttingRecipe;
+import com.simibubi.create.content.kinetics.saw.SawBlock;
 import com.simibubi.create.content.kinetics.saw.SawBlockEntity;
 import com.simibubi.create.content.logistics.box.PackageItem;
 import com.simibubi.create.content.processing.recipe.ProcessingInventory;
@@ -10,13 +11,16 @@ import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
 import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipe;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
 import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour;
 import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
+import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour;
 import com.simibubi.create.foundation.fluid.CombinedTankWrapper;
 import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.recipe.RecipeConditions;
 import com.simibubi.create.foundation.recipe.RecipeFinder;
 import com.simibubi.create.infrastructure.config.AllConfigs;
+import electrolyte.greate.Greate;
 import electrolyte.greate.compat.createfactorylogistics.CreateFactoryLogisticsCompat;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
@@ -24,15 +28,20 @@ import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import electrolyte.greate.foundation.data.recipe.TieredRecipeConditions;
 import electrolyte.greate.mixin.MixinSawBlockEntityAccessor;
 import electrolyte.greate.registry.ModRecipeTypes;
+import net.createmod.catnip.lang.Lang;
+import net.createmod.catnip.math.VecHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.StonecutterRecipe;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
@@ -58,6 +67,8 @@ public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKinet
     private int tier;
     private SmartFluidTankBehaviour inputTank;
     private LazyOptional<IFluidHandler> fluidCapability;
+    private ScrollValueBehaviour targetCircuit;
+    private RecipeType<?> activeRecipeType = ModRecipeTypes.CUTTING.getType();
 
     public TieredSawBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -66,7 +77,7 @@ public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKinet
     }
 
     @Override
-    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
+    public void addBehaviours(@NotNull List<BlockEntityBehaviour> behaviours) {
         super.addBehaviours(behaviours);
         inputTank = new SmartFluidTankBehaviour(SmartFluidTankBehaviour.INPUT, this, 1, 16000, false);
         behaviours.add(inputTank);
@@ -75,6 +86,11 @@ public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKinet
             LazyOptional<? extends IFluidHandler> inputCap = inputTank.getCapability();
             return new CombinedTankWrapper(inputCap.orElse(null));
         });
+
+        targetCircuit = new ScrollValueBehaviour(Lang.builder(Greate.MOD_ID).translate("tooltip.circuit_number").component(),
+                this, new CircuitValueBoxTransform());
+        targetCircuit.between(0, 32);
+        behaviours.add(targetCircuit);
     }
 
     @Override
@@ -101,7 +117,6 @@ public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKinet
         Optional<CuttingRecipe> assemblyRecipe = SequencedAssemblyRecipe.getRecipe(level, inventory.getStackInSlot(0), AllRecipeTypes.CUTTING.getType(), CuttingRecipe.class);
         Optional<TieredCuttingRecipe> tieredAssemblyRecipe = SequencedAssemblyRecipe.getRecipe(level, inventory.getStackInSlot(0), ModRecipeTypes.CUTTING.getType(), TieredCuttingRecipe.class);
         FilteringBehaviour filtering = ((MixinSawBlockEntityAccessor) this).getFilteringBehaviour();
-        Object cuttingRecipesKey = ((MixinSawBlockEntityAccessor) this).getCuttingRecipesKey();
         if(assemblyRecipe.isPresent() && filtering.test(assemblyRecipe.get().getResultItem(level.registryAccess()))) {
             return ImmutableList.of(assemblyRecipe.get());
         }
@@ -111,18 +126,19 @@ public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKinet
                 return ImmutableList.of(tieredAssemblyRecipe.get());
             }
         }
-        Predicate<Recipe<?>> recipeTypes = RecipeConditions.isOfType(AllRecipeTypes.CUTTING.getType(), ModRecipeTypes.CUTTING.getType(),
+        Predicate<Recipe<?>> recipeTypes = RecipeConditions.isOfType(ModRecipeTypes.CUTTING.getType(),
                 AllConfigs.server().recipes.allowStonecuttingOnSaw.get() ? RecipeType.STONECUTTING : null);
-        List<Recipe<?>> startedSearch = RecipeFinder.get(cuttingRecipesKey, level, recipeTypes);
+        List<Recipe<?>> startedSearch = RecipeFinder.get(((MixinSawBlockEntityAccessor) this).getCuttingRecipesKey(), level, recipeTypes);
         IFluidHandler availableFluid = be.getCapability(ForgeCapabilities.FLUID_HANDLER).orElse(null);
         if(availableFluid == null) return List.of();
         return startedSearch.stream()
+                .filter(r -> r.getType().equals(activeRecipeType))
                 .filter(TieredRecipeConditions.outputMatchesFilter(filtering))
                 .filter(TieredRecipeConditions.firstIngredientMatches(inventory.getStackInSlot(0)))
                 .filter(TieredRecipeConditions.firstIngredientCountMatches(inventory.getStackInSlot(0)))
                 .filter(TieredRecipeConditions.firstFluidMatches(availableFluid.getFluidInTank(0)))
                 .filter(TieredRecipeConditions.isEqualOrAboveTier(tier))
-                .filter(r -> !AllRecipeTypes.shouldIgnoreInAutomation(r))
+                .filter(TieredRecipeConditions.circuitMatches(targetCircuit.getValue()))
                 .filter(r -> !ModRecipeTypes.shouldIgnoreInAutomation(r))
                 .collect(Collectors.toList());
     }
@@ -195,7 +211,7 @@ public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKinet
     }
 
     @Override
-    public void start(ItemStack inserted) {
+    public void start(@NotNull ItemStack inserted) {
         if(!canProcess()) return;
         if(inventory.isEmpty()) return;
         if(level.isClientSide && !isVirtual()) return;
@@ -241,5 +257,72 @@ public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKinet
             return fluidCapability.cast();
         }
         return super.getCapability(cap, side);
+    }
+
+    @Override
+    protected void read(CompoundTag compound, boolean clientPacket) {
+        super.read(compound, clientPacket);
+        String recipeType = compound.getString("ActiveRecipeType");
+        if(!recipeType.equals(RecipeType.STONECUTTING.toString())) {
+            this.activeRecipeType = RecipeType.STONECUTTING;
+        } else this.activeRecipeType = ModRecipeTypes.CUTTING.getType();
+    }
+
+    @Override
+    public void write(CompoundTag compound, boolean clientPacket) {
+        super.write(compound, clientPacket);
+        compound.putString("ActiveRecipeType", activeRecipeType.toString());
+    }
+
+    public RecipeType<?> getActiveRecipeType() {
+        return activeRecipeType;
+    }
+
+    public void cycleActiveRecipeType() {
+        if(activeRecipeType == ModRecipeTypes.CUTTING.getType()) {
+            activeRecipeType = RecipeType.STONECUTTING;
+        } else {
+            activeRecipeType = ModRecipeTypes.CUTTING.getType();
+        }
+        this.setChanged();
+        this.sendData();
+    }
+
+    public String formatActiveRecipeType(String activeRecipeType) {
+        if(activeRecipeType.equals(RecipeType.STONECUTTING.toString())) return "Stonecutting";
+        return "Cutting";
+    }
+
+    private class CircuitValueBoxTransform extends ValueBoxTransform.Sided {
+
+        @Override
+        public Sided fromSide(Direction direction) {
+            return super.fromSide(direction);
+        }
+
+        @Override
+        public boolean shouldRender(LevelAccessor level, BlockPos pos, BlockState state) {
+            if(state.getValue(SawBlock.FACING) != Direction.UP) return false;
+            return super.shouldRender(level, pos, state);
+        }
+
+        @Override
+        public boolean testHit(LevelAccessor level, BlockPos pos, BlockState state, Vec3 localHit) {
+            if(state.getValue(SawBlock.FACING) != Direction.UP) return false;
+            boolean t = super.testHit(level, pos, state, localHit);
+            return localHit.y < 0.75 && t;
+        }
+
+        @Override
+        protected Vec3 getSouthLocation() {
+            return VecHelper.voxelSpace(8, 6f, 15.5f);
+        }
+
+        @Override
+        protected boolean isSideActive(BlockState state, Direction direction) {
+            if(state.getValue(SawBlock.FACING) != Direction.UP) return false;
+            if(direction.getAxis().isVertical()) return false;
+            return !((TieredSawBlock) state.getBlock()).hasShaftTowards(level, getBlockPos(), state, direction);
+        }
     }
 }

@@ -57,7 +57,8 @@ public class KubeJSGreatePlugin extends KubeJSPlugin {
                 ModRecipeTypes.COMPACTING, TieredProcessingRecipeSchema.PROCESSING_WITH_CIRCUIT,
                 ModRecipeTypes.MIXING, TieredProcessingRecipeSchema.PROCESSING_WITH_CIRCUIT,
                 ModRecipeTypes.BASIN, TieredProcessingRecipeSchema.PROCESSING_WITH_CIRCUIT,
-                ModRecipeTypes.SPLASHING, TieredProcessingRecipeSchema.PROCESSING_WITH_CIRCUIT
+                ModRecipeTypes.SPLASHING, TieredProcessingRecipeSchema.PROCESSING_WITH_CIRCUIT,
+                ModRecipeTypes.CUTTING, TieredProcessingRecipeSchema.PROCESSING_WITH_CIRCUIT
         );
         for(ModRecipeTypes recipeType : ModRecipeTypes.values()) {
             if(recipeType.getSerializer() instanceof TieredProcessingRecipeSerializer<?>) {

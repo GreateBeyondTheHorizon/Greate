@@ -2,6 +2,7 @@ package electrolyte.greate.content.kinetics.saw;
 
 import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
+import com.gregtechceu.gtceu.data.recipe.CustomTags;
 import com.simibubi.create.content.fluids.transfer.GenericItemEmptying;
 import com.simibubi.create.content.fluids.transfer.GenericItemFilling;
 import com.simibubi.create.content.kinetics.saw.SawBlock;
@@ -13,9 +14,11 @@ import electrolyte.greate.registry.ModBlockEntityTypes;
 import net.createmod.catnip.placement.IPlacementHelper;
 import net.createmod.catnip.placement.PlacementHelpers;
 import net.createmod.catnip.placement.PlacementOffset;
+import net.minecraft.ChatFormatting;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -105,6 +108,12 @@ public class TieredSawBlock extends SawBlock implements ITieredBlock, ITieredSha
                                 .orElse(FluidStack.EMPTY)
                                 .isEmpty()) {
                     player.playSound(SoundEvents.BOTTLE_EMPTY);
+                    return InteractionResult.SUCCESS;
+                }
+                if(heldItem.is(CustomTags.SCREWDRIVERS) && state.getValue(SawBlock.FACING) == Direction.UP) {
+                    TieredSawBlockEntity sawBE = (TieredSawBlockEntity) be;
+                    sawBE.cycleActiveRecipeType();
+                    player.displayClientMessage(Component.literal("Changed active recipe type to: " + sawBE.formatActiveRecipeType(sawBE.getActiveRecipeType().toString())).withStyle(ChatFormatting.GRAY), true);
                     return InteractionResult.SUCCESS;
                 }
                 return InteractionResult.PASS;

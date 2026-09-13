@@ -11,6 +11,7 @@ import electrolyte.greate.content.kinetics.saw.TieredSawBlock;
 import electrolyte.greate.content.kinetics.saw.TieredSawGenerator;
 import electrolyte.greate.content.kinetics.saw.TieredSawMovementBehaviour;
 import electrolyte.greate.foundation.data.GreateBuilderTransformers;
+import electrolyte.greate.foundation.data.GreateTagGen;
 import electrolyte.greate.infrastructure.config.GStress;
 import net.minecraft.world.level.material.MapColor;
 
@@ -61,7 +62,8 @@ public class Saws {
                 .onRegister(c -> c.setTier(tier))
                 .item()
                 .model(GreateBuilderTransformers::tieredSaw)
-                .tag(AllItemTags.CONTRAPTION_CONTROLLED.tag).build()
+                .tag(AllItemTags.CONTRAPTION_CONTROLLED.tag)
+                .tag(GreateTagGen.MECHANICAL_SAWS).build()
                 .register();
     }
 }

@@ -46,7 +46,8 @@ public class TieredSawGenerator extends SawGenerator {
 
         prov.models().withExistingParent(ctx.getName() + "_horizontal", Create.asResource("block/mechanical_saw/horizontal")).renderType(CUTOUT_MIPPED);
 
-        prov.models().withExistingParent(ctx.getName() + "_vertical", Create.asResource("block/mechanical_saw/vertical")).renderType(CUTOUT_MIPPED);
+        prov.models().withExistingParent(ctx.getName() + "_vertical", Create.asResource("block/mechanical_saw/vertical")).renderType(CUTOUT_MIPPED)
+                .texture("andesite_casing_short", prov.modLoc("block/saw_side"));
 
         prov.getVariantBuilder(ctx.getEntry()).forAllStates(state -> ConfiguredModel.builder()
                 .modelFile(getModel(ctx, prov, state))
