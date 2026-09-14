@@ -176,7 +176,7 @@ public class GreateFanProcessingTypes {
             int color = Color.mixColors(0x4499FF, 0x2277FF, random.nextFloat());
             if(fanBE != null && fanBE.getFluidInTank() != null) {
                 Material fluidMaterial = ChemicalHelper.getMaterial(fanBE.getFluidInTank().getFluid());
-                if(!fluidMaterial.isNull()) {
+                if(fluidMaterial != null) {
                     if(fluidMaterial.getMaterialSecondaryRGB() != -1) {
                         color = Color.mixColors(fluidMaterial.getMaterialRGB(), fluidMaterial.getMaterialSecondaryRGB(), random.nextFloat());
                     } else color = fluidMaterial.getMaterialRGB();

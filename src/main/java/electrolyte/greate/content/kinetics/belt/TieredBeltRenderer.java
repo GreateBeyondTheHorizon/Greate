@@ -1,7 +1,6 @@
 package electrolyte.greate.content.kinetics.belt;
 
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
-import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.simibubi.create.AllPartialModels;
@@ -127,7 +126,7 @@ public class TieredBeltRenderer extends BeltRenderer {
 
     public static PartialModel getBeltPulleyModel(TieredBeltBlockEntity be) {
         Material shaftMaterial = be.getShaftMaterial();
-        if(shaftMaterial == null || shaftMaterial == GTMaterials.NULL) return AllPartialModels.BELT_PULLEY;
+        if(shaftMaterial == null) return AllPartialModels.BELT_PULLEY;
         return PartialModel.of(Greate.id("block/" + shaftMaterial.getName() + "/belt_pulley"));
     }
 

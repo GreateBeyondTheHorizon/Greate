@@ -4,7 +4,6 @@ import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.recipe.content.Content;
 import com.gregtechceu.gtceu.api.recipe.ingredient.EnergyStack;
-import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.kinetics.millstone.MillingRecipe;
@@ -143,7 +142,7 @@ public class GreateValues {
     }
 
     public static float getMaxCapacityFromMaterial(Material material) {
-        if(material == null || material == GTMaterials.NULL) return Float.MAX_VALUE;
+        if(material == null) return Float.MAX_VALUE;
         if(!material.hasProperty(GreatePropertyKeys.KINETIC)) return Float.MAX_VALUE;
         return material.getProperty(GreatePropertyKeys.KINETIC).getMaxCapacity();
     }

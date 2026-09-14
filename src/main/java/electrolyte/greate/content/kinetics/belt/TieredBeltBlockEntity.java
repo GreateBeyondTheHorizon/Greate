@@ -2,7 +2,6 @@ package electrolyte.greate.content.kinetics.belt;
 
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.registry.GTRegistries;
-import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.simibubi.create.content.kinetics.belt.BeltBlockEntity;
 import electrolyte.greate.GreateValues;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
@@ -49,7 +48,7 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
-        if(getShaftMaterial() == null || getShaftMaterial() == GTMaterials.NULL) return false;
+        if(getShaftMaterial() == null) return false;
         return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, shaftMaterial, capacity, stress);
     }
 

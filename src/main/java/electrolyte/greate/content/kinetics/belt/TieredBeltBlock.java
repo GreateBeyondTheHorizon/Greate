@@ -2,7 +2,6 @@ package electrolyte.greate.content.kinetics.belt;
 
 import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
-import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.content.kinetics.belt.BeltBlock;
 import com.simibubi.create.content.kinetics.belt.BeltPart;
@@ -64,7 +63,7 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBelt {
     @Override
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
         IBE.onRemove(pState, pLevel, pPos, pNewState);
-        Material shaftMaterial = GTMaterials.NULL;
+        Material shaftMaterial = null;
         if(pLevel.isClientSide) return;
         if(pState.getBlock() == pNewState.getBlock()) return;
         if(pIsMoving) return;
@@ -77,7 +76,7 @@ public class TieredBeltBlock extends BeltBlock implements ITieredBelt {
             boolean hasPulley = false;
             BlockEntity be = pLevel.getBlockEntity(currentPos);
             if(be instanceof TieredBeltBlockEntity beltBE) {
-                if(shaftMaterial == GTMaterials.NULL) {
+                if(shaftMaterial == null) {
                     shaftMaterial = beltBE.getShaftMaterial();
                 }
                 if(beltBE.isController()) {
