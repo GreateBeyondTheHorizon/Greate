@@ -219,5 +219,6 @@ idea {
 configurations.all {
     resolutionStrategy {
         cacheChangingModulesFor 0, 'seconds'
+        cacheDynamicVersionsFor 0, 'seconds'
     }
 }

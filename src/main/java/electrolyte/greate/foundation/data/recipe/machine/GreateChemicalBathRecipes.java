@@ -13,8 +13,8 @@ import net.minecraft.world.item.ItemStack;
 import java.util.function.Consumer;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
-import static com.gregtechceu.gtceu.common.data.GTMaterials.CHEMICAL_DYES;
 import static com.gregtechceu.gtceu.common.data.GTMaterials.Chlorine;
+import static com.gregtechceu.gtceu.common.data.GTMaterials.DYE_MATERIALS;
 import static com.gregtechceu.gtceu.common.data.GTRecipeTypes.CHEMICAL_BATH_RECIPES;
 
 public class GreateChemicalBathRecipes {
@@ -28,7 +28,7 @@ public class GreateChemicalBathRecipes {
                         .recipeBuilder(Greate.id(dyeName + "_seat"))
                         .category(GTRecipeCategories.CHEM_DYES)
                         .inputItems(AllItemTags.SEATS.tag)
-                        .inputFluids(CHEMICAL_DYES[color.ordinal()].getFluid(L))
+                        .inputFluids(DYE_MATERIALS.get(color).getFluid(L))
                         .outputItems(new ItemStack(BuiltInRegistries.ITEM.get(Create.asResource(dyeName + "_seat"))))
                         .duration(20)
                         .EUt(VA[LV])
@@ -38,7 +38,7 @@ public class GreateChemicalBathRecipes {
                         .recipeBuilder(Greate.id(dyeName + "_postbox"))
                         .category(GTRecipeCategories.CHEM_DYES)
                         .inputItems(AllItemTags.POSTBOXES.tag)
-                        .inputFluids(CHEMICAL_DYES[color.ordinal()].getFluid(L))
+                        .inputFluids(DYE_MATERIALS.get(color).getFluid(L))
                         .outputItems(new ItemStack(BuiltInRegistries.ITEM.get(Create.asResource(dyeName + "_postbox"))))
                         .duration(20)
                         .EUt(VA[LV])
@@ -49,7 +49,7 @@ public class GreateChemicalBathRecipes {
                     .recipeBuilder(Greate.id(dyeName + "_valve_handle"))
                     .category(GTRecipeCategories.CHEM_DYES)
                     .inputItems(AllBlocks.COPPER_VALVE_HANDLE.asStack())
-                    .inputFluids(CHEMICAL_DYES[color.ordinal()].getFluid(L))
+                    .inputFluids(DYE_MATERIALS.get(color).getFluid(L))
                     .outputItems(new ItemStack(BuiltInRegistries.ITEM.get(Create.asResource(dyeName + "_valve_handle"))))
                     .duration(20)
                     .EUt(VA[LV])
