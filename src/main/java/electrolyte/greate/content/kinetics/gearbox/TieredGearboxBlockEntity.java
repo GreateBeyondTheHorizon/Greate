@@ -21,7 +21,7 @@ public class TieredGearboxBlockEntity extends GearboxBlockEntity implements ITie
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
-        return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, ((TieredGearboxBlock) getBlockState().getBlock()).getMaterial(), capacity, stress);
+        return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, ((TieredGearboxBlock) getBlockState().getBlock()).getMaterial(), speed);
     }
 
     @Override

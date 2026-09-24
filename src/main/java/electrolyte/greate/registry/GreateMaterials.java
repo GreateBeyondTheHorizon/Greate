@@ -62,16 +62,16 @@ public class GreateMaterials {
 				.buildAndRegister()
 				.setFormula(ChromaticCompound.getChemicalFormula() + Sp.symbol());
 
-		AndesiteAlloy.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(0, 8));
-		Steel.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(1, 32));
-		Aluminium.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(2, 128));
-		StainlessSteel.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(3, 512));
-		Titanium.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(4, 2048));
-		TungstenSteel.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(5, 8192));
-		RhodiumPlatedPalladium.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(6, 32768));
-		NaquadahAlloy.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(7, 131072));
-		Darmstadtium.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(8, 524288));
-		Neutronium.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(9, 2097152));
+		AndesiteAlloy.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(0, 25));
+		Steel.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(1, 50));
+		Aluminium.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(2, 75));
+		StainlessSteel.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(3, 100));
+		Titanium.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(4, 125));
+		TungstenSteel.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(5, 150));
+		RhodiumPlatedPalladium.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(6, 175));
+		NaquadahAlloy.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(7, 200));
+		Darmstadtium.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(8, 225));
+		Neutronium.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(9, 256));
 
 		AndesiteAlloy.setProperty(GreatePropertyKeys.COGWHEEL, new CogwheelProperty(Wood));
 		Steel.setProperty(GreatePropertyKeys.COGWHEEL, new CogwheelProperty(AndesiteAlloy));

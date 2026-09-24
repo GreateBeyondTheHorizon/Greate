@@ -190,7 +190,7 @@ public class TieredPumpBlockEntity extends PumpBlockEntity implements ITieredKin
 
 	@Override
 	public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-		ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, GreateValues.TM[this.getTier()], this.capacity, this.stress);
+		ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, GreateValues.TM[this.getTier()], this.speed);
 		double basePressure = GConfigUtility.getPumpPressureFromTier(tier);
 		float pressure = (float) (basePressure * Math.abs(getSpeed()));
 		Lang.builder(Greate.MOD_ID).translate("tooltip.pump_pressure").style(ChatFormatting.GRAY).forGoggles(tooltip);

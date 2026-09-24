@@ -54,7 +54,7 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
         if(getShaftMaterial() == null || getShaftMaterial() == GTMaterials.NULL) return false;
-        return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, shaftMaterial, capacity, stress);
+        return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, shaftMaterial, speed);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class TieredBeltBlockEntity extends BeltBlockEntity implements ITieredKin
     }
 
     @Override
-    public float getMaxCapacityFromBlock(Block block) {
-        return GreateValues.getMaxCapacityFromMaterial(shaftMaterial);
+    public float getMaxSpeedFromBlock(Block block) {
+        return GreateValues.getMaxSpeedFromMaterial(shaftMaterial);
     }
 }

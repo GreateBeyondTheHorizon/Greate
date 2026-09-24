@@ -99,10 +99,10 @@ public class GreateValues {
         return null;
     }
 
-    public static float getMaxCapacityFromMaterial(Material material) {
+    public static float getMaxSpeedFromMaterial(Material material) {
         if(material == null || material == GTMaterials.NULL) return Float.MAX_VALUE;
         if(!material.hasProperty(GreatePropertyKeys.KINETIC)) return Float.MAX_VALUE;
-        return material.getProperty(GreatePropertyKeys.KINETIC).getMaxCapacity();
+        return material.getProperty(GreatePropertyKeys.KINETIC).getMaxSpeed();
     }
 
     /**

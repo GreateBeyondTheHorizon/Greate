@@ -96,7 +96,7 @@ public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKinet
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
-        ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, TM[tier], capacity, stress);
+        ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, TM[tier], speed);
         if(canProcess()) {
             containedFluidTooltip(tooltip, isPlayerSneaking, fluidCapability);
         }

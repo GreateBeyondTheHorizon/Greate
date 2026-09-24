@@ -46,7 +46,7 @@ public record GreateKineticStats(Block block) implements TooltipModifier {
         List<Component> stats = KineticStats.getKineticStats(block, player);
         if(block instanceof TieredBeltBlock) return stats;
         if(block instanceof ITieredBlock tb) {
-            stats.add(0, Component.translatable("greate.tooltip.max_capacity").append(Component.literal(String.valueOf(GreateValues.getMaxCapacityFromMaterial(tb.getMaterial()))).withStyle(Style.EMPTY.withColor(GTValues.VC[tb.getTier()])))
+            stats.add(0, Component.translatable("greate.tooltip.max_speed").append(Component.literal(String.valueOf(GreateValues.getMaxSpeedFromMaterial(tb.getMaterial()))).withStyle(Style.EMPTY.withColor(GTValues.VC[tb.getTier()])))
                     .append(" (")
                     .append(Component.literal(GreateValues.SNF[tb.getTier()]))
                     .append(")").withStyle(ChatFormatting.GRAY));
