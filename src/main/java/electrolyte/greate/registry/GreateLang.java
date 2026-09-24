@@ -6,9 +6,7 @@ public class GreateLang {
 
     public static void register(RegistrateLangProvider provider) {
         provider.add("itemGroup.greate", "Greate");
-        provider.add("greate.tooltip.capacity", "Kinetic Capacity: ");
-        provider.add("greate.tooltip.max_capacity", "Max Kinetic Capacity: ");
-        provider.add("greate.tooltip.network_statistics", "Network Stats: ");
+        provider.add("greate.tooltip.max_speed", "Max Speed: ");
         provider.add("greate.tooltip.circuit_number", "Circuit Number");
         provider.add("greate.tooltip.belt_maxlength", "Max Length: ");
         provider.add("greate.tooltip.belt_usable", "Usable on: ");

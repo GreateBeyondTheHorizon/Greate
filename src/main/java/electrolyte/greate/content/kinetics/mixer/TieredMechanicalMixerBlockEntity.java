@@ -78,7 +78,7 @@ public class TieredMechanicalMixerBlockEntity extends MechanicalMixerBlockEntity
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
-        return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, TM[tier], capacity, stress);
+        return ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, TM[tier], speed);
     }
 
     @Override

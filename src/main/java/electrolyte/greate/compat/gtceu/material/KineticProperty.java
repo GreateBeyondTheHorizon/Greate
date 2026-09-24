@@ -9,11 +9,11 @@ import com.gregtechceu.gtceu.api.data.chemical.material.properties.PropertyKey;
 public class KineticProperty implements IMaterialProperty {
 
     private int tier;
-    private float maxCapacity;
+    private float maxSpeed;
 
-    public KineticProperty(int tier, int maxCapacity) {
+    public KineticProperty(int tier, int maxSpeed) {
         this.tier = tier;
-        this.maxCapacity = maxCapacity;
+        this.maxSpeed = maxSpeed;
     }
 
     @Override
@@ -33,11 +33,11 @@ public class KineticProperty implements IMaterialProperty {
         this.tier = tier;
     }
 
-    public float getMaxCapacity() {
-        return maxCapacity;
+    public float getMaxSpeed() {
+        return maxSpeed;
     }
 
-    public void setMaxCapacity(float maxCapacity) {
-        this.maxCapacity = maxCapacity;
+    public void setMaxSpeed(float maxSpeed) {
+        this.maxSpeed = maxSpeed;
     }
 }

@@ -80,7 +80,7 @@ public class TieredEncasedFanBlockEntity extends EncasedFanBlockEntity implement
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
-        ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, isPlayerSneaking, TM[tier], capacity, stress);
+        ITieredKineticBlockEntity.super.addToGoggleTooltip(tooltip, TM[tier], speed);
         containedFluidTooltip(tooltip, isPlayerSneaking, fluidCapability);
         return true;
     }
