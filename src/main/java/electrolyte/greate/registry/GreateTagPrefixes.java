@@ -48,6 +48,14 @@ public class GreateTagPrefixes {
 	public static TagPrefix girderEncasedShaft = new TagPrefix(Greate.id("girder_encased_shaft"))
 			.customLookupTable(() -> Girders.GIRDERS);
 
+	public static TagPrefix chainConveyor = new TagPrefix("chain_conveyor")
+			.defaultTagPath("chain_conveyors/%s")
+			.unformattedTagPath("chain_conveyors")
+			.itemTable(() -> ChainConveyors.CHAIN_CONVEYORS)
+			.materialAmount(M / 4)
+			.unificationEnabled(true)
+			.enableRecycling();
+
 	public static TagPrefix cogwheel = new TagPrefix(Greate.id("cogwheel"))
 			.defaultTagPath("cogwheels/%s")
 			.unformattedTagPath("cogwheels")

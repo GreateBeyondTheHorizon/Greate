@@ -15,6 +15,7 @@ public class GreateLang {
         provider.add("greate.tooltip.saw.recipe_type_toggle", "Right-Click with a Screwdriver to toggle active recipe state.");
         provider.add("greate.tooltip.saw.active_recipe_type", "Active Recipe Type: %s");
         provider.add("config.jade.plugin_greate.saw.active_recipe_type", "Active Recipe Type");
+        provider.add("create.chain_conveyor.not_equal_tier", "Conveyors are not the same tier"); //intentional create prefix
         provider.add("greate.recipe.milling", "Milling");
         provider.add("greate.recipe.crushing", "Crushing");
         provider.add("greate.recipe.pressing", "Pressing");

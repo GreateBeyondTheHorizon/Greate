@@ -38,6 +38,9 @@ public class MixinMixinHelpers {
         Belts.BELTS.rowMap().forEach((tagPrefix, materialBlockEntryMap) ->
                 MixinHelpers.addMaterialBlockLootTables(lootTables, tagPrefix, materialBlockEntryMap));
 
+        ChainConveyors.CHAIN_CONVEYORS.rowMap().forEach((tagPrefix, materialBlockEntryMap) ->
+                MixinHelpers.addMaterialBlockLootTables(lootTables, tagPrefix, materialBlockEntryMap));
+
         Cogwheels.COGWHEELS.rowMap().forEach((tagPrefix, materialBlockEntryMap) ->
                 MixinHelpers.addMaterialBlockLootTables(lootTables, tagPrefix, materialBlockEntryMap));
         Cogwheels.ANDESITE_ENCASED_COGWHEELS.rowMap().forEach((tagPrefix, materialBlockEntryMap) ->

@@ -23,6 +23,10 @@ public class GreateDynamicTags {
             TAGS.put(BlockTags.MINEABLE_WITH_PICKAXE.location(), TagEntry.element(entry.getId()));
             TAGS.put(BlockTags.MINEABLE_WITH_AXE.location(), TagEntry.element(entry.getId()));
         }
+        for(var entry : ChainConveyors.CHAIN_CONVEYORS.values()) {
+            TAGS.put(BlockTags.MINEABLE_WITH_PICKAXE.location(), TagEntry.element(entry.getId()));
+            TAGS.put(BlockTags.MINEABLE_WITH_AXE.location(), TagEntry.element(entry.getId()));
+        }
         for(var entry : Cogwheels.COGWHEELS.values()) {
             TAGS.put(BlockTags.MINEABLE_WITH_PICKAXE.location(), TagEntry.element(entry.getId()));
         }

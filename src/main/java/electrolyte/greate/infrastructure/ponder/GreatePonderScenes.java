@@ -4,6 +4,7 @@ import com.simibubi.create.Create;
 import com.simibubi.create.infrastructure.ponder.AllCreatePonderTags;
 import com.simibubi.create.infrastructure.ponder.scenes.*;
 import com.simibubi.create.infrastructure.ponder.scenes.fluid.PumpScenes;
+import com.simibubi.create.infrastructure.ponder.scenes.highLogistics.FrogAndConveyorScenes;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import electrolyte.greate.infrastructure.ponder.scenes.TieredFanScenes;
@@ -11,6 +12,7 @@ import net.createmod.ponder.api.registration.PonderSceneRegistrationHelper;
 import net.minecraft.resources.ResourceLocation;
 
 import static electrolyte.greate.registry.Belts.BELT_CONNECTORS;
+import static electrolyte.greate.registry.ChainConveyors.CHAIN_CONVEYORS;
 import static electrolyte.greate.registry.Cogwheels.COGWHEELS;
 import static electrolyte.greate.registry.Cogwheels.LARGE_COGWHEELS;
 import static electrolyte.greate.registry.CrushingWheels.CRUSHING_WHEELS;
@@ -30,6 +32,7 @@ public class GreatePonderScenes {
         PonderSceneRegistrationHelper<ItemProviderEntry<?>> HELPER = helper.withKeyFunction(RegistryEntry::getId);
         HELPER.forComponents(SHAFTS.values()).addStoryBoard(Create.asResource("shaft/relay"), KineticsScenes::shaftAsRelay, AllCreatePonderTags.KINETIC_RELAYS);
         HELPER.forComponents(SHAFTS.values()).addStoryBoard(Create.asResource("shaft/encasing"), KineticsScenes::shaftsCanBeEncased);
+        HELPER.forComponents(CHAIN_CONVEYORS.values()).addStoryBoard(Create.asResource("high_logistics/chain_conveyor"), FrogAndConveyorScenes::conveyor);
         HELPER.forComponents(COGWHEELS.values())
                 .addStoryBoard(Create.asResource("cog/small"), KineticsScenes::cogAsRelay, AllCreatePonderTags.KINETIC_RELAYS)
                 .addStoryBoard(Create.asResource("cog/speedup"), KineticsScenes::cogsSpeedUp)

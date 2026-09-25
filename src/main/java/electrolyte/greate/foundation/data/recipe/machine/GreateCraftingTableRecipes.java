@@ -283,6 +283,11 @@ public class GreateCraftingTableRecipes {
                     'A', ChemicalHelper.get(alloy, material));
         }
 
+        VanillaRecipeHelper.addShapedRecipe(provider, true, Greate.id(material.getName() + "_chain_conveyor"), ChemicalHelper.get(chainConveyor, material),
+                " A ", "ACA", "wAh",
+                'A', AllBlocks.ANDESITE_CASING,
+                'C', new MaterialEntry(largeCogwheel, material));
+
         if(material.hasProperty(GreatePropertyKeys.COGWHEEL)) {
             CogwheelProperty prop = material.getProperty(GreatePropertyKeys.COGWHEEL);
             Material previousTierMaterial = prop.getPreviousMaterial();
@@ -369,10 +374,6 @@ public class GreateCraftingTableRecipes {
                 'S', ItemTags.WOODEN_SLABS,
                 'C', AllBlocks.ANDESITE_CASING,
                 'H', SHAFT.get(ULV));
-        VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllBlocks.CHAIN_CONVEYOR.getId().getPath()), new ItemStack(AllBlocks.CHAIN_CONVEYOR.asItem(), 2),
-                " A ", "ACA", " A ",
-                'A', AllBlocks.ANDESITE_CASING,
-                'C', LARGE_COGWHEEL.get(ULV));
         VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllBlocks.MECHANICAL_CRAFTER.getId().getPath()), new ItemStack(AllBlocks.MECHANICAL_CRAFTER.asItem(), 3),
                 " C ", "EAE", " R ",
                 'C', AllItems.ELECTRON_TUBE,
@@ -494,10 +495,6 @@ public class GreateCraftingTableRecipes {
                 'S', new MaterialEntry(screw, WroughtIron),
                 'P', new MaterialEntry(plate, Iron),
                 'B', GTMachines.WOODEN_CRATE.asStack());
-        VanillaRecipeHelper.addShapedRecipe(provider, true, Greate.id(AllBlocks.CHAIN_CONVEYOR.getId().getPath()), new ItemStack(AllBlocks.CHAIN_CONVEYOR.asItem(), 2),
-                " A ", "ACA", "wAh",
-                'A', AllBlocks.ANDESITE_CASING,
-                'C', LARGE_COGWHEEL.get(LV));
         VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllItems.ELECTRON_TUBE.getId().getPath()), AllItems.ELECTRON_TUBE.asStack(),
                 " R ", " G ", "SSS",
                 'R', AllItems.POLISHED_ROSE_QUARTZ,

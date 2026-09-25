@@ -1,6 +1,7 @@
 package electrolyte.greate.registry;
 
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
+import com.simibubi.create.content.kinetics.chainConveyor.ChainConveyorVisual;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
@@ -12,6 +13,8 @@ import electrolyte.greate.content.kinetics.base.TieredShaftRenderer;
 import electrolyte.greate.content.kinetics.base.TieredSingleAxisRotatingVisual;
 import electrolyte.greate.content.kinetics.belt.TieredBeltBlockEntity;
 import electrolyte.greate.content.kinetics.belt.TieredBeltRenderer;
+import electrolyte.greate.content.kinetics.chainConveyor.TieredChainConveyorBlockEntity;
+import electrolyte.greate.content.kinetics.chainConveyor.TieredChainConveyorRenderer;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingWheelBlockEntity;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingWheelControllerBlockEntity;
 import electrolyte.greate.content.kinetics.fan.TieredEncasedFanBlockEntity;
@@ -55,6 +58,12 @@ public class ModBlockEntityTypes {
             .validBlocks(getBlocks(Shafts.ANDESITE_ENCASED_SHAFTS.values()))
             .validBlocks(getBlocks(Shafts.BRASS_ENCASED_SHAFTS.values()))
             .validBlocks(getBlocks(Girders.GIRDERS.values()))
+            .register();
+
+    public static final BlockEntityEntry<TieredChainConveyorBlockEntity> TIERED_CHAIN_CONVEYOR = GreateRegistries.REGISTRATE
+            .blockEntity("tiered_chain_conveyor", TieredChainConveyorBlockEntity::new)
+            .renderer(() -> TieredChainConveyorRenderer::new)
+            .validBlocks(getBlocks(ChainConveyors.CHAIN_CONVEYORS.values()))
             .register();
 
     public static final BlockEntityEntry<TieredSimpleKineticBlockEntity> TIERED_ENCASED_COGWHEEL = GreateRegistries.REGISTRATE
@@ -151,6 +160,11 @@ public class ModBlockEntityTypes {
 
         SimpleBlockEntityVisualizer.builder(TIERED_ENCASED_SHAFT.get())
                 .factory(TieredSingleAxisRotatingVisual::shaft)
+                .skipVanillaRender(p -> !p.renderNormally())
+                .apply();
+
+        SimpleBlockEntityVisualizer.builder(TIERED_CHAIN_CONVEYOR.get())
+                .factory(ChainConveyorVisual::new)
                 .skipVanillaRender(p -> !p.renderNormally())
                 .apply();
 

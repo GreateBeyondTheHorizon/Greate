@@ -6,6 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 import static com.simibubi.create.infrastructure.ponder.AllCreatePonderTags.*;
 import static electrolyte.greate.GreateValues.TM;
 import static electrolyte.greate.registry.Belts.BELT_CONNECTORS;
+import static electrolyte.greate.registry.ChainConveyors.CHAIN_CONVEYORS;
 import static electrolyte.greate.registry.Cogwheels.COGWHEELS;
 import static electrolyte.greate.registry.Cogwheels.LARGE_COGWHEELS;
 import static electrolyte.greate.registry.EncasedFans.FANS;
@@ -31,6 +32,7 @@ public class GreatePonderTags {
         }
 
         SHAFTS.values().forEach(shaft -> helper.addToTag(KINETIC_RELAYS).add(shaft.getId()));
+        CHAIN_CONVEYORS.values().forEach(conveyor -> helper.addToTag(KINETIC_RELAYS).add(conveyor.getId()));
         COGWHEELS.values().forEach(cogwheel -> helper.addToTag(KINETIC_RELAYS).add(cogwheel.getId()));
         LARGE_COGWHEELS.values().forEach(largeCogwheel -> helper.addToTag(KINETIC_RELAYS).add(largeCogwheel.getId()));
         GEARBOXES.values().forEach(gearbox -> helper.addToTag(KINETIC_RELAYS).add(gearbox.getId()));
