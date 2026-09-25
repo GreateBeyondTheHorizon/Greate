@@ -63,7 +63,7 @@ public class GreateRecipeTypes {
 
                         var slotGroupWidget = SlotGroupWidget.builder()
                                 .matrix(layout.capabilityInfo(ItemRecipeCapability.CAP).getRecipeViewerGrid(io))
-                                .key('s', i -> RecipeViewerSlotWidget.create()
+                                .key('s', i -> RecipeViewerSlotWidget.create(ItemStack.class)
                                         .value(ItemStackList.of(ItemStack.EMPTY))
                                         .background(GuiTextures.SLOT_ITEM,
                                                 layout.capabilityInfo(ItemRecipeCapability.CAP).getOverlay(io, i))
@@ -95,7 +95,7 @@ public class GreateRecipeTypes {
 
                         var slotGroupWidget = SlotGroupWidget.builder()
                                 .matrix(layout.capabilityInfo(ItemRecipeCapability.CAP).getRecipeViewerGrid(io))
-                                .key('s', i -> RecipeViewerSlotWidget.create()
+                                .key('s', i -> RecipeViewerSlotWidget.create(ItemStack.class)
                                         .value(ItemStackList.of(ItemStack.EMPTY))
                                         .background(GuiTextures.SLOT_ITEM,
                                                 layout.capabilityInfo(ItemRecipeCapability.CAP).getOverlay(io, i))
@@ -112,7 +112,7 @@ public class GreateRecipeTypes {
 
                                 var slotGroupWidget = SlotGroupWidget.builder()
                                         .matrix(layout.capabilityInfo(FluidRecipeCapability.CAP).getRecipeViewerGrid(io))
-                                        .key('s', i -> RecipeViewerSlotWidget.create()
+                                        .key('s', i -> RecipeViewerSlotWidget.create(FluidStack.class)
                                                 .value(FluidStackList.of(FluidStack.EMPTY))
                                                 .background(GuiTextures.SLOT_FLUID,
                                                         layout.capabilityInfo(FluidRecipeCapability.CAP).getOverlay(io, i))
