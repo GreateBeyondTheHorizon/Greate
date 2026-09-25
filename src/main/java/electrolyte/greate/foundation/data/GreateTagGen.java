@@ -49,6 +49,7 @@ public class GreateTagGen {
                     .add(AllBlocks.BRASS_ENCASED_COGWHEEL.asItem())
                     .add(AllBlocks.BRASS_ENCASED_LARGE_COGWHEEL.asItem())
                     .add(AllItems.BELT_CONNECTOR.asItem())
+                    .add(AllBlocks.CHAIN_CONVEYOR.asItem())
                     .add(AllBlocks.COGWHEEL.asItem())
                     .add(AllBlocks.LARGE_COGWHEEL.asItem())
                     .add(AllBlocks.MILLSTONE.asItem())

@@ -10,6 +10,7 @@
     "MixinBasinRenderer",
     "MixinBlockEntityBehaviour",
     "MixinBrassTunnelBlockEntity",
+    "MixinChainConveyorVisual",
     "MixinChuteBlockEntity",
     "MixinContraption",
     "MixinCrushingWheelControllerBlockEntity",

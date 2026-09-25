@@ -5,10 +5,7 @@ import com.gregtechceu.gtceu.api.data.chemical.material.stack.MaterialStack;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllItems;
 import electrolyte.greate.Greate;
-import electrolyte.greate.content.gtceu.material.BeltProperty;
-import electrolyte.greate.content.gtceu.material.CogwheelProperty;
-import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
-import electrolyte.greate.content.gtceu.material.KineticProperty;
+import electrolyte.greate.content.gtceu.material.*;
 
 import java.util.List;
 
@@ -72,6 +69,17 @@ public class GreateMaterials {
 		NaquadahAlloy.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(7, 200));
 		Darmstadtium.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(8, 225));
 		Neutronium.setProperty(GreatePropertyKeys.KINETIC, new KineticProperty(9, 256));
+
+		AndesiteAlloy.setProperty(GreatePropertyKeys.CHAIN_CONVEYOR, new ChainConveyorProperty(2, 8));
+		Steel.setProperty(GreatePropertyKeys.CHAIN_CONVEYOR, new ChainConveyorProperty(3, 16));
+		Aluminium.setProperty(GreatePropertyKeys.CHAIN_CONVEYOR, new ChainConveyorProperty(4, 32));
+		StainlessSteel.setProperty(GreatePropertyKeys.CHAIN_CONVEYOR, new ChainConveyorProperty(5, 64));
+		Titanium.setProperty(GreatePropertyKeys.CHAIN_CONVEYOR, new ChainConveyorProperty(6, 96));
+		TungstenSteel.setProperty(GreatePropertyKeys.CHAIN_CONVEYOR, new ChainConveyorProperty(7, 128));
+		RhodiumPlatedPalladium.setProperty(GreatePropertyKeys.CHAIN_CONVEYOR, new ChainConveyorProperty(8, 144));
+		NaquadahAlloy.setProperty(GreatePropertyKeys.CHAIN_CONVEYOR, new ChainConveyorProperty(9, 196));
+		Darmstadtium.setProperty(GreatePropertyKeys.CHAIN_CONVEYOR, new ChainConveyorProperty(10, 225));
+		Neutronium.setProperty(GreatePropertyKeys.CHAIN_CONVEYOR, new ChainConveyorProperty(11, 256));
 
 		AndesiteAlloy.setProperty(GreatePropertyKeys.COGWHEEL, new CogwheelProperty(Wood));
 		Steel.setProperty(GreatePropertyKeys.COGWHEEL, new CogwheelProperty(AndesiteAlloy));

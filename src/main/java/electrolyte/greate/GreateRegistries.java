@@ -39,6 +39,7 @@ public final class GreateRegistries {
 	public static void registerMaterialBlocks(PostMaterialEvent event) {
 		Shafts.register();
 		Belts.register();
+		ChainConveyors.register();
 		Cogwheels.register();
 		CrushingWheels.register();
 		EncasedFans.register();

@@ -2,11 +2,9 @@ package electrolyte.greate.foundation.events;
 
 import electrolyte.greate.Greate;
 import electrolyte.greate.content.kinetics.belt.item.TieredBeltConnectorHandler;
+import electrolyte.greate.content.kinetics.chainConveyor.TieredChainConveyorConnectionHandler;
 import electrolyte.greate.content.kinetics.fan.TieredAirCurrent;
-import electrolyte.greate.foundation.client.models.BeltModel;
-import electrolyte.greate.foundation.client.models.CogwheelModel;
-import electrolyte.greate.foundation.client.models.GearboxModel;
-import electrolyte.greate.foundation.client.models.ShaftModel;
+import electrolyte.greate.foundation.client.models.*;
 import electrolyte.greate.foundation.data.GreateTagGen;
 import electrolyte.greate.infrastructure.ponder.GreatePonderPlugin;
 import electrolyte.greate.registry.GreatePartialModels;
@@ -36,6 +34,7 @@ class GreateForgeClientEvents {
             return;
         }
         TieredBeltConnectorHandler.tick();
+        TieredChainConveyorConnectionHandler.clientTick();
     }
 
     protected static boolean isGameActive() {
@@ -55,6 +54,7 @@ class GreateModClientEvents {
     public static void onModelRegister(ModelEvent.RegisterAdditional event) {
         BeltModel.MODEL_LOCATIONS.forEach(event::register);
         ShaftModel.MODEL_LOCATIONS.forEach(event::register);
+        ChainConveyorModel.MODEL_LOCATIONS.forEach(event::register);
         CogwheelModel.MODEL_LOCATIONS.forEach(event::register);
         GearboxModel.MODEL_LOCATIONS.forEach(event::register);
     }

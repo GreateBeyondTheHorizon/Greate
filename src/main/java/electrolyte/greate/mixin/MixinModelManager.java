@@ -25,6 +25,7 @@ public class MixinModelManager {
         BeltModel.reinitModels();
         BeltConnectorModel.reinitModels();
         ShaftModel.reinitModels();
+        ChainConveyorModel.reinitModels();
         CogwheelModel.reinitModels();
         GearboxModel.reinitModels();
         Greate.LOGGER.info("Greate model loading took {}ms", System.currentTimeMillis() - startTime);
