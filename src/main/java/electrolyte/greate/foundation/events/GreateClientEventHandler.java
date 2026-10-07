@@ -1,9 +1,11 @@
 package electrolyte.greate.foundation.events;
 
+import com.simibubi.create.AllBlocks;
 import electrolyte.greate.Greate;
 import electrolyte.greate.content.kinetics.belt.item.TieredBeltConnectorHandler;
 import electrolyte.greate.content.kinetics.chainConveyor.TieredChainConveyorConnectionHandler;
 import electrolyte.greate.content.kinetics.fan.TieredAirCurrent;
+import electrolyte.greate.content.kinetics.waterWheel.WaterWheelBreaker;
 import electrolyte.greate.foundation.client.models.*;
 import electrolyte.greate.foundation.data.GreateTagGen;
 import electrolyte.greate.infrastructure.ponder.GreatePonderPlugin;
@@ -45,6 +47,10 @@ class GreateForgeClientEvents {
     public static void onTooltipEvent(ItemTooltipEvent event) {
         if(event.getItemStack().is(GreateTagGen.MECHANICAL_SAWS)) {
             event.getToolTip().add(Component.translatable("greate.tooltip.saw.recipe_type_toggle").withStyle(ChatFormatting.GRAY));
+        } else if(event.getItemStack().is(AllBlocks.WATER_WHEEL.asItem()) && WaterWheelBreaker.getMaxWaterWheelLimit() != Integer.MAX_VALUE) {
+            event.getToolTip().add(Component.translatable("greate.tooltip.item.water_wheel_count", WaterWheelBreaker.getMaxWaterWheelLimit()).withStyle(ChatFormatting.GRAY));
+        } else if(event.getItemStack().is(AllBlocks.LARGE_WATER_WHEEL.asItem()) && WaterWheelBreaker.getMaxLargeWaterWheelLimit() != Integer.MAX_VALUE) {
+            event.getToolTip().add(Component.translatable("greate.tooltip.item.large_water_wheel_count", WaterWheelBreaker.getMaxLargeWaterWheelLimit()).withStyle(ChatFormatting.GRAY));
         }
     }
 }

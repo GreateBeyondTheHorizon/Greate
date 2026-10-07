@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinRotationPropagator {
 
     @Inject(method = "propagateNewSource", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/kinetics/base/KineticBlockEntity;getFlickerScore()I", shift = Shift.AFTER), remap = false, cancellable = true)
-    private static void greate$propagateNewSource(KineticBlockEntity currentTE, CallbackInfo ci,
+    private static void greate_propagateNewSource(KineticBlockEntity currentTE, CallbackInfo ci,
                                                   @Local(name = "speedOfCurrent") float speedOfCurrent,
                                                   @Local(name = "neighbourTE") KineticBlockEntity neighbourTE,
                                                   @Local(name = "world") Level world) {
@@ -34,6 +34,5 @@ public class MixinRotationPropagator {
                 return;
             }
         }
-
     }
 }

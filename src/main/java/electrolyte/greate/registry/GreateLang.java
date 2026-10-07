@@ -7,6 +7,10 @@ public class GreateLang {
     public static void register(RegistrateLangProvider provider) {
         provider.add("itemGroup.greate", "Greate");
         provider.add("greate.tooltip.max_speed", "Max Speed: ");
+        provider.add("greate.tooltip.water_wheel_count", "Max Water Wheels: %s / %s");
+        provider.add("greate.tooltip.large_water_wheel_count", "Max Large Water Wheels: %s / %s");
+        provider.add("greate.tooltip.item.water_wheel_count", "Max Water Wheels Per Network: %s");
+        provider.add("greate.tooltip.item.large_water_wheel_count", "Max Large Water Wheels Per Network: %s");
         provider.add("greate.tooltip.circuit_number", "Circuit Number");
         provider.add("greate.tooltip.belt_maxlength", "Max Length: ");
         provider.add("greate.tooltip.belt_usable", "Usable on: ");
