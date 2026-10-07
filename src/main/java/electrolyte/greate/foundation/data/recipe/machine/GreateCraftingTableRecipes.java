@@ -363,7 +363,7 @@ public class GreateCraftingTableRecipes {
         VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllBlocks.LARGE_WATER_WHEEL.getId().getPath()), AllBlocks.LARGE_WATER_WHEEL.asStack(),
                 "PPP", "PWP", "PPP",
                 'P', ItemTags.WOODEN_SLABS,
-                'W', SHAFT.get(ULV));
+                'W', SHAFT.get(LV));
         VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllBlocks.WINDMILL_BEARING.getId().getPath()), AllBlocks.WINDMILL_BEARING.asStack(),
                 " S ", " T ", "wHf",
                 'S', ItemTags.WOODEN_SLABS,
