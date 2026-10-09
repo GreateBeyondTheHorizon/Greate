@@ -2,17 +2,17 @@ package electrolyte.greate.registry;
 
 import com.google.common.collect.ImmutableTable;
 import com.google.common.collect.Table;
-import com.gregtechceu.gtceu.api.GTCEuAPI;
 import com.gregtechceu.gtceu.api.data.chemical.material.Material;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
+import com.gregtechceu.gtceu.api.registry.GTRegistries;
 import com.gregtechceu.gtceu.common.data.GTItems;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import electrolyte.greate.Greate;
 import electrolyte.greate.GreateRegistries;
-import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
-import electrolyte.greate.content.gtceu.material.KineticProperty;
+import electrolyte.greate.compat.gtceu.material.GreatePropertyKeys;
+import electrolyte.greate.compat.gtceu.material.KineticProperty;
 import electrolyte.greate.content.kinetics.chainConveyor.TieredChainConveyorBlock;
 import electrolyte.greate.foundation.client.models.ChainConveyorModel;
 import electrolyte.greate.infrastructure.config.GStress;
@@ -31,7 +31,7 @@ public class ChainConveyors {
     }
 
     public static void generateChainConveyors() {
-        for(Material mat : GTCEuAPI.materialManager.getRegisteredMaterials()) {
+        for(Material mat : GTRegistries.MATERIALS.values()) {
             if(!mat.hasProperty(GreatePropertyKeys.KINETIC)) continue;
             KineticProperty prop = mat.getProperty(GreatePropertyKeys.KINETIC);
             int tier = prop.getTier();

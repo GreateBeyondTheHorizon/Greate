@@ -7,7 +7,7 @@ import com.simibubi.create.content.kinetics.chainConveyor.ChainConveyorBlock;
 import com.simibubi.create.content.kinetics.chainConveyor.ChainConveyorBlockEntity;
 import com.simibubi.create.content.kinetics.chainConveyor.ChainConveyorConnectionPacket;
 import com.simibubi.create.foundation.utility.CreateLang;
-import electrolyte.greate.content.gtceu.material.GreatePropertyKeys;
+import electrolyte.greate.compat.gtceu.material.GreatePropertyKeys;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import net.createmod.catnip.data.Iterate;
 import net.createmod.catnip.math.VecHelper;

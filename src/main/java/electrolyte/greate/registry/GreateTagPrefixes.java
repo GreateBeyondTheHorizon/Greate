@@ -51,7 +51,7 @@ public class GreateTagPrefixes {
 	public static TagPrefix chainConveyor = new TagPrefix("chain_conveyor")
 			.defaultTagPath("chain_conveyors/%s")
 			.unformattedTagPath("chain_conveyors")
-			.itemTable(() -> ChainConveyors.CHAIN_CONVEYORS)
+			.customLookupTable(() -> ChainConveyors.CHAIN_CONVEYORS)
 			.materialAmount(M / 4)
 			.unificationEnabled(true)
 			.enableRecycling();
