@@ -2,6 +2,7 @@ package electrolyte.greate.compat.gtceu.common.data.machines;
 
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.blockentity.BlockEntityCreationInfo;
+import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.data.RotationState;
 import com.gregtechceu.gtceu.api.item.MetaMachineItem;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
@@ -35,7 +36,12 @@ public class GreateMachines {
             (tier, builder) -> builder
                     .langValue(GTValues.VNF[tier] + " Millstone")
                     .rotationState(RotationState.NON_Y_AXIS)
-                    .recipeModifier(GreateRecipeModifiers::stressRequired)
+                    .recipeModifier(GreateRecipeModifiers.OC_NON_PERFECT)
+                    .addOutputLimit(ItemRecipeCapability.CAP, switch(tier) {
+                        case 1, 2 -> 1;
+                        case 3 -> 3;
+                        default -> 4;
+                    })
                     .register(),
             GreateRecipeTypes.MILLSTONE,
             GTMachineUtils.ALL_TIERS);

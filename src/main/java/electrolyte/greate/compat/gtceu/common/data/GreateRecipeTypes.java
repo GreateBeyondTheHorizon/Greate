@@ -21,6 +21,7 @@ import com.gregtechceu.gtceu.common.machine.trait.customlogic.MaceratorLogic;
 import com.gregtechceu.gtceu.common.mui.GTGuiTextures;
 import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
 import com.gregtechceu.gtceu.utils.GTMath;
+import electrolyte.greate.Greate;
 import electrolyte.greate.GreateValues;
 import electrolyte.greate.compat.gtceu.api.recipe.gui.GreateCapabilityContentBuilder;
 import electrolyte.greate.compat.gtceu.api.recipe.gui.GreateRecipeViewerCapabilityLayoutBuilder;
@@ -36,14 +37,14 @@ public class GreateRecipeTypes {
 
     public static final String KINETIC = "kinetic";
 
-    public static final GTRecipeType WIRE_COATING_RECIPES = GTRecipeTypes.register("wire_coating", ELECTRIC)
+    public static final GTRecipeType WIRE_COATING_RECIPES = GTRecipeTypes.register(Greate.id("wire_coating"), ELECTRIC)
             .setMaxIOSize(3, 1, 1, 0)
             .setEUIO(IO.IN)
             .UI(builder -> builder.setProgressBar(GTGuiTextures.PROGRESS_WIREMILL)
                     .setItemSlotOverlay(IO.IN, 0, GTGuiTextures.WIREMILL_OVERLAY))
             .setSound(GTSoundEntries.CHEMICAL);
 
-    public static final GTRecipeType MILLSTONE = GTRecipeTypes.register("millstone", KINETIC)
+    public static final GTRecipeType MILLSTONE = GTRecipeTypes.register(Greate.id("millstone"), KINETIC)
             .setMaxIOSize(1, 4, 0, 0)
             .setMaxSize(IO.IN, StressRecipeCapability.STRESS_CAPABILITY, 1)
             .setEUIO(IO.NONE)
@@ -77,7 +78,7 @@ public class GreateRecipeTypes {
                     .addRecipeUIModifier((recipe, widget) -> widget.textComponents.paddingTop(25))
                     .addRecipeUIModifier(RecipeUIModifier.textLine(Text.lang("gtceu.recipe.byproduct_tier", GreateValues.SNF[GTValues.HV]))));
 
-    public static final GTRecipeType SAW = GTRecipeTypes.register("saw", KINETIC)
+    public static final GTRecipeType SAW = GTRecipeTypes.register(Greate.id("saw"), KINETIC)
             .setMaxIOSize(1, 2, 1, 0)
             .setMaxSize(IO.IN, StressRecipeCapability.STRESS_CAPABILITY, 1)
             .setEUIO(IO.NONE)
