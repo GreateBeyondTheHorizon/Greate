@@ -11,8 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v5
-      with:
-        ref: 'forge-1.20.1'
     - uses: actions/setup-java@v4
       with:
         java-version: '17'
