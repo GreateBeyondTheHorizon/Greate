@@ -22,9 +22,9 @@ public class MixinGeneratingKineticBlockEntity {
 
     @Inject(method = "addToGoggleTooltip", at = @At("RETURN"), remap = false)
     private void greate_addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking, CallbackInfoReturnable<Boolean> cir) {
-        if(((KineticBlockEntity) (Object) this) instanceof LargeWaterWheelBlockEntity be && WaterWheelBreaker.getMaxLargeWaterWheelLimit() != Integer.MAX_VALUE) {
+        if(((KineticBlockEntity) (Object) this) instanceof LargeWaterWheelBlockEntity be && be.hasNetwork() && WaterWheelBreaker.getMaxLargeWaterWheelLimit() != Integer.MAX_VALUE) {
             CreateLang.builder(Greate.MOD_ID).translate("tooltip.large_water_wheel_count", ((KineticBlockEntityAccessor) be).greate_getLargeWaterWheelCount(), WaterWheelBreaker.getMaxLargeWaterWheelLimit()).style(ChatFormatting.GRAY).forGoggles(tooltip);
-        } else if(((KineticBlockEntity) (Object) this) instanceof WaterWheelBlockEntity be && WaterWheelBreaker.getMaxWaterWheelLimit() != Integer.MAX_VALUE) {
+        } else if(((KineticBlockEntity) (Object) this) instanceof WaterWheelBlockEntity be && be.hasNetwork() && WaterWheelBreaker.getMaxWaterWheelLimit() != Integer.MAX_VALUE) {
             CreateLang.builder(Greate.MOD_ID).translate("tooltip.water_wheel_count", ((KineticBlockEntityAccessor) be).greate_getWaterWheelCount(), WaterWheelBreaker.getMaxWaterWheelLimit()).style(ChatFormatting.GRAY).forGoggles(tooltip);
         }
     }

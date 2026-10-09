@@ -18,10 +18,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Map;
 
 @Mixin(KineticNetwork.class)
-public class MixinKineticNetwork implements KineticNetworkAccessor {
+public abstract class MixinKineticNetwork implements KineticNetworkAccessor {
 
     @Shadow public Map<KineticBlockEntity, Float> members;
     @Shadow public Long id;
+
+    @Shadow
+    public abstract void sync();
+
     @Unique private final Pair<Integer, Integer> greate_networkInformation = Pair.of(0,0); //first = regular WW, second = large WW
 
     @Inject(method = "updateFromNetwork", at = @At("HEAD"), remap = false)
@@ -35,8 +39,10 @@ public class MixinKineticNetwork implements KineticNetworkAccessor {
         if(members.containsKey(be)) return;
         if(be instanceof LargeWaterWheelBlockEntity) {
             greate_networkInformation.setSecond(greate_networkInformation.getSecond() + 1);
+            sync();
         } else if(be instanceof WaterWheelBlockEntity) {
             greate_networkInformation.setFirst(greate_networkInformation.getFirst() + 1);
+            sync();
         }
     }
 
@@ -45,8 +51,10 @@ public class MixinKineticNetwork implements KineticNetworkAccessor {
         if(members.containsKey(be)) return;
         if(be instanceof LargeWaterWheelBlockEntity) {
             greate_networkInformation.setSecond(greate_networkInformation.getSecond() + 1);
+            sync();
         } else if(be instanceof WaterWheelBlockEntity) {
             greate_networkInformation.setFirst(greate_networkInformation.getFirst() + 1);
+            sync();
         }
     }
 
@@ -55,8 +63,10 @@ public class MixinKineticNetwork implements KineticNetworkAccessor {
         if(!members.containsKey(be)) return;
         if(be instanceof LargeWaterWheelBlockEntity) {
             greate_networkInformation.setSecond(greate_networkInformation.getSecond() - 1);
+            sync();
         } else if(be instanceof WaterWheelBlockEntity) {
             greate_networkInformation.setFirst(greate_networkInformation.getFirst() - 1);
+            sync();
         }
     }
 
