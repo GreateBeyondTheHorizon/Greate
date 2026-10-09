@@ -263,7 +263,7 @@ public class TieredSawBlockEntity extends SawBlockEntity implements ITieredKinet
     protected void read(CompoundTag compound, boolean clientPacket) {
         super.read(compound, clientPacket);
         String recipeType = compound.getString("ActiveRecipeType");
-        if(!recipeType.equals(RecipeType.STONECUTTING.toString())) {
+        if(recipeType.equals(RecipeType.STONECUTTING.toString())) {
             this.activeRecipeType = RecipeType.STONECUTTING;
         } else this.activeRecipeType = ModRecipeTypes.CUTTING.getType();
     }
