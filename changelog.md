@@ -1,2 +1,4 @@
-- Fix NPE with certain block cutting recipes
-- Add recipe type selection (via screwdriver) & circuit selection to tiered mechanical saws
+- Change limiting factor per tier to be RPM instead of stress. (This means a shaft over max rpm will break.) Recipes are still tier gated to machine tier
+- Add tiered chained conveyors
+- Fix broken crafting recipe for large water wheels when `enableHardCreateRecipes` is false
+- Fix wrong active recipe type being read on saws
