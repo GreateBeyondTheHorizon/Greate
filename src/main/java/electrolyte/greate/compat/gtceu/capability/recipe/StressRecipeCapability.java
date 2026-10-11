@@ -3,13 +3,14 @@ package electrolyte.greate.compat.gtceu.capability.recipe;
 import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
 import com.gregtechceu.gtceu.api.recipe.content.ContentModifier;
 import com.gregtechceu.gtceu.api.recipe.content.SerializerFloat;
+import electrolyte.greate.Greate;
 
 public class StressRecipeCapability extends RecipeCapability<Float> {
 
     public static final StressRecipeCapability STRESS_CAPABILITY = new StressRecipeCapability();
 
     protected StressRecipeCapability() {
-        super("stress", 0xAABBCC00, false, 4, SerializerFloat.INSTANCE);
+        super(Greate.id("stress"), 0xAABBCC00, false, 4, SerializerFloat.INSTANCE);
     }
 
     @Override

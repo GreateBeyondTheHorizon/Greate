@@ -84,7 +84,7 @@ public class Greate {
         ModRecipeTypes.register(context.getModEventBus());
 
         GreateRegistries.REGISTRATE.addRegisterCallback(ForgeRegistries.BLOCKS.getRegistryKey(), () -> GreateConfigs.register(context));
-        ConfigHolder<GreateRecipeConfig> configHolder = Configuration.registerConfig(GreateRecipeConfig.class, ConfigFormats.yaml());
+        ConfigHolder<GreateRecipeConfig> configHolder = Configuration.registerConfig(GreateRecipeConfig.class, ConfigFormats.YAML);
         CONFIG = configHolder.getConfigInstance();
     }
 

@@ -15,22 +15,22 @@ import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.recipe.gui.GTRecipeViewerWidget;
 import com.gregtechceu.gtceu.api.recipe.gui.RecipeUIModifier;
-import com.gregtechceu.gtceu.common.data.GTMaterials;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.gregtechceu.gtceu.common.data.GTSoundEntries;
 import com.gregtechceu.gtceu.common.machine.trait.customlogic.MaceratorLogic;
 import com.gregtechceu.gtceu.common.mui.GTGuiTextures;
 import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
-import com.gregtechceu.gtceu.utils.GTMath;
 import electrolyte.greate.Greate;
 import electrolyte.greate.GreateValues;
 import electrolyte.greate.compat.gtceu.api.recipe.gui.GreateCapabilityContentBuilder;
 import electrolyte.greate.compat.gtceu.api.recipe.gui.GreateRecipeViewerCapabilityLayoutBuilder;
 import electrolyte.greate.compat.gtceu.capability.recipe.StressRecipeCapability;
+import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
-import java.util.Collections;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 import static com.gregtechceu.gtceu.common.data.GTRecipeTypes.ELECTRIC;
 
@@ -77,7 +77,7 @@ public class GreateRecipeTypes {
                         widget.child(slotGroupWidget);
                     })
                     .addRecipeUIModifier((recipe, widget) -> widget.textComponents.paddingTop(25))
-                    .addRecipeUIModifier(RecipeUIModifier.textLine(Text.lang("gtceu.recipe.byproduct_tier", GreateValues.SNF[GTValues.HV]))));
+                    .addRecipeUIModifier(RecipeUIModifier.textLine(Text.lang("gtceu.recipe.byproduct_tier", GreateValues.SNF[GTValues.LV]))));
 
     public static final GTRecipeType SAW = GTRecipeTypes.register(Greate.id("saw"), KINETIC)
             .setMaxIOSize(1, 2, 1, 0)
@@ -139,36 +139,20 @@ public class GreateRecipeTypes {
             copiedRecipe.tickInput.remove(EURecipeCapability.CAP);
             copiedRecipe.save(provider);
         });
-        //todo: figure out why this breaks normal cutting recipes and re-add them manually
-        GTRecipeTypes.CUTTER_RECIPES.onRecipeBuild((gtRecipeBuilder, provider) -> {
-            if (gtRecipeBuilder.input.getOrDefault(FluidRecipeCapability.CAP, Collections.emptyList()).isEmpty() &&
-                    gtRecipeBuilder.tickInput.getOrDefault(FluidRecipeCapability.CAP, Collections.emptyList()).isEmpty()) {
-                SAW.copyFrom(gtRecipeBuilder).id(gtRecipeBuilder.id.withSuffix("_water"))
-                        .inputFluids(GTMaterials.Water.getFluid((int) GTMath.clamp(
-                                gtRecipeBuilder.duration * gtRecipeBuilder.EUt().getTotalEU() / 320, 4, 1000)))
-                        .duration(gtRecipeBuilder.duration * 2)
+        GTRecipeTypes.CUTTER_RECIPES.prepareBuilder(builder -> {
+            BiConsumer<GTRecipeBuilder, Consumer<FinishedRecipe>> original = builder.onSave;
+            builder.onSave((gtRecipeBuilder, provider) -> {
+                if(original != null) {
+                    original.accept(gtRecipeBuilder, provider); //for water/dist water/lube addition
+                }
+                GTRecipeBuilder copiedRecipe = SAW
+                        .copyFrom(gtRecipeBuilder)
                         .perTick(true)
                         .input(StressRecipeCapability.STRESS_CAPABILITY, (float) gtRecipeBuilder.EUt().voltage())
-                        .perTick(false)
-                        .save(provider);
-
-                SAW.copyFrom(gtRecipeBuilder).id(gtRecipeBuilder.id.withSuffix("_distilled_water"))
-                        .inputFluids(GTMaterials.DistilledWater.getFluid((int) GTMath.clamp(
-                                gtRecipeBuilder.duration * gtRecipeBuilder.EUt().getTotalEU() / 426, 3, 750)))
-                        .duration((int) (gtRecipeBuilder.duration * 1.5))
-                        .perTick(true)
-                        .input(StressRecipeCapability.STRESS_CAPABILITY, (float) gtRecipeBuilder.EUt().voltage())
-                        .perTick(false)
-                        .save(provider);
-
-                SAW.copyFrom(gtRecipeBuilder)
-                        .inputFluids(GTMaterials.Lubricant.getFluid((int) GTMath.clamp(
-                        gtRecipeBuilder.duration * gtRecipeBuilder.EUt().getTotalEU() / 1280, 1, 250)))
-                        .perTick(true)
-                        .input(StressRecipeCapability.STRESS_CAPABILITY, (float) gtRecipeBuilder.EUt().voltage())
-                        .perTick(false)
-                        .save(provider);
-            }
+                        .perTick(false);
+                copiedRecipe.tickInput.remove(EURecipeCapability.CAP);
+                copiedRecipe.save(provider);
+            });
         });
     }
 }

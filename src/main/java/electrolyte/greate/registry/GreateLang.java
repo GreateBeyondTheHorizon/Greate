@@ -32,7 +32,6 @@ public class GreateLang {
         provider.add("greate.recipe.assembly.pressing", "Process in %s or higher Press");
         provider.add("greate.recipe.assembly.cutting", "Cut with %s or higher Saw");
         provider.add("greate.jei.recipe_tier", "Recipe Tier: ");
-        provider.add("greate.jei.byproducts", "Byproducts from §6HS§r+");
         provider.add("greate.recipe.processing.extra_chance", "% extra chance per tier");
         provider.add("tagprefix.whisk", "%s Whisk");
         provider.add("tagprefix.alloy", "%s Alloy");
