@@ -6,6 +6,7 @@ import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.client.renderer.machine.DynamicRenderManager;
 import com.gregtechceu.gtceu.utils.FormattingUtil;
 import com.mojang.logging.LogUtils;
+import com.simibubi.create.AllRecipeTypes;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
@@ -14,6 +15,7 @@ import dev.toma.configuration.config.ConfigHolder;
 import dev.toma.configuration.config.format.ConfigFormats;
 import electrolyte.greate.compat.gtceu.client.renderer.machine.MillstoneCogRender;
 import electrolyte.greate.compat.gtceu.client.renderer.machine.SawRender;
+import electrolyte.greate.compat.gtceu.common.data.GreateRecipeTypes;
 import electrolyte.greate.content.kinetics.fan.processing.GreateFanProcessingTypes;
 import electrolyte.greate.foundation.advancement.GreateAdvancements;
 import electrolyte.greate.foundation.data.GreateTagGen.GreateBlockTagGen;
@@ -39,6 +41,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -70,6 +73,7 @@ public class Greate {
         MinecraftForge.EVENT_BUS.register(this);
         context.getModEventBus().addListener(this::gatherData);
         context.getModEventBus().addListener(this::onRegister);
+        context.getModEventBus().addListener(this::commonSetup);
 
         if(FMLLoader.getDist().isClient()) {
             DynamicRenderManager.register(Greate.id("millstone_cog"), MillstoneCogRender.TYPE);
@@ -110,6 +114,12 @@ public class Greate {
             event.getGenerator().addProvider(true, new GreateItemTagGen(event.getGenerator().getPackOutput(), event.getLookupProvider(), blockTags.contentsGetter(), Greate.MOD_ID, event.getExistingFileHelper()));
             event.getGenerator().addProvider(true, new GreateItemApplicationRecipeGen(event.getGenerator().getPackOutput(), Greate.MOD_ID));
         }
+    }
+
+    private void commonSetup(FMLCommonSetupEvent event) {
+        event.enqueueWork(() -> {
+            GreateRecipeTypes.MILLSTONE.addProxyRecipeType(AllRecipeTypes.MILLING.getType());
+        });
     }
 
     public record GreateRegistrateDisplayItemsGenerator() implements DisplayItemsGenerator {

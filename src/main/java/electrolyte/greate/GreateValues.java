@@ -6,15 +6,11 @@ import com.gregtechceu.gtceu.api.recipe.content.Content;
 import com.gregtechceu.gtceu.api.recipe.ingredient.EnergyStack;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.simibubi.create.AllRecipeTypes;
-import com.simibubi.create.content.kinetics.millstone.MillingRecipe;
-import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
-import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder.ProcessingRecipeFactory;
 import dev.latvian.mods.rhino.util.HideFromJS;
 import electrolyte.greate.compat.gtceu.material.GreatePropertyKeys;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingRecipe;
 import electrolyte.greate.content.kinetics.fan.processing.TieredHauntingRecipe;
 import electrolyte.greate.content.kinetics.fan.processing.TieredSplashingRecipe;
-import electrolyte.greate.content.kinetics.millstone.TieredMillingRecipe;
 import electrolyte.greate.content.kinetics.mixer.TieredCompactingRecipe;
 import electrolyte.greate.content.kinetics.mixer.TieredMixingRecipe;
 import electrolyte.greate.content.kinetics.press.TieredPressingRecipe;
@@ -120,8 +116,7 @@ public class GreateValues {
         for(String s : Greate.CONFIG.ignoredRecipeTypes) {
             if(loc.equals(ResourceLocation.parse(s))) return null;
         }
-        if(loc.equals(GTRecipeTypes.MACERATOR_RECIPES.registryName) || loc.equals(AllRecipeTypes.MILLING.getId())) return TieredMillingRecipe::new;
-        else if(loc.equals(AllRecipeTypes.CRUSHING.getId())) return TieredCrushingRecipe::new;
+        if(loc.equals(AllRecipeTypes.CRUSHING.getId())) return TieredCrushingRecipe::new;
         else if(loc.equals(GTRecipeTypes.BENDER_RECIPES.registryName) || loc.equals(AllRecipeTypes.PRESSING.getId())) return TieredPressingRecipe::new;
         else if(loc.equals(GTRecipeTypes.MIXER_RECIPES.registryName) || loc.equals(AllRecipeTypes.MIXING.getId())) return TieredMixingRecipe::new;
         else if(loc.equals(GTRecipeTypes.CUTTER_RECIPES.registryName) || loc.equals(AllRecipeTypes.CUTTING.getId())) return TieredCuttingRecipe::new;
@@ -129,15 +124,6 @@ public class GreateValues {
         else if(loc.equals(GTRecipeTypes.COMPRESSOR_RECIPES.registryName)) return TieredCompactingRecipe::new;
         else if(loc.equals(AllRecipeTypes.HAUNTING.getId())) return TieredHauntingRecipe::new;
         else if(loc.equals(AllRecipeTypes.COMPACTING.getId())) return TieredCompactingRecipe::new;
-        return null;
-    }
-
-    @HideFromJS
-    public static ProcessingRecipeFactory<ProcessingRecipe<?>> getCreateFactory(ResourceLocation loc) {
-        for(String s : Greate.CONFIG.ignoredRecipeTypes) {
-            if(loc.equals(ResourceLocation.parse(s))) return null;
-        }
-        if(loc.equals(AllRecipeTypes.MILLING.getId())) return MillingRecipe::new;
         return null;
     }
 

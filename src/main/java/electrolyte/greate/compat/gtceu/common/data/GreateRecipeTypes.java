@@ -12,9 +12,11 @@ import com.gregtechceu.gtceu.api.capability.recipe.EURecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.FluidRecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
+import com.gregtechceu.gtceu.api.recipe.GTRecipeSerializer;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.recipe.gui.GTRecipeViewerWidget;
 import com.gregtechceu.gtceu.api.recipe.gui.RecipeUIModifier;
+import com.gregtechceu.gtceu.api.registry.GTRegistries;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
 import com.gregtechceu.gtceu.common.data.GTSoundEntries;
 import com.gregtechceu.gtceu.common.machine.trait.customlogic.MaceratorLogic;
@@ -22,11 +24,15 @@ import com.gregtechceu.gtceu.common.mui.GTGuiTextures;
 import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
 import electrolyte.greate.Greate;
 import electrolyte.greate.GreateValues;
+import electrolyte.greate.compat.gtceu.api.recipe.GreateRecipeType;
 import electrolyte.greate.compat.gtceu.api.recipe.gui.GreateCapabilityContentBuilder;
 import electrolyte.greate.compat.gtceu.api.recipe.gui.GreateRecipeViewerCapabilityLayoutBuilder;
 import electrolyte.greate.compat.gtceu.capability.recipe.StressRecipeCapability;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.function.BiConsumer;
@@ -45,7 +51,7 @@ public class GreateRecipeTypes {
                     .setItemSlotOverlay(IO.IN, 0, GTGuiTextures.WIREMILL_OVERLAY))
             .setSound(GTSoundEntries.CHEMICAL);
 
-    public static final GTRecipeType MILLSTONE = GTRecipeTypes.register(Greate.id("millstone"), KINETIC)
+    public static final GreateRecipeType MILLSTONE = (GreateRecipeType) GreateRecipeTypes.register(Greate.id("millstone"), KINETIC)
             .setMaxIOSize(1, 4, 0, 0)
             .setMaxSize(IO.IN, StressRecipeCapability.STRESS_CAPABILITY, 1)
             .setEUIO(IO.NONE)
@@ -127,8 +133,6 @@ public class GreateRecipeTypes {
                             })
                     .addRecipeUIModifier((recipe, widget) -> widget.textComponents.paddingTop(25)));
 
-
-
     public static void register() {
         GTRecipeTypes.MACERATOR_RECIPES.onRecipeBuild((gtRecipeBuilder, provider) -> {
             GTRecipeBuilder copiedRecipe = MILLSTONE
@@ -154,5 +158,13 @@ public class GreateRecipeTypes {
                 copiedRecipe.save(provider);
             });
         });
+    }
+
+    public static GreateRecipeType register(ResourceLocation id, String group, RecipeType<?>... proxyRecipes) {
+        GreateRecipeType recipeType = new GreateRecipeType(id, group, proxyRecipes);
+        GTRegistries.register(BuiltInRegistries.RECIPE_TYPE, recipeType.registryName, recipeType);
+        GTRegistries.register(BuiltInRegistries.RECIPE_SERIALIZER, recipeType.registryName, new GTRecipeSerializer());
+        GTRegistries.RECIPE_TYPES.register(recipeType.registryName, recipeType);
+        return recipeType;
     }
 }
