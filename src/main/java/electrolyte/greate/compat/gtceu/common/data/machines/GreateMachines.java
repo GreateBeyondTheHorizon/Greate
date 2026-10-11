@@ -51,6 +51,7 @@ public class GreateMachines {
             (tier, builder) -> builder
                     .langValue(GTValues.VNF[tier] + " Mechanical Saw")
                     .rotationState(RotationState.NONE)
+                    .recipeModifier(GreateRecipeModifiers.OC_NON_PERFECT)
                     .modelProperty(SawBlock.FACING, Direction.UP)
                     .modelProperty(SawBlock.FLIPPED)
                     .modelProperty(DirectionalAxisKineticBlock.AXIS_ALONG_FIRST_COORDINATE)
@@ -97,7 +98,7 @@ public class GreateMachines {
                             MetaMachineItem::new,
                             info -> factory.apply(info, tier))
                     .blockBuilder(b ->
-                            b.transform(GStress.setImpact(0.5 * (tier + 1))))
+                            b.transform(GStress.setImpact(0.75 * (tier + 1))))
                     .model(GreateMachineModels.createSawModel()
                             .andThen(b -> b.addDynamicRenderer(GreateDynamicRenderHelper::createSawRender)))
                     .itemBuilder(b -> b.model(GreateMachineModels.tieredSawItemModel(tier)))

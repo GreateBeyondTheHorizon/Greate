@@ -62,5 +62,9 @@ public class GreateLang {
 
         provider.add("emi.category.greate.milling", "Milling");
         provider.add("emi.category.greate.cutting", "Sawing");
+
+        provider.add("recipe.capability.stress.name", "Stress");
+        provider.add("greate.recipe_modifier.insufficient_machine_tier", "Machine tier too low.");
+        provider.add("greate.recipe_modifier.insufficient_stress_overclock", "Not enough stress to overclock recipe. Required: %ssu");
     }
 }

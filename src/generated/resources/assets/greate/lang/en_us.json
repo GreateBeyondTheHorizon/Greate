@@ -392,6 +392,8 @@
   "greate.recipe.stress_input": "Uses %s su/tick",
   "greate.recipe.stress_output": "Outputs %s su/tick (%s§r)",
   "greate.recipe.wood_cutting": "Wood Cutting",
+  "greate.recipe_modifier.insufficient_machine_tier": "Machine tier too low.",
+  "greate.recipe_modifier.insufficient_stress_overclock": "Not enough stress to overclock recipe. Required: %ssu",
   "greate.tooltip.belt_maxlength": "Max Length: ",
   "greate.tooltip.belt_usable": "Usable on: ",
   "greate.tooltip.circuit_number": "Circuit Number",
@@ -423,6 +425,7 @@
   "material.greate.refined_radiance": "Refined Radiance",
   "material.greate.rose_quartz": "Rose Quartz",
   "material.greate.shadow_steel": "Shadow Steel",
+  "recipe.capability.stress.name": "Stress",
   "tagprefix.alloy": "%s Alloy",
   "tagprefix.whisk": "%s Whisk"
 }

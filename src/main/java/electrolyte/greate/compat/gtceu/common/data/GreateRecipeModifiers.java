@@ -21,12 +21,12 @@ public class GreateRecipeModifiers {
         if(!(machine instanceof TieredKineticMachine tkm)) return RecipeModifier.nullWrongType(TieredKineticMachine.class, machine);
         if(!(machine instanceof IOverclockMachine overclockMachine)) return ModifierFunction.IDENTITY;
         if(RecipeHelper.getRecipeEUtTier(recipe) > overclockMachine.getMaxOverclockTier()) {
-            return ModifierFunction.cancel(Component.literal("Machine tier too low."));
+            return ModifierFunction.cancel(Component.translatable("greate.recipe_modifier.insufficient_machine_tier"));
         }
-        float stressRequired = (float) recipe.getTickInputContents(StressRecipeCapability.STRESS_CAPABILITY).get(0).content() * (4 * (overclockMachine.getOverclockTier() - 1));
+        float stressRequired = (float) recipe.getTickInputContents(StressRecipeCapability.STRESS_CAPABILITY).get(0).content() * (4 * (overclockMachine.getOverclockTier() - RecipeHelper.getRecipeEUtTier(recipe)));
         float currentStress = ((MixinKineticBlockEntityAccessor) tkm.getTrait(KineticMachineTrait.class).getKineticBlockEntity()).getStress();
         if(currentStress < stressRequired) {
-            return ModifierFunction.cancel(Component.literal("Stress too low. Required: " + stressRequired));
+            return ModifierFunction.cancel(Component.translatable("greate.recipe_modifier.insufficient_stress_overclock", stressRequired));
         }
         return logic.getModifier(machine, recipe, overclockMachine.getOverclockVoltage());
     });

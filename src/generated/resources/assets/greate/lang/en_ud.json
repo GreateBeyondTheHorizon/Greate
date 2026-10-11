@@ -392,6 +392,8 @@
   "greate.recipe.stress_input": "ʞɔıʇ/ns %s sǝs∩",
   "greate.recipe.stress_output": ")ɹ§%s( ʞɔıʇ/ns %s sʇndʇnO",
   "greate.recipe.wood_cutting": "buıʇʇnƆ pooM",
+  "greate.recipe_modifier.insufficient_machine_tier": "˙ʍoן ooʇ ɹǝıʇ ǝuıɥɔɐW",
+  "greate.recipe_modifier.insufficient_stress_overclock": "n%ss :pǝɹınbǝᴚ ˙ǝdıɔǝɹ ʞɔoןɔɹǝʌo oʇ ssǝɹʇs ɥbnouǝ ʇoN",
   "greate.tooltip.belt_maxlength": " :ɥʇbuǝꞀ xɐW",
   "greate.tooltip.belt_usable": " :uo ǝןqɐs∩",
   "greate.tooltip.circuit_number": "ɹǝqɯnN ʇınɔɹıƆ",
@@ -423,6 +425,7 @@
   "material.greate.refined_radiance": "ǝɔuɐıpɐᴚ pǝuıɟǝᴚ",
   "material.greate.rose_quartz": "zʇɹɐnὉ ǝsoᴚ",
   "material.greate.shadow_steel": "ןǝǝʇS ʍopɐɥS",
+  "recipe.capability.stress.name": "ssǝɹʇS",
   "tagprefix.alloy": "ʎoןןⱯ %s",
   "tagprefix.whisk": "ʞsıɥM %s"
 }

@@ -8,6 +8,7 @@ import brachy.modularui.integration.recipeviewer.entry.item.ItemStackList;
 import brachy.modularui.widget.ParentWidget;
 import brachy.modularui.widgets.SlotGroupWidget;
 import com.gregtechceu.gtceu.api.GTValues;
+import com.gregtechceu.gtceu.api.capability.recipe.EURecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.FluidRecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
@@ -135,6 +136,7 @@ public class GreateRecipeTypes {
                     .perTick(true)
                     .input(StressRecipeCapability.STRESS_CAPABILITY, (float) gtRecipeBuilder.EUt().voltage())
                     .perTick(false);
+            copiedRecipe.tickInput.remove(EURecipeCapability.CAP);
             copiedRecipe.save(provider);
         });
         //todo: figure out why this breaks normal cutting recipes and re-add them manually
