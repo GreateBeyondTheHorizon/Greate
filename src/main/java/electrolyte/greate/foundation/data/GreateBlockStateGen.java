@@ -18,17 +18,6 @@ public class GreateBlockStateGen {
     public static final ResourceLocation CUTOUT_MIPPED = ResourceLocation.parse("cutout_mipped");
     public static final ResourceLocation CUTOUT = ResourceLocation.parse("cutout");
 
-    public static <T extends Block> NonNullBiConsumer<DataGenContext<Block, T>, RegistrateBlockstateProvider> tieredMillstoneProvider() {
-        return (c, p) -> p.getVariantBuilder(c.getEntry()).forAllStates(state -> ConfiguredModel.builder()
-                .modelFile(p.models().withExistingParent(c.getName() + "_inner", Create.asResource("block/millstone/inner"))
-                        .texture("5", p.modLoc("block/" + c.getName().substring(0, c.getName().length() - 10) + "/millstone"))
-                        .texture("particle", p.modLoc("block/" + c.getName().substring(0, c.getName().length() - 10) + "/axis"))
-                        .texture("1_0", p.modLoc("block/" + c.getName().substring(0, c.getName().length() - 10) + "/axis"))
-                        .texture("1_1", p.modLoc("block/" + c.getName().substring(0, c.getName().length() - 10) + "/axis_top")))
-                .modelFile(p.models().withExistingParent(c.getName(), Create.asResource("block/millstone/block")))
-                .build());
-    }
-
     public static <T extends Block> NonNullBiConsumer<DataGenContext<Block, T>, RegistrateBlockstateProvider> tieredCrushingWheelProvider() {
         return (c, p) -> p.getVariantBuilder(c.getEntry()).forAllStates(state -> {
             Axis axis = state.getValue(BlockStateProperties.AXIS);

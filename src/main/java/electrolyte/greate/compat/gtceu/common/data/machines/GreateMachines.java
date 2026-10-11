@@ -8,10 +8,11 @@ import com.gregtechceu.gtceu.api.item.MetaMachineItem;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.registry.registrate.MachineBuilder;
-import com.gregtechceu.gtceu.common.data.machines.GTMachineUtils;
+import com.gregtechceu.gtceu.utils.FormattingUtil;
 import com.simibubi.create.content.kinetics.base.DirectionalAxisKineticBlock;
 import com.simibubi.create.content.kinetics.saw.SawBlock;
 import electrolyte.greate.GreateRegistries;
+import electrolyte.greate.GreateValues;
 import electrolyte.greate.compat.gtceu.client.data.models.GreateMachineModels;
 import electrolyte.greate.compat.gtceu.client.renderer.machine.GreateDynamicRenderHelper;
 import electrolyte.greate.compat.gtceu.common.data.GreateRecipeModifiers;
@@ -27,6 +28,9 @@ import net.minecraft.core.Direction;
 import java.util.Locale;
 import java.util.function.BiFunction;
 
+import static com.gregtechceu.gtceu.api.GTValues.UHV;
+import static com.gregtechceu.gtceu.api.GTValues.ULV;
+
 public class GreateMachines {
 
     public static void register() {}
@@ -34,7 +38,7 @@ public class GreateMachines {
     public static MachineDefinition[] MILLSTONES = registerMillstoneMachines("millstone",
             TieredMillstoneMachine::new,
             (tier, builder) -> builder
-                    .langValue(GTValues.VNF[tier] + " Millstone")
+                    .langValue(FormattingUtil.toEnglishName(GreateValues.TM[tier].getName()) + " Millstone")
                     .rotationState(RotationState.NON_Y_AXIS)
                     .recipeModifier(GreateRecipeModifiers.OC_NON_PERFECT)
                     .addOutputLimit(ItemRecipeCapability.CAP, switch(tier) {
@@ -44,7 +48,7 @@ public class GreateMachines {
                     })
                     .register(),
             GreateRecipeTypes.MILLSTONE,
-            GTMachineUtils.ALL_TIERS);
+            GTValues.tiersBetween(ULV, UHV));
 
     public static MachineDefinition[] SAWS = registerSawMachines("saw",
             TieredSawMachine::new,
@@ -57,7 +61,7 @@ public class GreateMachines {
                     .modelProperty(DirectionalAxisKineticBlock.AXIS_ALONG_FIRST_COORDINATE)
                     .register(),
             GreateRecipeTypes.SAW,
-            GTMachineUtils.ALL_TIERS);
+            GTValues.tiersBetween(ULV, UHV));
 
     public static MachineDefinition[] registerMillstoneMachines(String name,
                                                                 BiFunction<BlockEntityCreationInfo, Integer, TieredKineticWorkableMachine> factory,
@@ -67,14 +71,14 @@ public class GreateMachines {
         MachineDefinition[] definitions = new MachineDefinition[GTValues.TIER_COUNT];
         for(int tier : tiers) {
             var register = GreateRegistries.REGISTRATE
-                    .machine(GTValues.VN[tier].toLowerCase(Locale.ROOT) + "_" + name,
+                    .machine(GreateValues.TM[tier].getName().toLowerCase(Locale.ROOT) + "_" + name,
                             MachineDefinition::new,
                             TieredMillstoneMachineBlock::new,
                             MetaMachineItem::new,
                             info -> factory.apply(info, tier))
                     .blockBuilder(b ->
                             b.transform(GStress.setImpact(0.5 * (tier + 1)))) //TODO: change
-                    .model(GreateMachineModels.createMillstoneModel()
+                    .model(GreateMachineModels.createMillstoneModel(tier)
                             .andThen(b -> b.addDynamicRenderer(GreateDynamicRenderHelper::createMillstoneCogRender)))
                     .itemBuilder(b -> b.model(GreateMachineModels.tieredMillstoneItemModel(tier)))
                     .tier(tier)

@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
-      "model": "greate:block/darmstadtium_millstone"
+    "facing=east": {
+      "model": "greate:block/machine/darmstadtium_millstone",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "greate:block/machine/darmstadtium_millstone"
+    },
+    "facing=south": {
+      "model": "greate:block/machine/darmstadtium_millstone",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "greate:block/machine/darmstadtium_millstone",
+      "y": 270
     }
   }
 }

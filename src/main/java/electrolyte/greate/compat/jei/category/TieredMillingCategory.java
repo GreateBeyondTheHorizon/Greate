@@ -6,7 +6,6 @@ import com.simibubi.create.foundation.gui.AllGuiTextures;
 import electrolyte.greate.Greate;
 import electrolyte.greate.compat.jei.category.animations.TieredAnimatedMillstone;
 import electrolyte.greate.content.kinetics.crusher.TieredAbstractCrushingRecipe;
-import electrolyte.greate.registry.Millstones;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
@@ -18,6 +17,8 @@ import net.minecraft.client.gui.GuiGraphics;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
+
+import static electrolyte.greate.compat.gtceu.common.data.machines.GreateMachines.MILLSTONES;
 
 @ParametersAreNonnullByDefault
 public class TieredMillingCategory extends GreateRecipeCategory<TieredAbstractCrushingRecipe> {
@@ -51,7 +52,7 @@ public class TieredMillingCategory extends GreateRecipeCategory<TieredAbstractCr
         super.draw(recipe, recipeSlotsView, graphics, 1, 57);
         AllGuiTextures.JEI_ARROW.render(graphics, 85, 32);
         AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 43, 4);
-        new TieredAnimatedMillstone(Millstones.MILLSTONES[recipe.getRecipeTier()].get()).draw(graphics, 48, 27);
+        new TieredAnimatedMillstone(MILLSTONES[recipe.getRecipeTier()].get()).draw(graphics, 48, 27);
         graphics.drawString(Minecraft.getInstance().font, Lang.builder(Greate.MOD_ID).translate("jei.byproducts").component().getString(), 1, 70, 0x3f3f3f, false);
     }
 }

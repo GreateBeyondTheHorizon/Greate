@@ -41,7 +41,6 @@ public final class GreateRegistries {
 		Girders.register();
 		MechanicalPresses.register();
 		MechanicalMixers.register();
-		Millstones.register();
 		Pumps.register();
 		Saws.register();
 		Windows.register();

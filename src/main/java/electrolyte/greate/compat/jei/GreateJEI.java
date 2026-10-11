@@ -81,13 +81,6 @@ public class GreateJEI implements IModPlugin {
 
         GreateRecipeCategory<?>
 
-                milling = builder(TieredAbstractCrushingRecipe.class)
-                    .addTypedRecipes(ModRecipeTypes.MILLING)
-                    .catalysts(Millstones.MILLSTONES)
-                    .doubleIconItem(Millstones.NEUTRONIUM_MILLSTONE.get(), AllItems.WHEAT_FLOUR.get())
-                    .emptyBackground(177, 78)
-                    .build("milling", TieredMillingCategory::new),
-
                 crushing = builder(TieredAbstractCrushingRecipe.class)
                         .addTypedRecipes(ModRecipeTypes.CRUSHING::getType)
                         .addTypedRecipesExcluding(ModRecipeTypes.MILLING::getType, ModRecipeTypes.CRUSHING::getType)

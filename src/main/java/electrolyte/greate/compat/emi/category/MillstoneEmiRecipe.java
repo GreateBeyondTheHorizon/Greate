@@ -9,19 +9,18 @@ import dev.emi.emi.api.widget.WidgetHolder;
 import electrolyte.greate.Greate;
 import electrolyte.greate.GreateValues;
 import electrolyte.greate.compat.gtceu.capability.recipe.StressRecipeCapability;
-import electrolyte.greate.compat.gtceu.common.data.machines.GreateMachines;
 import electrolyte.greate.compat.jei.category.animations.TieredAnimatedMillstone;
-import electrolyte.greate.registry.Millstones;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
 import static com.gregtechceu.gtceu.api.GTValues.UHV;
+import static electrolyte.greate.compat.gtceu.common.data.machines.GreateMachines.MILLSTONES;
 
 public class MillstoneEmiRecipe extends GTEmiRecipe {
 
     private final GTRecipe recipe;
     public static final EmiRecipeCategory MILLSTONE_CATEGORY = new EmiRecipeCategory(Greate.id("milling"),
-            EmiStack.of(GreateMachines.MILLSTONES[UHV].asStack()));
+            EmiStack.of(MILLSTONES[UHV].asStack()));
 
     public MillstoneEmiRecipe(GTRecipe recipe) {
         super(recipe, MILLSTONE_CATEGORY);
@@ -44,7 +43,7 @@ public class MillstoneEmiRecipe extends GTEmiRecipe {
 
         widgets.addDrawable(38, 30, 16, 16, (graphics, mouseX, mouseY, delta) -> {
             int recipeTier = GreateValues.convertStressToTier(recipe.getTickInputContents(StressRecipeCapability.STRESS_CAPABILITY));
-            new TieredAnimatedMillstone(Millstones.MILLSTONES[recipeTier].get()).draw(graphics, 0,0);
+            new TieredAnimatedMillstone(MILLSTONES[recipeTier].get()).draw(graphics, 0,0);
         });
 
         widgets.addDrawable(75, 30, 16, 16, (graphics, mouseX, mouseY, delta) -> {

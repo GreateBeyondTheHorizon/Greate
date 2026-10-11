@@ -21,7 +21,6 @@ import static electrolyte.greate.registry.Gearboxes.GEARBOXES;
 import static electrolyte.greate.registry.Gearboxes.VERTICAL_GEARBOXES;
 import static electrolyte.greate.registry.MechanicalMixers.MECHANICAL_MIXERS;
 import static electrolyte.greate.registry.MechanicalPresses.MECHANICAL_PRESSES;
-import static electrolyte.greate.registry.Millstones.MILLSTONES;
 import static electrolyte.greate.registry.Pumps.MECHANICAL_PUMPS;
 import static electrolyte.greate.registry.Saws.SAWS;
 import static electrolyte.greate.registry.Shafts.SHAFTS;
@@ -51,7 +50,7 @@ public class GreatePonderScenes {
         HELPER.forComponents(FANS)
                 .addStoryBoard(Create.asResource("fan/direction"), FanScenes::direction, AllCreatePonderTags.KINETIC_APPLIANCES)
                 .addStoryBoard(Create.asResource("fan/processing"), TieredFanScenes::processing); //TODO: fix
-        HELPER.forComponents(MILLSTONES).addStoryBoard(Create.asResource("millstone"), ProcessingScenes::millstone);
+        //HELPER.forComponents(MILLSTONES).addStoryBoard(Create.asResource("millstone"), ProcessingScenes::millstone);
         HELPER.forComponents(CRUSHING_WHEELS).addStoryBoard(Create.asResource("crushing_wheel"), ProcessingScenes::crushingWheels);
         HELPER.forComponents(MECHANICAL_MIXERS).addStoryBoard(Create.asResource("mechanical_mixer/mixing"), ProcessingScenes::mixing);
         HELPER.forComponents(MECHANICAL_PRESSES).addStoryBoard(Create.asResource("mechanical_press/compacting"), ProcessingScenes::compacting);

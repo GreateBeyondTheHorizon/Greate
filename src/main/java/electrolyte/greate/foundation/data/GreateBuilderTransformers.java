@@ -17,7 +17,6 @@ import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import electrolyte.greate.content.fluids.pump.TieredPumpBlock;
 import electrolyte.greate.content.kinetics.crusher.TieredCrushingWheelBlock;
 import electrolyte.greate.content.kinetics.fan.TieredEncasedFanBlock;
-import electrolyte.greate.content.kinetics.millstone.TieredMillstoneBlock;
 import electrolyte.greate.content.kinetics.mixer.TieredMechanicalMixerBlock;
 import electrolyte.greate.content.kinetics.press.TieredMechanicalPressBlock;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedCogwheelBlock;
@@ -62,14 +61,6 @@ public class GreateBuilderTransformers {
                 .initialProperties(SharedProperties::stone)
                 .properties(p -> p.noOcclusion().noLootTable())
                 .transform(GStress.setNoImpact());
-    }
-
-    public static <B extends TieredMillstoneBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> tieredMillstone() {
-        return b -> b.blockstate(tieredMillstoneProvider())
-                .item()
-                .model((c, p) ->
-                        p.withExistingParent(c.getName(), Create.asResource("block/millstone/item"))
-                            .texture("5", p.modLoc("block/" + c.getName().substring(0, c.getName().length() - 10) + "/millstone"))).build();
     }
 
     public static <B extends TieredCrushingWheelBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> tieredCrushingWheel() {

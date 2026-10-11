@@ -23,8 +23,6 @@ import electrolyte.greate.content.kinetics.fan.TieredEncasedFanVisual;
 import electrolyte.greate.content.kinetics.gearbox.TieredGearboxBlockEntity;
 import electrolyte.greate.content.kinetics.gearbox.TieredGearboxRenderer;
 import electrolyte.greate.content.kinetics.gearbox.TieredGearboxVisual;
-import electrolyte.greate.content.kinetics.millstone.TieredMillstoneBlockEntity;
-import electrolyte.greate.content.kinetics.millstone.TieredMillstoneRenderer;
 import electrolyte.greate.content.kinetics.mixer.TieredMechanicalMixerBlockEntity;
 import electrolyte.greate.content.kinetics.mixer.TieredMechanicalMixerRenderer;
 import electrolyte.greate.content.kinetics.mixer.TieredMechanicalMixerVisual;
@@ -90,12 +88,6 @@ public class ModBlockEntityTypes {
             .blockEntity("tiered_powered_shaft", TieredPoweredShaftBlockEntity::new)
             .renderer(() -> KineticBlockEntityRenderer::new)
             .validBlocks(getBlocks(Shafts.POWERED_SHAFTS.values()))
-            .register();
-
-    public static final BlockEntityEntry<TieredMillstoneBlockEntity> TIERED_MILLSTONE = GreateRegistries.REGISTRATE
-            .blockEntity("tiered_millstone", TieredMillstoneBlockEntity::new)
-            .validBlocks(Millstones.MILLSTONES)
-            .renderer(() -> TieredMillstoneRenderer::new)
             .register();
 
     public static final BlockEntityEntry<TieredCrushingWheelBlockEntity> TIERED_CRUSHING_WHEEL = GreateRegistries.REGISTRATE
@@ -185,11 +177,6 @@ public class ModBlockEntityTypes {
 
         SimpleBlockEntityVisualizer.builder(TIERED_POWERED_SHAFT.get())
                 .factory(TieredSingleAxisRotatingVisual::poweredShaft)
-                .skipVanillaRender(p -> !p.renderNormally())
-                .apply();
-
-        SimpleBlockEntityVisualizer.builder(TIERED_MILLSTONE.get())
-                .factory(TieredSingleAxisRotatingVisual::millstoneCog)
                 .skipVanillaRender(p -> !p.renderNormally())
                 .apply();
 

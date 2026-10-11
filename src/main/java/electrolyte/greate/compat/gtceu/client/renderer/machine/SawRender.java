@@ -142,6 +142,7 @@ public class SawRender extends DynamicRender<TieredSawMachine, SawRender> {
     }
 
     private void renderItems(TieredSawMachine be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
+        //TODO: fix items staying in the same position constantly
 		if(be.getRenderState().getValue(SawBlock.FACING) != Direction.UP) return;
         if(be.getSpeed() == 0) return;
 		if(be.getRenderedImportStack().isEmpty()) return;

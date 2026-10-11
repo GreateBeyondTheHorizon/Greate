@@ -50,7 +50,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
-import static electrolyte.greate.registry.Millstones.MILLSTONES;
+import static electrolyte.greate.compat.gtceu.common.data.machines.GreateMachines.MILLSTONES;
 
 @Mod(Greate.MOD_ID)
 public class Greate {
@@ -61,7 +61,7 @@ public class Greate {
     public static RegistryEntry<CreativeModeTab> GREATE_TAB = GreateRegistries.REGISTRATE.defaultCreativeTab("greate",
             b -> b
                     .title(Component.translatable("itemGroup.greate"))
-                    .icon(() -> new ItemStack(MILLSTONES[GTValues.UHV]))
+                    .icon(() -> MILLSTONES[GTValues.UHV].asStack())
                     .displayItems(new GreateRegistrateDisplayItemsGenerator())
                     .build())
                 .register();

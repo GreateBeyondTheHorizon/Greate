@@ -27,7 +27,6 @@
     "MixinKineticBlockEntityAccessor",
     "MixinKineticEffectHandler",
     "MixinKineticNetwork",
-    "MixinMillstoneBlockEntity",
     "MixinMixinHelpers",
     "MixinPumpFluidTransferBehaviour",
     "MixinRecipeHelper",

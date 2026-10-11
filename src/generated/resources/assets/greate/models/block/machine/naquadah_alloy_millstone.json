@@ -1,0 +1,15 @@
+{
+  "parent": "minecraft:block/block",
+  "dynamic_renders": [
+    {
+      "type": "greate:millstone_cog"
+    }
+  ],
+  "loader": "gtceu:machine",
+  "machine": "greate:naquadah_alloy_millstone",
+  "variants": {
+    "": {
+      "model": "greate:block/naquadah_alloy_millstone"
+    }
+  }
+}

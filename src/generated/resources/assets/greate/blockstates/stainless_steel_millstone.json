@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
-      "model": "greate:block/stainless_steel_millstone"
+    "facing=east": {
+      "model": "greate:block/machine/stainless_steel_millstone",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "greate:block/machine/stainless_steel_millstone"
+    },
+    "facing=south": {
+      "model": "greate:block/machine/stainless_steel_millstone",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "greate:block/machine/stainless_steel_millstone",
+      "y": 270
     }
   }
 }
