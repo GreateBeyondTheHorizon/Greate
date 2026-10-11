@@ -23,7 +23,7 @@ public class GreateRecipeModifiers {
         if(RecipeHelper.getRecipeEUtTier(recipe) > overclockMachine.getMaxOverclockTier()) {
             return ModifierFunction.cancel(Component.translatable("greate.recipe_modifier.insufficient_machine_tier"));
         }
-        float stressRequired = (float) recipe.getTickInputContents(StressRecipeCapability.STRESS_CAPABILITY).get(0).content() * (4 * (overclockMachine.getOverclockTier() - RecipeHelper.getRecipeEUtTier(recipe)));
+        float stressRequired = (float) recipe.getTickInputContents(StressRecipeCapability.STRESS_CAPABILITY).get(0).content() * (4 * (overclockMachine.getOverclockTier() - Math.max(1, RecipeHelper.getRecipeEUtTier(recipe))));
         float currentStress = ((MixinKineticBlockEntityAccessor) tkm.getTrait(KineticMachineTrait.class).getKineticBlockEntity()).getStress();
         if(currentStress < stressRequired) {
             return ModifierFunction.cancel(Component.translatable("greate.recipe_modifier.insufficient_stress_overclock", stressRequired));
