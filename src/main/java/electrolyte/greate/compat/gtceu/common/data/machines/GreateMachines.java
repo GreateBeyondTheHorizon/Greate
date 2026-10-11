@@ -42,8 +42,9 @@ public class GreateMachines {
                     .rotationState(RotationState.NON_Y_AXIS)
                     .recipeModifier(GreateRecipeModifiers.OC_NON_PERFECT)
                     .addOutputLimit(ItemRecipeCapability.CAP, switch(tier) {
-                        case 1, 2 -> 1;
-                        case 3 -> 3;
+                        case 0 -> 1;
+                        case 1 -> 2;
+                        case 2 -> 3;
                         default -> 4;
                     })
                     .register(),
