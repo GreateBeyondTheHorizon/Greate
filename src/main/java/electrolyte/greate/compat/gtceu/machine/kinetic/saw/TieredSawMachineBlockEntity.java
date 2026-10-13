@@ -2,9 +2,11 @@ package electrolyte.greate.compat.gtceu.machine.kinetic.saw;
 
 import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
 import com.simibubi.create.content.kinetics.saw.SawBlock;
+import com.simibubi.create.content.kinetics.saw.SawFilterSlot;
 import com.simibubi.create.content.kinetics.saw.TreeCutter;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour;
 import com.simibubi.create.foundation.utility.AbstractBlockBreakQueue;
 import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredBlockBreakingKineticMachineBlockEntity;
 import net.createmod.catnip.math.VecHelper;
@@ -21,6 +23,9 @@ import java.util.List;
 import java.util.Optional;
 
 public class TieredSawMachineBlockEntity extends TieredBlockBreakingKineticMachineBlockEntity {
+
+	protected FilteringBehaviour filtering;
+
     public TieredSawMachineBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
         super(typeIn, pos, state);
     }
@@ -29,6 +34,8 @@ public class TieredSawMachineBlockEntity extends TieredBlockBreakingKineticMachi
 	public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
 		super.addBehaviours(behaviours);
 		behaviours.add(new DirectBeltInputBehaviour(this).allowingBeltFunnels());
+		filtering = new FilteringBehaviour(this, new SawFilterSlot()).forRecipes();
+		behaviours.add(filtering);
 		registerAwardables(behaviours, AllAdvancements.SAW_PROCESSING);
 	}
 

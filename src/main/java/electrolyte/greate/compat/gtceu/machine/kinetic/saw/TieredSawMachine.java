@@ -15,16 +15,22 @@ import com.gregtechceu.gtceu.client.model.machine.MachineRenderState;
 import com.gregtechceu.gtceu.common.data.machines.GTMachineUtils;
 import com.gregtechceu.gtceu.utils.ExtendedUseOnContext;
 import com.gregtechceu.gtceu.utils.ISubscription;
+import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.content.kinetics.belt.behaviour.DirectBeltInputBehaviour;
+import com.simibubi.create.content.kinetics.saw.CuttingRecipe;
 import com.simibubi.create.content.kinetics.saw.SawBlock;
 import com.simibubi.create.content.logistics.box.PackageItem;
+import com.simibubi.create.content.processing.sequenced.SequencedAssemblyRecipe;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.mixin.accessor.UseOnContextAccessor;
 import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredKineticWorkableMachine;
 import electrolyte.greate.compat.gtceu.machine.kinetic.millstone.KineticMachineRecipeLogic;
+import electrolyte.greate.content.kinetics.saw.TieredCuttingRecipe;
+import electrolyte.greate.foundation.data.recipe.TieredRecipeConditions;
+import electrolyte.greate.registry.ModRecipeTypes;
 import lombok.Getter;
 import net.createmod.catnip.math.VecHelper;
 import net.createmod.catnip.placement.IPlacementHelper;
@@ -49,6 +55,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -64,6 +71,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 public class TieredSawMachine extends TieredKineticWorkableMachine {
 
@@ -230,7 +239,8 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
                 this.syncDataHolder.markClientSyncFieldDirty("recipeProgress");
                 return;
             }
-            if(!hasNonGTRecipe(importItems.getStackInSlot(0))) {
+            boolean hasNonGTRecipe = hasNonGTRecipe(importItems.getStackInSlot(0));
+            if(!hasNonGTRecipe) {
                 if(remainingTime != -1 || appliedRecipe) {
                     remainingTime = -1;
                     appliedRecipe = false;
@@ -240,7 +250,7 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
 
             float processingSpeed = Mth.clamp(Math.abs(getSpeed()) / 24, 1, 128);
             this.remainingTime -= processingSpeed;
-            if(remainingTime > 0) {
+            if(remainingTime > 0 && hasNonGTRecipe) {
                 spawnParticles(importItems.getStackInSlot(0));
                 return;
             }
@@ -264,7 +274,13 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
 
     private boolean hasNonGTRecipe(ItemStack stack) {
         if(PackageItem.isPackage(stack)) return true;
-        //todo: sequenced assembly
+        if(SequencedAssemblyRecipe.getRecipe(level, importItems.getStackInSlot(0), AllRecipeTypes.CUTTING.getType(), CuttingRecipe.class).isPresent()) return true;
+        Optional<TieredCuttingRecipe> tieredAssemblyRecipe = SequencedAssemblyRecipe.getRecipe(level, importItems.getStackInSlot(0), ModRecipeTypes.CUTTING.getType(), TieredCuttingRecipe.class);
+        if(tieredAssemblyRecipe.isPresent()) {
+            //todo: circuit number
+            Predicate<Recipe<?>> tierAndCircuitPredicate = TieredRecipeConditions.isEqualOrAboveTier(this.getTier()).and(TieredRecipeConditions.circuitMatches(-1));
+            return tierAndCircuitPredicate.test(tieredAssemblyRecipe.get());
+        }
         return false;
     }
 
@@ -286,7 +302,17 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
             ((KineticMachineRecipeLogic) this.getRecipeLogic()).postEffects(true);
             return;
         }
-        //todo: sequenced assembly recipes
+        Optional<CuttingRecipe> assemblyRecipe = SequencedAssemblyRecipe.getRecipe(level, importItems.getStackInSlot(0), AllRecipeTypes.CUTTING.getType(), CuttingRecipe.class);
+        Optional<TieredCuttingRecipe> tieredAssemblyRecipe = SequencedAssemblyRecipe.getRecipe(level, importItems.getStackInSlot(0), ModRecipeTypes.CUTTING.getType(), TieredCuttingRecipe.class);
+        if(assemblyRecipe.isPresent() && ((TieredSawMachineBlockEntity) this.kineticMachineTrait.getKineticBlockEntity()).filtering.test(assemblyRecipe.get().getResultItem(level.registryAccess()))) {
+            List<ItemStack> results = assemblyRecipe.get().rollResults();
+            importItems.setStackInSlot(0, input.copyWithCount(input.getCount() - 1));
+            exportItems.setStackInSlot(0, results.get(0));
+        } else if(tieredAssemblyRecipe.isPresent() && ((TieredSawMachineBlockEntity) this.kineticMachineTrait.getKineticBlockEntity()).filtering.test(tieredAssemblyRecipe.get().getResultItem(level.registryAccess()))) {
+            List<ItemStack> results = tieredAssemblyRecipe.get().rollResults();
+            importItems.setStackInSlot(0, input.copyWithCount(input.getCount() - 1));
+            exportItems.setStackInSlot(0, results.get(0));
+        }
     }
 
     @Override
