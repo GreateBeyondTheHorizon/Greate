@@ -111,6 +111,11 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
     @Getter
     private int recipeDuration = 20;
 
+    @SyncToClient
+    @SaveField
+    @Getter
+    private int recipeProgress = 0;
+
 
     public TieredSawMachine(BlockEntityCreationInfo info, int tier) {
         super(info, tier, new TieredSawMachineBlockEntity(info.type(), info.pos(), info.state()));
@@ -220,8 +225,18 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
             if(!canRunRecipes()) return;
             if(getSpeed() == 0) return;
             if(importItems.isEmpty()) return;
-            if(this.getRecipeLogic().isActive()) return;
-            if(!hasNonGTRecipe(importItems.getStackInSlot(0))) return;
+            if(this.getRecipeLogic().isActive()) {
+                this.recipeProgress = this.getRecipeLogic().getProgress();
+                this.syncDataHolder.markClientSyncFieldDirty("recipeProgress");
+                return;
+            }
+            if(!hasNonGTRecipe(importItems.getStackInSlot(0))) {
+                if(remainingTime != -1 || appliedRecipe) {
+                    remainingTime = -1;
+                    appliedRecipe = false;
+                }
+                return;
+            }
 
             float processingSpeed = Mth.clamp(Math.abs(getSpeed()) / 24, 1, 128);
             this.remainingTime -= processingSpeed;
@@ -407,7 +422,7 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
     @Override
     public void clientTick() {
         if(getSpeed() == 0 || !canRunRecipes()) return;
-        if(!renderedImportStack.isEmpty()) {
+        if((getRecipeLogic().isActive() || remainingTime != -1) && !renderedImportStack.isEmpty()) {
             spawnParticles(renderedImportStack);
         }
 		if(shouldPlaySound && ((KineticMachineRecipeLogic) this.getRecipeLogic()).postEffects()) {
@@ -448,15 +463,15 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
 		RandomSource r = level.random;
 		Vec3 vec = getItemMovementVec();
 		Vec3 pos = VecHelper.getCenterOf(this.worldPosition);
-        float duration = this.getRecipeLogic().getLastRecipe() == null ? recipeDuration : this.getRecipeLogic().getLastRecipe().duration;
-		float offset = this.getRecipeLogic().getProgress() != 0 ? ((float) this.getRecipeLogic().getProgress() / duration) - 1.0f : ((float) remainingTime / duration) - 1.0f;
+        float duration = this.getRecipeLogic().getLastUnrolledRecipe() == null ? recipeDuration : this.getRecipeLogic().getLastUnrolledRecipe().duration;
+		float offset = this.getRecipeProgress() != 0 ? ((float) this.getRecipeProgress() / duration) - 1.0f : ((float) remainingTime / duration) - 1.0f; //todo: fix particle drift from rendered stack
         offset /= 2;
 		if (appliedRecipe) {
             offset = -offset;
 			offset -= .5f;
         }
 		level.addParticle(particleData, pos.x() + -vec.x * offset, pos.y() + .45f, pos.z() + -vec.z * offset,
-			-vec.x * speed, r.nextFloat() * speed, -vec.z * speed);
+			vec.x * speed, r.nextFloat() * speed, vec.z * speed);
 	}
 
     public Vec3 getItemMovementVec() {
