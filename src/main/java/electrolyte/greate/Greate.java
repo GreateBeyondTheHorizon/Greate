@@ -1,6 +1,8 @@
 package electrolyte.greate;
 
 import com.gregtechceu.gtceu.api.GTValues;
+import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
+import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.client.renderer.machine.DynamicRenderManager;
@@ -84,6 +86,8 @@ public class Greate {
 
         context.getModEventBus().addGenericListener(MachineDefinition.class, GreateRegistries::registerMachines);
         context.getModEventBus().addGenericListener(GTRecipeType.class, GreateRegistries::registerRecipeTypes);
+        context.getModEventBus().addGenericListener(TagPrefix.class, GreateRegistries::registerTagPrefixes);
+        context.getModEventBus().addGenericListener(RecipeCapability.class, GreateRegistries::registerRecipeCapabilities);
 
         ModRecipeTypes.register(context.getModEventBus());
 

@@ -1,14 +1,21 @@
 package electrolyte.greate;
 
 import com.gregtechceu.gtceu.api.GTCEuAPI.RegisterEvent;
+import com.gregtechceu.gtceu.api.addon.events.KJSRecipeKeyEvent;
+import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
 import com.gregtechceu.gtceu.api.data.chemical.material.event.MaterialEvent;
 import com.gregtechceu.gtceu.api.data.chemical.material.event.PostMaterialEvent;
+import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
+import com.gregtechceu.gtceu.api.registry.GTRegistries;
+import com.mojang.datafixers.util.Pair;
 import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.item.TooltipModifier;
+import electrolyte.greate.compat.gtceu.capability.recipe.StressRecipeCapability;
 import electrolyte.greate.compat.gtceu.common.data.GreateRecipeTypes;
 import electrolyte.greate.compat.gtceu.common.data.machines.GreateMachines;
+import electrolyte.greate.compat.kubejs.GreateRecipeComponents;
 import electrolyte.greate.foundation.data.GreateRegistrate;
 import electrolyte.greate.foundation.item.GreateKineticStats;
 import electrolyte.greate.registry.*;
@@ -54,5 +61,20 @@ public final class GreateRegistries {
 	@SubscribeEvent
 	public static void registerRecipeTypes(RegisterEvent<ResourceLocation, GTRecipeType> event) {
 		GreateRecipeTypes.register();
+	}
+
+	@SubscribeEvent
+	public static void registerTagPrefixes(RegisterEvent<ResourceLocation, TagPrefix> event) {
+		GreateTagPrefixes.register();
+	}
+
+	@SubscribeEvent
+	public static void registerRecipeCapabilities(RegisterEvent<ResourceLocation, RecipeCapability<?>> event) {
+		GTRegistries.RECIPE_CAPABILITIES.register(StressRecipeCapability.STRESS_CAPABILITY.id, StressRecipeCapability.STRESS_CAPABILITY);
+	}
+
+	@SubscribeEvent
+	public static void registerKJSRecipeKeys(KJSRecipeKeyEvent event) {
+		event.registerKey(StressRecipeCapability.STRESS_CAPABILITY, Pair.of(GreateRecipeComponents.STRESS_IN, GreateRecipeComponents.STRESS_OUT));
 	}
 }
