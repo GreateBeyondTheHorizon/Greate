@@ -8,7 +8,7 @@ import com.gregtechceu.gtceu.api.recipe.modifier.RecipeModifier;
 import electrolyte.greate.compat.gtceu.capability.recipe.StressRecipeCapability;
 import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredKineticMachine;
 import electrolyte.greate.compat.gtceu.machine.kinetic.trait.KineticMachineTrait;
-import electrolyte.greate.mixin.MixinKineticBlockEntityAccessor;
+import electrolyte.greate.mixin.kinetictrait.MixinKineticBlockEntityAccessor;
 import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
 

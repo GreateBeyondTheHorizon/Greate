@@ -133,7 +133,7 @@ public class TieredSawMachineBlock extends TieredDirectionalAxisKineticMachineBl
         LazyOptional<IItemHandler> capability = saw.getCapability(ForgeCapabilities.ITEM_HANDLER);
         if(!capability.isPresent()) return;
         ItemStack remainder = capability.orElse(new ItemStackHandler())
-                .insertItem(0, itemEntity.getItem(), false);
+                .insertItem(1, itemEntity.getItem(), false);
         if(remainder.isEmpty()) itemEntity.discard();
         if(remainder.getCount() < itemEntity.getItem().getCount()) itemEntity.setItem(remainder);
     }

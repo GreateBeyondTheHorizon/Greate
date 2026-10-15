@@ -1,3 +1,6 @@
 {
-  "parent": "create:block/mechanical_saw/blade_horizontal_active"
+  "parent": "create:block/mechanical_saw/blade_horizontal_active",
+  "textures": {
+    "stonecutter_saw": "greate:block/tungsten_steel/saw"
+  }
 }

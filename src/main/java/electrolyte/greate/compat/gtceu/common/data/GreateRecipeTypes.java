@@ -77,7 +77,7 @@ public class GreateRecipeTypes {
                     .addRecipeUIModifier(RecipeUIModifier.textLine(Text.lang("gtceu.recipe.byproduct_tier", GreateValues.SNF[GTValues.LV]))));
 
     public static final GTRecipeType SAW = GTRecipeTypes.register(Greate.id("saw"), KINETIC)
-            .setMaxIOSize(1, 2, 1, 0)
+            .setMaxIOSize(2, 2, 1, 0)
             .setMaxSize(IO.IN, StressRecipeCapability.STRESS_CAPABILITY, 1)
             .setEUIO(IO.NONE)
             .setSound(GTSoundEntries.CUT)

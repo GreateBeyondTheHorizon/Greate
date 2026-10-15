@@ -13,6 +13,7 @@ import com.gregtechceu.gtceu.api.sync_system.annotations.SaveField;
 import com.gregtechceu.gtceu.api.sync_system.annotations.SyncToClient;
 import com.gregtechceu.gtceu.client.model.machine.MachineRenderState;
 import com.gregtechceu.gtceu.common.data.machines.GTMachineUtils;
+import com.gregtechceu.gtceu.common.item.behavior.IntCircuitBehaviour;
 import com.gregtechceu.gtceu.utils.ExtendedUseOnContext;
 import com.gregtechceu.gtceu.utils.ISubscription;
 import com.simibubi.create.AllRecipeTypes;
@@ -77,7 +78,7 @@ import java.util.function.Predicate;
 public class TieredSawMachine extends TieredKineticWorkableMachine {
 
     @SaveField
-    private final NotifiableItemStackHandler importItems, exportItems;
+    private final NotifiableItemStackHandler importItems, circuitStack, exportItems;
 
     @SaveField
     private final NotifiableFluidTank importTank;
@@ -128,6 +129,8 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
 
     public TieredSawMachine(BlockEntityCreationInfo info, int tier) {
         super(info, tier, new TieredSawMachineBlockEntity(info.type(), info.pos(), info.state()));
+        this.circuitStack = attachTrait(new NotifiableItemStackHandler(1, IO.IN, IO.NONE));
+        this.circuitStack.setStackInSlot(0, IntCircuitBehaviour.stack(0));
         this.importItems = attachTrait(new NotifiableItemStackHandler(getRecipeType().getMaxInputs(ItemRecipeCapability.CAP), IO.IN));
         this.exportItems = attachTrait(new NotifiableItemStackHandler(getRecipeType().getMaxOutputs(ItemRecipeCapability.CAP), IO.OUT));
         this.importTank = attachTrait(new NotifiableFluidTank(getRecipeType().getMaxInputs(FluidRecipeCapability.CAP),
@@ -229,6 +232,9 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
 
     private void updateNonGTRecipeSubscription() {
         nonGTRecipeSub = subscribeServerTick(nonGTRecipeSub, () -> {
+            if(IntCircuitBehaviour.getCircuitConfiguration(circuitStack.getStackInSlot(0)) != this.kineticMachineTrait.getCircuitValue()) {
+                circuitStack.setStackInSlot(0, IntCircuitBehaviour.stack(this.kineticMachineTrait.getCircuitValue()));
+            }
             this.syncDataHolder.markClientSyncFieldDirty("recipeDuration");
             this.syncDataHolder.markClientSyncFieldDirty("remainingTime");
             if(!canRunRecipes()) return;
@@ -277,8 +283,7 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
         if(SequencedAssemblyRecipe.getRecipe(level, importItems.getStackInSlot(0), AllRecipeTypes.CUTTING.getType(), CuttingRecipe.class).isPresent()) return true;
         Optional<TieredCuttingRecipe> tieredAssemblyRecipe = SequencedAssemblyRecipe.getRecipe(level, importItems.getStackInSlot(0), ModRecipeTypes.CUTTING.getType(), TieredCuttingRecipe.class);
         if(tieredAssemblyRecipe.isPresent()) {
-            //todo: circuit number
-            Predicate<Recipe<?>> tierAndCircuitPredicate = TieredRecipeConditions.isEqualOrAboveTier(this.getTier()).and(TieredRecipeConditions.circuitMatches(-1));
+            Predicate<Recipe<?>> tierAndCircuitPredicate = TieredRecipeConditions.isEqualOrAboveTier(this.getTier()).and(TieredRecipeConditions.circuitMatches(kineticMachineTrait.getCircuitValue()));
             return tierAndCircuitPredicate.test(tieredAssemblyRecipe.get());
         }
         return false;
@@ -414,9 +419,8 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
 
     @Override
     public void onMachineDestroyed() {
+        circuitStack.setStackInSlot(0, ItemStack.EMPTY);
         super.onMachineDestroyed();
-        importItems.dropInventoryInWorld();
-        exportItems.dropInventoryInWorld();
     }
 
     @Override

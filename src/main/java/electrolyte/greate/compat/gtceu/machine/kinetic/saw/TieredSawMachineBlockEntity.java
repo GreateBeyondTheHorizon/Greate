@@ -6,14 +6,20 @@ import com.simibubi.create.content.kinetics.saw.SawFilterSlot;
 import com.simibubi.create.content.kinetics.saw.TreeCutter;
 import com.simibubi.create.foundation.advancement.AllAdvancements;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import com.simibubi.create.foundation.blockEntity.behaviour.ValueBoxTransform;
 import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour;
+import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour;
 import com.simibubi.create.foundation.utility.AbstractBlockBreakQueue;
+import electrolyte.greate.Greate;
 import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredBlockBreakingKineticMachineBlockEntity;
+import net.createmod.catnip.lang.Lang;
 import net.createmod.catnip.math.VecHelper;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -25,6 +31,7 @@ import java.util.Optional;
 public class TieredSawMachineBlockEntity extends TieredBlockBreakingKineticMachineBlockEntity {
 
 	protected FilteringBehaviour filtering;
+	public ScrollValueBehaviour targetCircuit;
 
     public TieredSawMachineBlockEntity(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
         super(typeIn, pos, state);
@@ -36,6 +43,10 @@ public class TieredSawMachineBlockEntity extends TieredBlockBreakingKineticMachi
 		behaviours.add(new DirectBeltInputBehaviour(this).allowingBeltFunnels());
 		filtering = new FilteringBehaviour(this, new SawFilterSlot()).forRecipes();
 		behaviours.add(filtering);
+		targetCircuit = new ScrollValueBehaviour(Lang.builder(Greate.MOD_ID).translate("tooltip.circuit_number").component(),
+				this, new CircuitValueBoxTransform());
+		targetCircuit.between(0, 32);
+		behaviours.add(targetCircuit);
 		registerAwardables(behaviours, AllAdvancements.SAW_PROCESSING);
 	}
 
@@ -113,5 +124,38 @@ public class TieredSawMachineBlockEntity extends TieredBlockBreakingKineticMachi
 		if (TreeCutter.canDynamicTreeCutFrom(block))
 			return true;
 		return false;
+	}
+
+	private class CircuitValueBoxTransform extends ValueBoxTransform.Sided {
+
+		@Override
+		public Sided fromSide(Direction direction) {
+			return super.fromSide(direction);
+		}
+
+		@Override
+		public boolean shouldRender(LevelAccessor level, BlockPos pos, BlockState state) {
+			if(state.getValue(SawBlock.FACING) != Direction.UP) return false;
+			return super.shouldRender(level, pos, state);
+		}
+
+		@Override
+		public boolean testHit(LevelAccessor level, BlockPos pos, BlockState state, Vec3 localHit) {
+			if(state.getValue(SawBlock.FACING) != Direction.UP) return false;
+			boolean t = super.testHit(level, pos, state, localHit);
+			return localHit.y < 0.75 && t;
+		}
+
+		@Override
+		protected Vec3 getSouthLocation() {
+			return VecHelper.voxelSpace(8, 6f, 15.5f);
+		}
+
+		@Override
+		protected boolean isSideActive(BlockState state, Direction direction) {
+			if(state.getValue(SawBlock.FACING) != Direction.UP) return false;
+			if(direction.getAxis().isVertical()) return false;
+			return !((TieredSawMachineBlock) state.getBlock()).hasShaftTowards(level, getBlockPos(), state, direction);
+		}
 	}
 }

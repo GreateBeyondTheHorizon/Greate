@@ -1,4 +1,4 @@
-package electrolyte.greate.mixin;
+package electrolyte.greate.mixin.kinetictrait;
 
 import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;

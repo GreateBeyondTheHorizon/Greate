@@ -2,13 +2,18 @@ package electrolyte.greate.compat.gtceu.machine.kinetic.trait;
 
 import com.gregtechceu.gtceu.api.machine.TickableSubscription;
 import com.gregtechceu.gtceu.api.machine.trait.MachineTrait;
+import com.gregtechceu.gtceu.api.sync_system.annotations.SaveField;
 import com.gregtechceu.gtceu.api.sync_system.annotations.SyncToClient;
 import com.simibubi.create.content.kinetics.RotationPropagator;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
+import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
+import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringBehaviour;
+import com.simibubi.create.foundation.blockEntity.behaviour.scrollValue.ScrollValueBehaviour;
 import lombok.Getter;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.server.TickTask;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.ItemStack;
 
 @MethodsReturnNonnullByDefault
 public class KineticMachineTrait extends MachineTrait {
@@ -17,6 +22,16 @@ public class KineticMachineTrait extends MachineTrait {
     @Getter
     private KineticBlockEntity kineticBlockEntity;
     private TickableSubscription kineticsSub;
+
+    @SyncToClient
+    @SaveField
+    @Getter
+    private ItemStack filterStack = ItemStack.EMPTY;
+
+    @SyncToClient
+    @SaveField
+    @Getter
+    private int circuitValue = 0;
 
     public KineticMachineTrait(KineticBlockEntity kineticBlockEntity) {
         this.kineticBlockEntity = kineticBlockEntity;
@@ -27,6 +42,13 @@ public class KineticMachineTrait extends MachineTrait {
         super.onMachineLoad();
         kineticBlockEntity.setLevel(getLevel());
         kineticBlockEntity.initialize();
+        for(BlockEntityBehaviour behaviour : kineticBlockEntity.getAllBehaviours()) {
+            if(behaviour instanceof FilteringBehaviour filteringBehaviour) {
+                if(filterStack != null && !filterStack.isEmpty()) filteringBehaviour.setFilter(filterStack);
+            } if(behaviour instanceof ScrollValueBehaviour scrollValueBehaviour) {
+                scrollValueBehaviour.setValue(circuitValue);
+            }
+        }
 
         if(getLevel() instanceof ServerLevel serverLevel) {
             serverLevel.getServer().tell(new TickTask(0, this::updateKineticsSubscription));
@@ -54,21 +76,21 @@ public class KineticMachineTrait extends MachineTrait {
     public void updateKineticsSubscription() {
         kineticsSub = subscribeServerTick(kineticsSub, () -> {
             kineticBlockEntity.tick();
-            //speed = kineticBlockEntity.getSpeed();
-            //if(kineticBlockEntity.hasNetwork()) {
-            //    networkTag = new CompoundTag();
-            //    networkTag.putLong("Id", ((MixinKineticBlockEntityAccessor) kineticBlockEntity).getNetwork());
-            //    networkTag.putFloat("Stress", ((MixinKineticBlockEntityAccessor) kineticBlockEntity).getStress());
-            //    networkTag.putFloat("Capacity", ((MixinKineticBlockEntityAccessor) kineticBlockEntity).getCapacity());
-            //    networkTag.putInt("Size", ((MixinKineticBlockEntityAccessor) kineticBlockEntity).getNetworkSize());
-            //    networkTag.putFloat("AddedStress", ((MixinKineticBlockEntityAccessor) kineticBlockEntity).getLastStressApplied());
-            //    networkTag.putFloat("AddedCapacity", ((MixinKineticBlockEntityAccessor) kineticBlockEntity).getLastCapacityProvided());
-            //    overStressed = ((MixinKineticBlockEntityAccessor) kineticBlockEntity).getCapacity() < ((MixinKineticBlockEntityAccessor) kineticBlockEntity).getStress() && StressImpact.isEnabled();
-            //}
-            //if(kineticBlockEntity.hasSource()) {
-            //    source = ((MixinKineticBlockEntityAccessor) kineticBlockEntity).getSource();
-            //}
             getSyncDataHolder().markClientSyncFieldDirty("kineticBlockEntity");
+
+            for(BlockEntityBehaviour behaviour : this.getKineticBlockEntity().getAllBehaviours()) {
+                if(behaviour instanceof FilteringBehaviour filteringBehaviour) {
+                    if(!this.filterStack.is(filteringBehaviour.getFilter().getItem())) {
+                        this.filterStack = filteringBehaviour.getFilter();
+                        getSyncDataHolder().markClientSyncFieldDirty("filterStack");
+                    }
+                } if(behaviour instanceof ScrollValueBehaviour scrollValueBehaviour) {
+                    if(this.circuitValue != scrollValueBehaviour.getValue()) {
+                        this.circuitValue = scrollValueBehaviour.getValue();
+                        getSyncDataHolder().markClientSyncFieldDirty("circuitValue");
+                    }
+                }
+            }
         });
     }
 }

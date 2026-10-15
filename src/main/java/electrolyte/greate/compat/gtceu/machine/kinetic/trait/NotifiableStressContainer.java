@@ -6,7 +6,7 @@ import com.gregtechceu.gtceu.api.machine.trait.notifiable.NotifiableRecipeHandle
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import electrolyte.greate.compat.gtceu.capability.recipe.StressRecipeCapability;
 import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredKineticMachine;
-import electrolyte.greate.mixin.MixinKineticBlockEntityAccessor;
+import electrolyte.greate.mixin.kinetictrait.MixinKineticBlockEntityAccessor;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;

@@ -25,13 +25,6 @@ public class TieredMillstoneMachine extends TieredKineticWorkableMachine {
     }
 
     @Override
-    public void onMachineDestroyed() {
-        super.onMachineDestroyed();
-        importItems.dropInventoryInWorld();
-        exportItems.dropInventoryInWorld();
-    }
-
-    @Override
     public void afterWorking() {
         super.afterWorking();
         this.kineticMachineTrait.getKineticBlockEntity().award(AllAdvancements.MILLSTONE);

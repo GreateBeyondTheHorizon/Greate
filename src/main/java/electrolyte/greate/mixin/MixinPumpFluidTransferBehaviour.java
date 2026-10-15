@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import electrolyte.greate.content.fluids.pump.TieredPumpBlockEntity;
 import electrolyte.greate.infrastructure.config.GConfigUtility;
+import electrolyte.greate.mixin.kinetictrait.MixinBlockEntityBehaviour;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
