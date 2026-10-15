@@ -38,18 +38,9 @@ import net.minecraftforge.fluids.FluidStack;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-import static com.gregtechceu.gtceu.common.data.GTRecipeTypes.ELECTRIC;
-
 public class GreateRecipeTypes {
 
     public static final String KINETIC = "kinetic";
-
-    public static final GTRecipeType WIRE_COATING_RECIPES = GTRecipeTypes.register(Greate.id("wire_coating"), ELECTRIC)
-            .setMaxIOSize(3, 1, 1, 0)
-            .setEUIO(IO.IN)
-            .UI(builder -> builder.setProgressBar(GTGuiTextures.PROGRESS_WIREMILL)
-                    .setItemSlotOverlay(IO.IN, 0, GTGuiTextures.WIREMILL_OVERLAY))
-            .setSound(GTSoundEntries.CHEMICAL);
 
     public static final GreateRecipeType MILLSTONE = (GreateRecipeType) GreateRecipeTypes.register(Greate.id("millstone"), KINETIC)
             .setMaxIOSize(1, 4, 0, 0)

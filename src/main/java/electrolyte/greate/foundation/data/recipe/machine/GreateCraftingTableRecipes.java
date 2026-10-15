@@ -36,14 +36,10 @@ import java.util.function.Consumer;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
 import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.*;
-import static com.gregtechceu.gtceu.common.data.GCYMBlocks.CASING_WATERTIGHT;
-import static com.gregtechceu.gtceu.common.data.GTItems.ELECTRIC_PUMP_IV;
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
-import static com.gregtechceu.gtceu.data.recipe.CustomTags.IV_CIRCUITS;
 import static com.gregtechceu.gtceu.data.recipe.GTCraftingComponents.*;
 import static electrolyte.greate.GreateValues.TM;
 import static electrolyte.greate.compat.gtceu.common.data.machines.GreateMachines.MILLSTONES;
-import static electrolyte.greate.compat.gtceu.machine.GreateMultiblockMachines.WIRE_COATING_FACTORY;
 import static electrolyte.greate.foundation.data.recipe.GreateCraftingComponents.*;
 import static electrolyte.greate.foundation.data.recipe.GreateCraftingComponents.PUMP;
 import static electrolyte.greate.registry.EncasedFans.FANS;
@@ -188,13 +184,6 @@ public class GreateCraftingTableRecipes {
                 " # ", "#X#",
                 '#', GTBlocks.TREATED_WOOD_PLANK.asStack(),
                 'X', GTBlocks.CASING_TEMPERED_GLASS.asStack());
-
-        VanillaRecipeHelper.addShapedRecipe(provider, true, Greate.id("wire_coating_factory"), WIRE_COATING_FACTORY.asStack(),
-                "WCW", "PSP", "WCW",
-                'W', CASING_WATERTIGHT,
-                'C', IV_CIRCUITS,
-                'P', ELECTRIC_PUMP_IV.asStack(),
-                'S', AllBlocks.SPOUT.asStack());
 
         //GTCEu Components
         VanillaRecipeHelper.addShapedRecipe(provider, Greate.id(AllItems.ELECTRON_TUBE.getId().getPath()), AllItems.ELECTRON_TUBE.asStack(),

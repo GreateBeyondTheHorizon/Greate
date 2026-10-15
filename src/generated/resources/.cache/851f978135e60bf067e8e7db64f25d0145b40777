@@ -1,4 +1,4 @@
-// 1.20.1	2026-10-11T12:50:15.172580598	Registrate Provider for greate [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
+// 1.20.1	2026-10-15T12:24:35.726128388	Registrate Provider for greate [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
 7f34dcbfb9923f8310cac4320343257721576c07 assets/greate/blockstates/aluminium_crushing_wheel.json
 4b0e51a1c10685f7d432467339afc9c2e24793b0 assets/greate/blockstates/aluminium_crushing_wheel_controller.json
 fb82338faceb90118ac5ac9fc244ed38d4ab66ce assets/greate/blockstates/aluminium_encased_fan.json
@@ -92,10 +92,9 @@ d8b5e6ddde0e2a603a7b2336c08dbafba3e75efa assets/greate/blockstates/tungsten_stee
 864152e00043e29e85e8ed17a7806c3b458f0d46 assets/greate/blockstates/uhv_saw.json
 b495a517dd2f4faff44906b9933e49ac98499a55 assets/greate/blockstates/ulv_saw.json
 f778a0a8bfd89578041d40f9c24a140268c6f8aa assets/greate/blockstates/uv_saw.json
-10e15c872633b00194528602fb2f807ac49cd051 assets/greate/blockstates/wire_coating_factory.json
 cd740ef8b9eace4a67858094e4a446d153787995 assets/greate/blockstates/zpm_saw.json
-78795c51147c6eb26d08be3e8cca1a20d54c56bf assets/greate/lang/en_ud.json
-a0e3ef9b47d9550b3260d80c40d7296e67b85486 assets/greate/lang/en_us.json
+13e01c8de12bc5921f5799ddb4ac62e29c0a65f6 assets/greate/lang/en_ud.json
+c853972f70e4b0ebfb841faf4a053e04be30be34 assets/greate/lang/en_us.json
 54475e3a6ea521ead59fb6ef58f004cca59a7244 assets/greate/models/block/aluminium_crushing_wheel.json
 320970a47bec65b3753acbf82efeca9994ca392d assets/greate/models/block/aluminium_crushing_wheel_textures.json
 6d164a6ff328307a44f620679b8e5ad000555345 assets/greate/models/block/aluminium_encased_fan.json
@@ -218,7 +217,6 @@ d89272d268faef1c76d2cc33a6980065356aca94 assets/greate/models/block/machine/stee
 627b023f2f29f05caa315b9d869a459dab188b71 assets/greate/models/block/machine/uhv_saw.json
 3ee90e8e831a384290e49d4859b540caed4331fd assets/greate/models/block/machine/ulv_saw.json
 5fa65f238cccddbf4edcefb887e97507e27cf2cb assets/greate/models/block/machine/uv_saw.json
-60ed41a129be066ff160a34025b2e715529e7c3a assets/greate/models/block/machine/wire_coating_factory.json
 6bb0ab006628384bf59a13a6c6167316331e566d assets/greate/models/block/machine/zpm_saw.json
 2104dd90b121693bc1a98f02ae9e6653cf283cbf assets/greate/models/block/mv_saw_blade_horizontal_active.json
 0cf37b19632cd4f219de484f7c61172b91514af4 assets/greate/models/block/mv_saw_blade_horizontal_inactive.json
@@ -502,7 +500,6 @@ e79af9fd00aa218bd6d24c4c9c46353a821b20e1 assets/greate/models/item/tungsten_stee
 217aacb92eb3995e8eb3592f551e47bd42f5f5e7 assets/greate/models/item/uhv_saw.json
 1783f1348721e4b2e21ccfef762c464d49912d22 assets/greate/models/item/ulv_saw.json
 c65abc62d7363c24d515ac2030d959bf2d030dd0 assets/greate/models/item/uv_saw.json
-9c9bb6dec8c90e4c9e2996d0ad375370b1db28e7 assets/greate/models/item/wire_coating_factory.json
 66ca1909a3b85f5a63d82998d7facc7cf3fe4b05 assets/greate/models/item/zpm_saw.json
 8e419f7a3cfdcf78141f72b3b4a86b114a2cd55b data/create/tags/items/contraption_controlled.json
 02015a317c5af7211007f759b33d481c692c62d9 data/forge/tags/blocks/glass_panes.json

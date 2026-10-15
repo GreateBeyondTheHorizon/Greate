@@ -9,7 +9,6 @@ import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.item.TooltipModifier;
 import electrolyte.greate.compat.gtceu.common.data.GreateRecipeTypes;
 import electrolyte.greate.compat.gtceu.common.data.machines.GreateMachines;
-import electrolyte.greate.compat.gtceu.machine.GreateMultiblockMachines;
 import electrolyte.greate.foundation.data.GreateRegistrate;
 import electrolyte.greate.foundation.item.GreateKineticStats;
 import electrolyte.greate.registry.*;
@@ -49,7 +48,6 @@ public final class GreateRegistries {
 
 	@SubscribeEvent
 	public static void registerMachines(RegisterEvent<ResourceLocation, MachineDefinition> event) {
-		GreateMultiblockMachines.register();
 		GreateMachines.register();
 	}
 
