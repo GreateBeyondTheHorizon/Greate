@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(ScrollValueRenderer.class)
 public class MixinScrollValueRenderer {
 
-    @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientLevel;getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;"), remap = false)
+    @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientLevel;getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;", remap = true), remap = false)
     private static BlockEntity greate$tick(ClientLevel clientLevel, BlockPos pos, Operation<BlockEntity> original) {
         if(clientLevel.getBlockEntity(pos) instanceof TieredKineticMachine tkm) {
             return tkm.getTraitHolder().getTrait(KineticMachineTrait.class).getKineticBlockEntity();

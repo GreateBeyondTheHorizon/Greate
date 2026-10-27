@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(ValueSettingsInputHandler.class)
 public class MixinValueSettingsInputHandler {
 
-    @WrapOperation(method = "onBlockActivated", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;"), remap = false)
+    @WrapOperation(method = "onBlockActivated", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;", remap = true), remap = false)
     private static BlockEntity greate$onBlockActivated(Level level, BlockPos pPos, Operation<BlockEntity> original) {
         if(level.getBlockEntity(pPos) instanceof TieredKineticMachine tkm) {
             return tkm.getTraitHolder().getTrait(KineticMachineTrait.class).getKineticBlockEntity();

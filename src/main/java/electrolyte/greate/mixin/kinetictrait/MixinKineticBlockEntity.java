@@ -3,7 +3,6 @@ package electrolyte.greate.mixin.kinetictrait;
 import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.llamalad7.mixinextras.sugar.Local;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredKineticMachineBlock;
 import electrolyte.greate.compat.gtceu.machine.kinetic.trait.KineticMachineTrait;
@@ -48,8 +47,8 @@ public class MixinKineticBlockEntity {
         return original.call(level, pPos);
     }
 
-    @WrapOperation(method = "switchToBlockState", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getBlock()Lnet/minecraft/world/level/block/Block;"), remap = false)
-    private static Block greate$switchToBlockState(BlockState blockState, Operation<Block> original, @Local(argsOnly = true) Level level, @Local(argsOnly = true) BlockPos pos) {
+    @WrapOperation(method = "switchToBlockState", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getBlock()Lnet/minecraft/world/level/block/Block;", remap = true), remap = false)
+    private static Block greate$switchToBlockState(BlockState blockState, Operation<Block> original) {
         if(blockState.getBlock() instanceof TieredKineticMachineBlock tkmb) {
             return tkmb.getKineticBlock();
         }

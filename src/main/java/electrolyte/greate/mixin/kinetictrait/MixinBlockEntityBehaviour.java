@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public abstract class MixinBlockEntityBehaviour {
 	@Shadow(remap = false) public SmartBlockEntity blockEntity;
 
-	@WrapOperation(method = "get(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lcom/simibubi/create/foundation/blockEntity/behaviour/BehaviourType;)Lcom/simibubi/create/foundation/blockEntity/behaviour/BlockEntityBehaviour;", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/BlockGetter;getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;"), remap = false)
+	@WrapOperation(method = "get(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lcom/simibubi/create/foundation/blockEntity/behaviour/BehaviourType;)Lcom/simibubi/create/foundation/blockEntity/behaviour/BlockEntityBehaviour;", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/BlockGetter;getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;"))
 	private static BlockEntity greate$get(BlockGetter reader, BlockPos pos, Operation<BlockEntity> original) {
 		if(reader.getBlockEntity(pos) instanceof TieredKineticMachine tkm) {
 			return tkm.getTraitHolder().getTrait(KineticMachineTrait.class).getKineticBlockEntity();
