@@ -9,8 +9,9 @@ import dev.emi.emi.api.EmiPlugin;
 import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.stack.EmiStack;
 import electrolyte.greate.Greate;
-import electrolyte.greate.compat.emi.category.MechanicalSawEmiRecipe;
 import electrolyte.greate.compat.emi.category.MillstoneEmiRecipe;
+import electrolyte.greate.compat.emi.category.saw.MechanicalSawCuttingEmiRecipe;
+import electrolyte.greate.compat.emi.category.saw.MechanicalSawStonecuttingEmiRecipe;
 import electrolyte.greate.compat.gtceu.common.data.GreateRecipeTypes;
 
 @EmiEntrypoint
@@ -23,9 +24,14 @@ public class GreateEMIPlugin implements EmiPlugin {
                 .map(MillstoneEmiRecipe::new)
                 .forEach(registry::addRecipe);
 
-        registry.addCategory(MechanicalSawEmiRecipe.CUTTING_CATEGORY);
+        registry.addCategory(MechanicalSawCuttingEmiRecipe.CUTTING_CATEGORY);
         GreateRecipeTypes.SAW.getRecipesInCategory(GreateRecipeTypes.SAW.getCategory()).stream()
-                .map(MechanicalSawEmiRecipe::new)
+                .map(MechanicalSawCuttingEmiRecipe::new)
+                .forEach(registry::addRecipe);
+
+        registry.addCategory(MechanicalSawStonecuttingEmiRecipe.STONECUTTING_CATEGORY);
+        GreateRecipeTypes.KINETIC_STONECUTTING.getRecipesInCategory(GreateRecipeTypes.KINETIC_STONECUTTING.getCategory()).stream()
+                .map(MechanicalSawStonecuttingEmiRecipe::new)
                 .forEach(registry::addRecipe);
 
         registerWorkstations(registry);
@@ -42,7 +48,9 @@ public class GreateEMIPlugin implements EmiPlugin {
                 if(type.equals(GreateRecipeTypes.MILLSTONE)) {
                     registry.addWorkstation(MillstoneEmiRecipe.MILLSTONE_CATEGORY, EmiStack.of(machine.asStack()));
                 } else if(type.equals(GreateRecipeTypes.SAW)) {
-                    registry.addWorkstation(MechanicalSawEmiRecipe.CUTTING_CATEGORY, EmiStack.of(machine.asStack()));
+                    registry.addWorkstation(MechanicalSawCuttingEmiRecipe.CUTTING_CATEGORY, EmiStack.of(machine.asStack()));
+                } else if(type.equals(GreateRecipeTypes.KINETIC_STONECUTTING)) {
+                    registry.addWorkstation(MechanicalSawStonecuttingEmiRecipe.STONECUTTING_CATEGORY, EmiStack.of(machine.asStack()));
                 }
             }
         }

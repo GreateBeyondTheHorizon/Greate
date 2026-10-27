@@ -38,6 +38,9 @@ import net.minecraftforge.fluids.FluidStack;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+import static com.gregtechceu.gtceu.api.GTValues.ULV;
+import static com.gregtechceu.gtceu.api.GTValues.VA;
+
 public class GreateRecipeTypes {
 
     public static final String KINETIC = "kinetic";
@@ -101,10 +104,64 @@ public class GreateRecipeTypes {
                                         .name(GTRecipeViewerWidget.capabilityWidgetName(ItemRecipeCapability.CAP, io, i)))
                                 .build()
                                 .coverChildren(18, 18)
-                                .pos(io == IO.IN ? 5 : 90, 5);
+                                .pos(io == IO.IN ? 5 : 100, 5);
 
                         widget.child(slotGroupWidget);
                     })
+                    .setRecipeViewerLayoutCapabilityLayoutBuilder(
+                            FluidRecipeCapability.CAP, (layout, widget, io) -> {
+                                if(layout.getRecipeType().getMaxSlots(FluidRecipeCapability.CAP, io) == 0) return;
+
+                                var slotGroupWidget = SlotGroupWidget.builder()
+                                        .matrix(layout.capabilityInfo(FluidRecipeCapability.CAP).getRecipeViewerGrid(io))
+                                        .key('s', i -> RecipeViewerSlotWidget.create(FluidStack.class)
+                                                .value(FluidStackList.of(FluidStack.EMPTY))
+                                                .background(GuiTextures.SLOT_FLUID,
+                                                        layout.capabilityInfo(FluidRecipeCapability.CAP).getOverlay(io, i))
+                                                .name(GTRecipeViewerWidget.capabilityWidgetName(FluidRecipeCapability.CAP, io, i)))
+                                        .build()
+                                        .coverChildren(18, 18)
+                                        .pos(io == IO.IN ? 5 : 90, 25);
+
+                                widget.child(slotGroupWidget);
+                            })
+                    .addRecipeUIModifier((recipe, widget) -> widget.textComponents.paddingTop(25)));
+
+    public static final GTRecipeType KINETIC_STONECUTTING = GreateRecipeTypes.register(Greate.id("kinetic_stonecutting"), KINETIC, RecipeType.STONECUTTING)
+            .setMaxIOSize(2, 1, 0, 0)
+            .setMaxSize(IO.IN, StressRecipeCapability.STRESS_CAPABILITY, 1)
+            .setEUIO(IO.NONE)
+            .setSound(GTSoundEntries.CUT)
+            .prepareBuilder(b -> b
+                    .duration(300)
+                    .perTick(true)
+                    .input(StressRecipeCapability.STRESS_CAPABILITY, (float) VA[ULV])
+                    .perTick(false))
+            .UI(uiBuilder -> uiBuilder
+                    .setItemSlotOverlay(IO.IN, 0, GTGuiTextures.SAWBLADE_OVERLAY)
+                    .setItemSlotOverlay(IO.OUT, 0, GTGuiTextures.CUTTER_OVERLAY)
+                    .setItemSlotOverlay(IO.OUT, 1, GTGuiTextures.DUST_OVERLAY)
+                    .setRecipeViewerLayoutCapabilityLayoutBuilder(StressRecipeCapability.STRESS_CAPABILITY, GreateRecipeViewerCapabilityLayoutBuilder.STRESS)
+                    .setCapabilityContentBuilder(StressRecipeCapability.STRESS_CAPABILITY, GreateCapabilityContentBuilder.STRESS)
+                    .setProgressBarSupplier((layout, value, machine) -> new ParentWidget<>().size(layout.getProgressBar().progressSize()))
+                    .setRecipeViewerLayoutCapabilityLayoutBuilder(
+                            ItemRecipeCapability.CAP, (layout, widget, io) -> {
+                                if(layout.getRecipeType().getMaxSlots(ItemRecipeCapability.CAP, io) == 0) return;
+
+                                var slotGroupWidget = SlotGroupWidget.builder()
+                                        .matrix(layout.capabilityInfo(ItemRecipeCapability.CAP).getRecipeViewerGrid(io))
+                                        .key('s', i -> RecipeViewerSlotWidget.create(ItemStack.class)
+                                                .value(ItemStackList.of(ItemStack.EMPTY))
+                                                .background(GuiTextures.SLOT_ITEM,
+                                                        layout.capabilityInfo(ItemRecipeCapability.CAP).getOverlay(io, i))
+                                                .name(GTRecipeViewerWidget.capabilityWidgetName(ItemRecipeCapability.CAP, io, i)))
+                                        .build()
+                                        .coverChildren(18, 18)
+                                        .pos(io == IO.IN ? 5 : 133,
+                                             io == IO.IN ? 5 : 22);
+
+                                widget.child(slotGroupWidget);
+                            })
                     .setRecipeViewerLayoutCapabilityLayoutBuilder(
                             FluidRecipeCapability.CAP, (layout, widget, io) -> {
                                 if(layout.getRecipeType().getMaxSlots(FluidRecipeCapability.CAP, io) == 0) return;

@@ -7,18 +7,35 @@ import com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient;
 import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
+import com.simibubi.create.foundation.item.ItemHelper;
 import electrolyte.greate.Greate;
 import electrolyte.greate.compat.gtceu.capability.recipe.StressRecipeCapability;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
 
+import static com.gregtechceu.gtceu.api.GTValues.ULV;
+import static com.gregtechceu.gtceu.api.GTValues.VA;
+
 public class GreateRecipeType extends GTRecipeType {
+
+    final ArrayList<StonecuttingGroup> uniqueStonecuttingRecipes = new ArrayList<>();
+
     public GreateRecipeType(ResourceLocation registryName, String group, RecipeType<?>... proxyRecipes) {
         super(registryName, group, proxyRecipes);
+    }
+
+    @Override
+    public void beginStagingRecipes() {
+        uniqueStonecuttingRecipes.clear();
+        super.beginStagingRecipes();
     }
 
     @Override
@@ -28,7 +45,7 @@ public class GreateRecipeType extends GTRecipeType {
             ResourceLocation recipeId = Greate.id(recipePath);
             GTRecipeBuilder builder = recipeBuilder(recipeId);
             builder.perTick(true);
-            builder.input(StressRecipeCapability.STRESS_CAPABILITY, 7.0f);
+            builder.input(StressRecipeCapability.STRESS_CAPABILITY, (float) VA[ULV]);
             builder.perTick(false);
             builder.duration(processingRecipe.getProcessingDuration());
             for(var ingredient : processingRecipe.getIngredients()) {
@@ -47,6 +64,28 @@ public class GreateRecipeType extends GTRecipeType {
                 builder.chancedOutput(new FluidStack(fluidOutput.getFluid(), fluidOutput.getAmount()), 10000); //todo:check (needs 100%)
             }
             return GTRecipeSerializer.SERIALIZER.fromJson(recipeId, builder.build().serializeRecipe());
+        } else if(recipe.getType() == RecipeType.STONECUTTING) {
+            ItemStack result = recipe.getResultItem(RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY));
+            Ingredient ingredient = recipe.getIngredients().get(0);
+            StonecuttingGroup group = null;
+            for(StonecuttingGroup g : uniqueStonecuttingRecipes) {
+                if(ItemHelper.matchIngredients(ingredient, g.ingredient)) {
+                    group = g;
+                    break;
+                }
+            }
+            if(group == null) {
+                group = new StonecuttingGroup(ingredient);
+                uniqueStonecuttingRecipes.add(group);
+            }
+            String recipePath = id.withPrefix("/integration/" + id.getNamespace() + "/").getPath();
+            ResourceLocation recipeId = Greate.id(recipePath);
+            GTRecipeBuilder builder = recipeBuilder(recipeId);
+            builder.circuitMeta(group.circuit);
+            builder.inputItems(recipe.getIngredients().get(0));
+            builder.outputItems(result);
+            group.circuit++;
+            return GTRecipeSerializer.SERIALIZER.fromJson(recipeId, builder.build().serializeRecipe());
         }
         return super.toGTrecipe(id, recipe);
     }
@@ -54,4 +93,15 @@ public class GreateRecipeType extends GTRecipeType {
     public void addProxyRecipeType(RecipeType<?> recipeType) {
         this.proxyRecipes.put(recipeType, new ArrayList<>());
     }
+
+    private static class StonecuttingGroup {
+        final Ingredient ingredient;
+        int circuit = 0;
+
+        public StonecuttingGroup(Ingredient ingredient) {
+            this.ingredient = ingredient;
+        }
+    }
 }
+
+

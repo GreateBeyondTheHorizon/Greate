@@ -13,7 +13,8 @@ public class MixinGTEMIPlugin {
     @Redirect(method = "register", at = @At(value = "INVOKE", target = "Lcom/gregtechceu/gtceu/api/recipe/category/GTRecipeCategory;shouldRegisterDisplays()Z"), remap = false)
     private boolean greate$shouldRegisterDisplays(GTRecipeCategory cat) {
         if(cat == GreateRecipeTypes.MILLSTONE.getCategory() ||
-            cat == GreateRecipeTypes.SAW.getCategory()) return false;
+            cat == GreateRecipeTypes.SAW.getCategory() ||
+        cat == GreateRecipeTypes.KINETIC_STONECUTTING.getCategory()) return false;
         return cat.shouldRegisterDisplays();
     }
 }

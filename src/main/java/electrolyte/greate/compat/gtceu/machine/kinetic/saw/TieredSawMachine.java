@@ -14,6 +14,7 @@ import com.gregtechceu.gtceu.api.sync_system.annotations.SyncToClient;
 import com.gregtechceu.gtceu.client.model.machine.MachineRenderState;
 import com.gregtechceu.gtceu.common.data.machines.GTMachineUtils;
 import com.gregtechceu.gtceu.common.item.behavior.IntCircuitBehaviour;
+import com.gregtechceu.gtceu.data.recipe.CustomTags;
 import com.gregtechceu.gtceu.utils.ExtendedUseOnContext;
 import com.gregtechceu.gtceu.utils.ISubscription;
 import com.simibubi.create.AllRecipeTypes;
@@ -36,12 +37,14 @@ import lombok.Getter;
 import net.createmod.catnip.math.VecHelper;
 import net.createmod.catnip.placement.IPlacementHelper;
 import net.createmod.catnip.placement.PlacementHelpers;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.TickTask;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -335,6 +338,14 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
         if(context.getItemInHand().is(Items.SPONGE) &&
                 !this.importTank.drain(Integer.MAX_VALUE, FluidAction.EXECUTE).isEmpty()) {
             context.getLevel().playSound(null, context.getClickedPos(), SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS);
+            return InteractionResult.SUCCESS;
+        }
+        if(context.getItemInHand().is(CustomTags.SCREWDRIVERS)) {
+            this.cycleActiveRecipeType();
+            context.getPlayer().displayClientMessage(Component.translatable("greate.message.saw.recipe_type_toggle").append(
+                    Component.translatable("%s.%s".formatted(getRecipeType().getRegistryName().getNamespace(), getRecipeType().getRegistryName().getPath())))
+                    .withStyle(ChatFormatting.GRAY),
+                    true);
             return InteractionResult.SUCCESS;
         }
         return super.onUseWithItem(context);

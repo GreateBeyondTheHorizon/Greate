@@ -137,7 +137,7 @@ public class TieredBlockCuttingCategory extends GreateRecipeCategory<TieredConde
     /**
      * Condense recipes based on input items, input tags, or DifferenceIngredient base tags.
      */
-    private static boolean matchIngredients(Ingredient a, Ingredient b) {
+    public static boolean matchIngredients(Ingredient a, Ingredient b) {
         if (ItemHelper.matchIngredients(a, b)) return true;
         var tagA = getTag(a);
         var tagB = getTag(b);

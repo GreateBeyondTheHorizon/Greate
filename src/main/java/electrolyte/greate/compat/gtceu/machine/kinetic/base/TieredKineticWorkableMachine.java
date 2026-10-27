@@ -138,4 +138,10 @@ public class TieredKineticWorkableMachine extends TieredKineticMachine implement
     public int getMinOverclockTier() {
         return 0;
     }
+
+    public void cycleActiveRecipeType() {
+        int newActiveRecipeType = (getActiveRecipeType() + 1) % recipeTypes.length;
+        setActiveRecipeType(newActiveRecipeType);
+        getRecipeLogic().updateTickSubscription();
+    }
 }

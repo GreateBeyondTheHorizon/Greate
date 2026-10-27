@@ -22,6 +22,7 @@ import electrolyte.greate.compat.gtceu.machine.kinetic.millstone.TieredMillstone
 import electrolyte.greate.compat.gtceu.machine.kinetic.millstone.TieredMillstoneMachineBlock;
 import electrolyte.greate.compat.gtceu.machine.kinetic.saw.TieredSawMachine;
 import electrolyte.greate.compat.gtceu.machine.kinetic.saw.TieredSawMachineBlock;
+import electrolyte.greate.foundation.data.GreateTagGen;
 import electrolyte.greate.infrastructure.config.GStress;
 import net.minecraft.core.Direction;
 
@@ -48,8 +49,8 @@ public class GreateMachines {
                         default -> 4;
                     })
                     .register(),
-            GreateRecipeTypes.MILLSTONE,
-            GTValues.tiersBetween(ULV, UHV));
+            GTValues.tiersBetween(ULV, UHV),
+            GreateRecipeTypes.MILLSTONE);
 
     public static MachineDefinition[] SAWS = registerSawMachines("saw",
             TieredSawMachine::new,
@@ -61,14 +62,13 @@ public class GreateMachines {
                     .modelProperty(SawBlock.FLIPPED)
                     .modelProperty(DirectionalAxisKineticBlock.AXIS_ALONG_FIRST_COORDINATE)
                     .register(),
-            GreateRecipeTypes.SAW,
-            GTValues.tiersBetween(ULV, UHV));
+            GTValues.tiersBetween(ULV, UHV),
+            GreateRecipeTypes.SAW, GreateRecipeTypes.KINETIC_STONECUTTING);
 
     public static MachineDefinition[] registerMillstoneMachines(String name,
                                                                 BiFunction<BlockEntityCreationInfo, Integer, TieredKineticWorkableMachine> factory,
                                                                 BiFunction<Integer, MachineBuilder<MachineDefinition, TieredKineticWorkableMachine, ?>, MachineDefinition> builder,
-                                                                GTRecipeType recipeType,
-                                                                int[] tiers) {
+                                                                int[] tiers, GTRecipeType... recipeTypes) {
         MachineDefinition[] definitions = new MachineDefinition[GTValues.TIER_COUNT];
         for(int tier : tiers) {
             var register = GreateRegistries.REGISTRATE
@@ -83,7 +83,7 @@ public class GreateMachines {
                             .andThen(b -> b.addDynamicRenderer(GreateDynamicRenderHelper::createMillstoneCogRender)))
                     .itemBuilder(b -> b.model(GreateMachineModels.tieredMillstoneItemModel(tier)))
                     .tier(tier)
-                    .recipeType(recipeType)
+                    .recipeTypes(recipeTypes)
                     .hasBER(true);
             definitions[tier] = builder.apply(tier, register);
         }
@@ -93,7 +93,7 @@ public class GreateMachines {
     public static MachineDefinition[] registerSawMachines(String name,
                                                              BiFunction<BlockEntityCreationInfo, Integer, TieredKineticWorkableMachine> factory,
                                                              BiFunction<Integer, MachineBuilder<MachineDefinition, TieredKineticWorkableMachine, ?>, MachineDefinition> builder,
-                                                             GTRecipeType recipeType, int[] tiers) {
+                                                            int[] tiers, GTRecipeType... recipeTypes) {
         MachineDefinition[] definitions = new MachineDefinition[GTValues.TIER_COUNT];
         for(int tier : tiers) {
             var register = GreateRegistries.REGISTRATE
@@ -106,9 +106,11 @@ public class GreateMachines {
                             b.transform(GStress.setImpact(0.75 * (tier + 1))))
                     .model(GreateMachineModels.createSawModel()
                             .andThen(b -> b.addDynamicRenderer(GreateDynamicRenderHelper::createSawRender)))
-                    .itemBuilder(b -> b.model(GreateMachineModels.tieredSawItemModel(tier)))
+                    .itemBuilder(b -> b
+                            .model(GreateMachineModels.tieredSawItemModel(tier))
+                            .tag(GreateTagGen.MECHANICAL_SAWS))
                     .tier(tier)
-                    .recipeType(recipeType)
+                    .recipeTypes(recipeTypes)
                     .hasBER(true);
             definitions[tier] = builder.apply(tier, register);
         }
