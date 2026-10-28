@@ -12,7 +12,6 @@ import static electrolyte.greate.registry.Cogwheels.LARGE_COGWHEELS;
 import static electrolyte.greate.registry.EncasedFans.FANS;
 import static electrolyte.greate.registry.Gearboxes.GEARBOXES;
 import static electrolyte.greate.registry.Pumps.MECHANICAL_PUMPS;
-import static electrolyte.greate.registry.Saws.SAWS;
 import static electrolyte.greate.registry.Shafts.SHAFTS;
 
 public class GreatePonderTags {
@@ -24,8 +23,8 @@ public class GreatePonderTags {
                     .add(FANS[i].getId())
                     .add(MECHANICAL_PUMPS[i].getId());
 
-            helper.addToTag(CONTRAPTION_ACTOR)
-                    .add(SAWS[i].getId());
+            /*helper.addToTag(CONTRAPTION_ACTOR)
+                    .add(SAWS[i].getId());*/ //todo:fix
 
             helper.addToTag(FLUIDS)
                     .add(MECHANICAL_PUMPS[i].getId());

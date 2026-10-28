@@ -40,6 +40,7 @@ import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
 import static com.gregtechceu.gtceu.data.recipe.GTCraftingComponents.*;
 import static electrolyte.greate.GreateValues.TM;
 import static electrolyte.greate.compat.gtceu.common.data.machines.GreateMachines.MILLSTONES;
+import static electrolyte.greate.compat.gtceu.common.data.machines.GreateMachines.SAWS;
 import static electrolyte.greate.foundation.data.recipe.GreateCraftingComponents.*;
 import static electrolyte.greate.foundation.data.recipe.GreateCraftingComponents.PUMP;
 import static electrolyte.greate.registry.EncasedFans.FANS;
@@ -48,7 +49,6 @@ import static electrolyte.greate.registry.GreateTagPrefixes.*;
 import static electrolyte.greate.registry.MechanicalMixers.MECHANICAL_MIXERS;
 import static electrolyte.greate.registry.MechanicalPresses.MECHANICAL_PRESSES;
 import static electrolyte.greate.registry.Pumps.MECHANICAL_PUMPS;
-import static electrolyte.greate.registry.Saws.SAWS;
 
 public class GreateCraftingTableRecipes {
 

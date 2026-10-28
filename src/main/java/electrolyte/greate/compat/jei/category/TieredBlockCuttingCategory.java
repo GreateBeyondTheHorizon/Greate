@@ -6,7 +6,6 @@ import electrolyte.greate.Greate;
 import electrolyte.greate.compat.jei.category.TieredBlockCuttingCategory.TieredCondensedBlockCuttingRecipe;
 import electrolyte.greate.compat.jei.category.animations.TieredAnimatedSaw;
 import electrolyte.greate.mixin.MixinDifferenceIngredientAccessor;
-import electrolyte.greate.registry.Saws;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.IFocusGroup;
@@ -28,6 +27,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.simibubi.create.compat.jei.category.CreateRecipeCategory.getResultItem;
+import static electrolyte.greate.compat.gtceu.common.data.machines.GreateMachines.SAWS;
 
 public class TieredBlockCuttingCategory extends GreateRecipeCategory<TieredCondensedBlockCuttingRecipe> {
 
@@ -57,7 +57,7 @@ public class TieredBlockCuttingCategory extends GreateRecipeCategory<TieredConde
     public void draw(TieredCondensedBlockCuttingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics graphics, double x, double y) {
         AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 31, 6);
         AllGuiTextures.JEI_SHADOW.render(graphics, 33 - 17, 37 + 13);
-        new TieredAnimatedSaw(Saws.SAWS[0].get()).draw(graphics, 33, 37);
+        new TieredAnimatedSaw(SAWS[0].get()).draw(graphics, 33, 37);
     }
 
     public static class TieredCondensedBlockCuttingRecipe extends StonecutterRecipe {

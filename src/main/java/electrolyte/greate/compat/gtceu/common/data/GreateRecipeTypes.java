@@ -45,12 +45,13 @@ public class GreateRecipeTypes {
 
     public static final String KINETIC = "kinetic";
 
-    public static final GreateRecipeType MILLSTONE = (GreateRecipeType) GreateRecipeTypes.register(Greate.id("millstone"), KINETIC)
+    public static final GreateRecipeType MILLING = (GreateRecipeType) GreateRecipeTypes.register(Greate.id("millstone"), KINETIC)//todo:rename to milling after removing old machines
             .setMaxIOSize(1, 4, 0, 0)
             .setMaxSize(IO.IN, StressRecipeCapability.STRESS_CAPABILITY, 1)
             .setEUIO(IO.NONE)
             .addCustomRecipeLogic(MaceratorLogic.INSTANCE)
             .setSound(GTSoundEntries.MACERATOR)  //todo:change
+            .setXEIVisible(false)
             .UI(uiBuilder -> uiBuilder
                     .setItemSlotOverlay(IO.OUT, 1, GTGuiTextures.DUST_OVERLAY)
                     .setItemSlotOverlay(IO.OUT, 2, GTGuiTextures.DUST_OVERLAY)
@@ -79,11 +80,12 @@ public class GreateRecipeTypes {
                     .addRecipeUIModifier((recipe, widget) -> widget.textComponents.paddingTop(25))
                     .addRecipeUIModifier(RecipeUIModifier.textLine(Text.lang("gtceu.recipe.byproduct_tier", GreateValues.SNF[GTValues.LV]))));
 
-    public static final GTRecipeType SAW = GTRecipeTypes.register(Greate.id("saw"), KINETIC)
+    public static final GTRecipeType CUTTING = GTRecipeTypes.register(Greate.id("saw"), KINETIC)
             .setMaxIOSize(2, 2, 1, 0)
             .setMaxSize(IO.IN, StressRecipeCapability.STRESS_CAPABILITY, 1)
             .setEUIO(IO.NONE)
             .setSound(GTSoundEntries.CUT)
+            .setXEIVisible(false)
             .UI(uiBuilder -> uiBuilder
                     .setItemSlotOverlay(IO.IN, 0, GTGuiTextures.SAWBLADE_OVERLAY)
                     .setItemSlotOverlay(IO.OUT, 0, GTGuiTextures.CUTTER_OVERLAY)
@@ -127,13 +129,14 @@ public class GreateRecipeTypes {
                             })
                     .addRecipeUIModifier((recipe, widget) -> widget.textComponents.paddingTop(25)));
 
-    public static final GTRecipeType KINETIC_STONECUTTING = GreateRecipeTypes.register(Greate.id("kinetic_stonecutting"), KINETIC, RecipeType.STONECUTTING)
+    public static final GTRecipeType KINETIC_STONECUTTING = GreateRecipeTypes.register(Greate.id("stonecutting"), KINETIC, RecipeType.STONECUTTING)
             .setMaxIOSize(2, 1, 0, 0)
             .setMaxSize(IO.IN, StressRecipeCapability.STRESS_CAPABILITY, 1)
             .setEUIO(IO.NONE)
             .setSound(GTSoundEntries.CUT)
+            .setXEIVisible(false)
             .prepareBuilder(b -> b
-                    .duration(300)
+                    .duration(100)
                     .perTick(true)
                     .input(StressRecipeCapability.STRESS_CAPABILITY, (float) VA[ULV])
                     .perTick(false))
@@ -183,7 +186,7 @@ public class GreateRecipeTypes {
 
     public static void register() {
         GTRecipeTypes.MACERATOR_RECIPES.onRecipeBuild((gtRecipeBuilder, provider) -> {
-            GTRecipeBuilder copiedRecipe = MILLSTONE
+            GTRecipeBuilder copiedRecipe = MILLING
                     .copyFrom(gtRecipeBuilder)
                     .perTick(true)
                     .input(StressRecipeCapability.STRESS_CAPABILITY, (float) gtRecipeBuilder.EUt().voltage())
@@ -197,7 +200,7 @@ public class GreateRecipeTypes {
                 if(original != null) {
                     original.accept(gtRecipeBuilder, provider); //for water/dist water/lube addition
                 }
-                GTRecipeBuilder copiedRecipe = SAW
+                GTRecipeBuilder copiedRecipe = CUTTING
                         .copyFrom(gtRecipeBuilder)
                         .perTick(true)
                         .input(StressRecipeCapability.STRESS_CAPABILITY, (float) gtRecipeBuilder.EUt().voltage())

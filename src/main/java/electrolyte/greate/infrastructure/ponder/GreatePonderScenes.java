@@ -2,7 +2,10 @@ package electrolyte.greate.infrastructure.ponder;
 
 import com.simibubi.create.Create;
 import com.simibubi.create.infrastructure.ponder.AllCreatePonderTags;
-import com.simibubi.create.infrastructure.ponder.scenes.*;
+import com.simibubi.create.infrastructure.ponder.scenes.BeltScenes;
+import com.simibubi.create.infrastructure.ponder.scenes.FanScenes;
+import com.simibubi.create.infrastructure.ponder.scenes.KineticsScenes;
+import com.simibubi.create.infrastructure.ponder.scenes.ProcessingScenes;
 import com.simibubi.create.infrastructure.ponder.scenes.fluid.PumpScenes;
 import com.simibubi.create.infrastructure.ponder.scenes.highLogistics.FrogAndConveyorScenes;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
@@ -22,7 +25,6 @@ import static electrolyte.greate.registry.Gearboxes.VERTICAL_GEARBOXES;
 import static electrolyte.greate.registry.MechanicalMixers.MECHANICAL_MIXERS;
 import static electrolyte.greate.registry.MechanicalPresses.MECHANICAL_PRESSES;
 import static electrolyte.greate.registry.Pumps.MECHANICAL_PUMPS;
-import static electrolyte.greate.registry.Saws.SAWS;
 import static electrolyte.greate.registry.Shafts.SHAFTS;
 
 public class GreatePonderScenes {
@@ -54,10 +56,10 @@ public class GreatePonderScenes {
         HELPER.forComponents(CRUSHING_WHEELS).addStoryBoard(Create.asResource("crushing_wheel"), ProcessingScenes::crushingWheels);
         HELPER.forComponents(MECHANICAL_MIXERS).addStoryBoard(Create.asResource("mechanical_mixer/mixing"), ProcessingScenes::mixing);
         HELPER.forComponents(MECHANICAL_PRESSES).addStoryBoard(Create.asResource("mechanical_press/compacting"), ProcessingScenes::compacting);
-        HELPER.forComponents(SAWS)
+        /*HELPER.forComponents(SAWS)
                 .addStoryBoard(Create.asResource("mechanical_saw/processing"), MechanicalSawScenes::processing, AllCreatePonderTags.KINETIC_APPLIANCES)
                 .addStoryBoard(Create.asResource("mechanical_saw/breaker"), MechanicalSawScenes::treeCutting)
-                .addStoryBoard(Create.asResource("mechanical_saw/contraption"), MechanicalSawScenes::contraption, AllCreatePonderTags.CONTRAPTION_ACTOR);
+                .addStoryBoard(Create.asResource("mechanical_saw/contraption"), MechanicalSawScenes::contraption, AllCreatePonderTags.CONTRAPTION_ACTOR);*/
         HELPER.forComponents(MECHANICAL_PUMPS)
                 .addStoryBoard(Create.asResource("mechanical_pump/flow"), PumpScenes::flow, AllCreatePonderTags.FLUIDS, AllCreatePonderTags.KINETIC_APPLIANCES)
                 .addStoryBoard(Create.asResource("mechanical_pump/speed"), PumpScenes::speed);

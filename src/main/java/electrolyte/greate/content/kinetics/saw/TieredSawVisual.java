@@ -1,5 +1,6 @@
 package electrolyte.greate.content.kinetics.saw;
 
+import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityVisual;
 import com.simibubi.create.content.kinetics.base.RotatingInstance;
 import com.simibubi.create.content.kinetics.saw.SawBlock;
@@ -17,11 +18,11 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
 
-public class TieredSawVisual extends KineticBlockEntityVisual<TieredSawBlockEntity> {
+public class TieredSawVisual extends KineticBlockEntityVisual<KineticBlockEntity> {
 
     protected final RotatingInstance rotatingModel;
 
-    public TieredSawVisual(VisualizationContext context, TieredSawBlockEntity blockEntity, float partialTick) {
+    public TieredSawVisual(VisualizationContext context, KineticBlockEntity blockEntity, float partialTick) {
         super(context, blockEntity, partialTick);
         rotatingModel = shaft(instancerProvider(), blockState).setup(blockEntity).setPosition(getVisualPosition());
         rotatingModel.setChanged();

@@ -22,15 +22,18 @@ import electrolyte.greate.compat.gtceu.machine.kinetic.millstone.TieredMillstone
 import electrolyte.greate.compat.gtceu.machine.kinetic.millstone.TieredMillstoneMachineBlock;
 import electrolyte.greate.compat.gtceu.machine.kinetic.saw.TieredSawMachine;
 import electrolyte.greate.compat.gtceu.machine.kinetic.saw.TieredSawMachineBlock;
+import electrolyte.greate.content.kinetics.saw.TieredSawMovementBehaviour;
 import electrolyte.greate.foundation.data.GreateTagGen;
 import electrolyte.greate.infrastructure.config.GStress;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.material.MapColor;
 
 import java.util.Locale;
 import java.util.function.BiFunction;
 
 import static com.gregtechceu.gtceu.api.GTValues.UHV;
 import static com.gregtechceu.gtceu.api.GTValues.ULV;
+import static com.simibubi.create.api.behaviour.movement.MovementBehaviour.movementBehaviour;
 
 public class GreateMachines {
 
@@ -50,12 +53,12 @@ public class GreateMachines {
                     })
                     .register(),
             GTValues.tiersBetween(ULV, UHV),
-            GreateRecipeTypes.MILLSTONE);
+            GreateRecipeTypes.MILLING);
 
-    public static MachineDefinition[] SAWS = registerSawMachines("saw",
+    public static MachineDefinition[] SAWS = registerSawMachines("mechanical_saw",
             TieredSawMachine::new,
             (tier, builder) -> builder
-                    .langValue(GTValues.VNF[tier] + " Mechanical Saw")
+                    .langValue(FormattingUtil.toEnglishName(GreateValues.TM[tier].getName()) + " Mechanical Saw")
                     .rotationState(RotationState.NONE)
                     .recipeModifier(GreateRecipeModifiers.OC_NON_PERFECT)
                     .modelProperty(SawBlock.FACING, Direction.UP)
@@ -63,7 +66,7 @@ public class GreateMachines {
                     .modelProperty(DirectionalAxisKineticBlock.AXIS_ALONG_FIRST_COORDINATE)
                     .register(),
             GTValues.tiersBetween(ULV, UHV),
-            GreateRecipeTypes.SAW, GreateRecipeTypes.KINETIC_STONECUTTING);
+            GreateRecipeTypes.CUTTING, GreateRecipeTypes.KINETIC_STONECUTTING);
 
     public static MachineDefinition[] registerMillstoneMachines(String name,
                                                                 BiFunction<BlockEntityCreationInfo, Integer, TieredKineticWorkableMachine> factory,
@@ -77,8 +80,9 @@ public class GreateMachines {
                             TieredMillstoneMachineBlock::new,
                             MetaMachineItem::new,
                             info -> factory.apply(info, tier))
-                    .blockBuilder(b ->
-                            b.transform(GStress.setImpact(0.5 * (tier + 1)))) //TODO: change
+                    .blockBuilder(b -> b
+                            .transform(GStress.setImpact(0.5 * (tier + 1))) //TODO: change
+                            .properties(p -> p.mapColor(MapColor.METAL)))
                     .model(GreateMachineModels.createMillstoneModel(tier)
                             .andThen(b -> b.addDynamicRenderer(GreateDynamicRenderHelper::createMillstoneCogRender)))
                     .itemBuilder(b -> b.model(GreateMachineModels.tieredMillstoneItemModel(tier)))
@@ -97,14 +101,16 @@ public class GreateMachines {
         MachineDefinition[] definitions = new MachineDefinition[GTValues.TIER_COUNT];
         for(int tier : tiers) {
             var register = GreateRegistries.REGISTRATE
-                    .machine(GTValues.VN[tier].toLowerCase(Locale.ROOT) + "_" + name,
+                    .machine(GreateValues.TM[tier].getName().toLowerCase(Locale.ROOT) + "_" + name,
                             MachineDefinition::new,
                             TieredSawMachineBlock::new,
                             MetaMachineItem::new,
                             info -> factory.apply(info, tier))
-                    .blockBuilder(b ->
-                            b.transform(GStress.setImpact(0.75 * (tier + 1))))
-                    .model(GreateMachineModels.createSawModel()
+                    .blockBuilder(b -> b
+                            .transform(GStress.setImpact(0.75 * (tier + 1)))
+                            .properties(p -> p.mapColor(MapColor.PODZOL))
+                            .onRegister(r -> movementBehaviour(new TieredSawMovementBehaviour())))//todo:check
+                    .model(GreateMachineModels.createSawModel(tier)
                             .andThen(b -> b.addDynamicRenderer(GreateDynamicRenderHelper::createSawRender)))
                     .itemBuilder(b -> b
                             .model(GreateMachineModels.tieredSawItemModel(tier))

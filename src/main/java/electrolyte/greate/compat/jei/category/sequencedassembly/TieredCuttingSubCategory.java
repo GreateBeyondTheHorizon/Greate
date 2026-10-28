@@ -7,7 +7,8 @@ import electrolyte.greate.compat.jei.category.animations.TieredAnimatedSaw;
 import electrolyte.greate.content.kinetics.saw.TieredCuttingRecipe;
 import net.minecraft.client.gui.GuiGraphics;
 
-import static electrolyte.greate.registry.Saws.SAWS;
+import static electrolyte.greate.compat.gtceu.common.data.machines.GreateMachines.SAWS;
+
 
 public class TieredCuttingSubCategory extends SequencedAssemblySubCategory {
 

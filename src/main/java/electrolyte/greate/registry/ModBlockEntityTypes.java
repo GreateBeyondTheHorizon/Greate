@@ -29,9 +29,6 @@ import electrolyte.greate.content.kinetics.mixer.TieredMechanicalMixerVisual;
 import electrolyte.greate.content.kinetics.press.TieredMechanicalPressBlockEntity;
 import electrolyte.greate.content.kinetics.press.TieredMechanicalPressRenderer;
 import electrolyte.greate.content.kinetics.press.TieredMechanicalPressVisual;
-import electrolyte.greate.content.kinetics.saw.TieredSawBlockEntity;
-import electrolyte.greate.content.kinetics.saw.TieredSawRenderer;
-import electrolyte.greate.content.kinetics.saw.TieredSawVisual;
 import electrolyte.greate.content.kinetics.simpleRelays.*;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedCogRenderer;
 import electrolyte.greate.content.kinetics.simpleRelays.encased.TieredEncasedCogVisual;
@@ -125,12 +122,6 @@ public class ModBlockEntityTypes {
             .renderer(() -> TieredPumpRenderer::new)
             .register();
 
-    public static final BlockEntityEntry<TieredSawBlockEntity> TIERED_SAW = GreateRegistries.REGISTRATE
-            .blockEntity("tiered_saw", TieredSawBlockEntity::new)
-            .validBlocks(Saws.SAWS)
-            .renderer(() -> TieredSawRenderer::new)
-            .register();
-
     public static final BlockEntityEntry<TieredEncasedFanBlockEntity> TIERED_FAN = GreateRegistries.REGISTRATE
             .blockEntity("tiered_encased_fan", TieredEncasedFanBlockEntity::new)
             .validBlocks(EncasedFans.FANS)
@@ -197,11 +188,6 @@ public class ModBlockEntityTypes {
 
         SimpleBlockEntityVisualizer.builder(TIERED_PUMP.get())
                 .factory(TieredSingleAxisRotatingVisual::pumpCog)
-                .skipVanillaRender(p -> !p.renderNormally())
-                .apply();
-
-        SimpleBlockEntityVisualizer.builder(TIERED_SAW.get())
-                .factory(TieredSawVisual::new)
                 .skipVanillaRender(p -> !p.renderNormally())
                 .apply();
 

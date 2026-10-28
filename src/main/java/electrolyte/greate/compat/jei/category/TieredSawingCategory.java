@@ -6,7 +6,6 @@ import com.simibubi.create.foundation.fluid.FluidIngredient;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import electrolyte.greate.compat.jei.category.animations.TieredAnimatedSaw;
 import electrolyte.greate.content.kinetics.saw.TieredCuttingRecipe;
-import electrolyte.greate.registry.Saws;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.IFocusGroup;
@@ -16,6 +15,8 @@ import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
+
+import static electrolyte.greate.compat.gtceu.common.data.machines.GreateMachines.SAWS;
 
 @ParametersAreNonnullByDefault
 public class TieredSawingCategory extends GreateRecipeCategory<TieredCuttingRecipe> {
@@ -62,6 +63,6 @@ public class TieredSawingCategory extends GreateRecipeCategory<TieredCuttingReci
         super.draw(recipe, recipeSlotsView, graphics, 1, 75);
         AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 70, 6);
         AllGuiTextures.JEI_SHADOW.render(graphics, 72 - 17, 42 + 13);
-        new TieredAnimatedSaw(Saws.SAWS[recipe.getRecipeTier()].get()).draw(graphics, 72, 42);
+        new TieredAnimatedSaw(SAWS[recipe.getRecipeTier()].get()).draw(graphics, 72, 42);
     }
 }

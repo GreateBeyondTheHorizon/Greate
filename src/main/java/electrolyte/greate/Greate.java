@@ -122,7 +122,7 @@ public class Greate {
 
     private void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            GreateRecipeTypes.MILLSTONE.addProxyRecipeType(AllRecipeTypes.MILLING.getType());
+            GreateRecipeTypes.MILLING.addProxyRecipeType(AllRecipeTypes.MILLING.getType());
         });
     }
 

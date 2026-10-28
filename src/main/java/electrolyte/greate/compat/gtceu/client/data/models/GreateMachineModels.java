@@ -32,17 +32,13 @@ public class GreateMachineModels {
         };
     }
 
-    public static ModelInitializer createSawModel() {
-        return ((ctx, prov, builder) -> {
-            new TieredSawGenerator().generateModel(ctx, prov, builder);
-        });
+    public static ModelInitializer createSawModel(int tier) {
+        return ((ctx, prov, builder) -> new TieredSawGenerator().generateModel(ctx, prov, builder, tier));
     }
 
 
     public static <P extends MetaMachineItem> NonNullBiConsumer<DataGenContext<Item, P>, RegistrateItemModelProvider> tieredSawItemModel(int tier) {
-        return (ctx, prov) -> {
-            prov.withExistingParent(ctx.getName(), Create.asResource("block/mechanical_saw/item"))
-                    .texture("stonecutter_saw", prov.modLoc("block/" + TM[tier].getResourceLocation().getPath() + "/saw"));
-        };
+        return (ctx, prov) -> prov.withExistingParent(ctx.getName(), Create.asResource("block/mechanical_saw/item"))
+                .texture("stonecutter_saw", prov.modLoc("block/" + TM[tier].getResourceLocation().getPath() + "/saw"));
     }
 }

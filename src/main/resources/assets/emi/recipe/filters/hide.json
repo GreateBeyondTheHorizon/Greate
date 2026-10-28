@@ -35,6 +35,15 @@
     },
     {
       "category": "create:sawing"
+    },
+    {
+      "category": "greate:stonecutting"
+    },
+    {
+      "category": "greate:millstone"
+    },
+    {
+      "category": "greate:saw"
     }
   ]
 }

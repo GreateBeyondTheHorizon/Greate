@@ -8,7 +8,6 @@ import com.simibubi.create.Create;
 import com.simibubi.create.content.kinetics.saw.SawBlock;
 import com.simibubi.create.content.kinetics.saw.SawGenerator;
 import com.tterrag.registrate.providers.DataGenContext;
-import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredKineticMachineBlock;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
@@ -27,9 +26,8 @@ public class TieredSawGenerator extends SawGenerator {
         return new UncheckedModelFile(prov.modLoc(path + orientation));
     }
 
-    public <T extends Block> void generateModel(DataGenContext<Block, T> ctx, GTBlockstateProvider prov, MachineModelBuilder<BlockModelBuilder> builder) {
-        String material = ctx.get() instanceof TieredKineticMachineBlock tkmb ?
-                TM[tkmb.getDefinition().getTier()].getName() : ctx.getName().substring(0, ctx.getName().length() - 15);
+    public <T extends Block> void generateModel(DataGenContext<Block, T> ctx, GTBlockstateProvider prov, MachineModelBuilder<BlockModelBuilder> builder, int tier) {
+        String material = TM[tier].getName();
         prov.models().nested().parent(prov.models().withExistingParent(ctx.getName() + "_blade_horizontal_active", Create.asResource("block/mechanical_saw/blade_horizontal_active"))
                 .texture("stonecutter_saw", prov.modLoc("block/" + material + "/saw"))).renderType(CUTOUT_MIPPED);
 

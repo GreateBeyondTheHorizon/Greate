@@ -8,7 +8,6 @@ import electrolyte.greate.compat.jei.category.sequencedassembly.TieredCuttingSub
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeParams;
 import electrolyte.greate.registry.ModRecipeTypes;
-import electrolyte.greate.registry.Saws;
 import net.createmod.catnip.lang.LangBuilder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -22,6 +21,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
+
+import static electrolyte.greate.compat.gtceu.common.data.machines.GreateMachines.SAWS;
 
 @ParametersAreNonnullByDefault
 public class TieredCuttingRecipe extends TieredProcessingRecipe<RecipeWrapper> implements IAssemblyRecipe {
@@ -58,7 +59,7 @@ public class TieredCuttingRecipe extends TieredProcessingRecipe<RecipeWrapper> i
 
     @Override
     public void addRequiredMachines(Set<ItemLike> list) {
-        list.addAll(List.of(Saws.SAWS));
+        list.addAll(List.of(SAWS));
     }
 
     @Override

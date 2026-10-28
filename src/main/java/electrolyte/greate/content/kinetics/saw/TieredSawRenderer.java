@@ -14,6 +14,7 @@ import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTank
 import com.simibubi.create.foundation.virtualWorld.VirtualRenderWorld;
 import dev.engine_room.flywheel.api.visualization.VisualizationManager;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.foundation.client.models.GreateModelUtils;
 import net.createmod.catnip.math.AngleHelper;
 import net.createmod.catnip.math.VecHelper;
@@ -46,11 +47,11 @@ public class TieredSawRenderer extends SawRenderer {
 
     @Override
     protected void renderSafe(SawBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource bufferSource, int light, int overlay) {
-        tier = ((TieredSawBlock) be.getBlockState().getBlock()).getTier();
+        tier = ((ITieredBlock) be.getBlockState().getBlock()).getTier();
         renderBlade(be, ms, bufferSource, light);
         renderItems(be, partialTicks, ms, bufferSource, light, overlay);
         if(be.getBlockState().getValue(SawBlock.FACING) == Direction.UP) {
-            renderFluid((TieredSawBlockEntity) be, partialTicks, ms, bufferSource, light);
+            renderFluid(be, partialTicks, ms, bufferSource, light);
         }
         FilteringRenderer.renderOnBlockEntity(be, partialTicks, ms, bufferSource, light, overlay);
 
@@ -118,7 +119,7 @@ public class TieredSawRenderer extends SawRenderer {
         boolean backwards = VecHelper.isVecPointingTowards(context.relativeMotion, facing.getOpposite());
         boolean moving = context.getAnimationSpeed() != 0;
         boolean shouldAnimate = (context.contraption.stalled && horizontal) || (!context.contraption.stalled && !backwards && moving);
-        int tier = ((TieredSawBlock) state.getBlock()).getTier();
+        int tier = ((ITieredBlock) state.getBlock()).getTier();
 
         SuperByteBuffer buffer;
         SuperByteBuffer superBuffer;
@@ -164,7 +165,7 @@ public class TieredSawRenderer extends SawRenderer {
                 .renderInto(matrices.getViewProjection(), bufferSource.getBuffer(RenderType.cutoutMipped()));
     }
 
-    private void renderFluid(TieredSawBlockEntity be, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int light) {
+    private void renderFluid(KineticBlockEntity be, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int light) {
         SmartFluidTankBehaviour behaviour = be.getBehaviour(SmartFluidTankBehaviour.INPUT);
         if(behaviour == null) return;
         float units = behaviour.getTanks()[0].getTotalUnits(partialTicks);

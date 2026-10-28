@@ -48,7 +48,6 @@ public final class GreateRegistries {
 		MechanicalPresses.register();
 		MechanicalMixers.register();
 		Pumps.register();
-		Saws.register();
 		Windows.register();
 		ModBlockEntityTypes.register();
 	}

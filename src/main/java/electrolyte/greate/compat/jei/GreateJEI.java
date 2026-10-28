@@ -1,6 +1,5 @@
 package electrolyte.greate.compat.jei;
 
-import com.google.common.base.Predicates;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.simibubi.create.AllBlocks;
@@ -26,7 +25,6 @@ import com.tterrag.registrate.util.entry.BlockEntry;
 import electrolyte.greate.Greate;
 import electrolyte.greate.compat.jei.category.*;
 import electrolyte.greate.compat.jei.category.GreateRecipeCategory.Info;
-import electrolyte.greate.compat.jei.category.TieredBlockCuttingCategory.TieredCondensedBlockCuttingRecipe;
 import electrolyte.greate.content.kinetics.crusher.TieredAbstractCrushingRecipe;
 import electrolyte.greate.content.kinetics.fan.TieredEncasedFanBlock;
 import electrolyte.greate.content.kinetics.fan.processing.TieredHauntingRecipe;
@@ -65,6 +63,9 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import static com.gregtechceu.gtceu.api.GTValues.UHV;
+import static com.gregtechceu.gtceu.api.GTValues.ULV;
+import static electrolyte.greate.compat.gtceu.common.data.machines.GreateMachines.SAWS;
 import static electrolyte.greate.registry.EncasedFans.FANS;
 
 @JeiPlugin
@@ -165,18 +166,18 @@ public class GreateJEI implements IModPlugin {
 
                 sawing = builder(TieredCuttingRecipe.class)
                         .addTypedRecipes(ModRecipeTypes.CUTTING::getType)
-                        .catalysts(Saws.SAWS)
-                        .doubleIconItem(Saws.NEUTRONIUM_SAW, Items.OAK_LOG)
+                        .catalysts(() -> SAWS[ULV]) //todo:fix
+                        .doubleIconItem(SAWS[UHV], Items.OAK_LOG)
                         .emptyBackground(177, 85)
-                        .build("sawing", TieredSawingCategory::new),
+                        .build("sawing", TieredSawingCategory::new);
 
-                blockCutting = builder(TieredCondensedBlockCuttingRecipe.class)
+                /*blockCutting = builder(TieredCondensedBlockCuttingRecipe.class)
                         .enableWhen(c -> c.allowStonecuttingOnSaw)
                         .addRecipes(() -> TieredBlockCuttingCategory.condenseRecipes(getTypedRecipesExcluding(RecipeType.STONECUTTING, Predicates.or(ModRecipeTypes::shouldIgnoreInAutomation))))
-                        .catalysts(Saws.SAWS)
-                        .doubleIconItem(Saws.NEUTRONIUM_SAW.get(), Items.STONE_BRICK_STAIRS)
+                        .catalysts(SAWS)
+                        .doubleIconItem(SAWS[UHV].get(), Items.STONE_BRICK_STAIRS)
                         .emptyBackground(177, 70)
-                        .build("block_cutting", TieredBlockCuttingCategory::new);
+                        .build("block_cutting", TieredBlockCuttingCategory::new);*/
     }
 
     @Override
