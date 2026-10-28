@@ -57,7 +57,7 @@ public class TieredSawMachineBlock extends TieredDirectionalAxisKineticMachineBl
 
     public static final int PLACEMENT_HELPER_ID = PlacementHelpers.register(new PlacementHelper());
 
-    public TieredSawMachineBlock(Properties properties, MachineDefinition definition) {
+    public TieredSawMachineBlock(MachineDefinition definition) {
         super(Properties.copy(AllBlocks.MECHANICAL_SAW.get()), definition, AllBlocks.MECHANICAL_SAW.get());
     }
 

@@ -1,4 +1,4 @@
-package electrolyte.greate.compat.gtceu.machine.kinetic.millstone;
+package electrolyte.greate.compat.gtceu.machine.kinetic;
 
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.machine.trait.recipe.RecipeLogic;

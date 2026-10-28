@@ -41,8 +41,8 @@ public class GreateMachines {
 
     public static void register() {}
 
-    public static MachineDefinition[] MILLSTONES = registerTieredMachines("millstone",
-            TieredMillstoneMachineBlock::new,
+    public static MachineDefinition[] MILLSTONES = registerTieredMachines("millstone", false,
+            (properties, definition) -> new TieredMillstoneMachineBlock(definition),
             TieredMillstoneMachine::new,
             (tier, builder) -> builder
                     .langValue(FormattingUtil.toEnglishName(GreateValues.TM[tier].getName()) + " Millstone")
@@ -64,8 +64,8 @@ public class GreateMachines {
             GTValues.tiersBetween(ULV, UHV),
             GreateRecipeTypes.MILLING);
 
-    public static MachineDefinition[] SAWS = registerTieredMachines("mechanical_saw",
-            TieredSawMachineBlock::new,
+    public static MachineDefinition[] SAWS = registerTieredMachines("mechanical_saw", false,
+            (properties, definition) -> new TieredSawMachineBlock(definition),
             TieredSawMachine::new,
             (tier, builder) -> builder
                     .langValue(FormattingUtil.toEnglishName(GreateValues.TM[tier].getName()) + " Mechanical Saw")
@@ -87,7 +87,7 @@ public class GreateMachines {
             GTValues.tiersBetween(ULV, UHV),
             GreateRecipeTypes.CUTTING, GreateRecipeTypes.KINETIC_STONECUTTING);
 
-    public static MachineDefinition[] registerTieredMachines(String name,
+    public static MachineDefinition[] registerTieredMachines(String name, boolean tempName,
                                                              BiFunction<Properties, MachineDefinition, MetaMachineBlock> blockFactory,
                                                              BiFunction<BlockEntityCreationInfo, Integer, TieredKineticWorkableMachine> factory,
                                                              BiFunction<Integer, MachineBuilder<MachineDefinition, TieredKineticWorkableMachine, ?>, MachineDefinition> builder,
@@ -95,8 +95,9 @@ public class GreateMachines {
                                                              GTRecipeType... recipeTypes) {
         MachineDefinition[] definitions = new MachineDefinition[tiers.length];
         for(int tier : tiers) {
+            String machineName = !tempName ? GreateValues.TM[tier].getName().toLowerCase(Locale.ROOT) + "_" + name : GTValues.VN[tier].toLowerCase(Locale.ROOT) + "_" + name;
             var register = GreateRegistries.REGISTRATE
-                    .machine(GreateValues.TM[tier].getName().toLowerCase(Locale.ROOT) + "_" + name,
+                    .machine(machineName, //todo: back to GreateValues.TM[tier].getName().toLowerCase(Locale.ROOT) + "_" + name once all machines have been converted
                             MachineDefinition::new,
                             blockFactory,
                             MetaMachineItem::new,

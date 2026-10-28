@@ -35,7 +35,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class TieredMillstoneMachineBlock extends TieredKineticMachineBlock implements IBE<TieredMillstoneMachine>, ICogWheel {
 
-    public TieredMillstoneMachineBlock(Properties properties, MachineDefinition definition) {
+    public TieredMillstoneMachineBlock(MachineDefinition definition) {
         super(Properties.copy(AllBlocks.MILLSTONE.get()), definition, AllBlocks.MILLSTONE.get());
     }
 
