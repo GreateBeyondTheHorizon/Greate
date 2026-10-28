@@ -77,7 +77,7 @@ public abstract class MixinSteamEngineBlock extends FaceAttachedHorizontalDirect
         }
     }
 
-    @WrapOperation(method = "onRemove", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z"))
+    @WrapOperation(method = "onRemove", at = @At(value = "INVOKE", target = "Lcom/tterrag/registrate/util/entry/BlockEntry;has(Lnet/minecraft/world/level/block/state/BlockState;)Z", remap = false))
     private boolean greate$onRemove(BlockEntry<?> instance, BlockState state, Operation<Boolean> original) {
         return state.getBlock() instanceof PoweredShaftBlock;
     }

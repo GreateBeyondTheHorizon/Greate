@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(KineticEffectHandler.class)
 public class MixinKineticEffectHandler {
 
-    @WrapOperation(method = "spawnRotationIndicators", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getBlock()Lnet/minecraft/world/level/block/Block;"), remap = false)
+    @WrapOperation(method = "spawnRotationIndicators", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getBlock()Lnet/minecraft/world/level/block/Block;", remap = true), remap = false)
     private Block greate$spawnRotationIndicators(BlockState blockState, Operation<Block> original) {
         if(blockState.getBlock() instanceof TieredKineticMachineBlock tkmb) {
             return tkmb.getKineticBlock();
