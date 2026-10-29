@@ -65,5 +65,8 @@ public class GreateLang {
         provider.add("recipe.capability.stress.name", "Stress");
         provider.add("greate.recipe_modifier.insufficient_machine_tier", "Machine tier too low.");
         provider.add("greate.recipe_modifier.insufficient_stress_overclock", "Not enough stress to overclock recipe. Required: %ssu");
+
+        provider.add("greate.tooltip.kinetic_input_box", "Kinetic Input for Multiblocks");
+        provider.add("greate.tooltip.kinetic_output_box", "Kinetic Output for Multiblocks");
     }
 }

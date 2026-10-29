@@ -55,8 +55,8 @@ public class TieredKineticWorkableMachine extends TieredKineticMachine implement
 
     private double stressConversionRate = 1.0;
 
-    private TieredKineticWorkableMachine(BlockEntityCreationInfo info, int tier, RecipeLogic recipeLogic, IO io, TieredKineticBlockEntity kineticBE) {
-        super(info, tier, io, kineticBE);
+    private TieredKineticWorkableMachine(BlockEntityCreationInfo info, RecipeLogic recipeLogic, IO io, TieredKineticBlockEntity kineticBE) {
+        super(info, io, kineticBE);
         this.recipeTypes = this.getDefinition().getRecipeTypes();
         this.activeRecipeType = 0;
         this.overclockTier = getMaxOverclockTier();
@@ -67,17 +67,17 @@ public class TieredKineticWorkableMachine extends TieredKineticMachine implement
         this.traitSubscriptions = new ArrayList<>();
     }
 
-    public TieredKineticWorkableMachine(BlockEntityCreationInfo info, int tier, IO io, TieredKineticBlockEntity kineticBE) {
-        this(info, tier, new KineticMachineRecipeLogic(), io, kineticBE);
+    public TieredKineticWorkableMachine(BlockEntityCreationInfo info, IO io, TieredKineticBlockEntity kineticBE) {
+        this(info, new KineticMachineRecipeLogic(), io, kineticBE);
     }
 
-    public TieredKineticWorkableMachine(BlockEntityCreationInfo info, int tier, double stressConversionRate, TieredKineticBlockEntity kineticBE) {
-        this(info, tier, IO.IN, kineticBE);
+    public TieredKineticWorkableMachine(BlockEntityCreationInfo info, double stressConversionRate, TieredKineticBlockEntity kineticBE) {
+        this(info, IO.IN, kineticBE);
         this.stressConversionRate = stressConversionRate;
     }
 
-    public TieredKineticWorkableMachine(BlockEntityCreationInfo info, int tier, TieredKineticBlockEntity kineticBE) {
-        this(info, tier, IO.IN, kineticBE);
+    public TieredKineticWorkableMachine(BlockEntityCreationInfo info, TieredKineticBlockEntity kineticBE) {
+        this(info, IO.IN, kineticBE);
     }
 
     @Override

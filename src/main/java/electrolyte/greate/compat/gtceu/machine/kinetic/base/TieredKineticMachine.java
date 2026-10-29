@@ -7,11 +7,10 @@ import com.gregtechceu.gtceu.api.machine.feature.ITieredMachine;
 import com.gregtechceu.gtceu.api.sync_system.annotations.SaveField;
 import com.gregtechceu.gtceu.api.sync_system.annotations.SyncToClient;
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
-import com.simibubi.create.foundation.blockEntity.behaviour.BehaviourType;
-import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import electrolyte.greate.compat.gtceu.machine.kinetic.trait.KineticMachineTrait;
 import electrolyte.greate.compat.gtceu.machine.kinetic.trait.NotifiableStressContainer;
 import electrolyte.greate.content.kinetics.simpleRelays.TieredKineticBlockEntity;
+import lombok.Getter;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.network.chat.Component;
 
@@ -20,21 +19,19 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class TieredKineticMachine extends MetaMachine implements ITieredMachine, IHaveGoggleInformation {
-
-    private final int tier;
+public class TieredKineticMachine extends MetaMachine implements ITieredMachine, ITieredKineticMachine, IHaveGoggleInformation {
 
     @SaveField
     public final NotifiableStressContainer stressContainer;
 
+    @Getter
     @SaveField
     @SyncToClient
     public final KineticMachineTrait kineticMachineTrait;
 
 
-    public TieredKineticMachine(BlockEntityCreationInfo info, int tier, IO io, TieredKineticBlockEntity kineticBE) {
+    public TieredKineticMachine(BlockEntityCreationInfo info, IO io, TieredKineticBlockEntity kineticBE) {
         super(info);
-        this.tier = tier;
         this.stressContainer = attachTrait(new NotifiableStressContainer(io));
         this.kineticMachineTrait = attachTrait(new KineticMachineTrait(kineticBE));
     }
@@ -43,27 +40,6 @@ public class TieredKineticMachine extends MetaMachine implements ITieredMachine,
     public void clientTick() {
         super.clientTick();
         kineticMachineTrait.getKineticBlockEntity().tick();
-    }
-
-    @Override
-    public int getTier() {
-        return tier;
-    }
-
-    public float getSpeed() {
-        return kineticMachineTrait.getKineticBlockEntity().getSpeed();
-    }
-
-    public <T extends BlockEntityBehaviour> T getBehaviour(BehaviourType<T> behaviourType) {
-        return kineticMachineTrait.getKineticBlockEntity().getBehaviour(behaviourType);
-    }
-
-    public boolean isVirtual() {
-        return kineticMachineTrait.getKineticBlockEntity().isVirtual();
-    }
-
-    public void notifyUpdate() {
-        kineticMachineTrait.getKineticBlockEntity().notifyUpdate();
     }
 
     @Override

@@ -5,7 +5,7 @@ import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
 import com.gregtechceu.gtceu.api.machine.trait.notifiable.NotifiableRecipeHandlerTrait;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import electrolyte.greate.compat.gtceu.capability.recipe.StressRecipeCapability;
-import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredKineticMachine;
+import electrolyte.greate.compat.gtceu.machine.kinetic.base.ITieredKineticMachine;
 import electrolyte.greate.mixin.kinetictrait.MixinKineticBlockEntityAccessor;
 import org.jetbrains.annotations.NotNull;
 
@@ -32,12 +32,10 @@ public class NotifiableStressContainer extends NotifiableRecipeHandlerTrait<Floa
     @Override
     public void onMachineLoad() {
         super.onMachineLoad();
-        if(getMachine() instanceof TieredKineticMachine tkm) {
-            tkm.subscribeServerTick(() -> {
-                float impact = ((MixinKineticBlockEntityAccessor) tkm.getTraitHolder().getTrait(KineticMachineTrait.class).getKineticBlockEntity()).getStress();
-                if(impact != lastOutputStress) lastOutputStress = impact;
-            });
-        }
+        getMachine().subscribeServerTick(() -> {
+            float impact = ((MixinKineticBlockEntityAccessor) ((ITieredKineticMachine) getMachine()).getKineticBlockEntity()).getStress();
+            if(impact != lastOutputStress) lastOutputStress = impact;
+        });
     }
 
     @Override
@@ -45,19 +43,15 @@ public class NotifiableStressContainer extends NotifiableRecipeHandlerTrait<Floa
         float remaining = left.stream().reduce(0F, Float::sum);
         if(io == IO.IN) {
             float extracted = Math.min(remaining, lastOutputStress);
-            if(getMachine() instanceof TieredKineticMachine tkm) {
-                if(tkm.getTraitHolder().getTrait(KineticMachineTrait.class).getKineticBlockEntity().getSpeed() == 0) {
-                    extracted = 0;
-                }
+            if(((ITieredKineticMachine) getMachine()).getKineticBlockEntity().getSpeed() == 0) {
+                extracted = 0;
             }
             //if(!simulate) updateStress(extracted);
             remaining -= extracted;
         } else if(io == IO.OUT) {
             float inserted = Math.min(remaining, lastOutputStress);
-            if(getMachine() instanceof TieredKineticMachine tkm) {
-                if(tkm.getTraitHolder().getTrait(KineticMachineTrait.class).getKineticBlockEntity().getSpeed() == 0) {
-                    inserted = 0;
-                }
+            if(((ITieredKineticMachine) getMachine()).getKineticBlockEntity().getSpeed() == 0) {
+                inserted = 0;
             }
             //if(!simulate) updateCapacity(inserted);
             remaining -= inserted;

@@ -1,12 +1,10 @@
 package electrolyte.greate.compat.gtceu.client.renderer.machine;
 
 import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
-import com.gregtechceu.gtceu.client.renderer.machine.DynamicRender;
 import com.gregtechceu.gtceu.client.renderer.machine.DynamicRenderType;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.mojang.serialization.Codec;
-import com.simibubi.create.content.kinetics.base.IRotate;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.simibubi.create.content.kinetics.saw.SawBlock;
@@ -14,7 +12,6 @@ import com.simibubi.create.content.logistics.box.PackageItem;
 import com.simibubi.create.foundation.blockEntity.behaviour.filtering.FilteringRenderer;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import electrolyte.greate.compat.gtceu.machine.kinetic.saw.TieredSawMachine;
-import electrolyte.greate.compat.gtceu.machine.kinetic.trait.KineticMachineTrait;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredBlock;
 import electrolyte.greate.foundation.client.models.GreateModelUtils;
 import net.createmod.catnip.math.AngleHelper;
@@ -45,7 +42,7 @@ import static electrolyte.greate.registry.GreateTagPrefixes.shaft;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class SawRender extends DynamicRender<TieredSawMachine, SawRender> {
+public class SawRender extends BaseKineticDynamicRender<TieredSawMachine, SawRender> {
 
     public static final Codec<SawRender> CODEC = Codec.unit(SawRender::new);
     public static final DynamicRenderType<TieredSawMachine, SawRender> TYPE = new DynamicRenderType<>(CODEC);
@@ -57,7 +54,7 @@ public class SawRender extends DynamicRender<TieredSawMachine, SawRender> {
 
     @Override
     public void render(TieredSawMachine machine, float partialTicks, PoseStack ms, MultiBufferSource bufferSource, int light, int overlay) {
-        KineticBlockEntity be = machine.getTraitHolder().getTrait(KineticMachineTrait.class).getKineticBlockEntity();
+        KineticBlockEntity be = machine.getKineticBlockEntity();
         tier = ((ITieredBlock) be.getBlockState().getBlock()).getTier();
         renderBlade(machine, ms, bufferSource, light);
         renderItems(machine, partialTicks, ms, bufferSource, light, overlay);
@@ -136,10 +133,7 @@ public class SawRender extends DynamicRender<TieredSawMachine, SawRender> {
         return ChemicalHelper.getBlock(shaft, TM[tier]).defaultBlockState().setValue(BlockStateProperties.AXIS, getRotationAxisOf(be));
     }
 
-    private Direction.Axis getRotationAxisOf(TieredSawMachine be) {
-        return ((IRotate) be.getBlockState()
-			.getBlock()).getRotationAxis(be.getBlockState());
-    }
+
 
     private void renderItems(TieredSawMachine be, float partialTicks, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
         //TODO: fix items staying in the same position constantly

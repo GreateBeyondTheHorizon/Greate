@@ -1,0 +1,25 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "minecraft:cutout_mipped",
+  "dynamic_renders": [
+    {
+      "type": "greate:kinetic_box_shaft"
+    }
+  ],
+  "loader": "gtceu:machine",
+  "machine": "greate:aluminium_kinetic_input_box",
+  "variants": {
+    "is_formed=false,is_painted=false": {
+      "model": "greate:block/aluminium_kinetic_input_box"
+    },
+    "is_formed=false,is_painted=true": {
+      "model": "greate:block/aluminium_kinetic_input_box"
+    },
+    "is_formed=true,is_painted=false": {
+      "model": "greate:block/aluminium_kinetic_input_box"
+    },
+    "is_formed=true,is_painted=true": {
+      "model": "greate:block/aluminium_kinetic_input_box"
+    }
+  }
+}

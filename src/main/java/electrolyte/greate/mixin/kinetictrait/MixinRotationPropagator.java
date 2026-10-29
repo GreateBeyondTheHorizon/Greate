@@ -1,12 +1,11 @@
 package electrolyte.greate.mixin.kinetictrait;
 
-import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.simibubi.create.content.kinetics.RotationPropagator;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
-import electrolyte.greate.compat.gtceu.machine.kinetic.trait.KineticMachineTrait;
+import electrolyte.greate.compat.gtceu.machine.kinetic.base.ITieredKineticMachine;
 import electrolyte.greate.content.kinetics.simpleRelays.ITieredKineticBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
@@ -23,20 +22,16 @@ public class MixinRotationPropagator {
 
     @WrapOperation(method = "findConnectedNeighbour", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;", remap = true), remap = false)
     private static BlockEntity greate$findConnectedNeighbour(Level level, BlockPos pPos, Operation<BlockEntity> original) {
-        if(level.getBlockEntity(pPos) instanceof MetaMachine mm) {
-            if(mm.getTraitHolder().getTraitOptional(KineticMachineTrait.class).isPresent()) {
-                return mm.getTraitHolder().getTrait(KineticMachineTrait.class).getKineticBlockEntity();
-            }
+        if(level.getBlockEntity(pPos) instanceof ITieredKineticMachine km) {
+            return km.getKineticBlockEntity();
         }
         return original.call(level, pPos);
     }
 
     @WrapOperation(method = "handleRemoved", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;", remap = true), remap = false)
     private static BlockEntity greate$handleRemoved(Level level, BlockPos pPos, Operation<BlockEntity> original) {
-        if(level.getBlockEntity(pPos) instanceof MetaMachine mm) {
-            if(mm.getTraitHolder().getTraitOptional(KineticMachineTrait.class).isPresent()) {
-                return mm.getTraitHolder().getTrait(KineticMachineTrait.class).getKineticBlockEntity();
-            }
+        if(level.getBlockEntity(pPos) instanceof ITieredKineticMachine km) {
+            return km.getKineticBlockEntity();
         }
         return original.call(level, pPos);
     }
@@ -64,10 +59,8 @@ public class MixinRotationPropagator {
 
     @WrapOperation(method = "propagateMissingSource", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;", remap = true), remap = false)
     private static BlockEntity greate$propagateMissingSource(Level level, BlockPos pPos, Operation<BlockEntity> original) {
-        if(level.getBlockEntity(pPos) instanceof MetaMachine mm) {
-            if(mm.getTraitHolder().getTraitOptional(KineticMachineTrait.class).isPresent()) {
-                return mm.getTraitHolder().getTraitOptional(KineticMachineTrait.class).get().getKineticBlockEntity();
-            }
+        if(level.getBlockEntity(pPos) instanceof ITieredKineticMachine km) {
+            return km.getKineticBlockEntity();
         }
         return original.call(level, pPos);
     }

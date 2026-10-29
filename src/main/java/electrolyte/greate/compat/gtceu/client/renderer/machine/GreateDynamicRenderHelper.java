@@ -11,4 +11,8 @@ public class GreateDynamicRenderHelper {
     public static DynamicRender<?, ?> createSawRender() {
         return new SawRender();
     }
+
+    public static DynamicRender<?, ?> createKineticBoxShaftRender() {
+        return new KineticBoxShaftRender();
+    }
 }

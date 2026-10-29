@@ -6,8 +6,8 @@ import com.gregtechceu.gtceu.api.recipe.RecipeHelper;
 import com.gregtechceu.gtceu.api.recipe.modifier.ModifierFunction;
 import com.gregtechceu.gtceu.api.recipe.modifier.RecipeModifier;
 import electrolyte.greate.compat.gtceu.capability.recipe.StressRecipeCapability;
+import electrolyte.greate.compat.gtceu.machine.kinetic.base.ITieredKineticMachine;
 import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredKineticMachine;
-import electrolyte.greate.compat.gtceu.machine.kinetic.trait.KineticMachineTrait;
 import electrolyte.greate.mixin.kinetictrait.MixinKineticBlockEntityAccessor;
 import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
@@ -24,7 +24,7 @@ public class GreateRecipeModifiers {
             return ModifierFunction.cancel(Component.translatable("greate.recipe_modifier.insufficient_machine_tier"));
         }
         float stressRequired = (float) recipe.getTickInputContents(StressRecipeCapability.STRESS_CAPABILITY).get(0).content() * (4 * (overclockMachine.getOverclockTier() - Math.max(1, RecipeHelper.getRecipeEUtTier(recipe))));
-        float currentStress = ((MixinKineticBlockEntityAccessor) tkm.getTrait(KineticMachineTrait.class).getKineticBlockEntity()).getStress();
+        float currentStress = ((MixinKineticBlockEntityAccessor) ((ITieredKineticMachine) machine).getKineticBlockEntity()).getStress();
         if(currentStress < stressRequired) {
             return ModifierFunction.cancel(Component.translatable("greate.recipe_modifier.insufficient_stress_overclock", stressRequired));
         }

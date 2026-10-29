@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "greate:block/machine/steel_kinetic_output_box",
+      "x": 90
+    },
+    "facing=east": {
+      "model": "greate:block/machine/steel_kinetic_output_box",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "greate:block/machine/steel_kinetic_output_box"
+    },
+    "facing=south": {
+      "model": "greate:block/machine/steel_kinetic_output_box",
+      "y": 180
+    },
+    "facing=up": {
+      "gtceu:z": 180,
+      "model": "greate:block/machine/steel_kinetic_output_box",
+      "x": 270
+    },
+    "facing=west": {
+      "model": "greate:block/machine/steel_kinetic_output_box",
+      "y": 270
+    }
+  }
+}

@@ -14,6 +14,7 @@ import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.item.TooltipModifier;
 import electrolyte.greate.compat.gtceu.capability.recipe.StressRecipeCapability;
 import electrolyte.greate.compat.gtceu.common.data.GreateRecipeTypes;
+import electrolyte.greate.compat.gtceu.common.data.blocks.GreateBlocks;
 import electrolyte.greate.compat.gtceu.common.data.machines.GreateMachines;
 import electrolyte.greate.compat.kubejs.GreateRecipeComponents;
 import electrolyte.greate.foundation.data.GreateRegistrate;
@@ -45,6 +46,7 @@ public final class GreateRegistries {
 		EncasedFans.register();
 		Gearboxes.register();
 		Girders.register();
+		GreateBlocks.register();
 		MechanicalPresses.register();
 		MechanicalMixers.register();
 		Pumps.register();

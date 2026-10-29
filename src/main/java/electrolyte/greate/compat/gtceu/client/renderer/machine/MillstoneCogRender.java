@@ -7,7 +7,6 @@ import com.mojang.serialization.Codec;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredKineticMachine;
-import electrolyte.greate.compat.gtceu.machine.kinetic.trait.KineticMachineTrait;
 import net.createmod.catnip.render.CachedBuffers;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -31,7 +30,7 @@ public class MillstoneCogRender extends DynamicRender<TieredKineticMachine, Mill
 
     @Override
     public void render(TieredKineticMachine machine, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int packedOverlay) {
-        KineticBlockEntity be = machine.getTraitHolder().getTrait(KineticMachineTrait.class).getKineticBlockEntity();
+        KineticBlockEntity be = machine.getKineticBlockEntity();
         KineticBlockEntityRenderer.renderRotatingBuffer(be,
                 CachedBuffers.partial(MILLSTONE_INNER_MODELS[machine.getTier()], be.getBlockState()),
                 poseStack, buffer.getBuffer(RenderType.solid()), packedLight);

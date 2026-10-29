@@ -23,6 +23,7 @@ public class KineticMachineTrait extends MachineTrait {
     private KineticBlockEntity kineticBlockEntity;
     private TickableSubscription kineticsSub;
 
+    //TODO: move to custom trait (need both for mech press/mixer too, in addition to saw)
     @SyncToClient
     @SaveField
     @Getter

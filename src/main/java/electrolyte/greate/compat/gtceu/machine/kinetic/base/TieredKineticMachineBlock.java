@@ -29,7 +29,7 @@ import static electrolyte.greate.GreateValues.TM;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public abstract class TieredKineticMachineBlock extends MetaMachineBlock implements ITieredBlock, IRotate {
+public class TieredKineticMachineBlock extends MetaMachineBlock implements ITieredBlock, IRotate {
 
     @Getter
     protected final KineticBlock kineticBlock;

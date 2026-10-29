@@ -1,0 +1,10 @@
+{
+  "parent": "greate:block/machine/part/kinetic_input_box",
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "bottom": "gtceu:block/casings/voltage/hv/bottom",
+    "particle": "gtceu:block/casings/voltage/hv/side",
+    "side": "gtceu:block/casings/voltage/hv/side",
+    "top": "gtceu:block/casings/voltage/hv/top"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "parent": "minecraft:block/block",
+  "dynamic_renders": [
+    {
+      "type": "greate:kinetic_box_shaft"
+    }
+  ],
+  "loader": "gtceu:machine",
+  "machine": "greate:stainless_steel_kinetic_output_box",
+  "variants": {
+    "is_formed=false,is_painted=false": {
+      "model": "greate:block/stainless_steel_kinetic_output_box"
+    },
+    "is_formed=false,is_painted=true": {
+      "model": "greate:block/stainless_steel_kinetic_output_box"
+    },
+    "is_formed=true,is_painted=false": {
+      "model": "greate:block/stainless_steel_kinetic_output_box"
+    },
+    "is_formed=true,is_painted=true": {
+      "model": "greate:block/stainless_steel_kinetic_output_box"
+    }
+  }
+}
