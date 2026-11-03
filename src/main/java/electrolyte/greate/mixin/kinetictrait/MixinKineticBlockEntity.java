@@ -61,8 +61,8 @@ public class MixinKineticBlockEntity {
     @WrapOperation(method = "calculateAddedStressCapacity", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/api/stress/BlockStressValues;getCapacity(Lnet/minecraft/world/level/block/Block;)D", remap = true), remap = false)
     private double greate$calculateAddedStressCapacity(Block block, Operation<Double> original) {
         if(((KineticBlockEntity) (Object) this) instanceof TieredGeneratingKineticMachineBlockEntity kbe) {
-            if(((MixinKineticBlockEntityAccessor) kbe).getCapacity() == 0 || kbe.getSpeed() == 0) return 0;
-            return ((MixinKineticBlockEntityAccessor) kbe).getCapacity() / kbe.getSpeed();
+            if(kbe.getRecipeStress() == 0 || kbe.getRecipeRPM() == 0) return 0;
+            return kbe.getRecipeStress() / kbe.getRecipeRPM();
         }
         return original.call(block);
     }

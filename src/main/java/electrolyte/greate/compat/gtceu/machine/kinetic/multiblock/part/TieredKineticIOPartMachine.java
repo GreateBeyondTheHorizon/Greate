@@ -53,9 +53,11 @@ public class TieredKineticIOPartMachine extends TieredIOPartMachine implements I
     @Override
     public void afterWorking(WorkableMultiblockMachine controller) {
         if(this.kineticMachineTrait.getKineticBlockEntity() instanceof TieredGeneratingKineticMachineBlockEntity gkbe) {
+            float prevSpeed = gkbe.getSpeed();
             gkbe.setRecipeRPM(0);
             gkbe.setRecipeStress(0);
-            gkbe.updateGeneratedRotation();
+
+            gkbe.applyNewSpeed(prevSpeed, 0);
             this.stressContainer.notifyListeners();
         }
         super.afterWorking(controller);

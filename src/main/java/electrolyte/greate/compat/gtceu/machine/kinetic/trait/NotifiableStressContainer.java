@@ -69,14 +69,14 @@ public class NotifiableStressContainer extends NotifiableRecipeHandlerTrait<Floa
         } else if(io == IO.OUT) {
             TieredGeneratingKineticMachineBlockEntity generator = (TieredGeneratingKineticMachineBlockEntity) kineticMachine.getKineticBlockEntity();
             generator.setRecipeRPM(16f); //todo:based on recipe
-            generator.setRecipeStress(remaining);
+            generator.setRecipeStress(remaining * generator.getRecipeRPM());
             generator.updateGeneratedRotation();
             generator.notifyUpdate();
             if(generator.getOrCreateNetwork() != null) {
                 generator.getOrCreateNetwork().updateCapacityFor(generator, remaining);
                 notifyListeners();
             }
-            remaining -= remaining;
+            remaining = 0;
         }
         return remaining <= 0 ? Collections.emptyList() : Collections.singletonList(remaining);
     }
