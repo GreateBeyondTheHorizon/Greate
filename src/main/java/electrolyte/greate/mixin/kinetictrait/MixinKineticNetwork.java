@@ -20,4 +20,12 @@ public class MixinKineticNetwork {
         }
         return original.call(level, pPos);
     }
+
+    @WrapOperation(method = "calculateCapacity", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;getBlockEntity(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/entity/BlockEntity;", remap = true), remap = false)
+    private BlockEntity greate$calculateCapacity(Level level, BlockPos pPos, Operation<BlockEntity> original) {
+        if(level.getBlockEntity(pPos) instanceof ITieredKineticMachine km) {
+            return km.getKineticBlockEntity();
+        }
+        return original.call(level, pPos);
+    }
 }

@@ -3,12 +3,14 @@ package electrolyte.greate.compat.gtceu.machine.kinetic.multiblock.part;
 import com.gregtechceu.gtceu.api.blockentity.BlockEntityCreationInfo;
 import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.machine.feature.ITieredMachine;
+import com.gregtechceu.gtceu.api.machine.multiblock.WorkableMultiblockMachine;
 import com.gregtechceu.gtceu.api.machine.multiblock.part.TieredIOPartMachine;
 import com.gregtechceu.gtceu.api.sync_system.annotations.SaveField;
 import com.gregtechceu.gtceu.api.sync_system.annotations.SyncToClient;
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import electrolyte.greate.compat.gtceu.machine.kinetic.base.ITieredKineticMachine;
+import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredGeneratingKineticMachineBlockEntity;
 import electrolyte.greate.compat.gtceu.machine.kinetic.trait.KineticMachineTrait;
 import electrolyte.greate.compat.gtceu.machine.kinetic.trait.NotifiableStressContainer;
 import lombok.Getter;
@@ -46,5 +48,16 @@ public class TieredKineticIOPartMachine extends TieredIOPartMachine implements I
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         return kineticMachineTrait.getKineticBlockEntity().addToGoggleTooltip(tooltip, isPlayerSneaking);
+    }
+
+    @Override
+    public void afterWorking(WorkableMultiblockMachine controller) {
+        if(this.kineticMachineTrait.getKineticBlockEntity() instanceof TieredGeneratingKineticMachineBlockEntity gkbe) {
+            gkbe.setRecipeRPM(0);
+            gkbe.setRecipeStress(0);
+            gkbe.updateGeneratedRotation();
+            this.stressContainer.notifyListeners();
+        }
+        super.afterWorking(controller);
     }
 }

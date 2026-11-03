@@ -21,6 +21,7 @@ import electrolyte.greate.compat.gtceu.client.renderer.machine.GreateDynamicRend
 import electrolyte.greate.compat.gtceu.common.data.GreateRecipeModifiers;
 import electrolyte.greate.compat.gtceu.common.data.GreateRecipeTypes;
 import electrolyte.greate.compat.gtceu.common.data.blocks.GreateBlocks;
+import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredGeneratingKineticMachineBlockEntity;
 import electrolyte.greate.compat.gtceu.machine.kinetic.millstone.TieredMillstoneMachine;
 import electrolyte.greate.compat.gtceu.machine.kinetic.millstone.TieredMillstoneMachineBlock;
 import electrolyte.greate.compat.gtceu.machine.kinetic.multiblock.part.GreatePartAbility;
@@ -105,7 +106,7 @@ public class GreateMachines {
                     .rotationState(RotationState.ALL)
                     .blockProp(BlockBehaviour.Properties::dynamicShape)
                     .blockProp(BlockBehaviour.Properties::noOcclusion)
-                    .blockBuilder(b -> b.transform(GStress.setNoImpact())) //todo: dynamic based on recipe
+                    .blockBuilder(b -> b.transform(GStress.setImpact(0.75f))) //todo: dynamic based on recipe
                     .colorOverlayTieredHullModel(OVERLAY_ITEM_HATCH_INPUT, "overlay_pipe", "overlay_pipe_in_emissive")
                     .tooltips(Component.translatable("greate.tooltip.kinetic_input_box"))
                     .abilities(GreatePartAbility.INPUT_KINETIC)
@@ -116,13 +117,12 @@ public class GreateMachines {
 
     public static final MachineDefinition[] KINETIC_OUTPUT_BOXES = registerTieredMachines("kinetic_output_box", false,
             ((properties, machineDefinition) -> new TieredKineticBoxMachineBlock(machineDefinition, GreateBlocks.KINETIC_OUTPUT_BOX)),
-            (info, tier) -> new StressPartMachine(info, tier, IO.OUT, new TieredKineticBlockEntity(info.type(), info.pos(), info.state())),
+            (info, tier) -> new StressPartMachine(info, tier, IO.OUT, new TieredGeneratingKineticMachineBlockEntity(info.type(), info.pos(), info.state())),
             (tier, builder) -> builder
                     .langValue(FormattingUtil.toEnglishName(GreateValues.TM[tier].getName()) + " Kinetic Output Box")
                     .rotationState(RotationState.ALL)
                     .blockProp(BlockBehaviour.Properties::dynamicShape)
                     .blockProp(BlockBehaviour.Properties::noOcclusion)
-                    .blockBuilder(b -> b.transform(GStress.setNoImpact())) //todo: dynamic based on recipe
                     .colorOverlayTieredHullModel(OVERLAY_ITEM_HATCH_OUTPUT, "overlay_pipe", "overlay_pipe_out_emissive")
                     .tooltips(Component.translatable("greate.tooltip.kinetic_output_box"))
                     .abilities(GreatePartAbility.OUTPUT_KINETIC)

@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import electrolyte.greate.compat.gtceu.machine.kinetic.base.ITieredKineticMachine;
+import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredGeneratingKineticMachineBlockEntity;
 import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredKineticMachineBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -12,6 +13,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(KineticBlockEntity.class)
 public class MixinKineticBlockEntity {
@@ -48,4 +51,19 @@ public class MixinKineticBlockEntity {
         return original.call(blockState);
     }
 
+    @Inject(method = "isSource", at = @At("RETURN"), remap = false, cancellable = true)
+    private void greate$isSource(CallbackInfoReturnable<Boolean> cir) {
+        if(((KineticBlockEntity) (Object) this) instanceof TieredGeneratingKineticMachineBlockEntity) {
+            cir.setReturnValue(true);
+        }
+    }
+
+    @WrapOperation(method = "calculateAddedStressCapacity", at = @At(value = "INVOKE", target = "Lcom/simibubi/create/api/stress/BlockStressValues;getCapacity(Lnet/minecraft/world/level/block/Block;)D", remap = true), remap = false)
+    private double greate$calculateAddedStressCapacity(Block block, Operation<Double> original) {
+        if(((KineticBlockEntity) (Object) this) instanceof TieredGeneratingKineticMachineBlockEntity kbe) {
+            if(((MixinKineticBlockEntityAccessor) kbe).getCapacity() == 0 || kbe.getSpeed() == 0) return 0;
+            return ((MixinKineticBlockEntityAccessor) kbe).getCapacity() / kbe.getSpeed();
+        }
+        return original.call(block);
+    }
 }

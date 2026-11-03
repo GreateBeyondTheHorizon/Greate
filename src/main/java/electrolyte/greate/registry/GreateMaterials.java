@@ -115,30 +115,30 @@ public class GreateMaterials {
 		Polybenzimidazole.setProperty(GreatePropertyKeys.BELT, new BeltProperty(List.of(Darmstadtium, Neutronium)));
 
 		alloy.addSecondaryMaterial(new MaterialStack(Andesite, M));
-		alloy.setIgnored(WroughtIron, () -> AllItems.ANDESITE_ALLOY);
+		alloy.setIgnored(WroughtIron, AllItems.ANDESITE_ALLOY::get);
 		block.setIgnored(AndesiteAlloy, () -> AllBlocks.ANDESITE_ALLOY_BLOCK);
-		ingot.setIgnored(AndesiteAlloy, () -> AllItems.ANDESITE_ALLOY);
-		gem.setIgnored(RoseQuartz, () -> AllItems.ROSE_QUARTZ);
+		ingot.setIgnored(AndesiteAlloy, AllItems.ANDESITE_ALLOY::get);
+		gem.setIgnored(RoseQuartz, AllItems.ROSE_QUARTZ::get);
 
 		if(Greate.CONFIG.useCreateItemsInRecipes) {
 			block.setIgnored(Brass, () -> AllBlocks.BRASS_BLOCK);
 			block.setIgnored(Zinc, () -> AllBlocks.ZINC_BLOCK);
 
-			dust.setIgnored(Netherrack, () -> AllItems.CINDER_FLOUR);
-			dust.setIgnored(Obsidian, () -> AllItems.POWDERED_OBSIDIAN);
-			dust.setIgnored(Wheat, () -> AllItems.WHEAT_FLOUR);
+			dust.setIgnored(Netherrack, AllItems.CINDER_FLOUR::get);
+			dust.setIgnored(Obsidian, AllItems.POWDERED_OBSIDIAN::get);
+			dust.setIgnored(Wheat, AllItems.WHEAT_FLOUR::get);
 
-			ingot.setIgnored(Brass, () -> AllItems.BRASS_INGOT);
-			ingot.setIgnored(Zinc, () -> AllItems.ZINC_INGOT);
+			ingot.setIgnored(Brass, AllItems.BRASS_INGOT::get);
+			ingot.setIgnored(Zinc, AllItems.ZINC_INGOT::get);
 
-			nugget.setIgnored(Brass, () -> AllItems.BRASS_NUGGET);
-			nugget.setIgnored(Copper, () -> AllItems.COPPER_NUGGET);
-			nugget.setIgnored(Zinc, () -> AllItems.ZINC_NUGGET);
+			nugget.setIgnored(Brass, AllItems.BRASS_NUGGET::get);
+			nugget.setIgnored(Copper, AllItems.COPPER_NUGGET::get);
+			nugget.setIgnored(Zinc, AllItems.ZINC_NUGGET::get);
 
-			plate.setIgnored(Brass, () -> AllItems.BRASS_SHEET);
-			plate.setIgnored(Copper, () -> AllItems.COPPER_SHEET);
-			plate.setIgnored(Iron, () -> AllItems.IRON_SHEET);
-			plate.setIgnored(Gold, () -> AllItems.GOLDEN_SHEET);
+			plate.setIgnored(Brass, AllItems.BRASS_SHEET::get);
+			plate.setIgnored(Copper, AllItems.COPPER_SHEET::get);
+			plate.setIgnored(Iron, AllItems.IRON_SHEET::get);
+			plate.setIgnored(Gold, AllItems.GOLDEN_SHEET::get);
 		}
 	}
 

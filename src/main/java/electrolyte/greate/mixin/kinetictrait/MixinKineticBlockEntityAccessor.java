@@ -9,4 +9,5 @@ public interface MixinKineticBlockEntityAccessor {
 
     @Accessor(value = "network", remap = false) Long getNetwork();
     @Accessor(value = "stress", remap = false) float getStress();
+    @Accessor(value = "capacity", remap = false) float getCapacity();
 }

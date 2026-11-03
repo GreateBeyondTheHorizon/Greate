@@ -16,9 +16,7 @@ import java.util.List;
 public interface ITieredKineticBlockEntity {
 
     default float getMaxSpeedFromBlock(Block block) {
-        boolean tieredMachine = block instanceof ITieredBlock;
-        if(tieredMachine) {
-            ITieredBlock tieredBlock = (ITieredBlock) block;
+        if(block instanceof ITieredBlock tieredBlock) {
             int tier = tieredBlock.getTier();
             if(tier != -1) {
                 return GreateValues.getMaxSpeedFromMaterial(tieredBlock.getMaterial());
