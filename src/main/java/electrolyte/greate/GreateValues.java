@@ -14,7 +14,6 @@ import electrolyte.greate.content.kinetics.fan.processing.TieredSplashingRecipe;
 import electrolyte.greate.content.kinetics.mixer.TieredCompactingRecipe;
 import electrolyte.greate.content.kinetics.mixer.TieredMixingRecipe;
 import electrolyte.greate.content.kinetics.press.TieredPressingRecipe;
-import electrolyte.greate.content.kinetics.saw.TieredCuttingRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipe;
 import electrolyte.greate.content.processing.recipe.TieredProcessingRecipeBuilder.TieredProcessingRecipeFactory;
 import net.minecraft.resources.ResourceLocation;
@@ -119,7 +118,6 @@ public class GreateValues {
         if(loc.equals(AllRecipeTypes.CRUSHING.getId())) return TieredCrushingRecipe::new;
         else if(loc.equals(GTRecipeTypes.BENDER_RECIPES.registryName) || loc.equals(AllRecipeTypes.PRESSING.getId())) return TieredPressingRecipe::new;
         else if(loc.equals(GTRecipeTypes.MIXER_RECIPES.registryName) || loc.equals(AllRecipeTypes.MIXING.getId())) return TieredMixingRecipe::new;
-        else if(loc.equals(GTRecipeTypes.CUTTER_RECIPES.registryName) || loc.equals(AllRecipeTypes.CUTTING.getId())) return TieredCuttingRecipe::new;
         else if(loc.equals(GTRecipeTypes.ORE_WASHER_RECIPES.registryName) || loc.equals(AllRecipeTypes.SPLASHING.getId())) return TieredSplashingRecipe::new;
         else if(loc.equals(GTRecipeTypes.COMPRESSOR_RECIPES.registryName)) return TieredCompactingRecipe::new;
         else if(loc.equals(AllRecipeTypes.HAUNTING.getId())) return TieredHauntingRecipe::new;
