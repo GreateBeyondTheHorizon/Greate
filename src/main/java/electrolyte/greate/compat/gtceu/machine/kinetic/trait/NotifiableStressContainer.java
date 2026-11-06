@@ -5,7 +5,6 @@ import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
 import com.gregtechceu.gtceu.api.machine.TickableSubscription;
 import com.gregtechceu.gtceu.api.machine.trait.notifiable.NotifiableRecipeHandlerTrait;
 import com.gregtechceu.gtceu.api.recipe.GTRecipe;
-import com.simibubi.create.content.kinetics.base.GeneratingKineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import electrolyte.greate.compat.gtceu.capability.recipe.StressRecipeCapability;
 import electrolyte.greate.compat.gtceu.machine.kinetic.base.ITieredKineticMachine;
@@ -22,6 +21,7 @@ public class NotifiableStressContainer extends NotifiableRecipeHandlerTrait<Floa
     private float currentOutputStress, lastOutputStress;
     private TickableSubscription stressSub;
 
+
     public NotifiableStressContainer(IO handlerIO) {
         super();
         this.handlerIO = handlerIO;
@@ -37,7 +37,7 @@ public class NotifiableStressContainer extends NotifiableRecipeHandlerTrait<Floa
         super.onMachineLoad();
         getMachine().subscribeServerTick(stressSub, () -> {
             KineticBlockEntity kbe = ((ITieredKineticMachine) getMachine()).getKineticBlockEntity();
-            if(!(kbe instanceof GeneratingKineticBlockEntity)) {
+            if(!(kbe instanceof TieredGeneratingKineticMachineBlockEntity)) {
                 float impact = ((MixinKineticBlockEntityAccessor) kbe).getStress();
                 if(impact != lastOutputStress) {
                     lastOutputStress = impact;
@@ -67,14 +67,16 @@ public class NotifiableStressContainer extends NotifiableRecipeHandlerTrait<Floa
             }
             remaining -= extracted;
         } else if(io == IO.OUT) {
-            TieredGeneratingKineticMachineBlockEntity generator = (TieredGeneratingKineticMachineBlockEntity) kineticMachine.getKineticBlockEntity();
-            generator.setRecipeRPM(16f); //todo:based on recipe
-            generator.setRecipeStress(remaining * generator.getRecipeRPM());
-            generator.updateGeneratedRotation();
-            generator.notifyUpdate();
-            if(generator.getOrCreateNetwork() != null) {
-                generator.getOrCreateNetwork().updateCapacityFor(generator, remaining);
-                notifyListeners();
+            if(!simulate) {
+                TieredGeneratingKineticMachineBlockEntity generator = (TieredGeneratingKineticMachineBlockEntity) kineticMachine.getKineticBlockEntity();
+                generator.setRecipeRPM(16f); //todo:based on recipe
+                generator.setRecipeStress(remaining * generator.getRecipeRPM());
+                generator.updateGeneratedRotation();
+                generator.notifyUpdate();
+                if(generator.getOrCreateNetwork() != null) {
+                    generator.getOrCreateNetwork().updateCapacityFor(generator, remaining);
+                    notifyListeners();
+                }
             }
             remaining = 0;
         }

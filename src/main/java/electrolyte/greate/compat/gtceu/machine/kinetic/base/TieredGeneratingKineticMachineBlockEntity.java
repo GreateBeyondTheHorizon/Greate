@@ -44,15 +44,29 @@ public class TieredGeneratingKineticMachineBlockEntity extends GeneratingKinetic
     }
 
     @Override
+    public float calculateAddedStressCapacity() {
+        if(this.getRecipeStress() == 0 || this.getRecipeRPM() == 0) return 0;
+        this.lastCapacityProvided = this.getRecipeStress() / this.getRecipeRPM();
+        return this.getRecipeStress() / this.getRecipeRPM();
+    }
+
+    @Override
+    public boolean isSource() {
+        return this.getRecipeStress() != 0 && this.getRecipeRPM() != 0;
+    }
+
+    @Override
     protected void read(CompoundTag compound, boolean clientPacket) {
         super.read(compound, clientPacket);
         recipeRPM = compound.getFloat("recipeSpeed");
+        recipeStress = compound.getFloat("recipeStress");
 
     }
 
     @Override
     protected void write(CompoundTag compound, boolean clientPacket) {
         compound.putFloat("recipeSpeed", recipeRPM);
+        compound.putFloat("recipeStress", recipeStress);
         super.write(compound, clientPacket);
     }
 
