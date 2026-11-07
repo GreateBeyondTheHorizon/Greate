@@ -1,12 +1,7 @@
 package electrolyte.greate.compat.gtceu.common.data;
 
 import brachy.modularui.api.drawable.Text;
-import brachy.modularui.drawable.GuiTextures;
-import brachy.modularui.integration.recipeviewer.RecipeViewerSlotWidget;
-import brachy.modularui.integration.recipeviewer.entry.fluid.FluidStackList;
-import brachy.modularui.integration.recipeviewer.entry.item.ItemStackList;
 import brachy.modularui.widget.ParentWidget;
-import brachy.modularui.widgets.SlotGroupWidget;
 import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.capability.recipe.EURecipeCapability;
 import com.gregtechceu.gtceu.api.capability.recipe.FluidRecipeCapability;
@@ -14,7 +9,6 @@ import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.capability.recipe.ItemRecipeCapability;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeSerializer;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
-import com.gregtechceu.gtceu.api.recipe.gui.GTRecipeViewerWidget;
 import com.gregtechceu.gtceu.api.recipe.gui.RecipeUIModifier;
 import com.gregtechceu.gtceu.api.registry.GTRegistries;
 import com.gregtechceu.gtceu.common.data.GTRecipeTypes;
@@ -25,13 +19,12 @@ import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
 import electrolyte.greate.Greate;
 import electrolyte.greate.GreateValues;
 import electrolyte.greate.compat.gtceu.api.recipe.GreateRecipeType;
+import electrolyte.greate.compat.gtceu.api.recipe.gui.GreateRecipeViewerCapabilityLayoutBuilder;
 import electrolyte.greate.compat.gtceu.capability.recipe.StressRecipeCapability;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraftforge.fluids.FluidStack;
 
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -55,24 +48,7 @@ public class GreateRecipeTypes {
                     .setItemSlotOverlay(IO.OUT, 2, GTGuiTextures.DUST_OVERLAY)
                     .setItemSlotOverlay(IO.OUT, 3, GTGuiTextures.DUST_OVERLAY)
                     .setProgressBarSupplier((layout, value, machine) -> new ParentWidget<>().size(layout.getProgressBar().progressSize()))
-                    .setRecipeViewerLayoutCapabilityLayoutBuilder(
-                    ItemRecipeCapability.CAP, (layout, widget, io) -> {
-                        if(layout.getRecipeType().getMaxSlots(ItemRecipeCapability.CAP, io) == 0)
-                            return;
-
-                        var slotGroupWidget = SlotGroupWidget.builder()
-                                .matrix(layout.capabilityInfo(ItemRecipeCapability.CAP).getRecipeViewerGrid(io))
-                                .key('s', i -> RecipeViewerSlotWidget.create(ItemStack.class)
-                                        .value(ItemStackList.of(ItemStack.EMPTY))
-                                        .background(GuiTextures.SLOT_ITEM,
-                                                layout.capabilityInfo(ItemRecipeCapability.CAP).getOverlay(io, i))
-                                        .name(GTRecipeViewerWidget.capabilityWidgetName(ItemRecipeCapability.CAP, io, i)))
-                                .build()
-                                .coverChildren(18, 18)
-                                .pos(io == IO.IN ? 5 : 90, 5);
-
-                        widget.child(slotGroupWidget);
-                    })
+                    .setRecipeViewerLayoutCapabilityLayoutBuilder(ItemRecipeCapability.CAP, GreateRecipeViewerCapabilityLayoutBuilder.MILLING_ITEM)
                     .addRecipeUIModifier((recipe, widget) -> widget.textComponents.paddingTop(25))
                     .addRecipeUIModifier(RecipeUIModifier.textLine(Text.lang("gtceu.recipe.byproduct_tier", GreateValues.SNF[GTValues.LV]))));
 
@@ -87,40 +63,8 @@ public class GreateRecipeTypes {
                     .setItemSlotOverlay(IO.OUT, 0, GTGuiTextures.CUTTER_OVERLAY)
                     .setItemSlotOverlay(IO.OUT, 1, GTGuiTextures.DUST_OVERLAY)
                     .setProgressBarSupplier((layout, value, machine) -> new ParentWidget<>().size(layout.getProgressBar().progressSize()))
-                    .setRecipeViewerLayoutCapabilityLayoutBuilder(
-                    ItemRecipeCapability.CAP, (layout, widget, io) -> {
-                        if(layout.getRecipeType().getMaxSlots(ItemRecipeCapability.CAP, io) == 0) return;
-
-                        var slotGroupWidget = SlotGroupWidget.builder()
-                                .matrix(layout.capabilityInfo(ItemRecipeCapability.CAP).getRecipeViewerGrid(io))
-                                .key('s', i -> RecipeViewerSlotWidget.create(ItemStack.class)
-                                        .value(ItemStackList.of(ItemStack.EMPTY))
-                                        .background(GuiTextures.SLOT_ITEM,
-                                                layout.capabilityInfo(ItemRecipeCapability.CAP).getOverlay(io, i))
-                                        .name(GTRecipeViewerWidget.capabilityWidgetName(ItemRecipeCapability.CAP, io, i)))
-                                .build()
-                                .coverChildren(18, 18)
-                                .pos(io == IO.IN ? 5 : 100, 5);
-
-                        widget.child(slotGroupWidget);
-                    })
-                    .setRecipeViewerLayoutCapabilityLayoutBuilder(
-                            FluidRecipeCapability.CAP, (layout, widget, io) -> {
-                                if(layout.getRecipeType().getMaxSlots(FluidRecipeCapability.CAP, io) == 0) return;
-
-                                var slotGroupWidget = SlotGroupWidget.builder()
-                                        .matrix(layout.capabilityInfo(FluidRecipeCapability.CAP).getRecipeViewerGrid(io))
-                                        .key('s', i -> RecipeViewerSlotWidget.create(FluidStack.class)
-                                                .value(FluidStackList.of(FluidStack.EMPTY))
-                                                .background(GuiTextures.SLOT_FLUID,
-                                                        layout.capabilityInfo(FluidRecipeCapability.CAP).getOverlay(io, i))
-                                                .name(GTRecipeViewerWidget.capabilityWidgetName(FluidRecipeCapability.CAP, io, i)))
-                                        .build()
-                                        .coverChildren(18, 18)
-                                        .pos(io == IO.IN ? 5 : 90, 25);
-
-                                widget.child(slotGroupWidget);
-                            })
+                    .setRecipeViewerLayoutCapabilityLayoutBuilder(ItemRecipeCapability.CAP, GreateRecipeViewerCapabilityLayoutBuilder.CUTTING_ITEM)
+                    .setRecipeViewerLayoutCapabilityLayoutBuilder(FluidRecipeCapability.CAP, GreateRecipeViewerCapabilityLayoutBuilder.CUTTING_FLUID)
                     .addRecipeUIModifier((recipe, widget) -> widget.textComponents.paddingTop(25)));
 
     public static final GTRecipeType KINETIC_STONECUTTING = GreateRecipeTypes.register(Greate.id("stonecutting"), KINETIC, RecipeType.STONECUTTING)
@@ -139,41 +83,7 @@ public class GreateRecipeTypes {
                     .setItemSlotOverlay(IO.OUT, 0, GTGuiTextures.CUTTER_OVERLAY)
                     .setItemSlotOverlay(IO.OUT, 1, GTGuiTextures.DUST_OVERLAY)
                     .setProgressBarSupplier((layout, value, machine) -> new ParentWidget<>().size(layout.getProgressBar().progressSize()))
-                    .setRecipeViewerLayoutCapabilityLayoutBuilder(
-                            ItemRecipeCapability.CAP, (layout, widget, io) -> {
-                                if(layout.getRecipeType().getMaxSlots(ItemRecipeCapability.CAP, io) == 0) return;
-
-                                var slotGroupWidget = SlotGroupWidget.builder()
-                                        .matrix(layout.capabilityInfo(ItemRecipeCapability.CAP).getRecipeViewerGrid(io))
-                                        .key('s', i -> RecipeViewerSlotWidget.create(ItemStack.class)
-                                                .value(ItemStackList.of(ItemStack.EMPTY))
-                                                .background(GuiTextures.SLOT_ITEM,
-                                                        layout.capabilityInfo(ItemRecipeCapability.CAP).getOverlay(io, i))
-                                                .name(GTRecipeViewerWidget.capabilityWidgetName(ItemRecipeCapability.CAP, io, i)))
-                                        .build()
-                                        .coverChildren(18, 18)
-                                        .pos(io == IO.IN ? 5 : 133,
-                                             io == IO.IN ? 5 : 22);
-
-                                widget.child(slotGroupWidget);
-                            })
-                    .setRecipeViewerLayoutCapabilityLayoutBuilder(
-                            FluidRecipeCapability.CAP, (layout, widget, io) -> {
-                                if(layout.getRecipeType().getMaxSlots(FluidRecipeCapability.CAP, io) == 0) return;
-
-                                var slotGroupWidget = SlotGroupWidget.builder()
-                                        .matrix(layout.capabilityInfo(FluidRecipeCapability.CAP).getRecipeViewerGrid(io))
-                                        .key('s', i -> RecipeViewerSlotWidget.create(FluidStack.class)
-                                                .value(FluidStackList.of(FluidStack.EMPTY))
-                                                .background(GuiTextures.SLOT_FLUID,
-                                                        layout.capabilityInfo(FluidRecipeCapability.CAP).getOverlay(io, i))
-                                                .name(GTRecipeViewerWidget.capabilityWidgetName(FluidRecipeCapability.CAP, io, i)))
-                                        .build()
-                                        .coverChildren(18, 18)
-                                        .pos(io == IO.IN ? 5 : 90, 25);
-
-                                widget.child(slotGroupWidget);
-                            })
+                    .setRecipeViewerLayoutCapabilityLayoutBuilder(ItemRecipeCapability.CAP, GreateRecipeViewerCapabilityLayoutBuilder.KINETIC_STONECUTTING_ITEM)
                     .addRecipeUIModifier((recipe, widget) -> widget.textComponents.paddingTop(25)));
 
     public static void register() {
