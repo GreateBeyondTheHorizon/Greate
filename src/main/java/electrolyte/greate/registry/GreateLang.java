@@ -49,8 +49,8 @@ public class GreateLang {
 
         provider.add("greate.recipe.stress_input", "Uses %s su/tick");
         provider.add("greate.recipe.rpm_input", "Usage: >= %s RPM");
-        provider.add("greate.recipe.stress_output", "Outputs %s su/tick (%s§r)");
-        provider.add("greate.recipe.rpm_output", "Outputs %s RPM");
+        provider.add("greate.recipe.stress_output", "Generates %s su/tick (%s§r)");
+        provider.add("greate.recipe.rpm_output", "Generates %s RPM");
 
         provider.add("material.greate.andesite_alloy", "Andesite Alloy");
         provider.add("material.greate.rose_quartz", "Rose Quartz");

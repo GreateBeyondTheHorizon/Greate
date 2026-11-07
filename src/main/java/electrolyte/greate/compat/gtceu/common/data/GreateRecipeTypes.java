@@ -25,8 +25,6 @@ import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
 import electrolyte.greate.Greate;
 import electrolyte.greate.GreateValues;
 import electrolyte.greate.compat.gtceu.api.recipe.GreateRecipeType;
-import electrolyte.greate.compat.gtceu.api.recipe.gui.GreateCapabilityContentBuilder;
-import electrolyte.greate.compat.gtceu.api.recipe.gui.GreateRecipeViewerCapabilityLayoutBuilder;
 import electrolyte.greate.compat.gtceu.capability.recipe.StressRecipeCapability;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.FinishedRecipe;
@@ -56,8 +54,6 @@ public class GreateRecipeTypes {
                     .setItemSlotOverlay(IO.OUT, 1, GTGuiTextures.DUST_OVERLAY)
                     .setItemSlotOverlay(IO.OUT, 2, GTGuiTextures.DUST_OVERLAY)
                     .setItemSlotOverlay(IO.OUT, 3, GTGuiTextures.DUST_OVERLAY)
-                    .setRecipeViewerLayoutCapabilityLayoutBuilder(StressRecipeCapability.STRESS_CAPABILITY, GreateRecipeViewerCapabilityLayoutBuilder.STRESS)
-                    .setCapabilityContentBuilder(StressRecipeCapability.STRESS_CAPABILITY, GreateCapabilityContentBuilder.STRESS)
                     .setProgressBarSupplier((layout, value, machine) -> new ParentWidget<>().size(layout.getProgressBar().progressSize()))
                     .setRecipeViewerLayoutCapabilityLayoutBuilder(
                     ItemRecipeCapability.CAP, (layout, widget, io) -> {
@@ -90,8 +86,6 @@ public class GreateRecipeTypes {
                     .setItemSlotOverlay(IO.IN, 0, GTGuiTextures.SAWBLADE_OVERLAY)
                     .setItemSlotOverlay(IO.OUT, 0, GTGuiTextures.CUTTER_OVERLAY)
                     .setItemSlotOverlay(IO.OUT, 1, GTGuiTextures.DUST_OVERLAY)
-                    .setRecipeViewerLayoutCapabilityLayoutBuilder(StressRecipeCapability.STRESS_CAPABILITY, GreateRecipeViewerCapabilityLayoutBuilder.STRESS)
-                    .setCapabilityContentBuilder(StressRecipeCapability.STRESS_CAPABILITY, GreateCapabilityContentBuilder.STRESS)
                     .setProgressBarSupplier((layout, value, machine) -> new ParentWidget<>().size(layout.getProgressBar().progressSize()))
                     .setRecipeViewerLayoutCapabilityLayoutBuilder(
                     ItemRecipeCapability.CAP, (layout, widget, io) -> {
@@ -144,8 +138,6 @@ public class GreateRecipeTypes {
                     .setItemSlotOverlay(IO.IN, 0, GTGuiTextures.SAWBLADE_OVERLAY)
                     .setItemSlotOverlay(IO.OUT, 0, GTGuiTextures.CUTTER_OVERLAY)
                     .setItemSlotOverlay(IO.OUT, 1, GTGuiTextures.DUST_OVERLAY)
-                    .setRecipeViewerLayoutCapabilityLayoutBuilder(StressRecipeCapability.STRESS_CAPABILITY, GreateRecipeViewerCapabilityLayoutBuilder.STRESS)
-                    .setCapabilityContentBuilder(StressRecipeCapability.STRESS_CAPABILITY, GreateCapabilityContentBuilder.STRESS)
                     .setProgressBarSupplier((layout, value, machine) -> new ParentWidget<>().size(layout.getProgressBar().progressSize()))
                     .setRecipeViewerLayoutCapabilityLayoutBuilder(
                             ItemRecipeCapability.CAP, (layout, widget, io) -> {

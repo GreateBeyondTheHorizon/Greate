@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "plugin": "electrolyte.greate.mixin.GreateMixinPlugin",
   "mixins": [
+    "GTRecipeTypeUILayout$Builder",
     "MixinAirCurrent",
     "MixinAirCurrentInvoker",
     "MixinBasinBlockEntity",

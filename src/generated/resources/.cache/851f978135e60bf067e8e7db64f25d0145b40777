@@ -1,4 +1,4 @@
-// 1.20.1	2026-10-28T21:50:40.231405327	Registrate Provider for greate [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
+// 1.20.1	2026-11-06T21:49:06.479621414	Registrate Provider for greate [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
 7f34dcbfb9923f8310cac4320343257721576c07 assets/greate/blockstates/aluminium_crushing_wheel.json
 4b0e51a1c10685f7d432467339afc9c2e24793b0 assets/greate/blockstates/aluminium_crushing_wheel_controller.json
 fb82338faceb90118ac5ac9fc244ed38d4ab66ce assets/greate/blockstates/aluminium_encased_fan.json
@@ -29,6 +29,8 @@ bef1efb5016da21775c80d6d5e7c2c69bf4ce4bb assets/greate/blockstates/darmstadtium_
 c277026d1f6a55a719f6a43ccbfdb619fefa18b0 assets/greate/blockstates/darmstadtium_mechanical_pump.json
 9bb7459cc7482e0d1919321ef73723c8226e035f assets/greate/blockstates/darmstadtium_mechanical_saw.json
 541cbb04ce934401f84d1aecb73a4c4d5f71ae36 assets/greate/blockstates/darmstadtium_millstone.json
+3dff9e1ec59415779195d2abfa9f07bc17b428a1 assets/greate/blockstates/kinetic_input_box.json
+3dff9e1ec59415779195d2abfa9f07bc17b428a1 assets/greate/blockstates/kinetic_output_box.json
 826c582a79ee1439c9ddefa469e0f7a28007e6bf assets/greate/blockstates/naquadah_alloy_crushing_wheel.json
 4b0e51a1c10685f7d432467339afc9c2e24793b0 assets/greate/blockstates/naquadah_alloy_crushing_wheel_controller.json
 2c4e0532de000b49d73e3ee688beb35e9494ea73 assets/greate/blockstates/naquadah_alloy_encased_fan.json
@@ -103,8 +105,8 @@ b571dec3cadaf701f6cb724e7cb9bf5f5e68a3f0 assets/greate/blockstates/tungsten_stee
 d32fec57fdc211d6ddf1672ccf943c00f206a211 assets/greate/blockstates/tungsten_steel_mechanical_pump.json
 f07fc5308b6a9540d250bed0d7b250cb542cecca assets/greate/blockstates/tungsten_steel_mechanical_saw.json
 0951eef5ca81ac90c9cf62e9d861ac85ff28873c assets/greate/blockstates/tungsten_steel_millstone.json
-b855dc7600ed75f4ba1470470a466ec521d4b977 assets/greate/lang/en_ud.json
-cc7a43f5a35fa060845a73c42bf677cb0819bc7d assets/greate/lang/en_us.json
+b635c3c6c1e93d717c44b351827b418c4c2ff7a2 assets/greate/lang/en_ud.json
+ceb6cd285e3684e8b07e940dfc400b74f5fd09f1 assets/greate/lang/en_us.json
 54475e3a6ea521ead59fb6ef58f004cca59a7244 assets/greate/models/block/aluminium_crushing_wheel.json
 320970a47bec65b3753acbf82efeca9994ca392d assets/greate/models/block/aluminium_crushing_wheel_textures.json
 6d164a6ff328307a44f620679b8e5ad000555345 assets/greate/models/block/aluminium_encased_fan.json

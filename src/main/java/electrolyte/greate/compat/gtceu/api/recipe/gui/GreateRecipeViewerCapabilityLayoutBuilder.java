@@ -6,7 +6,7 @@ import com.gregtechceu.gtceu.api.recipe.gui.GTRecipeViewerWidget;
 import com.gregtechceu.gtceu.api.recipe.gui.RecipeViewerCapabilityLayoutBuilder;
 import electrolyte.greate.compat.gtceu.capability.recipe.StressRecipeCapability;
 
-public interface GreateRecipeViewerCapabilityLayoutBuilder extends RecipeViewerCapabilityLayoutBuilder {
+public interface GreateRecipeViewerCapabilityLayoutBuilder {
 
     RecipeViewerCapabilityLayoutBuilder STRESS = (layout, widget, io) -> {
         if (layout.getRecipeType().getMaxSlots(StressRecipeCapability.STRESS_CAPABILITY, io) == 0) return;

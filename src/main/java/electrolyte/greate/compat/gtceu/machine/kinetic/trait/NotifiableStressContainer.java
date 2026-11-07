@@ -18,7 +18,7 @@ import java.util.List;
 public class NotifiableStressContainer extends NotifiableRecipeHandlerTrait<Float> {
 
     protected IO handlerIO;
-    private float currentOutputStress, lastOutputStress;
+    private float lastOutputStress;
     private TickableSubscription stressSub;
 
 
@@ -28,7 +28,7 @@ public class NotifiableStressContainer extends NotifiableRecipeHandlerTrait<Floa
     }
 
     @Override
-    public IO getHandlerIO() {
+    public @NotNull IO getHandlerIO() {
         return this.handlerIO;
     }
 

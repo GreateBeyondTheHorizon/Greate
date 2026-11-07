@@ -18,6 +18,7 @@ import dev.latvian.mods.kubejs.KubeJSPlugin;
 import dev.latvian.mods.kubejs.create.ProcessingRecipeSchema.ProcessingRecipeJS;
 import dev.latvian.mods.kubejs.recipe.RecipeJS;
 import dev.latvian.mods.kubejs.recipe.RecipesEventJS;
+import dev.latvian.mods.kubejs.recipe.schema.RecipeComponentFactoryRegistryEvent;
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
 import dev.latvian.mods.kubejs.recipe.schema.RegisterRecipeSchemasEvent;
 import dev.latvian.mods.kubejs.script.BindingsEvent;
@@ -78,6 +79,12 @@ public class KubeJSGreatePlugin extends KubeJSPlugin {
         event.add("GreatePropertyKeys", GreatePropertyKeys.class);
         event.add("StressRecipeCapability", StressRecipeCapability.class);
         event.add("GreatePartAbility", GreatePartAbility.class);
+    }
+
+    @Override
+    public void registerRecipeComponents(RecipeComponentFactoryRegistryEvent event) {
+        event.register("greateStressIn", GreateRecipeComponents.STRESS_IN);
+        event.register("greateStressOut", GreateRecipeComponents.STRESS_OUT);
     }
 
     @Override
