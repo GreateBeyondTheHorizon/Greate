@@ -49,7 +49,7 @@ public class GreateRecipeTypes {
                     .setItemSlotOverlay(IO.OUT, 3, GTGuiTextures.DUST_OVERLAY)
                     .setProgressBarSupplier((layout, value, machine) -> new ParentWidget<>().size(layout.getProgressBar().progressSize()))
                     .setRecipeViewerLayoutCapabilityLayoutBuilder(ItemRecipeCapability.CAP, GreateRecipeViewerCapabilityLayoutBuilder.MILLING_ITEM)
-                    .addRecipeUIModifier((recipe, widget) -> widget.textComponents.paddingTop(25))
+                    .addRecipeUIModifier((recipe, widget) -> widget.textComponents.paddingTop(30))
                     .addRecipeUIModifier(RecipeUIModifier.textLine(Text.lang("gtceu.recipe.byproduct_tier", GreateValues.SNF[GTValues.LV]))));
 
     public static final GTRecipeType CUTTING = GTRecipeTypes.register(Greate.id("saw"), KINETIC)
@@ -65,7 +65,7 @@ public class GreateRecipeTypes {
                     .setProgressBarSupplier((layout, value, machine) -> new ParentWidget<>().size(layout.getProgressBar().progressSize()))
                     .setRecipeViewerLayoutCapabilityLayoutBuilder(ItemRecipeCapability.CAP, GreateRecipeViewerCapabilityLayoutBuilder.CUTTING_ITEM)
                     .setRecipeViewerLayoutCapabilityLayoutBuilder(FluidRecipeCapability.CAP, GreateRecipeViewerCapabilityLayoutBuilder.CUTTING_FLUID)
-                    .addRecipeUIModifier((recipe, widget) -> widget.textComponents.paddingTop(25)));
+                    .addRecipeUIModifier((recipe, widget) -> widget.textComponents.paddingTop(30)));
 
     public static final GTRecipeType KINETIC_STONECUTTING = GreateRecipeTypes.register(Greate.id("stonecutting"), KINETIC, RecipeType.STONECUTTING)
             .setMaxIOSize(2, 1, 0, 0)
@@ -84,7 +84,7 @@ public class GreateRecipeTypes {
                     .setItemSlotOverlay(IO.OUT, 1, GTGuiTextures.DUST_OVERLAY)
                     .setProgressBarSupplier((layout, value, machine) -> new ParentWidget<>().size(layout.getProgressBar().progressSize()))
                     .setRecipeViewerLayoutCapabilityLayoutBuilder(ItemRecipeCapability.CAP, GreateRecipeViewerCapabilityLayoutBuilder.KINETIC_STONECUTTING_ITEM)
-                    .addRecipeUIModifier((recipe, widget) -> widget.textComponents.paddingTop(25)));
+                    .addRecipeUIModifier((recipe, widget) -> widget.textComponents.paddingTop(30)));
 
     public static void register() {
         GTRecipeTypes.MACERATOR_RECIPES.onRecipeBuild((gtRecipeBuilder, provider) -> {

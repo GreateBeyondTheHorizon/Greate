@@ -91,7 +91,7 @@ public interface GreateRecipeViewerCapabilityLayoutBuilder {
                         .name(GTRecipeViewerWidget.capabilityWidgetName(ItemRecipeCapability.CAP, io, i)))
                 .build()
                 .coverChildren(18, 18)
-                .pos(5, io == IO.IN ? 133 : 22);
+                .pos(io == IO.IN ? 5 : 133, io == IO.IN ? 5 : 22);
         widget.child(slotGroupWidget);
     };
 }
