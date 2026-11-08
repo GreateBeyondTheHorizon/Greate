@@ -5,6 +5,7 @@ import com.gregtechceu.gtceu.api.capability.recipe.IO;
 import com.gregtechceu.gtceu.api.machine.feature.ITieredMachine;
 import com.gregtechceu.gtceu.api.machine.multiblock.WorkableMultiblockMachine;
 import com.gregtechceu.gtceu.api.machine.multiblock.part.TieredIOPartMachine;
+import com.gregtechceu.gtceu.api.machine.trait.recipe.RecipeLogic.Status;
 import com.gregtechceu.gtceu.api.sync_system.annotations.SaveField;
 import com.gregtechceu.gtceu.api.sync_system.annotations.SyncToClient;
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
@@ -51,6 +52,19 @@ public class TieredKineticIOPartMachine extends TieredIOPartMachine implements I
     }
 
     @Override
+    public void recipeLogicStatusChanged(Status oldStatus, Status newStatus) {
+        if(newStatus == Status.SUSPEND || newStatus == Status.WAITING) {
+            if(this.kineticMachineTrait.getKineticBlockEntity() instanceof TieredGeneratingKineticMachineBlockEntity gkbe) {
+                gkbe.setRecipeRPM(0);
+                gkbe.setRecipeStress(0);
+
+                gkbe.updateGeneratedRotation();
+                this.stressContainer.notifyListeners();
+            }
+        }
+    }
+
+    @Override
     public void afterWorking(WorkableMultiblockMachine controller) {
         if(this.kineticMachineTrait.getKineticBlockEntity() instanceof TieredGeneratingKineticMachineBlockEntity gkbe) {
             gkbe.setRecipeRPM(0);
@@ -59,6 +73,5 @@ public class TieredKineticIOPartMachine extends TieredIOPartMachine implements I
             gkbe.updateGeneratedRotation();
             this.stressContainer.notifyListeners();
         }
-        super.afterWorking(controller);
     }
 }

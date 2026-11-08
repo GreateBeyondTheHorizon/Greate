@@ -58,7 +58,7 @@ public class GreateMachines {
             (tier, builder) -> builder
                     .langValue(FormattingUtil.toEnglishName(GreateValues.TM[tier].getName()) + " Millstone")
                     .rotationState(RotationState.NON_Y_AXIS)
-                    .recipeModifier(GreateRecipeModifiers.OC_NON_PERFECT)
+                    .recipeModifiers(GreateRecipeModifiers.OC_NON_PERFECT, GreateRecipeModifiers::minRPM, GreateRecipeModifiers::maxRPM)
                     .addOutputLimit(ItemRecipeCapability.CAP, switch(tier) {
                         case 0 -> 1;
                         case 1 -> 2;
@@ -81,7 +81,7 @@ public class GreateMachines {
             (tier, builder) -> builder
                     .langValue(FormattingUtil.toEnglishName(GreateValues.TM[tier].getName()) + " Mechanical Saw")
                     .rotationState(RotationState.NONE)
-                    .recipeModifier(GreateRecipeModifiers.OC_NON_PERFECT)
+                    .recipeModifiers(GreateRecipeModifiers.OC_NON_PERFECT, GreateRecipeModifiers::minRPM, GreateRecipeModifiers::maxRPM)
                     .modelProperty(SawBlock.FACING, Direction.UP)
                     .modelProperty(SawBlock.FLIPPED)
                     .modelProperty(DirectionalAxisKineticBlock.AXIS_ALONG_FIRST_COORDINATE)
@@ -104,6 +104,7 @@ public class GreateMachines {
             (tier, builder) -> builder
                     .langValue(FormattingUtil.toEnglishName(GreateValues.TM[tier].getName()) + " Kinetic Input Box")
                     .rotationState(RotationState.ALL)
+                    .recipeModifiers(GreateRecipeModifiers::minRPM, GreateRecipeModifiers::maxRPM)
                     .blockProp(BlockBehaviour.Properties::dynamicShape)
                     .blockProp(BlockBehaviour.Properties::noOcclusion)
                     .blockBuilder(b -> b.transform(GStress.setImpact(0.75f))) //todo: dynamic based on recipe
@@ -121,6 +122,7 @@ public class GreateMachines {
             (tier, builder) -> builder
                     .langValue(FormattingUtil.toEnglishName(GreateValues.TM[tier].getName()) + " Kinetic Output Box")
                     .rotationState(RotationState.ALL)
+                    .recipeModifiers(GreateRecipeModifiers::minRPM, GreateRecipeModifiers::maxRPM)
                     .blockProp(BlockBehaviour.Properties::dynamicShape)
                     .blockProp(BlockBehaviour.Properties::noOcclusion)
                     .colorOverlayTieredHullModel(OVERLAY_ITEM_HATCH_OUTPUT, "overlay_pipe", "overlay_pipe_out_emissive")

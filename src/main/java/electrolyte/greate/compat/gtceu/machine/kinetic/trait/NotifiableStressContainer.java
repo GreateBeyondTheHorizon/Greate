@@ -10,6 +10,7 @@ import electrolyte.greate.compat.gtceu.capability.recipe.StressRecipeCapability;
 import electrolyte.greate.compat.gtceu.machine.kinetic.base.ITieredKineticMachine;
 import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredGeneratingKineticMachineBlockEntity;
 import electrolyte.greate.mixin.kinetictrait.MixinKineticBlockEntityAccessor;
+import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
@@ -62,14 +63,17 @@ public class NotifiableStressContainer extends NotifiableRecipeHandlerTrait<Floa
         ITieredKineticMachine kineticMachine = (ITieredKineticMachine) getMachine();
         if(io == IO.IN) {
             float extracted = Math.min(remaining, lastOutputStress);
-            if(kineticMachine.getKineticBlockEntity().getSpeed() == 0) {
+            //todo: maybe rpm gets it's own trait?
+            if(kineticMachine.getSpeed() == 0 || Mth.abs(kineticMachine.getSpeed()) < gtRecipe.data.getInt("minRPM") || Mth.abs(kineticMachine.getSpeed()) > gtRecipe.data.getInt("maxRPM")) {
                 extracted = 0;
             }
             remaining -= extracted;
         } else if(io == IO.OUT) {
             if(!simulate) {
                 TieredGeneratingKineticMachineBlockEntity generator = (TieredGeneratingKineticMachineBlockEntity) kineticMachine.getKineticBlockEntity();
-                generator.setRecipeRPM(16f); //todo:based on recipe
+                int generatedRPM = gtRecipe.data.getInt("generatedRPM");
+                if(generatedRPM == 0) generatedRPM = 16;
+                generator.setRecipeRPM(generatedRPM);
                 generator.setRecipeStress(remaining * generator.getRecipeRPM());
                 generator.updateGeneratedRotation();
                 generator.notifyUpdate();

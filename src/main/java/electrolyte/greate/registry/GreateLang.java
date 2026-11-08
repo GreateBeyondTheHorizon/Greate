@@ -48,9 +48,9 @@ public class GreateLang {
         provider.add("config.greate.option.ignoredModIds", "Ignored Mod Ids");
 
         provider.add("greate.recipe.stress_input", "Uses %s su/tick");
-        provider.add("greate.recipe.rpm_input", "Usage: >= %s RPM");
-        provider.add("greate.recipe.stress_output", "Generates %s su/tick (%s§r)");
-        provider.add("greate.recipe.rpm_output", "Generates %s RPM");
+        provider.add("greate.recipe.rpm_input_min", "Requires >= %s RPM");
+        provider.add("greate.recipe.rpm_input_max", "Requires <= %s RPM");
+        provider.add("greate.recipe.stress_output", "Generates %s su/tick @ %s RPM");
 
         provider.add("material.greate.andesite_alloy", "Andesite Alloy");
         provider.add("material.greate.rose_quartz", "Rose Quartz");
@@ -65,6 +65,8 @@ public class GreateLang {
         provider.add("recipe.capability.stress.name", "Stress");
         provider.add("greate.recipe_modifier.insufficient_machine_tier", "Machine tier too low.");
         provider.add("greate.recipe_modifier.insufficient_stress_overclock", "Not enough stress to overclock recipe. Required: %ssu");
+        provider.add("greate.recipe_modifier.insufficient_min_rpm", "Supplied RPM is too low. Required: >= %s RPM");
+        provider.add("greate.recipe_modifier.insufficient_max_rpm", "Supplied RPM is too high. Required: <= %s RPM");
 
         provider.add("greate.tooltip.kinetic_input_box", "Kinetic Input for Multiblocks");
         provider.add("greate.tooltip.kinetic_output_box", "Kinetic Output for Multiblocks");
