@@ -159,6 +159,9 @@ public class CreateRecipeRemoval {
         recipe.accept(Create.asResource("milling/calcite"));
         recipe.accept(Create.asResource("milling/wheat"));
         recipe.accept(Create.asResource("milling/terracotta"));
+        recipe.accept(Create.asResource("milling/wool"));
+        recipe.accept(Create.asResource("milling/cobblestone"));
+        recipe.accept(Create.asResource("milling/cocoa_beans"));
 
         for(var entry : MixinWoodMachineRecipesAccessor.getDefaultEntries()) {
             ResourceLocation air = ResourceLocation.parse("air");
