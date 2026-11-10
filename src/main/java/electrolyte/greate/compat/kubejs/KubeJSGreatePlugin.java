@@ -24,6 +24,7 @@ import dev.latvian.mods.kubejs.recipe.schema.RegisterRecipeSchemasEvent;
 import dev.latvian.mods.kubejs.script.BindingsEvent;
 import electrolyte.greate.Greate;
 import electrolyte.greate.GreateValues;
+import electrolyte.greate.compat.gtceu.api.machine.WorkableStressElectricMultiblockMachine;
 import electrolyte.greate.compat.gtceu.capability.recipe.StressRecipeCapability;
 import electrolyte.greate.compat.gtceu.machine.kinetic.multiblock.part.GreatePartAbility;
 import electrolyte.greate.compat.gtceu.material.GreateMaterialFlags;
@@ -79,6 +80,7 @@ public class KubeJSGreatePlugin extends KubeJSPlugin {
         event.add("GreatePropertyKeys", GreatePropertyKeys.class);
         event.add("StressRecipeCapability", StressRecipeCapability.class);
         event.add("GreatePartAbility", GreatePartAbility.class);
+        event.add("WorkableStressElectricMultiblockMachine", WorkableStressElectricMultiblockMachine.class);
     }
 
     @Override

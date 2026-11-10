@@ -8,7 +8,9 @@ import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import electrolyte.greate.compat.gtceu.capability.recipe.StressRecipeCapability;
 import electrolyte.greate.compat.gtceu.machine.kinetic.base.ITieredKineticMachine;
-import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredGeneratingKineticMachineBlockEntity;
+import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredGeneratingKineticBlockEntity;
+import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredKineticInputBoxBlockEntity;
+import electrolyte.greate.compat.gtceu.machine.kinetic.multiblock.part.StressPartMachine;
 import electrolyte.greate.mixin.kinetictrait.MixinKineticBlockEntityAccessor;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
@@ -38,7 +40,7 @@ public class NotifiableStressContainer extends NotifiableRecipeHandlerTrait<Floa
         super.onMachineLoad();
         getMachine().subscribeServerTick(stressSub, () -> {
             KineticBlockEntity kbe = ((ITieredKineticMachine) getMachine()).getKineticBlockEntity();
-            if(!(kbe instanceof TieredGeneratingKineticMachineBlockEntity)) {
+            if(!(kbe instanceof TieredGeneratingKineticBlockEntity)) {
                 float impact = ((MixinKineticBlockEntityAccessor) kbe).getStress();
                 if(impact != lastOutputStress) {
                     lastOutputStress = impact;
@@ -64,13 +66,33 @@ public class NotifiableStressContainer extends NotifiableRecipeHandlerTrait<Floa
         if(io == IO.IN) {
             float extracted = Math.min(remaining, lastOutputStress);
             //todo: maybe rpm gets it's own trait?
-            if(kineticMachine.getSpeed() == 0 || Mth.abs(kineticMachine.getSpeed()) < gtRecipe.data.getInt("minRPM") || Mth.abs(kineticMachine.getSpeed()) > gtRecipe.data.getInt("maxRPM")) {
+            if(kineticMachine.getSpeed() == 0) {
                 extracted = 0;
+            }
+            if((Mth.abs(kineticMachine.getSpeed()) < gtRecipe.data.getInt("minRPM") && gtRecipe.data.getInt("minRPM") != 0) ||
+                    (Mth.abs(kineticMachine.getSpeed()) > gtRecipe.data.getInt("maxRPM") && gtRecipe.data.getInt("maxRPM") != 0)) {
+                extracted = 0;
+            } else {
+                if(kineticMachine instanceof StressPartMachine) {
+                    TieredKineticInputBoxBlockEntity kbe = (TieredKineticInputBoxBlockEntity) kineticMachine.getKineticBlockEntity();
+                    float impact = gtRecipe.data.getFloat("stressImpact");
+                    if(impact == 0) impact = 1;
+                    float requiredImpact = Mth.abs(kineticMachine.getSpeed()) * impact;
+                    MixinKineticBlockEntityAccessor kbeAccessor = (MixinKineticBlockEntityAccessor) kineticMachine.getKineticBlockEntity();
+                    if(requiredImpact <= kbeAccessor.getCapacity()) {
+                        if(kbe.getOrCreateNetwork() != null) {
+                            kbe.getOrCreateNetwork().updateStressFor(kbe, impact);
+                            kbeAccessor.setStressApplied(impact);
+                            kbe.notifyUpdate();
+                            notifyListeners();
+                        }
+                    }
+                }
             }
             remaining -= extracted;
         } else if(io == IO.OUT) {
             if(!simulate) {
-                TieredGeneratingKineticMachineBlockEntity generator = (TieredGeneratingKineticMachineBlockEntity) kineticMachine.getKineticBlockEntity();
+                TieredGeneratingKineticBlockEntity generator = (TieredGeneratingKineticBlockEntity) kineticMachine.getKineticBlockEntity();
                 int generatedRPM = gtRecipe.data.getInt("generatedRPM");
                 if(generatedRPM == 0) generatedRPM = 16;
                 generator.setRecipeRPM(generatedRPM);

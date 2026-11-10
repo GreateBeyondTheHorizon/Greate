@@ -21,7 +21,8 @@ import electrolyte.greate.compat.gtceu.client.renderer.machine.GreateDynamicRend
 import electrolyte.greate.compat.gtceu.common.data.GreateRecipeModifiers;
 import electrolyte.greate.compat.gtceu.common.data.GreateRecipeTypes;
 import electrolyte.greate.compat.gtceu.common.data.blocks.GreateBlocks;
-import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredGeneratingKineticMachineBlockEntity;
+import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredGeneratingKineticBlockEntity;
+import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredKineticInputBoxBlockEntity;
 import electrolyte.greate.compat.gtceu.machine.kinetic.millstone.TieredMillstoneMachine;
 import electrolyte.greate.compat.gtceu.machine.kinetic.millstone.TieredMillstoneMachineBlock;
 import electrolyte.greate.compat.gtceu.machine.kinetic.multiblock.part.GreatePartAbility;
@@ -30,7 +31,6 @@ import electrolyte.greate.compat.gtceu.machine.kinetic.multiblock.part.TieredKin
 import electrolyte.greate.compat.gtceu.machine.kinetic.saw.TieredSawMachine;
 import electrolyte.greate.compat.gtceu.machine.kinetic.saw.TieredSawMachineBlock;
 import electrolyte.greate.content.kinetics.saw.TieredSawMovementBehaviour;
-import electrolyte.greate.content.kinetics.simpleRelays.TieredKineticBlockEntity;
 import electrolyte.greate.foundation.data.GreateTagGen;
 import electrolyte.greate.infrastructure.config.GStress;
 import net.minecraft.core.Direction;
@@ -100,14 +100,13 @@ public class GreateMachines {
 
     public static final MachineDefinition[] KINETIC_INPUT_BOXES = registerTieredMachines("kinetic_input_box", false,
             ((properties, machineDefinition) -> new TieredKineticBoxMachineBlock(machineDefinition, GreateBlocks.KINETIC_INPUT_BOX)),
-            (info, tier) -> new StressPartMachine(info, tier, IO.IN, new TieredKineticBlockEntity(info.type(), info.pos(), info.state())),
+            (info, tier) -> new StressPartMachine(info, tier, IO.IN, new TieredKineticInputBoxBlockEntity(info.type(), info.pos(), info.state())),
             (tier, builder) -> builder
                     .langValue(FormattingUtil.toEnglishName(GreateValues.TM[tier].getName()) + " Kinetic Input Box")
                     .rotationState(RotationState.ALL)
                     .recipeModifiers(GreateRecipeModifiers::minRPM, GreateRecipeModifiers::maxRPM)
                     .blockProp(BlockBehaviour.Properties::dynamicShape)
                     .blockProp(BlockBehaviour.Properties::noOcclusion)
-                    .blockBuilder(b -> b.transform(GStress.setImpact(0.75f))) //todo: dynamic based on recipe
                     .colorOverlayTieredHullModel(OVERLAY_ITEM_HATCH_INPUT, "overlay_pipe", "overlay_pipe_in_emissive")
                     .tooltips(Component.translatable("greate.tooltip.kinetic_input_box"))
                     .abilities(GreatePartAbility.INPUT_KINETIC)
@@ -118,7 +117,7 @@ public class GreateMachines {
 
     public static final MachineDefinition[] KINETIC_OUTPUT_BOXES = registerTieredMachines("kinetic_output_box", false,
             ((properties, machineDefinition) -> new TieredKineticBoxMachineBlock(machineDefinition, GreateBlocks.KINETIC_OUTPUT_BOX)),
-            (info, tier) -> new StressPartMachine(info, tier, IO.OUT, new TieredGeneratingKineticMachineBlockEntity(info.type(), info.pos(), info.state())),
+            (info, tier) -> new StressPartMachine(info, tier, IO.OUT, new TieredGeneratingKineticBlockEntity(info.type(), info.pos(), info.state())),
             (tier, builder) -> builder
                     .langValue(FormattingUtil.toEnglishName(GreateValues.TM[tier].getName()) + " Kinetic Output Box")
                     .rotationState(RotationState.ALL)

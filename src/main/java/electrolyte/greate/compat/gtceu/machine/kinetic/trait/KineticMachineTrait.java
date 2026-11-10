@@ -41,10 +41,12 @@ public class KineticMachineTrait extends MachineTrait {
 
     @SyncToClient
     @SaveField
+    @Getter
     private float speed = 0;
 
     @SyncToClient
     @SaveField
+    @Getter
     private float capacity = 0;
 
     @SyncToClient
@@ -145,7 +147,7 @@ public class KineticMachineTrait extends MachineTrait {
             }
             if(!Objects.equals(networkId, kineticBlockEntity.network)) {
                 networkId = kineticBlockEntity.network;
-                this.getSyncDataHolder().markClientSyncFieldDirty("network");
+                this.getSyncDataHolder().markClientSyncFieldDirty("networkId");
             }
 
             if(stress != kbeAccessor.getStress()) {

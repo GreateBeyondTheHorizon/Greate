@@ -22,4 +22,9 @@ public class StressRecipeCapability extends RecipeCapability<Float> {
     public Float copyWithModifier(Float content, ContentModifier modifier) {
         return modifier.apply(content);
     }
+
+    @Override
+    public boolean skipEmptyContentCheck() {
+        return true;
+    }
 }

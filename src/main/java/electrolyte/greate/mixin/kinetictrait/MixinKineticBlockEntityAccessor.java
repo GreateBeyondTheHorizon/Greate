@@ -2,8 +2,12 @@ package electrolyte.greate.mixin.kinetictrait;
 
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
+import org.spongepowered.asm.mixin.gen.Invoker;
+
+import java.util.List;
 
 @Mixin(KineticBlockEntity.class)
 public interface MixinKineticBlockEntityAccessor {
@@ -20,4 +24,6 @@ public interface MixinKineticBlockEntityAccessor {
     @Accessor(value = "lastCapacityProvided", remap = false) void setCapacityProvided(float capacity);
     @Accessor(value = "network", remap = false) void setNetworkId(Long networkId);
     @Accessor(value = "source", remap = false) void setSourcePos(BlockPos sourcePos);
+
+    @Invoker(value = "addStressImpactStats", remap = false) void addStressStats(List<Component> tooltip, float stressAtBase);
 }

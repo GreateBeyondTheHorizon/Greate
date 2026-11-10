@@ -13,13 +13,13 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 
-public class TieredGeneratingKineticMachineBlockEntity extends GeneratingKineticBlockEntity implements ITieredKineticBlockEntity {
+public class TieredGeneratingKineticBlockEntity extends GeneratingKineticBlockEntity implements ITieredKineticBlockEntity {
 
     @Getter
     @Setter
     private float recipeRPM, recipeStress = 0;
 
-    public TieredGeneratingKineticMachineBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public TieredGeneratingKineticBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
 
