@@ -30,6 +30,8 @@ import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.mixin.accessor.UseOnContextAccessor;
 import electrolyte.greate.compat.gtceu.machine.kinetic.base.TieredKineticWorkableMachine;
 import electrolyte.greate.compat.gtceu.machine.kinetic.recipelogic.KineticMachineRecipeLogic;
+import electrolyte.greate.compat.gtceu.machine.kinetic.trait.FilterStackTrait;
+import electrolyte.greate.compat.gtceu.machine.kinetic.trait.GhostCircuitTrait;
 import electrolyte.greate.content.kinetics.saw.TieredCuttingRecipe;
 import electrolyte.greate.foundation.data.recipe.TieredRecipeConditions;
 import electrolyte.greate.registry.ModRecipeTypes;
@@ -129,6 +131,14 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
     @Getter
     private int recipeProgress = 0;
 
+    @SaveField
+    @SyncToClient
+    public final GhostCircuitTrait circuitTrait;
+
+    @SaveField
+    @SyncToClient
+    public final FilterStackTrait filterStackTrait;
+
 
     public TieredSawMachine(BlockEntityCreationInfo info) {
         super(info, new TieredSawMachineBlockEntity(info.type(), info.pos(), info.state()));
@@ -141,6 +151,8 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
                         IO.IN, IO.BOTH));
         this.containedFluid = FluidStack.EMPTY;
         this.renderedImportStack = ItemStack.EMPTY;
+        this.circuitTrait = attachTrait(new GhostCircuitTrait());
+        this.filterStackTrait = attachTrait(new FilterStackTrait());
     }
 
     @Override
@@ -235,8 +247,8 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
 
     private void updateNonGTRecipeSubscription() {
         nonGTRecipeSub = subscribeServerTick(nonGTRecipeSub, () -> {
-            if(IntCircuitBehaviour.getCircuitConfiguration(circuitStack.getStackInSlot(0)) != this.kineticMachineTrait.getCircuitValue()) {
-                circuitStack.setStackInSlot(0, IntCircuitBehaviour.stack(this.kineticMachineTrait.getCircuitValue()));
+            if(IntCircuitBehaviour.getCircuitConfiguration(circuitStack.getStackInSlot(0)) != this.circuitTrait.getCircuitValue()) {
+                circuitStack.setStackInSlot(0, IntCircuitBehaviour.stack(this.circuitTrait.getCircuitValue()));
             }
             this.syncDataHolder.markClientSyncFieldDirty("recipeDuration");
             this.syncDataHolder.markClientSyncFieldDirty("remainingTime");
@@ -286,7 +298,7 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
         if(SequencedAssemblyRecipe.getRecipe(level, importItems.getStackInSlot(0), AllRecipeTypes.CUTTING.getType(), CuttingRecipe.class).isPresent()) return true;
         Optional<TieredCuttingRecipe> tieredAssemblyRecipe = SequencedAssemblyRecipe.getRecipe(level, importItems.getStackInSlot(0), ModRecipeTypes.CUTTING.getType(), TieredCuttingRecipe.class);
         if(tieredAssemblyRecipe.isPresent()) {
-            Predicate<Recipe<?>> tierAndCircuitPredicate = TieredRecipeConditions.isEqualOrAboveTier(this.getTier()).and(TieredRecipeConditions.circuitMatches(kineticMachineTrait.getCircuitValue()));
+            Predicate<Recipe<?>> tierAndCircuitPredicate = TieredRecipeConditions.isEqualOrAboveTier(this.getTier()).and(TieredRecipeConditions.circuitMatches(circuitTrait.getCircuitValue()));
             return tierAndCircuitPredicate.test(tieredAssemblyRecipe.get());
         }
         return false;

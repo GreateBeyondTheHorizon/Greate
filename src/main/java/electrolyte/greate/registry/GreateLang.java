@@ -15,7 +15,7 @@ public class GreateLang {
         provider.add("greate.message.saw.recipe_type_toggle", "Changed active recipe type to: ");
         provider.add("greate.tooltip.saw.recipe_type_toggle", "Right-Click with a Screwdriver to toggle active recipe state.");
         provider.add("greate.saw", "Cutting");
-        provider.add("greate.kinetic_stonecutting", "Stonecutting");
+        provider.add("greate.stonecutting", "Stonecutting");
         provider.add("create.chain_conveyor.not_equal_tier", "Conveyors are not the same tier"); //intentional create prefix
         provider.add("greate.recipe.milling", "Milling");
         provider.add("greate.recipe.crushing", "Crushing");
