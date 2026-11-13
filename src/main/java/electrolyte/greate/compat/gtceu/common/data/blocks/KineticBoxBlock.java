@@ -22,6 +22,6 @@ public class KineticBoxBlock extends KineticBlock {
 
     @Override
     public boolean hasShaftTowards(LevelReader world, BlockPos pos, BlockState state, Direction face) {
-        return face.getAxis() == state.getValue(FACING).getAxis();
+        return face == state.getValue(FACING);
     }
 }

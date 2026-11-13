@@ -31,7 +31,6 @@ public class GreateRecipeConfig {
     @Comment({"Should recipes from create that conflict with GTCEu recipes be disabled?", "[WARNING]: This will not cover every single recipe conflict, only common conflicts (like components (plates/sheets)), or ore processing conflicts."})
     public boolean disableConflictingRecipes = false;
 
-
     @Configurable
     @Synchronized
     @Comment({"Should tiered encased fans process item entities?"})

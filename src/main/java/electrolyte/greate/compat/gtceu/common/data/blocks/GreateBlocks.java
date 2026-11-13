@@ -11,12 +11,14 @@ public class GreateBlocks {
 
     public static final BlockEntry<KineticBoxBlock> KINETIC_INPUT_BOX = REGISTRATE
             .block("kinetic_input_box", KineticBoxBlock::new)
+            .properties(p -> p.strength(7.0F, 6.0F))
             .blockstate((c, p) -> p.getVariantBuilder(c.get())
 				.forAllStatesExcept(BlockStateGen.mapToAir(p)))
             .register();
 
     public static final BlockEntry<KineticBoxBlock> KINETIC_OUTPUT_BOX = REGISTRATE
             .block("kinetic_output_box", KineticBoxBlock::new)
+            .properties(p -> p.strength(7.0F, 6.0F))
             .blockstate((c, p) -> p.getVariantBuilder(c.get())
 				.forAllStatesExcept(BlockStateGen.mapToAir(p)))
             .register();

@@ -4,6 +4,7 @@ import com.gregtechceu.gtceu.api.recipe.GTRecipe;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeSerializer;
 import com.gregtechceu.gtceu.api.recipe.GTRecipeType;
 import com.gregtechceu.gtceu.api.recipe.ingredient.FluidIngredient;
+import com.gregtechceu.gtceu.common.item.behavior.IntCircuitBehaviour;
 import com.gregtechceu.gtceu.data.recipe.builder.GTRecipeBuilder;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipe;
@@ -81,6 +82,9 @@ public class GreateRecipeType extends GTRecipeType {
             String recipePath = id.withPrefix("/integration/" + id.getNamespace() + "/").getPath();
             ResourceLocation recipeId = Greate.id(recipePath);
             GTRecipeBuilder builder = recipeBuilder(recipeId);
+            if(group.circuit > IntCircuitBehaviour.CIRCUIT_MAX) {
+                Greate.LOGGER.error("Stonecutting recipe {} has more than 32 stonecutting recipes.", recipe.getId());
+            }
             builder.circuitMeta(group.circuit);
             builder.inputItems(recipe.getIngredients().get(0));
             builder.outputItems(result);
