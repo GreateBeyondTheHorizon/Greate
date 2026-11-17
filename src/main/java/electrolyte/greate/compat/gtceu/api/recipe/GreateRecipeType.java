@@ -82,13 +82,12 @@ public class GreateRecipeType extends GTRecipeType {
             String recipePath = id.withPrefix("/integration/" + id.getNamespace() + "/").getPath();
             ResourceLocation recipeId = Greate.id(recipePath);
             GTRecipeBuilder builder = recipeBuilder(recipeId);
-            if(group.circuit > IntCircuitBehaviour.CIRCUIT_MAX) {
-                Greate.LOGGER.error("Stonecutting recipe {} has more than 32 stonecutting recipes.", recipe.getId());
-            }
             builder.circuitMeta(group.circuit);
             builder.inputItems(recipe.getIngredients().get(0));
             builder.outputItems(result);
-            group.circuit++;
+            if(group.circuit + 1 > IntCircuitBehaviour.CIRCUIT_MAX) {
+                Greate.LOGGER.error("Stonecutting recipe {} has more than 32 stonecutting recipes with the same ingredient.", recipe.getId());
+            } else group.circuit++;
             return GTRecipeSerializer.SERIALIZER.fromJson(recipeId, builder.build().serializeRecipe());
         }
         return super.toGTrecipe(id, recipe);
