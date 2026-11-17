@@ -140,8 +140,8 @@ public class TieredSawMachine extends TieredKineticWorkableMachine {
     public final FilterStackTrait filterStackTrait;
 
 
-    public TieredSawMachine(BlockEntityCreationInfo info) {
-        super(info, new TieredSawMachineBlockEntity(info.type(), info.pos(), info.state()));
+    public TieredSawMachine(BlockEntityCreationInfo info, int tier) {
+        super(info, tier, new TieredSawMachineBlockEntity(info.type(), info.pos(), info.state()));
         this.circuitStack = attachTrait(new NotifiableItemStackHandler(1, IO.IN, IO.NONE));
         this.circuitStack.setStackInSlot(0, IntCircuitBehaviour.stack(0));
         this.importItems = attachTrait(new NotifiableItemStackHandler(getRecipeType().getMaxInputs(ItemRecipeCapability.CAP), IO.IN));

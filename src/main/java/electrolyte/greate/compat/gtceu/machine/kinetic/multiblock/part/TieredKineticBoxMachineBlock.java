@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class TieredKineticBoxMachineBlock extends TieredKineticMachineBlock implements IBE<TieredKineticMachine> {
     public TieredKineticBoxMachineBlock(MachineDefinition definition, BlockEntry<KineticBoxBlock> kineticBlock) {
-        super(Properties.copy(kineticBlock.get()), definition, kineticBlock.get());
+        super(definition, kineticBlock.get());
     }
 
     @Override

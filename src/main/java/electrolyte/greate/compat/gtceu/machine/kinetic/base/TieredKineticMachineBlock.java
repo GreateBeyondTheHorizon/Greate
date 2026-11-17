@@ -34,8 +34,8 @@ public class TieredKineticMachineBlock extends MetaMachineBlock implements ITier
     @Getter
     protected final KineticBlock kineticBlock;
 
-    public TieredKineticMachineBlock(Properties properties, MachineDefinition definition, KineticBlock kineticBlock) {
-        super(properties, definition);
+    public TieredKineticMachineBlock(MachineDefinition definition, KineticBlock kineticBlock) {
+        super(Properties.copy(kineticBlock), definition);
         this.kineticBlock = kineticBlock;
     }
 

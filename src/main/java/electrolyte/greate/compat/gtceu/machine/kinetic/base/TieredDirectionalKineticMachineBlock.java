@@ -16,8 +16,8 @@ import static com.simibubi.create.content.kinetics.base.DirectionalKineticBlock.
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 public abstract class TieredDirectionalKineticMachineBlock extends TieredKineticMachineBlock {
-    public TieredDirectionalKineticMachineBlock(Properties properties, MachineDefinition definition, KineticBlock kineticBlock) {
-        super(properties, definition, kineticBlock);
+    public TieredDirectionalKineticMachineBlock(MachineDefinition definition, KineticBlock kineticBlock) {
+        super(definition, kineticBlock);
     }
 
     @Override

@@ -54,7 +54,7 @@ public class GreateMachines {
 
     public static final MachineDefinition[] MILLSTONES = registerTieredMachines("millstone", false,
             (properties, definition) -> new TieredMillstoneMachineBlock(definition),
-            (info, tier) -> new TieredMillstoneMachine(info),
+            TieredMillstoneMachine::new,
             (tier, builder) -> builder
                     .langValue(FormattingUtil.toEnglishName(GreateValues.TM[tier].getName()) + " Millstone")
                     .rotationState(RotationState.NON_Y_AXIS)
@@ -77,7 +77,7 @@ public class GreateMachines {
 
     public static final MachineDefinition[] SAWS = registerTieredMachines("mechanical_saw", false,
             (properties, definition) -> new TieredSawMachineBlock(definition),
-            (def, tier) -> new TieredSawMachine(def),
+            TieredSawMachine::new,
             (tier, builder) -> builder
                     .langValue(FormattingUtil.toEnglishName(GreateValues.TM[tier].getName()) + " Mechanical Saw")
                     .rotationState(RotationState.NONE)
